@@ -39,7 +39,7 @@ public class Fragment_Login extends Fragment {
     private Button button_login, button_register_page;
     private SessionManager sessionManager;
 
-    private static String URL_LOGIN = "http://192.168.1.15/android_register_login/login.php";
+    private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/login.php";
     final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
 
     @Nullable
