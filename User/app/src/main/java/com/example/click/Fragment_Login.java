@@ -1,6 +1,5 @@
 package com.example.click;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,8 +40,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
+public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int RC_SIGN_IN = 1;
+    private static String URL_LOGIN = "http://192.168.1.15/android_register_login/verify.php";
+    private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
+    private final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
     private EditText email, password;
     private ProgressBar loading;
     private Button button_login, button_goto_register_page, button_goto_forgot_page;
@@ -50,22 +53,16 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
 
-    final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
-
-    private static final int RC_SIGN_IN = 1;
-    private static String URL_LOGIN = "http://192.168.1.15/android_register_login/verify.php";
-    private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         Declare(view);
 
+        sessionManager = new SessionManager(view.getContext());
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-
         googleApiClient = new GoogleApiClient.Builder(getContext()).enableAutoManage(getActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
-
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +71,6 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 startActivityForResult(intent, RC_SIGN_IN);
             }
         });
-
-        sessionManager = new SessionManager(view.getContext());
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +135,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                         String id = object.getString("id").trim();
 
 
-                                        sessionManager.createSession(name, email,phone_no,address,birthday, gender, id);
+                                        sessionManager.createSession(name, email, phone_no, address, birthday, gender, id);
 
                                         Intent intent = new Intent(getContext(), Activity_Home.class);
                                         intent.putExtra("name", name);
@@ -152,9 +147,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
 
                                         getActivity().startActivity(intent);
 
-                                        Toast.makeText(getContext(),
-                                                "Success Login " + name + email,
-                                                Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(getContext(), "Success Login " + name + email, Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
                                     }
@@ -175,7 +168,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.GONE);
                     button_login.setVisibility(View.VISIBLE);
 
@@ -184,17 +177,13 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-
                     params.put("email", mEmail);
                     params.put("password", mPassword);
                     return params;
                 }
             };
-
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
             requestQueue.add(stringRequest);
-
-
         } else {
             email.setError("Fields cannot be empty!");
             password.setError("Fields cannot be empty!");
@@ -204,7 +193,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
@@ -226,10 +215,10 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     }
 */
 
-    private void handleSignInResult(GoogleSignInResult result){
+    private void handleSignInResult(GoogleSignInResult result) {
         int second = 1;
 
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             Google_SignIn(result);
             GoogleSignInAccount account = result.getSignInAccount();
             email.setText(account.getEmail());
@@ -239,13 +228,13 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 public void run() {
                     button_login.performClick();
                 }
-            }, second*100);
-        }else{
+            }, second * 100);
+        } else {
             Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void Google_SignIn(GoogleSignInResult result){
+    private void Google_SignIn(GoogleSignInResult result) {
         GoogleSignInAccount account = result.getSignInAccount();
         final String name = account.getDisplayName();
         final String email = account.getEmail();
@@ -253,7 +242,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         final String address = "";
         final String birthday = "";
         final String gender = "";
-        final String password = account.getEmail();
+        final String password = account.getDisplayName();
 
         final String photo = String.valueOf(account.getPhotoUrl());
 
@@ -265,11 +254,11 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
-                            if(success.equals("1")){
+                            if (success.equals("1")) {
                                 Intent intent = new Intent(getContext(), Activity_Home.class);
                                 startActivity(intent);
                             }
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
@@ -280,7 +269,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

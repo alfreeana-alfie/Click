@@ -26,6 +26,10 @@
         <activity
         android:name="com.example.click.Activity_Home"
         android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.example.click.Activity_Home_Backup"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

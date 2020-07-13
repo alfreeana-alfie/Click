@@ -68,12 +68,12 @@ public class Activity_Home_Backup extends AppCompatActivity{
 
     private static String URL_READ = "http://192.168.1.15/android_register_login/read_detail.php";
     private static String URL_EDIT = "http://192.168.1.15/android_register_login/edit_detail.php";
-    private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/profile_image/upload.php";
+    private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/upload.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer);
+        setContentView(R.layout.activity_drawer_backup);
         Declare();
 
         sessionManager = new SessionManager(this);
@@ -392,7 +392,6 @@ public class Activity_Home_Backup extends AppCompatActivity{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             UploadPicture(getId, getStringImage(bitmap));
         }
     }

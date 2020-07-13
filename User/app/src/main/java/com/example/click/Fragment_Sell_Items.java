@@ -35,20 +35,17 @@ import java.util.Map;
 
 public class Fragment_Sell_Items extends Fragment {
 
+    private static String URL_READ = "http://192.168.1.15/android_register_login/itemsave.php";
+    private static String URL_USERID = "http://192.168.1.15/android_register_login/save.php";
+    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
+    SessionManager sessionManager;
+    String getId;
     private TextView enter_category, enter_ad_detail;
     private EditText enter_price, edittext_ad_detail;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail;
     private Spinner spinner_main_category, spinner_sub_category, spinner_item_location;
-
     private RelativeLayout category_page_layout, ad_detail_page_layout;
     private LinearLayout item_page_layout;
-
-    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
-    SessionManager sessionManager;
-    String getId;
-
-    private static String URL_READ = "http://192.168.1.15/android_register_login/itemsave.php";
-    private static String URL_USERID = "http://192.168.1.15/android_register_login/save.php";
 
     @Nullable
     @Override
@@ -56,7 +53,7 @@ public class Fragment_Sell_Items extends Fragment {
         View view = inflater.inflate(R.layout.fragment_sell_item, container, false);
         Declare(view);
 
-        sessionManager = new SessionManager(getContext());
+        sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
         getUserId(view);
@@ -108,7 +105,6 @@ public class Fragment_Sell_Items extends Fragment {
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
-
                 enter_category.setText(mCategory);
             }
         });
@@ -120,14 +116,13 @@ public class Fragment_Sell_Items extends Fragment {
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mAd_Detail = edittext_ad_detail.getText().toString();
-
                 enter_ad_detail.setText(mAd_Detail);
             }
         });
         return view;
     }
 
-    private void saveItemDetail(View view){
+    private void saveItemDetail(View view) {
         final String userid = getId;
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
@@ -143,10 +138,10 @@ public class Fragment_Sell_Items extends Fragment {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
 
-                            if(success.equals("1")){
-                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                            if (success.equals("1")) {
+//                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
                             }
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
@@ -156,10 +151,10 @@ public class Fragment_Sell_Items extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
 
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -177,7 +172,7 @@ public class Fragment_Sell_Items extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void getUserId(View view){
+    private void getUserId(View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -190,8 +185,8 @@ public class Fragment_Sell_Items extends Fragment {
 
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                    Toast.makeText(getContext(), "Information", Toast.LENGTH_SHORT).show();
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                    Toast.makeText(getContext(), "Information", Toast.LENGTH_SHORT).show();
 
 //                                    String strName = object.getString("name").trim();
 //                                    String strEmail = object.getString("email").trim();
@@ -219,7 +214,7 @@ public class Fragment_Sell_Items extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getContext(), "Error!!", Toast.LENGTH_SHORT).show();
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -232,18 +227,18 @@ public class Fragment_Sell_Items extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void gotoAdDetail(){
+    private void gotoAdDetail() {
         ad_detail_page_layout.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
     }
 
-    private void gotoCategory(){
+    private void gotoCategory() {
         category_page_layout.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
     }
 
-    public void showResult(int position){
-        switch(position){
+    private void showResult(int position) {
+        switch (position) {
             case 0:
                 break;
             case 1:
@@ -310,13 +305,19 @@ public class Fragment_Sell_Items extends Fragment {
         }
     }
 
-    private void Declare(View v){
+    private void Declare(View v) {
         enter_category = v.findViewById(R.id.enter_main_category);
         enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
         enter_price = v.findViewById(R.id.enter_price);
         spinner_item_location = v.findViewById(R.id.spinner_item_location);
         accept_item = v.findViewById(R.id.accept_item);
         edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
+        accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
+        back_ad_detail = v.findViewById(R.id.back_ad_detail);
+        spinner_main_category = v.findViewById(R.id.spinner_main_category);
+        spinner_sub_category = v.findViewById(R.id.spinner_sub_category);
+        accept_category = v.findViewById(R.id.accept_category);
+        back_category = v.findViewById(R.id.back_category);
 
         category_page_layout = v.findViewById(R.id.category_page_layout);
         ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
@@ -325,14 +326,6 @@ public class Fragment_Sell_Items extends Fragment {
         adapter_item_location = ArrayAdapter.createFromResource(getContext(), R.array.location, android.R.layout.simple_spinner_item);
         adapter_item_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_item_location.setAdapter(adapter_item_location);
-
-        spinner_main_category = v.findViewById(R.id.spinner_main_category);
-        spinner_sub_category = v.findViewById(R.id.spinner_sub_category);
-        accept_category = v.findViewById(R.id.accept_category);
-        back_category = v.findViewById(R.id.back_category);
-
-        accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
-        back_ad_detail = v.findViewById(R.id.back_ad_detail);
 
         adapter_category = ArrayAdapter.createFromResource(getContext(), R.array.main_category, android.R.layout.simple_spinner_item);
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
