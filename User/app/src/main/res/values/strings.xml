@@ -31,5 +31,105 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="about_the_app">About the App</string>
+    <string name="my_saved_searches">My Saved Searches</string>
+    <string name="my_favourite_ads">My Favourite Ads</string>
+    <string name="my_chat_inbox">My Chat Inbox</string>
+    <string name="my_ads">My Ads</string>
+    <string name="find_items">Find Items</string>
+    <string name="sell_my_item">Sell My Item</string>
+    <string name="home">Home</string>
+    <string name="category">Category</string>
+    <string name="ad_details">Ad Details</string>
+    <string name="price_rm">Price (RM)</string>
+    <string name="item_location">Item Location</string>
+    <string name="yes_i_want_to_receive_chat_messages_for_safer_and_faster_replies">Yes! I want to receive chat messages for safer and faster replies</string>
+    <string name="uploaded_photo">Uploaded Photo</string>
+    <string name="good_tips">Good Tips</string>
+    <string name="cover_photo">Cover Photo</string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="reset_here">Reset Here</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="enter">Enter</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="enter_email_address">Enter Email Address</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="address">Address</string>
+    <string name="accept">Accept</string>
+    <string name="back">Back</string>
+    <string name="please_enter_an_ad_detail">Please enter an ad detail...</string>
 
+    <string-array name="gender">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
+    <string-array name="main_category">
+        <item>All Categories</item>
+        <item>Vehicles</item>
+        <item>Properties</item>
+        <item>Electronics</item>
+        <item>Home and Personal Items</item>
+        <item>Leisure/Sport/Hobbies</item>
+        <item>Business to Business</item>
+        <item>Jobs and Services</item>
+        <item>Travel</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="vehicle_category">
+        <item>Car</item>
+        <item>Motorcycle</item>
+    </string-array>
+
+    <string-array name="properties_category">
+        <item>Properties for Sale</item>
+        <item>New Properties</item>
+    </string-array>
+
+    <string-array name="electronic_category">
+        <item>Mobile Phones and Gadgets</item>
+        <item>Accessories for Phones and Gadgets</item>
+    </string-array>
+
+    <string-array name="home_category">
+        <item>Women Collection</item>
+        <item>Men Collection</item>
+    </string-array>
+
+    <string-array name="leisure_category">
+        <item>Music Instruments</item>
+        <item>Pets</item>
+    </string-array>
+
+    <string-array name="business_category">
+        <item>Professional/Business Equipment</item>
+        <item>Business for Sale</item>
+    </string-array>
+
+    <string-array name="jobs_category">
+        <item>Jobs</item>
+        <item>Service</item>
+    </string-array>
+
+    <string-array name="travel_category">
+        <item>Jobs</item>
+        <item>Service</item>
+    </string-array>
+
+    <string-array name="other_category">
+        <item>Others</item>
+        <item>Food</item>
+        <item>Items for Swap</item>
+    </string-array>
+
+    <string-array name="location">
+        <item>Item Location</item>
+        <item>Sibu</item>
+        <item>Kuching</item>
+        <item>Kota Samarahan</item>
+    </string-array>
 </resources>

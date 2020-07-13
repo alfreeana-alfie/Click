@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
-            android:title="@string/menu_home" />
+            android:title="@string/home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_sell"
+            android:title="@string/sell_my_item" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_tools"
-            android:title="@string/menu_tools" />
+            android:id="@+id/nav_find"
+            android:title="@string/find_items" />
     </group>
+
+    <group
+        android:id="@+id/menu_middle"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_ads"
+            android:title="@string/my_ads" />
+
+        <item
+            android:id="@+id/nav_chat_inbox"
+            android:title="@string/my_chat_inbox" />
+
+        <item
+            android:id="@+id/nav_favourite_ads"
+            android:title="@string/my_favourite_ads" />
+
+        <item
+            android:id="@+id/nav_saved_searches"
+            android:title="@string/my_saved_searches" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_about_the_apps"
+            android:title="@string/about_the_app" />
+
+        <item
+            android:id="@+id/nav_log_out"
+            android:title="@string/logout" />
+    </group>
+
+
 </menu>

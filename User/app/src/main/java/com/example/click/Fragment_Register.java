@@ -1,5 +1,6 @@
 package com.example.click;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -31,12 +32,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class Fragment_Register extends Fragment {
+public class Fragment_Register extends Fragment{
 
-    private EditText name_edittext, email_edittext, phone_no_edittext, password_edittext, confirm_password_edittext;
+    private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
-    private Button button_login_page, button_register;
-    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
+    private Button button_goto_login_page, button_register;
+
+    private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
 
     @Nullable
     @Override
@@ -48,88 +50,91 @@ public class Fragment_Register extends Fragment {
             @Override
             public void onClick(View v) {
                 Register(v);
+
             }
         });
 
-        button_login_page.setOnClickListener(new View.OnClickListener() {
+        button_goto_login_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Fragment fragment_login = new Fragment_Login();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.framelayout, fragment_login);
-                fragmentTransaction.commit();
+                Intent intent = new Intent(getContext(), Activity_Main.class);
+                getActivity().startActivity(intent);
             }
         });
         return view;
     }
 
     private void Register(View view) {
+        final String strName = this.name.getText().toString().trim();
+        final String strEmail = this.email.getText().toString().trim();
+        final String strPhone_No = this.phone_no.getText().toString().trim();
+        final String strPassword = this.password.getText().toString().trim();
+        final String strConfirm_Password = this.confirm_password.getText().toString().trim();
+        final String strAddress = "";
+        final String strBirthday = "";
+        final String strGender = "";
+        final String strPhoto_URL = "null";
 
-        final String name = this.name_edittext.getText().toString().trim();
-        final String email = this.email_edittext.getText().toString().trim();
-        final String phone_no = this.phone_no_edittext.getText().toString().trim();
-        final String password = this.password_edittext.getText().toString().trim();
-        final String confirm_password = this.confirm_password_edittext.getText().toString().trim();
-
-        final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
+        final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
 
         //Name
-        if (name.isEmpty()) {
-            name_edittext.requestFocus();
-            name_edittext.setError("Fields cannot be empty!");
-        } else if (!name.matches("[a-zA-Z ]+")) {
-            name_edittext.requestFocus();
-            name_edittext.setError("Enter only Alphabetical Letter");
+        if (strName.isEmpty()) {
+            name.requestFocus();
+            name.setError("Fields cannot be empty!");
+        } else if (!strName.matches("[a-zA-Z ]+")) {
+            name.requestFocus();
+            name.setError("Enter only Alphabetical Letter");
         }
 
         //Email
-        if (email.isEmpty()) {
-            email_edittext.requestFocus();
-            email_edittext.setError("Fields cannot be empty!");
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            email_edittext.requestFocus();
-            email_edittext.setError("Please enter a valid email address");
+        if (strEmail.isEmpty()) {
+            email.requestFocus();
+            email.setError("Fields cannot be empty!");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
+            email.requestFocus();
+            email.setError("Please enter a valid email address");
         }
 
         //Phone NO.
-        if (phone_no.isEmpty()) {
-            phone_no_edittext.requestFocus();
-            phone_no_edittext.setError("Fields cannot be empty!");
-        } else if (!Patterns.PHONE.matcher(phone_no).matches()) {
-            phone_no_edittext.requestFocus();
-            phone_no_edittext.setError("Enter only Numerical Letter");
+        if (strPhone_No.isEmpty()) {
+            phone_no.requestFocus();
+            phone_no.setError("Fields cannot be empty!");
+        } else if (!Patterns.PHONE.matcher(strPhone_No).matches()) {
+            phone_no.requestFocus();
+            phone_no.setError("Enter only Numerical Letter");
         }
 
         //Password
-        if (password.isEmpty()) {
-            password_edittext.requestFocus();
-            password_edittext.setError("Fields cannot be empty!");
-        } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            password_edittext.requestFocus();
-            password_edittext.setError("At least 4 lengths and at least 1 Capital Letter, 1 number, and 1 symbol for password");
+        if (strPassword.isEmpty()) {
+            password.requestFocus();
+            password.setError("Fields cannot be empty!");
+        } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
+            password.requestFocus();
+            password.setError("At least 8 character lengths for password");
         }
 
+/*
         //Confirm Password
-        if (confirm_password.isEmpty()) {
-            confirm_password_edittext.requestFocus();
-            confirm_password_edittext.setError("Fields cannot be empty!");
-        } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            confirm_password_edittext.requestFocus();
-            confirm_password_edittext.setError("At least 4 lengths and at least 1 Capital Letter, 1 number, and 1 symbol for password");
+        if (strConfirm_Password.isEmpty()) {
+            confirm_password.requestFocus();
+            confirm_password.setError("Fields cannot be empty!");
+        } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
+            confirm_password.requestFocus();
+            confirm_password.setError("At least 8 character lengths for password");
         }
+*/
 
         //Other
-        if (!confirm_password.equals(password)) {
-            confirm_password_edittext.requestFocus();
-            confirm_password_edittext.setError("Confirm Password is different than Password");
+        if (!strConfirm_Password.equals(strPassword)) {
+            confirm_password.requestFocus();
+            confirm_password.setError("Confirm Password is different than Password");
         }
 
-        if (name.matches("[a-zA-Z ]+")
-                && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-                && Patterns.PHONE.matcher(phone_no).matches()
-                && PASSWORD_PATTERN.matcher(password).matches()
-                && confirm_password.equals(password)) {
+        if (strName.matches("[a-zA-Z]+")
+                && Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()
+                && Patterns.PHONE.matcher(strPhone_No).matches()
+                && PASSWORD_PATTERN.matcher(strPassword).matches()
+                && strConfirm_Password.equals(strPassword)) {
 
             loading.setVisibility(view.VISIBLE);
             button_register.setVisibility(view.GONE);
@@ -143,6 +148,15 @@ public class Fragment_Register extends Fragment {
 
                         if (success.equals("1")) {
                             Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
+
+                            loading.setVisibility(View.GONE);
+                            button_register.setVisibility(View.VISIBLE);
+
+                            Intent intent = new Intent(getContext(), Activity_Main.class);
+                            getActivity().startActivity(intent);
+                        } else {
+                            Toast.makeText(getContext(), "Registration Failed! ", Toast.LENGTH_SHORT).show();
+
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
                         }
@@ -150,6 +164,7 @@ public class Fragment_Register extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(getContext(), "Email is already existed", Toast.LENGTH_SHORT).show();
+
                         loading.setVisibility(View.GONE);
                         button_register.setVisibility(View.VISIBLE);
                     }
@@ -159,7 +174,8 @@ public class Fragment_Register extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
-                    Toast.makeText(getContext(), "Register Error" + error.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Connection Error" + error.toString(), Toast.LENGTH_SHORT).show();
+
                     loading.setVisibility(View.GONE);
                     button_register.setVisibility(View.VISIBLE);
                 }
@@ -167,10 +183,14 @@ public class Fragment_Register extends Fragment {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("name", name);
-                    params.put("email", email);
-                    params.put("phone_no", phone_no);
-                    params.put("password", password);
+                    params.put("name", strName);
+                    params.put("email", strEmail);
+                    params.put("phone_no", strPhone_No);
+                    params.put("password", strPassword);
+                    params.put("address", strAddress);
+                    params.put("birthday", strBirthday);
+                    params.put("gender", strGender);
+                    params.put("photo", strPhoto_URL);
                     return params;
                 }
             };
@@ -181,13 +201,14 @@ public class Fragment_Register extends Fragment {
     }
 
     private void Declare(View v) {
-        name_edittext = v.findViewById(R.id.name_edittext);
-        email_edittext = v.findViewById(R.id.email_edittext);
-        phone_no_edittext = v.findViewById(R.id.phone_no_edittext);
-        password_edittext = v.findViewById(R.id.password_edittext);
-        confirm_password_edittext = v.findViewById(R.id.confirm_password_edittext);
+        name = v.findViewById(R.id.name_register);
+        email = v.findViewById(R.id.email_register);
+        phone_no = v.findViewById(R.id.phone_no_register);
+        password = v.findViewById(R.id.password_register);
+        confirm_password = v.findViewById(R.id.confirm_password_register);
         loading = v.findViewById(R.id.loading);
         button_register = v.findViewById(R.id.button_register);
-        button_login_page = v.findViewById(R.id.button_login_page);
+        button_goto_login_page = v.findViewById(R.id.button_goto_login_page);
     }
+
 }

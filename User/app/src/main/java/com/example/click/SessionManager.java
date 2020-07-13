@@ -15,8 +15,12 @@ public class SessionManager {
 
     private static final String PREF_NAME = "LOGIN";
     private static final String LOGIN = "IS_LOGIN";
-    public static final String NAME = "NAME";
-    public static final String EMAIL = "EMAIL";
+    private static final String NAME = "NAME";
+    private static final String EMAIL = "EMAIL";
+    private static final String PHONE_NO = "PHONE_NO";
+    private static final String ADDRESS = "ADDRESS";
+    private static final String BIRTHDAY = "BIRTHDAY";
+    private static final String GENDER = "GENDER";
     public static final String ID = "ID";
 
     public SessionManager(Context context){
@@ -25,10 +29,14 @@ public class SessionManager {
         editor = sharedPreferences.edit();
     }
 
-    public void createSession(String name, String email, String id){
+    public void createSession(String name, String email,String phone_no, String address, String birthday, String gender, String id){
         editor.putBoolean(LOGIN, true);
         editor.putString(NAME, name);
         editor.putString(EMAIL, email);
+        editor.putString(PHONE_NO, phone_no);
+        editor.putString(ADDRESS, address);
+        editor.putString(BIRTHDAY, birthday);
+        editor.putString(GENDER, gender);
         editor.putString(ID, id);
         editor.apply();
     }
@@ -39,7 +47,7 @@ public class SessionManager {
 
     public void checkLogin(){
         if(!this.isLoggin()){
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, Activity_Main.class);
             context.startActivity(intent);
             ((Activity_Home)context).finish();
         }
@@ -49,6 +57,10 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<>();
         user.put(NAME, sharedPreferences.getString(NAME, null));
         user.put(EMAIL, sharedPreferences.getString(EMAIL, null));
+        user.put(PHONE_NO, sharedPreferences.getString(PHONE_NO, null));
+        user.put(ADDRESS, sharedPreferences.getString(ADDRESS, null));
+        user.put(BIRTHDAY, sharedPreferences.getString(BIRTHDAY, null));
+        user.put(GENDER, sharedPreferences.getString(GENDER, null));
         user.put(ID, sharedPreferences.getString(ID, null));
         return user;
     }
@@ -56,7 +68,7 @@ public class SessionManager {
     public void logout(){
         editor.clear();
         editor.commit();
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, Activity_Main.class);
         context.startActivity(intent);
         ((Activity_Home)context).finish();
     }
