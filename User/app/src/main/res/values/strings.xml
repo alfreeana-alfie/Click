@@ -61,6 +61,7 @@
     <string name="accept">Accept</string>
     <string name="back">Back</string>
     <string name="please_enter_an_ad_detail">Please enter an ad detail...</string>
+    <string name="item_image">Item Image</string>
 
     <string-array name="gender">
         <item>Female</item>

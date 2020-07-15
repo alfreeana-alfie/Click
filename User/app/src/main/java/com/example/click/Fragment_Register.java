@@ -75,7 +75,7 @@ public class Fragment_Register extends Fragment{
         final String strGender = "";
         final String strPhoto_URL = "null";
 
-        final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
+        final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 
         //Name
         if (strName.isEmpty()) {

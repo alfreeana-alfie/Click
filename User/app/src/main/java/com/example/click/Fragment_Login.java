@@ -45,7 +45,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     private static final int RC_SIGN_IN = 1;
     private static String URL_LOGIN = "http://192.168.1.15/android_register_login/verify.php";
     private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
-    private final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z]).{8,}$");
+    private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
     private EditText email, password;
     private ProgressBar loading;
     private Button button_login, button_goto_register_page, button_goto_forgot_page;
@@ -222,7 +222,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
             Google_SignIn(result);
             GoogleSignInAccount account = result.getSignInAccount();
             email.setText(account.getEmail());
-            password.setText(account.getEmail());
+            password.setText(account.getFamilyName() + account.getGivenName());
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -242,7 +242,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         final String address = "";
         final String birthday = "";
         final String gender = "";
-        final String password = account.getDisplayName();
+        final String password = account.getFamilyName() + account.getGivenName();
 
         final String photo = String.valueOf(account.getPhotoUrl());
 

@@ -323,7 +323,6 @@ public class Fragment_Home extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-
     public String getStringImage(Bitmap bitmap) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

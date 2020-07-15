@@ -44,10 +44,10 @@ import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Fragment_Sell_Items extends Fragment {
+public class Fragment_Sell_Items_Backup extends Fragment {
 
     private static String URL_READ = "http://192.168.1.15/android_register_login/itemsave.php";
-//    private static String URL_USERID = "http://192.168.1.15/android_register_login/save.php";
+    private static String URL_USERID = "http://192.168.1.15/android_register_login/save.php";
     private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/uploadimg.php";
     ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
     SessionManager sessionManager;
@@ -79,10 +79,9 @@ public class Fragment_Sell_Items extends Fragment {
             @Override
             public void onClick(View v) {
                 chooseFile();
-
             }
         });
-
+        
         enter_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,8 +115,8 @@ public class Fragment_Sell_Items extends Fragment {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveItemDetail(v);
-                saveEdit(getId, getStringImage(bitmap));
+                saveItemDetail(v);
+                UploadPicture(getId, getStringImage(bitmap));
             }
         });
 
@@ -148,19 +147,20 @@ public class Fragment_Sell_Items extends Fragment {
     private void chooseFile() {
         Intent intent = new Intent();
         intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
     }
 
-    private void saveEdit(final String id, final String photo){
-//        final String userid = getId;
+    private void saveItemDetail(View view) {
+        final String userid = getId;
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
         final String strPrice = this.enter_price.getText().toString().trim();
         final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_USERID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -188,72 +188,19 @@ public class Fragment_Sell_Items extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userid", id);
+                params.put("userid", userid);
                 params.put("main_category", strMain_category);
                 params.put("sub_category", strSub_category);
                 params.put("ad_detail", strAd_Detail);
                 params.put("price", strPrice);
                 params.put("item_location", strItem_location);
-                params.put("photo", photo);
                 return params;
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
-
-//    private void saveItemDetail(View view) {
-//        final String userid = getId;
-//        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-//        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-//        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-//        final String strPrice = this.enter_price.getText().toString().trim();
-//        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
-//        final String strPhoto_URL = "null";
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_USERID,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            if (success.equals("1")) {
-////                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("userid", userid);
-//                params.put("main_category", strMain_category);
-//                params.put("sub_category", strSub_category);
-//                params.put("ad_detail", strAd_Detail);
-//                params.put("price", strPrice);
-//                params.put("item_location", strItem_location);
-//                params.put("photo", strPhoto_URL);
-//                return params;
-//            }
-//        };
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-//        requestQueue.add(stringRequest);
-//    }
 
     private void getUserId(View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
@@ -388,50 +335,52 @@ public class Fragment_Sell_Items extends Fragment {
         }
     }
 
-//    private void UploadPicture(final String id, final String photo) {
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-//        progressDialog.setMessage("Uploading...");
-//        progressDialog.show();
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        progressDialog.dismiss();
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            if (success.equals("1")) {
-////                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            progressDialog.dismiss();
-//                            Toast.makeText(getContext(), "Failed!" + e.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("id", id);
-//                params.put("photo", photo);
-//                return params;
-//            }
-//        };
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//        requestQueue.add(stringRequest);
-//    }
+    private void UploadPicture(final String id, final String photo) {
+
+        final String filename = this.edittext_ad_detail.getText().toString().trim();
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Uploading...");
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+//                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), "Failed!" + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("userid", id);
+                params.put("filename", filename);
+                params.put("photo", photo);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
 
     public String getStringImage(Bitmap bitmap) {
 
@@ -452,11 +401,12 @@ public class Fragment_Sell_Items extends Fragment {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 upload_photo_img.setImageBitmap(bitmap);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-//        UploadPicture(getId, getStringImage(bitmap));
+
     }
 
     private void Declare(View v) {
