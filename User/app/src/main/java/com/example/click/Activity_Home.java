@@ -44,6 +44,8 @@ public class Activity_Home extends AppCompatActivity implements NavigationView.O
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_View_Item()).commit();
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
                 break;
         }
