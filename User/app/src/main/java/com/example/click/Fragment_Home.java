@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -57,7 +58,8 @@ public class Fragment_Home extends Fragment {
     SessionManager sessionManager;
     String getId;
     private EditText name, email, phone_no, address, birthday, gender_display;
-    private Button button_logout, button_upload_photo, button_edit, button_accept;
+    private Button button_logout, button_edit, button_accept;
+    private ImageButton button_edit_photo;
     private Spinner gender;
     private Bitmap bitmap;
     private ImageView gender_img, gender_img_spinner;
@@ -77,23 +79,7 @@ public class Fragment_Home extends Fragment {
 
         getUserDetail(view);
 
-        birthday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-                    }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
 
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +88,7 @@ public class Fragment_Home extends Fragment {
             }
         });
 
-        button_upload_photo.setOnClickListener(new View.OnClickListener() {
+        button_edit_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseFile();
@@ -112,9 +98,41 @@ public class Fragment_Home extends Fragment {
         button_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                button_upload_photo.setVisibility(View.VISIBLE);
+
+                name.setFocusable(true);
+                email.setFocusable(true);
+                phone_no.setFocusable(true);
+                address.setFocusable(true);
+                birthday.setFocusable(true);
+
+                name.setFocusableInTouchMode(true);
+                email.setFocusableInTouchMode(true);
+                phone_no.setFocusableInTouchMode(true);
+                address.setFocusableInTouchMode(true);
+                birthday.setFocusableInTouchMode(true);
+                gender_display.setFocusableInTouchMode(true);
+
+                birthday.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final Calendar calendar = Calendar.getInstance();
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        int month = calendar.get(Calendar.MONTH);
+                        int year = calendar.get(Calendar.YEAR);
+
+                        datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                            }
+                        }, year, month, day);
+                        datePickerDialog.show();
+                    }
+                });
+
                 button_accept.setVisibility(View.VISIBLE);
                 gender_img_spinner.setVisibility(View.VISIBLE);
+                button_edit_photo.setVisibility(View.VISIBLE);
                 gender.setVisibility(View.VISIBLE);
                 button_edit.setVisibility(View.GONE);
                 gender_display.setVisibility(View.GONE);
@@ -126,13 +144,27 @@ public class Fragment_Home extends Fragment {
         button_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name.setFocusable(false);
+                email.setFocusable(false);
+                phone_no.setFocusable(false);
+                address.setFocusable(false);
+                birthday.setFocusable(false);
+                gender_display.setFocusable(false);
+
+                name.setFocusableInTouchMode(false);
+                email.setFocusableInTouchMode(false);
+                phone_no.setFocusableInTouchMode(false);
+                address.setFocusableInTouchMode(false);
+                birthday.setFocusableInTouchMode(false);
+                gender_display.setFocusableInTouchMode(false);
+
                 gender_display.setVisibility(View.VISIBLE);
                 gender_img.setVisibility(View.VISIBLE);
                 button_edit.setVisibility(View.VISIBLE);
-                button_upload_photo.setVisibility(View.GONE);
                 button_accept.setVisibility(View.GONE);
                 gender_img_spinner.setVisibility(View.GONE);
                 gender.setVisibility(View.GONE);
+                button_edit_photo.setVisibility(View.GONE);
             }
         });
 
@@ -355,9 +387,9 @@ public class Fragment_Home extends Fragment {
         email = v.findViewById(R.id.email_edit);
         phone_no = v.findViewById(R.id.phone_edit);
         button_logout = v.findViewById(R.id.button_logout);
-        button_upload_photo = v.findViewById(R.id.button_upload_photo);
         button_edit = v.findViewById(R.id.button_edit);
         button_accept = v.findViewById(R.id.button_accept);
+        button_edit_photo = v.findViewById(R.id.button_edit_photo);
         profile_image = v.findViewById(R.id.profile_image);
         gender = v.findViewById(R.id.gender_spinner);
         address = v.findViewById(R.id.address_edit);
@@ -378,16 +410,16 @@ public class Fragment_Home extends Fragment {
         phone_no.setFocusable(false);
         address.setFocusable(false);
         birthday.setFocusable(false);
-        gender.setFocusable(false);
+        gender_display.setFocusable(false);
 
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
         phone_no.setFocusableInTouchMode(false);
         address.setFocusableInTouchMode(false);
         birthday.setFocusableInTouchMode(false);
-        gender.setFocusableInTouchMode(false);
+        gender_display.setFocusableInTouchMode(false);
 
-        button_upload_photo.setVisibility(View.GONE);
         button_accept.setVisibility(View.GONE);
+        button_edit_photo.setVisibility(View.GONE);
     }
 }

@@ -4,11 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp">
 
     <LinearLayout
         android:id="@+id/item_page_layout"
-        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -19,13 +20,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -34,14 +34,16 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:fontFamily="@font/open_sans_bold"
                     android:text="@string/uploaded_photo"
                     android:textSize="14sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -50,26 +52,17 @@
                     android:layout_height="110dp"
                     android:layout_margin="10dp"
                     android:background="@color/colorPrimary"
-                    app:srcCompat="@drawable/ic_photo_foreground" />
+                    app:srcCompat="@drawable/ic_photo_black_foreground" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/cover_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/cover_photo"
-                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
+            android:background="@drawable/login_part_border"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -78,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/category"
@@ -87,13 +81,14 @@
                 android:id="@+id/enter_main_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:clickable="true"
                 android:focusable="true"
+
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/category"
+                android:hint="Select Category"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
 
@@ -102,7 +97,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
+            android:background="@drawable/login_part_border"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -111,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/ad_details"
@@ -121,11 +119,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:paddingTop="20dp"
-                android:paddingRight="20dp"
                 android:paddingBottom="20dp"
-                android:text="@string/ad_details"
+                android:hint="Enter Ad Details"
                 android:textAlignment="textEnd"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -135,7 +133,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
+            android:background="@drawable/login_part_border"
+            android:layout_margin="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -146,6 +145,7 @@
                 android:layout_marginRight="15dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
+                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/price_rm"
                 android:textSize="20sp" />
 
@@ -155,11 +155,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:background="@null"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:hint="@string/price_rm"
                 android:inputType="numberDecimal"
-                android:paddingLeft="20dp"
                 android:paddingTop="20dp"
-                android:paddingRight="20dp"
                 android:paddingBottom="20dp"
                 android:textAlignment="textEnd"
                 android:textSize="16sp" />
@@ -168,7 +168,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
+            android:background="@drawable/login_part_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -179,24 +181,29 @@
                 android:layout_marginRight="15dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
+                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/item_location"
                 android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/spinner_item_location"
-                android:textAlignment="textEnd"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textAlignment="textEnd" />
 
         </LinearLayout>
 
         <Button
             android:id="@+id/accept_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="@font/open_sans"
             android:text="@string/accept" />
     </LinearLayout>
 
@@ -205,7 +212,6 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
         android:paddingBottom="20dp"
         android:paddingRight="20dp"
         android:paddingLeft="20dp"
@@ -250,7 +256,6 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

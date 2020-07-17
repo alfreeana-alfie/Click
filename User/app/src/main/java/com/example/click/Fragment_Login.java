@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -38,6 +40,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
@@ -85,6 +89,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 final Fragment fragment_register = new Fragment_Register();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
                 fragmentTransaction.replace(R.id.framelayout, fragment_register);
                 fragmentTransaction.commit();
             }
@@ -93,10 +98,11 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         button_goto_forgot_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Fragment fragment_verify_email = new Fragment_Forgot_Password();
+                final Fragment fragment_forgot_password = new Fragment_Forgot_Password();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.framelayout, fragment_verify_email);
+                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
+                fragmentTransaction.replace(R.id.framelayout, fragment_forgot_password);
                 fragmentTransaction.commit();
             }
         });
@@ -126,26 +132,31 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String name = object.getString("name").trim();
-                                        String email = object.getString("email").trim();
-                                        String phone_no = object.getString("phone_no").trim();
-                                        String address = object.getString("address").trim();
-                                        String birthday = object.getString("birthday").trim();
-                                        String gender = object.getString("gender").trim();
+                                        final String name = object.getString("name").trim();
+                                        final String email = object.getString("email").trim();
+                                        final String phone_no = object.getString("phone_no").trim();
+                                        final String address = object.getString("address").trim();
+                                        final String birthday = object.getString("birthday").trim();
+                                        final String gender = object.getString("gender").trim();
                                         String id = object.getString("id").trim();
-
 
                                         sessionManager.createSession(name, email, phone_no, address, birthday, gender, id);
 
-                                        Intent intent = new Intent(getContext(), Activity_Home.class);
-                                        intent.putExtra("name", name);
-                                        intent.putExtra("email", email);
-                                        intent.putExtra("phone_no", phone_no);
-                                        intent.putExtra("address", address);
-                                        intent.putExtra("birthday", birthday);
-                                        intent.putExtra("gender", gender);
-
-                                        getActivity().startActivity(intent);
+                                        Timer timer = new Timer();
+                                        timer.schedule(new TimerTask() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(getContext(), Activity_Home.class);
+                                                intent.putExtra("name", name);
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("phone_no", phone_no);
+                                                intent.putExtra("address", address);
+                                                intent.putExtra("birthday", birthday);
+                                                intent.putExtra("gender", gender);
+                                                getActivity().startActivity(intent);
+                                                getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                            }
+                                        }, 100);
 
 //                                        Toast.makeText(getContext(), "Success Login " + name + email, Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
@@ -198,22 +209,6 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
             handleSignInResult(result);
         }
     }
-
-/*    @Override
-    public void onStart() {
-        super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
-        email.setText(account.getEmail());
-        password.setText(account.getEmail());
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                button_login.performClick();
-            }
-        }, 1*2000);
-    }
-*/
 
     private void handleSignInResult(GoogleSignInResult result) {
         int second = 1;
@@ -301,5 +296,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         button_goto_register_page = v.findViewById(R.id.button_goto_register_page);
         button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
         signInButton = v.findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_ICON_ONLY);
     }
+
 }

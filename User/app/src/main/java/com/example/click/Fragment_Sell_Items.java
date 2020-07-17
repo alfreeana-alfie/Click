@@ -1,6 +1,5 @@
 package com.example.click;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -47,7 +46,6 @@ import static android.app.Activity.RESULT_OK;
 public class Fragment_Sell_Items extends Fragment {
 
     private static String URL_READ = "http://192.168.1.15/android_register_login/itemsave.php";
-//    private static String URL_USERID = "http://192.168.1.15/android_register_login/save.php";
     private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/uploadimg.php";
     ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
     SessionManager sessionManager;
@@ -116,7 +114,6 @@ public class Fragment_Sell_Items extends Fragment {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                saveItemDetail(v);
                 saveEdit(getId, getStringImage(bitmap));
             }
         });
@@ -152,8 +149,7 @@ public class Fragment_Sell_Items extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
     }
 
-    private void saveEdit(final String id, final String photo){
-//        final String userid = getId;
+    private void saveEdit(final String id, final String photo) {
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
@@ -169,7 +165,9 @@ public class Fragment_Sell_Items extends Fragment {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                                        new Fragment_View_Item_User()).commit();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -203,58 +201,6 @@ public class Fragment_Sell_Items extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-//    private void saveItemDetail(View view) {
-//        final String userid = getId;
-//        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-//        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-//        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-//        final String strPrice = this.enter_price.getText().toString().trim();
-//        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
-//        final String strPhoto_URL = "null";
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_USERID,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            if (success.equals("1")) {
-////                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("userid", userid);
-//                params.put("main_category", strMain_category);
-//                params.put("sub_category", strSub_category);
-//                params.put("ad_detail", strAd_Detail);
-//                params.put("price", strPrice);
-//                params.put("item_location", strItem_location);
-//                params.put("photo", strPhoto_URL);
-//                return params;
-//            }
-//        };
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-//        requestQueue.add(stringRequest);
-//    }
-
     private void getUserId(View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
@@ -265,23 +211,8 @@ public class Fragment_Sell_Items extends Fragment {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//                                    Toast.makeText(getContext(), "Information", Toast.LENGTH_SHORT).show();
-
-//                                    String strName = object.getString("name").trim();
-//                                    String strEmail = object.getString("email").trim();
-//                                    String strPhone_no = object.getString("phone_no").trim();
-//                                    String strAddress = object.getString("address").trim();
-//                                    String strBirthday = object.getString("birthday").trim();
-//                                    String strGender = object.getString("gender");
-//                                    String strPhoto = object.getString("photo");
-//
-//                                    gender.setVisibility(View.GONE);
-//                                    gender_img_spinner.setVisibility(View.GONE);
-//                                    Picasso.get().load(strPhoto).into(profile_image);
                                 }
                             } else {
                                 Toast.makeText(getContext(), "Incorrect Informations", Toast.LENGTH_SHORT).show();
@@ -388,51 +319,6 @@ public class Fragment_Sell_Items extends Fragment {
         }
     }
 
-//    private void UploadPicture(final String id, final String photo) {
-//
-//        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-//        progressDialog.setMessage("Uploading...");
-//        progressDialog.show();
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        progressDialog.dismiss();
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            if (success.equals("1")) {
-////                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            progressDialog.dismiss();
-//                            Toast.makeText(getContext(), "Failed!" + e.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("id", id);
-//                params.put("photo", photo);
-//                return params;
-//            }
-//        };
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//        requestQueue.add(stringRequest);
-//    }
-
     public String getStringImage(Bitmap bitmap) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -456,7 +342,6 @@ public class Fragment_Sell_Items extends Fragment {
                 e.printStackTrace();
             }
         }
-//        UploadPicture(getId, getStringImage(bitmap));
     }
 
     private void Declare(View v) {

@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class Fragment_Register extends Fragment{
@@ -57,8 +59,17 @@ public class Fragment_Register extends Fragment{
         button_goto_login_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Activity_Main.class);
-                getActivity().startActivity(intent);
+
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(getContext(), Activity_Main.class);
+                        getActivity().startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                    }
+                }, 100);
+
             }
         });
         return view;
@@ -152,8 +163,15 @@ public class Fragment_Register extends Fragment{
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
 
-                            Intent intent = new Intent(getContext(), Activity_Main.class);
-                            getActivity().startActivity(intent);
+                            Timer timer = new Timer();
+                            timer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(getContext(), Activity_Main.class);
+                                    getActivity().startActivity(intent);
+                                    getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                }
+                            }, 100);
                         } else {
                             Toast.makeText(getContext(), "Registration Failed! ", Toast.LENGTH_SHORT).show();
 
