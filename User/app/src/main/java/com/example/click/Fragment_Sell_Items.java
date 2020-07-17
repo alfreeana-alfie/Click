@@ -45,8 +45,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Sell_Items extends Fragment {
 
-    private static String URL_READ = "http://192.168.1.15/android_register_login/itemsave.php";
-    private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/uploadimg.php";
+    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/itemsave.php";
+    private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg.php";
     ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
     SessionManager sessionManager;
     String getId;

@@ -40,7 +40,7 @@ public class Activity_Home extends AppCompatActivity implements NavigationView.O
     List<Item> itemList;
     GridView gridView;
     Adapter_Item_Grid_Search adapter_item;
-    private String URL_VIEW = "http://192.168.1.15/android_register_login/readall.php";
+    private String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readall.php";
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View view;

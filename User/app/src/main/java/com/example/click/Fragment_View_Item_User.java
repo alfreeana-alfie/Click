@@ -40,7 +40,7 @@ public class Fragment_View_Item_User extends Fragment {
     GridView recyclerView;
     Adapter_Item_Grid adapter_item;
     List<Item> itemList;
-    private String URL_VIEW = "http://192.168.1.15/android_register_login/readuser.php";
+    private String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
 
     @Nullable
     @Override

@@ -50,9 +50,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Home extends Fragment {
 
-    private static String URL_READ = "http://192.168.1.15/android_register_login/read_detail.php";
-    private static String URL_EDIT = "http://192.168.1.15/android_register_login/edit_detail.php";
-    private static String URL_UPLOAD = "http://192.168.1.15/android_register_login/upload.php";
+    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
+    private static String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edit_detail.php";
+    private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/profile_image/upload.php";
     ArrayAdapter<CharSequence> adapter;
     DatePickerDialog datePickerDialog;
     SessionManager sessionManager;

@@ -40,7 +40,7 @@ public class Fragment_Register extends Fragment{
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
 
-    private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
+    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
 
     @Nullable
     @Override

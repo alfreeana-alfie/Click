@@ -47,8 +47,8 @@ import java.util.regex.Pattern;
 public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
-    private static String URL_LOGIN = "http://192.168.1.15/android_register_login/verify.php";
-    private static String URL_REGISTER = "http://192.168.1.15/android_register_login/register.php";
+    private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/verify.php";
+    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
     private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
     private EditText email, password;
     private ProgressBar loading;
