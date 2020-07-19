@@ -14,20 +14,22 @@
 
         <TextView
             android:id="@+id/welcome_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="250dp"
             android:fontFamily="@font/fugaz_one"
+            android:textAlignment="center"
             android:text="Welcome"
             android:textSize="52sp" />
 
         <TextView
             android:id="@+id/to_click_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/fugaz_one"
+            android:textAlignment="center"
             android:text="to CLICK"
             android:textSize="28sp" />
 

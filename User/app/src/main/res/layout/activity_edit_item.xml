@@ -9,7 +9,6 @@
     android:paddingEnd="10dp">
 
     <LinearLayout
-
         android:id="@+id/item_page_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,21 +79,53 @@
                 android:text="@string/category"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/enter_main_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:clickable="true"
-                android:focusable="true"
+                <TextView
+                    android:id="@+id/enter_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="textEnd"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
 
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:hint="Select Category"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:hint="Main"
+                    android:textSize="16sp" />
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/enter_main_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="textEnd"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:hint="Main"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/enter_sub_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:hint="Sub"
+                    android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -215,7 +246,7 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/accept_item"
+            android:id="@+id/button_edit_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -226,6 +257,20 @@
             android:background="@drawable/login_part_border_orange"
             android:fontFamily="@font/montserrat"
             android:text="@string/accept"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/back_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/back"
             android:textSize="18sp"/>
     </LinearLayout>
 
@@ -436,6 +481,8 @@
             android:id="@+id/accept_ad_detail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:fontFamily="@font/montserrat"
             android:textSize="14sp"
             android:background="@drawable/login_part_border_orange"
@@ -446,7 +493,9 @@
             android:id="@+id/back_ad_detail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
             android:fontFamily="@font/montserrat"
             android:textSize="14sp"
             android:background="@drawable/login_part_border_orange"

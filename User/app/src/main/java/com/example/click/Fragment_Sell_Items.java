@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,6 +51,7 @@ public class Fragment_Sell_Items extends Fragment {
     ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
     SessionManager sessionManager;
     String getId;
+    Uri filePath;
     private Bitmap bitmap;
     private TextView enter_category, enter_ad_detail;
     private EditText enter_price, edittext_ad_detail;
@@ -58,6 +60,7 @@ public class Fragment_Sell_Items extends Fragment {
     private RelativeLayout category_page_layout, ad_detail_page_layout;
     private LinearLayout item_page_layout;
     private ImageView upload_photo_img;
+    private ProgressBar loading;
 
     @Nullable
     @Override
@@ -114,7 +117,13 @@ public class Fragment_Sell_Items extends Fragment {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveEdit(getId, getStringImage(bitmap));
+
+                if(filePath == null){
+                    Toast.makeText(getContext(), "FAILED", Toast.LENGTH_SHORT).show();
+                } else {
+                    saveEdit(getId, getStringImage(bitmap));
+                }
+
             }
         });
 
@@ -150,55 +159,76 @@ public class Fragment_Sell_Items extends Fragment {
     }
 
     private void saveEdit(final String id, final String photo) {
-        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-        final String strPrice = this.enter_price.getText().toString().trim();
-        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+            final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
+            final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
+            final String strAd_Detail = this.edittext_ad_detail.getText().toString();
+            final String strPrice = this.enter_price.getText().toString().trim();
+            final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
-                            if (success.equals("1")) {
-                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-                                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                        new Fragment_View_Item_User()).commit();
+            if(strPrice.isEmpty() || strAd_Detail.isEmpty() || strItem_location.contains("Item Location")){
+                Toast.makeText(getContext(), "FAILED", Toast.LENGTH_SHORT).show();
+            }else {
+                loading.setVisibility(View.VISIBLE);
+                accept_item.setVisibility(View.GONE);
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+
+                                    if (success.equals("1")) {
+                                        loading.setVisibility(View.GONE);
+                                        accept_item.setVisibility(View.VISIBLE);
+                                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                                                new Fragment_View_Item_User()).commit();
+                                    } else {
+                                        Toast.makeText(getContext(), "Registration Failed! ", Toast.LENGTH_SHORT).show();
+
+                                        loading.setVisibility(View.GONE);
+                                        accept_item.setVisibility(View.VISIBLE);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    loading.setVisibility(View.GONE);
+                                    accept_item.setVisibility(View.VISIBLE);
+                                    Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+
+                                }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                loading.setVisibility(View.GONE);
+                                accept_item.setVisibility(View.VISIBLE);
+                                Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("userid", id);
+                        params.put("main_category", strMain_category);
+                        params.put("sub_category", strSub_category);
+                        params.put("ad_detail", strAd_Detail);
+                        params.put("price", strPrice);
+                        params.put("item_location", strItem_location);
+                        params.put("photo", photo);
+                        return params;
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("userid", id);
-                params.put("main_category", strMain_category);
-                params.put("sub_category", strSub_category);
-                params.put("ad_detail", strAd_Detail);
-                params.put("price", strPrice);
-                params.put("item_location", strItem_location);
-                params.put("photo", photo);
-                return params;
-            }
-        };
+                };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
+                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                requestQueue.add(stringRequest);
+            }
+
+
+
+
     }
 
     private void getUserId(View view) {
@@ -334,9 +364,10 @@ public class Fragment_Sell_Items extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
+            filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
                 upload_photo_img.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -358,6 +389,7 @@ public class Fragment_Sell_Items extends Fragment {
         accept_category = v.findViewById(R.id.accept_category);
         back_category = v.findViewById(R.id.back_category);
         upload_photo_img = v.findViewById(R.id.upload_photo);
+        loading = v.findViewById(R.id.loading);
 
         category_page_layout = v.findViewById(R.id.category_page_layout);
         ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);

@@ -6,18 +6,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -50,6 +53,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Home extends Fragment {
 
+    Animation fadein, fadeout;
+    LinearLayout layout_gender_display, layout_gender;
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
     private static String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edit_detail.php";
     private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/profile_image/upload.php";
@@ -70,7 +75,6 @@ public class Fragment_Home extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         Declare(view);
-
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
@@ -78,8 +82,6 @@ public class Fragment_Home extends Fragment {
         getId = user.get(sessionManager.ID);
 
         getUserDetail(view);
-
-
 
         button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +112,7 @@ public class Fragment_Home extends Fragment {
                 phone_no.setFocusableInTouchMode(true);
                 address.setFocusableInTouchMode(true);
                 birthday.setFocusableInTouchMode(true);
-                gender_display.setFocusableInTouchMode(true);
+                gender.setFocusableInTouchMode(true);
 
                 birthday.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -131,19 +133,22 @@ public class Fragment_Home extends Fragment {
                 });
 
                 button_accept.setVisibility(View.VISIBLE);
+                layout_gender.setVisibility(View.VISIBLE);
+                gender.setVisibility(View.VISIBLE);
                 gender_img_spinner.setVisibility(View.VISIBLE);
                 button_edit_photo.setVisibility(View.VISIBLE);
-                gender.setVisibility(View.VISIBLE);
+
                 button_edit.setVisibility(View.GONE);
-                gender_display.setVisibility(View.GONE);
-                gender_img.setVisibility(View.GONE);
+                layout_gender_display.setVisibility(View.GONE);
                 SaveEditDetail(v);
             }
         });
 
+        layout_gender.setVisibility(View.GONE);
         button_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 name.setFocusable(false);
                 email.setFocusable(false);
                 phone_no.setFocusable(false);
@@ -158,13 +163,12 @@ public class Fragment_Home extends Fragment {
                 birthday.setFocusableInTouchMode(false);
                 gender_display.setFocusableInTouchMode(false);
 
-                gender_display.setVisibility(View.VISIBLE);
-                gender_img.setVisibility(View.VISIBLE);
+                layout_gender_display.setVisibility(View.VISIBLE);
                 button_edit.setVisibility(View.VISIBLE);
                 button_accept.setVisibility(View.GONE);
-                gender_img_spinner.setVisibility(View.GONE);
-                gender.setVisibility(View.GONE);
+                layout_gender.setVisibility(View.GONE);
                 button_edit_photo.setVisibility(View.GONE);
+                gender_display.setText(gender.getSelectedItem().toString());
             }
         });
 
@@ -397,6 +401,8 @@ public class Fragment_Home extends Fragment {
         gender_display = v.findViewById(R.id.textview_gender_display);
         gender_img = v.findViewById(R.id.gender_display_img);
         gender_img_spinner = v.findViewById(R.id.gender_display_img_spinner);
+        layout_gender_display = v.findViewById(R.id.layout_gender_display);
+        layout_gender = v.findViewById(R.id.layout_gender);
 
         adapter = ArrayAdapter.createFromResource(getContext(), R.array.gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

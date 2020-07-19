@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <GridView
         android:id="@+id/gridView_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="0dp"
         android:numColumns="2"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
+        android:paddingBottom="10dp"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

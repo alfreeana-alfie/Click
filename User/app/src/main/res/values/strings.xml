@@ -47,7 +47,7 @@
     <string name="uploaded_photo">Uploaded Photo</string>
     <string name="good_tips">Good Tips</string>
     <string name="cover_photo">Cover Photo</string>
-    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="forgot_your_password">Forgot Password?</string>
     <string name="reset_here">Reset Here</string>
     <string name="reset_password">Reset Password</string>
     <string name="enter">Enter</string>
@@ -63,9 +63,11 @@
     <string name="please_enter_an_ad_detail">Please enter an ad detail...</string>
     <string name="item_image">Item Image</string>
     <string name="search">Search</string>
-    <string name="or">Or</string>
+    <string name="or">Quick Login with</string>
     <string name="login">Login</string>
     <string name="todo">TODO</string>
+    <string name="settings">Settings</string>
+
 
     <string-array name="gender">
         <item>Female</item>

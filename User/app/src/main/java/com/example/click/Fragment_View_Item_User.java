@@ -1,6 +1,9 @@
 package com.example.click;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -33,14 +37,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Fragment_View_Item_User extends Fragment {
+public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Grid.OnItemClickListener{
+    public static final String EXTRA_USERID= "userid";
+    public static final String EXTRA_ID= "id";
+    public static final String EXTRA_MAIN = "main_category";
+    public static final String EXTRA_SUB = "sub_category";
+    public static final String EXTRA_AD_DETAIL = "ad_detail";
+    public static final String EXTRA_PRICE = "price";
+    public static final String EXTRA_ITEM_LOCATION = "item_location";
+    public static final String EXTRA_IMG_ITEM = "photo";
+
 
     SessionManager sessionManager;
     String getId;
     GridView recyclerView;
     Adapter_Item_Grid adapter_item;
-    List<Item> itemList;
+    List<ItemFull> itemList;
+
     private String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
+    private String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edititem.php";
 
     @Nullable
     @Override
@@ -98,17 +113,36 @@ public class Fragment_View_Item_User extends Fragment {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item item = new Item(id, ad_detail, price, item_location, image_item);
+                                    ItemFull item = new ItemFull(id,main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Adapter_Item_Grid(getContext(), itemList);
                                 recyclerView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Adapter_Item_Grid.OnItemClickListener() {
+                                    @Override
+                                    public void onEditClick(int position) {
+                                        Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
+                                        ItemFull item = itemList.get(position);
 
+                                        detailIntent.putExtra(EXTRA_USERID, getId);
+                                        detailIntent.putExtra(EXTRA_ID, item.getId());
+                                        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
+                                        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
+                                        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
+                                        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
+
+                                        getActivity().startActivity(detailIntent);
+                                    }
+                                });
                             } else {
                                 Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
@@ -134,5 +168,21 @@ public class Fragment_View_Item_User extends Fragment {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onEditClick(int position) {
+        Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
+        ItemFull item = itemList.get(position);
+
+        detailIntent.putExtra(EXTRA_USERID, getId);
+        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
+        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
+        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
+        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
+        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
+        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
+
+        getActivity().startActivity(detailIntent);
     }
 }

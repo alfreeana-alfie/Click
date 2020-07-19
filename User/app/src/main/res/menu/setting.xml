@@ -12,13 +12,14 @@
     <group
         android:id="@+id/settings"
         android:checkableBehavior="none">
-        <item
-            android:id="@+id/logout"
-            android:title="@string/logout" />
 
         <item
             android:id="@+id/user_profile"
-            android:title="Edit Profile" />
+            android:title="@string/edit_profile" />
+
+        <item
+            android:id="@+id/setting"
+            android:title="@string/settings" />
 
     </group>
 </menu>

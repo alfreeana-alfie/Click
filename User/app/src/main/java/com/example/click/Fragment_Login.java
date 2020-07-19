@@ -3,6 +3,7 @@ package com.example.click;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -158,7 +160,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                             }
                                         }, 100);
 
-//                                        Toast.makeText(getContext(), "Success Login " + name + email, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Success! ", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
                                     }
@@ -296,7 +298,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         button_goto_register_page = v.findViewById(R.id.button_goto_register_page);
         button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
         signInButton = v.findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_ICON_ONLY);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
     }
 
 }

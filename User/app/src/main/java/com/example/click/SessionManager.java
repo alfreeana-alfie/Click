@@ -53,6 +53,14 @@ public class SessionManager {
         }
     }
 
+    public void checkLogin_Edit(){
+        if(!this.isLoggin()){
+            Intent intent = new Intent(context, Activity_Main.class);
+            context.startActivity(intent);
+            ((Activity_Edit_Item)context).finish();
+        }
+    }
+
     public HashMap<String, String> getUserDetail(){
         HashMap<String, String> user = new HashMap<>();
         user.put(NAME, sharedPreferences.getString(NAME, null));
@@ -70,6 +78,12 @@ public class SessionManager {
         editor.commit();
         Intent intent = new Intent(context, Activity_Main.class);
         context.startActivity(intent);
+        ((Activity_Home)context).finish();
+    }
+
+    public void logout_screen(){
+        editor.clear();
+        editor.commit();
         ((Activity_Home)context).finish();
     }
 
