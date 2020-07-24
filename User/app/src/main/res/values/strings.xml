@@ -12,7 +12,6 @@
     <string name="please_log_in_to_continue">Please Log In To Continue</string>
     <string name="Registration">Registration</string>
     <string name="create_an_account">Create an Account</string>
-    <string name="edit_profile">Edit Profile</string>
     <string name="don_t_have_an_account">Don\'t have An Account?</string>
     <string name="already_registered">Already Registered?</string>
     <string name="edit_photo">Edit Photo</string>
@@ -36,7 +35,7 @@
     <string name="my_favourite_ads">My Favourite Ads</string>
     <string name="my_chat_inbox">My Chat Inbox</string>
     <string name="my_ads">My Ads</string>
-    <string name="find_items">Find Items</string>
+    <string name="find_items">Find My Items</string>
     <string name="sell_my_item">Sell My Item</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
@@ -59,14 +58,35 @@
     <string name="gender">Gender</string>
     <string name="address">Address</string>
     <string name="accept">Accept</string>
-    <string name="back">Back</string>
-    <string name="please_enter_an_ad_detail">Please enter an ad detail...</string>
+    <string name="please_enter_an_ad_detail">Please enter an ad detail…</string>
     <string name="item_image">Item Image</string>
     <string name="search">Search</string>
     <string name="or">Quick Login with</string>
     <string name="login">Login</string>
     <string name="todo">TODO</string>
     <string name="settings">Settings</string>
+    <string name="main">Main</string>
+    <string name="sub">Sub</string>
+    <string name="main_category">Main Category</string>
+    <string name="sub_category">Sub Category</string>
+    <string name="what_are_you_selling">What are you selling?</string>
+    <string name="available">AVAILABLE</string>
+    <string name="write_your_review">Write Your Review</string>
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="back">Back</string>
+    <string name="select_category">Select Category</string>
+    <string name="enter_ad_details">Enter Ad Details</string>
+    <string name="add_product">Add Product</string>
+    <string name="select_a_category">Select a Category</string>
+    <string name="view">View</string>
+    <string name="to_click">to CLICK</string>
+    <string name="unit_price">Unit Price</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="rm">RM</string>
 
 
     <string-array name="gender">

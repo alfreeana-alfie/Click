@@ -35,12 +35,13 @@ public class Splashscreen extends AppCompatActivity {
             }
         }, 2500);
     }
-    private void Declare(){
+
+    private void Declare() {
         welcome_text = findViewById(R.id.welcome_text);
         to_click_text = findViewById(R.id.to_click_text);
     }
 
-    private void Animate(){
+    private void Animate() {
         topAnim = AnimationUtils.loadAnimation(this, R.anim.slide_down);
         topAnim_02 = AnimationUtils.loadAnimation(this, R.anim.fadein);
         topAnim_02.setStartOffset(1000);

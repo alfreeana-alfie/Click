@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
 
@@ -33,9 +33,9 @@
                     android:id="@+id/photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:fontFamily="@font/open_sans_bold"
                     android:text="@string/uploaded_photo"
                     android:textSize="14sp" />
 
@@ -53,6 +53,7 @@
                     android:layout_height="110dp"
                     android:layout_margin="10dp"
                     android:background="@color/colorPrimary"
+                    android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/ic_photo_black_foreground" />
 
             </LinearLayout>
@@ -62,88 +63,89 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_part_border"
             android:layout_margin="5dp"
+            android:background="@drawable/login_part_border"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textview_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/category"
                 android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/enter_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAlignment="textEnd"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:clickable="true"
-                    android:focusable="true"
+            <TextView
+                android:id="@+id/enter_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/main"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
 
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:hint="Main"
-                    android:textSize="16sp" />
-                <TextView
-                    android:visibility="invisible"
-                    android:id="@+id/enter_main_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAlignment="textEnd"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                tools:ignore="RtlCompat" />
 
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:hint="Main"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/enter_main_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/main"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                android:visibility="invisible"
+                tools:ignore="RtlCompat" />
 
-                <TextView
-                    android:visibility="invisible"
-                    android:id="@+id/enter_sub_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:clickable="true"
-                    android:focusable="true"
-
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:hint="Sub"
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/enter_sub_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/sub"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textSize="16sp"
+                android:visibility="invisible" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_part_border"
-            android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/login_part_border"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textview_ad_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
@@ -155,34 +157,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:hint="Enter Ad Details"
-                android:textAlignment="textEnd"
                 android:ellipsize="end"
+                android:hint="@string/enter_ad_details"
                 android:maxLines="1"
-                android:textSize="16sp" />
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                tools:ignore="RtlCompat" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_part_border"
             android:layout_margin="5dp"
+            android:background="@drawable/login_part_border"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textview_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/price_rm"
                 android:textSize="16sp" />
 
@@ -192,35 +195,36 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:background="@null"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
                 android:hint="@string/price_rm"
-                android:textCursorDrawable="@drawable/color_cursor"
+                android:importantForAutofill="no"
                 android:inputType="numberDecimal"
+                android:paddingLeft="15dp"
                 android:paddingTop="10dp"
+                android:paddingRight="15dp"
                 android:paddingBottom="10dp"
                 android:textAlignment="textEnd"
+                android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/login_part_border"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:background="@drawable/login_part_border"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/item_location_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/item_location"
                 android:textSize="16sp" />
 
@@ -231,7 +235,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                tools:ignore="RtlCompat" />
 
         </LinearLayout>
 
@@ -249,40 +254,40 @@
             android:id="@+id/button_edit_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/login_part_border_orange"
             android:fontFamily="@font/montserrat"
+            android:padding="10dp"
             android:text="@string/accept"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/back_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/login_part_border_orange"
             android:fontFamily="@font/montserrat"
+            android:padding="10dp"
             android:text="@string/back"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/category_page_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:padding="20dp"
-        android:elevation="5dp"
         android:background="@drawable/login_part_border"
+        android:elevation="5dp"
+        android:padding="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -300,7 +305,7 @@
 
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Add Product"
+                android:text="@string/add_product"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="25sp"
@@ -309,7 +314,6 @@
             <View
                 android:layout_width="100dp"
                 android:layout_height="5dp"
-                android:layout_below="@id/textView"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_part_border_orange" />
@@ -318,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Select a Category"
+                android:text="@string/select_a_category"
                 android:textAlignment="center"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
@@ -330,24 +334,24 @@
             android:id="@+id/main_cat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_below="@+id/category_text_layout"
             android:layout_marginLeft="5dp"
-            android:text="Main Category"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/main_category"
             android:textColor="@color/colorGrey"
             android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_below="@+id/category_text_layout" />
+            android:textStyle="bold|italic" />
 
         <Spinner
             android:id="@+id/spinner_main_category"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
             android:layout_below="@id/main_cat"
             android:background="@drawable/bg_spinner"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:spinnerMode="dropdown" />
 
 
@@ -355,24 +359,25 @@
             android:id="@+id/sub_cat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_below="@id/spinner_main_category"
             android:layout_marginLeft="5dp"
-            android:text="Sub Category"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/sub_category"
             android:textColor="@color/colorGrey"
             android:textSize="14sp"
-            android:textStyle="bold|italic"
-            android:layout_below="@id/spinner_main_category" />
+            android:textStyle="bold|italic" />
+
         <Spinner
             android:id="@+id/spinner_sub_category"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:layout_below="@id/sub_cat"
+            android:background="@drawable/bg_spinner"
+            android:paddingStart="10dp"
 
-            android:background="@drawable/bg_spinner" />
+            android:paddingEnd="10dp" />
 
         <Button
             android:id="@+id/accept_category"
@@ -400,15 +405,15 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
-        android:background="@drawable/login_part_border"
         android:id="@+id/ad_detail_page_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_margin="10dp"
-        android:padding="20dp"
+        android:background="@drawable/login_part_border"
         android:elevation="5dp"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -426,9 +431,9 @@
 
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-condensed"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="Add Product"
+                android:text="@string/add_product"
                 android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
@@ -437,14 +442,13 @@
                 android:layout_height="5dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:layout_below="@id/textView"
                 android:background="@drawable/login_part_border_orange" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="What are you selling?"
                 android:layout_marginTop="10dp"
+                android:text="@string/what_are_you_selling"
                 android:textAlignment="center"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
@@ -455,12 +459,12 @@
         <RelativeLayout
             android:id="@+id/ad_detail_relative_layout"
             android:layout_width="match_parent"
-            android:layout_below="@id/ad_text_layout"
             android:layout_height="300dp"
+            android:layout_below="@id/ad_text_layout"
             android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="0dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
             android:background="@drawable/border">
 
             <EditText
@@ -472,8 +476,8 @@
                 android:hint="@string/please_enter_an_ad_detail"
                 android:inputType="textMultiLine"
                 android:padding="15dp"
-                android:textCursorDrawable="@drawable/color_cursor"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textCursorDrawable="@drawable/color_cursor" />
 
         </RelativeLayout>
 
@@ -481,28 +485,27 @@
             android:id="@+id/accept_ad_detail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_below="@id/ad_detail_relative_layout"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="14sp"
             android:background="@drawable/login_part_border_orange"
-            android:layout_below="@id/ad_detail_relative_layout"
-            android:text="@string/accept" />
+            android:fontFamily="@font/montserrat"
+            android:text="@string/accept"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/back_ad_detail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
+            android:layout_below="@id/accept_ad_detail"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
-            android:fontFamily="@font/montserrat"
-            android:textSize="14sp"
             android:background="@drawable/login_part_border_orange"
-            android:layout_below="@id/accept_ad_detail"
-            android:text="@string/back" />
+            android:fontFamily="@font/montserrat"
+            android:text="@string/back"
+            android:textSize="14sp" />
     </RelativeLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

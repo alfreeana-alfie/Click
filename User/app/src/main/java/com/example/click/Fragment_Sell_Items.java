@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,7 +120,7 @@ public class Fragment_Sell_Items extends Fragment {
             public void onClick(View v) {
 
                 if(filePath == null){
-                    Toast.makeText(getContext(), "FAILED", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please enter image of product", Toast.LENGTH_LONG).show();
                 } else {
                     saveEdit(getId, getStringImage(bitmap));
                 }
@@ -149,230 +150,6 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
         return view;
-    }
-
-    private void chooseFile() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
-    }
-
-    private void saveEdit(final String id, final String photo) {
-
-            final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-            final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-            final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-            final String strPrice = this.enter_price.getText().toString().trim();
-            final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
-
-            if(strPrice.isEmpty() || strAd_Detail.isEmpty() || strItem_location.contains("Item Location")){
-                Toast.makeText(getContext(), "FAILED", Toast.LENGTH_SHORT).show();
-            }else {
-                loading.setVisibility(View.VISIBLE);
-                accept_item.setVisibility(View.GONE);
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("success");
-
-                                    if (success.equals("1")) {
-                                        loading.setVisibility(View.GONE);
-                                        accept_item.setVisibility(View.VISIBLE);
-                                        Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
-                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                                new Fragment_View_Item_User()).commit();
-                                    } else {
-                                        Toast.makeText(getContext(), "Registration Failed! ", Toast.LENGTH_SHORT).show();
-
-                                        loading.setVisibility(View.GONE);
-                                        accept_item.setVisibility(View.VISIBLE);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    loading.setVisibility(View.GONE);
-                                    accept_item.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getContext(), "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                loading.setVisibility(View.GONE);
-                                accept_item.setVisibility(View.VISIBLE);
-                                Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("userid", id);
-                        params.put("main_category", strMain_category);
-                        params.put("sub_category", strSub_category);
-                        params.put("ad_detail", strAd_Detail);
-                        params.put("price", strPrice);
-                        params.put("item_location", strItem_location);
-                        params.put("photo", photo);
-                        return params;
-                    }
-                };
-
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                requestQueue.add(stringRequest);
-            }
-
-
-
-
-    }
-
-    private void getUserId(View view) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                }
-                            } else {
-                                Toast.makeText(getContext(), "Incorrect Informations", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getContext(), "Error!!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Error!!", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-        requestQueue.add(stringRequest);
-    }
-
-    private void gotoAdDetail() {
-        ad_detail_page_layout.setVisibility(View.VISIBLE);
-        item_page_layout.setVisibility(View.GONE);
-    }
-
-    private void gotoCategory() {
-        category_page_layout.setVisibility(View.VISIBLE);
-        item_page_layout.setVisibility(View.GONE);
-    }
-
-    private void showResult(int position) {
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                adapter_car = ArrayAdapter.createFromResource(getContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item);
-                adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_car);
-                Toast.makeText(getContext(), "Car", Toast.LENGTH_SHORT).show();
-                break;
-            case 2:
-                adapter_properties = ArrayAdapter.createFromResource(getContext(), R.array.properties_category, android.R.layout.simple_spinner_item);
-                adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_properties);
-                Toast.makeText(getContext(), "Properties", Toast.LENGTH_SHORT).show();
-                break;
-            case 3:
-                adapter_elctronic = ArrayAdapter.createFromResource(getContext(), R.array.electronic_category, android.R.layout.simple_spinner_item);
-                adapter_elctronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_elctronic);
-
-                Toast.makeText(getContext(), "Electronics", Toast.LENGTH_SHORT).show();
-                break;
-            case 4:
-                adapter_home = ArrayAdapter.createFromResource(getContext(), R.array.home_category, android.R.layout.simple_spinner_item);
-                adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_home);
-
-                Toast.makeText(getContext(), "Home and Personal Items", Toast.LENGTH_SHORT).show();
-                break;
-            case 5:
-                adapter_leisure = ArrayAdapter.createFromResource(getContext(), R.array.leisure_category, android.R.layout.simple_spinner_item);
-                adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_leisure);
-
-                Toast.makeText(getContext(), "Leisure/Sport/Hobbies", Toast.LENGTH_SHORT).show();
-                break;
-            case 6:
-                adapter_business = ArrayAdapter.createFromResource(getContext(), R.array.business_category, android.R.layout.simple_spinner_item);
-                adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_business);
-
-                Toast.makeText(getContext(), "Business to Business", Toast.LENGTH_SHORT).show();
-                break;
-            case 7:
-                adapter_jobs = ArrayAdapter.createFromResource(getContext(), R.array.jobs_category, android.R.layout.simple_spinner_item);
-                adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_jobs);
-
-                Toast.makeText(getContext(), "Jobs and Services", Toast.LENGTH_SHORT).show();
-                break;
-            case 8:
-                adapter_travel = ArrayAdapter.createFromResource(getContext(), R.array.travel_category, android.R.layout.simple_spinner_item);
-                adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_travel);
-
-                Toast.makeText(getContext(), "Travel", Toast.LENGTH_SHORT).show();
-                break;
-            case 9:
-                adapter_other = ArrayAdapter.createFromResource(getContext(), R.array.other_category, android.R.layout.simple_spinner_item);
-                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_other);
-
-                Toast.makeText(getContext(), "Other", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
-    public String getStringImage(Bitmap bitmap) {
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-
-        byte[] imageByteArray = byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
-
-        return encodedImage;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
-                upload_photo_img.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void Declare(View v) {
@@ -415,4 +192,225 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
     }
+
+    private void gotoAdDetail() {
+        ad_detail_page_layout.setVisibility(View.VISIBLE);
+        item_page_layout.setVisibility(View.GONE);
+    }
+
+    private void gotoCategory() {
+        category_page_layout.setVisibility(View.VISIBLE);
+        item_page_layout.setVisibility(View.GONE);
+    }
+
+    private void showResult(int position) {
+        switch (position) {
+            case 0:
+                break;
+            case 1:
+                adapter_car = ArrayAdapter.createFromResource(getContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item);
+                adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_car);
+//                Toast.makeText(getContext(), "Car", Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                adapter_properties = ArrayAdapter.createFromResource(getContext(), R.array.properties_category, android.R.layout.simple_spinner_item);
+                adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_properties);
+//                Toast.makeText(getContext(), "Properties", Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                adapter_elctronic = ArrayAdapter.createFromResource(getContext(), R.array.electronic_category, android.R.layout.simple_spinner_item);
+                adapter_elctronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_elctronic);
+//                Toast.makeText(getContext(), "Electronics", Toast.LENGTH_SHORT).show();
+                break;
+            case 4:
+                adapter_home = ArrayAdapter.createFromResource(getContext(), R.array.home_category, android.R.layout.simple_spinner_item);
+                adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_home);
+//                Toast.makeText(getContext(), "Home and Personal Items", Toast.LENGTH_SHORT).show();
+                break;
+            case 5:
+                adapter_leisure = ArrayAdapter.createFromResource(getContext(), R.array.leisure_category, android.R.layout.simple_spinner_item);
+                adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_leisure);
+//                Toast.makeText(getContext(), "Leisure/Sport/Hobbies", Toast.LENGTH_SHORT).show();
+                break;
+            case 6:
+                adapter_business = ArrayAdapter.createFromResource(getContext(), R.array.business_category, android.R.layout.simple_spinner_item);
+                adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_business);
+//                Toast.makeText(getContext(), "Business to Business", Toast.LENGTH_SHORT).show();
+                break;
+            case 7:
+                adapter_jobs = ArrayAdapter.createFromResource(getContext(), R.array.jobs_category, android.R.layout.simple_spinner_item);
+                adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_jobs);
+//                Toast.makeText(getContext(), "Jobs and Services", Toast.LENGTH_SHORT).show();
+                break;
+            case 8:
+                adapter_travel = ArrayAdapter.createFromResource(getContext(), R.array.travel_category, android.R.layout.simple_spinner_item);
+                adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_travel);
+//                Toast.makeText(getContext(), "Travel", Toast.LENGTH_SHORT).show();
+                break;
+            case 9:
+                adapter_other = ArrayAdapter.createFromResource(getContext(), R.array.other_category, android.R.layout.simple_spinner_item);
+                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_other);
+//                Toast.makeText(getContext(), "Other", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    private void getUserId(View view) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void saveEdit(final String id, final String photo) {
+
+        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
+        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
+        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
+        final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
+        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
+
+        if(strAd_Detail.isEmpty() || strItem_location.contains("Item Location")){
+            Toast.makeText(getContext(), "Incomplete info", Toast.LENGTH_SHORT).show();
+        }else {
+            loading.setVisibility(View.VISIBLE);
+            accept_item.setVisibility(View.GONE);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+
+                                if (success.equals("1")) {
+                                    loading.setVisibility(View.GONE);
+                                    accept_item.setVisibility(View.VISIBLE);
+                                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                                            new Fragment_View_Item_User()).commit();
+                                } else {
+                                    Toast.makeText(getContext(), "Failed to Save Product", Toast.LENGTH_SHORT).show();
+
+                                    loading.setVisibility(View.GONE);
+                                    accept_item.setVisibility(View.VISIBLE);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                loading.setVisibility(View.GONE);
+                                accept_item.setVisibility(View.VISIBLE);
+//                                    Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if(error.getMessage() == null){
+//                                    Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                                loading.setVisibility(View.GONE);
+                                accept_item.setVisibility(View.VISIBLE);
+                            }else
+                            {
+                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                loading.setVisibility(View.GONE);
+                                accept_item.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("userid", id);
+                    params.put("main_category", strMain_category);
+                    params.put("sub_category", strSub_category);
+                    params.put("ad_detail", strAd_Detail);
+                    params.put("price", String.format("%.2f", strPrice));
+                    params.put("item_location", strItem_location);
+                    params.put("photo", photo);
+                    return params;
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            requestQueue.add(stringRequest);
+        }
+    }
+
+    private void chooseFile() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+    }
+
+    public String getStringImage(Bitmap bitmap) {
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+
+        byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
+
+        return encodedImage;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
+                upload_photo_img.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

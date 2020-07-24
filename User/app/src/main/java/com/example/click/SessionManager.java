@@ -8,11 +8,7 @@ import java.util.HashMap;
 
 public class SessionManager {
 
-    SharedPreferences sharedPreferences;
-    public SharedPreferences.Editor editor;
-    public Context context;
-    int PRIVATE_MODE = 0;
-
+    public static final String ID = "ID";
     private static final String PREF_NAME = "LOGIN";
     private static final String LOGIN = "IS_LOGIN";
     private static final String NAME = "NAME";
@@ -21,15 +17,18 @@ public class SessionManager {
     private static final String ADDRESS = "ADDRESS";
     private static final String BIRTHDAY = "BIRTHDAY";
     private static final String GENDER = "GENDER";
-    public static final String ID = "ID";
+    public SharedPreferences.Editor editor;
+    public Context context;
+    SharedPreferences sharedPreferences;
+    int PRIVATE_MODE = 0;
 
-    public SessionManager(Context context){
+    public SessionManager(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences("LOGIN", PRIVATE_MODE);
         editor = sharedPreferences.edit();
     }
 
-    public void createSession(String name, String email,String phone_no, String address, String birthday, String gender, String id){
+    public void createSession(String name, String email, String phone_no, String address, String birthday, String gender, String id) {
         editor.putBoolean(LOGIN, true);
         editor.putString(NAME, name);
         editor.putString(EMAIL, email);
@@ -41,27 +40,19 @@ public class SessionManager {
         editor.apply();
     }
 
-    public boolean isLoggin(){
+    public boolean isLoggin() {
         return sharedPreferences.getBoolean(LOGIN, false);
     }
 
-    public void checkLogin(){
-        if(!this.isLoggin()){
+    public void checkLogin() {
+        if (!this.isLoggin()) {
             Intent intent = new Intent(context, Activity_Main.class);
             context.startActivity(intent);
-            ((Activity_Home)context).finish();
+            ((Activity_All_View) context).finish();
         }
     }
 
-    public void checkLogin_Edit(){
-        if(!this.isLoggin()){
-            Intent intent = new Intent(context, Activity_Main.class);
-            context.startActivity(intent);
-            ((Activity_Edit_Item)context).finish();
-        }
-    }
-
-    public HashMap<String, String> getUserDetail(){
+    public HashMap<String, String> getUserDetail() {
         HashMap<String, String> user = new HashMap<>();
         user.put(NAME, sharedPreferences.getString(NAME, null));
         user.put(EMAIL, sharedPreferences.getString(EMAIL, null));
@@ -73,18 +64,12 @@ public class SessionManager {
         return user;
     }
 
-    public void logout(){
+    public void logout() {
         editor.clear();
         editor.commit();
         Intent intent = new Intent(context, Activity_Main.class);
         context.startActivity(intent);
-        ((Activity_Home)context).finish();
-    }
-
-    public void logout_screen(){
-        editor.clear();
-        editor.commit();
-        ((Activity_Home)context).finish();
+        ((Activity_All_View) context).finish();
     }
 
 }

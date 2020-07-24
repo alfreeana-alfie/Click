@@ -1,9 +1,9 @@
 package com.example.click;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -37,9 +36,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Grid.OnItemClickListener{
-    public static final String EXTRA_USERID= "userid";
-    public static final String EXTRA_ID= "id";
+public class Fragment_View_Item_User extends Fragment implements Item_Adapter.OnItemClickListener {
+
+    public static final String EXTRA_USERID = "userid";
+    public static final String EXTRA_ID = "id";
     public static final String EXTRA_MAIN = "main_category";
     public static final String EXTRA_SUB = "sub_category";
     public static final String EXTRA_AD_DETAIL = "ad_detail";
@@ -47,15 +47,15 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
     public static final String EXTRA_ITEM_LOCATION = "item_location";
     public static final String EXTRA_IMG_ITEM = "photo";
 
+    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
+    private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
 
     SessionManager sessionManager;
     String getId;
     GridView recyclerView;
-    Adapter_Item_Grid adapter_item;
-    List<ItemFull> itemList;
+    Item_Adapter adapter_item;
+    List<Item_All_Details> itemList;
 
-    private String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
-    private String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edititem.php";
 
     @Nullable
     @Override
@@ -67,7 +67,7 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(sessionManager.ID);
+        getId = user.get(SessionManager.ID);
 
         return view;
     }
@@ -108,11 +108,12 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
+                                    String seller_id = object.getString("userid").trim();
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
@@ -120,16 +121,17 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    ItemFull item = new ItemFull(id,main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Adapter_Item_Grid(getContext(), itemList);
+                                adapter_item = new Item_Adapter(getContext(), itemList);
+                                adapter_item.notifyDataSetChanged();
                                 recyclerView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Adapter_Item_Grid.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onEditClick(int position) {
                                         Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
-                                        ItemFull item = itemList.get(position);
+                                        Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(EXTRA_USERID, getId);
                                         detailIntent.putExtra(EXTRA_ID, item.getId());
@@ -142,21 +144,88 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
 
                                         getActivity().startActivity(detailIntent);
                                     }
+
+                                    @Override
+                                    public void onDeleteClick(final int position) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
+                                        builder.setTitle("Are you sure?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
+                                                final Item_All_Details item = itemList.get(position);
+
+                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+                                                        new Response.Listener<String>() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                try {
+                                                                    JSONObject jsonObject = new JSONObject(response);
+                                                                    String success = jsonObject.getString("success");
+
+                                                                    if (success.equals("1")) {
+                                                                        itemList.remove(position);
+                                                                        adapter_item.notifyDataSetChanged();
+                                                                        recyclerView.setAdapter(adapter_item);
+//                                                                        Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
+//                                                                final String id = jsonObject.getString("id").trim();
+
+                                                                    } else {
+                                                                        Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                    Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        },
+                                                        new Response.ErrorListener() {
+                                                            @Override
+                                                            public void onErrorResponse(VolleyError error) {
+
+                                                            }
+                                                        }) {
+                                                    @Override
+                                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                                        Map<String, String> params = new HashMap<>();
+                                                        params.put("id", item.getId());
+                                                        return params;
+                                                    }
+                                                };
+                                                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                                                requestQueue.add(stringRequest);
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    }
                                 });
+                                adapter_item.notifyDataSetChanged();
                             } else {
-                                Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(), "Connection Error" + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Connection Error" + error.toString(), Toast.LENGTH_SHORT).show();
-
+                        if (error.getMessage() == null) {
+//                            Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }) {
             @Override
@@ -172,17 +241,24 @@ public class Fragment_View_Item_User extends Fragment implements Adapter_Item_Gr
 
     @Override
     public void onEditClick(int position) {
-        Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
-        ItemFull item = itemList.get(position);
-
-        detailIntent.putExtra(EXTRA_USERID, getId);
-        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
-        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
-        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
-        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
-        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
-
-        getActivity().startActivity(detailIntent);
+//        Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
+//        Item_All_Details item = itemList.get(position);
+//
+//        detailIntent.putExtra(EXTRA_USERID, getId);
+//        detailIntent.putExtra(EXTRA_ID, item.getId());
+//        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
+//        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
+//        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
+//        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
+//        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
+//        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
+//
+//        getActivity().startActivity(detailIntent);
     }
+
+    @Override
+    public void onDeleteClick(int position) {
+
+    }
+
 }

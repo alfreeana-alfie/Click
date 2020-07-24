@@ -58,16 +58,7 @@ public class Fragment_Forgot_Password extends Fragment {
         button_back_pressed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getContext(), Activity_Main.class);
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
-                    }
-                }, 100);
+                Goto_Activity_Main();
             }
         });
 
@@ -81,27 +72,44 @@ public class Fragment_Forgot_Password extends Fragment {
         button_back_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getContext(), Activity_Main.class);
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
-                    }
-                }, 100);
+                Goto_Activity_Main();
             }
         });
         return view;
+    }
+
+    private void Declare(View v) {
+        email = v.findViewById(R.id.email_verify);
+        button_enter_email = v.findViewById(R.id.button_enter_email);
+        loading = v.findViewById(R.id.loading);
+        loading_password = v.findViewById(R.id.loading_new_password);
+        password_linear_layout = v.findViewById(R.id.password_linear_layout);
+        email_linear_layout = v.findViewById(R.id.email_linear_layout);
+        new_password = v.findViewById(R.id.edittext_new_password);
+        confirm_new_password = v.findViewById(R.id.edittext_confirm_new_password);
+        button_enter_new_password = v.findViewById(R.id.button_enter_new_password);
+        button_back_pressed = v.findViewById(R.id.button_back);
+        button_back_password = v.findViewById(R.id.button_back_password);
+    }
+
+    private void Goto_Activity_Main(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getContext(), Activity_Main.class);
+                getActivity().startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+            }
+        }, 100);
     }
 
     private void Verify_Email(View view) {
         final String mEmail = this.email.getText().toString().trim();
 
         if (!mEmail.isEmpty()) {
-            loading.setVisibility(view.VISIBLE);
-            button_enter_email.setVisibility(view.GONE);
+            loading.setVisibility(View.VISIBLE);
+            button_enter_email.setVisibility(View.GONE);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
                     new Response.Listener<String>() {
@@ -237,19 +245,5 @@ public class Fragment_Forgot_Password extends Fragment {
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
             requestQueue.add(stringRequest);
         }
-    }
-
-    private void Declare(View v) {
-        email = v.findViewById(R.id.email_verify);
-        button_enter_email = v.findViewById(R.id.button_enter_email);
-        loading = v.findViewById(R.id.loading);
-        loading_password = v.findViewById(R.id.loading_new_password);
-        password_linear_layout = v.findViewById(R.id.password_linear_layout);
-        email_linear_layout = v.findViewById(R.id.email_linear_layout);
-        new_password = v.findViewById(R.id.edittext_new_password);
-        confirm_new_password = v.findViewById(R.id.edittext_confirm_new_password);
-        button_enter_new_password = v.findViewById(R.id.button_enter_new_password);
-        button_back_pressed = v.findViewById(R.id.button_back);
-        button_back_password = v.findViewById(R.id.button_back_password);
     }
 }

@@ -14,8 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,13 +32,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
-public class Fragment_Register extends Fragment{
+public class Fragment_Register extends Fragment {
+
+    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
 
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
-
-    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
 
     @Nullable
     @Override
@@ -59,7 +57,6 @@ public class Fragment_Register extends Fragment{
         button_goto_login_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
                     @Override
@@ -75,6 +72,17 @@ public class Fragment_Register extends Fragment{
         return view;
     }
 
+    private void Declare(View v) {
+        name = v.findViewById(R.id.name_register);
+        email = v.findViewById(R.id.email_register);
+        phone_no = v.findViewById(R.id.phone_no_register);
+        password = v.findViewById(R.id.password_register);
+        confirm_password = v.findViewById(R.id.confirm_password_register);
+        loading = v.findViewById(R.id.loading);
+        button_register = v.findViewById(R.id.button_register);
+        button_goto_login_page = v.findViewById(R.id.button_goto_login_page);
+    }
+
     private void Register(View view) {
         final String strName = this.name.getText().toString().trim();
         final String strEmail = this.email.getText().toString().trim();
@@ -83,8 +91,8 @@ public class Fragment_Register extends Fragment{
         final String strConfirm_Password = this.confirm_password.getText().toString().trim();
         final String strAddress = "";
         final String strBirthday = "";
-        final String strGender = "";
-        final String strPhoto_URL = "null";
+        final String strGender = "Female";
+        final String strPhoto_URL = "https://annkalina53.000webhostapp.com/android_register_login/profile_image/main_photo.png";
 
         final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 
@@ -147,8 +155,8 @@ public class Fragment_Register extends Fragment{
                 && PASSWORD_PATTERN.matcher(strPassword).matches()
                 && strConfirm_Password.equals(strPassword)) {
 
-            loading.setVisibility(view.VISIBLE);
-            button_register.setVisibility(view.GONE);
+            loading.setVisibility(View.VISIBLE);
+            button_register.setVisibility(View.GONE);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                 @Override
@@ -158,7 +166,7 @@ public class Fragment_Register extends Fragment{
                         String success = jsonObject.getString("success");
 
                         if (success.equals("1")) {
-                            Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
 
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
@@ -173,7 +181,7 @@ public class Fragment_Register extends Fragment{
                                 }
                             }, 100);
                         } else {
-                            Toast.makeText(getContext(), "Registration Failed! ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
 
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
@@ -191,11 +199,17 @@ public class Fragment_Register extends Fragment{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    if (error.getMessage() == null) {
+//                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.GONE);
+                        button_register.setVisibility(View.VISIBLE);
+                    } else {
+//                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.GONE);
+                        button_register.setVisibility(View.VISIBLE);
+                    }
                     error.printStackTrace();
-                    Toast.makeText(getContext(), "Connection Error" + error.toString(), Toast.LENGTH_SHORT).show();
 
-                    loading.setVisibility(View.GONE);
-                    button_register.setVisibility(View.VISIBLE);
                 }
             }) {
                 @Override
@@ -216,17 +230,6 @@ public class Fragment_Register extends Fragment{
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
             requestQueue.add(stringRequest);
         }
-    }
-
-    private void Declare(View v) {
-        name = v.findViewById(R.id.name_register);
-        email = v.findViewById(R.id.email_register);
-        phone_no = v.findViewById(R.id.phone_no_register);
-        password = v.findViewById(R.id.password_register);
-        confirm_password = v.findViewById(R.id.confirm_password_register);
-        loading = v.findViewById(R.id.loading);
-        button_register = v.findViewById(R.id.button_register);
-        button_goto_login_page = v.findViewById(R.id.button_goto_login_page);
     }
 
 }

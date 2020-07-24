@@ -3,16 +3,12 @@ package com.example.click;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -111,6 +107,17 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         return view;
     }
 
+    private void Declare(View v) {
+        email = v.findViewById(R.id.email_edit);
+        password = v.findViewById(R.id.password_login);
+        loading = v.findViewById(R.id.loading);
+        button_login = v.findViewById(R.id.button_login);
+        button_goto_register_page = v.findViewById(R.id.button_goto_register_page);
+        button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
+        signInButton = v.findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_WIDE);
+    }
+
     private void Login(View view) {
         final String mEmail = this.email.getText().toString().trim();
         final String mPassword = this.password.getText().toString().trim();
@@ -118,8 +125,8 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         if (!PASSWORD_PATTERN.matcher(mPassword).matches()) {
             password.setError("Incorrect Password");
         } else if (!mEmail.isEmpty() || !mPassword.isEmpty()) {
-            loading.setVisibility(view.VISIBLE);
-            button_login.setVisibility(view.GONE);
+            loading.setVisibility(View.VISIBLE);
+            button_login.setVisibility(View.GONE);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN,
                     new Response.Listener<String>() {
@@ -148,7 +155,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                         timer.schedule(new TimerTask() {
                                             @Override
                                             public void run() {
-                                                Intent intent = new Intent(getContext(), Activity_Home.class);
+                                                Intent intent = new Intent(getContext(), Activity_All_View.class);
                                                 intent.putExtra("name", name);
                                                 intent.putExtra("email", email);
                                                 intent.putExtra("phone_no", phone_no);
@@ -159,13 +166,12 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                 getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                             }
                                         }, 100);
-
-                                        Toast.makeText(getContext(), "Success! ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
                                     }
                                 } else {
-                                    Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     button_login.setVisibility(View.VISIBLE);
@@ -181,10 +187,15 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                    loading.setVisibility(View.GONE);
-                    button_login.setVisibility(View.VISIBLE);
-
+                    if (error.getMessage() == null) {
+//                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.GONE);
+                        button_login.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        loading.setVisibility(View.GONE);
+                        button_login.setVisibility(View.VISIBLE);
+                    }
                 }
             }) {
                 @Override
@@ -200,34 +211,6 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         } else {
             email.setError("Fields cannot be empty!");
             password.setError("Fields cannot be empty!");
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        }
-    }
-
-    private void handleSignInResult(GoogleSignInResult result) {
-        int second = 1;
-
-        if (result.isSuccess()) {
-            Google_SignIn(result);
-            GoogleSignInAccount account = result.getSignInAccount();
-            email.setText(account.getEmail());
-            password.setText(account.getFamilyName() + account.getGivenName());
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    button_login.performClick();
-                }
-            }, second * 100);
-        } else {
-            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -252,7 +235,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Intent intent = new Intent(getContext(), Activity_Home.class);
+                                Intent intent = new Intent(getContext(), Activity_All_View.class);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
@@ -264,7 +247,11 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                        if (error.getMessage() == null) {
+                            Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }) {
             @Override
@@ -285,20 +272,37 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         requestQueue.add(stringRequest);
     }
 
+    private void handleSignInResult(GoogleSignInResult result) {
+        int second = 1;
+
+        if (result.isSuccess()) {
+            Google_SignIn(result);
+            GoogleSignInAccount account = result.getSignInAccount();
+            email.setText(account.getEmail());
+            password.setText(account.getFamilyName() + account.getGivenName());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    button_login.performClick();
+                }
+            }, second * 100);
+        } else {
+            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
-    private void Declare(View v) {
-        email = v.findViewById(R.id.email_edit);
-        password = v.findViewById(R.id.password_login);
-        loading = v.findViewById(R.id.loading);
-        button_login = v.findViewById(R.id.button_login);
-        button_goto_register_page = v.findViewById(R.id.button_goto_register_page);
-        button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
-        signInButton = v.findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_WIDE);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
     }
 
 }
