@@ -196,6 +196,7 @@
 <!--                    tools:ignore="SmallSp" />-->
 
                 <Button
+                    android:id="@+id/button_pets"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -209,6 +210,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_men"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -222,6 +224,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_mom"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -235,6 +238,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_women"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -248,6 +252,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_home"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -261,6 +266,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_services"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -274,6 +280,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_travel"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -287,6 +294,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_elect"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -300,6 +308,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_rent"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -313,6 +322,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_furniture"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -326,6 +336,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_sports"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -339,6 +350,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_motors"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -352,6 +364,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_car_parts"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -365,6 +378,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_camera"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -378,6 +392,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_computer"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -391,6 +406,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_business"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -404,6 +420,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_handcraft"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"
@@ -417,6 +434,7 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_see"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="5dp"

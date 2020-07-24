@@ -111,8 +111,25 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        button_business = findViewById(R.id.button_business);
+        button_camera = findViewById(R.id.button_camera);
+        button_car_parts = findViewById(R.id.button_car_parts);
         button_cars = findViewById(R.id.button_cars);
+        button_computer = findViewById(R.id.button_computer);
+        button_electronics = findViewById(R.id.button_elect);
+        button_furniture = findViewById(R.id.button_furniture);
+        button_handcraft = findViewById(R.id.button_handcraft);
+        button_home = findViewById(R.id.button_home);
+        button_men = findViewById(R.id.button_men);
+        button_mom = findViewById(R.id.button_mom);
+        button_motorcycle = findViewById(R.id.button_motors);
+        button_pets = findViewById(R.id.button_pets);
+        button_rent = findViewById(R.id.button_rent);
         button_sales = findViewById(R.id.button_sales);
+        button_services = findViewById(R.id.button_services);
+        button_sport = findViewById(R.id.button_sports);
+        button_travel = findViewById(R.id.button_travel);
+        button_women = findViewById(R.id.button_women);
     }
 
     private void View_Item() {
