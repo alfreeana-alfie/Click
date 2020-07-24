@@ -158,20 +158,20 @@ public class Activity_Home extends AppCompatActivity implements NavigationView.O
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.setting, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return true;
-            }
-        });
+//        MenuItem menuItem = menu.findItem(R.id.menu_search);
+//        SearchView searchView = (SearchView) menuItem.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                adapter_item.getFilter().filter(newText);
+//                return true;
+//            }
+//        });
         return true;
     }
 

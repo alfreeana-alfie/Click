@@ -60,10 +60,10 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     String getId;
     SessionManager sessionManager;
 
-    private Button button_cars, button_sales;
+    private Button button_cars, button_sales, button_camera, button_car_parts, button_business, button_computer, button_electronics, button_furniture, button_handcraft, button_home, button_men, button_mom, button_motorcycle, button_pets, button_rent, button_services,button_sport, button_travel, button_women;
     private TwoWayGridView gridView;
     private CircleImageView profile_display;
-    private TextView name_display, email_display;
+    private TextView name_display, email_display, Count_Item;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View view;
@@ -83,14 +83,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
         getUserDetail();
 
-        button_cars.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Cars()).commit();
-            }
-        });
+        Category_Func();
 
         View_Item();
     }
@@ -305,6 +298,179 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         requestQueue.add(stringRequest);
     }
 
+    private void Category_Func(){
+        button_business.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Business()).addToBackStack(null).commit();
+            }
+        });
+
+        button_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Camera()).addToBackStack(null).commit();
+            }
+        });
+
+        button_car_parts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Car_Accessories()).addToBackStack(null).commit();
+            }
+        });
+
+        button_cars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Cars()).addToBackStack(null).commit();
+            }
+        });
+
+        button_computer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Computer()).addToBackStack(null).commit();
+            }
+        });
+
+        button_electronics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Electronics()).addToBackStack(null).commit();
+            }
+        });
+
+        button_furniture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Furniture()).addToBackStack(null).commit();
+            }
+        });
+
+        button_handcraft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Handcraft()).addToBackStack(null).commit();
+            }
+        });
+
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Home()).addToBackStack(null).commit();
+            }
+        });
+
+        button_men.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Men()).addToBackStack(null).commit();
+            }
+        });
+
+        button_mom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Mom()).addToBackStack(null).commit();
+            }
+        });
+
+        button_motorcycle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Motorcycles()).addToBackStack(null).commit();
+            }
+        });
+
+        button_pets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Pets()).addToBackStack(null).commit();
+            }
+        });
+
+        button_rent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Rent()).addToBackStack(null).commit();
+            }
+        });
+
+        button_sales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Sales()).addToBackStack(null).commit();
+            }
+        });
+
+        button_services.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Services()).addToBackStack(null).commit();
+            }
+        });
+
+        button_sport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Sports()).addToBackStack(null).commit();
+            }
+        });
+
+        button_travel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Travel()).addToBackStack(null).commit();
+            }
+        });
+
+        button_women.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Women()).addToBackStack(null).commit();
+            }
+        });
+    }
+
     private void getUserDetail() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
@@ -372,13 +538,13 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             case R.id.nav_sell:
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Sell_Items()).commit();
+                        new Fragment_Sell_Items()).addToBackStack(null).commit();
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_View_Item_User()).commit();
+                        new Fragment_View_Item_User()).addToBackStack(null).commit();
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -393,7 +559,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             case R.id.nav_favourite_ads:
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Saved_Searches()).commit();
+                        new Fragment_Saved_Searches()).addToBackStack(null).commit();
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -429,11 +595,13 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             public boolean onQueryTextChange(String newText) {
                 view.setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Empty()).commit();
+                        new Fragment_Empty()).addToBackStack(null).commit();
                 adapter_item.getFilter().filter(newText);
                 return true;
             }
         });
+
+
         return true;
     }
 
@@ -443,13 +611,13 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             case R.id.user_profile:
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Edit_Profile()).commit();
+                        new Fragment_Edit_Profile()).addToBackStack(null).commit();
                 break;
             case R.id.setting:
                 Toast.makeText(this, "Settings is Clicked!", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.add_to_cart:
+            case R.id.menu_cart:
                 Intent intent = new Intent(Activity_All_View.this, Activity_Add_to_Cart.class);
                 startActivity(intent);
                 break;
@@ -464,22 +632,28 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builder.setTitle("Do you want to exit the app?");
-        builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sessionManager.logout();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+            builder.setTitle("Do you want to exit the app?");
+            builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    sessionManager.logout();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        } else {
+            getSupportFragmentManager().popBackStack();
+            view.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override

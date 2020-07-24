@@ -7,7 +7,14 @@
         android:title="@string/search"
         android:icon="@drawable/ic_search_foreground"
         app:showAsAction="ifRoom|collapseActionView"
+        android:visible="false"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
+        android:id="@+id/menu_cart"
+        android:title="@string/add_to_cart"
+        android:icon="@drawable/ic_cart_foreground"
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <group
         android:id="@+id/settings"

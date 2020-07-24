@@ -87,6 +87,35 @@
     <string name="unit_price">Unit Price</string>
     <string name="subtotal">Subtotal</string>
     <string name="rm">RM</string>
+    <string name="cars">Cars</string>
+    <string name="properties_for_sale">Properties for Sale</string>
+    <string name="jobs">Jobs</string>
+    <string name="pets">Pets</string>
+    <string name="men_collection">Men Collection</string>
+    <string name="mom_and_kids">Mom and Kids</string>
+    <string name="women_collection">Women Collection</string>
+    <string name="home_appliances">Home Appliances</string>
+    <string name="services">Services</string>
+    <string name="travel_and_holiday">Travel and Holiday</string>
+    <string name="electronics">Electronics</string>
+    <string name="properties_for_rent">Properties for Rent</string>
+    <string name="furniture">Furniture</string>
+    <string name="sport_and_hobbies">Sport and Hobbies</string>
+    <string name="motorcycles">Motorcycles</string>
+    <string name="car_accessories_and_parts">Car Accessories and Parts</string>
+    <string name="camera_and_photography">Camera and Photography</string>
+    <string name="computer_and_accessories">Computer and Accessories</string>
+    <string name="business_for_sale">Business for Sale</string>
+    <string name="handcraft">Handcraft</string>
+    <string name="see_all">See All</string>
+    <string name="good_morning">Good Morning!</string>
+    <string name="buy_sell_find_almost_everything">Buy. Sell. Find. Almost Everything!</string>
+    <string name="items_available_now"> items Available now</string>
+    <string name="items">Items</string>
+    <string name="sell">Sell</string>
+    <string name="find">Find</string>
+    <string name="snap_it_post_it_make_rm">Snap it. Post it. Make RM</string>
+    <string name="chat_check_cod">Chat. Check. COD</string>
 
 
     <string-array name="gender">
@@ -148,7 +177,6 @@
     </string-array>
 
     <string-array name="jobs_category">
-        <item>Jobs</item>
         <item>Services</item>
     </string-array>
 

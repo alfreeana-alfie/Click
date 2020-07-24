@@ -5,7 +5,9 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorLightGrey">#e5e8e8</color>
     <color name="colorGrey">#999999</color>
+    <color name="colorDarkGrey">#707b7c</color>
     <color name="colorPasswordGrey">#b2babb</color>
     <color name="colorLightGrey02">#D8DDDD</color>
     <color name="colorGreen">#27AE60 </color>
+    <color name="colorBlue">#3498db</color>
 </resources>

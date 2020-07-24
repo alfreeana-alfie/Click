@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mhmtk.twowaygrid.TwoWayGridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +53,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
 
     SessionManager sessionManager;
     String getId;
-    GridView recyclerView;
+    TwoWayGridView recyclerView;
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
@@ -75,22 +76,22 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.setting, menu);
-        MenuItem search = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) search.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setQueryHint("Search");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return false;
-            }
-        });
+//        MenuItem search = menu.findItem(R.id.menu_search);
+//        SearchView searchView = (SearchView) search.getActionView();
+//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//        searchView.setQueryHint("Search");
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                adapter_item.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
