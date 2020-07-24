@@ -109,27 +109,37 @@
 
     <string-array name="vehicle_category">
         <item>Car</item>
-        <item>Motorcycle</item>
+        <item>Motorcycles</item>
+        <item>Car Accessories and Parts</item>
     </string-array>
 
     <string-array name="properties_category">
         <item>Properties for Sale</item>
+        <item>Properties for Rent</item>
+        <item>Properties for Auction</item>
         <item>New Properties</item>
     </string-array>
 
     <string-array name="electronic_category">
         <item>Mobile Phones and Gadgets</item>
         <item>Accessories for Phones and Gadgets</item>
+        <item>Camera and Photography</item>
+        <item>Computer and Accessories</item>
     </string-array>
 
     <string-array name="home_category">
         <item>Women Collection</item>
         <item>Men Collection</item>
+        <item>Home Appliances and Kitchen</item>
+        <item>Mom and Kids</item>
+        <item>Furniture and Decoration</item>
     </string-array>
 
     <string-array name="leisure_category">
         <item>Music Instruments</item>
         <item>Pets</item>
+        <item>Sports and Outdoor</item>
+        <item>Hobby and Collectibles</item>
     </string-array>
 
     <string-array name="business_category">
@@ -139,12 +149,12 @@
 
     <string-array name="jobs_category">
         <item>Jobs</item>
-        <item>Service</item>
+        <item>Services</item>
     </string-array>
 
     <string-array name="travel_category">
-        <item>Jobs</item>
-        <item>Service</item>
+        <item>Tours and Holidays</item>
+        <item>Accommodation and Homestays</item>
     </string-array>
 
     <string-array name="other_category">
@@ -155,8 +165,54 @@
 
     <string-array name="location">
         <item>Item Location</item>
-        <item>Sibu</item>
-        <item>Kuching</item>
+        <item>Asajaya</item>
+        <item>Balingian</item>
+        <item>Baram</item>
+        <item>Bau</item>
+        <item>Bekenu</item>
+        <item>Belaga</item>
+        <item>Belawai</item>
+        <item>Betong</item>
+        <item>Bintangor</item>
+        <item>Bintulu</item>
+        <item>Dalat</item>
+        <item>Daro</item>
+        <item>Debak</item>
+        <item>Engkilili</item>
+        <item>Julau</item>
+        <item>Kabong</item>
+        <item>Kanowit</item>
+        <item>Kapit</item>
         <item>Kota Samarahan</item>
+        <item>Kuching</item>
+        <item>Lawas</item>
+        <item>Limbang</item>
+        <item>Lingga</item>
+        <item>Long Lama</item>
+        <item>Lubok Antu</item>
+        <item>Lundu</item>
+        <item>Lutong</item>
+        <item>Maradong</item>
+        <item>Marudi</item>
+        <item>Matu</item>
+        <item>Miri</item>
+        <item>Mukah</item>
+        <item>Nanga Medamit</item>
+        <item>Niah</item>
+        <item>Pusa</item>
+        <item>Roban</item>
+        <item>Saratok</item>
+        <item>Sarikei</item>
+        <item>Sebauh</item>
+        <item>Sebuyau</item>
+        <item>Serian</item>
+        <item>Sibu</item>
+        <item>Simunjan</item>
+        <item>Song</item>
+        <item>Spaoh</item>
+        <item>Sri Aman</item>
+        <item>Sundar</item>
+        <item>Tanjung Kidurong</item>
+        <item>Tatau</item>
     </string-array>
 </resources>

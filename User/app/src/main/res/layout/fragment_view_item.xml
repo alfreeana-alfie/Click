@@ -91,7 +91,7 @@
                 android:layout_height="match_parent"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="5dp"
-                app:columnCount="10"
+                app:columnCount="11"
                 app:rowCount="2">
 
                 <Button
@@ -321,6 +321,18 @@
                     android:fontFamily="@font/open_sans_bold"
                     android:padding="5dp"
                     android:text="Business for Sale"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_handcraft"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Handcraft"
                     android:textAllCaps="false"
                     android:textSize="9sp" />
 

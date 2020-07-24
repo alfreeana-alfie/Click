@@ -35,7 +35,7 @@ public class Fragment_Category_Handcraft extends Fragment {
     public static final String PRICE = "price";
     public static final String ITEM_LOCATION = "item_location";
     public static final String PHOTO = "photo";
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/read_cars.php";
+    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_handcraft.php";
 
     SessionManager sessionManager;
     String getId;
@@ -46,7 +46,7 @@ public class Fragment_Category_Handcraft extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cars, container, false);
+        View view = inflater.inflate(R.layout.fragment_category_view, container, false);
         Declare(view);
         View_Item(view);
         sessionManager = new SessionManager(view.getContext());
