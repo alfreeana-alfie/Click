@@ -4,12 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -60,7 +60,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     String getId;
     SessionManager sessionManager;
 
-    private GridView gridView;
+    private Button button_cars, button_sales;
+    private TwoWayGridView gridView;
     private CircleImageView profile_display;
     private TextView name_display, email_display;
     private NavigationView navigationView;
@@ -81,6 +82,15 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         getId = user.get(SessionManager.ID);
 
         getUserDetail();
+
+        button_cars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Cars()).commit();
+            }
+        });
 
         View_Item();
     }
@@ -107,6 +117,9 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        button_cars = findViewById(R.id.button_cars);
+        button_sales = findViewById(R.id.button_sales);
     }
 
     private void View_Item() {

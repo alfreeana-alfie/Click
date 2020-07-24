@@ -50,7 +50,7 @@ public class Fragment_View_Item extends Fragment {
 
         itemList = new ArrayList<>();
 
-        recyclerView = v.findViewById(R.id.recycleView_item);
+        recyclerView = v.findViewById(R.id.gridView_item);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -97,7 +98,6 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
         TV_item_location.setText(item.getItem_location());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
-
         return convertView;
     }
 

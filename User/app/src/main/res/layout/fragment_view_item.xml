@@ -8,11 +8,12 @@
     android:focusableInTouchMode="true"
     android:paddingBottom="5dp">
 
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_white"
+        app:layout_constraintBottom_toTopOf="@+id/grid_category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,6 +22,7 @@
             android:id="@+id/linear1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/layout_border_white"
             android:orientation="vertical">
 
             <TextView
@@ -29,35 +31,36 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/open_sans_bold"
+                android:text="Buy. Sell. Find. Almost Everything! "
                 android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:text="Buy. Sell. Find. Almost Everything! " />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/countItem_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans"
                 android:layout_gravity="center"
+                android:fontFamily="@font/open_sans"
+                android:text="ITEM items Available now"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:text="ITEM items Available now" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linear1"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <Button
                 android:id="@+id/button_sellItem"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_camera_foreground"
                 android:text="Sell" />
 
             <Button
@@ -65,26 +68,294 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableLeft="@drawable/ic_search_foreground"
                 android:text="Find" />
         </LinearLayout>
 
     </RelativeLayout>
 
-    <GridView
+    <HorizontalScrollView
+        android:id="@+id/grid_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/relativeLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="5dp"
+                app:columnCount="10"
+                app:rowCount="2">
+
+                <Button
+                    android:id="@+id/button_cars"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_cars"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Cars"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:id="@+id/button_sales"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_sale"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Properties for Sale"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_jobs"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Jobs"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_pets"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Pets"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_men"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Men's Collection"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_momkids"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Mom and Kids"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_women"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Women's Collection"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_home"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Home Appliances"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_services"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Services"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_travel"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Travel and Holiday"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_electronics"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Electronics"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_rent"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Properties for Rent"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_furniture"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Furniture"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_sport"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Sport and Hobbies"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_motorcycles"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Motorcycles"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_car"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Car Accessories and Parts"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_cameraphoto"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Camera and Photography"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_computer"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Computer and Accessories"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_business"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="Business for Sale"
+                    android:textAllCaps="false"
+                    android:textSize="9sp" />
+
+                <Button
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_orange"
+                    android:drawableTop="@mipmap/ic_see_all_round"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="See All"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+            </androidx.gridlayout.widget.GridLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <com.mhmtk.twowaygrid.TwoWayGridView
         android:id="@+id/gridView_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:horizontalSpacing="1dp"
-        android:numColumns="2"
-        android:paddingBottom="1dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp"
+        app:cacheColorHint="#E8E8E8"
+        android:columnWidth="800dp"
+        app:rowHeight="80dp"
+        app:numRows="1"
+        app:verticalSpacing="16dp"
+        app:horizontalSpacing="1dp"
+        app:stretchMode="columnWidth"
+        app:scrollDirectionPortrait="horizontal"
+        app:scrollDirectionLandscape="horizontal"
+        app:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@id/grid_category"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
