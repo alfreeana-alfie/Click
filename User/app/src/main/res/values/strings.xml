@@ -116,6 +116,8 @@
     <string name="find">Find</string>
     <string name="snap_it_post_it_make_rm">Snap it. Post it. Make RM</string>
     <string name="chat_check_cod">Chat. Check. COD</string>
+    <string name="food">Food</string>
+    <string name="remove">Remove</string>
 
 
     <string-array name="gender">

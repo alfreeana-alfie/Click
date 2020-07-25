@@ -1,158 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:paddingBottom="5dp">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="5dp"
-        android:background="@drawable/background_white"
-        app:layout_constraintBottom_toTopOf="@+id/grid_category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/linear1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:elevation="5dp"
-            android:background="@drawable/layout_border_white"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/greet_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/good_morning"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/homepage_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/buy_sell_find_almost_everything"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linear1"
-            android:layout_centerHorizontal="true"
-            android:orientation="horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/button_sellItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_sell_border"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:drawableStart="@drawable/ic_camera_foreground"
-                    android:text="@string/sell" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/open_sans"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/snap_it_post_it_make_rm"
-                    android:textColor="@color/colorDarkGrey"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/button_FindItem"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_find_border"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
-                    android:drawableStart="@drawable/ic_search_foreground"
-                    android:text="@string/find" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/open_sans"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/chat_check_cod"
-                    android:textColor="@color/colorDarkGrey"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <HorizontalScrollView
+    <ScrollView
         android:id="@+id/grid_category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/relativeLayout">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.gridlayout.widget.GridLayout
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_white"
+                android:elevation="5dp">
+
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/layout_border_white"
+                    android:elevation="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/greet_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans"
+                        android:text="@string/good_morning"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/homepage_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:text="@string/buy_sell_find_almost_everything"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linear1"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/button_sellItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_sell_border"
+                            android:drawableStart="@drawable/ic_camera_foreground"
+                            android:text="@string/sell"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/open_sans"
+                            android:text="@string/snap_it_post_it_make_rm"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/button_FindItem"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_find_border"
+                            android:drawableStart="@drawable/ic_search_foreground"
+                            android:text="@string/find"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/open_sans"
+                            android:text="@string/chat_check_cod"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:fitsSystemWindows="true"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="5dp"
-                app:columnCount="10"
-                app:rowCount="2">
+                app:columnCount="3"
+                app:rowCount="10">
 
                 <Button
                     android:id="@+id/button_cars"
@@ -181,19 +179,6 @@
                     android:textAllCaps="false"
                     android:textSize="9sp"
                     tools:ignore="SmallSp" />
-
-<!--                <Button-->
-<!--                    android:layout_width="110dp"-->
-<!--                    android:layout_height="110dp"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:background="@drawable/layout_border_white"-->
-<!--                    android:drawableTop="@mipmap/ic_jobs"-->
-<!--                    android:fontFamily="@font/open_sans_bold"-->
-<!--                    android:padding="5dp"-->
-<!--                    android:text="@string/jobs"-->
-<!--                    android:textAllCaps="false"-->
-<!--                    android:textSize="9sp"-->
-<!--                    tools:ignore="SmallSp" />-->
 
                 <Button
                     android:id="@+id/button_pets"
@@ -434,6 +419,20 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_food"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_food"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="@string/food"
+                    android:textAllCaps="false"
+                    android:textSize="9sp"
+                    tools:ignore="SmallSp" />
+
+                <Button
                     android:id="@+id/button_see"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
@@ -448,25 +447,19 @@
                     android:textSize="15sp" />
             </androidx.gridlayout.widget.GridLayout>
         </LinearLayout>
-    </HorizontalScrollView>
+    </ScrollView>
 
-    <com.mhmtk.twowaygrid.TwoWayGridView
+    <GridView
         android:id="@+id/gridView_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cacheColorHint="#E8E8E8"
-        android:columnWidth="800dp"
-        app:rowHeight="80dp"
-        app:numRows="1"
-        app:numColumns="2"
-        app:verticalSpacing="16dp"
-        app:horizontalSpacing="1dp"
-        app:stretchMode="columnWidth"
-        app:scrollDirectionPortrait="vertical"
-        app:scrollDirectionLandscape="horizontal"
-        app:gravity="center"
+        android:columnWidth="80dp"
+        android:horizontalSpacing="1dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/grid_category"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

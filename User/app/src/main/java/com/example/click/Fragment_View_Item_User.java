@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.GridView;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -51,9 +52,10 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
 
+    ScrollView scrollView;
     SessionManager sessionManager;
     String getId;
-    TwoWayGridView recyclerView;
+    GridView recyclerView;
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
@@ -63,6 +65,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_item, container, false);
         Declare(view);
+        scrollView.setVisibility(View.GONE);
 
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
@@ -76,28 +79,29 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.setting, menu);
-//        MenuItem search = menu.findItem(R.id.menu_search);
-//        SearchView searchView = (SearchView) search.getActionView();
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setQueryHint("Search");
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                adapter_item.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
+        MenuItem search = menu.findItem(R.id.menu_search);
+        SearchView searchView = (SearchView) search.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void Declare(View v) {
         itemList = new ArrayList<>();
         recyclerView = v.findViewById(R.id.gridView_item);
+        scrollView = v.findViewById(R.id.grid_category);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {

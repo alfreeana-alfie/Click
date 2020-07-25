@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,10 +62,11 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     String getId;
     SessionManager sessionManager;
 
-    private Button button_cars, button_sales, button_camera, button_car_parts, button_business, button_computer, button_electronics, button_furniture, button_handcraft, button_home, button_men, button_mom, button_motorcycle, button_pets, button_rent, button_services,button_sport, button_travel, button_women;
-    private TwoWayGridView gridView;
+    private ScrollView scrollView;
+    private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera, button_car_parts, button_business, button_computer, button_electronics, button_furniture, button_handcraft, button_home, button_men, button_mom, button_motorcycle, button_pets, button_rent, button_services,button_sport, button_travel, button_women;
+    private GridView gridView;
     private CircleImageView profile_display;
-    private TextView name_display, email_display, Count_Item;
+    private TextView name_display, email_display;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private View view;
@@ -85,13 +88,14 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
         Category_Func();
 
-        View_Item();
+        //View_Item();
     }
 
     private void Declare() {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_item);
         view = findViewById(R.id.support_layout);
+        scrollView = findViewById(R.id.grid_category);
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -110,6 +114,9 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        Button_SellItem = findViewById(R.id.button_sellItem);
+        Button_FindItem = findViewById(R.id.button_FindItem);
 
         button_business = findViewById(R.id.button_business);
         button_camera = findViewById(R.id.button_camera);
@@ -316,6 +323,23 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     }
 
     private void Category_Func(){
+
+        Button_SellItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Sell_Items()).addToBackStack(null).commit();
+            }
+        });
+
+        Button_FindItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         button_business.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -548,6 +572,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         switch (item.getItemId()) {
             case R.id.nav_home:
                 view.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.VISIBLE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_Empty()).commit();
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();

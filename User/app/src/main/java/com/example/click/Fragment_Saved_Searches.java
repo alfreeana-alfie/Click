@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class Fragment_Saved_Searches extends Fragment {
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readfav.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_fav.php";
 
+    ScrollView scrollView;
     GridView gridView;
     Item_Fav_Adapter adapter_item;
     List<Item_All_Details> itemList;
@@ -54,6 +56,7 @@ public class Fragment_Saved_Searches extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_item, container, false);
         Declare(view);
+        scrollView.setVisibility(View.GONE);
 
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
@@ -68,6 +71,7 @@ public class Fragment_Saved_Searches extends Fragment {
     private void Declare(View v){
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
+        scrollView = v.findViewById(R.id.grid_category);
     }
 
     private void View_Item(View view){

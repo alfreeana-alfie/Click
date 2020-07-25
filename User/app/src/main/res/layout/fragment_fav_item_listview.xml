@@ -93,7 +93,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
-                    android:text="@string/edit"
+                    android:text="@string/view"
                     android:textAlignment="center"
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
@@ -110,7 +110,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
-                    android:text="Delete from Fav"
+                    android:text="@string/remove"
                     android:textAlignment="center"
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
