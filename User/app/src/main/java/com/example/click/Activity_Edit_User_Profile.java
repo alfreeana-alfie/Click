@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -64,7 +65,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
     private CircleImageView profile_image;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_profile);
 
@@ -73,7 +74,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(sessionManager.ID);
+        getId = user.get(SessionManager.ID);
 
         getUserDetail();
         gender_display.setText(gender.getSelectedItem().toString());
@@ -148,6 +149,20 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
 
         layout_gender.setVisibility(View.GONE);
         button_accept.setVisibility(View.GONE);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Shopping Cart");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Activity_All_View.class));
+            }
+        });
+
     }
 
     private void Edit_Func() {

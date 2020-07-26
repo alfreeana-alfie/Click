@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -55,7 +58,7 @@ public class Fragment_Category_Food extends Fragment {
     ImageButton but_loc;
     Button price_sortlowest, price_sorthighest;
     ArrayAdapter<CharSequence> adapter_location;
-
+    SearchView searchView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,6 +79,20 @@ public class Fragment_Category_Food extends Fragment {
         gridView = v.findViewById(R.id.gridView_CarItem);
         spinner_location = v.findViewById(R.id.spinner_location);
         but_loc = v.findViewById(R.id.but_loc);
+        searchView = v.findViewById(R.id.search_find);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         price_sortlowest = v.findViewById(R.id.price_sortlowest);
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
@@ -107,22 +124,6 @@ public class Fragment_Category_Food extends Fragment {
                 adapter_item.getFilter().filter(null);
                 spinner_location.setSelection(0);
                 but_loc.setVisibility(View.GONE);
-//                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
-//                builder.setTitle("Item Location");
-//                builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
-//                    }
-//                });
-//                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        adapter_item.getFilter().filter(null);
-//                    }
-//                });
-//                builder.create().show();
             }
         });
 

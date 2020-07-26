@@ -14,7 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryBackground="@android:color/transparent"
+
+            android:background="@drawable/background_white"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search Here" />
+
     <TableLayout
+        android:layout_below="@id/search_find"
         android:background="@drawable/background_white"
         android:id="@+id/table_filter"
         android:layout_width="match_parent"

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -54,6 +55,7 @@ public class Fragment_Category_Cars extends Fragment {
     Item_Adapter_All_View adapter_item;
     List<Item_All_Details> itemList;
 
+    SearchView searchView;
     Spinner spinner_location;
     ImageButton but_loc;
     Button price_sortlowest, price_sorthighest;
@@ -78,6 +80,7 @@ public class Fragment_Category_Cars extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
+        searchView = v.findViewById(R.id.search_find);
 
         spinner_location = v.findViewById(R.id.spinner_location);
         but_loc = v.findViewById(R.id.but_loc);
@@ -88,6 +91,19 @@ public class Fragment_Category_Cars extends Fragment {
         adapter_location = ArrayAdapter.createFromResource(getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
         adapter_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_location.setAdapter(adapter_location);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         price_sortlowest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +139,7 @@ public class Fragment_Category_Cars extends Fragment {
                 if(position != 0){
                     but_loc.setVisibility(View.VISIBLE);
                     adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
+
                 }
             }
 

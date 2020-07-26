@@ -145,9 +145,10 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                     List<Item_All_Details> resultData = new ArrayList<>();
                     for (Item_All_Details item : itemList) {
                         if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str) || item.getItem_location().toLowerCase().contains(strSearch)) {
-//                            if(Double.parseDouble(item.getPrice()) == Double.parseDouble(minNum)){
+//                            if(item.getItem_location().toLowerCase().contains(strSearch)){
                                 resultData.add(item);
 //                            }
+//                            resultData.add(item);
                         }
                         filterResults.count = resultData.size();
                         filterResults.values = resultData;

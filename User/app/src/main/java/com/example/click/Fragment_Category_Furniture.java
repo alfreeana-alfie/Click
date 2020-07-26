@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -51,6 +52,7 @@ public class Fragment_Category_Furniture extends Fragment {
     Item_Adapter_All_View adapter_item;
     List<Item_All_Details> itemList;
 
+    SearchView searchView;
     Spinner spinner_location;
     ImageButton but_loc;
     Button price_sortlowest, price_sorthighest;
@@ -75,6 +77,19 @@ public class Fragment_Category_Furniture extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
+        searchView = v.findViewById(R.id.search_find);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         spinner_location = v.findViewById(R.id.spinner_location);
         but_loc = v.findViewById(R.id.but_loc);
