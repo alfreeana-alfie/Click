@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="5dp">
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/grid_category"
@@ -433,6 +432,20 @@
                     tools:ignore="SmallSp" />
 
                 <Button
+                    android:id="@+id/button_grocery"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/layout_border_white"
+                    android:drawableTop="@mipmap/ic_grocery"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:padding="5dp"
+                    android:text="@string/grocery"
+                    android:textAllCaps="false"
+                    android:textSize="9sp"
+                    tools:ignore="SmallSp" />
+
+                <Button
                     android:id="@+id/button_see"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
@@ -449,17 +462,46 @@
         </LinearLayout>
     </ScrollView>
 
-    <GridView
-        android:id="@+id/gridView_item"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="80dp"
-        android:horizontalSpacing="1dp"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:visibility="gone"
+            android:id="@+id/search_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search Here" />
+
+        <GridView
+            android:id="@+id/gridView_itemSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="80dp"
+            android:horizontalSpacing="1dp"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="1dp"
+            android:layout_below="@id/search_find"/>
+
+        <GridView
+            android:id="@+id/gridView_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnWidth="80dp"
+            android:horizontalSpacing="1dp"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,8 +37,11 @@
         <activity android:name=".Activity_Edit_Item" />
         <activity android:name=".Activity_View_Item"
             android:theme="@style/AppTheme"/>
+
         <activity android:name=".Activity_View_Item_Fav" />
+
         <activity android:name=".Activity_Add_to_Cart" />
+        <activity android:name=".Activity_Edit_User_Profile" />
 
         <meta-data
             android:name="preloaded_fonts"

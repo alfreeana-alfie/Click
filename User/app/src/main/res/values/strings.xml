@@ -118,6 +118,8 @@
     <string name="chat_check_cod">Chat. Check. COD</string>
     <string name="food">Food</string>
     <string name="remove">Remove</string>
+    <string name="grocery">Grocery</string>
+    <string name="location">Location</string>
 
 
     <string-array name="gender">
@@ -190,11 +192,12 @@
     <string-array name="other_category">
         <item>Others</item>
         <item>Food</item>
-        <item>Items for Swap</item>
+        <item>Grocery</item>
     </string-array>
 
     <string-array name="location">
         <item>Item Location</item>
+        <item>All Region</item>
         <item>Asajaya</item>
         <item>Balingian</item>
         <item>Baram</item>
@@ -244,5 +247,65 @@
         <item>Sundar</item>
         <item>Tanjung Kidurong</item>
         <item>Tatau</item>
+    </string-array>
+
+    <string-array name="item_location">
+        <item>All Region</item>
+        <item>Asajaya</item>
+        <item>Balingian</item>
+        <item>Baram</item>
+        <item>Bau</item>
+        <item>Bekenu</item>
+        <item>Belaga</item>
+        <item>Belawai</item>
+        <item>Betong</item>
+        <item>Bintangor</item>
+        <item>Bintulu</item>
+        <item>Dalat</item>
+        <item>Daro</item>
+        <item>Debak</item>
+        <item>Engkilili</item>
+        <item>Julau</item>
+        <item>Kabong</item>
+        <item>Kanowit</item>
+        <item>Kapit</item>
+        <item>Kota Samarahan</item>
+        <item>Kuching</item>
+        <item>Lawas</item>
+        <item>Limbang</item>
+        <item>Lingga</item>
+        <item>Long Lama</item>
+        <item>Lubok Antu</item>
+        <item>Lundu</item>
+        <item>Lutong</item>
+        <item>Maradong</item>
+        <item>Marudi</item>
+        <item>Matu</item>
+        <item>Miri</item>
+        <item>Mukah</item>
+        <item>Nanga Medamit</item>
+        <item>Niah</item>
+        <item>Pusa</item>
+        <item>Roban</item>
+        <item>Saratok</item>
+        <item>Sarikei</item>
+        <item>Sebauh</item>
+        <item>Sebuyau</item>
+        <item>Serian</item>
+        <item>Sibu</item>
+        <item>Simunjan</item>
+        <item>Song</item>
+        <item>Spaoh</item>
+        <item>Sri Aman</item>
+        <item>Sundar</item>
+        <item>Tanjung Kidurong</item>
+        <item>Tatau</item>
+    </string-array>
+
+    <string-array name="item_location2">
+        <item>All Region</item>
+        <item>Kota Samarahan</item>
+        <item>Kuching</item>
+        <item>Sibu</item>
     </string-array>
 </resources>

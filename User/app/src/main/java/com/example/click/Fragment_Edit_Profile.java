@@ -410,8 +410,8 @@ public class Fragment_Edit_Profile extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", id);
                 params.put("photo", photo);
+                params.put("id", getId);
                 return params;
             }
         };
@@ -427,7 +427,6 @@ public class Fragment_Edit_Profile extends Fragment {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 profile_image.setImageBitmap(bitmap);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -411,6 +411,4 @@ public class Fragment_Sell_Items extends Fragment {
             }
         }
     }
-
-
 }

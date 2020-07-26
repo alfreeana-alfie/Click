@@ -1,6 +1,7 @@
 package com.example.click;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
@@ -33,6 +36,28 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListerner = listener;
+    }
+
+    public void sortArrayLowest(){
+        Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o1.getPrice()), Double.parseDouble(o2.getPrice()));
+            }
+        });
+        notifyDataSetChanged();
+
+    }
+
+    public void sortArrayHighest(){
+        Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o2.getPrice()), Double.parseDouble(o1.getPrice()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -113,13 +138,16 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                     filterResults.count = itemList.size();
                     filterResults.values = itemList;
                 } else {
+//                    String minNum = constraint.toString();
                     String strSearch = constraint.toString().toLowerCase();
                     String strSEARCH = constraint.toString().toUpperCase();
                     String str = constraint.toString();
                     List<Item_All_Details> resultData = new ArrayList<>();
                     for (Item_All_Details item : itemList) {
-                        if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str)) {
-                            resultData.add(item);
+                        if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str) || item.getItem_location().toLowerCase().contains(strSearch)) {
+//                            if(Double.parseDouble(item.getPrice()) == Double.parseDouble(minNum)){
+                                resultData.add(item);
+//                            }
                         }
                         filterResults.count = resultData.size();
                         filterResults.values = resultData;

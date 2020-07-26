@@ -1,5 +1,6 @@
 package com.example.click;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     public static final String ITEM_LOCATION = "item_location";
     public static final String PHOTO = "photo";
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readall.php";
+    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/readall.php";
     private static String URL_ADD = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
     private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
 
@@ -62,9 +63,14 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     String getId;
     SessionManager sessionManager;
 
+    SearchView searchView;
     private ScrollView scrollView;
-    private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera, button_car_parts, button_business, button_computer, button_electronics, button_furniture, button_handcraft, button_home, button_men, button_mom, button_motorcycle, button_pets, button_rent, button_services,button_sport, button_travel, button_women;
-    private GridView gridView;
+    private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera,
+            button_car_parts, button_business, button_computer, button_electronics, button_furniture,
+            button_handcraft, button_home, button_men, button_mom, button_motorcycle,
+            button_pets, button_rent, button_services,button_sport, button_travel,
+            button_women, button_food,button_grocery, button_see_all;
+    private GridView gridViewSearch;
     private CircleImageView profile_display;
     private TextView name_display, email_display;
     private NavigationView navigationView;
@@ -88,14 +94,16 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
         Category_Func();
 
-        //View_Item();
+        View_Item();
     }
 
     private void Declare() {
         itemList = new ArrayList<>();
-        gridView = findViewById(R.id.gridView_item);
+        gridViewSearch = findViewById(R.id.gridView_itemSearch);
         view = findViewById(R.id.support_layout);
         scrollView = findViewById(R.id.grid_category);
+        searchView = findViewById(R.id.search_find);
+        gridViewSearch.setVisibility(View.GONE);
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -108,6 +116,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("CLICK");
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,6 +146,9 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         button_sport = findViewById(R.id.button_sports);
         button_travel = findViewById(R.id.button_travel);
         button_women = findViewById(R.id.button_women);
+        button_food = findViewById(R.id.button_food);
+        button_grocery = findViewById(R.id.button_grocery);
+        button_see_all = findViewById(R.id.button_see);
     }
 
     private void View_Item() {
@@ -168,8 +180,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, Activity_All_View.this);
                                 adapter_item.notifyDataSetChanged();
-                                gridView.invalidateViews();
-                                gridView.setAdapter(adapter_item);
+                                gridViewSearch.invalidateViews();
+                                gridViewSearch.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter_All_View.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
@@ -333,10 +345,26 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             }
         });
 
+        searchView.setVisibility(View.GONE);
         Button_FindItem.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                scrollView.setVisibility(View.GONE);
+                searchView.setVisibility(View.VISIBLE);
+                gridViewSearch.setVisibility(View.VISIBLE);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
 
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        adapter_item.getFilter().filter(newText);
+                        return false;
+                    }
+                });
             }
         });
 
@@ -510,6 +538,34 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                         new Fragment_Category_Women()).addToBackStack(null).commit();
             }
         });
+
+        button_food.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Food()).addToBackStack(null).commit();
+            }
+        });
+
+        button_grocery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_Grocery()).addToBackStack(null).commit();
+            }
+        });
+
+        button_see_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_See_All()).addToBackStack(null).commit();
+            }
+        });
+
     }
 
     private void getUserDetail() {
@@ -573,18 +629,27 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             case R.id.nav_home:
                 view.setVisibility(View.VISIBLE);
                 scrollView.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.GONE);
+                gridViewSearch.setVisibility(View.GONE);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_Empty()).commit();
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_sell:
                 view.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
+                gridViewSearch.setVisibility(View.GONE);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_Sell_Items()).addToBackStack(null).commit();
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
                 view.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
+                gridViewSearch.setVisibility(View.GONE);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_View_Item_User()).addToBackStack(null).commit();
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
@@ -600,6 +665,9 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
             case R.id.nav_favourite_ads:
                 view.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
+                gridViewSearch.setVisibility(View.GONE);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_Saved_Searches()).addToBackStack(null).commit();
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
@@ -642,8 +710,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 return true;
             }
         });
-
-
         return true;
     }
 
@@ -652,8 +718,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         switch (item.getItemId()) {
             case R.id.user_profile:
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Edit_Profile()).addToBackStack(null).commit();
+                Intent intent1 = new Intent(Activity_All_View.this, Activity_Edit_User_Profile.class);
+                startActivity(intent1);
                 break;
             case R.id.setting:
                 Toast.makeText(this, "Settings is Clicked!", Toast.LENGTH_SHORT).show();

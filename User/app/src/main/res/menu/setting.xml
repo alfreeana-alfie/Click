@@ -25,11 +25,6 @@
             android:title="@string/edit_profile" />
 
         <item
-            android:id="@+id/add_to_cart"
-            android:title="@string/add_to_cart" />
-
-
-        <item
             android:id="@+id/setting"
             android:title="@string/settings" />
 

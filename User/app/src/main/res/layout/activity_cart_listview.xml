@@ -8,12 +8,12 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_white">
 
-    <Button
+    <ImageButton
         android:id="@+id/delete_cart_item"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        app:srcCompat="@drawable/ic_exit_foreground"
         android:background="@drawable/login_part_border_orange"
-        android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
