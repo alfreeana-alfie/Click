@@ -58,10 +58,10 @@ public class Fragment_Category_Business extends Fragment {
 
     private GridView gridView;
     private SearchView searchView;
-    private Spinner spinner_location;
+    private Spinner spinner_division, spinner_district;
     private ImageButton but_loc;
     private Button price_sortlowest, price_sorthighest;
-    private ArrayAdapter<CharSequence> adapter_location;
+    private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
 
     @Nullable
@@ -83,17 +83,18 @@ public class Fragment_Category_Business extends Fragment {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
         searchView = v.findViewById(R.id.search_find);
-        spinner_location = v.findViewById(R.id.spinner_location);
-        but_loc = v.findViewById(R.id.but_loc);
+        spinner_division = v.findViewById(R.id.spinner_division);
+        spinner_district = v.findViewById(R.id.spinner_district);
+        but_loc = v.findViewById(R.id.but_division);
         price_sortlowest = v.findViewById(R.id.price_sortlowest);
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
 
         price_sorthighest.setVisibility(View.GONE);
         but_loc.setVisibility(View.GONE);
 
-        adapter_location = ArrayAdapter.createFromResource(v.getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
-        adapter_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_location.setAdapter(adapter_location);
+        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
+        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_division.setAdapter(adapter_division);
 
         Button_Func();
     }
@@ -135,17 +136,17 @@ public class Fragment_Category_Business extends Fragment {
             @Override
             public void onClick(View v) {
                 adapter_item.getFilter().filter(null);
-                spinner_location.setSelection(0);
+                spinner_division.setSelection(0);
                 but_loc.setVisibility(View.GONE);
             }
         });
 
-        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     but_loc.setVisibility(View.VISIBLE);
-                    adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
                 }
             }
 

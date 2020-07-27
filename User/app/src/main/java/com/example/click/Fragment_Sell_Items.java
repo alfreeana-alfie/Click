@@ -105,7 +105,7 @@ public class Fragment_Sell_Items extends Fragment {
         ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
         item_page_layout = v.findViewById(R.id.item_page_layout);
 
-        adapter_item_location = ArrayAdapter.createFromResource(getContext(), R.array.location, android.R.layout.simple_spinner_item);
+        adapter_item_location = ArrayAdapter.createFromResource(v.getContext(), R.array.location, android.R.layout.simple_spinner_item);
         adapter_item_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_item_location.setAdapter(adapter_item_location);
 

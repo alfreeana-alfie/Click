@@ -81,8 +81,8 @@ public class Fragment_Category_Food extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
-        spinner_location = v.findViewById(R.id.spinner_location);
-        but_loc = v.findViewById(R.id.but_loc);
+        spinner_location = v.findViewById(R.id.spinner_division);
+        but_loc = v.findViewById(R.id.but_division);
         searchView = v.findViewById(R.id.search_find);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -123,6 +123,7 @@
     <string name="remove">Remove</string>
     <string name="grocery">Grocery</string>
     <string name="location">Location</string>
+    <string name="price">Price</string>
 
 
     <string-array name="gender">
@@ -252,63 +253,115 @@
         <item>Tatau</item>
     </string-array>
 
-    <string-array name="item_location">
-        <item>All Region</item>
-        <item>Asajaya</item>
-        <item>Balingian</item>
-        <item>Baram</item>
-        <item>Bau</item>
-        <item>Bekenu</item>
-        <item>Belaga</item>
-        <item>Belawai</item>
-        <item>Betong</item>
-        <item>Bintangor</item>
-        <item>Bintulu</item>
-        <item>Dalat</item>
-        <item>Daro</item>
-        <item>Debak</item>
-        <item>Engkilili</item>
-        <item>Julau</item>
-        <item>Kabong</item>
-        <item>Kanowit</item>
-        <item>Kapit</item>
-        <item>Kota Samarahan</item>
-        <item>Kuching</item>
-        <item>Lawas</item>
-        <item>Limbang</item>
-        <item>Lingga</item>
-        <item>Long Lama</item>
-        <item>Lubok Antu</item>
-        <item>Lundu</item>
-        <item>Lutong</item>
-        <item>Maradong</item>
-        <item>Marudi</item>
-        <item>Matu</item>
-        <item>Miri</item>
-        <item>Mukah</item>
-        <item>Nanga Medamit</item>
-        <item>Niah</item>
-        <item>Pusa</item>
-        <item>Roban</item>
-        <item>Saratok</item>
-        <item>Sarikei</item>
-        <item>Sebauh</item>
-        <item>Sebuyau</item>
-        <item>Serian</item>
-        <item>Sibu</item>
-        <item>Simunjan</item>
-        <item>Song</item>
-        <item>Spaoh</item>
-        <item>Sri Aman</item>
-        <item>Sundar</item>
-        <item>Tanjung Kidurong</item>
-        <item>Tatau</item>
-    </string-array>
-
     <string-array name="item_location2">
         <item>All Region</item>
         <item>Kota Samarahan</item>
         <item>Kuching</item>
         <item>Sibu</item>
     </string-array>
+
+    <string-array name="division">
+        <item>All</item>
+        <item>Kuching</item>
+        <item>Samarahan</item>
+        <item>Serian</item>
+        <item>Sri Aman</item>
+        <item>Betong</item>
+        <item>Sarikei</item>
+        <item>Sibu</item>
+        <item>Mukah</item>
+        <item>Bintulu</item>
+        <item>Kapit</item>
+        <item>Miri</item>
+        <item>Limbang</item>
+    </string-array>
+
+    <string-array name="kuching">
+        <item>All</item>
+        <item>Kuching</item>
+        <item>Bau</item>
+        <item>Lundu</item>
+    </string-array>
+
+    <string-array name="samarahan">
+        <item>All</item>
+        <item>Samarahan</item>
+        <item>Asajaya</item>
+        <item>Simunjan</item>
+    </string-array>
+
+    <string-array name="serian">
+        <item>All</item>
+        <item>Serian</item>
+        <item>Tebedu</item>
+    </string-array>
+
+    <string-array name="sri_aman">
+        <item>All</item>
+        <item>Sri Aman</item>
+        <item>Lubok Antu</item>
+    </string-array>
+
+    <string-array name="betong">
+        <item>All</item>
+        <item>Betong</item>
+        <item>Saratok</item>
+        <item>Pusa</item>
+        <item>Kabong</item>
+    </string-array>
+
+    <string-array name="sarikei">
+        <item>All</item>
+        <item>Sarikei</item>
+        <item>Meradong</item>
+        <item>Julau</item>
+        <item>Pakan</item>
+    </string-array>
+
+    <string-array name="sibu">
+        <item>All</item>
+        <item>Sibu</item>
+        <item>Kanowit</item>
+        <item>Selangau</item>
+    </string-array>
+
+    <string-array name="mukah">
+        <item>All</item>
+        <item>Mukah</item>
+        <item>Dalat</item>
+        <item>Matu</item>
+        <item>Daro</item>
+        <item>Tanjung Manis</item>
+    </string-array>
+
+    <string-array name="bintulu">
+        <item>All</item>
+        <item>Bintulu</item>
+        <item>Sebauh</item>
+        <item>Tatau</item>
+    </string-array>
+
+    <string-array name="kapit">
+        <item>All</item>
+        <item>Kapit</item>
+        <item>Song</item>
+        <item>Belaga</item>
+        <item>Bukit Mabong</item>
+    </string-array>
+
+    <string-array name="miri">
+        <item>All</item>
+        <item>Miri</item>
+        <item>Marudi</item>
+        <item>Subis</item>
+        <item>Beluru</item>
+        <item>Telang Usan</item>
+    </string-array>
+
+    <string-array name="limbang">
+        <item>All</item>
+        <item>Limbang</item>
+        <item>Lawas</item>
+    </string-array>
 </resources>
+

@@ -96,8 +96,8 @@ public class Fragment_Category_Handcraft extends Fragment {
             }
         });
 
-        spinner_location = v.findViewById(R.id.spinner_location);
-        but_loc = v.findViewById(R.id.but_loc);
+        spinner_location = v.findViewById(R.id.spinner_division);
+        but_loc = v.findViewById(R.id.but_division);
         price_sortlowest = v.findViewById(R.id.price_sortlowest);
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
