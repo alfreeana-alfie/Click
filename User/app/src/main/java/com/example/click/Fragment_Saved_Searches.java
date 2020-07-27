@@ -22,6 +22,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.adapter.Item_Fav_Adapter;
+import com.example.click.helper.Item_All_Details;
+import com.example.click.helper.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,7 +108,7 @@ public class Fragment_Saved_Searches extends Fragment {
                                 adapter_item.setOnItemClickListener(new Item_Fav_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(getContext(), Activity_View_Item_Fav.class);
+                                        Intent detailIntent = new Intent(getContext(), Activity_View_Item_Favourite.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
