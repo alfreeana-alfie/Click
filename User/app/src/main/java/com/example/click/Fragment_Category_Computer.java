@@ -133,7 +133,7 @@ public class Fragment_Category_Computer extends Fragment {
         spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0){
+                if (position != 0) {
                     but_loc.setVisibility(View.VISIBLE);
                     adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
                 }
@@ -171,7 +171,7 @@ public class Fragment_Category_Computer extends Fragment {
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, getContext());
@@ -211,12 +211,12 @@ public class Fragment_Category_Computer extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -227,7 +227,7 @@ public class Fragment_Category_Computer extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
@@ -266,12 +266,12 @@ public class Fragment_Category_Computer extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -282,7 +282,7 @@ public class Fragment_Category_Computer extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();

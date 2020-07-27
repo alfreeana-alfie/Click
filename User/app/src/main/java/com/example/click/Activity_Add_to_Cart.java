@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,12 +25,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Activity_Add_to_Cart extends AppCompatActivity{
+public class Activity_Add_to_Cart extends AppCompatActivity {
 
     private static String URL_CART = "https://annkalina53.000webhostapp.com/android_register_login/readcart.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_cart.php";
@@ -57,7 +55,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
         View_Item();
     }
 
-    private void Declare(){
+    private void Declare() {
         recyclerView = findViewById(R.id.cart_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Activity_Add_to_Cart.this));
@@ -77,7 +75,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
         itemAllDetailsArrayList = new ArrayList<>();
     }
 
-    private void View_Item(){
+    private void View_Item() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -87,7 +85,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if(success.equals("1")){
+                            if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -100,7 +98,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemAllDetailsArrayList.add(item);
                                 }
                                 item_cart_adapter = new Item_Cart_Adapter(Activity_Add_to_Cart.this, itemAllDetailsArrayList);
@@ -130,7 +128,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
                                                                         itemAllDetailsArrayList.remove(position);
                                                                         item_cart_adapter.notifyItemRemoved(position);
 //                                                                        Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
-//                                                                final String id = jsonObject.getString("id").trim();
+//                                                                        final String id = jsonObject.getString("id").trim();
 
                                                                     } else {
                                                                         Toast.makeText(Activity_Add_to_Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -173,9 +171,9 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
 
                             }
                             item_cart_adapter.notifyDataSetChanged();
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Activity_Add_to_Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Activity_Add_to_Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -184,7 +182,7 @@ public class Activity_Add_to_Cart extends AppCompatActivity{
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

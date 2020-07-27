@@ -27,7 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mhmtk.twowaygrid.TwoWayGridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,10 +51,10 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
 
-    ScrollView scrollView;
+    private ScrollView scrollView;
     SessionManager sessionManager;
     String getId;
-    GridView recyclerView;
+    GridView gridView;
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
@@ -100,7 +99,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
 
     private void Declare(View v) {
         itemList = new ArrayList<>();
-        recyclerView = v.findViewById(R.id.gridView_item);
+        gridView = v.findViewById(R.id.gridView_item);
         scrollView = v.findViewById(R.id.grid_category);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
@@ -126,12 +125,12 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
-                                recyclerView.setAdapter(adapter_item);
+                                gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onEditClick(int position) {
@@ -172,7 +171,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
                                                                     if (success.equals("1")) {
                                                                         itemList.remove(position);
                                                                         adapter_item.notifyDataSetChanged();
-                                                                        recyclerView.setAdapter(adapter_item);
+                                                                        gridView.setAdapter(adapter_item);
 //                                                                        Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
 //                                                                final String id = jsonObject.getString("id").trim();
 
@@ -246,19 +245,6 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
 
     @Override
     public void onEditClick(int position) {
-//        Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
-//        Item_All_Details item = itemList.get(position);
-//
-//        detailIntent.putExtra(EXTRA_USERID, getId);
-//        detailIntent.putExtra(EXTRA_ID, item.getId());
-//        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
-//        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
-//        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
-//        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-//        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
-//        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
-//
-//        getActivity().startActivity(detailIntent);
     }
 
     @Override

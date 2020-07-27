@@ -1,7 +1,6 @@
 package com.example.click;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-public class Adapter_Item extends RecyclerView.Adapter<Adapter_Item.ItemViewHolder>{
+public class Adapter_Item extends RecyclerView.Adapter<Adapter_Item.ItemViewHolder> {
 
     private Context context;
     private List<Item> itemList;
@@ -52,12 +49,12 @@ public class Adapter_Item extends RecyclerView.Adapter<Adapter_Item.ItemViewHold
         return itemList.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
 
-        public ItemViewHolder(View itemView){
+        public ItemViewHolder(View itemView) {
             super(itemView);
 
             img_item = itemView.findViewById(R.id.img_item);

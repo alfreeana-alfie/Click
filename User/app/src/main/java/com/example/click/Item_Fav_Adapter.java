@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -95,6 +94,7 @@ public class Item_Fav_Adapter extends BaseAdapter {
 
     public interface OnItemClickListener {
         void onViewClick(int position);
+
         void onDeleteClick(int position);
     }
 }

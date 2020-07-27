@@ -79,33 +79,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         getUserDetail();
         gender_display.setText(gender.getSelectedItem().toString());
 
-        button_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionManager.logout();
-            }
-        });
-
-        button_edit_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseFile();
-            }
-        });
-
-        button_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Edit_Func();
-                SaveEditDetail();
-            }
-        });
-        button_accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Accept_Func();
-            }
-        });
+        Button_Func();
     }
 
     private void Declare() {
@@ -229,6 +203,37 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         layout_gender.setVisibility(View.GONE);
         button_edit_photo.setVisibility(View.GONE);
         gender_display.setText(gender.getSelectedItem().toString());
+    }
+
+    private void Button_Func() {
+        button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionManager.logout();
+            }
+        });
+
+        button_edit_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile();
+            }
+        });
+
+        button_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Edit_Func();
+                SaveEditDetail();
+            }
+        });
+        button_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Accept_Func();
+            }
+        });
+
     }
 
     // Getting User Details
@@ -440,7 +445,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            UploadPicture(getId, getStringImage(bitmap));
         }
+        UploadPicture(getId, getStringImage(bitmap));
     }
 }

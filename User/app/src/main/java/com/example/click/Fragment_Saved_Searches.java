@@ -42,21 +42,17 @@ public class Fragment_Saved_Searches extends Fragment {
 
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readfav.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_fav.php";
-
-    ScrollView scrollView;
     GridView gridView;
     Item_Fav_Adapter adapter_item;
     List<Item_All_Details> itemList;
     String getId;
     SessionManager sessionManager;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_item, container, false);
         Declare(view);
-        scrollView.setVisibility(View.GONE);
 
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
@@ -68,13 +64,15 @@ public class Fragment_Saved_Searches extends Fragment {
         return view;
     }
 
-    private void Declare(View v){
+    private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
-        scrollView = v.findViewById(R.id.grid_category);
+        ScrollView scrollView = v.findViewById(R.id.grid_category);
+
+        scrollView.setVisibility(View.GONE);
     }
 
-    private void View_Item(View view){
+    private void View_Item(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {
                     @Override
@@ -98,7 +96,7 @@ public class Fragment_Saved_Searches extends Fragment {
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Fav_Adapter(getContext(), itemList);
@@ -166,7 +164,7 @@ public class Fragment_Saved_Searches extends Fragment {
                                                         return params;
                                                     }
                                                 };
-                                                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                                                RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                                                 requestQueue.add(stringRequest);
                                             }
                                         });

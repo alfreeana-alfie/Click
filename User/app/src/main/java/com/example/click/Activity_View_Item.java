@@ -31,9 +31,11 @@ public class Activity_View_Item extends AppCompatActivity {
         final String price = intent.getStringExtra(PRICE);
         final String item_location = intent.getStringExtra(ITEM_LOCATION);
         final String photo = intent.getStringExtra(PHOTO);
+        String Price_Text = "MYR" + price;
+
 
         ad_detail_item.setText(ad_detail);
-        price_item.setText("MYR" + price);
+        price_item.setText(Price_Text);
         item_location_item.setText(item_location);
 
         Picasso.get().load(photo).into(img_item);

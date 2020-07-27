@@ -123,6 +123,7 @@ public class Item_Adapter extends BaseAdapter {
 
     public interface OnItemClickListener {
         void onEditClick(int position);
+
         void onDeleteClick(int position);
     }
 }

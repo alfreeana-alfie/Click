@@ -1,15 +1,5 @@
 package com.example.click;
 
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphRequestAsyncTask;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.appevents.AppEventsLogger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,7 +25,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.login.LoginManager;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -58,8 +52,8 @@ import java.util.regex.Pattern;
 
 public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
-    CallbackManager callbackManager;
-    LoginButton loginButton;
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
     private static final int RC_SIGN_IN = 1;
     private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/verify.php";
     private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";

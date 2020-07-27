@@ -52,17 +52,21 @@ public class Activity_Edit_Item extends AppCompatActivity {
     private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/edituser.php";
     private static String URL_IMG = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg02.php";
 
-    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_electronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
+    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car,
+            adapter_properties, adapter_electronic, adapter_home,
+            adapter_leisure, adapter_business, adapter_jobs,
+            adapter_travel, adapter_other;
     Uri filePath;
     String id;
     private Bitmap bitmap;
-    private TextView enter_main_category, enter_sub_category, enter_ad_detail, enter_category;
-    private EditText enter_price, edittext_ad_detail;
-    private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, back_edit, edit_item;
+    private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView, Category_TextView;
+    private EditText EditText_Price, EditText_Ad_Detail;
+    private Button Button_AcceptItem, Button_AcceptCategory, Button_BackCategory,
+            Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit, Button_SavedEdit;
     private Spinner spinner_main_category, spinner_sub_category, spinner_item_location;
     private RelativeLayout category_page_layout, ad_detail_page_layout;
     private LinearLayout item_page_layout;
-    private ImageView upload_photo_img;
+    private ImageView Upload_Photo;
     private ProgressBar loading;
 
     @Override
@@ -79,16 +83,16 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String ad_detail = intent.getStringExtra(EXTRA_AD_DETAIL);
         final String price = intent.getStringExtra(EXTRA_PRICE);
         final String item_location = intent.getStringExtra(EXTRA_ITEM_LOCATION);
-
         final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
+        String Category_Text = main_category + ", " + sub_category;
 
-        enter_category.setText(main_category + ", " + sub_category);
-        enter_main_category.setText(main_category);
-        enter_sub_category.setText(sub_category);
-        enter_ad_detail.setText(ad_detail);
-        edittext_ad_detail.setText(ad_detail);
-        enter_price.setText(price);
-        Picasso.get().load(photo).into(upload_photo_img);
+        Category_TextView.setText(Category_Text);
+        Main_Category_TextView.setText(main_category);
+        Sub_Category_TextView.setText(sub_category);
+        Ad_Detail_TextView.setText(ad_detail);
+        EditText_Ad_Detail.setText(ad_detail);
+        EditText_Price.setText(price);
+        Picasso.get().load(photo).into(Upload_Photo);
 
         int selectposition = adapter_item_location.getPosition(item_location);
         spinner_item_location.setSelection(selectposition);
@@ -97,27 +101,27 @@ public class Activity_Edit_Item extends AppCompatActivity {
     }
 
     private void Declare() {
-        enter_main_category = findViewById(R.id.enter_main_category);
-        enter_sub_category = findViewById(R.id.enter_sub_category);
-        enter_category = findViewById(R.id.enter_category);
-        enter_ad_detail = findViewById(R.id.enter_ad_detail);
-        enter_price = findViewById(R.id.enter_price);
+        Main_Category_TextView = findViewById(R.id.enter_main_category);
+        Sub_Category_TextView = findViewById(R.id.enter_sub_category);
+        Category_TextView = findViewById(R.id.enter_category);
+        Ad_Detail_TextView = findViewById(R.id.enter_ad_detail);
+        EditText_Price = findViewById(R.id.enter_price);
         spinner_item_location = findViewById(R.id.spinner_item_location);
-        accept_item = findViewById(R.id.accept_item);
-        edittext_ad_detail = findViewById(R.id.edittext_ad_detail);
-        accept_ad_detail = findViewById(R.id.accept_ad_detail);
-        back_ad_detail = findViewById(R.id.back_ad_detail);
+        Button_AcceptItem = findViewById(R.id.accept_item);
+        EditText_Ad_Detail = findViewById(R.id.edittext_ad_detail);
+        Button_AcceptAdDetail = findViewById(R.id.accept_ad_detail);
+        Button_BackAdDetail = findViewById(R.id.back_ad_detail);
         spinner_main_category = findViewById(R.id.spinner_main_category);
         spinner_sub_category = findViewById(R.id.spinner_sub_category);
-        accept_category = findViewById(R.id.accept_category);
-        back_category = findViewById(R.id.back_category);
-        upload_photo_img = findViewById(R.id.upload_photo);
+        Button_AcceptCategory = findViewById(R.id.accept_category);
+        Button_BackCategory = findViewById(R.id.back_category);
+        Upload_Photo = findViewById(R.id.upload_photo);
         loading = findViewById(R.id.loading);
         category_page_layout = findViewById(R.id.category_page_layout);
         ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
-        back_edit = findViewById(R.id.back_edit);
-        edit_item = findViewById(R.id.button_edit_item);
+        Button_BackEdit = findViewById(R.id.back_edit);
+        Button_SavedEdit = findViewById(R.id.button_edit_item);
 
         adapter_item_location = ArrayAdapter.createFromResource(this, R.array.location, android.R.layout.simple_spinner_item);
         adapter_item_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -141,7 +145,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
     }
 
     private void Button_Func() {
-        upload_photo_img.setOnClickListener(new View.OnClickListener() {
+        Upload_Photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseFile();
@@ -149,14 +153,14 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
-        enter_category.setOnClickListener(new View.OnClickListener() {
+        Category_TextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoCategory();
             }
         });
 
-        back_category.setOnClickListener(new View.OnClickListener() {
+        Button_BackCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category_page_layout.setVisibility(View.GONE);
@@ -164,14 +168,14 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
-        enter_ad_detail.setOnClickListener(new View.OnClickListener() {
+        Ad_Detail_TextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoAdDetail();
             }
         });
 
-        back_ad_detail.setOnClickListener(new View.OnClickListener() {
+        Button_BackAdDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ad_detail_page_layout.setVisibility(View.GONE);
@@ -179,7 +183,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
-        back_edit.setOnClickListener(new View.OnClickListener() {
+        Button_BackEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Activity_Edit_Item.this, Activity_All_View.class);
@@ -187,34 +191,34 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
-        edit_item.setOnClickListener(new View.OnClickListener() {
+        Button_SavedEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveEdit();
             }
         });
 
-        accept_category.setOnClickListener(new View.OnClickListener() {
+        Button_AcceptCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 category_page_layout.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
-                enter_main_category.setText(spinner_main_category.getSelectedItem().toString());
-                enter_sub_category.setText(spinner_sub_category.getSelectedItem().toString());
-                enter_category.setText(mCategory);
+                Main_Category_TextView.setText(spinner_main_category.getSelectedItem().toString());
+                Sub_Category_TextView.setText(spinner_sub_category.getSelectedItem().toString());
+                Category_TextView.setText(mCategory);
             }
         });
 
-        accept_ad_detail.setOnClickListener(new View.OnClickListener() {
+        Button_AcceptAdDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ad_detail_page_layout.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
-                final String mAd_Detail = edittext_ad_detail.getText().toString();
-                enter_ad_detail.setText(mAd_Detail);
+                final String mAd_Detail = EditText_Ad_Detail.getText().toString();
+                Ad_Detail_TextView.setText(mAd_Detail);
             }
         });
     }
@@ -282,17 +286,16 @@ public class Activity_Edit_Item extends AppCompatActivity {
     }
 
     private void saveEdit() {
-
         Intent intent = getIntent();
         id = intent.getStringExtra(EXTRA_ID);
-        final String strMain_category = this.enter_main_category.getText().toString().trim();
-        final String strSub_category = this.enter_sub_category.getText().toString().trim();
-        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-        final String strPrice = this.enter_price.getText().toString().trim();
+        final String strMain_category = this.Main_Category_TextView.getText().toString().trim();
+        final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
+        final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
+        final String strPrice = this.EditText_Price.getText().toString().trim();
         final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
         loading.setVisibility(View.VISIBLE);
-        edit_item.setVisibility(View.GONE);
+        Button_SavedEdit.setVisibility(View.GONE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override
@@ -302,7 +305,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             if (success.equals("1")) {
                                 loading.setVisibility(View.GONE);
-                                edit_item.setVisibility(View.VISIBLE);
+                                Button_SavedEdit.setVisibility(View.VISIBLE);
 
                                 Toast.makeText(Activity_Edit_Item.this, "Item Updated", Toast.LENGTH_SHORT).show();
 
@@ -312,12 +315,12 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             } else {
                                 Toast.makeText(Activity_Edit_Item.this, "Failed to Update", Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
-                                edit_item.setVisibility(View.VISIBLE);
+                                Button_SavedEdit.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             loading.setVisibility(View.GONE);
-                            edit_item.setVisibility(View.VISIBLE);
+                            Button_SavedEdit.setVisibility(View.VISIBLE);
 //                                Toast.makeText(Activity_Edit_Item.this, "JSON Parsing Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
@@ -329,14 +332,14 @@ public class Activity_Edit_Item extends AppCompatActivity {
                         if (error.getMessage() == null) {
 //                                Toast.makeText(Activity_Edit_Item.this, "Connection Error", Toast.LENGTH_SHORT).show();
                             loading.setVisibility(View.GONE);
-                            accept_item.setVisibility(View.VISIBLE);
+                            Button_AcceptItem.setVisibility(View.VISIBLE);
                         } else {
 //                                Toast.makeText(Activity_Edit_Item.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                             loading.setVisibility(View.GONE);
-                            accept_item.setVisibility(View.VISIBLE);
+                            Button_AcceptItem.setVisibility(View.VISIBLE);
                         }
                         loading.setVisibility(View.GONE);
-                        edit_item.setVisibility(View.VISIBLE);
+                        Button_SavedEdit.setVisibility(View.VISIBLE);
 
                     }
                 }) {
@@ -359,14 +362,14 @@ public class Activity_Edit_Item extends AppCompatActivity {
     private void saveImage(final String photo) {
         Intent intent = getIntent();
         id = intent.getStringExtra(EXTRA_ID);
-//        final String strMain_category = this.enter_main_category.toString();
+//        final String strMain_category = this.Main_Category_TextView.toString();
 //        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-//        final String strPrice = this.enter_price.getText().toString().trim();
+        final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
+//        final String strPrice = this.EditText_Price.getText().toString().trim();
 //        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
 //        loading.setVisibility(View.VISIBLE);
-//        edit_item.setVisibility(View.GONE);
+//        Button_SavedEdit.setVisibility(View.GONE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_IMG,
                 new Response.Listener<String>() {
                     @Override
@@ -376,18 +379,18 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             if (success.equals("1")) {
 //                                loading.setVisibility(View.GONE);
-//                                edit_item.setVisibility(View.VISIBLE);
+//                                Button_SavedEdit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Activity_Edit_Item.this, "Success!", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 Toast.makeText(Activity_Edit_Item.this, "Failed! ", Toast.LENGTH_SHORT).show();
 //                                loading.setVisibility(View.GONE);
-//                                edit_item.setVisibility(View.VISIBLE);
+//                                Button_SavedEdit.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
 //                            loading.setVisibility(View.GONE);
-//                            edit_item.setVisibility(View.VISIBLE);
+//                            Button_SavedEdit.setVisibility(View.VISIBLE);
                             Toast.makeText(Activity_Edit_Item.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
@@ -397,7 +400,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        loading.setVisibility(View.GONE);
-//                        edit_item.setVisibility(View.VISIBLE);
+//                        Button_SavedEdit.setVisibility(View.VISIBLE);
                         Toast.makeText(Activity_Edit_Item.this, "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -439,7 +442,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                upload_photo_img.setImageBitmap(bitmap);
+                Upload_Photo.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }

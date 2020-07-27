@@ -1,7 +1,6 @@
 package com.example.click;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +36,7 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
         mListerner = listener;
     }
 
-    public void sortArrayLowest(){
+    public void sortArrayLowest() {
         Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
             @Override
             public int compare(Item_All_Details o1, Item_All_Details o2) {
@@ -49,7 +47,7 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
     }
 
-    public void sortArrayHighest(){
+    public void sortArrayHighest() {
         Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
             @Override
             public int compare(Item_All_Details o1, Item_All_Details o2) {
@@ -146,7 +144,7 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                     for (Item_All_Details item : itemList) {
                         if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str) || item.getItem_location().toLowerCase().contains(strSearch)) {
 //                            if(item.getItem_location().toLowerCase().contains(strSearch)){
-                                resultData.add(item);
+                            resultData.add(item);
 //                            }
 //                            resultData.add(item);
                         }
@@ -168,7 +166,9 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
     public interface OnItemClickListener {
         void onViewClick(int position);
+
         void onAddtoFavClick(int position);
+
         void onAddtoCartClick(int position);
     }
 }

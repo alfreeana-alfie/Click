@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
@@ -59,6 +57,7 @@ public class Fragment_Category_Food extends Fragment {
     Button price_sortlowest, price_sorthighest;
     ArrayAdapter<CharSequence> adapter_location;
     SearchView searchView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,7 +115,6 @@ public class Fragment_Category_Food extends Fragment {
         });
 
 
-
         but_loc.setVisibility(View.GONE);
         but_loc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +132,7 @@ public class Fragment_Category_Food extends Fragment {
         spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0){
+                if (position != 0) {
                     but_loc.setVisibility(View.VISIBLE);
                     adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
                 }
@@ -171,7 +169,7 @@ public class Fragment_Category_Food extends Fragment {
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, getContext());
@@ -211,12 +209,12 @@ public class Fragment_Category_Food extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -227,7 +225,7 @@ public class Fragment_Category_Food extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @SuppressLint("DefaultLocale")
                                             @Override
                                             protected Map<String, String> getParams() {
@@ -267,12 +265,12 @@ public class Fragment_Category_Food extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -283,7 +281,7 @@ public class Fragment_Category_Food extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @SuppressLint("DefaultLocale")
                                             @Override
                                             protected Map<String, String> getParams() {

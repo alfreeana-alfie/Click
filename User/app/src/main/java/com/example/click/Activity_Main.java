@@ -51,9 +51,11 @@ public class Activity_Main extends AppCompatActivity {
         }).executeAsync();
     }
 
+/*
     @Override
     protected void onDestroy() {
         super.onDestroy();
         disconnectFromFacebook();
     }
+*/
 }

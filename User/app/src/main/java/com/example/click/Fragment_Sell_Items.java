@@ -39,7 +39,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,10 +48,13 @@ public class Fragment_Sell_Items extends Fragment {
 
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/itemsave.php";
     private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg.php";
-    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car, adapter_properties, adapter_elctronic, adapter_home, adapter_leisure, adapter_business, adapter_jobs, adapter_travel, adapter_other;
     SessionManager sessionManager;
     String getId;
     Uri filePath;
+    private ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car,
+            adapter_properties, adapter_elctronic, adapter_home,
+            adapter_leisure, adapter_business, adapter_jobs,
+            adapter_travel, adapter_other;
     private Bitmap bitmap;
     private TextView enter_category, enter_ad_detail;
     private EditText enter_price, edittext_ad_detail;
@@ -75,80 +77,10 @@ public class Fragment_Sell_Items extends Fragment {
         getUserId(view);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(sessionManager.ID);
+        getId = user.get(SessionManager.ID);
 
-        upload_photo_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseFile();
+        Button_Func();
 
-            }
-        });
-
-        enter_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoCategory();
-            }
-        });
-
-        back_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                category_page_layout.setVisibility(View.GONE);
-                item_page_layout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        enter_ad_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoAdDetail();
-            }
-        });
-
-        back_ad_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
-                item_page_layout.setVisibility(View.VISIBLE);
-            }
-        });
-
-        accept_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(filePath == null){
-                    Toast.makeText(getContext(), "Please enter image of product", Toast.LENGTH_LONG).show();
-                } else {
-                    saveEdit(getId, getStringImage(bitmap));
-                }
-
-            }
-        });
-
-        accept_category.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                category_page_layout.setVisibility(View.GONE);
-                item_page_layout.setVisibility(View.VISIBLE);
-
-                final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
-                enter_category.setText(mCategory);
-            }
-        });
-
-        accept_ad_detail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
-                item_page_layout.setVisibility(View.VISIBLE);
-
-                final String mAd_Detail = edittext_ad_detail.getText().toString();
-                enter_ad_detail.setText(mAd_Detail);
-            }
-        });
         return view;
     }
 
@@ -191,6 +123,82 @@ public class Fragment_Sell_Items extends Fragment {
 
             }
         });
+    }
+
+    private void Button_Func() {
+        upload_photo_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile();
+
+            }
+        });
+
+        enter_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoCategory();
+            }
+        });
+
+        back_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        enter_ad_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAdDetail();
+            }
+        });
+
+        back_ad_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad_detail_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        accept_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (filePath == null) {
+                    Toast.makeText(getContext(), "Please enter image of product", Toast.LENGTH_LONG).show();
+                } else {
+                    saveEdit(getId, getStringImage(bitmap));
+                }
+
+            }
+        });
+
+        accept_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+
+                final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
+                enter_category.setText(mCategory);
+            }
+        });
+
+        accept_ad_detail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ad_detail_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+
+                final String mAd_Detail = edittext_ad_detail.getText().toString();
+                enter_ad_detail.setText(mAd_Detail);
+            }
+        });
+
     }
 
     private void gotoAdDetail() {
@@ -312,9 +320,9 @@ public class Fragment_Sell_Items extends Fragment {
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
         final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
 
-        if(strAd_Detail.isEmpty() || strItem_location.contains("Item Location")){
+        if (strAd_Detail.isEmpty() || strItem_location.contains("Item Location")) {
             Toast.makeText(getContext(), "Incomplete info", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             loading.setVisibility(View.VISIBLE);
             accept_item.setVisibility(View.GONE);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
@@ -348,12 +356,11 @@ public class Fragment_Sell_Items extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if(error.getMessage() == null){
+                            if (error.getMessage() == null) {
 //                                    Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
-                            }else
-                            {
+                            } else {
                                 Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);

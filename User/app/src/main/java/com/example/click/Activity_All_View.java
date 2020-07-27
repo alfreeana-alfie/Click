@@ -1,6 +1,5 @@
 package com.example.click;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,7 +36,6 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
-import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -68,17 +66,16 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     String getId;
     SessionManager sessionManager;
 
-    SearchView searchView;
+    private SearchView searchView;
     private ScrollView scrollView;
     private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera,
             button_car_parts, button_business, button_computer, button_electronics, button_furniture,
             button_handcraft, button_home, button_men, button_mom, button_motorcycle,
-            button_pets, button_rent, button_services,button_sport, button_travel,
-            button_women, button_food,button_grocery, button_see_all;
+            button_pets, button_rent, button_services, button_sport, button_travel,
+            button_women, button_food, button_grocery, button_see_all;
     private GridView gridViewSearch;
     private CircleImageView profile_display;
     private TextView name_display, email_display;
-    private NavigationView navigationView;
     private DrawerLayout drawer;
     private View view;
 
@@ -108,30 +105,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         view = findViewById(R.id.support_layout);
         scrollView = findViewById(R.id.grid_category);
         searchView = findViewById(R.id.search_find);
-        gridViewSearch.setVisibility(View.GONE);
-
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-
-        profile_display = headerView.findViewById(R.id.profile_display);
-        profile_display.setBorderWidth(1);
-        name_display = headerView.findViewById(R.id.name_display);
-        email_display = headerView.findViewById(R.id.email_display);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("CLICK");
-
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
-
         button_business = findViewById(R.id.button_business);
         button_camera = findViewById(R.id.button_camera);
         button_car_parts = findViewById(R.id.button_car_parts);
@@ -154,6 +129,28 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         button_food = findViewById(R.id.button_food);
         button_grocery = findViewById(R.id.button_grocery);
         button_see_all = findViewById(R.id.button_see);
+
+        gridViewSearch.setVisibility(View.GONE);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+
+        profile_display = headerView.findViewById(R.id.profile_display);
+        profile_display.setBorderWidth(1);
+        name_display = headerView.findViewById(R.id.name_display);
+        email_display = headerView.findViewById(R.id.email_display);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("CLICK");
+
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
     }
 
     private void View_Item() {
@@ -180,7 +177,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, Activity_All_View.this);
@@ -221,12 +218,12 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(Activity_All_View.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(Activity_All_View.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -237,7 +234,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(Activity_All_View.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
@@ -276,12 +273,12 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(Activity_All_View.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(Activity_All_View.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -292,7 +289,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(Activity_All_View.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
@@ -339,7 +336,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         requestQueue.add(stringRequest);
     }
 
-    private void Category_Func(){
+    private void Category_Func() {
 
         Button_SellItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -593,10 +590,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
                                     String strName = object.getString("name").trim();
                                     String strEmail = object.getString("email").trim();
-                                    String strPhone_no = object.getString("phone_no").trim();
-                                    String strAddress = object.getString("address").trim();
-                                    String strBirthday = object.getString("birthday").trim();
-                                    String strGender = object.getString("gender");
                                     String strPhoto = object.getString("photo");
 
                                     name_display.setText(strName);
@@ -718,23 +711,23 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.setting, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                view.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Empty()).addToBackStack(null).commit();
-                adapter_item.getFilter().filter(newText);
-                return true;
-            }
-        });
+//        MenuItem menuItem = menu.findItem(R.id.menu_search);
+//        SearchView searchView = (SearchView) menuItem.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                view.setVisibility(View.VISIBLE);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+//                        new Fragment_Empty()).addToBackStack(null).commit();
+//                adapter_item.getFilter().filter(newText);
+//                return true;
+//            }
+//        });
         return true;
     }
 
@@ -756,11 +749,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.click;
 
 import android.content.Context;
-import android.content.ReceiverCallNotAllowedException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +23,12 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
 
-    public Item_Cart_Adapter(Context context, List<Item_All_Details> item_all_detailsList){
+    public Item_Cart_Adapter(Context context, List<Item_All_Details> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListerner = listener;
     }
 
@@ -76,12 +75,11 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
         holder.DeleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListerner != null){
+                if (mListerner != null) {
                     mListerner.onDeleteClick(position);
                 }
             }
         });
-
 
 
         Picasso.get().load(photo_URL).into(holder.ItemImageView);
@@ -92,14 +90,18 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
         return item_all_details.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public interface OnItemClickListener {
+        void onDeleteClick(int position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView;
         TextView AdDetail, UnitPrice, SubTotal, Quantity;
         Button decrease, increase;
         ImageButton DeleteCart;
 
-        public ViewHolder(View view){
+        public ViewHolder(View view) {
             super(view);
 
             ItemImageView = view.findViewById(R.id.item_image);
@@ -114,9 +116,5 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
 
 
         }
-    }
-
-    public interface OnItemClickListener {
-        void onDeleteClick(int position);
     }
 }

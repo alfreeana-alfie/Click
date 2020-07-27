@@ -42,21 +42,21 @@ public class Fragment_Category_Business extends Fragment {
     public static final String PRICE = "price";
     public static final String ITEM_LOCATION = "item_location";
     public static final String PHOTO = "photo";
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_business.php";
-    private static String URL_ADD = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
+    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_business.php";
+    private static String URL_ADD_FAV = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
     private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
 
     SessionManager sessionManager;
     String getId;
-    GridView gridView;
     Item_Adapter_All_View adapter_item;
     List<Item_All_Details> itemList;
 
-    SearchView searchView;
-    Spinner spinner_location;
-    ImageButton but_loc;
-    Button price_sortlowest, price_sorthighest;
-    ArrayAdapter<CharSequence> adapter_location;
+    private GridView gridView;
+    private SearchView searchView;
+    private Spinner spinner_location;
+    private ImageButton but_loc;
+    private Button price_sortlowest, price_sorthighest;
+    private ArrayAdapter<CharSequence> adapter_location;
 
 
     @Nullable
@@ -78,17 +78,22 @@ public class Fragment_Category_Business extends Fragment {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
         searchView = v.findViewById(R.id.search_find);
-
         spinner_location = v.findViewById(R.id.spinner_location);
         but_loc = v.findViewById(R.id.but_loc);
         price_sortlowest = v.findViewById(R.id.price_sortlowest);
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
-        price_sorthighest.setVisibility(View.GONE);
 
-        adapter_location = ArrayAdapter.createFromResource(getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
+        price_sorthighest.setVisibility(View.GONE);
+        but_loc.setVisibility(View.GONE);
+
+        adapter_location = ArrayAdapter.createFromResource(v.getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
         adapter_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_location.setAdapter(adapter_location);
 
+        Button_Func();
+    }
+
+    private void Button_Func(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -120,7 +125,7 @@ public class Fragment_Category_Business extends Fragment {
             }
         });
 
-        but_loc.setVisibility(View.GONE);
+
         but_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +138,7 @@ public class Fragment_Category_Business extends Fragment {
         spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position != 0){
+                if (position != 0) {
                     but_loc.setVisibility(View.VISIBLE);
                     adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
                 }
@@ -144,10 +149,11 @@ public class Fragment_Category_Business extends Fragment {
                 adapter_item.getFilter().filter(null);
             }
         });
+
     }
 
     private void View_Item(final View view) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -170,7 +176,7 @@ public class Fragment_Category_Business extends Fragment {
                                     String item_location = object.getString("item_location");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, getContext());
@@ -202,7 +208,7 @@ public class Fragment_Category_Business extends Fragment {
                                         final String strItem_location = item.getItem_location();
                                         final String strPhoto = item.getPhoto();
 
-                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -210,12 +216,12 @@ public class Fragment_Category_Business extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -226,7 +232,7 @@ public class Fragment_Category_Business extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
@@ -265,12 +271,12 @@ public class Fragment_Category_Business extends Fragment {
                                                             JSONObject jsonObject1 = new JSONObject(response);
                                                             String success = jsonObject1.getString("success");
 
-                                                            if(success.equals("1")){
+                                                            if (success.equals("1")) {
                                                                 Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                             }
 
-                                                        }catch (JSONException e){
+                                                        } catch (JSONException e) {
                                                             e.printStackTrace();
                                                             Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -281,7 +287,7 @@ public class Fragment_Category_Business extends Fragment {
                                                     public void onErrorResponse(VolleyError error) {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
-                                                }){
+                                                }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
