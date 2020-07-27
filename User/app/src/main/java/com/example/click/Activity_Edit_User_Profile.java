@@ -397,7 +397,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 progressDialog.dismiss();
-//                                Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_Edit_User_Profile.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(Activity_Edit_User_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -405,7 +405,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progressDialog.dismiss();
-//                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Activity_Edit_User_Profile.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -440,7 +440,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            UploadPicture(getId, getStringImage(bitmap));
         }
-        UploadPicture(getId, getStringImage(bitmap));
     }
 }

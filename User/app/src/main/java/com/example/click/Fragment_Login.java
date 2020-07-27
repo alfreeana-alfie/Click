@@ -1,8 +1,19 @@
 package com.example.click;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.appevents.AppEventsLogger;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +35,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -44,6 +58,8 @@ import java.util.regex.Pattern;
 
 public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
+    CallbackManager callbackManager;
+    LoginButton loginButton;
     private static final int RC_SIGN_IN = 1;
     private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/verify.php";
     private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
@@ -116,6 +132,105 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
         signInButton = v.findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = v.findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+        loginButton.setFragment(this);
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+//                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        if(response.getError() != null){
+                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                        }else{
+                            final String fbUserId = object.optString("id");
+                            final String fbUserName = object.optString("name");
+                            final String fbEmail = object.optString("email");
+                            final String phone_no = "1111111111";
+                            final String address = "";
+                            final String birthday = "";
+                            final String gender = "Female";
+                            final String strPassword = object.optString("name") + "Facebook";
+
+                            final String photo = "http://graph.facebook.com/" + fbUserId + "/picture?type=large";
+
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(response);
+                                                String success = jsonObject.getString("success");
+
+                                                if (success.equals("1")) {
+                                                    Toast.makeText(getContext(), fbEmail+" / "+fbUserName, Toast.LENGTH_LONG).show();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            if (error.getMessage() == null) {
+                                                Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("name", fbUserName);
+                                    params.put("email", fbEmail);
+                                    params.put("phone_no", phone_no);
+                                    params.put("password", strPassword);
+                                    params.put("address", address);
+                                    params.put("birthday", birthday);
+                                    params.put("gender", gender);
+                                    params.put("photo", photo);
+                                    return params;
+                                }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                            requestQueue.add(stringRequest);
+
+                            email.setText(fbEmail);
+                            password.setText(strPassword);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    button_login.performClick();
+                                }
+                            }, 20);
+
+                        }
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.v("LoginActivity", "cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void Login(View view) {
@@ -221,7 +336,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         final String phone_no = "";
         final String address = "";
         final String birthday = "";
-        final String gender = "";
+        final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
 
         final String photo = String.valueOf(account.getPhotoUrl());
@@ -299,10 +414,23 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        isLoggedIn();
+//    }
+//
+//    public boolean isLoggedIn() {
+//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//        return accessToken != null;
+//    }
+//
 
 }

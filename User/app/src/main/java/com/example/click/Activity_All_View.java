@@ -31,6 +31,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
@@ -350,21 +355,24 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onClick(View v) {
-                scrollView.setVisibility(View.GONE);
-                searchView.setVisibility(View.VISIBLE);
-                gridViewSearch.setVisibility(View.VISIBLE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        adapter_item.getFilter().filter(newText);
-                        return false;
-                    }
-                });
+//                scrollView.setVisibility(View.GONE);
+//                searchView.setVisibility(View.VISIBLE);
+//                gridViewSearch.setVisibility(View.VISIBLE);
+//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(String query) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onQueryTextChange(String newText) {
+//                        adapter_item.getFilter().filter(newText);
+//                        return false;
+//                    }
+//                });
+                view.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Category_See_All()).addToBackStack(null).commit();
             }
         });
 
@@ -682,10 +690,27 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 break;
 
             case R.id.nav_log_out:
+                disconnectFromFacebook();
                 sessionManager.logout();
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void disconnectFromFacebook() {
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
     }
 
     @Override
@@ -778,4 +803,5 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     public void onAddtoCartClick(int position) {
 
     }
+
 }
