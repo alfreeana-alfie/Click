@@ -113,7 +113,7 @@
             android:paddingTop="20dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/item_location"
+            android:text="@string/division"
             android:visibility="gone" />
 
 

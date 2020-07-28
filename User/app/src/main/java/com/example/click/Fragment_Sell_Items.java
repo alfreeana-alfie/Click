@@ -52,16 +52,16 @@ public class Fragment_Sell_Items extends Fragment {
     SessionManager sessionManager;
     String getId;
     Uri filePath;
-    private ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car,
-            adapter_properties, adapter_elctronic, adapter_home,
-            adapter_leisure, adapter_business, adapter_jobs,
-            adapter_travel, adapter_other;
+    private ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category,
+            adapter_car, adapter_properties, adapter_elctronic,
+            adapter_home, adapter_leisure, adapter_business,
+            adapter_jobs, adapter_travel, adapter_other;
     private Bitmap bitmap;
-    private TextView enter_category, enter_ad_detail;
+    private TextView enter_category, enter_ad_detail, enter_location;
     private EditText enter_price, edittext_ad_detail;
-    private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail;
-    private Spinner spinner_main_category, spinner_sub_category, spinner_item_location;
-    private RelativeLayout category_page_layout, ad_detail_page_layout;
+    private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location;
+    private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
+    private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
     private ImageView upload_photo_img;
     private ProgressBar loading;
@@ -88,8 +88,15 @@ public class Fragment_Sell_Items extends Fragment {
     private void Declare(View v) {
         enter_category = v.findViewById(R.id.enter_main_category);
         enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
+        enter_location = v.findViewById(R.id.enter_location);
         enter_price = v.findViewById(R.id.enter_price);
-        spinner_item_location = v.findViewById(R.id.spinner_item_location);
+
+        spinner_division = v.findViewById(R.id.spinner_division);
+        spinner_district = v.findViewById(R.id.spinner_district);
+        accept_location = v.findViewById(R.id.accept_location);
+        back_location = v.findViewById(R.id.back_location);
+        location_page_layout = v.findViewById(R.id.location_page_layout);
+
         accept_item = v.findViewById(R.id.accept_item);
         edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
         accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
@@ -105,9 +112,20 @@ public class Fragment_Sell_Items extends Fragment {
         ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
         item_page_layout = v.findViewById(R.id.item_page_layout);
 
-        adapter_item_location = ArrayAdapter.createFromResource(v.getContext(), R.array.location, android.R.layout.simple_spinner_item);
-        adapter_item_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_item_location.setAdapter(adapter_item_location);
+        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_division.setAdapter(adapter_division);
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showLocationResult(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         adapter_category = ArrayAdapter.createFromResource(getContext(), R.array.main_category, android.R.layout.simple_spinner_item);
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -125,6 +143,7 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
     }
+
 
     private void Button_Func() {
         upload_photo_img.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +184,33 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
 
+        enter_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLocation();
+            }
+        });
+
+        accept_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+
+                final String mLocation = spinner_division.getSelectedItem().toString() + ", " + spinner_district.getSelectedItem().toString();
+                enter_location.setText(mLocation);
+            }
+        });
+
+        back_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +250,11 @@ public class Fragment_Sell_Items extends Fragment {
 
     private void gotoAdDetail() {
         ad_detail_page_layout.setVisibility(View.VISIBLE);
+        item_page_layout.setVisibility(View.GONE);
+    }
+
+    private void gotoLocation() {
+        location_page_layout.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
     }
 
@@ -273,6 +324,86 @@ public class Fragment_Sell_Items extends Fragment {
         }
     }
 
+    private void showLocationResult(int position) {
+        switch (position) {
+            case 0:
+                break;
+
+            case 1:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 2:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 3:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 4:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 5:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 6:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 7:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 8:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 9:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 10:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 11:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 12:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.limbang, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+        }
+    }
+
     private void getUserId(View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
@@ -319,9 +450,10 @@ public class Fragment_Sell_Items extends Fragment {
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
-        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
+        final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
+        final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
 
-        if (strAd_Detail.isEmpty() || strItem_location.contains("Item Location")) {
+        if (strAd_Detail.isEmpty()) {
             Toast.makeText(getContext(), "Incomplete info", Toast.LENGTH_SHORT).show();
         } else {
             loading.setVisibility(View.VISIBLE);
@@ -376,7 +508,8 @@ public class Fragment_Sell_Items extends Fragment {
                     params.put("sub_category", strSub_category);
                     params.put("ad_detail", strAd_Detail);
                     params.put("price", String.format("%.2f", strPrice));
-                    params.put("item_location", strItem_location);
+                    params.put("division", strDivision);
+                    params.put("district", strDistrict);
                     params.put("photo", photo);
                     return params;
                 }

@@ -3,18 +3,19 @@ package com.example.click.helper;
 public class Item_All_Details {
 
     private String id, seller_id;
-    private String ad_detail, price, item_location;
+    private String ad_detail, price, division, district;
     private String photo;
     private String main_category, sub_category;
 
-    public Item_All_Details(String id, String seller_id, String main_category, String sub_category, String ad_detail, String price, String item_location, String photo) {
+    public Item_All_Details(String id, String seller_id, String main_category, String sub_category, String ad_detail, String price, String division, String district, String photo) {
         this.id = id;
         this.seller_id = seller_id;
         this.main_category = main_category;
         this.sub_category = sub_category;
         this.ad_detail = ad_detail;
         this.price = price;
-        this.item_location = item_location;
+        this.division = division;
+        this.district = district;
         this.photo = photo;
     }
 
@@ -66,12 +67,20 @@ public class Item_All_Details {
         this.price = price;
     }
 
-    public String getItem_location() {
-        return item_location;
+    public String getDivision() {
+        return division;
     }
 
-    public void setItem_location(String item_location) {
-        this.item_location = item_location;
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getPhoto() {

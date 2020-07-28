@@ -87,7 +87,7 @@ public class Item_Fav_Adapter extends BaseAdapter {
 
         TV_addetail.setText(item.getAd_detail());
         TV_price.setText("MYR" + item.getPrice());
-        TV_item_location.setText(item.getItem_location());
+        TV_item_location.setText(item.getDistrict());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
 

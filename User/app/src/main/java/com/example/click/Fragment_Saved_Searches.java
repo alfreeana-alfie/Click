@@ -40,7 +40,7 @@ public class Fragment_Saved_Searches extends Fragment {
     public static final String ID = "id";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
-    public static final String ITEM_LOCATION = "item_location";
+    public static final String ITEM_LOCATION = "district";
     public static final String PHOTO = "photo";
 
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readfav.php";
@@ -96,10 +96,11 @@ public class Fragment_Saved_Searches extends Fragment {
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Fav_Adapter(getContext(), itemList);
@@ -113,7 +114,7 @@ public class Fragment_Saved_Searches extends Fragment {
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
 
                                         startActivity(detailIntent);

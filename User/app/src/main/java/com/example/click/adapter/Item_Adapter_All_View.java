@@ -120,7 +120,7 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
         TV_addetail.setText(item.getAd_detail());
         TV_price.setText("MYR" + item.getPrice());
-        TV_item_location.setText(item.getItem_location());
+        TV_item_location.setText(item.getDistrict());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
         return convertView;
@@ -144,8 +144,8 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                     String str = constraint.toString();
                     List<Item_All_Details> resultData = new ArrayList<>();
                     for (Item_All_Details item : itemList) {
-                        if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str) || item.getItem_location().toLowerCase().contains(strSearch)) {
-//                            if(item.getItem_location().toLowerCase().contains(strSearch)){
+                        if (item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().contains(strSEARCH) || item.getAd_detail().equalsIgnoreCase(str) || item.getDivision().toLowerCase().contains(strSearch)) {
+//                            if(item.getDivision().toLowerCase().contains(strSearch)){
                             resultData.add(item);
 //                            }
 //                            resultData.add(item);

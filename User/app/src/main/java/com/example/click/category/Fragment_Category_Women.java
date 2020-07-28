@@ -276,10 +276,11 @@ public class Fragment_Category_Women extends Fragment {
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, getContext());
@@ -293,7 +294,7 @@ public class Fragment_Category_Women extends Fragment {
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(ITEM_LOCATION, item.getDivision());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
 
                                         startActivity(detailIntent);
@@ -308,7 +309,7 @@ public class Fragment_Category_Women extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strItem_location = item.getDivision();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
@@ -363,7 +364,7 @@ public class Fragment_Category_Women extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strItem_location = item.getDivision();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,

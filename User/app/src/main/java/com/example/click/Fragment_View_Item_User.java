@@ -48,7 +48,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     public static final String EXTRA_SUB = "sub_category";
     public static final String EXTRA_AD_DETAIL = "ad_detail";
     public static final String EXTRA_PRICE = "price";
-    public static final String EXTRA_ITEM_LOCATION = "item_location";
+    public static final String EXTRA_ITEM_LOCATION = "district";
     public static final String EXTRA_IMG_ITEM = "photo";
 
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
@@ -125,10 +125,11 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter(getContext(), itemList);
@@ -146,7 +147,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
                                         detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
                                         detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-                                        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getDistrict());
                                         detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
 
                                         getActivity().startActivity(detailIntent);

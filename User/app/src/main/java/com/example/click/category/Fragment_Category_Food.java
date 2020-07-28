@@ -1,6 +1,5 @@
 package com.example.click.category;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,9 +26,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Activity_View_Item;
+import com.example.click.R;
 import com.example.click.adapter.Item_Adapter_All_View;
 import com.example.click.helper.Item_All_Details;
-import com.example.click.R;
 import com.example.click.helper.SessionManager;
 
 import org.json.JSONArray;
@@ -57,11 +56,13 @@ public class Fragment_Category_Food extends Fragment {
     GridView gridView;
     Item_Adapter_All_View adapter_item;
     List<Item_All_Details> itemList;
-    Spinner spinner_location;
-    ImageButton but_loc;
-    Button price_sortlowest, price_sorthighest;
-    ArrayAdapter<CharSequence> adapter_location;
+
     SearchView searchView;
+    private Spinner spinner_division, spinner_district;
+    private ImageButton but_division, but_district;
+    private Button price_sortlowest, price_sorthighest;
+    private ArrayAdapter<CharSequence> adapter_division, adapter_district;
+
 
     @Nullable
     @Override
@@ -81,8 +82,6 @@ public class Fragment_Category_Food extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
-        spinner_location = v.findViewById(R.id.spinner_division);
-        but_loc = v.findViewById(R.id.but_division);
         searchView = v.findViewById(R.id.search_find);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -97,9 +96,28 @@ public class Fragment_Category_Food extends Fragment {
             }
         });
 
+        spinner_division = v.findViewById(R.id.spinner_division);
+        spinner_district = v.findViewById(R.id.spinner_district);
+        but_division = v.findViewById(R.id.but_division);
+        but_district = v.findViewById(R.id.but_district);
         price_sortlowest = v.findViewById(R.id.price_sortlowest);
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
+
+        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_division.setAdapter(adapter_division);
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showResult(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         price_sortlowest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,27 +137,33 @@ public class Fragment_Category_Food extends Fragment {
             }
         });
 
-
-        but_loc.setVisibility(View.GONE);
-        but_loc.setOnClickListener(new View.OnClickListener() {
+        but_division.setVisibility(View.GONE);
+        but_division.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 adapter_item.getFilter().filter(null);
-                spinner_location.setSelection(0);
-                but_loc.setVisibility(View.GONE);
+                spinner_division.setSelection(0);
+                but_division.setVisibility(View.GONE);
             }
         });
 
-        adapter_location = ArrayAdapter.createFromResource(getContext(), R.array.item_location2, android.R.layout.simple_spinner_item);
-        adapter_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_location.setAdapter(adapter_location);
+        but_district.setVisibility(View.GONE);
+        but_district.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter_item.getFilter().filter(null);
+                spinner_district.setSelection(0);
+                but_district.setVisibility(View.GONE);
+            }
+        });
 
-        spinner_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+/*
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
-                    but_loc.setVisibility(View.VISIBLE);
-                    adapter_item.getFilter().filter(spinner_location.getSelectedItem().toString());
+                    but_division.setVisibility(View.VISIBLE);
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
                 }
             }
 
@@ -148,6 +172,87 @@ public class Fragment_Category_Food extends Fragment {
                 adapter_item.getFilter().filter(null);
             }
         });
+*/
+    }
+
+    private void showResult(int position){
+        switch (position){
+            case 0:
+                break;
+
+            case 1:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 2:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 3:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 4:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 5:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 6:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 7:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 8:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 9:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 10:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 11:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 12:
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.limbang, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+        }
     }
 
     private void View_Item(final View view) {
@@ -171,10 +276,11 @@ public class Fragment_Category_Food extends Fragment {
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, getContext());
@@ -188,7 +294,7 @@ public class Fragment_Category_Food extends Fragment {
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(ITEM_LOCATION, item.getDivision());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
 
                                         startActivity(detailIntent);
@@ -203,7 +309,7 @@ public class Fragment_Category_Food extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strItem_location = item.getDivision();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
@@ -231,9 +337,8 @@ public class Fragment_Category_Food extends Fragment {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
                                                 }) {
-                                            @SuppressLint("DefaultLocale")
                                             @Override
-                                            protected Map<String, String> getParams() {
+                                            protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
                                                 params.put("customer_id", getId);
                                                 params.put("main_category", strMain_category);
@@ -259,7 +364,7 @@ public class Fragment_Category_Food extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strItem_location = item.getDivision();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
@@ -287,9 +392,8 @@ public class Fragment_Category_Food extends Fragment {
                                                         Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
                                                 }) {
-                                            @SuppressLint("DefaultLocale")
                                             @Override
-                                            protected Map<String, String> getParams() {
+                                            protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
                                                 params.put("customer_id", getId);
                                                 params.put("main_category", strMain_category);

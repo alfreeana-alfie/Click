@@ -2,6 +2,7 @@ package com.example.click;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -52,19 +53,20 @@ public class Activity_Edit_Item extends AppCompatActivity {
     private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/edituser.php";
     private static String URL_IMG = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg02.php";
 
-    ArrayAdapter<CharSequence> adapter_item_location, adapter_category, adapter_car,
+    ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category, adapter_car,
             adapter_properties, adapter_electronic, adapter_home,
             adapter_leisure, adapter_business, adapter_jobs,
             adapter_travel, adapter_other;
     Uri filePath;
     String id;
     private Bitmap bitmap;
-    private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView, Category_TextView;
+    private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView, Category_TextView, Location_TextView;
     private EditText EditText_Price, EditText_Ad_Detail;
     private Button Button_AcceptItem, Button_AcceptCategory, Button_BackCategory,
-            Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit, Button_SavedEdit;
-    private Spinner spinner_main_category, spinner_sub_category, spinner_item_location;
-    private RelativeLayout category_page_layout, ad_detail_page_layout;
+            Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
+            Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
+    private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
+    private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
     private ImageView Upload_Photo;
     private ProgressBar loading;
@@ -82,20 +84,20 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String sub_category = intent.getStringExtra(EXTRA_SUB);
         final String ad_detail = intent.getStringExtra(EXTRA_AD_DETAIL);
         final String price = intent.getStringExtra(EXTRA_PRICE);
-        final String item_location = intent.getStringExtra(EXTRA_ITEM_LOCATION);
+        final String division = intent.getStringExtra(EXTRA_ITEM_LOCATION);
+        final String district = intent.getStringExtra(EXTRA_ITEM_LOCATION);
         final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
         String Category_Text = main_category + ", " + sub_category;
+        String Location_Text = division + ", " + district;
 
         Category_TextView.setText(Category_Text);
         Main_Category_TextView.setText(main_category);
         Sub_Category_TextView.setText(sub_category);
         Ad_Detail_TextView.setText(ad_detail);
+        Location_TextView.setText(Location_Text);
         EditText_Ad_Detail.setText(ad_detail);
         EditText_Price.setText(price);
         Picasso.get().load(photo).into(Upload_Photo);
-
-        int selectposition = adapter_item_location.getPosition(item_location);
-        spinner_item_location.setSelection(selectposition);
 
         Button_Func();
     }
@@ -105,8 +107,10 @@ public class Activity_Edit_Item extends AppCompatActivity {
         Sub_Category_TextView = findViewById(R.id.enter_sub_category);
         Category_TextView = findViewById(R.id.enter_category);
         Ad_Detail_TextView = findViewById(R.id.enter_ad_detail);
+        Location_TextView = findViewById(R.id.enter_location);
         EditText_Price = findViewById(R.id.enter_price);
-        spinner_item_location = findViewById(R.id.spinner_item_location);
+        spinner_division = findViewById(R.id.spinner_division);
+        spinner_district = findViewById(R.id.spinner_district);
         Button_AcceptItem = findViewById(R.id.accept_item);
         EditText_Ad_Detail = findViewById(R.id.edittext_ad_detail);
         Button_AcceptAdDetail = findViewById(R.id.accept_ad_detail);
@@ -115,17 +119,31 @@ public class Activity_Edit_Item extends AppCompatActivity {
         spinner_sub_category = findViewById(R.id.spinner_sub_category);
         Button_AcceptCategory = findViewById(R.id.accept_category);
         Button_BackCategory = findViewById(R.id.back_category);
+        Button_AcceptLocation = findViewById(R.id.accept_location);
+        Button_BackLocation = findViewById(R.id.back_location);
         Upload_Photo = findViewById(R.id.upload_photo);
         loading = findViewById(R.id.loading);
         category_page_layout = findViewById(R.id.category_page_layout);
         ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
+        location_page_layout = findViewById(R.id.location_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
         Button_BackEdit = findViewById(R.id.back_edit);
         Button_SavedEdit = findViewById(R.id.button_edit_item);
 
-        adapter_item_location = ArrayAdapter.createFromResource(this, R.array.location, android.R.layout.simple_spinner_item);
-        adapter_item_location.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_item_location.setAdapter(adapter_item_location);
+        adapter_division = ArrayAdapter.createFromResource(this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_division.setAdapter(adapter_division);
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showLocationResult(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         adapter_category = ArrayAdapter.createFromResource(this, R.array.main_category, android.R.layout.simple_spinner_item);
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -183,6 +201,15 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
+        Button_BackLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+
         Button_BackEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +237,18 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 Category_TextView.setText(mCategory);
             }
         });
+
+        Button_AcceptLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                location_page_layout.setVisibility(View.GONE);
+                item_page_layout.setVisibility(View.VISIBLE);
+
+                final String mLocation = spinner_division.getSelectedItem().toString() + ", " + spinner_district.getSelectedItem().toString();
+                Location_TextView.setText(mLocation);
+            }
+        });
+
 
         Button_AcceptAdDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,6 +324,86 @@ public class Activity_Edit_Item extends AppCompatActivity {
         }
     }
 
+    private void showLocationResult(int position) {
+        switch (position) {
+            case 0:
+                break;
+
+            case 1:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 2:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 3:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 4:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 5:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 6:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 7:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 8:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 9:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 10:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 11:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+            case 12:
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.limbang, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
+                break;
+
+        }
+    }
+
     private void saveEdit() {
         Intent intent = getIntent();
         id = intent.getStringExtra(EXTRA_ID);
@@ -292,7 +411,9 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final String strPrice = this.EditText_Price.getText().toString().trim();
-        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
+        final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
+        final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
+
 
         loading.setVisibility(View.VISIBLE);
         Button_SavedEdit.setVisibility(View.GONE);
@@ -350,7 +471,8 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 params.put("sub_category", strSub_category);
                 params.put("ad_detail", strAd_Detail);
                 params.put("price", String.format("%.2f", strPrice));
-                params.put("item_location", strItem_location);
+                params.put("division", strDivision);
+                params.put("district", strDistrict);
                 params.put("id", id);
                 return params;
             }
@@ -366,7 +488,7 @@ public class Activity_Edit_Item extends AppCompatActivity {
 //        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
 //        final String strPrice = this.EditText_Price.getText().toString().trim();
-//        final String strItem_location = this.spinner_item_location.getSelectedItem().toString().trim();
+//        final String strItem_location = this.spinner_division.getSelectedItem().toString().trim();
 
 //        loading.setVisibility(View.VISIBLE);
 //        Button_SavedEdit.setVisibility(View.GONE);

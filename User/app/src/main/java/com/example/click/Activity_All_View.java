@@ -78,7 +78,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     public static final String ID = "id";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
-    public static final String ITEM_LOCATION = "item_location";
+    public static final String ITEM_LOCATION = "district";
     public static final String PHOTO = "photo";
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/readall.php";
@@ -198,10 +198,11 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, Activity_All_View.this);
@@ -216,7 +217,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getItem_location());
+                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
 
                                         startActivity(detailIntent);
@@ -231,7 +232,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
@@ -267,7 +269,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                 params.put("sub_category", strSub_category);
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
-                                                params.put("item_location", strItem_location);
+                                                params.put("division", strDivision);
+                                                params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 return params;
@@ -286,7 +289,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getItem_location();
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
@@ -322,7 +326,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                                 params.put("sub_category", strSub_category);
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
-                                                params.put("item_location", strItem_location);
+                                                params.put("division", strDivision);
+                                                params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 return params;

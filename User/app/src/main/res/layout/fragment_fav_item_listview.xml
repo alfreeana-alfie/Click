@@ -73,7 +73,7 @@
                 android:paddingTop="0dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="0dp"
-                android:text="@string/item_location"
+                android:text="@string/division"
                 android:textAlignment="center"
                 android:textSize="12sp" />
 

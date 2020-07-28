@@ -194,19 +194,35 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="@string/item_location"
+                android:text="@string/division"
                 android:textSize="16sp" />
 
-            <Spinner
-                android:id="@+id/spinner_item_location"
+<!--            <Spinner-->
+<!--                android:id="@+id/spinner_division"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_marginLeft="15dp"-->
+<!--                android:layout_marginRight="15dp"-->
+<!--                android:textAlignment="textEnd"-->
+<!--                tools:ignore="RtlCompat" />-->
+
+            <TextView
+                android:id="@+id/enter_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:textAlignment="textEnd"
-                tools:ignore="RtlCompat" />
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/select_location"
+                android:paddingLeft="15dp"
 
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                tools:ignore="RtlCompat" />
         </LinearLayout>
 
         <ProgressBar
@@ -350,6 +366,132 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_below="@id/accept_category"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/back"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/location_page_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/login_part_border"
+        android:elevation="5dp"
+        android:padding="20dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/location_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewloc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/location"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/login_part_border_orange" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/choose_a_location"
+                android:textAlignment="center"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/division_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_text_layout"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/division"
+            android:textColor="@color/colorGrey"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <Spinner
+            android:id="@+id/spinner_division"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/division_display"
+            android:background="@drawable/bg_spinner"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:spinnerMode="dropdown" />
+
+
+        <TextView
+            android:id="@+id/district_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinner_division"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/district"
+            android:textColor="@color/colorGrey"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+
+        <Spinner
+            android:id="@+id/spinner_district"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/district_display"
+            android:background="@drawable/bg_spinner"
+            android:paddingStart="10dp"
+
+            android:paddingEnd="10dp" />
+
+        <Button
+            android:id="@+id/accept_location"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/spinner_district"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/accept"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/back_location"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/accept_location"
             android:layout_marginTop="5dp"
             android:background="@drawable/login_part_border_orange"
             android:fontFamily="@font/montserrat"

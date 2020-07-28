@@ -98,10 +98,11 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
-                                    String item_location = object.getString("item_location");
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, item_location, image_item);
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemAllDetailsArrayList.add(item);
                                 }
                                 item_cart_adapter = new Item_Cart_Adapter(Activity_Add_to_Cart.this, itemAllDetailsArrayList);
