@@ -47,8 +47,8 @@ public class Fragment_Category_Computer extends Fragment {
     public static final String PRICE = "price";
     public static final String ITEM_LOCATION = "item_location";
     public static final String PHOTO = "photo";
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_computer.php";
-    private static String URL_ADD = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
+    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_computer.php";
+    private static String URL_ADD_FAV = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
     private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
 
     SessionManager sessionManager;
@@ -111,6 +111,11 @@ public class Fragment_Category_Computer extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 showResult(position);
+                if (position != 0) {
+                    but_division.setVisibility(View.VISIBLE);
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
+                }
+
             }
 
             @Override
@@ -144,6 +149,8 @@ public class Fragment_Category_Computer extends Fragment {
                 adapter_item.getFilter().filter(null);
                 spinner_division.setSelection(0);
                 but_division.setVisibility(View.GONE);
+                but_district.setVisibility(View.GONE);
+                spinner_district.setSelection(0);
             }
         });
 
@@ -151,7 +158,7 @@ public class Fragment_Category_Computer extends Fragment {
         but_district.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter_item.getFilter().filter(null);
+                adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
                 spinner_district.setSelection(0);
                 but_district.setVisibility(View.GONE);
             }
@@ -184,79 +191,258 @@ public class Fragment_Category_Computer extends Fragment {
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 2:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
                 break;
 
             case 3:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 4:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 5:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 6:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 7:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 8:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 9:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 10:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 11:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
             case 12:
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
+                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            but_district.setVisibility(View.VISIBLE);
+                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        adapter_item.getFilter().filter(null);
+                    }
+                });
+
                 break;
 
         }
     }
 
     private void View_Item(final View view) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -312,7 +498,7 @@ public class Fragment_Category_Computer extends Fragment {
                                         final String strItem_location = item.getDivision();
                                         final String strPhoto = item.getPhoto();
 
-                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -437,5 +623,4 @@ public class Fragment_Category_Computer extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
-
 }

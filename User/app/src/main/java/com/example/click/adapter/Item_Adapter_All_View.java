@@ -149,6 +149,12 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                             resultData.add(item);
 //                            }
 //                            resultData.add(item);
+                        }else if(item.getDivision().toLowerCase().contains(strSearch)){
+                            if (item.getDistrict().toLowerCase().contains(strSearch)){
+                                resultData.add(item);
+                            }else {
+                                resultData.add(item);
+                            }
                         }
                         filterResults.count = resultData.size();
                         filterResults.values = resultData;
