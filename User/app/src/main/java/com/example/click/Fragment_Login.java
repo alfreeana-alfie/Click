@@ -1,6 +1,5 @@
 package com.example.click;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +31,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.Firebase;
@@ -349,9 +347,52 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                 else{
                                                     try {
                                                         JSONObject obj = new JSONObject(s);
-
                                                         if(!obj.has(name)){
-//                                                            Login(view);
+                                                            name_firebase = name;
+                                                            email_firebase = email;
+                                                            password_firebase = email;
+
+                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String s) {
+                                                                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                                                    if (s.equals("null")) {
+                                                                        reference.child(name_firebase).child("email").setValue(password_firebase);
+                                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+//                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                                                                    } else {
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
+
+                                                                            if (!obj.has(name_firebase)) {
+                                                                                reference.child(name_firebase).child("email").setValue(password_firebase);
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+//                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                                                                            } else {
+//                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
+                                                                            }
+
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                    }
+
+//                pd.dismiss();
+                                                                }
+
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError volleyError) {
+                                                                    System.out.println("" + volleyError);
+//                pd.dismiss();
+                                                                }
+                                                            });
+
+                                                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                                                            rQueue.add(request);
 //                                                            Toast.makeText(getContext(), "user not found", Toast.LENGTH_LONG).show();
                                                         }
                                                         else if(obj.getJSONObject(name).getString("email").equals(email)){
