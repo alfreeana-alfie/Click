@@ -21,7 +21,7 @@ import java.util.List;
 public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.ViewHolder> {
 
     Context context;
-    int mQuantity = 0;
+    int mQuantity = 1;
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
 
@@ -52,7 +52,14 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
 //        final Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * 2;
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText("MYR" + price);
-//        holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+        holder.SubTotal.setText("MYR" + price);
+        holder.Quantity.setText(String.valueOf(mQuantity));
+        if(mQuantity == 0){
+            mQuantity = 1;
+            Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+            holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+            holder.Quantity.setText(String.valueOf(mQuantity));
+        }
 
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +74,17 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
         holder.decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuantity = mQuantity - 1;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-                holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity));
+                if(mQuantity == 0){
+                    mQuantity += 1;
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                    holder.Quantity.setText(String.valueOf(mQuantity));
+                }else{
+                    mQuantity = mQuantity - 1;
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                    holder.Quantity.setText(String.valueOf(mQuantity));
+                }
             }
         });
 

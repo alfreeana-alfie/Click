@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +36,7 @@ import java.util.regex.Pattern;
 public class Fragment_Register extends Fragment {
 
     private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
-
+    String name_firebase, password_firebase, email_firebase;
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
@@ -46,10 +47,56 @@ public class Fragment_Register extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Declare(view);
 
+        Firebase.setAndroidContext(view.getContext());
+
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                name_firebase = name.getText().toString();
+                email_firebase = email.getText().toString();
+                password_firebase = password.getText().toString();
                 Register(v);
+                String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                        if (s.equals("null")) {
+                            reference.child(name_firebase).child("email").setValue(password_firebase);
+                            reference.child(name_firebase).child("email").setValue(email_firebase);
+                            Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                        } else {
+                            try {
+                                JSONObject obj = new JSONObject(s);
+
+                                if (!obj.has(name_firebase)) {
+                                    reference.child(name_firebase).child("email").setValue(password_firebase);
+                                    reference.child(name_firebase).child("email").setValue(email_firebase);
+                                    Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+//                pd.dismiss();
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        System.out.println("" + volleyError);
+//                pd.dismiss();
+                    }
+                });
+
+                RequestQueue rQueue = Volley.newRequestQueue(v.getContext());
+                rQueue.add(request);
 
             }
         });
@@ -70,6 +117,12 @@ public class Fragment_Register extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     private void Declare(View v) {
@@ -129,7 +182,7 @@ public class Fragment_Register extends Fragment {
             password.setError("Fields cannot be empty!");
         } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
             password.requestFocus();
-            password.setError("At least 8 character lengths for password");
+            password.setError("At least 8 character lengths for email");
         }
 
 /*
@@ -139,7 +192,7 @@ public class Fragment_Register extends Fragment {
             confirm_password.setError("Fields cannot be empty!");
         } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
             confirm_password.requestFocus();
-            confirm_password.setError("At least 8 character lengths for password");
+            confirm_password.setError("At least 8 character lengths for email");
         }
 */
 
@@ -158,6 +211,8 @@ public class Fragment_Register extends Fragment {
             loading.setVisibility(View.VISIBLE);
             button_register.setVisibility(View.GONE);
 
+
+            //MySQL
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -231,5 +286,4 @@ public class Fragment_Register extends Fragment {
             requestQueue.add(stringRequest);
         }
     }
-
 }

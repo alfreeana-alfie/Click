@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:918843433379:android:7ad95add46ff9ae93e3a16",
+        "mobilesdk_app_id": "1:918843433379:android:d22a88ebb1d173893e3a16",
         "android_client_info": {
           "package_name": "com.example.click"
         }
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANJRjuckPNDO0CRf6TxHyxT4MQeUu8o64"
+          "current_key": "AIzaSyDPCzWIYp3wzzttCSnScaB2yLOTKPSDpxg"
         }
       ],
       "services": {

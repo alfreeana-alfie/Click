@@ -105,16 +105,16 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/item_location_item"
+            android:id="@+id/contact_seller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:paddingStart="10dp"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/division"
-            android:visibility="gone" />
+            android:text="Contact to Seller"
+            android:textColor="@color/colorBlue" />
 
 
     </LinearLayout>
@@ -127,7 +127,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/add_to_cart_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -135,7 +135,7 @@
             android:text="@string/add_to_cart" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buy_now_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

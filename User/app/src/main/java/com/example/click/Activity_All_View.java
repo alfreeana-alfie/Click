@@ -76,6 +76,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Activity_All_View extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Item_Adapter_All_View.OnItemClickListener {
 
     public static final String ID = "id";
+    public static final String USERID = "userid";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
     public static final String ITEM_LOCATION = "district";
@@ -215,6 +216,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                         Intent detailIntent = new Intent(Activity_All_View.this, Activity_View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
                                         detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
@@ -690,7 +692,13 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 break;
 
             case R.id.nav_chat_inbox:
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                view.setVisibility(View.GONE);
+                searchView.setVisibility(View.GONE);
+                gridViewSearch.setVisibility(View.GONE);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new Fragment_Users()).addToBackStack(null).commit();
+                Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_favourite_ads:

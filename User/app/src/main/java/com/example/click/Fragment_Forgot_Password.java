@@ -243,7 +243,7 @@ public class Fragment_Forgot_Password extends Fragment {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
-                    params.put("password", mNew_Password);
+                    params.put("email", mNew_Password);
                     return params;
                 }
             };

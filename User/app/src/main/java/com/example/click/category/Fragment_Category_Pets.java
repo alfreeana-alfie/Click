@@ -43,6 +43,7 @@ import java.util.Map;
 public class Fragment_Category_Pets extends Fragment {
 
     public static final String ID = "id";
+    public static final String USERID = "userid";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
     public static final String ITEM_LOCATION = "item_location";
@@ -478,6 +479,7 @@ public class Fragment_Category_Pets extends Fragment {
                                         Intent detailIntent = new Intent(getContext(), Activity_View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
                                         detailIntent.putExtra(ITEM_LOCATION, item.getDivision());
@@ -495,7 +497,8 @@ public class Fragment_Category_Pets extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getDivision();
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
@@ -531,7 +534,8 @@ public class Fragment_Category_Pets extends Fragment {
                                                 params.put("sub_category", strSub_category);
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
-                                                params.put("item_location", strItem_location);
+                                                params.put("division", strDivision);
+                                                params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 return params;
@@ -550,7 +554,8 @@ public class Fragment_Category_Pets extends Fragment {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strItem_location = item.getDivision();
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
@@ -586,7 +591,8 @@ public class Fragment_Category_Pets extends Fragment {
                                                 params.put("sub_category", strSub_category);
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
-                                                params.put("item_location", strItem_location);
+                                                params.put("division", strDivision);
+                                                params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 return params;

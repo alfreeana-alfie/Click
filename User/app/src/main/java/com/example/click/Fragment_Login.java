@@ -1,5 +1,6 @@
 package com.example.click;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,8 +32,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -65,12 +68,15 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     private SessionManager sessionManager;
     private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
+    String name_firebase, password_firebase, email_firebase;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         Declare(view);
+
+        Firebase.setAndroidContext(view.getContext());
 
         sessionManager = new SessionManager(view.getContext());
 
@@ -88,6 +94,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                ChatLogin(v);
                 Login(v);
             }
         });
@@ -154,6 +161,52 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
 
                             final String photo = "http://graph.facebook.com/" + fbUserId + "/picture?type=large";
 
+                            name_firebase = fbUserName;
+                            email_firebase = fbEmail;
+                            password_firebase = fbEmail;
+
+                            String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String s) {
+                                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                    if (s.equals("null")) {
+                                        reference.child(name_firebase).child("email").setValue(password_firebase);
+                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+//                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        try {
+                                            JSONObject obj = new JSONObject(s);
+
+                                            if (!obj.has(name_firebase)) {
+                                                reference.child(name_firebase).child("email").setValue(password_firebase);
+                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+//                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                                            } else {
+//                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
+                                            }
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+//                pd.dismiss();
+                                }
+
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    System.out.println("" + volleyError);
+//                pd.dismiss();
+                                }
+                            });
+
+                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                            rQueue.add(request);
+
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
                                     new Response.Listener<String>() {
                                         @Override
@@ -214,6 +267,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 parameters.putString("fields", "id,name,email,gender, birthday");
                 request.setParameters(parameters);
                 request.executeAsync();
+
             }
 
             @Override
@@ -228,7 +282,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         });
     }
 
-    private void Login(View view) {
+    private void Login(final View view) {
         final String mEmail = this.email.getText().toString().trim();
         final String mPassword = this.password.getText().toString().trim();
 
@@ -279,6 +333,52 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                         Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
+
+                                        //Firebase
+                                        String url = "https://click-1595830894120.firebaseio.com/users.json";
+//                                        final ProgressDialog pd = new ProgressDialog(getContext());
+//                                        pd.setMessage("Loading...");
+//                                        pd.show();
+
+                                        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>(){
+                                            @Override
+                                            public void onResponse(String s) {
+                                                if(s.equals("null")){
+                                                    Toast.makeText(getContext(), "user not found", Toast.LENGTH_LONG).show();
+                                                }
+                                                else{
+                                                    try {
+                                                        JSONObject obj = new JSONObject(s);
+
+                                                        if(!obj.has(name)){
+//                                                            Login(view);
+//                                                            Toast.makeText(getContext(), "user not found", Toast.LENGTH_LONG).show();
+                                                        }
+                                                        else if(obj.getJSONObject(name).getString("email").equals(email)){
+                                                            UserDetails.username = name;
+                                                            UserDetails.email = email;
+//                                                            Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
+                                                        }
+                                                        else {
+                                                            Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+
+//                                                pd.dismiss();
+                                            }
+                                        },new Response.ErrorListener(){
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
+                                                System.out.println("" + volleyError);
+//                                                pd.dismiss();
+                                            }
+                                        });
+
+                                        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                                        rQueue.add(request);
                                     }
                                 } else {
 //                                    Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
@@ -333,8 +433,53 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         final String birthday = "";
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
-
         final String photo = String.valueOf(account.getPhotoUrl());
+
+        name_firebase = name;
+        email_firebase = email;
+        password_firebase = email;
+
+        String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                if (s.equals("null")) {
+                    reference.child(name_firebase).child("email").setValue(password_firebase);
+                    reference.child(name_firebase).child("email").setValue(email_firebase);
+//                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                } else {
+                    try {
+                        JSONObject obj = new JSONObject(s);
+
+                        if (!obj.has(name_firebase)) {
+                            reference.child(name_firebase).child("email").setValue(password_firebase);
+                            reference.child(name_firebase).child("email").setValue(email_firebase);
+//                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                        } else {
+//                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+//                pd.dismiss();
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println("" + volleyError);
+//                pd.dismiss();
+            }
+        });
+
+        RequestQueue rQueue = Volley.newRequestQueue(getContext());
+        rQueue.add(request);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
                 new Response.Listener<String>() {
@@ -345,7 +490,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Intent intent = new Intent(getContext(), Activity_All_View.class);
+                               Intent intent = new Intent(getContext(), Activity_All_View.class);
                                 startActivity(intent);
                             }
                         } catch (JSONException e) {
@@ -396,6 +541,54 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                     button_login.performClick();
                 }
             }, second * 100);
+
+//            name_firebase = account.getDisplayName();
+//            email_firebase = email.getText().toString();
+//            password_firebase = password.getText().toString();
+//
+//            String url = "https://click-1595830894120.firebaseio.com/users.json";
+//
+//            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//                @Override
+//                public void onResponse(String s) {
+//                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+//
+//                    if (s.equals("null")) {
+//                        reference.child(name_firebase).child("email").setValue(password_firebase);
+//                        reference.child(name_firebase).child("email").setValue(email_firebase);
+////                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+//                    } else {
+//                        try {
+//                            JSONObject obj = new JSONObject(s);
+//
+//                            if (!obj.has(name_firebase)) {
+//                                reference.child(name_firebase).child("email").setValue(password_firebase);
+//                                reference.child(name_firebase).child("email").setValue(email_firebase);
+////                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+//                            } else {
+////                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+////                pd.dismiss();
+//                }
+//
+//            }, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError volleyError) {
+//                    System.out.println("" + volleyError);
+////                pd.dismiss();
+//                }
+//            });
+//
+//            RequestQueue rQueue = Volley.newRequestQueue(getContext());
+//            rQueue.add(request);
+
+
         } else {
             Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
         }
@@ -415,17 +608,5 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
             handleSignInResult(result);
         }
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        isLoggedIn();
-//    }
-//
-//    public boolean isLoggedIn() {
-//        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//        return accessToken != null;
-//    }
-//
 
 }
