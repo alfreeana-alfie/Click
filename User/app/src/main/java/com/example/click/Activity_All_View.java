@@ -747,24 +747,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.setting, menu);
-
-//        MenuItem menuItem = menu.findItem(R.id.menu_search);
-//        SearchView searchView = (SearchView) menuItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                view.setVisibility(View.VISIBLE);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-//                        new Fragment_Empty()).addToBackStack(null).commit();
-//                adapter_item.getFilter().filter(newText);
-//                return true;
-//            }
-//        });
         return true;
     }
 

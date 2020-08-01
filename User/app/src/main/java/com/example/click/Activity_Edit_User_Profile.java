@@ -129,7 +129,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Shopping Cart");
+        getSupportActionBar().setTitle("Edit Profile");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -449,4 +449,11 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         }
         UploadPicture(getId, getStringImage(bitmap));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().getBackStackEntryCount();
+    }
+
 }

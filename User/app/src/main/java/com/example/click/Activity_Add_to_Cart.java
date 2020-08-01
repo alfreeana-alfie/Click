@@ -197,4 +197,10 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().getBackStackEntryCount();
+    }
 }

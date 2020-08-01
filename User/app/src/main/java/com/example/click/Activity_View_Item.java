@@ -1,5 +1,7 @@
 package com.example.click;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -136,7 +138,6 @@ public class Activity_View_Item extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Activity_View_Item.this, Activity_All_View.class);
-        startActivity(intent);
+        getSupportFragmentManager().getBackStackEntryCount();
     }
 }

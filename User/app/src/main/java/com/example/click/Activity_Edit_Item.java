@@ -572,4 +572,9 @@ public class Activity_Edit_Item extends AppCompatActivity {
         saveImage(getStringImage(bitmap));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().getBackStackEntryCount();
+    }
 }
