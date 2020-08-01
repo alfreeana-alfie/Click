@@ -97,10 +97,10 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             button_car_parts, button_business, button_computer, button_electronics, button_furniture,
             button_handcraft, button_home, button_men, button_mom, button_motorcycle,
             button_pets, button_rent, button_services, button_sport, button_travel,
-            button_women, button_food, button_grocery, button_see_all;
+            button_women, button_food, button_grocery;
     private GridView gridViewSearch;
     private CircleImageView profile_display;
-    private TextView name_display, email_display;
+    private TextView name_display, email_display, button_view_all;
     private DrawerLayout drawer;
     private View view;
 
@@ -153,7 +153,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         button_women = findViewById(R.id.button_women);
         button_food = findViewById(R.id.button_food);
         button_grocery = findViewById(R.id.button_grocery);
-        button_see_all = findViewById(R.id.button_see);
+        button_view_all = findViewById(R.id.button_see);
 
         gridViewSearch.setVisibility(View.GONE);
 
@@ -593,7 +593,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             }
         });
 
-        button_see_all.setOnClickListener(new View.OnClickListener() {
+        button_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);

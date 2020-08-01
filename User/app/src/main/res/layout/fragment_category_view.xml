@@ -1,170 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="10dp"
-    android:orientation="vertical">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/background_orange">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_find"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:queryBackground="@android:color/transparent"
-
-            android:background="@drawable/background_white"
+            android:background="@drawable/background_white_full_curves"
+            android:layout_margin="10dp"
+            app:searchHintIcon="@color/colorAccent"
             app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
             app:queryHint="Search Here" />
 
-    <TableLayout
-        android:layout_below="@id/search_find"
-        android:background="@drawable/background_white"
-        android:id="@+id/table_filter"
+        <TableLayout
+            android:background="@drawable/background_orange"
+            android:id="@+id/table_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_find"
+            android:stretchColumns="1,2,3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/division"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/district"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/district"
+                    android:textAlignment="center" />
+
+
+                <TextView
+                    android:id="@+id/price_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/price_rm"
+                    android:textAlignment="center" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="1"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_division"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/but_division"
+                        android:backgroundTint="@color/colorAccent"
+                        android:prompt="@string/location"
+                        android:textAlignment="center" />
+
+                    <ImageButton
+                        android:id="@+id/but_division"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_exit_gray_foreground" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_column="2"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_district"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_toStartOf="@id/but_district"
+                        android:backgroundTint="@color/colorAccent"
+                        android:prompt="@string/location"
+                        android:textAlignment="center" />
+
+                    <ImageButton
+                        android:id="@+id/but_district"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_exit_gray_foreground" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_column="3">
+
+                    <Button
+                        android:id="@+id/price_sortlowest"
+                        style="@style/MyButtonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_down_foreground"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="@string/price"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/price_sorthighest"
+                        style="@style/MyButtonStyleSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_up_foreground"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:text="Price"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+            </TableRow>
+
+        </TableLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/table_filter"
+        android:background="@drawable/background_white_curve"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1,2,3"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TableRow
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/location"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/district"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_column="2"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/location"
-                android:textAlignment="center" />
-
-
-            <TextView
-                android:id="@+id/price_range"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_column="3"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/price_rm"
-                android:textAlignment="center"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_column="1">
-
-                <Spinner
-                    android:id="@+id/spinner_division"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/but_division"
-                    android:textAlignment="center"
-                    android:prompt="@string/location" />
-
-                <ImageButton
-                    android:id="@+id/but_division"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="@android:color/white"
-                    app:srcCompat="@drawable/ic_exit_gray_foreground" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_column="2">
-
-                <Spinner
-                    android:id="@+id/spinner_district"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/but_district"
-                    android:textAlignment="center"
-                    android:prompt="@string/location" />
-
-                <ImageButton
-                    android:id="@+id/but_district"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:backgroundTint="@android:color/white"
-                    app:srcCompat="@drawable/ic_exit_gray_foreground" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_column="3"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp">
-
-                <Button
-                    android:id="@+id/price_sortlowest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/MyButtonStyleSmall"
-                    android:drawableEnd="@drawable/ic_down_foreground"
-                    android:textSize="12sp"
-                    android:textColor="@color/colorGrey"
-                    android:text="@string/price" />
-
-                <Button
-                    android:id="@+id/price_sorthighest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/MyButtonStyleSmall"
-                    android:drawableEnd="@drawable/ic_up_foreground"
-                    android:textSize="12sp"
-                    android:textColor="@color/colorGrey"
-                    android:text="Price" />
-            </RelativeLayout>
-
-        </TableRow>
-
-    </TableLayout>
+        android:layout_height="match_parent">
 
         <GridView
             android:id="@+id/gridView_CarItem"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:paddingTop="40dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:columnWidth="80dp"
             android:horizontalSpacing="1dp"
             android:numColumns="2"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"
-            android:layout_below="@id/table_filter"/>
+            android:verticalSpacing="1dp" />
+
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

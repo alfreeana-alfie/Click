@@ -44,7 +44,7 @@ public class Activity_View_Item extends AppCompatActivity {
     ArrayList<String> al = new ArrayList<>();
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
     String userid, ad_detail;
-    Button add_to_cart_btn, buy_now_btn;
+    Button add_to_cart_btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,14 +74,10 @@ public class Activity_View_Item extends AppCompatActivity {
         contact_seller = findViewById(R.id.contact_seller);
         add_to_cart_btn = findViewById(R.id.add_to_cart_btn);
 
-        buy_now_btn = findViewById(R.id.buy_now_btn);
         contact_seller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getUserDetail();
-                /*UserDetails.chatWith = userid;
-                Intent intent = new Intent(Activity_View_Item.this, Chat.class);
-                startActivity(intent);*/
             }
         });
     }

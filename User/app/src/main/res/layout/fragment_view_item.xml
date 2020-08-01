@@ -1,150 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/grid_category"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <ScrollView
+        android:id="@+id/grid_category"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/background_orange"
+                android:paddingBottom="30dp"
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
 
-                <RelativeLayout
-                    android:id="@+id/relativeLayout"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/welcome_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/background_white"
-                    android:elevation="5dp">
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:layout_marginTop="30dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/good_morning"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp" />
 
-                    <LinearLayout
-                        android:id="@+id/linear1"
-                        android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/welcome_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/welcome_text"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/buy_sell_find_almost_everything"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/button_sellItem"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/layout_border_white"
-                        android:elevation="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/greet_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/open_sans"
-                            android:text="@string/good_morning"
-                            android:textColor="@android:color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/homepage_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:text="@string/buy_sell_find_almost_everything"
-                            android:textColor="@android:color/black"
-                            android:textSize="20sp" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:orientation="horizontal">
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:background="@drawable/button_sell_border"
+                        android:drawableEnd="@drawable/ic_camera_foreground"
+                        android:text="@string/sell"
+                        android:textColor="@android:color/white"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp" />
 
 
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:id="@+id/button_FindItem"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/linear1"
-                        android:layout_centerHorizontal="true"
-                        android:orientation="horizontal"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp">
+                        android:background="@drawable/button_find_border"
+                        android:drawableEnd="@drawable/ic_search_foreground"
+                        android:text="@string/find"
+                        android:textColor="@android:color/white"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        tools:ignore="ButtonStyle" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                </LinearLayout>
 
-                            <Button
-                                android:id="@+id/button_sellItem"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_sell_border"
-                                android:drawableStart="@drawable/ic_camera_foreground"
-                                android:text="@string/sell"
-                                android:textColor="@android:color/white"
-                                android:textSize="20sp" />
+            </RelativeLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/open_sans"
-                                android:text="@string/snap_it_post_it_make_rm"
-                                android:textColor="@color/colorDarkGrey"
-                                android:textSize="12sp" />
-                        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_white_curve">
 
+                <TextView
+                    android:id="@+id/browse_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="Browse Categories"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="16sp" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <Button
-                                android:id="@+id/button_FindItem"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/button_find_border"
-                                android:drawableStart="@drawable/ic_search_foreground"
-                                android:text="@string/find"
-                                android:textColor="@android:color/white"
-                                android:textSize="20sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginBottom="10dp"
-                                android:fontFamily="@font/open_sans"
-                                android:text="@string/chat_check_cod"
-                                android:textColor="@color/colorDarkGrey"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/button_see"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="@string/see_all"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
                 <androidx.gridlayout.widget.GridLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-
-                    android:paddingHorizontal="5dp"
-                    android:paddingVertical="5dp"
+                    android:layout_below="@id/button_see"
+                    android:layout_centerHorizontal="true"
                     app:columnCount="3"
                     app:rowCount="10">
 
@@ -152,7 +138,7 @@
                         android:id="@+id/button_cars"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_cars"
                         android:fontFamily="@font/open_sans_bold"
@@ -166,7 +152,7 @@
                         android:id="@+id/button_sales"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_sale"
                         android:fontFamily="@font/open_sans_bold"
@@ -180,7 +166,7 @@
                         android:id="@+id/button_pets"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_pets"
                         android:fontFamily="@font/open_sans_bold"
@@ -194,7 +180,7 @@
                         android:id="@+id/button_men"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_men"
                         android:fontFamily="@font/open_sans_bold"
@@ -208,7 +194,7 @@
                         android:id="@+id/button_mom"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_momkids"
                         android:fontFamily="@font/open_sans_bold"
@@ -222,7 +208,7 @@
                         android:id="@+id/button_women"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_women"
                         android:fontFamily="@font/open_sans_bold"
@@ -236,7 +222,7 @@
                         android:id="@+id/button_home"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_home"
                         android:fontFamily="@font/open_sans_bold"
@@ -250,7 +236,7 @@
                         android:id="@+id/button_services"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_services"
                         android:fontFamily="@font/open_sans_bold"
@@ -264,7 +250,7 @@
                         android:id="@+id/button_travel"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_travel"
                         android:fontFamily="@font/open_sans_bold"
@@ -278,7 +264,7 @@
                         android:id="@+id/button_elect"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_electronics"
                         android:fontFamily="@font/open_sans_bold"
@@ -292,7 +278,7 @@
                         android:id="@+id/button_rent"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_rent"
                         android:fontFamily="@font/open_sans_bold"
@@ -306,7 +292,7 @@
                         android:id="@+id/button_furniture"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_furniture"
                         android:fontFamily="@font/open_sans_bold"
@@ -320,7 +306,7 @@
                         android:id="@+id/button_sports"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_sport"
                         android:fontFamily="@font/open_sans_bold"
@@ -334,7 +320,7 @@
                         android:id="@+id/button_motors"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_motorcycles"
                         android:fontFamily="@font/open_sans_bold"
@@ -348,7 +334,7 @@
                         android:id="@+id/button_car_parts"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_car"
                         android:fontFamily="@font/open_sans_bold"
@@ -362,7 +348,7 @@
                         android:id="@+id/button_camera"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_cameraphoto"
                         android:fontFamily="@font/open_sans_bold"
@@ -376,7 +362,7 @@
                         android:id="@+id/button_computer"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_computer"
                         android:fontFamily="@font/open_sans_bold"
@@ -390,7 +376,7 @@
                         android:id="@+id/button_business"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_business"
                         android:fontFamily="@font/open_sans_bold"
@@ -404,7 +390,7 @@
                         android:id="@+id/button_handcraft"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_handcraft"
                         android:fontFamily="@font/open_sans_bold"
@@ -418,7 +404,7 @@
                         android:id="@+id/button_food"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_food"
                         android:fontFamily="@font/open_sans_bold"
@@ -432,7 +418,7 @@
                         android:id="@+id/button_grocery"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_white"
                         android:drawableTop="@mipmap/ic_grocery"
                         android:fontFamily="@font/open_sans_bold"
@@ -443,10 +429,11 @@
                         tools:ignore="SmallSp" />
 
                     <Button
-                        android:id="@+id/button_see"
+                        android:visibility="gone"
+                        android:id="@+id/button_see2"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_margin="5dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/layout_border_orange"
                         android:drawableTop="@mipmap/ic_see_all_round"
                         android:fontFamily="@font/open_sans_bold"
@@ -456,10 +443,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="15sp" />
                 </androidx.gridlayout.widget.GridLayout>
-            </LinearLayout>
-        </ScrollView>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -501,4 +492,4 @@
 
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

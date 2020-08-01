@@ -5,49 +5,52 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/img_item"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/linear2"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/img_item"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:background="@drawable/background_white"
-            android:contentDescription="@string/item_image"
-            android:padding="2dp"
-            tools:srcCompat="@tools:sample/avatars[1]" />
-
-
-    </LinearLayout>
+        android:layout_height="400dp"
+        android:background="@drawable/background_white"
+        android:contentDescription="@string/item_image"
+        tools:srcCompat="@tools:sample/avatars[1]" />
 
     <LinearLayout
         android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/linear1"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/white"
+        android:layout_below="@id/img_item"
+        android:background="@drawable/background_orange_curve"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/ad_details_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/open_sans_bold"
-            android:paddingStart="10dp"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/colorPrimaryDark"
+            android:paddingStart="40dp"
             android:paddingTop="15dp"
-            android:paddingEnd="10dp"
+            android:paddingEnd="40dp"
             android:paddingBottom="5dp"
             android:text="@string/ad_details"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textAlignment="textStart"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/price_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/open_sans_bold"
+            android:paddingStart="40dp"
+            android:paddingTop="0dp"
+            android:paddingEnd="40dp"
+            android:paddingBottom="5dp"
+            android:text="@string/price_rm"
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp" />
 
         <RelativeLayout
+            android:background="@drawable/background_white_curve"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -55,18 +58,38 @@
             android:paddingEnd="10dp">
 
 
-            <TextView
-                android:id="@+id/avail"
+            <LinearLayout
+                android:layout_alignParentStart="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:fontFamily="@font/open_sans"
-                android:text="@string/available"
-                android:textColor="@color/colorGreen"
-                android:textSize="14sp"
-                tools:ignore="RelativeOverlap" />
+                android:paddingStart="40dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/avail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Stock: "
+                    android:textColor="@color/colorGreen"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/avail1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/available"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="14sp"
+                    tools:ignore="RelativeOverlap" />
+            </LinearLayout>
 
             <RatingBar
+                android:visibility="gone"
                 android:id="@+id/ratingBar"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
@@ -78,6 +101,7 @@
                 android:theme="@style/MyRatingBar" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,34 +112,20 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
                 tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/contact_seller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:text="Contact to Seller"
+                android:textColor="@color/colorBlue" />
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/price_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/open_sans"
-            android:paddingStart="10dp"
-            android:paddingTop="3dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="5dp"
-            android:text="@string/price_rm"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/contact_seller"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
-            android:text="Contact to Seller"
-            android:textColor="@color/colorBlue" />
-
 
     </LinearLayout>
 
@@ -124,23 +134,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/background_button_pink_curves"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/add_to_cart_btn"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorLightGrey"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_gravity="end"
             android:text="@string/add_to_cart" />
-
-        <Button
-            android:id="@+id/buy_now_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="@string/buy_now" />
 
     </LinearLayout>
 </RelativeLayout>
