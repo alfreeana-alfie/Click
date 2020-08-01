@@ -171,8 +171,7 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:fontFamily="@font/open_sans"
-            android:paddingEnd="40dp"
-            android:paddingStart="40dp"
+            android:padding="10dp"
             android:textAlignment="center"
             android:text="@string/add_to_cart" />
 

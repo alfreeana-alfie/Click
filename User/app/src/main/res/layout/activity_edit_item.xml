@@ -52,7 +52,7 @@
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_margin="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/background_dark_orange"
                     android:contentDescription="@string/todo"
                     app:srcCompat="@drawable/ic_photo_black_foreground" />
 
@@ -278,7 +278,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@drawable/login_part_border_dark_orange"
+            android:textColor="@android:color/white"
             android:fontFamily="@font/montserrat"
             android:padding="10dp"
             android:text="@string/accept"
@@ -292,9 +293,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@drawable/login_part_border_dark_orange"
             android:fontFamily="@font/montserrat"
             android:padding="10dp"
+            android:textColor="@android:color/white"
             android:text="@string/back"
             android:textSize="18sp" />
     </LinearLayout>
