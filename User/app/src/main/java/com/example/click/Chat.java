@@ -31,10 +31,10 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        layout = (LinearLayout) findViewById(R.id.layout1);
-        sendButton = (ImageView) findViewById(R.id.sendButton);
-        messageArea = (EditText) findViewById(R.id.messageArea);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        layout = findViewById(R.id.layout1);
+        sendButton = findViewById(R.id.sendButton);
+        messageArea = findViewById(R.id.messageArea);
+        scrollView = findViewById(R.id.scrollView);
 
         Firebase.setAndroidContext(this);
 
@@ -53,9 +53,9 @@ public class Chat extends AppCompatActivity {
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
-                    reference1_other.child("messages").setValue(UserDetails.username + "_" + UserDetails.chatWith);
+                    reference1_other.child("chatWith").setValue(UserDetails.chatWith);
                     reference2.push().setValue(map);
-                    reference2_other.child("messages").setValue(UserDetails.chatWith + "_" + UserDetails.username);
+                    reference2_other.child("chatWith").setValue(UserDetails.username);
 
                 }
             }

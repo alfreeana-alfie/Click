@@ -58,11 +58,9 @@ public class Fragment_Category_Business extends Fragment {
     List<Item_All_Details> itemList;
 
     private GridView gridView;
-    private SearchView searchView;
     private Spinner spinner_division, spinner_district;
     private ImageButton but_division, but_district;
     private Button price_sortlowest, price_sorthighest;
-    private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
 
     @Nullable
@@ -83,7 +81,7 @@ public class Fragment_Category_Business extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
-        searchView = v.findViewById(R.id.search_find);
+        SearchView searchView = v.findViewById(R.id.search_find);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -105,7 +103,7 @@ public class Fragment_Category_Business extends Fragment {
         price_sorthighest = v.findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -189,7 +187,7 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 1:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
+                ArrayAdapter<CharSequence> adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -443,6 +441,7 @@ public class Fragment_Category_Business extends Fragment {
     }
 
     private void View_Item(final View view) {
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -527,7 +526,7 @@ public class Fragment_Category_Business extends Fragment {
                                                     }
                                                 }) {
                                             @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                            protected Map<String, String> getParams() {
                                                 Map<String, String> params = new HashMap<>();
                                                 params.put("customer_id", getId);
                                                 params.put("main_category", strMain_category);

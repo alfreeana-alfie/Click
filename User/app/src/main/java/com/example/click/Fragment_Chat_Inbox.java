@@ -23,8 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +36,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Fragment_Users extends Fragment {
+public class Fragment_Chat_Inbox extends Fragment {
 
     ListView usersList;
     TextView noUsersText;
@@ -81,7 +85,7 @@ public class Fragment_Users extends Fragment {
         return view;
     }
 
-    public void doOnSuccess(String s) {
+    public void doOnSuccess(final String s) {
         try {
             JSONObject obj = new JSONObject(s);
 
