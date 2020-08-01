@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_white">
 
 
     <ImageView
         android:id="@+id/img_item"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         android:background="@drawable/background_white"
         android:contentDescription="@string/item_image"
         tools:srcCompat="@tools:sample/avatars[1]" />
@@ -30,7 +31,7 @@
             android:paddingStart="40dp"
             android:paddingTop="15dp"
             android:paddingEnd="40dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="15dp"
             android:text="@string/ad_details"
             android:textAlignment="textStart"
             android:textSize="25sp" />
@@ -43,7 +44,7 @@
             android:paddingStart="40dp"
             android:paddingTop="0dp"
             android:paddingEnd="40dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="15dp"
             android:text="@string/price_rm"
             android:textAlignment="textStart"
             android:textColor="@color/colorPrimaryDark"
@@ -52,13 +53,14 @@
         <RelativeLayout
             android:background="@drawable/background_white_curve"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingStart="10dp"
             android:paddingEnd="10dp">
 
 
             <LinearLayout
+                android:id="@+id/linear_stock"
                 android:layout_alignParentStart="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,20 +90,38 @@
                     tools:ignore="RelativeOverlap" />
             </LinearLayout>
 
-            <RatingBar
-                android:visibility="gone"
-                android:id="@+id/ratingBar"
-                style="@style/Widget.AppCompat.RatingBar.Small"
+            <LinearLayout
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/linear_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:numStars="5"
-                android:rating="4"
-                android:theme="@style/MyRatingBar" />
+                android:paddingStart="40dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Rating: "
+                    android:textColor="@color/colorGreen"
+                    android:textSize="14sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:numStars="5"
+                    android:rating="4"
+                    android:theme="@style/MyRatingBar" />
+            </LinearLayout>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,18 +131,23 @@
                 android:textAlignment="textEnd"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
+                android:paddingStart="40dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="5dp"
                 tools:ignore="RelativeOverlap" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/contact_seller"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView3"
                 android:fontFamily="@font/open_sans"
-                android:paddingStart="10dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="10dp"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="40dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="5dp"
                 android:text="Contact to Seller"
                 android:textColor="@color/colorBlue" />
         </RelativeLayout>
@@ -139,12 +164,12 @@
 
         <Button
             android:id="@+id/add_to_cart_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_gravity="end"
+            android:layout_gravity="center"
             android:text="@string/add_to_cart" />
 
     </LinearLayout>

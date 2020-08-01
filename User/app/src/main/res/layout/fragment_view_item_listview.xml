@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/bookmark_item"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -34,9 +35,7 @@
                     android:id="@+id/img_item"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_centerInParent="true"
                     android:layout_toStartOf="@id/fav_item"
-                    android:layout_toEndOf="@id/bookmark_item"
                     android:contentDescription="@string/item_image"
                     android:paddingTop="5dp"
                     tools:srcCompat="@tools:sample/avatars[1]" />

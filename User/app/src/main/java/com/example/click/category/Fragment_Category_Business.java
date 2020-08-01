@@ -64,6 +64,7 @@ public class Fragment_Category_Business extends Fragment {
     private Spinner spinner_division, spinner_district;
     private ImageButton but_division, but_district;
     private Button price_sortlowest, price_sorthighest;
+    private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
 
     @Nullable
@@ -187,15 +188,18 @@ public class Fragment_Category_Business extends Fragment {
     private void showResult(int position){
         switch (position){
             case 0:
+                spinner_district.setVisibility(View.GONE);
                 break;
 
             case 1:
-                ArrayAdapter<CharSequence> adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
+                spinner_district.setVisibility(View.VISIBLE);
+                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -211,12 +215,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 2:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -231,12 +237,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 3:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -252,12 +260,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 4:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -273,12 +283,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 5:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -294,12 +306,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 6:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -315,12 +329,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 7:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -336,12 +352,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 8:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -357,12 +375,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 9:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -378,12 +398,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 10:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -399,12 +421,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 11:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -420,12 +444,14 @@ public class Fragment_Category_Business extends Fragment {
                 break;
 
             case 12:
+                spinner_district.setVisibility(View.VISIBLE);
                 adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
                             adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
@@ -437,9 +463,7 @@ public class Fragment_Category_Business extends Fragment {
                         adapter_item.getFilter().filter(null);
                     }
                 });
-
                 break;
-
         }
     }
 
