@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_orange">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:elevation="0dp">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:elevation="0dp"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@id/appbar"
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +52,9 @@
                     android:layout_height="30dp"
                     android:layout_alignEnd="@id/profile_image"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/login_part_border_orange"
-                    app:srcCompat="@drawable/ic_edit_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:background="@drawable/button_edit_photo"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/ic_edit_foreground" />
 
 
             </RelativeLayout>
@@ -75,8 +75,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_person_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_person_foreground" />
 
                 <EditText
                     android:id="@+id/name_edit"
@@ -87,11 +87,11 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/name"
+                    android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:importantForAutofill="no" />
+                    android:textCursorDrawable="@drawable/color_cursor" />
 
             </LinearLayout>
 
@@ -111,8 +111,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_email_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_email_foreground" />
 
                 <EditText
                     android:id="@+id/email_edit"
@@ -123,11 +123,11 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/email"
+                    android:importantForAutofill="no"
                     android:inputType="textEmailAddress"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:importantForAutofill="no" />
+                    android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,8 +146,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_phone_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_phone_foreground" />
 
                 <EditText
                     android:id="@+id/phone_edit"
@@ -158,11 +158,11 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/phone_no"
+                    android:importantForAutofill="no"
                     android:inputType="phone"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:importantForAutofill="no" />
+                    android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
             <LinearLayout
@@ -180,8 +180,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_address_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_address_foreground" />
 
                 <EditText
                     android:id="@+id/address_edit"
@@ -192,11 +192,11 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/address"
+                    android:importantForAutofill="no"
                     android:inputType="textPostalAddress"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor"
-                    android:importantForAutofill="no" />
+                    android:textCursorDrawable="@drawable/color_cursor" />
 
             </LinearLayout>
 
@@ -216,8 +216,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_birth_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_birth_foreground" />
 
                 <EditText
                     android:id="@+id/birthday_edit"
@@ -228,10 +228,10 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/birthday"
+                    android:importantForAutofill="no"
                     android:inputType="date"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:importantForAutofill="no" />
+                    android:paddingEnd="20dp" />
 
             </LinearLayout>
 
@@ -252,8 +252,8 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_gender_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_gender_foreground" />
 
                 <EditText
                     android:id="@+id/textview_gender_display"
@@ -264,10 +264,10 @@
                     android:background="@null"
                     android:ems="10"
                     android:hint="@string/gender"
+                    android:importantForAutofill="no"
                     android:inputType="text"
                     android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:importantForAutofill="no" />
+                    android:paddingEnd="20dp" />
 
             </LinearLayout>
 
@@ -287,8 +287,8 @@
                     android:layout_width="55dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_gender_foreground"
-                    android:contentDescription="@string/todo" />
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_gender_foreground" />
 
                 <Spinner
                     android:id="@+id/gender_spinner"
@@ -301,59 +301,45 @@
                     android:spinnerMode="dropdown" />
 
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-
-                <Button
-                    android:id="@+id/button_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/login_part_border_orange"
-                    android:fontFamily="@font/open_sans"
-                    android:text="@string/edit_profile"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/button_accept"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/button_edit"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/login_part_border_orange"
-                    android:fontFamily="@font/open_sans"
-                    android:text="@string/accept"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/button_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/button_accept"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/login_part_border_orange"
-                    android:fontFamily="@font/open_sans"
-                    android:text="@string/logout"
-                    android:textColor="@android:color/black" />
-
-
-            </RelativeLayout>
-
         </LinearLayout>
     </ScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/button_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/button_edit"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/background_button_pink_curves"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/edit_profile"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button_accept"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/background_button_pink_curves"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/accept"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/button_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/logout"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -157,8 +157,9 @@
     <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:paddingTop="5dp"
         android:background="@drawable/background_button_pink_curves"
         android:orientation="horizontal">
 
@@ -169,7 +170,10 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_gravity="center"
+            android:fontFamily="@font/open_sans"
+            android:paddingEnd="40dp"
+            android:paddingStart="40dp"
+            android:textAlignment="center"
             android:text="@string/add_to_cart" />
 
     </LinearLayout>

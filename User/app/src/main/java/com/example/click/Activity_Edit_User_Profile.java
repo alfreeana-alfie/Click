@@ -334,7 +334,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress, strBirthday, strGender, id);
-                                Toast.makeText(Activity_Edit_User_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Activity_Edit_User_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Activity_Edit_User_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
@@ -453,7 +453,13 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().getBackStackEntryCount();
+        if(getSupportFragmentManager().getBackStackEntryCount() != 0){
+            getSupportFragmentManager().getBackStackEntryCount();
+        }else{
+            Intent intent = new Intent(Activity_Edit_User_Profile.this, Activity_All_View.class);
+            startActivity(intent);
+        }
+
     }
 
 }
