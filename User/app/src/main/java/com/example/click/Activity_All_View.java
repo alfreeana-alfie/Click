@@ -99,8 +99,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             button_pets, button_rent, button_services, button_sport, button_travel,
             button_women, button_food, button_grocery;
     private GridView gridViewSearch;
-    private CircleImageView profile_display;
-    private TextView name_display, email_display, button_view_all;
+    private CircleImageView profile_display, profile_image;
+    private TextView name_display, email_display, button_view_all, username;
     private DrawerLayout drawer;
     private View view;
 
@@ -154,6 +154,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         button_food = findViewById(R.id.button_food);
         button_grocery = findViewById(R.id.button_grocery);
         button_view_all = findViewById(R.id.button_see);
+        profile_image = findViewById(R.id.profile_image);
+        username = findViewById(R.id.username);
 
         gridViewSearch.setVisibility(View.GONE);
 
@@ -627,6 +629,9 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                     email_display.setText(strEmail);
 
                                     Picasso.get().load(strPhoto).into(profile_display);
+
+                                    username.setText(strName);
+                                    Picasso.get().load(strPhoto).into(profile_image);
                                 }
                             } else {
                                 Toast.makeText(Activity_All_View.this, "Incorrect Information", Toast.LENGTH_SHORT).show();

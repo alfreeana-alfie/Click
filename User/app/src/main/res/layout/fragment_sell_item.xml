@@ -34,6 +34,7 @@
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:textColor="@color/colorPrimaryDark"
                     android:text="@string/uploaded_photo"
                     android:textSize="14sp" />
 
@@ -246,9 +247,9 @@
                 android:layout_alignParentBottom="true"
                 android:id="@+id/accept_item"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:background="@drawable/background_button_pink_curves"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans"
                 android:textColor="@android:color/white"
                 android:text="@string/accept"
                 android:textSize="18sp" />

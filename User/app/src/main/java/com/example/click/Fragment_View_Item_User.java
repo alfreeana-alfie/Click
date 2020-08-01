@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.GridView;
-import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -48,13 +47,14 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     public static final String EXTRA_SUB = "sub_category";
     public static final String EXTRA_AD_DETAIL = "ad_detail";
     public static final String EXTRA_PRICE = "price";
-    public static final String EXTRA_ITEM_LOCATION = "district";
+    public static final String EXTRA_DIVISION = "division";
+    public static final String EXTRA_DISTRICT = "district";
     public static final String EXTRA_IMG_ITEM = "photo";
+
 
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
 
-    private ScrollView scrollView;
     SessionManager sessionManager;
     String getId;
     GridView gridView;
@@ -65,9 +65,8 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_item_user, container, false);
         Declare(view);
-        scrollView.setVisibility(View.GONE);
 
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
@@ -103,7 +102,6 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
-        scrollView = v.findViewById(R.id.grid_category);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {
@@ -147,7 +145,8 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
                                         detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
                                         detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-                                        detailIntent.putExtra(EXTRA_ITEM_LOCATION, item.getDistrict());
+                                        detailIntent.putExtra(EXTRA_DIVISION, item.getDivision());
+                                        detailIntent.putExtra(EXTRA_DISTRICT, item.getDistrict());
                                         detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
 
                                         getActivity().startActivity(detailIntent);

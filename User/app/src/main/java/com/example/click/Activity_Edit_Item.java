@@ -2,7 +2,6 @@ package com.example.click;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,7 +42,8 @@ import java.util.Map;
 import static com.example.click.Fragment_View_Item_User.EXTRA_AD_DETAIL;
 import static com.example.click.Fragment_View_Item_User.EXTRA_ID;
 import static com.example.click.Fragment_View_Item_User.EXTRA_IMG_ITEM;
-import static com.example.click.Fragment_View_Item_User.EXTRA_ITEM_LOCATION;
+import static com.example.click.Fragment_View_Item_User.EXTRA_DIVISION;
+import static com.example.click.Fragment_View_Item_User.EXTRA_DISTRICT;
 import static com.example.click.Fragment_View_Item_User.EXTRA_MAIN;
 import static com.example.click.Fragment_View_Item_User.EXTRA_PRICE;
 import static com.example.click.Fragment_View_Item_User.EXTRA_SUB;
@@ -84,8 +84,8 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String sub_category = intent.getStringExtra(EXTRA_SUB);
         final String ad_detail = intent.getStringExtra(EXTRA_AD_DETAIL);
         final String price = intent.getStringExtra(EXTRA_PRICE);
-        final String division = intent.getStringExtra(EXTRA_ITEM_LOCATION);
-        final String district = intent.getStringExtra(EXTRA_ITEM_LOCATION);
+        final String division = intent.getStringExtra(EXTRA_DIVISION);
+        final String district = intent.getStringExtra(EXTRA_DISTRICT);
         final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
         String Category_Text = main_category + ", " + sub_category;
         String Location_Text = division + ", " + district;
@@ -209,6 +209,12 @@ public class Activity_Edit_Item extends AppCompatActivity {
             }
         });
 
+        Location_TextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoLocation();
+            }
+        });
 
         Button_BackEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,6 +266,11 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 Ad_Detail_TextView.setText(mAd_Detail);
             }
         });
+    }
+
+    private void gotoLocation() {
+        location_page_layout.setVisibility(View.VISIBLE);
+        item_page_layout.setVisibility(View.GONE);
     }
 
     private void gotoAdDetail() {

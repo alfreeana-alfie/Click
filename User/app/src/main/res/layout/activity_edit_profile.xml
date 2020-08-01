@@ -47,6 +47,7 @@
                     android:src="@drawable/ic_person_foreground" />
 
                 <ImageButton
+                    android:visibility="gone"
                     android:id="@+id/button_edit_photo"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
