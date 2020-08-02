@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#fcf3cf"
+    android:background="@color/colorPrimary"
     tools:context=".Chat">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,6 +28,7 @@
 
 
     <ScrollView
+        android:background="@drawable/background_light_orange_curve"
         android:layout_width="match_parent"
         android:layout_weight="20"
         android:layout_height="wrap_content"
@@ -40,17 +41,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="15dp"
             android:id="@+id/layout1">
 
         </LinearLayout>
     </ScrollView>
 
-    <include
-        layout="@layout/message_area"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"/>
+        android:background="@color/colorLightOrange">
+
+        <include
+            layout="@layout/message_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"/>
+
+    </RelativeLayout>
 </LinearLayout>
