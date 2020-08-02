@@ -66,7 +66,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     private SessionManager sessionManager;
     private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
-    String name_firebase, password_firebase, email_firebase;
+    String name_firebase, password_firebase, email_firebase, photo_firebase;
 
     @Nullable
     @Override
@@ -309,6 +309,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                         final String address = object.getString("address").trim();
                                         final String birthday = object.getString("birthday").trim();
                                         final String gender = object.getString("gender").trim();
+                                        final String photo = object.getString("photo").trim();
                                         String id = object.getString("id").trim();
 
                                         sessionManager.createSession(name, email, phone_no, address, birthday, gender, id);
@@ -351,6 +352,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                             name_firebase = name;
                                                             email_firebase = email;
                                                             password_firebase = email;
+                                                            photo_firebase = photo;
 
                                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -362,6 +364,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                                     if (s.equals("null")) {
                                                                         reference.child(name_firebase).child("email").setValue(password_firebase);
                                                                         reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                        reference.child(name_firebase).child("photo").setValue(photo_firebase);
 //                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                                                                     } else {
                                                                         try {
@@ -370,6 +373,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                                             if (!obj.has(name_firebase)) {
                                                                                 reference.child(name_firebase).child("email").setValue(password_firebase);
                                                                                 reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                reference.child(name_firebase).child("photo").setValue(photo_firebase);
 //                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                                                                             } else {
 //                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
@@ -398,6 +402,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                         else if(obj.getJSONObject(name).getString("email").equals(email)){
                                                             UserDetails.username = name;
                                                             UserDetails.email = email;
+                                                            UserDetails.photo = photo;
 //                                                            Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_LONG).show();
                                                         }
                                                         else {
@@ -479,6 +484,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         name_firebase = name;
         email_firebase = email;
         password_firebase = email;
+        photo_firebase = photo;
 
         String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -490,6 +496,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                 if (s.equals("null")) {
                     reference.child(name_firebase).child("email").setValue(password_firebase);
                     reference.child(name_firebase).child("email").setValue(email_firebase);
+                    reference.child(name_firebase).child("photo").setValue(photo_firebase);
 //                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                 } else {
                     try {
@@ -498,6 +505,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                         if (!obj.has(name_firebase)) {
                             reference.child(name_firebase).child("email").setValue(password_firebase);
                             reference.child(name_firebase).child("email").setValue(email_firebase);
+                            reference.child(name_firebase).child("photo").setValue(photo_firebase);
 //                                Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                         } else {
 //                                Toast.makeText(getContext(), "username already exists", Toast.LENGTH_LONG).show();
