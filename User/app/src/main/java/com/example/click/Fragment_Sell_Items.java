@@ -59,7 +59,7 @@ public class Fragment_Sell_Items extends Fragment {
     private Bitmap bitmap;
     private TextView enter_category, enter_ad_detail, enter_location;
     private EditText enter_price, edittext_ad_detail;
-    private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location;
+    private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
@@ -98,6 +98,7 @@ public class Fragment_Sell_Items extends Fragment {
         location_page_layout = v.findViewById(R.id.location_page_layout);
 
         accept_item = v.findViewById(R.id.accept_item);
+        back_item = v.findViewById(R.id.back_item);
         edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
         accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
         back_ad_detail = v.findViewById(R.id.back_ad_detail);
@@ -143,7 +144,6 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
     }
-
 
     private void Button_Func() {
         upload_photo_img.setOnClickListener(new View.OnClickListener() {
@@ -214,13 +214,19 @@ public class Fragment_Sell_Items extends Fragment {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (filePath == null) {
                     Toast.makeText(getContext(), "Please enter image of product", Toast.LENGTH_LONG).show();
                 } else {
                     saveEdit(getId, getStringImage(bitmap));
                 }
 
+            }
+        });
+
+        back_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), Activity_All_View.class));
             }
         });
 

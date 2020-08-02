@@ -16,6 +16,8 @@
             app:searchHintIcon="@color/colorAccent"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/transparent"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/color_cursor"
             app:queryHint="Search Here" />
 
         <TableLayout

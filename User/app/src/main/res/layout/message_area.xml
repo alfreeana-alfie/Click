@@ -26,9 +26,10 @@
             android:fontFamily="@font/open_sans"
             android:background="@null"
             android:textSize="18sp"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:hint="Type your message here"
-            android:id="@+id/messageArea"
-            android:maxHeight="80dp" />
+            android:id="@+id/messageArea" />
     </RelativeLayout>
 
     <ImageView

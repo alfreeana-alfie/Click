@@ -94,6 +94,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
+                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
 
             </LinearLayout>
@@ -126,6 +127,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
+                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
@@ -158,6 +160,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
+                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
@@ -197,6 +200,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:textColor="@android:color/black"
+                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -237,6 +241,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:textColor="@android:color/black"
+                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

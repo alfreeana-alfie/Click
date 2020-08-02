@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.GridView;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -60,6 +60,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     GridView gridView;
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
+    SearchView searchView;
 
 
     @Nullable
@@ -68,6 +69,18 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
         View view = inflater.inflate(R.layout.fragment_view_item_user, container, false);
         Declare(view);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
@@ -102,6 +115,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
+        searchView = v.findViewById(R.id.search_find);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {

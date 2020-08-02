@@ -88,6 +88,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textColor="@android:color/black"
+                android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
 
@@ -129,6 +130,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:textColor="@android:color/black"
+                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor"
                     android:textSize="16sp"
                     app:passwordToggleEnabled="true" />

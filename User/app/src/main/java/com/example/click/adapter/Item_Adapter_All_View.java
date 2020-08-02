@@ -138,22 +138,13 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                     filterResults.count = itemList.size();
                     filterResults.values = itemList;
                 } else {
-//                    String minNum = constraint.toString();
                     String strSearch = constraint.toString().toLowerCase();
                     String strSEARCH = constraint.toString().toUpperCase();
-                    String str = constraint.toString();
+                    String str= constraint.toString();
                     List<Item_All_Details> resultData = new ArrayList<>();
                     for (Item_All_Details item : itemList) {
-                        if (item.getDivision().toLowerCase().equals(strSearch)) {
+                        if(item.getAd_detail().toLowerCase().contains(strSearch)||item.getAd_detail().toLowerCase().contains(strSEARCH)||item.getAd_detail().toLowerCase().contains(str)){
                             resultData.add(item);
-                        } else if (item.getDivision().toLowerCase().equals(strSearch) && item.getDistrict().toLowerCase().equals(strSearch)) {
-                                resultData.add(item);
-
-                        } else if(item.getAd_detail().toLowerCase().contains(strSearch) || item.getAd_detail().toLowerCase().contains(strSEARCH) || item.getAd_detail().toLowerCase().contains(str)){
-                            if(item.getDivision().toLowerCase().contains(strSearch)){
-                                resultData.add(item);
-                            }
-
                         }
                         filterResults.count = resultData.size();
                         filterResults.values = resultData;

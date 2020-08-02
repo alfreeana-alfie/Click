@@ -203,7 +203,7 @@ public class Chat extends AppCompatActivity {
             lp2.gravity = Gravity.START;
             textView.setLayoutParams(lp2);
             textView.setElevation(0);
-            textView.setPadding(15, 5, 15 ,5);
+            textView.setPadding(15, 5, 15 ,15);
             textView.setTextSize(12);
             layout.addView(textView);
         }
