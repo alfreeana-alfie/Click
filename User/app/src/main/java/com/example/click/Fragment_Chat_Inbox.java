@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class Fragment_Chat_Inbox extends Fragment {
 
     ListView usersList;
     TextView noUsersText;
+    ImageView imageView;
     ArrayList<String> al = new ArrayList<>();
     int totalUsers = 0;
     ProgressDialog pd;
@@ -52,6 +54,7 @@ public class Fragment_Chat_Inbox extends Fragment {
 
         usersList = view.findViewById(R.id.usersList);
         noUsersText = view.findViewById(R.id.noUsersText);
+        imageView = view.findViewById(R.id.imageView2);
 
         pd = new ProgressDialog(getContext());
         pd.setMessage("Loading...");
@@ -94,6 +97,7 @@ public class Fragment_Chat_Inbox extends Fragment {
 
             while (i.hasNext()) {
                 key = i.next().toString();
+                Toast.makeText(getContext(), obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
 
                 if (!key.equals(UserDetails.username)) {
                         al.add(key);

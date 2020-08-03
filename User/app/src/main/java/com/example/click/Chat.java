@@ -1,6 +1,7 @@
 package com.example.click;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,21 +12,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -55,6 +67,28 @@ public class Chat extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Activity_All_View.class));
             }
         });
+
+        String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    JSONObject obj = new JSONObject(s);
+
+                    Toast.makeText(Chat.this, obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                System.out.println("" + volleyError);
+            }
+        });
+        RequestQueue rQueue = Volley.newRequestQueue(Chat.this);
+        rQueue.add(request);
 
 
         layout = findViewById(R.id.layout1);
@@ -146,7 +180,7 @@ public class Chat extends AppCompatActivity {
             textView.setBackgroundResource(R.drawable.rounded_corner1);
             textView.setElevation(3);
             textView.setPadding(45, 25, 45 ,25);
-            textView.setTextSize(16);
+            textView.setTextSize(18);
             layout.addView(textView);
             scrollView.fullScroll(View.FOCUS_DOWN);
 
@@ -163,7 +197,8 @@ public class Chat extends AppCompatActivity {
             textView.setBackgroundResource(R.drawable.rounded_corner2);
             textView.setElevation(3);
             textView.setPadding(45, 25, 45 ,25);
-            textView.setTextSize(16);
+            textView.setTextSize(18);
+
 
 //            circleImageView.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
 //            circleImageView.setImageURI(Uri.parse(UserDetails.photo));

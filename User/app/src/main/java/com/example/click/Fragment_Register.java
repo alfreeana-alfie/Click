@@ -1,13 +1,17 @@
 package com.example.click;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,15 +27,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
+
+import static android.app.Activity.RESULT_OK;
 
 public class Fragment_Register extends Fragment {
 
@@ -40,12 +55,24 @@ public class Fragment_Register extends Fragment {
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
+    ImageView imageView;
+
+    private final int PICK_IMAGE_REQUEST = 22;
+    private Uri filePath;
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_register, container, false);
         Declare(view);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
+        });
 
         Firebase.setAndroidContext(view.getContext());
 
@@ -55,6 +82,27 @@ public class Fragment_Register extends Fragment {
                 name_firebase = name.getText().toString();
                 email_firebase = email.getText().toString();
                 Register(v);
+
+                storage = FirebaseStorage.getInstance();
+                storageReference = storage.getReference();
+                if(filePath != null){
+                    final StorageReference storageReference1 = storageReference.child("images").child(String.valueOf(filePath));
+                    storageReference1.putFile(filePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful()){
+                                storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String url = uri.toString();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+
                 String url = "https://click-1595830894120.firebaseio.com/users.json";
 
                 StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -129,6 +177,7 @@ public class Fragment_Register extends Fragment {
         loading = v.findViewById(R.id.loading);
         button_register = v.findViewById(R.id.button_register);
         button_goto_login_page = v.findViewById(R.id.button_goto_login_page);
+        imageView = v.findViewById(R.id.imageView);
     }
 
     private void Register(View view) {
@@ -206,7 +255,6 @@ public class Fragment_Register extends Fragment {
             loading.setVisibility(View.VISIBLE);
             button_register.setVisibility(View.GONE);
 
-
             //MySQL
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                 @Override
@@ -280,5 +328,36 @@ public class Fragment_Register extends Fragment {
             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
             requestQueue.add(stringRequest);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST
+                && resultCode == RESULT_OK
+                && data.getData() != null) {
+
+            // Get the Uri of data
+            filePath = data.getData();
+            try {
+
+                // Setting image on image view using Bitmap
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+            }
+
+            catch (IOException e) {
+                // Log the exception
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void chooseImage()
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 }
