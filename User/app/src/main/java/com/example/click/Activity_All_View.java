@@ -90,6 +90,8 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     Item_Adapter_All_View adapter_item;
     String getId;
     SessionManager sessionManager;
+    TextView textCartItemCount;
+    int mCartItemCount = 10;
 
     private SearchView searchView;
     private ScrollView scrollView;
@@ -752,7 +754,36 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.setting, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.menu_cart);
+        View actionView = menuItem.getActionView();
+        textCartItemCount = actionView.findViewById(R.id.cart_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
         return true;
+    }
+
+    private void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     @Override

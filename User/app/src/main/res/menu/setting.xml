@@ -14,7 +14,8 @@
         android:id="@+id/menu_cart"
         android:title="@string/add_to_cart"
         android:icon="@drawable/ic_cart_foreground"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:actionLayout="@layout/action_item_layout"
+        app:showAsAction="always" />
 
     <group
         android:id="@+id/settings"

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Activity_Add_to_Cart;
+import com.example.click.Activity_All_View;
+import com.example.click.Activity_Edit_User_Profile;
 import com.example.click.Activity_View_Item;
 import com.example.click.R;
 import com.example.click.adapter.Item_Adapter_All_View;
@@ -638,5 +644,4 @@ public class Fragment_Category_Cars extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
-
 }
