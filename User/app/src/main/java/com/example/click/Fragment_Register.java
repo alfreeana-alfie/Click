@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 public class Fragment_Register extends Fragment {
 
     private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
-    String name_firebase, password_firebase, email_firebase;
+    String name_firebase, email_firebase;
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
@@ -54,7 +54,6 @@ public class Fragment_Register extends Fragment {
             public void onClick(View v) {
                 name_firebase = name.getText().toString();
                 email_firebase = email.getText().toString();
-                password_firebase = password.getText().toString();
                 Register(v);
                 String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -64,7 +63,6 @@ public class Fragment_Register extends Fragment {
                         Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
                         if (s.equals("null")) {
-                            reference.child(name_firebase).child("email").setValue(password_firebase);
                             reference.child(name_firebase).child("email").setValue(email_firebase);
                             Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                         } else {
@@ -72,7 +70,6 @@ public class Fragment_Register extends Fragment {
                                 JSONObject obj = new JSONObject(s);
 
                                 if (!obj.has(name_firebase)) {
-                                    reference.child(name_firebase).child("email").setValue(password_firebase);
                                     reference.child(name_firebase).child("email").setValue(email_firebase);
                                     Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
                                 } else {
@@ -84,14 +81,12 @@ public class Fragment_Register extends Fragment {
                             }
                         }
 
-//                pd.dismiss();
                     }
 
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         System.out.println("" + volleyError);
-//                pd.dismiss();
                     }
                 });
 

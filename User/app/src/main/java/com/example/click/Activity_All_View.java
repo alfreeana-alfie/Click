@@ -865,7 +865,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 if (textCartItemCount.getVisibility() != View.VISIBLE) {
                     textCartItemCount.setVisibility(View.VISIBLE);
                 }
-
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.example.click.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cart_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cart_listview_b, parent, false);
         return new ViewHolder(view);
     }
 
@@ -116,7 +115,7 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
         ImageView ItemImageView;
         TextView AdDetail, UnitPrice, SubTotal, Quantity;
         Button decrease, increase;
-        ImageButton DeleteCart;
+        ImageView DeleteCart;
 
         public ViewHolder(View view) {
             super(view);

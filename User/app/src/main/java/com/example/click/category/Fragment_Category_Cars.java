@@ -3,6 +3,7 @@ package com.example.click.category;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -615,6 +616,20 @@ public class Fragment_Category_Cars extends Fragment {
                                         };
                                         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                                         requestQueue.add(stringRequest2);
+
+//                                        new Handler().post(new Runnable() {
+//                                            @Override
+//                                            public void run()
+//                                            {
+//                                                Intent intent = getActivity().getIntent();
+//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+//                                                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                                                getActivity().overridePendingTransition(0, 0);
+//
+//                                                getActivity().overridePendingTransition(0, 0);
+//                                                startActivity(intent);
+//                                            }
+//                                        });
                                     }
                                 });
                             } else {
