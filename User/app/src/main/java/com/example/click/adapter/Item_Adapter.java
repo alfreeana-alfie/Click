@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,45 +18,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_Adapter extends BaseAdapter {
+public class Item_Adapter extends BaseAdapter  implements Filterable{
 
     private Context context;
     private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
-    private Filter itemFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Item_All_Details> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(itemListFull);
-            } else {
-                String filteredPattern = constraint.toString().toLowerCase().trim();
-                for (Item_All_Details item : itemListFull) {
-                    if (item.getAd_detail().toLowerCase().contains(filteredPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            itemList.clear();
-            itemListFull.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
 
     public Item_Adapter(Context context, List<Item_All_Details> itemList) {
-        this.context = context;
         this.itemList = itemList;
-        itemListFull = new ArrayList<>(itemList);
+        this.itemListFull = itemList;
+        this.context = context;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -64,11 +37,7 @@ public class Item_Adapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return itemList.size();
-    }
-
-    public Filter getFilter() {
-        return itemFilter;
+        return itemListFull.size();
     }
 
     @Override
@@ -78,14 +47,14 @@ public class Item_Adapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.fragment_edit_item_listview, null);
-        Item_All_Details item = itemList.get(position);
+        Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
@@ -121,6 +90,42 @@ public class Item_Adapter extends BaseAdapter {
         Picasso.get().load(item.getPhoto()).into(img_item);
 
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults filterResults = new FilterResults();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filterResults.count = itemList.size();
+                    filterResults.values = itemList;
+                } else {
+                    String strSearch = constraint.toString().toLowerCase();
+                    String strSEARCH = constraint.toString().toUpperCase();
+                    String str= constraint.toString();
+                    List<Item_All_Details> resultData = new ArrayList<>();
+                    for (Item_All_Details item : itemList) {
+                        if(item.getAd_detail().toLowerCase().contains(strSearch)){
+                            resultData.add(item);
+                        }
+                        filterResults.count = resultData.size();
+                        filterResults.values = resultData;
+                    }
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemListFull = (List<Item_All_Details>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 
     public interface OnItemClickListener {

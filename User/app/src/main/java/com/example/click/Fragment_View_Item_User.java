@@ -27,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Adapter;
+import com.example.click.adapter.Item_Adapter_All_View;
 import com.example.click.helper.Item_All_Details;
 import com.example.click.helper.SessionManager;
 
@@ -55,12 +56,11 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
 
-    SessionManager sessionManager;
-    String getId;
-    GridView gridView;
-    Item_Adapter adapter_item;
-    List<Item_All_Details> itemList;
-    SearchView searchView;
+    private String getId;
+    private GridView gridView;
+    private Item_Adapter adapter_item;
+    private List<Item_All_Details> itemList;
+    private SearchView searchView;
 
 
     @Nullable
@@ -68,20 +68,7 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_item_user, container, false);
         Declare(view);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return false;
-            }
-        });
-        sessionManager = new SessionManager(view.getContext());
+        SessionManager sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -116,6 +103,19 @@ public class Fragment_View_Item_User extends Fragment implements Item_Adapter.On
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
         searchView = v.findViewById(R.id.search_find);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter_item.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {
