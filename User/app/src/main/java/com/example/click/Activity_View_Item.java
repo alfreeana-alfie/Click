@@ -36,7 +36,6 @@ import static com.example.click.Activity_All_View.PHOTO;
 import static com.example.click.Activity_All_View.PRICE;
 import static com.example.click.Activity_All_View.USERID;
 
-
 public class Activity_View_Item extends AppCompatActivity {
 
     private ImageView img_item;

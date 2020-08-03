@@ -5,4 +5,5 @@ public class UserDetails {
     public static String email = "";
     public static String chatWith = "";
     public static String photo = "";
+    public static String cart = "";
 }

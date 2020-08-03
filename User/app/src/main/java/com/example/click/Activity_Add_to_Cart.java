@@ -3,7 +3,10 @@ package com.example.click;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,8 +41,10 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
     private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_cart.php";
 
     ArrayList<Item_All_Details> itemAllDetailsArrayList;
+
     RecyclerView recyclerView;
     Item_Cart_Adapter item_cart_adapter;
+
     String getId;
     SessionManager sessionManager;
 
@@ -104,7 +109,10 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemAllDetailsArrayList.add(item);
+
+                                    Log.d("COUNT", String.valueOf(object.length()));
                                 }
+                                Log.d("CART", String.valueOf(itemAllDetailsArrayList.size()));
                                 item_cart_adapter = new Item_Cart_Adapter(Activity_Add_to_Cart.this, itemAllDetailsArrayList);
                                 recyclerView.setAdapter(item_cart_adapter);
                                 item_cart_adapter.setOnItemClickListener(new Item_Cart_Adapter.OnItemClickListener() {

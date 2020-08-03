@@ -54,7 +54,7 @@ public class Fragment_Saved_Searches extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_view_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_item_user, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());
@@ -70,9 +70,9 @@ public class Fragment_Saved_Searches extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
-        ScrollView scrollView = v.findViewById(R.id.grid_category);
-
-        scrollView.setVisibility(View.GONE);
+//        ScrollView scrollView = v.findViewById(R.id.grid_category);
+//
+//        scrollView.setVisibility(View.GONE);
     }
 
     private void View_Item(final View view) {
@@ -109,7 +109,7 @@ public class Fragment_Saved_Searches extends Fragment {
                                 adapter_item.setOnItemClickListener(new Item_Fav_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(getContext(), Activity_View_Item_Favourite.class);
+                                        Intent detailIntent = new Intent(getContext(), Activity_View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());

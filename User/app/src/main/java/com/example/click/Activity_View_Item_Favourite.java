@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-import static com.example.click.Activity_All_View.AD_DETAIL;
-import static com.example.click.Activity_All_View.ITEM_LOCATION;
-import static com.example.click.Activity_All_View.PHOTO;
-import static com.example.click.Activity_All_View.PRICE;
+import static com.example.click.Fragment_Saved_Searches.AD_DETAIL;
+import static com.example.click.Fragment_Saved_Searches.ITEM_LOCATION;
+import static com.example.click.Fragment_Saved_Searches.PHOTO;
+import static com.example.click.Fragment_Saved_Searches.PRICE;
 
 public class Activity_View_Item_Favourite extends AppCompatActivity {
 

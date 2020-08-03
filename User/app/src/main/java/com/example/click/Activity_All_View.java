@@ -21,6 +21,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,6 +32,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Adapter_All_View;
+import com.example.click.adapter.Item_Cart_Adapter;
 import com.example.click.category.Fragment_Category_Business;
 import com.example.click.category.Fragment_Category_Camera;
 import com.example.click.category.Fragment_Category_Car_Accessories;
@@ -85,13 +88,21 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/readall.php";
     private static String URL_ADD = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
     private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
+    private static String URL_CART = "https://annkalina53.000webhostapp.com/android_register_login/readcart.php";
 
-    List<Item_All_Details> itemList;
+    List<Item_All_Details> itemList, item_all_details;
     Item_Adapter_All_View adapter_item;
+
+
+    Item_Cart_Adapter item_cart_adapter;
+    RecyclerView recyclerView;
+    ArrayList<Item_All_Details> itemAllDetailsArrayList;
+
+
     String getId;
     SessionManager sessionManager;
     TextView textCartItemCount;
-    int mCartItemCount = 10;
+    int mCartItemCount;
 
     private SearchView searchView;
     private ScrollView scrollView;
@@ -113,6 +124,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         setContentView(R.layout.activity_drawer);
         Declare();
 
+        item_cart_adapter = new Item_Cart_Adapter(this, itemList);
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
@@ -124,10 +136,17 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
         Category_Func();
 
         View_Item();
+        Cart_Item();
     }
 
     private void Declare() {
         itemList = new ArrayList<>();
+
+        recyclerView = findViewById(R.id.cart_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(Activity_All_View.this));
+        itemAllDetailsArrayList = new ArrayList<>();
+
         gridViewSearch = findViewById(R.id.gridView_itemSearch);
         view = findViewById(R.id.support_layout);
         scrollView = findViewById(R.id.grid_category);
@@ -209,6 +228,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
+
                                 }
                                 adapter_item = new Item_Adapter_All_View(itemList, Activity_All_View.this);
                                 adapter_item.notifyDataSetChanged();
@@ -365,6 +385,70 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 return super.getParams();
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void Cart_Item() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("customer_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemAllDetailsArrayList.add(item);
+                                    mCartItemCount = itemAllDetailsArrayList.size();
+
+                                }
+                                setupBadge();
+                                item_cart_adapter.notifyDataSetChanged();
+                                item_cart_adapter = new Item_Cart_Adapter(Activity_All_View.this, itemAllDetailsArrayList);
+                                recyclerView.setAdapter(item_cart_adapter);
+                                item_cart_adapter.setOnItemClickListener(new Item_Cart_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onDeleteClick(final int position) {
+                                    }
+
+                                });
+
+                            }
+                            item_cart_adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -771,17 +855,17 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     }
 
     private void setupBadge() {
-
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {
                 if (textCartItemCount.getVisibility() != View.GONE) {
                     textCartItemCount.setVisibility(View.GONE);
                 }
             } else {
-                textCartItemCount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                textCartItemCount.setText(String.valueOf(itemAllDetailsArrayList.size()));
                 if (textCartItemCount.getVisibility() != View.VISIBLE) {
                     textCartItemCount.setVisibility(View.VISIBLE);
                 }
+
             }
         }
     }
