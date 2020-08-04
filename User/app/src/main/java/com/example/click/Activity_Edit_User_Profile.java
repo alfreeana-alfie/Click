@@ -151,9 +151,8 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
         email.setFocusableInTouchMode(true);
         phone_no.setFocusableInTouchMode(true);
         address.setFocusableInTouchMode(true);
-        birthday.setFocusableInTouchMode(true);
-        gender.setFocusableInTouchMode(true);
-
+//        birthday.setFocusableInTouchMode(true);
+//        gender.setFocusableInTouchMode(true);
 
         birthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +162,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(v.getContext(),R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
@@ -225,13 +224,15 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Edit_Func();
-                SaveEditDetail();
+
             }
         });
         button_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Accept_Func();
+                SaveEditDetail();
+
             }
         });
 
@@ -334,7 +335,7 @@ public class Activity_Edit_User_Profile extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress, strBirthday, strGender, id);
-//                                Toast.makeText(Activity_Edit_User_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_Edit_User_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Activity_Edit_User_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }

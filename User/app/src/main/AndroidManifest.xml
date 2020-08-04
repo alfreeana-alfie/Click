@@ -57,7 +57,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity_View_Item_Favourite" />
         <activity android:name=".Activity_Add_to_Cart" />
-        <activity android:name=".Activity_Edit_User_Profile" />
+        <activity android:windowSoftInputMode="adjustPan"
+            android:name=".Activity_Edit_User_Profile" />
         <activity android:windowSoftInputMode="adjustPan"
             android:name=".Chat" />
 
