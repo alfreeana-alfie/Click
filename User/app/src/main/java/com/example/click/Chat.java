@@ -86,8 +86,6 @@ public class Chat extends AppCompatActivity {
                     JSONObject obj = new JSONObject(s);
 
                     Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
-
-                    Toast.makeText(Chat.this, obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -255,5 +253,11 @@ public class Chat extends AppCompatActivity {
         }
 //        layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        getSupportFragmentManager().getBackStackEntryCount();
     }
 }

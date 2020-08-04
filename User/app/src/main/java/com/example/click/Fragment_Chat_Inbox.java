@@ -33,11 +33,11 @@ public class Fragment_Chat_Inbox extends Fragment {
 
     public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
     User user;
-    private RecyclerView recyclerView;
-    private TextView noUsersText;
-    private List<User> usersArrayList;
-    private User_Adapter user_adapter;
-    private int totalUsers = 0;
+    RecyclerView recyclerView;
+    TextView noUsersText;
+    List<User> usersArrayList;
+    User_Adapter user_adapter;
+    int totalUsers = 0;
 
     @Nullable
     @Override
@@ -79,23 +79,23 @@ public class Fragment_Chat_Inbox extends Fragment {
                 key = i.next().toString();
 
                 if (!key.equals(UserDetails.username)) {
-                    Toast.makeText(getContext(), obj.getJSONObject(key).get("photo").toString(), Toast.LENGTH_SHORT).show();
                     user = new User(key, obj.getJSONObject(key).get("photo").toString());
                     usersArrayList.add(user);
                     user_adapter = new User_Adapter(getContext(), usersArrayList);
                 }
                 totalUsers++;
-//                Toast.makeText(getContext(),user.getUsername(), Toast.LENGTH_SHORT).show();
+                recyclerView.setAdapter(user_adapter);
+                user_adapter.setOnItemClickListener(new User_Adapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+//                        Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
+                        User user = usersArrayList.get(position);
+                        UserDetails.chatWith = user.getUsername();
+                        startActivity(new Intent(getContext(), Chat.class));
+                    }
+                });
             }
-            recyclerView.setAdapter(user_adapter);
-            user_adapter.setOnItemClickListener(new User_Adapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    User user = usersArrayList.get(position);
-                    UserDetails.chatWith = user.getUsername();
-                    startActivity(new Intent(getContext(), Chat.class));
-                }
-            });
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

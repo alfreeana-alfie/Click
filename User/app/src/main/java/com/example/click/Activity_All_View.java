@@ -730,8 +730,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-
-//                            Toast.makeText(Activity_All_View.this, "JSON Parsing Eror: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
