@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +36,7 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cart_listview_b, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cart_listview, parent, false);
         return new ViewHolder(view);
     }
 

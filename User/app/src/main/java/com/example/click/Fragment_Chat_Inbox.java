@@ -1,20 +1,18 @@
 package com.example.click;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,88 +27,86 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Fragment_Chat_Inbox extends Fragment {
 
-    ListView usersList;
-    TextView noUsersText;
-    ImageView imageView;
-    ArrayList<String> al = new ArrayList<>();
-
-    int totalUsers = 0;
-    ProgressDialog pd;
-
+    public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
+    User user;
+    private RecyclerView recyclerView;
+    private TextView noUsersText;
+    private List<User> usersArrayList;
+    private User_Adapter user_adapter;
+    private int totalUsers = 0;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_users, container, false);
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_userlist, container, false);
+        recyclerView = view.findViewById(R.id.usersList);
+        usersArrayList = new ArrayList<>();
 
-        usersList = view.findViewById(R.id.usersList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         noUsersText = view.findViewById(R.id.noUsersText);
-        imageView = view.findViewById(R.id.imageView2);
 
-        pd = new ProgressDialog(getContext());
-        pd.setMessage("Loading...");
-        pd.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        doOnSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                doOnSuccess(s);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                System.out.println("" + volleyError);
-            }
-        });
-
-        RequestQueue rQueue = Volley.newRequestQueue(getContext());
-        rQueue.add(request);
-
-        usersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                UserDetails.chatWith = al.get(position);
-                startActivity(new Intent(getContext(), Chat.class));
-            }
-        });
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        requestQueue.add(stringRequest);
 
         return view;
     }
 
-    public void doOnSuccess(final String s) {
+    private void doOnSuccess(final String s) {
         try {
             JSONObject obj = new JSONObject(s);
 
             Iterator i = obj.keys();
-            String key = "";
+            String key;
 
             while (i.hasNext()) {
                 key = i.next().toString();
-//                Toast.makeText(getContext(), obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
+
                 if (!key.equals(UserDetails.username)) {
-                        al.add(key);
+                    Toast.makeText(getContext(), obj.getJSONObject(key).get("photo").toString(), Toast.LENGTH_SHORT).show();
+                    user = new User(key, obj.getJSONObject(key).get("photo").toString());
+                    usersArrayList.add(user);
+                    user_adapter = new User_Adapter(getContext(), usersArrayList);
                 }
                 totalUsers++;
+//                Toast.makeText(getContext(),user.getUsername(), Toast.LENGTH_SHORT).show();
             }
-
+            recyclerView.setAdapter(user_adapter);
+            user_adapter.setOnItemClickListener(new User_Adapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    User user = usersArrayList.get(position);
+                    UserDetails.chatWith = user.getUsername();
+                    startActivity(new Intent(getContext(), Chat.class));
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         if (totalUsers <= 1) {
             noUsersText.setVisibility(View.VISIBLE);
-            usersList.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         } else {
             noUsersText.setVisibility(View.GONE);
-            usersList.setVisibility(View.VISIBLE);
-            usersList.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, al));
+            recyclerView.setVisibility(View.VISIBLE);
+            recyclerView.setAdapter(user_adapter);
         }
-
-        pd.dismiss();
     }
 }

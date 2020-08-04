@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -795,7 +794,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_New_User()).addToBackStack(null).commit();
+                        new Fragment_Chat_Inbox()).addToBackStack(null).commit();
                 Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
                 break;
 

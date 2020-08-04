@@ -2,45 +2,46 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="1dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/button_noradius"
-    android:elevation="5dp"
-    android:padding="10dp">
+    android:background="@drawable/background_white_full_curves">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/delete_cart_item"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/login_part_border_orange"
-            app:srcCompat="@drawable/ic_exit_foreground" />
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_delete_foreground"
+            android:contentDescription="@string/todo" />
 
         <ImageView
             android:id="@+id/item_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
             android:contentDescription="@string/todo"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
+            android:layout_toEndOf="@id/item_image"
+            android:layout_alignEnd="@id/quantity_display"
+            android:layout_below="@id/delete_cart_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/item_image"
             android:orientation="vertical"
-            android:padding="10dp"
             app:layout_constraintStart_toEndOf="@+id/item_image"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -50,26 +51,33 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
                 android:text="@string/ad_details"
+                android:paddingBottom="0dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/unit_price_display"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/rm"
                 android:textColor="@color/colorGrey"
-                android:textSize="14sp" />
+                android:text="@string/rm"
+
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
         <TableLayout
+            android:id="@id/quantity_display"
             android:layout_marginTop="5dp"
             android:layout_below="@id/item_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1,2,3">
+            android:stretchColumns="1,2">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -99,8 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
+                    android:textAlignment="center"
                     android:fontFamily="@font/open_sans"
                     android:text="Quantity"
                     android:textSize="14sp" />
@@ -109,8 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
+                    android:textAlignment="center"
                     android:fontFamily="@font/open_sans"
                     android:text="SubTotal"
                     android:textSize="14sp" />
@@ -122,9 +128,10 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
+                    android:paddingBottom="5dp"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:orientation="horizontal">
@@ -163,12 +170,11 @@
 
                 <TextView
                     android:id="@+id/subtotal_display"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
-                    android:layout_gravity="center"
+                    android:textAlignment="center"
                     android:text="RM0.00"
                     android:textSize="14sp" />
             </TableRow>
@@ -176,6 +182,5 @@
         </TableLayout>
 
     </RelativeLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
