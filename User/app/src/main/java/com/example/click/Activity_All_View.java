@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,9 +81,12 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
     public static final String ID = "id";
     public static final String USERID = "userid";
+    public static final String MAIN_CATE = "main_category";
+    public static final String SUB_CATE = "sub_category";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
-    public static final String ITEM_LOCATION = "district";
+    public static final String DISTRICT = "district";
+    public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
     private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/readall.php";
@@ -241,9 +245,12 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
 
                                         startActivity(detailIntent);

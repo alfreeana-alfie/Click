@@ -80,72 +80,6 @@ public class Fragment_Sell_Items extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        Button_Func();
-
-        return view;
-    }
-
-    private void Declare(View v) {
-        enter_category = v.findViewById(R.id.enter_main_category);
-        enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
-        enter_location = v.findViewById(R.id.enter_location);
-        enter_price = v.findViewById(R.id.enter_price);
-
-        spinner_division = v.findViewById(R.id.spinner_division);
-        spinner_district = v.findViewById(R.id.spinner_district);
-        accept_location = v.findViewById(R.id.accept_location);
-        back_location = v.findViewById(R.id.back_location);
-        location_page_layout = v.findViewById(R.id.location_page_layout);
-
-        accept_item = v.findViewById(R.id.accept_item);
-        back_item = v.findViewById(R.id.back_item);
-        edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
-        accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
-        back_ad_detail = v.findViewById(R.id.back_ad_detail);
-        spinner_main_category = v.findViewById(R.id.spinner_main_category);
-        spinner_sub_category = v.findViewById(R.id.spinner_sub_category);
-        accept_category = v.findViewById(R.id.accept_category);
-        back_category = v.findViewById(R.id.back_category);
-        upload_photo_img = v.findViewById(R.id.upload_photo);
-        loading = v.findViewById(R.id.loading);
-
-        category_page_layout = v.findViewById(R.id.category_page_layout);
-        ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
-        item_page_layout = v.findViewById(R.id.item_page_layout);
-
-        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
-        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_division.setAdapter(adapter_division);
-        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showLocationResult(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        adapter_category = ArrayAdapter.createFromResource(getContext(), R.array.main_category, android.R.layout.simple_spinner_item);
-        adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_main_category.setAdapter(adapter_category);
-
-        spinner_main_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showResult(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void Button_Func() {
         upload_photo_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -252,6 +186,68 @@ public class Fragment_Sell_Items extends Fragment {
             }
         });
 
+
+        return view;
+    }
+
+    private void Declare(View v) {
+        enter_category = v.findViewById(R.id.enter_main_category);
+        enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
+        enter_location = v.findViewById(R.id.enter_location);
+        enter_price = v.findViewById(R.id.enter_price);
+
+        spinner_division = v.findViewById(R.id.spinner_division);
+        spinner_district = v.findViewById(R.id.spinner_district);
+        accept_location = v.findViewById(R.id.accept_location);
+        back_location = v.findViewById(R.id.back_location);
+        location_page_layout = v.findViewById(R.id.location_page_layout);
+
+        accept_item = v.findViewById(R.id.accept_item);
+        back_item = v.findViewById(R.id.back_item);
+        edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
+        accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
+        back_ad_detail = v.findViewById(R.id.back_ad_detail);
+        spinner_main_category = v.findViewById(R.id.spinner_main_category);
+        spinner_sub_category = v.findViewById(R.id.spinner_sub_category);
+        accept_category = v.findViewById(R.id.accept_category);
+        back_category = v.findViewById(R.id.back_category);
+        upload_photo_img = v.findViewById(R.id.upload_photo);
+        loading = v.findViewById(R.id.loading);
+
+        category_page_layout = v.findViewById(R.id.category_page_layout);
+        ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
+        item_page_layout = v.findViewById(R.id.item_page_layout);
+
+        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_division.setAdapter(adapter_division);
+        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showLocationResult(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        adapter_category = ArrayAdapter.createFromResource(getContext(), R.array.main_category, android.R.layout.simple_spinner_item);
+        adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_main_category.setAdapter(adapter_category);
+
+        spinner_main_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                showResult(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void gotoAdDetail() {

@@ -265,6 +265,43 @@
                 android:textSize="16sp"
                 tools:ignore="RtlCompat" />
 
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/division_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/select_location"
+                android:paddingLeft="15dp"
+
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/district_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/select_location"
+                android:paddingLeft="15dp"
+
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textSize="16sp"
+                tools:ignore="RtlCompat" />
+
+
 
         </LinearLayout>
 

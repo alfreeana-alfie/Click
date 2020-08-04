@@ -46,9 +46,12 @@ public class Fragment_Category_Computer extends Fragment {
 
     public static final String ID = "id";
     public static final String USERID = "userid";
+    public static final String MAIN_CATE = "main_category";
+    public static final String SUB_CATE = "sub_category";
     public static final String AD_DETAIL = "ad_detail";
     public static final String PRICE = "price";
-    public static final String ITEM_LOCATION = "item_location";
+    public static final String DISTRICT = "district";
+    public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
     private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_computer.php";
     private static String URL_ADD_FAV = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
@@ -504,13 +507,14 @@ public class Fragment_Category_Computer extends Fragment {
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(getContext(), Activity_View_Item.class);
                                         Item_All_Details item = itemList.get(position);
-
                                         detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
                                         detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
                                         detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getDivision());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
                                         detailIntent.putExtra(PHOTO, item.getPhoto());
-
                                         startActivity(detailIntent);
                                     }
 
