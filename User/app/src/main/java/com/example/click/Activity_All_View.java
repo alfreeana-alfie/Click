@@ -795,7 +795,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
                 gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Chat_Inbox()).addToBackStack(null).commit();
+                        new Fragment_New_User()).addToBackStack(null).commit();
                 Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
                 break;
 
