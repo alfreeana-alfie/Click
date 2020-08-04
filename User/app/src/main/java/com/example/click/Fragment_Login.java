@@ -400,7 +400,6 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
                                                         else if(obj.getJSONObject(name).getString("email").equals(email)){
                                                             UserDetails.username = name;
                                                             UserDetails.email = email;
-                                                            UserDetails.photo = photo;
                                                         }
                                                         else {
                                                             Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();

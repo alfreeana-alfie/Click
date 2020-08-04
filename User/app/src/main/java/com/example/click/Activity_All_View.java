@@ -94,7 +94,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
     private static String URL_CART = "https://annkalina53.000webhostapp.com/android_register_login/readcart.php";
 
-    List<Item_All_Details> itemList, item_all_details;
+    List<Item_All_Details> itemList;
     Item_Adapter_All_View adapter_item;
 
 

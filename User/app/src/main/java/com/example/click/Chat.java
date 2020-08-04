@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
@@ -28,9 +29,11 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -57,9 +60,15 @@ public class Chat extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(UserDetails.chatWith);
+        getSupportActionBar().setCustomView(R.layout.custom);
+
+        View view = getSupportActionBar().getCustomView();
+        TextView chatname = view.findViewById(R.id.user_chatname);
+        final CircleImageView circleImageView = view.findViewById(R.id.profile_image);
+
+        chatname.setText(UserDetails.chatWith);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +84,8 @@ public class Chat extends AppCompatActivity {
             public void onResponse(String s) {
                 try {
                     JSONObject obj = new JSONObject(s);
+
+                    Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
 
                     Toast.makeText(Chat.this, obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

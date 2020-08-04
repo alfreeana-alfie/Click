@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,13 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.firebase.client.Firebase;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +35,7 @@ public class Fragment_Chat_Inbox extends Fragment {
     TextView noUsersText;
     ImageView imageView;
     ArrayList<String> al = new ArrayList<>();
+
     int totalUsers = 0;
     ProgressDialog pd;
 
@@ -97,8 +90,7 @@ public class Fragment_Chat_Inbox extends Fragment {
 
             while (i.hasNext()) {
                 key = i.next().toString();
-                Toast.makeText(getContext(), obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(getContext(), obj.getJSONObject(UserDetails.username).get("photo").toString(), Toast.LENGTH_SHORT).show();
                 if (!key.equals(UserDetails.username)) {
                         al.add(key);
                 }

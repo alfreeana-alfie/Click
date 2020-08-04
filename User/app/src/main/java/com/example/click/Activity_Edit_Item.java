@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
@@ -546,12 +547,11 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String strMain_category = this.Main_Category_TextView.getText().toString().trim();
         final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
-        final String strPrice = this.EditText_Price.getText().toString().trim();
+        final Double strPrice = Double.valueOf(this.EditText_Price.getText().toString().trim());
+        final String strPrice_Text = String.format("%.2f", strPrice);
         final String strDivision = this.Division_TextView.getText().toString().trim();
         final String strDistrict = this.District_TextView.getText().toString().trim();
 
-        loading.setVisibility(View.VISIBLE);
-        Button_SavedEdit.setVisibility(View.GONE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override
@@ -560,22 +560,15 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
-                                Button_SavedEdit.setVisibility(View.VISIBLE);
-
                                 Toast.makeText(Activity_Edit_Item.this, "Item Updated", Toast.LENGTH_SHORT).show();
-                                Intent intent1 = new Intent(Activity_Edit_Item.this, Activity_All_View.class);
-                                startActivity(intent1);
+//                                Intent intent1 = new Intent(Activity_Edit_Item.this, Activity_All_View.class);
+//                                startActivity(intent1);
 
                             } else {
                                 Toast.makeText(Activity_Edit_Item.this, "Failed to Update", Toast.LENGTH_SHORT).show();
-                                loading.setVisibility(View.GONE);
-                                Button_SavedEdit.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            loading.setVisibility(View.GONE);
-                            Button_SavedEdit.setVisibility(View.VISIBLE);
                         }
                     }
                 },
@@ -590,9 +583,9 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 params.put("main_category", strMain_category);
                 params.put("sub_category", strSub_category);
                 params.put("ad_detail", strAd_Detail);
-                params.put("price", String.format("%.2f", strPrice));
-                params.put("division", "Sibu");
-                params.put("district", "Sibu");
+                params.put("price", strPrice_Text);
+                params.put("division", strDivision);
+                params.put("district", strDistrict);
                 params.put("id", id);
                 return params;
             }
@@ -614,7 +607,6 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             if (success.equals("1")) {
                                 Toast.makeText(Activity_Edit_Item.this, "Success!", Toast.LENGTH_SHORT).show();
-
                             } else {
                                 Toast.makeText(Activity_Edit_Item.this, "Failed! ", Toast.LENGTH_SHORT).show();
                             }
