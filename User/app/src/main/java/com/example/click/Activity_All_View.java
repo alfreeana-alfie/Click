@@ -338,7 +338,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
                                                             if (success.equals("1")) {
                                                                 Toast.makeText(Activity_All_View.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
+                                                                setupBadge();
                                                             }
 
                                                         } catch (JSONException e) {
@@ -480,21 +480,6 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onClick(View v) {
-//                scrollView.setVisibility(View.GONE);
-//                searchView.setVisibility(View.VISIBLE);
-//                gridViewSearch.setVisibility(View.VISIBLE);
-//                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                    @Override
-//                    public boolean onQueryTextSubmit(String query) {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onQueryTextChange(String newText) {
-//                        adapter_item.getFilter().filter(newText);
-//                        return false;
-//                    }
-//                });
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Fragment_Category_See_All()).addToBackStack(null).commit();

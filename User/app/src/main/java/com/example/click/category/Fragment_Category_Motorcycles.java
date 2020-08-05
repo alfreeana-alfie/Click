@@ -75,6 +75,27 @@ public class Fragment_Category_Motorcycles extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_view, container, false);
         Declare(view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(spinner_division.getSelectedItem().toString().equals("All")){
+                    adapter_item.getFilter().filter(newText);
+                }else if(spinner_district.getSelectedItem().toString().equals("All")){
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText);
+                } else if (!spinner_division.getSelectedItem().toString().equals("All") && !spinner_district.getSelectedItem().toString().equals("All")){
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString() + newText);
+                } else{
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText + spinner_district.getSelectedItem().toString() );
+
+                }
+                return false;
+            }
+        });
         View_Item(view);
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
@@ -89,18 +110,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_CarItem);
         searchView = v.findViewById(R.id.search_find);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return false;
-            }
-        });
 
         spinner_division = v.findViewById(R.id.spinner_division);
         spinner_district = v.findViewById(R.id.spinner_district);
@@ -113,6 +123,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
         adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
+
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -170,23 +181,6 @@ public class Fragment_Category_Motorcycles extends Fragment {
                 but_district.setVisibility(View.GONE);
             }
         });
-
-/*
-        spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    but_division.setVisibility(View.VISIBLE);
-                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                adapter_item.getFilter().filter(null);
-            }
-        });
-*/
     }
 
     private void showResult(int position){
@@ -206,7 +200,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -229,7 +223,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -251,7 +245,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -274,7 +268,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -297,7 +291,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -320,7 +314,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -343,7 +337,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -366,7 +360,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -389,7 +383,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -412,7 +406,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -435,7 +429,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 
@@ -458,7 +452,7 @@ public class Fragment_Category_Motorcycles extends Fragment {
                         ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                         if (position != 0) {
                             but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_district.getSelectedItem().toString());
+                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
                         }
                     }
 

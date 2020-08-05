@@ -107,23 +107,18 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemAllDetailsArrayList.add(item);
-
-                                    Log.d("COUNT", String.valueOf(object.length()));
                                 }
-                                Log.d("CART", String.valueOf(itemAllDetailsArrayList.size()));
                                 item_cart_adapter = new Item_Cart_Adapter(Activity_Add_to_Cart.this, itemAllDetailsArrayList);
                                 recyclerView.setAdapter(item_cart_adapter);
                                 item_cart_adapter.setOnItemClickListener(new Item_Cart_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onDeleteClick(final int position) {
-//                                        Toast.makeText(Activity_Add_to_Cart.this, "Clicked!", Toast.LENGTH_SHORT).show();
                                         AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Add_to_Cart.this, R.style.MyDialogTheme);
                                         builder.setTitle("Are you sure?");
                                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-//                                                Intent detailIntent = new Intent(getContext(), Activity_Edit_Item.class);
                                                 final Item_All_Details item = itemAllDetailsArrayList.get(position);
 
                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
@@ -137,11 +132,8 @@ public class Activity_Add_to_Cart extends AppCompatActivity {
                                                                     if (success.equals("1")) {
                                                                         itemAllDetailsArrayList.remove(position);
                                                                         item_cart_adapter.notifyItemRemoved(position);
-//                                                                        Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
-//                                                                        final String id = jsonObject.getString("id").trim();
-
                                                                     } else {
-                                                                        Toast.makeText(Activity_Add_to_Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+//                                                                        Toast.makeText(Activity_Add_to_Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
