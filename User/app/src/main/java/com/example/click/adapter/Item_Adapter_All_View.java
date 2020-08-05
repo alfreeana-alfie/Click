@@ -23,15 +23,17 @@ import java.util.List;
 
 public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
-    private List<Item_All_Details> itemList;
-    private List<Item_All_Details> itemListFull;
+    List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
     private OnItemClickListener mListerner;
 
     public Item_Adapter_All_View(List<Item_All_Details> itemList, Context context) {
-        this.itemList = itemList;
         this.itemListFull = itemList;
         this.context = context;
+        itemListFull02 = new ArrayList<>();
+        if(itemListFull != null){
+            this.itemListFull02.addAll(itemListFull);
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -67,12 +69,12 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return itemListFull.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return itemListFull.indexOf(getItem(position));
     }
 
     @Override
@@ -131,16 +133,15 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
         Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-
                 FilterResults filterResults = new FilterResults();
 
                 if (constraint == null || constraint.length() == 0) {
-                    filterResults.count = itemList.size();
-                    filterResults.values = itemList;
+                    filterResults.count = itemListFull02.size();
+                    filterResults.values = itemListFull02;
                 } else {
                     String strSearch = constraint.toString().toLowerCase();
                     List<Item_All_Details> resultData = new ArrayList<>();
-                    for (Item_All_Details item : itemList) {
+                    for (Item_All_Details item : itemListFull) {
                         String fulltext01 = item.getDivision().toLowerCase() + item.getAd_detail().toLowerCase() + item.getDistrict().toLowerCase();
                         String fulltext02 = item.getDivision().toLowerCase() + item.getDistrict().toLowerCase() + item.getAd_detail().toLowerCase();
                         if (fulltext01.toLowerCase().contains(strSearch)) {
@@ -148,7 +149,6 @@ public class Item_Adapter_All_View extends BaseAdapter implements Filterable {
                         }else if (fulltext02.toLowerCase().contains(strSearch)) {
                             resultData.add(item);
                         }
-
                         filterResults.count = resultData.size();
                         filterResults.values = resultData;
                     }

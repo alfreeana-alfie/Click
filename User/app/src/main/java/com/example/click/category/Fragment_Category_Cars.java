@@ -82,6 +82,7 @@ public class Fragment_Category_Cars extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_view, container, false);
         Declare(view);
+        View_Item(view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -92,18 +93,24 @@ public class Fragment_Category_Cars extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 if(spinner_division.getSelectedItem().toString().equals("All")){
                     adapter_item.getFilter().filter(newText);
+                    gridView.setAdapter(adapter_item);
+
                 }else if(spinner_district.getSelectedItem().toString().equals("All")){
                     adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText);
+                    gridView.setAdapter(adapter_item);
+
                 } else if (!spinner_division.getSelectedItem().toString().equals("All") && !spinner_district.getSelectedItem().toString().equals("All")){
                     adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString() + newText);
+                    gridView.setAdapter(adapter_item);
                 } else{
                     adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText + spinner_district.getSelectedItem().toString() );
-
+                    gridView.setAdapter(adapter_item);
                 }
-                return false;
+                gridView.setAdapter(adapter_item);
+                adapter_item.notifyDataSetChanged();
+                return true;
             }
         });
-        View_Item(view);
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
