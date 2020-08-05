@@ -57,14 +57,32 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity_View_Item_Favourite" />
         <activity android:name=".Activity_Add_to_Cart" />
-        <activity android:windowSoftInputMode="adjustPan"
-            android:name=".Activity_Edit_User_Profile" />
-        <activity android:windowSoftInputMode="adjustPan"
-            android:name=".Chat" />
+        <activity
+            android:name=".Activity_Edit_User_Profile"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Chat"
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

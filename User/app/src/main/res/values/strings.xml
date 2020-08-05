@@ -1,7 +1,7 @@
 <resources>
     <string name="facebook_app_id">1695626630575322</string>
     <string name="fb_login_protocol_scheme">fb1695626630575322</string>
-
+    <string name="fcm_token">FCM Token: %s</string>
     <string name="app_name">CLICK</string>
     <string name="submit">Submit</string>
     <string name="register">Register</string>

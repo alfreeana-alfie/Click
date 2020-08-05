@@ -1,9 +1,18 @@
 package com.example.click;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +23,29 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -43,6 +60,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -52,6 +70,16 @@ public class Chat extends AppCompatActivity {
     EditText messageArea;
     ScrollView scrollView;
     Firebase reference1, reference2, reference1_other, reference2_other;
+
+    private final String ADMIN_CHANNEL_ID ="com.example.click";
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +113,7 @@ public class Chat extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(s);
 
+                    TOPIC = obj.getJSONObject(UserDetails.chatWith).get("token").toString();
                     Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -98,7 +127,6 @@ public class Chat extends AppCompatActivity {
         });
         RequestQueue rQueue = Volley.newRequestQueue(Chat.this);
         rQueue.add(request);
-
 
         layout = findViewById(R.id.layout1);
         sendButton = findViewById(R.id.sendButton);
@@ -115,7 +143,7 @@ public class Chat extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String messageText = messageArea.getText().toString();
+                final String messageText = messageArea.getText().toString();
                 String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
                 if (!messageText.equals("")) {
@@ -127,6 +155,46 @@ public class Chat extends AppCompatActivity {
 //                    reference1_other.child("chatWith").setValue(UserDetails.chatWith);
                     reference2.push().setValue(map);
 //                    reference2_other.child("chatWith").setValue(UserDetails.username);
+
+                    String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            try {
+                                JSONObject obj = new JSONObject(s);
+
+                                TOPIC = obj.getJSONObject(UserDetails.chatWith).get("token").toString();
+                                NOTIFICATION_TITLE = UserDetails.username;
+                                NOTIFICATION_MESSAGE = messageText;
+
+                                JSONObject notification = new JSONObject();
+                                JSONObject notifcationBody = new JSONObject();
+                                try {
+                                    notifcationBody.put("title", NOTIFICATION_TITLE);
+                                    notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                                    notification.put("to", TOPIC);
+                                    notification.put("data", notifcationBody);
+                                    sendNotification(notification);
+
+                                    Log.d(TAG, "onCreate: " +  NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
+                                } catch (JSONException e) {
+                                    Log.e(TAG, "onCreate: " + e.getMessage() );
+                                }
+                                Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            System.out.println("" + volleyError);
+                        }
+                    });
+                    RequestQueue rQueue = Volley.newRequestQueue(Chat.this);
+                    rQueue.add(request);
 
                 }
             }
@@ -170,6 +238,32 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i(TAG, "onResponse: " + response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Chat.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     public void addMessageBox(String message, int type) {
