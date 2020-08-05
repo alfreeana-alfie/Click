@@ -533,48 +533,52 @@ public class Fragment_Category_Furniture extends Fragment {
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
-                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                            String success = jsonObject1.getString("success");
+                                        if(getId.equals(item.getSeller_id())){
+                                            Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
 
-                                                            if (success.equals("1")) {
-                                                                Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
 
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("main_category", strMain_category);
-                                                params.put("sub_category", strSub_category);
-                                                params.put("ad_detail", strAd_Detail);
-                                                params.put("price", String.format("%.2f", strPrice));
-                                                params.put("division", strDivision);
-                                                params.put("district", strDistrict);
-                                                params.put("photo", strPhoto);
-                                                params.put("seller_id", strSeller_id);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                        requestQueue.add(stringRequest1);
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                            requestQueue.add(stringRequest1);
+                                        }
                                     }
 
                                     @Override
@@ -590,48 +594,66 @@ public class Fragment_Category_Furniture extends Fragment {
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
-                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                            String success = jsonObject1.getString("success");
+                                        if(getId.equals(strSeller_id)){
+                                            Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
 
-                                                            if (success.equals("1")) {
-                                                                Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
 
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("main_category", strMain_category);
-                                                params.put("sub_category", strSub_category);
-                                                params.put("ad_detail", strAd_Detail);
-                                                params.put("price", String.format("%.2f", strPrice));
-                                                params.put("division", strDivision);
-                                                params.put("district", strDistrict);
-                                                params.put("photo", strPhoto);
-                                                params.put("seller_id", strSeller_id);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                        requestQueue.add(stringRequest2);
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                            requestQueue.add(stringRequest2);
+                                        }
+
+//                                        new Handler().post(new Runnable() {
+//                                            @Override
+//                                            public void run()
+//                                            {
+//                                                Intent intent = getActivity().getIntent();
+//                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+//                                                        | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                                                getActivity().overridePendingTransition(0, 0);
+//
+//                                                getActivity().overridePendingTransition(0, 0);
+//                                                startActivity(intent);
+//                                            }
+//                                        });
                                     }
                                 });
                             } else {
@@ -639,18 +661,12 @@ public class Fragment_Category_Furniture extends Fragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(Activity_All_View.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        if (error.getMessage() == null) {
-//                            Toast.makeText(Activity_All_View.this, "Connection Error", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(Activity_All_View.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
                     }
                 }) {
             @Override
@@ -661,5 +677,4 @@ public class Fragment_Category_Furniture extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
-
 }

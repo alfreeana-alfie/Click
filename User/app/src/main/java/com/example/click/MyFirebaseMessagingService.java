@@ -31,11 +31,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         final Intent intent = new Intent(this, Activity_Main.class);
         int notificationID = new Random().nextInt(3000);
 
-      /*
-        Apps targeting SDK 26 or above (Android O) must implement notification channels and add its notifications
-        to at least one of them. Therefore, confirm if version is Oreo or higher, then setup notification channel
-      */
-
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this , 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

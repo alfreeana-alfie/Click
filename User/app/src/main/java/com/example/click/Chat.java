@@ -1,16 +1,6 @@
 package com.example.click;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,12 +13,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.view.accessibility.AccessibilityViewCommand;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,41 +29,29 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Chat extends AppCompatActivity {
+    final String TAG = "NOTIFICATION TAG";
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
+    final private String contentType = "application/json";
     LinearLayout layout;
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
     Firebase reference1, reference2, reference1_other, reference2_other;
-
-    private final String ADMIN_CHANNEL_ID ="com.example.click";
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
-    final private String contentType = "application/json";
-    final String TAG = "NOTIFICATION TAG";
-
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
     String TOPIC;
@@ -152,9 +127,7 @@ public class Chat extends AppCompatActivity {
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
-//                    reference1_other.child("chatWith").setValue(UserDetails.chatWith);
                     reference2.push().setValue(map);
-//                    reference2_other.child("chatWith").setValue(UserDetails.username);
 
                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -178,9 +151,9 @@ public class Chat extends AppCompatActivity {
                                     notification.put("data", notifcationBody);
                                     sendNotification(notification);
 
-                                    Log.d(TAG, "onCreate: " +  NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
+                                    Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
                                 } catch (JSONException e) {
-                                    Log.e(TAG, "onCreate: " + e.getMessage() );
+                                    Log.e(TAG, "onCreate: " + e.getMessage());
                                 }
                                 Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
                             } catch (JSONException e) {
@@ -254,7 +227,7 @@ public class Chat extends AppCompatActivity {
                         Toast.makeText(Chat.this, "Request error", Toast.LENGTH_LONG).show();
                         Log.i(TAG, "onErrorResponse: Didn't work");
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -282,7 +255,7 @@ public class Chat extends AppCompatActivity {
 
             textView.setBackgroundResource(R.drawable.rounded_corner1);
             textView.setElevation(3);
-            textView.setPadding(45, 25, 45 ,25);
+            textView.setPadding(45, 25, 45, 25);
             textView.setTextSize(18);
             layout.addView(textView);
             scrollView.fullScroll(View.FOCUS_DOWN);
@@ -299,7 +272,7 @@ public class Chat extends AppCompatActivity {
             textView.setLayoutParams(lp2);
             textView.setBackgroundResource(R.drawable.rounded_corner2);
             textView.setElevation(3);
-            textView.setPadding(45, 25, 45 ,25);
+            textView.setPadding(45, 25, 45, 25);
             textView.setTextSize(18);
 
 
@@ -331,7 +304,7 @@ public class Chat extends AppCompatActivity {
             lp1.gravity = Gravity.END;
             textView.setLayoutParams(lp1);
             textView.setElevation(0);
-            textView.setPadding(15, 5, 15 ,5);
+            textView.setPadding(15, 5, 15, 5);
             textView.setTextSize(12);
             layout.addView(textView);
 
@@ -341,7 +314,7 @@ public class Chat extends AppCompatActivity {
             lp2.gravity = Gravity.START;
             textView.setLayoutParams(lp2);
             textView.setElevation(0);
-            textView.setPadding(15, 5, 15 ,15);
+            textView.setPadding(15, 5, 15, 15);
             textView.setTextSize(12);
             layout.addView(textView);
         }

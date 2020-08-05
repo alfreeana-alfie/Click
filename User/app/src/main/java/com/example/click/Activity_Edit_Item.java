@@ -94,7 +94,6 @@ public class Activity_Edit_Item extends AppCompatActivity {
 
         Category_TextView.setText(Category_Text);
 
-
         if(main_category != null){
             int main_catposition = adapter_category.getPosition(main_category);
             spinner_main_category.setSelection(main_catposition);
@@ -276,6 +275,8 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mLocation = spinner_division.getSelectedItem().toString() + ", " + spinner_district.getSelectedItem().toString();
+                Division_TextView.setText(spinner_division.getSelectedItem().toString());
+                District_TextView.setText(spinner_district.getSelectedItem().toString());
                 Location_TextView.setText(mLocation);
             }
         });
@@ -552,6 +553,9 @@ public class Activity_Edit_Item extends AppCompatActivity {
         final String strDivision = this.Division_TextView.getText().toString().trim();
         final String strDistrict = this.District_TextView.getText().toString().trim();
 
+        loading.setVisibility(View.VISIBLE);
+        Button_SavedEdit.setVisibility(View.GONE);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override
@@ -560,14 +564,21 @@ public class Activity_Edit_Item extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
+                                Button_SavedEdit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Activity_Edit_Item.this, "Item Updated", Toast.LENGTH_SHORT).show();
+                                onBackPressed();
 //                                Intent intent1 = new Intent(Activity_Edit_Item.this, Activity_All_View.class);
 //                                startActivity(intent1);
 
                             } else {
+                                loading.setVisibility(View.GONE);
+                                Button_SavedEdit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Activity_Edit_Item.this, "Failed to Update", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+                            loading.setVisibility(View.GONE);
+                            Button_SavedEdit.setVisibility(View.VISIBLE);
                             e.printStackTrace();
                         }
                     }
@@ -575,6 +586,8 @@ public class Activity_Edit_Item extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.setVisibility(View.GONE);
+                        Button_SavedEdit.setVisibility(View.VISIBLE);
                     }
                 }) {
             @Override
@@ -672,6 +685,6 @@ public class Activity_Edit_Item extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().getBackStackEntryCount();
+        getSupportFragmentManager().popBackStack();
     }
 }
