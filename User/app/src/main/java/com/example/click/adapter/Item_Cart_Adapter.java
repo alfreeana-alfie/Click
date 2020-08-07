@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.click.helper.Item_All_Details;
+import com.example.click.item.Item_All_Details;
 import com.example.click.R;
 import com.squareup.picasso.Picasso;
 
@@ -36,7 +36,7 @@ public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_cart_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_listview, parent, false);
         return new ViewHolder(view);
     }
 

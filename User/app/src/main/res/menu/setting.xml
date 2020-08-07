@@ -14,7 +14,7 @@
         android:id="@+id/menu_cart"
         android:title="@string/add_to_cart"
         android:icon="@drawable/ic_cart_foreground"
-        app:actionLayout="@layout/action_item_layout"
+        app:actionLayout="@layout/cart_badge"
         app:showAsAction="always" />
 
     <group

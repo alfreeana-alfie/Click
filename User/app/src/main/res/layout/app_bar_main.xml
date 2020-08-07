@@ -29,7 +29,7 @@
 
             <include
                 android:id="@+id/support_layout"
-                layout="@layout/fragment_view_item"
+                layout="@layout/homepage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/appbar" />

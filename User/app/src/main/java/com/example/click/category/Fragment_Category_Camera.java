@@ -27,11 +27,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Activity_View_Item;
+import com.example.click.page.View_Item;
 import com.example.click.R;
 import com.example.click.adapter.Item_Adapter_All_View;
-import com.example.click.helper.Item_All_Details;
-import com.example.click.helper.SessionManager;
+import com.example.click.item.Item_All_Details;
+import com.example.click.user.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,7 +73,7 @@ public class Fragment_Category_Camera extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category_view, container, false);
+        View view = inflater.inflate(R.layout.category_view, container, false);
         Declare(view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -476,7 +476,7 @@ public class Fragment_Category_Camera extends Fragment {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Activity_All_View.this, "Login! ", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -499,7 +499,7 @@ public class Fragment_Category_Camera extends Fragment {
                                 adapter_item.setOnItemClickListener(new Item_Adapter_All_View.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(getContext(), Activity_View_Item.class);
+                                        Intent detailIntent = new Intent(getContext(), View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());

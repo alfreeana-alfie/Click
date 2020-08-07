@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.click.helper.Item_All_Details;
+import com.example.click.item.Item_All_Details;
 import com.example.click.R;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +55,7 @@ public class Item_Fav_Adapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.fragment_fav_item_listview, null);
+        convertView = inflater.inflate(R.layout.fav_item_listview, null);
         Item_All_Details item = itemList.get(position);
 
         ImageView img_item;

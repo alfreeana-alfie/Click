@@ -11,7 +11,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.click.helper.Item_All_Details;
+import com.example.click.item.Item_All_Details;
 import com.example.click.R;
 import com.squareup.picasso.Picasso;
 
@@ -53,7 +53,7 @@ public class Item_Adapter extends BaseAdapter  implements Filterable{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.fragment_edit_item_listview, null);
+        convertView = inflater.inflate(R.layout.edit_item_listview, null);
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;

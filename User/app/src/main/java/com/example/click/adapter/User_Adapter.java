@@ -1,9 +1,6 @@
 package com.example.click.adapter;
 
-import android.content.ContentProvider;
 import android.content.Context;
-import android.printservice.CustomPrinterIconCallback;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.click.R;
-import com.example.click.User;
+import com.example.click.user.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,7 +39,7 @@ public class User_Adapter extends RecyclerView.Adapter<User_Adapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_user_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_listview, parent, false);
         return new ViewHolder(view);
     }
 

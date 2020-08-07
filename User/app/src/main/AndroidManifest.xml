@@ -38,7 +38,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Splashscreen">
+        <activity android:name=".page.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,37 +46,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_Main"
+            android:name=".page.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity_All_View"
+            android:name=".page.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity_Edit_Item" />
+        <activity android:name=".page.Edit_Item" />
         <activity
-            android:name=".Activity_View_Item"
+            android:name=".page.View_Item"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity_View_Item_Favourite" />
-        <activity android:name=".Activity_Add_to_Cart" />
+        <activity android:name=".page.View_Item_Favourite" />
+        <activity android:name=".page.Shopping_Cart" />
         <activity
-            android:name=".Activity_Edit_User_Profile"
+            android:name=".user.Edit_Profile"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Chat"
+            android:name=".user.Chat"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".page.Checkout" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".service.MyFirebaseMessagingService"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
