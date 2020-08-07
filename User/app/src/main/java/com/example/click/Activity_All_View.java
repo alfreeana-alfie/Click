@@ -884,22 +884,7 @@ public class Activity_All_View extends AppCompatActivity implements NavigationVi
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-            builder.setTitle("Do you want to exit the app?");
-            builder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    sessionManager.logout();
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            sessionManager.logout();
         } else {
             getSupportFragmentManager().popBackStack();
             view.setVisibility(View.VISIBLE);
