@@ -66,6 +66,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     String name_firebase, email_firebase, token_firebase, token;
     FirebaseStorage storage;
     StorageReference storageReference;
+    String getId;
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private EditText email, password;
@@ -76,6 +77,7 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
     private GoogleApiClient googleApiClient;
     private Uri filePath;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,11 +85,10 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
         Declare(view);
 
         Firebase.setAndroidContext(view.getContext());
+        sessionManager = new SessionManager(view.getContext());
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference("uploads");
-
-        sessionManager = new SessionManager(view.getContext());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(getContext()).enableAutoManage(getActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
@@ -628,5 +629,4 @@ public class Fragment_Login extends Fragment implements GoogleApiClient.OnConnec
             handleSignInResult(result);
         }
     }
-
 }
