@@ -46,8 +46,8 @@ public class View_Item extends AppCompatActivity {
     private ImageView img_item;
     private TextView ad_detail_item, price_item, contact_seller;
     ArrayList<String> al = new ArrayList<>();
-    private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
+    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     String userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId;
     SessionManager sessionManager;
     Button add_to_cart_btn;

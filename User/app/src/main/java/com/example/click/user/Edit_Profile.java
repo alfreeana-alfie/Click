@@ -49,9 +49,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Edit_Profile extends AppCompatActivity {
 
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
-    private static String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edit_detail.php";
-    private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/upload.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/upload.php";
     SessionManager sessionManager;
     String getId;
     Uri filePath;

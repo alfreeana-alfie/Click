@@ -30,30 +30,30 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
-import com.example.click.adapter.Item_Adapter_All_View;
-import com.example.click.adapter.Item_Cart_Adapter;
-import com.example.click.category.Fragment_Category_Business;
-import com.example.click.category.Fragment_Category_Camera;
-import com.example.click.category.Fragment_Category_Car_Accessories;
-import com.example.click.category.Fragment_Category_Cars;
-import com.example.click.category.Fragment_Category_Computer;
-import com.example.click.category.Fragment_Category_Electronics;
-import com.example.click.category.Fragment_Category_Food;
-import com.example.click.category.Fragment_Category_Furniture;
-import com.example.click.category.Fragment_Category_Grocery;
-import com.example.click.category.Fragment_Category_Handcraft;
-import com.example.click.category.Fragment_Category_Home;
-import com.example.click.category.Fragment_Category_Men;
-import com.example.click.category.Fragment_Category_Mom;
-import com.example.click.category.Fragment_Category_Motorcycles;
-import com.example.click.category.Fragment_Category_Pets;
-import com.example.click.category.Fragment_Category_Rent;
-import com.example.click.category.Fragment_Category_Sales;
-import com.example.click.category.Fragment_Category_See_All;
-import com.example.click.category.Fragment_Category_Services;
-import com.example.click.category.Fragment_Category_Sports;
-import com.example.click.category.Fragment_Category_Travel;
-import com.example.click.category.Fragment_Category_Women;
+import com.example.click.adapter.Item_Adapter;
+import com.example.click.adapter.CartAdapter;
+import com.example.click.category.Business;
+import com.example.click.category.Camera;
+import com.example.click.category.Car_Accessories;
+import com.example.click.category.Cars;
+import com.example.click.category.Computer;
+import com.example.click.category.Electronics;
+import com.example.click.category.Food;
+import com.example.click.category.Furniture;
+import com.example.click.category.Grocery;
+import com.example.click.category.Handcraft;
+import com.example.click.category.Home_Appliances;
+import com.example.click.category.Men;
+import com.example.click.category.Mom;
+import com.example.click.category.Motorcycles;
+import com.example.click.category.Pets;
+import com.example.click.category.House_Rent;
+import com.example.click.category.House_Sales;
+import com.example.click.category.All;
+import com.example.click.category.Services;
+import com.example.click.category.Sports;
+import com.example.click.category.Travel;
+import com.example.click.category.Women;
 import com.example.click.item.Item_All_Details;
 import com.example.click.user.SessionManager;
 import com.example.click.user.Edit_Profile;
@@ -76,7 +76,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Item_Adapter_All_View.OnItemClickListener {
+public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Item_Adapter.OnItemClickListener {
 
     public static final String ID = "id";
     public static final String USERID = "userid";
@@ -87,17 +87,17 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String DISTRICT = "district";
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/category/readall.php";
-    private static String URL_ADD = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
-    private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
-    private static String URL_CART = "https://annkalina53.000webhostapp.com/android_register_login/readcart.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_VIEW = "https://ketekmall.com/ketekmall/category/readall.php";
+    private static String URL_ADD = "https://ketekmall.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
 
     List<Item_All_Details> itemList;
-    Item_Adapter_All_View adapter_item;
+    Item_Adapter adapter_item;
 
 
-    Item_Cart_Adapter item_cart_adapter;
+    CartAdapter _cart_adapter;
     RecyclerView recyclerView;
     ArrayList<Item_All_Details> itemAllDetailsArrayList;
 
@@ -127,7 +127,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.nav_drawer);
         Declare();
 
-        item_cart_adapter = new Item_Cart_Adapter(this, itemList);
+        _cart_adapter = new CartAdapter(this, itemList);
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
@@ -233,11 +233,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     itemList.add(item);
 
                                 }
-                                adapter_item = new Item_Adapter_All_View(itemList, Homepage.this);
+                                adapter_item = new Item_Adapter(itemList, Homepage.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridViewSearch.invalidateViews();
                                 gridViewSearch.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter_All_View.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(Homepage.this, View_Item.class);
@@ -427,10 +427,10 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
                                 }
                                 setupBadge();
-                                item_cart_adapter.notifyDataSetChanged();
-                                item_cart_adapter = new Item_Cart_Adapter(Homepage.this, itemAllDetailsArrayList);
-                                recyclerView.setAdapter(item_cart_adapter);
-                                item_cart_adapter.setOnItemClickListener(new Item_Cart_Adapter.OnItemClickListener() {
+                                _cart_adapter.notifyDataSetChanged();
+                                _cart_adapter = new CartAdapter(Homepage.this, itemAllDetailsArrayList);
+                                recyclerView.setAdapter(_cart_adapter);
+                                _cart_adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
                                     @Override
                                     public void onDeleteClick(final int position) {
                                     }
@@ -438,7 +438,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                 });
 
                             }
-                            item_cart_adapter.notifyDataSetChanged();
+                            _cart_adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -479,7 +479,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_See_All()).addToBackStack(null).commit();
+                        new All()).addToBackStack(null).commit();
             }
         });
 
@@ -488,7 +488,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Business()).addToBackStack(null).commit();
+                        new Business()).addToBackStack(null).commit();
             }
         });
 
@@ -497,7 +497,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Camera()).addToBackStack(null).commit();
+                        new Camera()).addToBackStack(null).commit();
             }
         });
 
@@ -506,7 +506,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Car_Accessories()).addToBackStack(null).commit();
+                        new Car_Accessories()).addToBackStack(null).commit();
             }
         });
 
@@ -515,7 +515,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Cars()).addToBackStack(null).commit();
+                        new Cars()).addToBackStack(null).commit();
             }
         });
 
@@ -524,7 +524,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Computer()).addToBackStack(null).commit();
+                        new Computer()).addToBackStack(null).commit();
             }
         });
 
@@ -533,7 +533,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Electronics()).addToBackStack(null).commit();
+                        new Electronics()).addToBackStack(null).commit();
             }
         });
 
@@ -542,7 +542,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Furniture()).addToBackStack(null).commit();
+                        new Furniture()).addToBackStack(null).commit();
             }
         });
 
@@ -551,7 +551,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Handcraft()).addToBackStack(null).commit();
+                        new Handcraft()).addToBackStack(null).commit();
             }
         });
 
@@ -560,7 +560,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Home()).addToBackStack(null).commit();
+                        new Home_Appliances()).addToBackStack(null).commit();
             }
         });
 
@@ -569,7 +569,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Men()).addToBackStack(null).commit();
+                        new Men()).addToBackStack(null).commit();
             }
         });
 
@@ -578,7 +578,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Mom()).addToBackStack(null).commit();
+                        new Mom()).addToBackStack(null).commit();
             }
         });
 
@@ -587,7 +587,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Motorcycles()).addToBackStack(null).commit();
+                        new Motorcycles()).addToBackStack(null).commit();
             }
         });
 
@@ -596,7 +596,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Pets()).addToBackStack(null).commit();
+                        new Pets()).addToBackStack(null).commit();
             }
         });
 
@@ -605,7 +605,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Rent()).addToBackStack(null).commit();
+                        new House_Rent()).addToBackStack(null).commit();
             }
         });
 
@@ -614,7 +614,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Sales()).addToBackStack(null).commit();
+                        new House_Sales()).addToBackStack(null).commit();
             }
         });
 
@@ -623,7 +623,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Services()).addToBackStack(null).commit();
+                        new Services()).addToBackStack(null).commit();
             }
         });
 
@@ -632,7 +632,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Sports()).addToBackStack(null).commit();
+                        new Sports()).addToBackStack(null).commit();
             }
         });
 
@@ -641,7 +641,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Travel()).addToBackStack(null).commit();
+                        new Travel()).addToBackStack(null).commit();
             }
         });
 
@@ -650,7 +650,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Women()).addToBackStack(null).commit();
+                        new Women()).addToBackStack(null).commit();
             }
         });
 
@@ -659,7 +659,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Food()).addToBackStack(null).commit();
+                        new Food()).addToBackStack(null).commit();
             }
         });
 
@@ -668,7 +668,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_Grocery()).addToBackStack(null).commit();
+                        new Grocery()).addToBackStack(null).commit();
             }
         });
 
@@ -677,7 +677,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Fragment_Category_See_All()).addToBackStack(null).commit();
+                        new All()).addToBackStack(null).commit();
             }
         });
 
@@ -772,7 +772,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 searchView.setVisibility(View.GONE);
                 gridViewSearch.setVisibility(View.GONE);
 
-                Intent intent = new Intent(Homepage.this, Shopping_Cart.class);
+                Intent intent = new Intent(Homepage.this, Cart.class);
                 startActivity(intent);
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 break;
@@ -877,7 +877,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
 
             case R.id.menu_cart:
-                Intent intent = new Intent(Homepage.this, Shopping_Cart.class);
+                Intent intent = new Intent(Homepage.this, Cart.class);
                 startActivity(intent);
                 break;
         }

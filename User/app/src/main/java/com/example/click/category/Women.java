@@ -28,9 +28,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.page.View_Item;
-import com.example.click.R;
-import com.example.click.adapter.Item_Adapter_All_View;
+import com.example.click.adapter.Item_Adapter;
 import com.example.click.item.Item_All_Details;
+import com.example.click.R;
 import com.example.click.user.SessionManager;
 
 import org.json.JSONArray;
@@ -42,10 +42,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Fragment_Category_Electronics extends Fragment {
+public class Women extends Fragment {
 
     public static final String ID = "id";
-    public static final String USERID = "userid";
+    public static final String USERID = "user_id";
     public static final String MAIN_CATE = "main_category";
     public static final String SUB_CATE = "sub_category";
     public static final String AD_DETAIL = "ad_detail";
@@ -53,14 +53,14 @@ public class Fragment_Category_Electronics extends Fragment {
     public static final String DISTRICT = "district";
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/category/read_category_electronics.php";
-    private static String URL_ADD_FAV = "https://annkalina53.000webhostapp.com/android_register_login/add_to_fav.php";
-    private static String URL_ADD_CART = "https://annkalina53.000webhostapp.com/android_register_login/add_to_cart.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_women.php";
+    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
     SessionManager sessionManager;
     String getId;
     GridView gridView;
-    Item_Adapter_All_View adapter_item;
+    Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
     SearchView searchView;
@@ -481,7 +481,7 @@ public class Fragment_Category_Electronics extends Fragment {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
-                                    String seller_id = object.getString("userid").trim();
+                                    String seller_id = object.getString("user_id").trim();
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
@@ -493,10 +493,10 @@ public class Fragment_Category_Electronics extends Fragment {
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Adapter_All_View(itemList, getContext());
+                                adapter_item = new Item_Adapter(itemList, getContext());
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter_All_View.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(getContext(), View_Item.class);

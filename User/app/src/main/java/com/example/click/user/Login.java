@@ -60,8 +60,8 @@ import java.util.regex.Pattern;
 public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
-    private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/verify.php";
-    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
+    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
+    private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
     private final int PICK_IMAGE_REQUEST = 22;
     String name_firebase, email_firebase, token_firebase, token;

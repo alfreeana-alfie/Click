@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
-import com.example.click.adapter.Item_Fav_Adapter;
+import com.example.click.adapter.FavouriteAdapter;
 import com.example.click.item.Item_All_Details;
 import com.example.click.user.SessionManager;
 
@@ -43,10 +43,10 @@ public class Saved_Searches extends Fragment {
     public static final String ITEM_LOCATION = "district";
     public static final String PHOTO = "photo";
 
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readfav.php";
-    private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_fav.php";
+    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readfav.php";
+    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_fav.php";
     GridView gridView;
-    Item_Fav_Adapter adapter_item;
+    FavouriteAdapter adapter_item;
     List<Item_All_Details> itemList;
     String getId;
     SessionManager sessionManager;
@@ -103,10 +103,10 @@ public class Saved_Searches extends Fragment {
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Fav_Adapter(getContext(), itemList);
+                                adapter_item = new FavouriteAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Fav_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(getContext(), View_Item.class);

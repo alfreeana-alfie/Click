@@ -50,7 +50,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class Register extends Fragment {
 
-    private static String URL_REGISTER = "https://annkalina53.000webhostapp.com/android_register_login/register.php";
+    private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     String name_firebase, email_firebase;
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;

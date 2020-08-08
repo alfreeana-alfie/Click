@@ -48,8 +48,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class Sell_Items extends Fragment {
 
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/itemsave.php";
-    private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
     SessionManager sessionManager;
     String getId;
     Uri filePath;
@@ -506,7 +506,7 @@ public class Sell_Items extends Fragment {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("userid", id);
+                    params.put("user_id", id);
                     params.put("main_category", strMain_category);
                     params.put("sub_category", strSub_category);
                     params.put("ad_detail", strAd_Detail);

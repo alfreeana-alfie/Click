@@ -17,7 +17,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class User_Adapter extends RecyclerView.Adapter<User_Adapter.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     Context context;
     private List<User> userList;
@@ -31,7 +31,7 @@ public class User_Adapter extends RecyclerView.Adapter<User_Adapter.ViewHolder> 
         mListener = listener;
     }
 
-    public User_Adapter(Context context, List<User> userList) {
+    public UserAdapter(Context context, List<User> userList) {
         this.context = context;
         this.userList = userList;
     }

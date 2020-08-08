@@ -56,7 +56,7 @@
             android:name=".page.View_Item"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".page.View_Item_Favourite" />
-        <activity android:name=".page.Shopping_Cart" />
+        <activity android:name=".page.Cart" />
         <activity
             android:name=".user.Edit_Profile"
             android:windowSoftInputMode="adjustPan" />

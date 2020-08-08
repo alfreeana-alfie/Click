@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_Fav_Adapter extends BaseAdapter {
+public class FavouriteAdapter extends BaseAdapter {
 
     private Context context;
     private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public Item_Fav_Adapter(Context context, List<Item_All_Details> itemList) {
+    public FavouriteAdapter(Context context, List<Item_All_Details> itemList) {
         this.context = context;
         this.itemList = itemList;
         itemListFull = new ArrayList<>(itemList);

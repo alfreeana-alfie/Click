@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
-import com.example.click.adapter.User_Adapter;
+import com.example.click.adapter.UserAdapter;
 import com.example.click.user.Chat;
 import com.example.click.user.User;
 import com.example.click.user.UserDetails;
@@ -39,7 +39,7 @@ public class Chat_Inbox extends Fragment {
     RecyclerView recyclerView;
     TextView noUsersText;
     List<User> usersArrayList;
-    User_Adapter user_adapter;
+    UserAdapter user_adapter;
     int totalUsers = 0;
 
     @Nullable
@@ -84,11 +84,11 @@ public class Chat_Inbox extends Fragment {
                 if (!key.equals(UserDetails.username)) {
                     user = new User(key, obj.getJSONObject(key).get("photo").toString());
                     usersArrayList.add(user);
-                    user_adapter = new User_Adapter(getContext(), usersArrayList);
+                    user_adapter = new UserAdapter(getContext(), usersArrayList);
                 }
                 totalUsers++;
                 recyclerView.setAdapter(user_adapter);
-                user_adapter.setOnItemClickListener(new User_Adapter.OnItemClickListener() {
+                user_adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
 //                        Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();

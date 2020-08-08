@@ -27,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
-import com.example.click.adapter.Item_Adapter;
+import com.example.click.adapter.Item_UserAdapter;
 import com.example.click.item.Item_All_Details;
 import com.example.click.user.SessionManager;
 
@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class View_Item_User extends Fragment implements Item_Adapter.OnItemClickListener {
+public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemClickListener {
 
-    public static final String EXTRA_USERID = "userid";
+    public static final String EXTRA_USERID = "user_id";
     public static final String EXTRA_ID = "id";
     public static final String EXTRA_MAIN = "main_category";
     public static final String EXTRA_SUB = "sub_category";
@@ -53,12 +53,12 @@ public class View_Item_User extends Fragment implements Item_Adapter.OnItemClick
     public static final String EXTRA_IMG_ITEM = "photo";
 
 
-    private static String URL_VIEW = "https://annkalina53.000webhostapp.com/android_register_login/readuser.php";
-    private static String URL_DELETE = "https://annkalina53.000webhostapp.com/android_register_login/delete_item.php";
+    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readuser.php";
+    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_item.php";
 
     private String getId;
     private GridView gridView;
-    private Item_Adapter adapter_item;
+    private Item_UserAdapter adapter_item;
     private List<Item_All_Details> itemList;
     private SearchView searchView;
 
@@ -132,7 +132,7 @@ public class View_Item_User extends Fragment implements Item_Adapter.OnItemClick
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
-                                    String seller_id = object.getString("userid").trim();
+                                    String seller_id = object.getString("user_id").trim();
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
@@ -144,10 +144,10 @@ public class View_Item_User extends Fragment implements Item_Adapter.OnItemClick
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Adapter(getContext(), itemList);
+                                adapter_item = new Item_UserAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_UserAdapter.OnItemClickListener() {
                                     @Override
                                     public void onEditClick(int position) {
                                         Intent detailIntent = new Intent(getContext(), Edit_Item.class);
@@ -252,7 +252,7 @@ public class View_Item_User extends Fragment implements Item_Adapter.OnItemClick
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("userid", getId);
+                params.put("user_id", getId);
                 return params;
             }
         };

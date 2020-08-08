@@ -37,8 +37,8 @@ import java.util.TimerTask;
 
 public class Forgot_Password extends Fragment {
 
-    private static String URL_LOGIN = "https://annkalina53.000webhostapp.com/android_register_login/verify.php";
-    private static String URL_EDIT = "https://annkalina53.000webhostapp.com/android_register_login/edit.php";
+    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
+    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit.php";
     private EditText email, new_password, confirm_new_password;
     private Button button_enter_email, button_enter_new_password, button_back_pressed, button_back_password;
     private ProgressBar loading, loading_password;

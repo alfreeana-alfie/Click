@@ -17,14 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Item_Cart_Adapter extends RecyclerView.Adapter<Item_Cart_Adapter.ViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     Context context;
     int mQuantity = 1;
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
 
-    public Item_Cart_Adapter(Context context, List<Item_All_Details> item_all_detailsList) {
+    public CartAdapter(Context context, List<Item_All_Details> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
     }

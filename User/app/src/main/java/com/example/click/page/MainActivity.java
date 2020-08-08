@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String URL_READ = "https://annkalina53.000webhostapp.com/android_register_login/read_detail.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     String getId;
     private SessionManager sessionManager;
 

@@ -51,8 +51,8 @@ import static com.example.click.page.View_Item_User.EXTRA_SUB;
 
 public class Edit_Item extends AppCompatActivity {
 
-    private static String URL_UPLOAD = "https://annkalina53.000webhostapp.com/android_register_login/edituser.php";
-    private static String URL_IMG = "https://annkalina53.000webhostapp.com/android_register_login/uploadimg02.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/edituser.php";
+    private static String URL_IMG = "https://ketekmall.com/ketekmall/uploadimg02.php";
 
     ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category, adapter_car,
             adapter_properties, adapter_electronic, adapter_home,

@@ -8,31 +8,58 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.click.item.Item_All_Details;
 import com.example.click.R;
+import com.example.click.item.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class Item_Adapter extends BaseAdapter  implements Filterable{
+public class Item_Adapter extends BaseAdapter implements Filterable {
 
+    List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
-    private List<Item_All_Details> itemList;
-    private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public Item_Adapter(Context context, List<Item_All_Details> itemList) {
-        this.itemList = itemList;
+    public Item_Adapter(List<Item_All_Details> itemList, Context context) {
         this.itemListFull = itemList;
         this.context = context;
+        itemListFull02 = new ArrayList<>();
+        if(itemListFull != null){
+            this.itemListFull02.addAll(itemListFull);
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListerner = listener;
+    }
+
+    public void sortArrayLowest() {
+        Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o1.getPrice()), Double.parseDouble(o2.getPrice()));
+            }
+        });
+        notifyDataSetChanged();
+
+    }
+
+    public void sortArrayHighest() {
+        Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o2.getPrice()), Double.parseDouble(o1.getPrice()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -42,43 +69,53 @@ public class Item_Adapter extends BaseAdapter  implements Filterable{
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return itemListFull.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return itemListFull.indexOf(getItem(position));
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.edit_item_listview, null);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        convertView = inflater.inflate(R.layout.view_item_listview, null);
         Item_All_Details item = itemListFull.get(position);
 
+        ImageButton fav_item, add_to_cart;
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
-        Button edit_item, delete_item;
+        Button view_item;
 
         img_item = convertView.findViewById(R.id.img_item);
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
         TV_price = convertView.findViewById(R.id.price_item);
         TV_item_location = convertView.findViewById(R.id.item_location_item);
-        edit_item = convertView.findViewById(R.id.edit_item);
-        edit_item.setOnClickListener(new View.OnClickListener() {
+        view_item = convertView.findViewById(R.id.view_item);
+        view_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
-                    mListerner.onEditClick(position);
+                    mListerner.onViewClick(position);
                 }
             }
         });
-        delete_item = convertView.findViewById(R.id.delete_item);
-        delete_item.setOnClickListener(new View.OnClickListener() {
+        fav_item = convertView.findViewById(R.id.fav_item);
+        fav_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
-                    mListerner.onDeleteClick(position);
+                    mListerner.onAddtoFavClick(position);
+                }
+            }
+        });
+        add_to_cart = convertView.findViewById(R.id.add_to_cart_item);
+        add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
+                    mListerner.onAddtoCartClick(position);
                 }
             }
         });
@@ -88,7 +125,6 @@ public class Item_Adapter extends BaseAdapter  implements Filterable{
         TV_item_location.setText(item.getDistrict());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
-
         return convertView;
     }
 
@@ -97,19 +133,20 @@ public class Item_Adapter extends BaseAdapter  implements Filterable{
         Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-
                 FilterResults filterResults = new FilterResults();
 
                 if (constraint == null || constraint.length() == 0) {
-                    filterResults.count = itemList.size();
-                    filterResults.values = itemList;
+                    filterResults.count = itemListFull02.size();
+                    filterResults.values = itemListFull02;
                 } else {
                     String strSearch = constraint.toString().toLowerCase();
-                    String strSEARCH = constraint.toString().toUpperCase();
-                    String str= constraint.toString();
                     List<Item_All_Details> resultData = new ArrayList<>();
-                    for (Item_All_Details item : itemList) {
-                        if(item.getAd_detail().toLowerCase().contains(strSearch)){
+                    for (Item_All_Details item : itemListFull) {
+                        String fulltext01 = item.getDivision().toLowerCase() + item.getAd_detail().toLowerCase() + item.getDistrict().toLowerCase();
+                        String fulltext02 = item.getDivision().toLowerCase() + item.getDistrict().toLowerCase() + item.getAd_detail().toLowerCase();
+                        if (fulltext01.toLowerCase().contains(strSearch)) {
+                            resultData.add(item);
+                        }else if (fulltext02.toLowerCase().contains(strSearch)) {
                             resultData.add(item);
                         }
                         filterResults.count = resultData.size();
@@ -129,8 +166,10 @@ public class Item_Adapter extends BaseAdapter  implements Filterable{
     }
 
     public interface OnItemClickListener {
-        void onEditClick(int position);
+        void onViewClick(int position);
 
-        void onDeleteClick(int position);
+        void onAddtoFavClick(int position);
+
+        void onAddtoCartClick(int position);
     }
 }
