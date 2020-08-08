@@ -6,7 +6,7 @@
     android:background="@color/colorLightOrange"
     android:orientation="vertical"
     android:paddingTop="30dp"
-    tools:context=".page.MainActivity">
+    tools:context=".MainActivity">
 
     <FrameLayout
         android:id="@+id/framelayout"

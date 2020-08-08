@@ -76,7 +76,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/grandtotal_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_semibold"
