@@ -5,18 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -36,83 +31,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemClickListener {
+public class My_Orders extends Fragment {
 
-    public static final String EXTRA_USERID = "user_id";
-    public static final String EXTRA_ID = "id";
-    public static final String EXTRA_MAIN = "main_category";
-    public static final String EXTRA_SUB = "sub_category";
-    public static final String EXTRA_AD_DETAIL = "ad_detail";
-    public static final String EXTRA_PRICE = "price";
-    public static final String EXTRA_DIVISION = "division";
-    public static final String EXTRA_DISTRICT = "district";
-    public static final String EXTRA_IMG_ITEM = "photo";
+    public static final String ID = "id";
+    public static final String AD_DETAIL = "ad_detail";
+    public static final String PRICE = "price";
+    public static final String ITEM_LOCATION = "district";
+    public static final String PHOTO = "photo";
+
+    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readfav.php";
+    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_fav.php";
+    private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_approval.php";
+    private static String URL_READ_ITEM = "https://ketekmall.com/ketekmall/read_item.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
 
-    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readuser.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_item.php";
-
-    private String getId;
-    private GridView gridView;
-    private Item_UserAdapter adapter_item;
-    private List<Item_All_Details> itemList;
-    private SearchView searchView;
-
+    GridView gridView;
+    OrderAdapter adapter_item;
+    List<Item_All_Details> itemList;
+    String getId;
+    SessionManager sessionManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.find_my_items, container, false);
+        View view = inflater.inflate(R.layout.my_orders, container, false);
         Declare(view);
-        SessionManager sessionManager = new SessionManager(view.getContext());
+
+        sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        Approval_List(view);
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.setting, menu);
-        MenuItem search = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) search.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setQueryHint("Search");
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
-        searchView = v.findViewById(R.id.search_find);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+//        ScrollView scrollView = v.findViewById(R.id.grid_category);
+//
+//        scrollView.setVisibility(View.GONE);
+    }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter_item.getFilter().filter(newText);
-                return false;
-            }
-        });
-
-
+    private void View_Item(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
                 new Response.Listener<String>() {
                     @Override
@@ -128,7 +92,7 @@ public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemC
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
-                                    String seller_id = object.getString("user_id").trim();
+                                    String seller_id = object.getString("customer_id").trim();
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
@@ -140,26 +104,21 @@ public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemC
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_UserAdapter(getContext(), itemList);
+                                adapter_item = new OrderAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_UserAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
                                     @Override
-                                    public void onEditClick(int position) {
-                                        Intent detailIntent = new Intent(getContext(), Edit_Item.class);
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(getContext(), View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(EXTRA_USERID, getId);
-                                        detailIntent.putExtra(EXTRA_ID, item.getId());
-                                        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
-                                        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
-                                        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-                                        detailIntent.putExtra(EXTRA_DIVISION, item.getDivision());
-                                        detailIntent.putExtra(EXTRA_DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
+                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(PRICE, item.getPrice());
+                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
+                                        detailIntent.putExtra(PHOTO, item.getPhoto());
 
-                                        getActivity().startActivity(detailIntent);
+                                        startActivity(detailIntent);
                                     }
 
                                     @Override
@@ -170,7 +129,7 @@ public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemC
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                Intent detailIntent = new Intent(getContext(), Edit_Item.class);
+//                                                Intent detailIntent = new Intent(getContext(), Edit_Item.class);
                                                 final Item_All_Details item = itemList.get(position);
 
                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
@@ -210,7 +169,7 @@ public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemC
                                                         return params;
                                                     }
                                                 };
-                                                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                                                RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                                                 requestQueue.add(stringRequest);
                                             }
                                         });
@@ -248,21 +207,62 @@ public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemC
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", getId);
+                params.put("customer_id", getId);
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    public void onEditClick(int position) {
-    }
+    private void Approval_List(final View view){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_APPROVAL
+                , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-    @Override
-    public void onDeleteClick(int position) {
+                    if (success.equals("1")) {
+//                                Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
 
+                            String id = object.getString("id").trim();
+                            final String seller_id = object.getString("seller_id").trim();
+                            String customer_id = object.getString("customer_id").trim();
+                            final String item_id = object.getString("item_id").trim();
+                            String receipt_id = object.getString("receipt_id").trim();
+                            String receipt_date = object.getString("receipt_date").trim();
+                            String status = object.getString("status");
+
+                            Toast.makeText(getContext(), item_id, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("seller_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        requestQueue.add(stringRequest);
     }
 
 }

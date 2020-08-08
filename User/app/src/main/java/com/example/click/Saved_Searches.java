@@ -50,7 +50,7 @@ public class Saved_Searches extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_item_user, container, false);
+        View view = inflater.inflate(R.layout.find_my_items, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());

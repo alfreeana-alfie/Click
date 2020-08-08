@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="0dp"
+    android:background="@color/colorPrimary">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_white_full_curves"
+        android:layout_margin="10dp"
+        app:searchHintIcon="@color/colorAccent"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@android:color/white"
+        app:queryHint="Search Here" />
+
+    <RelativeLayout
+        android:layout_below="@id/search_find"
+        android:background="@drawable/background_white_curve"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/gridView_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:paddingTop="40dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="7dp"
+            android:columnWidth="80dp"
+            android:horizontalSpacing="5dp"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

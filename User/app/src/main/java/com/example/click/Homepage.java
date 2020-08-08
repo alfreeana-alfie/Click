@@ -744,8 +744,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 searchView.setVisibility(View.GONE);
                 gridViewSearch.setVisibility(View.GONE);
 
-                Intent intent = new Intent(Homepage.this, Cart.class);
-                startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
+                        new My_Orders()).addToBackStack(null).commit();
                 Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 break;
 

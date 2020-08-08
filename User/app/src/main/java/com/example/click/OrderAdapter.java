@@ -14,14 +14,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteAdapter extends BaseAdapter {
+public class OrderAdapter extends BaseAdapter {
 
     private Context context;
     private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public FavouriteAdapter(Context context, List<Item_All_Details> itemList) {
+    public OrderAdapter(Context context, List<Item_All_Details> itemList) {
         this.context = context;
         this.itemList = itemList;
         itemListFull = new ArrayList<>(itemList);
@@ -53,17 +53,13 @@ public class FavouriteAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.saved_item_listview, null);
+        convertView = inflater.inflate(R.layout.order_listview, null);
         Item_All_Details item = itemList.get(position);
 
-        ImageView img_item;
-        TextView TV_addetail, TV_price, TV_item_location;
+        TextView TV_addetail;
         Button view_item, delete_fav_item;
 
-        img_item = convertView.findViewById(R.id.img_item);
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
-        TV_price = convertView.findViewById(R.id.price_item);
-        TV_item_location = convertView.findViewById(R.id.item_location_item);
         view_item = convertView.findViewById(R.id.view_item);
         view_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +80,6 @@ public class FavouriteAdapter extends BaseAdapter {
         });
 
         TV_addetail.setText(item.getAd_detail());
-        TV_price.setText("MYR" + item.getPrice());
-        TV_item_location.setText(item.getDistrict());
-
-        Picasso.get().load(item.getPhoto()).into(img_item);
-
         return convertView;
     }
 

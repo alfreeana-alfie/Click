@@ -54,6 +54,7 @@ public class Cars extends Fragment {
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_cars.php";
+    private static String URL_DIVISION = "https://ketekmall.com/ketekmall/category/filter_category.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
@@ -133,12 +134,208 @@ public class Cars extends Fragment {
 
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
                 showResult(position);
                 if (position != 0) {
+                    adapter_item.notifyDataSetChanged();
                     but_division.setVisibility(View.VISIBLE);
-                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
+//                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
+                    final String filter_division = spinner_division.getSelectedItem().toString();
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DIVISION,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        final JSONObject jsonObject = new JSONObject(response);
+                                        String success = jsonObject.getString("success");
+                                        final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                        if (success.equals("1")) {
+                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                                String id = object.getString("id").trim();
+                                                String seller_id = object.getString("user_id").trim();
+                                                String main_category = object.getString("main_category").trim();
+                                                String sub_category = object.getString("sub_category").trim();
+                                                String ad_detail = object.getString("ad_detail").trim();
+                                                String price = object.getString("price").trim();
+                                                String division = object.getString("division");
+                                                String district = object.getString("district");
+                                                String image_item = object.getString("photo");
+
+                                                Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                                itemList.add(item);
+                                            }
+                                            adapter_item = new Item_Adapter(itemList, getContext());
+                                            adapter_item.notifyDataSetChanged();
+                                            gridView.setAdapter(adapter_item);
+                                            adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                                @Override
+                                                public void onViewClick(int position) {
+                                                    Intent detailIntent = new Intent(getContext(), View_Item.class);
+                                                    Item_All_Details item = itemList.get(position);
+
+                                                    detailIntent.putExtra(USERID, item.getSeller_id());
+                                                    detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                                    detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                                    detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                                    detailIntent.putExtra(PRICE, item.getPrice());
+                                                    detailIntent.putExtra(DIVISION, item.getDivision());
+                                                    detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                                    detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                                    startActivity(detailIntent);
+                                                }
+
+                                                @Override
+                                                public void onAddtoFavClick(int position) {
+                                                    Item_All_Details item = itemList.get(position);
+
+                                                    final String strSeller_id = item.getSeller_id();
+                                                    final String strMain_category = item.getMain_category();
+                                                    final String strSub_category = item.getSub_category();
+                                                    final String strAd_Detail = item.getAd_detail();
+                                                    final Double strPrice = Double.valueOf(item.getPrice());
+                                                    final String strDivision = item.getDivision();
+                                                    final String strDistrict = item.getDistrict();
+                                                    final String strPhoto = item.getPhoto();
+
+                                                    if(getId.equals(item.getSeller_id())){
+                                                        Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                                    }else{
+                                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                                new Response.Listener<String>() {
+                                                                    @Override
+                                                                    public void onResponse(String response) {
+                                                                        try {
+                                                                            JSONObject jsonObject1 = new JSONObject(response);
+                                                                            String success = jsonObject1.getString("success");
+
+                                                                            if (success.equals("1")) {
+                                                                                Toast.makeText(getContext(), "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                            }
+
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+                                                                },
+                                                                new Response.ErrorListener() {
+                                                                    @Override
+                                                                    public void onErrorResponse(VolleyError error) {
+                                                                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }) {
+                                                            @Override
+                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                Map<String, String> params = new HashMap<>();
+                                                                params.put("customer_id", getId);
+                                                                params.put("main_category", strMain_category);
+                                                                params.put("sub_category", strSub_category);
+                                                                params.put("ad_detail", strAd_Detail);
+                                                                params.put("price", String.format("%.2f", strPrice));
+                                                                params.put("division", strDivision);
+                                                                params.put("district", strDistrict);
+                                                                params.put("photo", strPhoto);
+                                                                params.put("seller_id", strSeller_id);
+                                                                return params;
+                                                            }
+                                                        };
+                                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                                        requestQueue.add(stringRequest1);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onAddtoCartClick(int position) {
+                                                    Item_All_Details item = itemList.get(position);
+
+                                                    final String strSeller_id = item.getSeller_id();
+                                                    final String strMain_category = item.getMain_category();
+                                                    final String strSub_category = item.getSub_category();
+                                                    final String strAd_Detail = item.getAd_detail();
+                                                    final Double strPrice = Double.valueOf(item.getPrice());
+                                                    final String strDivision = item.getDivision();
+                                                    final String strDistrict = item.getDistrict();
+                                                    final String strPhoto = item.getPhoto();
+
+                                                    if(getId.equals(strSeller_id)){
+                                                        Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                                    }else{
+                                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                                new Response.Listener<String>() {
+                                                                    @Override
+                                                                    public void onResponse(String response) {
+                                                                        try {
+                                                                            JSONObject jsonObject1 = new JSONObject(response);
+                                                                            String success = jsonObject1.getString("success");
+
+                                                                            if (success.equals("1")) {
+                                                                                Toast.makeText(getContext(), "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                            }
+
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    }
+                                                                },
+                                                                new Response.ErrorListener() {
+                                                                    @Override
+                                                                    public void onErrorResponse(VolleyError error) {
+                                                                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }) {
+                                                            @Override
+                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                Map<String, String> params = new HashMap<>();
+                                                                params.put("customer_id", getId);
+                                                                params.put("main_category", strMain_category);
+                                                                params.put("sub_category", strSub_category);
+                                                                params.put("ad_detail", strAd_Detail);
+                                                                params.put("price", String.format("%.2f", strPrice));
+                                                                params.put("division", strDivision);
+                                                                params.put("district", strDistrict);
+                                                                params.put("photo", strPhoto);
+                                                                params.put("seller_id", strSeller_id);
+                                                                return params;
+                                                            }
+                                                        };
+                                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                                        requestQueue.add(stringRequest2);
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            Toast.makeText(getContext(), "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                }
+                            }){
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("division", filter_division);
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                    requestQueue.add(stringRequest);
                 }
 
             }
@@ -473,6 +670,8 @@ public class Cars extends Fragment {
     }
 
     private void View_Item(final View view) {
+        final String filter_division = spinner_division.getSelectedItem().toString();
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
