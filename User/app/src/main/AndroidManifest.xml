@@ -46,38 +46,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".pages.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Homepage"
+            android:name=".pages.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Edit_Item" />
+        <activity android:name=".pages.Edit_Item" />
         <activity
-            android:name=".View_Item"
+            android:name=".pages.View_Item"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".View_Item_Favourite" />
-        <activity android:name=".Cart" />
+        <activity android:name=".pages.View_Item_Favourite" />
+        <activity android:name=".pages.Cart" />
         <activity
-            android:name=".Edit_Profile"
+            android:name=".user.Edit_Profile"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Chat"
+            android:name=".pages.Chat"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Checkout" />
+        <activity android:name=".pages.Checkout" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".service.MyFirebaseMessagingService"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
