@@ -100,7 +100,7 @@ public class Cart extends AppCompatActivity {
                                             JSONObject object = jsonArray.getJSONObject(i);
 
                                             final String id = object.getString("id").trim();
-                                            final String seller_id = object.getString("customer_id").trim();
+                                            final String customer_id = object.getString("customer_id").trim();
                                             final String main_category = object.getString("main_category").trim();
                                             final String sub_category = object.getString("sub_category").trim();
                                             final String ad_detail = object.getString("ad_detail").trim();
@@ -108,6 +108,7 @@ public class Cart extends AppCompatActivity {
                                             final String division = object.getString("division");
                                             final String district = object.getString("district");
                                             final String image_item = object.getString("photo");
+                                            final String seller_id = object.getString("seller_id").trim();
 
                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
                                                     new Response.Listener<String>() {
@@ -118,9 +119,10 @@ public class Cart extends AppCompatActivity {
                                                                 String success = Object.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    addReceipt();
-                                                                    Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
-
+//                                                                    addReceipt();
+//                                                                    Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
+                                                                    Intent intent = new Intent(Cart.this, Checkout.class);
+                                                                    startActivity(intent);
                                                                 } else {
                                                                     Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                                 }
@@ -334,7 +336,6 @@ public class Cart extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String id = object.getString("id").trim();
-                                    final String seller_id = object.getString("customer_id").trim();
                                     final String main_category = object.getString("main_category").trim();
                                     final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
@@ -342,6 +343,7 @@ public class Cart extends AppCompatActivity {
                                     final String division = object.getString("division");
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
+                                    final String seller_id = object.getString("seller_id").trim();
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_RECEIPTS,
                                             new Response.Listener<String>() {
@@ -424,6 +426,7 @@ public class Cart extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String receipt_id = object.getString("id").trim();
+                                    final String seller_id1 = object.getString("seller_id").trim();
                                     final String receipt_date = object.getString("date");
 
                                     StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_CART,
@@ -440,7 +443,6 @@ public class Cart extends AppCompatActivity {
                                                                 JSONObject object = jsonArray.getJSONObject(i);
 
                                                                 final String id = object.getString("id").trim();
-                                                                final String seller_id = object.getString("customer_id").trim();
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_APPROVAL,
                                                                         new Response.Listener<String>() {
@@ -525,7 +527,7 @@ public class Cart extends AppCompatActivity {
                                                                                             @Override
                                                                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                                                                 Map<String, String> params = new HashMap<>();
-                                                                                                params.put("id", seller_id);
+                                                                                                params.put("id", seller_id1);
                                                                                                 return params;
                                                                                             }
                                                                                         };
@@ -550,7 +552,7 @@ public class Cart extends AppCompatActivity {
                                                                     @Override
                                                                     protected Map<String, String> getParams() throws AuthFailureError {
                                                                         Map<String, String> params = new HashMap<>();
-                                                                        params.put("seller_id", seller_id);
+                                                                        params.put("seller_id", seller_id1);
                                                                         params.put("customer_id", getId);
                                                                         params.put("item_id", id);
                                                                         params.put("receipt_id", receipt_id);
@@ -609,91 +611,6 @@ public class Cart extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
         requestQueue.add(stringRequest);
     }
-
-//    private void getUserDetail() {
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//
-//                            if (success.equals("1")) {
-//                                for (int i = 0; i < jsonArray.length(); i++) {
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                    String strName = object.getString("name").trim();
-//                                    String strEmail = object.getString("email").trim();
-//                                    String strPhoto = object.getString("photo");
-//
-//                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
-//
-//                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//                                        @Override
-//                                        public void onResponse(String s) {
-//                                            try {
-//                                                JSONObject obj = new JSONObject(s);
-//
-//                                                TOPIC = obj.getJSONObject(UserDetails.chatWith).get("token").toString();
-//                                                NOTIFICATION_TITLE = UserDetails.username;
-//                                                NOTIFICATION_MESSAGE = "You have new order";
-//
-//                                                JSONObject notification = new JSONObject();
-//                                                JSONObject notifcationBody = new JSONObject();
-//                                                try {
-//                                                    notifcationBody.put("title", NOTIFICATION_TITLE);
-//                                                    notifcationBody.put("message", NOTIFICATION_MESSAGE);
-//
-//                                                    notification.put("to", TOPIC);
-//                                                    notification.put("data", notifcationBody);
-//                                                    sendNotification(notification);
-//
-//                                                    Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
-//                                                } catch (JSONException e) {
-//                                                    Log.e(TAG, "onCreate: " + e.getMessage());
-//                                                }
-//                                            } catch (JSONException e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                        }
-//                                    }, new Response.ErrorListener() {
-//                                        @Override
-//                                        public void onErrorResponse(VolleyError volleyError) {
-//                                            System.out.println("" + volleyError);
-//                                        }
-//                                    });
-//                                    RequestQueue rQueue = Volley.newRequestQueue(Cart.this);
-//                                    rQueue.add(request);
-//
-//
-//                                }
-//                            } else {
-//                                Toast.makeText(Cart.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-////                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("id", seller_id);
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
 
     private void sendNotification(JSONObject notification) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,

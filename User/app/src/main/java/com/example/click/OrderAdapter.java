@@ -6,10 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +33,6 @@ public class OrderAdapter extends BaseAdapter {
         return itemList.size();
     }
 
-//    public Filter getFilter() {
-//        return itemFilter;
-//    }
-
     @Override
     public Object getItem(int position) {
         return null;
@@ -65,7 +58,7 @@ public class OrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
-                    mListerner.onViewClick(position);
+                    mListerner.onAcceptClick(position);
                 }
             }
         });
@@ -74,7 +67,7 @@ public class OrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
-                    mListerner.onDeleteClick(position);
+                    mListerner.onRejectClick(position);
                 }
             }
         });
@@ -84,8 +77,8 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     public interface OnItemClickListener {
-        void onViewClick(int position);
+        void onAcceptClick(int position);
 
-        void onDeleteClick(int position);
+        void onRejectClick(int position);
     }
 }
