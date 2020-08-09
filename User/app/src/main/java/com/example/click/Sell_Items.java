@@ -472,7 +472,7 @@ public class Sell_Items extends Fragment {
                                     accept_item.setVisibility(View.VISIBLE);
                                     Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                            new View_Item_User()).commit();
+                                            new Find_My_Items()).commit();
                                 } else {
                                     Toast.makeText(getContext(), "Failed to Save Product", Toast.LENGTH_SHORT).show();
 

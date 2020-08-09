@@ -518,6 +518,7 @@ public class Handcraft extends Fragment {
                                     public void onAddtoFavClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
+                                        final String strItem_Id = item.getId();
                                         final String strSeller_id = item.getSeller_id();
                                         final String strMain_category = item.getMain_category();
                                         final String strSub_category = item.getSub_category();
@@ -567,6 +568,7 @@ public class Handcraft extends Fragment {
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
                                                     return params;
                                                 }
                                             };
@@ -579,6 +581,7 @@ public class Handcraft extends Fragment {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
+                                        final String strItem_Id = item.getId();
                                         final String strSeller_id = item.getSeller_id();
                                         final String strMain_category = item.getMain_category();
                                         final String strSub_category = item.getSub_category();
@@ -628,6 +631,7 @@ public class Handcraft extends Fragment {
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
                                                     return params;
                                                 }
                                             };

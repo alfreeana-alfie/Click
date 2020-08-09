@@ -45,7 +45,9 @@ public class My_Orders extends Fragment {
     private static String URL_READ_ITEM = "https://ketekmall.com/ketekmall/read_item.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_approval.php";
-    private static String URL_APPROVAL= "https://ketekmall.com/ketekmall/edit_approval.php";
+    private static String URL_EDIT_RECEIPT= "https://ketekmall.com/ketekmall/edit_receipt.php";
+    private static String URL_ACCEPT= "https://ketekmall.com/ketekmall/add_accept.php";
+    private static String URL_DELETE_APPROVAL= "https://ketekmall.com/ketekmall/delete_approval.php";
 
 
     GridView gridView;
@@ -127,15 +129,16 @@ public class My_Orders extends Fragment {
                                                                 for(int i = 0; i < jsonArray.length(); i++){
                                                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                    String id = object.getString("id").trim();
-                                                                    String seller_id = object.getString("seller_id").trim();
-                                                                    String customer_id = object.getString("customer_id").trim();
+                                                                    final String id = object.getString("id").trim();
+                                                                    final String seller_id = object.getString("seller_id").trim();
+                                                                    final String customer_id = object.getString("customer_id").trim();
                                                                     final String item_id = object.getString("item_id").trim();
-                                                                    String receipt_id = object.getString("receipt_id").trim();
-                                                                    String receipt_date = object.getString("receipt_date").trim();
-                                                                    String status = object.getString("status").trim();
+                                                                    final String receipt_id = object.getString("receipt_id").trim();
+                                                                    final String receipt_date = object.getString("receipt_date").trim();
+                                                                    final String status = object.getString("status").trim();
 
-                                                                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_APPROVAL,
+
+                                                                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ACCEPT,
                                                                             new Response.Listener<String>() {
                                                                                 @Override
                                                                                 public void onResponse(String response) {
@@ -144,7 +147,73 @@ public class My_Orders extends Fragment {
                                                                                         String success = jsonObject.getString("success");
 
                                                                                         if (success.equals("1")) {
-                                                                                            Toast.makeText(getContext(), "Profile Saved", Toast.LENGTH_SHORT).show();
+                                                                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_EDIT_RECEIPT
+                                                                                                    , new Response.Listener<String>() {
+                                                                                                @Override
+                                                                                                public void onResponse(String response) {
+                                                                                                    try {
+                                                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                                                        String success = jsonObject.getString("success");
+                                                                                                        if (success.equals("1")) {
+                                                                                                            Toast.makeText(getContext(), "Success Receipt", Toast.LENGTH_SHORT).show();
+                                                                                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_DELETE_APPROVAL
+                                                                                                                    , new Response.Listener<String>() {
+                                                                                                                @Override
+                                                                                                                public void onResponse(String response) {
+                                                                                                                    try {
+                                                                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                                                                        String success = jsonObject.getString("success");
+                                                                                                                        if (success.equals("1")) {
+                                                                                                                            Toast.makeText(getContext(), "Success Delete", Toast.LENGTH_SHORT).show();
+                                                                                                                        } else {
+                                                                                                                            Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                                                                        }
+                                                                                                                    } catch (JSONException e) {
+                                                                                                                        e.printStackTrace();
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }, new Response.ErrorListener() {
+                                                                                                                @Override
+                                                                                                                public void onErrorResponse(VolleyError error) {
+
+                                                                                                                }
+                                                                                                            }){
+                                                                                                                @Override
+                                                                                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                                                    Map<String, String> params = new HashMap<>();
+                                                                                                                    params.put("seller_id", seller_id);
+                                                                                                                    params.put("receipt_id", receipt_id);
+                                                                                                                    params.put("item_id", item_id);
+                                                                                                                    params.put("customer_id", customer_id);
+                                                                                                                    return params;
+                                                                                                                }
+                                                                                                            };
+                                                                                                            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                                                                                            requestQueue.add(stringRequest2);
+                                                                                                        } else {
+                                                                                                            Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                                                        }
+                                                                                                    } catch (JSONException e) {
+                                                                                                        e.printStackTrace();
+                                                                                                    }
+                                                                                                }
+                                                                                            }, new Response.ErrorListener() {
+                                                                                                @Override
+                                                                                                public void onErrorResponse(VolleyError error) {
+
+                                                                                                }
+                                                                                            }){
+                                                                                                @Override
+                                                                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                                    Map<String, String> params = new HashMap<>();
+                                                                                                    params.put("id", receipt_id);
+                                                                                                    params.put("seller_id", seller_id);
+                                                                                                    params.put("status", "Accept");
+                                                                                                    return params;
+                                                                                                }
+                                                                                            };
+                                                                                            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+                                                                                            requestQueue.add(stringRequest2);
                                                                                         } else {
                                                                                             Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
                                                                                         }
@@ -162,8 +231,9 @@ public class My_Orders extends Fragment {
                                                                         protected Map<String, String> getParams() throws AuthFailureError {
                                                                             Map<String, String> params = new HashMap<>();
                                                                             params.put("seller_id", getId);
-                                                                            params.put("status", "Accept");
-                                                                            params.put("item_id", item_id);
+                                                                            params.put("customer_id", customer_id);
+                                                                            params.put("item_id", id);
+                                                                            params.put("receipt_id", receipt_id);
                                                                             return params;
                                                                         }
                                                                     };

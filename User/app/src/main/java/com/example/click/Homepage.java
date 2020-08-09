@@ -735,7 +735,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new View_Item_User()).addToBackStack(null).commit();
+                        new Find_My_Items()).addToBackStack(null).commit();
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
                 break;
 

@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class View_Item_User extends Fragment implements Item_UserAdapter.OnItemClickListener {
+public class Find_My_Items extends Fragment implements Item_UserAdapter.OnItemClickListener {
 
     public static final String EXTRA_USERID = "user_id";
     public static final String EXTRA_ID = "id";

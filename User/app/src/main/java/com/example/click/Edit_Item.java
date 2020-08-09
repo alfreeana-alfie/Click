@@ -39,14 +39,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.click.View_Item_User.EXTRA_AD_DETAIL;
-import static com.example.click.View_Item_User.EXTRA_DISTRICT;
-import static com.example.click.View_Item_User.EXTRA_DIVISION;
-import static com.example.click.View_Item_User.EXTRA_ID;
-import static com.example.click.View_Item_User.EXTRA_IMG_ITEM;
-import static com.example.click.View_Item_User.EXTRA_MAIN;
-import static com.example.click.View_Item_User.EXTRA_PRICE;
-import static com.example.click.View_Item_User.EXTRA_SUB;
+import static com.example.click.Find_My_Items.EXTRA_AD_DETAIL;
+import static com.example.click.Find_My_Items.EXTRA_DISTRICT;
+import static com.example.click.Find_My_Items.EXTRA_DIVISION;
+import static com.example.click.Find_My_Items.EXTRA_ID;
+import static com.example.click.Find_My_Items.EXTRA_IMG_ITEM;
+import static com.example.click.Find_My_Items.EXTRA_MAIN;
+import static com.example.click.Find_My_Items.EXTRA_PRICE;
+import static com.example.click.Find_My_Items.EXTRA_SUB;
 
 public class Edit_Item extends AppCompatActivity {
 

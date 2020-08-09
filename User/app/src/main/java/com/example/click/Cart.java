@@ -109,6 +109,7 @@ public class Cart extends AppCompatActivity {
                                             final String district = object.getString("district");
                                             final String image_item = object.getString("photo");
                                             final String seller_id = object.getString("seller_id").trim();
+                                            final String item_id = object.getString("item_id").trim();
 
                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
                                                     new Response.Listener<String>() {
@@ -119,8 +120,6 @@ public class Cart extends AppCompatActivity {
                                                                 String success = Object.getString("success");
 
                                                                 if (success.equals("1")) {
-//                                                                    addReceipt();
-//                                                                    Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
                                                                     Intent intent = new Intent(Cart.this, Checkout.class);
                                                                     startActivity(intent);
                                                                 } else {
@@ -151,7 +150,7 @@ public class Cart extends AppCompatActivity {
                                                     params.put("division", division);
                                                     params.put("district", district);
                                                     params.put("photo", image_item);
-                                                    params.put("item_id", id);
+                                                    params.put("item_id", item_id);
                                                     return params;
                                                 }
                                             };
