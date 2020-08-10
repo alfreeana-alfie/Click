@@ -637,6 +637,4 @@ public class My_Orders extends Fragment {
         };
         MySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
-
-
 }

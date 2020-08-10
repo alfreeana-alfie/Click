@@ -2,6 +2,7 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -39,14 +40,13 @@ import java.util.Map;
 public class Checkout extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
 
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
-    private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
+    private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
     private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
     private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -57,7 +57,7 @@ public class Checkout extends AppCompatActivity {
     String TOPIC;
 
 
-    Button Button_Checkout;
+    Button Button_Checkout, Button_Approval;
     TextView Grand_Total, AddressUser;
 
     RecyclerView recyclerView;
@@ -80,7 +80,6 @@ public class Checkout extends AppCompatActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
@@ -122,7 +121,7 @@ public class Checkout extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -134,8 +133,9 @@ public class Checkout extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Declare(){
+    private void Declare() {
         Button_Checkout = findViewById(R.id.btn_place_order);
+
         Grand_Total = findViewById(R.id.grandtotal);
         AddressUser = findViewById(R.id.address);
 
@@ -161,7 +161,7 @@ public class Checkout extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Homepage.class));
+                DeleteOrder();
             }
         });
 
@@ -186,7 +186,7 @@ public class Checkout extends AppCompatActivity {
                                     String strPhone_no = object.getString("phone_no").trim();
                                     String strAddress = object.getString("address");
 
-                                    AddressUser.setText(strName + " | " + strPhone_no + "\n" + strAddress );
+                                    AddressUser.setText(strName + " | " + strPhone_no + "\n" + strAddress);
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -213,8 +213,8 @@ public class Checkout extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void addReceipt(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
+    private void addReceipt() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ORDER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -227,6 +227,7 @@ public class Checkout extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
+                                    final String order_id = object.getString("id").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String seller_id_cart = object.getString("seller_id").trim();
                                     final String item_id_cart = object.getString("item_id").trim();
@@ -257,131 +258,129 @@ public class Checkout extends AppCompatActivity {
                                                                                         final String receipt_id = object.getString("id").trim();
                                                                                         final String seller_id_receipt = object.getString("seller_id").trim();
                                                                                         final String item_id_receipt = object.getString("item_id").trim();
-                                                                                        final String status = object.getString("status");
                                                                                         final String receipt_date = object.getString("date");
 
-                                                                                        if(seller_id_receipt.equals(seller_id_cart) && item_id_receipt.equals(item_id_cart) && status.equals("Pending")){
-                                                                                            Toast.makeText(Checkout.this, "Opps, You already order this item", Toast.LENGTH_SHORT).show();
-                                                                                        }else{
-                                                                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_APPROVAL,
-                                                                                                    new Response.Listener<String>() {
-                                                                                                        @Override
-                                                                                                        public void onResponse(String response) {
-                                                                                                            try {
-                                                                                                                final JSONObject Object = new JSONObject(response);
-                                                                                                                String success = Object.getString("success");
+                                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_APPROVAL,
+                                                                                                new Response.Listener<String>() {
+                                                                                                    @Override
+                                                                                                    public void onResponse(String response) {
+                                                                                                        try {
+                                                                                                            final JSONObject Object = new JSONObject(response);
+                                                                                                            String success = Object.getString("success");
 
-                                                                                                                if (success.equals("1")) {
-                                                                                                                    Toast.makeText(Checkout.this, "Success Approved!", Toast.LENGTH_SHORT).show();
-                                                                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                                                                                                                            new Response.Listener<String>() {
-                                                                                                                                @Override
-                                                                                                                                public void onResponse(String response) {
-                                                                                                                                    try {
-                                                                                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                                                                                        String success = jsonObject.getString("success");
-                                                                                                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                                                                                            if (success.equals("1")) {
+                                                                                                                Toast.makeText(Checkout.this, "Success Approved!", Toast.LENGTH_SHORT).show();
+                                                                                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                                                                                                                        new Response.Listener<String>() {
+                                                                                                                            @Override
+                                                                                                                            public void onResponse(String response) {
+                                                                                                                                try {
+                                                                                                                                    JSONObject jsonObject = new JSONObject(response);
+                                                                                                                                    String success = jsonObject.getString("success");
+                                                                                                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                                                                                                                                        if (success.equals("1")) {
-                                                                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                                                                JSONObject object = jsonArray.getJSONObject(i);
+                                                                                                                                    if (success.equals("1")) {
+                                                                                                                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                                                            JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                                                                                                final String strName = object.getString("name").trim();
+                                                                                                                                            final String strName = object.getString("name").trim();
 
-                                                                                                                                                String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                                                                                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
 
-                                                                                                                                                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                                                                                                    @Override
-                                                                                                                                                    public void onResponse(String s) {
+                                                                                                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                                                                                                @Override
+                                                                                                                                                public void onResponse(String s) {
+                                                                                                                                                    try {
+                                                                                                                                                        JSONObject obj = new JSONObject(s);
+
+                                                                                                                                                        TOPIC = obj.getJSONObject(strName).get("token").toString();
+                                                                                                                                                        NOTIFICATION_TITLE = strName;
+                                                                                                                                                        NOTIFICATION_MESSAGE = "You have new order";
+
+                                                                                                                                                        JSONObject notification = new JSONObject();
+                                                                                                                                                        JSONObject notifcationBody = new JSONObject();
                                                                                                                                                         try {
-                                                                                                                                                            JSONObject obj = new JSONObject(s);
+                                                                                                                                                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                                                                                                                                                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
 
-                                                                                                                                                            TOPIC = obj.getJSONObject(strName).get("token").toString();
-                                                                                                                                                            NOTIFICATION_TITLE = strName;
-                                                                                                                                                            NOTIFICATION_MESSAGE = "You have new order";
+                                                                                                                                                            notification.put("to", TOPIC);
+                                                                                                                                                            notification.put("data", notifcationBody);
+                                                                                                                                                            sendNotification(notification);
 
-                                                                                                                                                            JSONObject notification = new JSONObject();
-                                                                                                                                                            JSONObject notifcationBody = new JSONObject();
-                                                                                                                                                            try {
-                                                                                                                                                                notifcationBody.put("title", NOTIFICATION_TITLE);
-                                                                                                                                                                notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                                                                                                                                                                notification.put("to", TOPIC);
-                                                                                                                                                                notification.put("data", notifcationBody);
-                                                                                                                                                                sendNotification(notification);
-
-                                                                                                                                                                Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
-                                                                                                                                                            } catch (JSONException e) {
-                                                                                                                                                                Log.e(TAG, "onCreate: " + e.getMessage());
-                                                                                                                                                            }
+                                                                                                                                                            Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
                                                                                                                                                         } catch (JSONException e) {
-                                                                                                                                                            e.printStackTrace();
+                                                                                                                                                            Log.e(TAG, "onCreate: " + e.getMessage());
                                                                                                                                                         }
+                                                                                                                                                    } catch (JSONException e) {
+                                                                                                                                                        e.printStackTrace();
                                                                                                                                                     }
-                                                                                                                                                }, new Response.ErrorListener() {
-                                                                                                                                                    @Override
-                                                                                                                                                    public void onErrorResponse(VolleyError volleyError) {
-                                                                                                                                                        System.out.println("" + volleyError);
-                                                                                                                                                    }
-                                                                                                                                                });
-                                                                                                                                                RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
-                                                                                                                                                rQueue.add(request);
+                                                                                                                                                }
+                                                                                                                                            }, new Response.ErrorListener() {
+                                                                                                                                                @Override
+                                                                                                                                                public void onErrorResponse(VolleyError volleyError) {
+                                                                                                                                                    System.out.println("" + volleyError);
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                            RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
+                                                                                                                                            rQueue.add(request);
 
+                                                                                                                                            Intent intent = new Intent(Checkout.this, After_Place_Order.class);
+                                                                                                                                            startActivity(intent);
 
-                                                                                                                                            }
-                                                                                                                                        } else {
-                                                                                                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                                                                         }
-                                                                                                                                    } catch (JSONException e) {
-                                                                                                                                        e.printStackTrace();
+                                                                                                                                    } else {
+                                                                                                                                        Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                                                                     }
+                                                                                                                                } catch (JSONException e) {
+                                                                                                                                    e.printStackTrace();
                                                                                                                                 }
-                                                                                                                            },
-                                                                                                                            new Response.ErrorListener() {
-                                                                                                                                @Override
-                                                                                                                                public void onErrorResponse(VolleyError error) {
-                                                                                                                                }
-                                                                                                                            }) {
-                                                                                                                        @Override
-                                                                                                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                                                                                                            Map<String, String> params = new HashMap<>();
-                                                                                                                            params.put("id", seller_id_receipt);
-                                                                                                                            return params;
-                                                                                                                        }
-                                                                                                                    };
-                                                                                                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-                                                                                                                    requestQueue.add(stringRequest);
-                                                                                                                } else {
-                                                                                                                    Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                                                                                                                }
-
-                                                                                                            }catch (JSONException e){
-                                                                                                                e.printStackTrace();
-                                                                                                                Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        new Response.ErrorListener() {
+                                                                                                                            @Override
+                                                                                                                            public void onErrorResponse(VolleyError error) {
+                                                                                                                            }
+                                                                                                                        }) {
+                                                                                                                    @Override
+                                                                                                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                                                        Map<String, String> params = new HashMap<>();
+                                                                                                                        params.put("id", seller_id_receipt);
+                                                                                                                        return params;
+                                                                                                                    }
+                                                                                                                };
+                                                                                                                RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                                                                                                requestQueue.add(stringRequest);
+                                                                                                            } else {
+                                                                                                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                                                                             }
+
+                                                                                                        } catch (JSONException e) {
+                                                                                                            e.printStackTrace();
+                                                                                                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                                                                         }
-                                                                                                    },
-                                                                                                    new Response.ErrorListener() {
-                                                                                                        @Override
-                                                                                                        public void onErrorResponse(VolleyError error) {
-                                                                                                            Toast.makeText(Checkout.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                                                                        }
-                                                                                                    }){
-                                                                                                @Override
-                                                                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                                                                    Map<String, String> params = new HashMap<>();
-                                                                                                    params.put("seller_id", seller_id_receipt);
-                                                                                                    params.put("customer_id", getId);
-                                                                                                    params.put("item_id", item_id_receipt);
-                                                                                                    params.put("receipt_id", receipt_id);
-                                                                                                    params.put("receipt_date", receipt_date);
-                                                                                                    params.put("status", "Pending");
-                                                                                                    return params;
-                                                                                                }
-                                                                                            };
-                                                                                            RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-                                                                                            requestQueue.add(stringRequest);
-                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                new Response.ErrorListener() {
+                                                                                                    @Override
+                                                                                                    public void onErrorResponse(VolleyError error) {
+                                                                                                        Toast.makeText(Checkout.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                                                                    }
+                                                                                                }) {
+                                                                                            @Override
+                                                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                                Map<String, String> params = new HashMap<>();
+                                                                                                params.put("seller_id", seller_id_receipt);
+                                                                                                params.put("customer_id", getId);
+                                                                                                params.put("item_id", item_id_receipt);
+                                                                                                params.put("receipt_id", receipt_id);
+                                                                                                params.put("receipt_date", receipt_date);
+                                                                                                params.put("status", "Pending");
+                                                                                                return params;
+                                                                                            }
+                                                                                        };
+                                                                                        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                                                                        requestQueue.add(stringRequest);
+
                                                                                     }
                                                                                 }
                                                                             } catch (JSONException e) {
@@ -401,6 +400,7 @@ public class Checkout extends AppCompatActivity {
                                                                     Map<String, String> params = new HashMap<>();
                                                                     params.put("customer_id", getId);
                                                                     params.put("item_id", item_id_cart);
+                                                                    params.put("order_id", order_id);
                                                                     return params;
                                                                 }
                                                             };
@@ -410,7 +410,7 @@ public class Checkout extends AppCompatActivity {
                                                             Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                         }
 
-                                                    }catch (JSONException e){
+                                                    } catch (JSONException e) {
                                                         e.printStackTrace();
                                                         Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                     }
@@ -421,21 +421,22 @@ public class Checkout extends AppCompatActivity {
                                                 public void onErrorResponse(VolleyError error) {
                                                     Toast.makeText(Checkout.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                                                 }
-                                            }){
+                                            }) {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
                                             params.put("customer_id", getId);
                                             params.put("seller_id", seller_id_cart);
                                             params.put("item_id", item_id_cart);
+                                            params.put("order_id", order_id);
                                             params.put("quantity", "1");
                                             params.put("grand_total", String.format("%.2f", price));
                                             params.put("status", "Pending");
                                             return params;
                                         }
                                     };
-                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-                                    requestQueue.add(stringRequest);
+                                    RequestQueue requestQueue2 = Volley.newRequestQueue(Checkout.this);
+                                    requestQueue2.add(stringRequest);
                                 }
                             }
                         } catch (JSONException e) {
@@ -487,5 +488,48 @@ public class Checkout extends AppCompatActivity {
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        DeleteOrder();
+    }
+
+    private void DeleteOrder(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                                Intent intent = new Intent(Checkout.this, Cart.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+        requestQueue.add(stringRequest);
+    }
 
 }
