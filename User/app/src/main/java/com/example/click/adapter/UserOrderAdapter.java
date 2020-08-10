@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.click.data.Item_All_Details;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,6 +26,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
         this.context = context;
         this.item_all_details = item_all_detailsList;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

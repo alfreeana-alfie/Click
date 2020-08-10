@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class My_Orders extends Fragment {
+public class Buying extends Fragment {
 
     public static final String ID = "id";
     public static final String AD_DETAIL = "ad_detail";
@@ -45,10 +45,10 @@ public class My_Orders extends Fragment {
 
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order.php";
     private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_approval.php";
-    private static String URL_EDIT_RECEIPT= "https://ketekmall.com/ketekmall/edit_receipt.php";
-    private static String URL_ACCEPT= "https://ketekmall.com/ketekmall/add_accept.php";
-    private static String URL_REJECT= "https://ketekmall.com/ketekmall/add_reject.php";
-    private static String URL_DELETE_APPROVAL= "https://ketekmall.com/ketekmall/delete_approval.php";
+    private static String URL_EDIT_RECEIPT = "https://ketekmall.com/ketekmall/edit_receipt.php";
+    private static String URL_ACCEPT = "https://ketekmall.com/ketekmall/add_accept.php";
+    private static String URL_REJECT = "https://ketekmall.com/ketekmall/add_reject.php";
+    private static String URL_DELETE_APPROVAL = "https://ketekmall.com/ketekmall/delete_approval.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
     final String TAG = "NOTIFICATION TAG";
@@ -68,7 +68,7 @@ public class My_Orders extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_orders, container, false);
+        View view = inflater.inflate(R.layout.my_orders_02, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());
@@ -86,7 +86,7 @@ public class My_Orders extends Fragment {
         gridView = v.findViewById(R.id.gridView_item);
     }
 
-    private void Approval_List(final View view){
+    private void Approval_List(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -154,7 +154,7 @@ public class My_Orders extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void Accept(final View view){
+    private void Accept(final View view) {
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_READ_APPROVAL,
                 new Response.Listener<String>() {
                     @Override
@@ -164,8 +164,8 @@ public class My_Orders extends Fragment {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if(success.equals("1")){
-                                for(int i = 0; i < jsonArray.length(); i++){
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String id = object.getString("id").trim();
@@ -295,7 +295,7 @@ public class My_Orders extends Fragment {
                                                                                 public void onErrorResponse(VolleyError error) {
 
                                                                                 }
-                                                                            }){
+                                                                            }) {
                                                                                 @Override
                                                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                                                     Map<String, String> params = new HashMap<>();
@@ -320,7 +320,7 @@ public class My_Orders extends Fragment {
                                                                 public void onErrorResponse(VolleyError error) {
 
                                                                 }
-                                                            }){
+                                                            }) {
                                                                 @Override
                                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                                     Map<String, String> params = new HashMap<>();
@@ -344,7 +344,7 @@ public class My_Orders extends Fragment {
                                         public void onErrorResponse(VolleyError error) {
 
                                         }
-                                    }){
+                                    }) {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
@@ -360,7 +360,7 @@ public class My_Orders extends Fragment {
                                 }
                             }
 
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
 
                         }
 
@@ -371,7 +371,7 @@ public class My_Orders extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -383,7 +383,7 @@ public class My_Orders extends Fragment {
         requestQueue.add(stringRequest1);
     }
 
-    private void Reject(final View view){
+    private void Reject(final View view) {
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_READ_APPROVAL,
                 new Response.Listener<String>() {
                     @Override
@@ -393,8 +393,8 @@ public class My_Orders extends Fragment {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if(success.equals("1")){
-                                for(int i = 0; i < jsonArray.length(); i++){
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String id = object.getString("id").trim();
@@ -524,7 +524,7 @@ public class My_Orders extends Fragment {
                                                                                 public void onErrorResponse(VolleyError error) {
 
                                                                                 }
-                                                                            }){
+                                                                            }) {
                                                                                 @Override
                                                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                                                     Map<String, String> params = new HashMap<>();
@@ -549,7 +549,7 @@ public class My_Orders extends Fragment {
                                                                 public void onErrorResponse(VolleyError error) {
 
                                                                 }
-                                                            }){
+                                                            }) {
                                                                 @Override
                                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                                     Map<String, String> params = new HashMap<>();
@@ -573,7 +573,7 @@ public class My_Orders extends Fragment {
                                         public void onErrorResponse(VolleyError error) {
 
                                         }
-                                    }){
+                                    }) {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
@@ -589,7 +589,7 @@ public class My_Orders extends Fragment {
                                 }
                             }
 
-                        }catch (JSONException e){
+                        } catch (JSONException e) {
 
                         }
 
@@ -600,7 +600,7 @@ public class My_Orders extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();

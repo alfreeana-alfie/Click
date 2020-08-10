@@ -52,16 +52,15 @@ import static android.app.Activity.RESULT_OK;
 public class Register extends Fragment {
 
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
+    private final int PICK_IMAGE_REQUEST = 22;
     String name_firebase, email_firebase;
+    ImageView imageView;
+    FirebaseStorage storage;
+    StorageReference storageReference;
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
-    ImageView imageView;
-
-    private final int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
-    FirebaseStorage storage;
-    StorageReference storageReference;
 
     @Nullable
     @Override
@@ -86,12 +85,12 @@ public class Register extends Fragment {
 
                 storage = FirebaseStorage.getInstance();
                 storageReference = storage.getReference();
-                if(filePath != null){
+                if (filePath != null) {
                     final StorageReference storageReference1 = storageReference.child("images").child(String.valueOf(filePath));
                     storageReference1.putFile(filePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -352,17 +351,14 @@ public class Register extends Fragment {
                 // Setting image on image view using Bitmap
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }
         }
     }
 
-    private void chooseImage()
-    {
+    private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);

@@ -164,7 +164,7 @@ public class Edit_Profile extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                datePickerDialog = new DatePickerDialog(v.getContext(),R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(v.getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
@@ -456,9 +456,9 @@ public class Edit_Profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(getSupportFragmentManager().getBackStackEntryCount() != 0){
+        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
             getSupportFragmentManager().getBackStackEntryCount();
-        }else{
+        } else {
             Intent intent = new Intent(Edit_Profile.this, Homepage.class);
             startActivity(intent);
         }

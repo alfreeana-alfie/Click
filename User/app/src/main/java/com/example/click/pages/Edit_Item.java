@@ -94,13 +94,13 @@ public class Edit_Item extends AppCompatActivity {
 
         Category_TextView.setText(Category_Text);
 
-        if(main_category != null){
+        if (main_category != null) {
             int main_catposition = adapter_category.getPosition(main_category);
             spinner_main_category.setSelection(main_catposition);
 
         }
 
-        if(division != null){
+        if (division != null) {
             int division_position = adapter_division.getPosition(division);
             spinner_division.setSelection(division_position);
         }
@@ -317,7 +317,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_car = ArrayAdapter.createFromResource(this, R.array.vehicle_category, android.R.layout.simple_spinner_item);
                 adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_car);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_car.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -327,7 +327,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_properties = ArrayAdapter.createFromResource(this, R.array.properties_category, android.R.layout.simple_spinner_item);
                 adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_properties);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_properties.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -338,7 +338,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_electronic = ArrayAdapter.createFromResource(this, R.array.electronic_category, android.R.layout.simple_spinner_item);
                 adapter_electronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_electronic);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_electronic.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -349,7 +349,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_home = ArrayAdapter.createFromResource(this, R.array.home_category, android.R.layout.simple_spinner_item);
                 adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_home);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_home.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -360,7 +360,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_leisure = ArrayAdapter.createFromResource(this, R.array.leisure_category, android.R.layout.simple_spinner_item);
                 adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_leisure);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_leisure.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -371,7 +371,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_business = ArrayAdapter.createFromResource(this, R.array.business_category, android.R.layout.simple_spinner_item);
                 adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_business);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_business.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -382,7 +382,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_jobs = ArrayAdapter.createFromResource(this, R.array.jobs_category, android.R.layout.simple_spinner_item);
                 adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_jobs);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_jobs.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -393,7 +393,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_travel = ArrayAdapter.createFromResource(this, R.array.travel_category, android.R.layout.simple_spinner_item);
                 adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_travel);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_travel.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -404,7 +404,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_other = ArrayAdapter.createFromResource(this, R.array.other_category, android.R.layout.simple_spinner_item);
                 adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_other);
-                if(sub_category != null){
+                if (sub_category != null) {
                     int main_catposition = adapter_other.getPosition(sub_category);
                     spinner_sub_category.setSelection(main_catposition);
 
@@ -423,7 +423,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -433,7 +433,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -443,7 +443,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -453,7 +453,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -463,7 +463,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -473,7 +473,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -483,7 +483,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -493,7 +493,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -503,7 +503,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -513,7 +513,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -523,7 +523,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }
@@ -533,7 +533,7 @@ public class Edit_Item extends AppCompatActivity {
                 adapter_district = ArrayAdapter.createFromResource(this, R.array.limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if(district != null){
+                if (district != null) {
                     int district_position = adapter_district.getPosition(district);
                     spinner_district.setSelection(district_position);
                 }

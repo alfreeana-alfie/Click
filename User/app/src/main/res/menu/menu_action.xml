@@ -4,15 +4,15 @@
 
     <item
         android:id="@+id/menu_edit"
-        android:title="Edit"
         android:icon="@drawable/ic_edit_foreground"
-        app:showAsAction="always"/>
+        android:title="Edit"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_save"
-        android:title="Save"
         android:icon="@drawable/ic_save_foreground"
-        app:showAsAction="always"/>
+        android:title="Save"
+        app:showAsAction="always" />
 
 
 </menu>

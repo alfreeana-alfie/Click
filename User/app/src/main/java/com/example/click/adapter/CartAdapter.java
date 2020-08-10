@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.click.data.Item_All_Details;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.UnitPrice.setText("MYR" + price);
         holder.SubTotal.setText("MYR" + price);
         holder.Quantity.setText(String.valueOf(mQuantity));
-        if(mQuantity == 0){
+        if (mQuantity == 0) {
             mQuantity = 1;
             Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
             holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
@@ -73,12 +73,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mQuantity == 0){
+                if (mQuantity == 0) {
                     mQuantity += 1;
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity));
-                }else{
+                } else {
                     mQuantity = mQuantity - 1;
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));

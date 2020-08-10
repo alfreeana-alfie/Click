@@ -23,17 +23,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> userList;
     private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public UserAdapter(Context context, List<User> userList) {
+        this.context = context;
+        this.userList = userList;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
-    }
-
-    public UserAdapter(Context context, List<User> userList) {
-        this.context = context;
-        this.userList = userList;
     }
 
     @NonNull
@@ -59,6 +55,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return userList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView circleImageView;
@@ -73,9 +73,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mListener != null){
+                    if (mListener != null) {
                         int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             mListener.onItemClick(position);
                         }
                     }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,13 +20,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.data.Item_All_Details;
-import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
 
 import org.json.JSONArray;
@@ -131,7 +128,7 @@ public class Cart extends AppCompatActivity {
                                                                     Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                                 }
 
-                                                            }catch (JSONException e){
+                                                            } catch (JSONException e) {
                                                                 e.printStackTrace();
                                                                 Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
@@ -142,7 +139,7 @@ public class Cart extends AppCompatActivity {
                                                         public void onErrorResponse(VolleyError error) {
                                                             Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
-                                                    }){
+                                                    }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
                                                     Map<String, String> params = new HashMap<>();

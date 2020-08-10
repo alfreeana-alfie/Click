@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_light_orange_curve"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_light_orange_curve"
     android:orientation="vertical">
 
     <LinearLayout
@@ -35,8 +35,8 @@
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:textColor="@color/colorPrimaryDark"
                     android:text="@string/uploaded_photo"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -63,8 +63,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/login_part_border"
             android:orientation="horizontal">
@@ -103,8 +103,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/login_part_border"
             android:orientation="horizontal">
@@ -142,8 +142,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/login_part_border"
             android:orientation="horizontal">
@@ -167,6 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:background="@null"
+                android:cursorVisible="true"
                 android:hint="@string/price_rm"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
@@ -175,7 +176,6 @@
                 android:paddingRight="15dp"
                 android:paddingBottom="10dp"
                 android:textAlignment="textEnd"
-                android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -183,8 +183,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:background="@drawable/login_part_border"
             android:orientation="horizontal">
@@ -202,15 +202,15 @@
                 android:text="@string/division"
                 android:textSize="16sp" />
 
-<!--            <Spinner-->
-<!--                android:id="@+id/spinner_division"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginLeft="15dp"-->
-<!--                android:layout_marginRight="15dp"-->
-<!--                android:textAlignment="textEnd"-->
-<!--                tools:ignore="RtlCompat" />-->
+            <!--            <Spinner-->
+            <!--                android:id="@+id/spinner_division"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center_vertical"-->
+            <!--                android:layout_marginLeft="15dp"-->
+            <!--                android:layout_marginRight="15dp"-->
+            <!--                android:textAlignment="textEnd"-->
+            <!--                tools:ignore="RtlCompat" />-->
 
             <TextView
                 android:id="@+id/enter_location"
@@ -245,9 +245,9 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
                 <Button
@@ -257,8 +257,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_button_pink_left_curves"
                     android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/white"
                     android:text="Cancel"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
                 <Button
@@ -267,9 +267,9 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="@drawable/background_button_pink_right_curves"
-                    android:textColor="@android:color/white"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/accept"
+                    android:textColor="@android:color/white"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -403,7 +403,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/location_page_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -411,6 +410,7 @@
         android:background="@drawable/login_part_border"
         android:elevation="5dp"
         android:padding="20dp"
+        android:visibility="gone"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -596,13 +596,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:cursorVisible="true"
                 android:ems="10"
                 android:hint="@string/please_enter_an_ad_detail"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:padding="15dp"
                 android:textAlignment="textStart"
-                android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/color_cursor" />
 
         </RelativeLayout>

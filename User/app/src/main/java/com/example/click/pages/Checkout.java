@@ -2,7 +2,6 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -494,7 +493,7 @@ public class Checkout extends AppCompatActivity {
         DeleteOrder();
     }
 
-    private void DeleteOrder(){
+    private void DeleteOrder() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
                 new Response.Listener<String>() {
                     @Override

@@ -27,11 +27,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.pages.View_Item;
 import com.example.click.R;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.View_Item;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,19 +85,19 @@ public class Cars extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if(spinner_division.getSelectedItem().toString().equals("All")){
+                if (spinner_division.getSelectedItem().toString().equals("All")) {
                     adapter_item.getFilter().filter(newText);
                     gridView.setAdapter(adapter_item);
 
-                }else if(spinner_district.getSelectedItem().toString().equals("All")){
+                } else if (spinner_district.getSelectedItem().toString().equals("All")) {
                     adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText);
                     gridView.setAdapter(adapter_item);
 
-                } else if (!spinner_division.getSelectedItem().toString().equals("All") && !spinner_district.getSelectedItem().toString().equals("All")){
+                } else if (!spinner_division.getSelectedItem().toString().equals("All") && !spinner_district.getSelectedItem().toString().equals("All")) {
                     adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString() + newText);
                     gridView.setAdapter(adapter_item);
-                } else{
-                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText + spinner_district.getSelectedItem().toString() );
+                } else {
+                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + newText + spinner_district.getSelectedItem().toString());
                     gridView.setAdapter(adapter_item);
                 }
                 gridView.setAdapter(adapter_item);
@@ -203,9 +203,9 @@ public class Cars extends Fragment {
                                                     final String strDistrict = item.getDistrict();
                                                     final String strPhoto = item.getPhoto();
 
-                                                    if(getId.equals(item.getSeller_id())){
+                                                    if (getId.equals(item.getSeller_id())) {
                                                         Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                    }else{
+                                                    } else {
                                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                                 new Response.Listener<String>() {
                                                                     @Override
@@ -264,9 +264,9 @@ public class Cars extends Fragment {
                                                     final String strDistrict = item.getDistrict();
                                                     final String strPhoto = item.getPhoto();
 
-                                                    if(getId.equals(strSeller_id)){
+                                                    if (getId.equals(strSeller_id)) {
                                                         Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                    }else{
+                                                    } else {
                                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                                 new Response.Listener<String>() {
                                                                     @Override
@@ -326,7 +326,7 @@ public class Cars extends Fragment {
                                 public void onErrorResponse(VolleyError error) {
 
                                 }
-                            }){
+                            }) {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<>();
@@ -387,8 +387,8 @@ public class Cars extends Fragment {
         });
     }
 
-    private void showResult(int position){
-        switch (position){
+    private void showResult(int position) {
+        switch (position) {
             case 0:
                 spinner_district.setVisibility(View.GONE);
                 break;
@@ -734,9 +734,9 @@ public class Cars extends Fragment {
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
-                                        if(getId.equals(item.getSeller_id())){
+                                        if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        }else{
+                                        } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
                                                         @Override
@@ -797,9 +797,9 @@ public class Cars extends Fragment {
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
-                                        if(getId.equals(strSeller_id)){
+                                        if (getId.equals(strSeller_id)) {
                                             Toast.makeText(getContext(), "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        }else{
+                                        } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
                                                         @Override

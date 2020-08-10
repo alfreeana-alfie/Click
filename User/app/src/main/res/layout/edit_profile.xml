@@ -17,9 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:elevation="0dp"/>
+            app:elevation="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,7 +48,6 @@
                     android:src="@drawable/ic_person_foreground" />
 
                 <ImageButton
-                    android:visibility="gone"
                     android:id="@+id/button_edit_photo"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -56,6 +55,7 @@
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/button_edit_photo"
                     android:contentDescription="@string/todo"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_edit_foreground" />
 
 
@@ -333,14 +333,14 @@
             android:textSize="18sp" />
 
         <Button
-            android:visibility="gone"
             android:id="@+id/button_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/login_part_border_orange"
             android:fontFamily="@font/open_sans"
             android:text="@string/logout"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

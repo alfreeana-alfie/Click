@@ -11,7 +11,7 @@
     <color name="colorDarkGrey">#707b7c</color>
     <color name="colorPasswordGrey">#b2babb</color>
     <color name="colorLightGrey02">#D8DDDD</color>
-    <color name="colorGreen">#27AE60 </color>
+    <color name="colorGreen">#27AE60</color>
     <color name="colorBlue">#3498db</color>
     <color name="colorLightOrange">#fcf3cf</color>
 </resources>

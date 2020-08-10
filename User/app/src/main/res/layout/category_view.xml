@@ -4,177 +4,177 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/background_orange">
+    android:background="@drawable/background_orange"
+    android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_find"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_white_full_curves"
-            android:layout_margin="10dp"
-            app:searchHintIcon="@color/colorWhite"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/white"
-            app:queryHint="Search Here" />
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/background_white_full_curves"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@android:color/white"
+        app:queryHint="Search Here"
+        app:searchHintIcon="@color/colorWhite" />
 
-        <TableLayout
-            android:background="@drawable/background_orange"
-            android:id="@+id/table_filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/search_find"
-            android:stretchColumns="1,2,3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TableLayout
+        android:id="@+id/table_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_find"
+        android:background="@drawable/background_orange"
+        android:stretchColumns="1,2,3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-            <TableRow
-                android:visibility="gone"
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/division"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/district"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/district"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent" />
+
+
+            <TextView
+                android:id="@+id/price_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/price_rm"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_column="1"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/location"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/division"
+                <Spinner
+                    android:id="@+id/spinner_division"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/but_division"
+                    android:backgroundTint="@color/colorAccent"
+                    android:prompt="@string/location"
                     android:textAlignment="center" />
 
-                <TextView
-                    android:id="@+id/district"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/district"
-                    android:textAlignment="center" />
+                <ImageButton
+                    android:id="@+id/but_division"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:srcCompat="@drawable/ic_exit_gray_foreground" />
+            </RelativeLayout>
 
-
-                <TextView
-                    android:id="@+id/price_range"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_column="3"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/price_rm"
-                    android:textAlignment="center" />
-            </TableRow>
-
-            <TableRow
-                android:layout_marginBottom="7dp"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_column="2"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <Spinner
+                    android:id="@+id/spinner_district"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_column="1"
-                    android:orientation="horizontal">
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/but_district"
+                    android:backgroundTint="@color/colorAccent"
+                    android:prompt="@string/location"
+                    android:textAlignment="center" />
 
-                    <Spinner
-                        android:id="@+id/spinner_division"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@id/but_division"
-                        android:backgroundTint="@color/colorAccent"
-                        android:prompt="@string/location"
-                        android:textAlignment="center" />
+                <ImageButton
+                    android:id="@+id/but_district"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:srcCompat="@drawable/ic_exit_gray_foreground" />
+            </RelativeLayout>
 
-                    <ImageButton
-                        android:id="@+id/but_division"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:backgroundTint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_exit_gray_foreground" />
-                </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="3">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_column="2"
-                    android:orientation="horizontal">
-
-                    <Spinner
-                        android:id="@+id/spinner_district"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@id/but_district"
-                        android:backgroundTint="@color/colorAccent"
-                        android:prompt="@string/location"
-                        android:textAlignment="center" />
-
-                    <ImageButton
-                        android:id="@+id/but_district"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:backgroundTint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_exit_gray_foreground" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/price_sortlowest"
+                    style="@style/MyButtonStyleSmall"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_column="3">
+                    android:drawableEnd="@drawable/ic_down_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/price"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
 
-                    <Button
-                        android:id="@+id/price_sortlowest"
-                        style="@style/MyButtonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_down_foreground"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="@string/price"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="13sp" />
+                <Button
+                    android:id="@+id/price_sorthighest"
+                    style="@style/MyButtonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_up_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Price"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+            </RelativeLayout>
 
-                    <Button
-                        android:id="@+id/price_sorthighest"
-                        style="@style/MyButtonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_up_foreground"
-                        android:fontFamily="@font/open_sans_semibold"
-                        android:text="Price"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="13sp" />
-                </RelativeLayout>
+        </TableRow>
 
-            </TableRow>
-
-        </TableLayout>
+    </TableLayout>
 
     <RelativeLayout
-        android:layout_below="@id/table_filter"
-        android:background="@drawable/background_white_curve"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/table_filter"
+        android:background="@drawable/background_white_curve">
 
         <GridView
             android:id="@+id/gridView_CarItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
-            android:paddingTop="40dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="7dp"
             android:columnWidth="80dp"
+            android:elevation="5dp"
             android:horizontalSpacing="5dp"
             android:numColumns="2"
+            android:paddingStart="5dp"
+            android:paddingTop="40dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="7dp"
             android:stretchMode="columnWidth"
             android:verticalSpacing="5dp" />
 

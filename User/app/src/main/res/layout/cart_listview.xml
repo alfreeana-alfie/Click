@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="5dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="1dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_white_full_curves">
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/background_white_full_curves"
+    android:padding="5dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -22,8 +22,8 @@
             android:id="@+id/delete_cart_item"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/ic_delete_foreground"
             android:contentDescription="@string/todo" />
 
@@ -36,11 +36,11 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
-            android:layout_toEndOf="@id/item_image"
-            android:layout_alignEnd="@id/quantity_display"
-            android:layout_below="@id/delete_cart_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/delete_cart_item"
+            android:layout_alignEnd="@id/quantity_display"
+            android:layout_toEndOf="@id/item_image"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@+id/item_image"
             app:layout_constraintTop_toTopOf="parent">
@@ -50,10 +50,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/ad_details"
-                android:paddingBottom="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:paddingBottom="0dp"
+                android:text="@string/ad_details"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -62,21 +62,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:textColor="@color/colorGrey"
-                android:text="@string/rm"
-
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+
+                android:text="@string/rm"
+                android:textColor="@color/colorGrey"
                 android:textSize="13sp" />
 
         </LinearLayout>
 
         <TableLayout
             android:id="@id/quantity_display"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/item_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/item_image"
+            android:layout_marginTop="5dp"
             android:stretchColumns="1,2">
 
             <TableRow
@@ -98,43 +98,43 @@
             </TableRow>
 
             <TableRow
-                android:paddingBottom="2dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp">
 
                 <TextView
                     android:id="@+id/quantity_display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:textAlignment="center"
                     android:fontFamily="@font/open_sans"
                     android:text="Quantity"
+                    android:textAlignment="center"
                     android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:textAlignment="center"
                     android:fontFamily="@font/open_sans"
                     android:text="SubTotal"
+                    android:textAlignment="center"
                     android:textSize="14sp" />
             </TableRow>
 
             <TableRow
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp">
 
                     <Button
                         android:id="@+id/decrease"
@@ -174,8 +174,8 @@
                     android:layout_height="wrap_content"
                     android:layout_column="2"
                     android:fontFamily="@font/open_sans"
-                    android:textAlignment="center"
                     android:text="RM0.00"
+                    android:textAlignment="center"
                     android:textSize="14sp" />
             </TableRow>
 

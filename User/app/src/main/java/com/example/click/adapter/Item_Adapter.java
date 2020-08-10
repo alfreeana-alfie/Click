@@ -12,8 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.click.data.Item_All_Details;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
         this.itemListFull = itemList;
         this.context = context;
         itemListFull02 = new ArrayList<>();
-        if(itemListFull != null){
+        if (itemListFull != null) {
             this.itemListFull02.addAll(itemListFull);
         }
     }
@@ -146,7 +146,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
                         String fulltext02 = item.getDivision().toLowerCase() + item.getDistrict().toLowerCase() + item.getAd_detail().toLowerCase();
                         if (fulltext01.toLowerCase().contains(strSearch)) {
                             resultData.add(item);
-                        }else if (fulltext02.toLowerCase().contains(strSearch)) {
+                        } else if (fulltext02.toLowerCase().contains(strSearch)) {
                             resultData.add(item);
                         }
                         filterResults.count = resultData.size();

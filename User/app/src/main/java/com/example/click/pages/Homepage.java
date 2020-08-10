@@ -29,7 +29,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.user.Edit_Profile;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.Item_Adapter;
@@ -57,6 +56,7 @@ import com.example.click.category.Travel;
 import com.example.click.category.Women;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -773,8 +773,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new My_Orders()).addToBackStack(null).commit();
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+                        new Main_Order_Fragment()).addToBackStack(null).commit();
+                Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_chat_inbox:

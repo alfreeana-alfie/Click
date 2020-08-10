@@ -69,7 +69,7 @@ public class Forgot_Password extends Fragment {
         button_back_password = v.findViewById(R.id.button_back_password);
     }
 
-    private void Button_Func(){
+    private void Button_Func() {
         button_enter_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +100,7 @@ public class Forgot_Password extends Fragment {
 
     }
 
-    private void Goto_Activity_Main(){
+    private void Goto_Activity_Main() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override

@@ -88,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@null"
+                    android:cursorVisible="true"
                     android:fontFamily="@font/open_sans"
                     android:hint="@string/name"
                     android:importantForAutofill="no"
@@ -95,7 +96,6 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
-                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
 
             </LinearLayout>
@@ -121,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@null"
+                    android:cursorVisible="true"
                     android:fontFamily="@font/open_sans"
                     android:hint="@string/email"
                     android:importantForAutofill="no"
@@ -128,7 +129,6 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
-                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
@@ -154,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@null"
+                    android:cursorVisible="true"
                     android:fontFamily="@font/open_sans"
                     android:hint="@string/phone_no"
                     android:importantForAutofill="no"
@@ -161,7 +162,6 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"
-                    android:cursorVisible="true"
                     android:textCursorDrawable="@drawable/color_cursor" />
             </LinearLayout>
 
@@ -196,12 +196,12 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@null"
+                        android:cursorVisible="true"
                         android:fontFamily="@font/open_sans"
                         android:hint="@string/password"
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:textColor="@android:color/black"
-                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -237,12 +237,12 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@null"
+                        android:cursorVisible="true"
                         android:fontFamily="@font/open_sans"
                         android:hint="@string/confirm_password"
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:textColor="@android:color/black"
-                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>

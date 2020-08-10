@@ -11,14 +11,14 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.click.data.Item_All_Details;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_UserAdapter extends BaseAdapter  implements Filterable{
+public class Item_UserAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
     private List<Item_All_Details> itemList;
@@ -106,10 +106,10 @@ public class Item_UserAdapter extends BaseAdapter  implements Filterable{
                 } else {
                     String strSearch = constraint.toString().toLowerCase();
                     String strSEARCH = constraint.toString().toUpperCase();
-                    String str= constraint.toString();
+                    String str = constraint.toString();
                     List<Item_All_Details> resultData = new ArrayList<>();
                     for (Item_All_Details item : itemList) {
-                        if(item.getAd_detail().toLowerCase().contains(strSearch)){
+                        if (item.getAd_detail().toLowerCase().contains(strSearch)) {
                             resultData.add(item);
                         }
                         filterResults.count = resultData.size();
