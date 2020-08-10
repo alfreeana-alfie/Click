@@ -56,7 +56,7 @@ public class Checkout extends AppCompatActivity {
     String TOPIC;
 
 
-    Button Button_Checkout, Button_Approval;
+    Button Button_Checkout;
     TextView Grand_Total, AddressUser;
 
     RecyclerView recyclerView;

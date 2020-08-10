@@ -6,22 +6,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.click.Order;
 import com.example.click.R;
 import com.example.click.data.Item_All_Details;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderAdapter extends BaseAdapter {
+public class Seller_OrderAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Item_All_Details> itemList;
-    private List<Item_All_Details> itemListFull;
+    private List<Order> itemList;
+    private List<Order> itemListFull;
     private OnItemClickListener mListerner;
 
-    public OrderAdapter(Context context, List<Item_All_Details> itemList) {
+    public Seller_OrderAdapter(Context context, List<Order> itemList) {
         this.context = context;
         this.itemList = itemList;
         itemListFull = new ArrayList<>(itemList);
@@ -49,15 +52,19 @@ public class OrderAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.order_listview, null);
-        Item_All_Details item = itemList.get(position);
+        convertView = inflater.inflate(R.layout.seller_order_listview, null);
+        Order item = itemList.get(position);
 
-        TextView TV_addetail;
-        Button view_item, delete_fav_item;
+        ImageView img_item;
+        TextView TV_addetail, TV_price, TV_item_location;
+        Button accept, reject;
 
+        img_item = convertView.findViewById(R.id.img_item);
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
-        view_item = convertView.findViewById(R.id.view_item);
-        view_item.setOnClickListener(new View.OnClickListener() {
+        TV_price = convertView.findViewById(R.id.price_item);
+        TV_item_location = convertView.findViewById(R.id.item_location_item);
+        accept = convertView.findViewById(R.id.view_item);
+        accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
@@ -65,8 +72,8 @@ public class OrderAdapter extends BaseAdapter {
                 }
             }
         });
-        delete_fav_item = convertView.findViewById(R.id.delete_fav_item);
-        delete_fav_item.setOnClickListener(new View.OnClickListener() {
+        reject = convertView.findViewById(R.id.delete_fav_item);
+        reject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
@@ -76,6 +83,11 @@ public class OrderAdapter extends BaseAdapter {
         });
 
         TV_addetail.setText(item.getAd_detail());
+        TV_price.setText("MYR" + item.getPrice());
+        TV_item_location.setText(item.getDistrict());
+
+        Picasso.get().load(item.getPhoto()).into(img_item);
+
         return convertView;
     }
 

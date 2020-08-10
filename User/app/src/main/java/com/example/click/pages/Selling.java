@@ -20,11 +20,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Order;
 import com.example.click.R;
-import com.example.click.adapter.OrderAdapter;
+import com.example.click.Receipt;
+import com.example.click.adapter.Seller_OrderAdapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,13 +47,15 @@ public class Selling extends Fragment {
     public static final String PHOTO = "photo";
 
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order.php";
-    private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_approval.php";
+
+    private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_detail_approval.php";
+
     private static String URL_EDIT_RECEIPT = "https://ketekmall.com/ketekmall/edit_receipt.php";
     private static String URL_ACCEPT = "https://ketekmall.com/ketekmall/add_accept.php";
     private static String URL_REJECT = "https://ketekmall.com/ketekmall/add_reject.php";
     private static String URL_DELETE_APPROVAL = "https://ketekmall.com/ketekmall/delete_approval.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_RECEIPT = "https://ketekmall.com/ketekmall/read_receipts.php";
+    private static String URL_READ_RECEIPT = "https://ketekmall.com/ketekmall/read_detail_receipt.php";
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -61,8 +66,10 @@ public class Selling extends Fragment {
     String TOPIC;
 
     GridView gridView;
-    OrderAdapter adapter_item;
-    List<Item_All_Details> itemList;
+    Seller_OrderAdapter adapter_item;
+    List<Order> itemList;
+    List<Receipt> receiptList;
+
     String getId;
     SessionManager sessionManager;
 
@@ -78,16 +85,17 @@ public class Selling extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        Approval_List(view);
+        NewApproval_List(view);
         return view;
     }
 
     private void Declare(View v) {
         itemList = new ArrayList<>();
+        receiptList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
     }
 
-    private void Approval_List(final View view) {
+    private void NewApproval_List(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -114,101 +122,59 @@ public class Selling extends Fragment {
                                     final String item_id = object.getString("item_id").trim();
 
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
+                                    Order item = new Order(id,
+                                            seller_id,
+                                            ad_detail,
+                                            main_category,
+                                            sub_category,
+                                            String.format("%.2f", price),
+                                            division,
+                                            district,
+                                            item_id,
+                                            customer_id,
+                                            image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new OrderAdapter(getContext(), itemList);
+                                adapter_item = new Seller_OrderAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Seller_OrderAdapter.OnItemClickListener() {
                                     @Override
                                     public void onAcceptClick(int position) {
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject = new JSONObject(response);
-                                                            String success = jsonObject.getString("success");
-                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                        Order order = itemList.get(position);
 
-                                                            if (success.equals("1")) {
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    JSONObject object = jsonArray.getJSONObject(i);
+                                        final String strOrder_Id = order.getId();
+                                        final String strSeller_id = order.getSeller_id();
+                                        final String strCustomer_id = order.getCustomer_id();
+                                        final String strItem_id = order.getItem_id();
+                                        final String strMain_category = order.getMain_category();
+                                        final String strSub_category = order.getSub_category();
+                                        final String strAd_Detail = order.getAd_detail();
+                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                        final String strDivision = order.getDivision();
+                                        final String strDistrict = order.getDistrict();
+                                        final String strPhoto = order.getPhoto();
 
-                                                                    final String id = object.getString("id").trim();
-                                                                    final String customer_id = object.getString("customer_id").trim();
-                                                                    final String item_id = object.getString("item_id").trim();
-
-                                                                    Accept(view, customer_id, item_id, id);
-                                                                }
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(getContext(), "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("seller_id", getId);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                        requestQueue.add(stringRequest);
+                                        Accept(view, strCustomer_id, strItem_id, strOrder_Id);
                                     }
 
                                     @Override
                                     public void onRejectClick(int position) {
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject = new JSONObject(response);
-                                                            String success = jsonObject.getString("success");
-                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                        Order order = itemList.get(position);
 
-                                                            if (success.equals("1")) {
-                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                    JSONObject object = jsonArray.getJSONObject(i);
+                                        final String strOrder_Id = order.getId();
+                                        final String strSeller_id = order.getSeller_id();
+                                        final String strCustomer_id = order.getCustomer_id();
+                                        final String strItem_id = order.getItem_id();
+                                        final String strMain_category = order.getMain_category();
+                                        final String strSub_category = order.getSub_category();
+                                        final String strAd_Detail = order.getAd_detail();
+                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                        final String strDivision = order.getDivision();
+                                        final String strDistrict = order.getDistrict();
+                                        final String strPhoto = order.getPhoto();
 
-                                                                    final String id = object.getString("id").trim();
-                                                                    final String customer_id = object.getString("customer_id").trim();
-                                                                    final String item_id = object.getString("item_id").trim();
-
-                                                                    Reject(view, customer_id, item_id, id);
-                                                                }
-                                                            }
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(getContext(), "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("seller_id", getId);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                        requestQueue.add(stringRequest);
+                                        Reject(view, strCustomer_id, strItem_id, strOrder_Id);
                                     }
                                 });
                             }
@@ -249,9 +215,15 @@ public class Selling extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
 
-                            final String receipt_id = object.getString("id").trim();
-                            final String seller_id_receipt = object.getString("seller_id").trim();
-                            final String item_id_receipt = object.getString("item_id").trim();
+                            final String strReceipt_ID = object.getString("id").trim();
+                            String strCustomer_ID = object.getString("customer_id").trim();
+                            String strSeller_ID = object.getString("seller_id").trim();
+                            String strItem_ID = object.getString("item_id").trim();
+                            String strOrder_ID = object.getString("order_id").trim();
+                            String strQuantity = object.getString("quantity").trim();
+                            String strGrand_Total = object.getString("grand_total").trim();
+                            String strStatus = object.getString("status").trim();
+
 
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_APPROVAL
                                     , new Response.Listener<String>() {
@@ -290,7 +262,6 @@ public class Selling extends Fragment {
                                                                                     JSONObject jsonObject = new JSONObject(response);
                                                                                     String success = jsonObject.getString("success");
                                                                                     if (success.equals("1")) {
-                                                                                        Toast.makeText(getContext(), "SUCCESS URL_EDIT_RECEIPT", Toast.LENGTH_SHORT).show();
                                                                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_DELETE_APPROVAL
                                                                                                 , new Response.Listener<String>() {
                                                                                             @Override
@@ -299,7 +270,7 @@ public class Selling extends Fragment {
                                                                                                     JSONObject jsonObject = new JSONObject(response);
                                                                                                     String success = jsonObject.getString("success");
                                                                                                     if (success.equals("1")) {
-                                                                                                        Toast.makeText(getContext(), "Success Delete", Toast.LENGTH_SHORT).show();
+                                                                                                        Toast.makeText(getContext(), "Your order has been updated", Toast.LENGTH_SHORT).show();
                                                                                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                                                                 new Response.Listener<String>() {
                                                                                                                     @Override
@@ -423,7 +394,7 @@ public class Selling extends Fragment {
                                                                                 params.put("id", receipt_id);
                                                                                 params.put("seller_id", seller_id);
                                                                                 params.put("order_id", order_id);
-                                                                                params.put("status", "Accept");
+                                                                                params.put("status", "Reject");
                                                                                 return params;
                                                                             }
                                                                         };
@@ -470,15 +441,15 @@ public class Selling extends Fragment {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> params = new HashMap<>();
-                                    params.put("seller_id", seller_id_receipt);
-                                    params.put("item_id", item_id_receipt);
-                                    params.put("receipt_id", receipt_id);
+                                    params.put("receipt_id", strReceipt_ID);
                                     return params;
                                 }
                             };
                             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                             requestQueue.add(stringRequest);
                         }
+                    }else{
+                        Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -488,14 +459,12 @@ public class Selling extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", customer_id);
-                params.put("item_id", item_id);
                 params.put("order_id", order_id);
                 return params;
             }
@@ -518,9 +487,15 @@ public class Selling extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
 
-                            final String receipt_id = object.getString("id").trim();
-                            final String seller_id_receipt = object.getString("seller_id").trim();
-                            final String item_id_receipt = object.getString("item_id").trim();
+                            final String strReceipt_ID = object.getString("id").trim();
+                            String strCustomer_ID = object.getString("customer_id").trim();
+                            String strSeller_ID = object.getString("seller_id").trim();
+                            String strItem_ID = object.getString("item_id").trim();
+                            String strOrder_ID = object.getString("order_id").trim();
+                            String strQuantity = object.getString("quantity").trim();
+                            String strGrand_Total = object.getString("grand_total").trim();
+                            String strStatus = object.getString("status").trim();
+
 
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_APPROVAL
                                     , new Response.Listener<String>() {
@@ -738,15 +713,15 @@ public class Selling extends Fragment {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> params = new HashMap<>();
-                                    params.put("seller_id", seller_id_receipt);
-                                    params.put("item_id", item_id_receipt);
-                                    params.put("receipt_id", receipt_id);
+                                    params.put("receipt_id", strReceipt_ID);
                                     return params;
                                 }
                             };
                             RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                             requestQueue.add(stringRequest);
                         }
+                    }else{
+                        Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -756,14 +731,12 @@ public class Selling extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", customer_id);
-                params.put("item_id", item_id);
                 params.put("order_id", order_id);
                 return params;
             }
