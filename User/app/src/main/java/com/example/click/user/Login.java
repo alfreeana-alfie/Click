@@ -355,13 +355,16 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                         final String name = object.getString("name").trim();
                                         final String email = object.getString("email").trim();
                                         final String phone_no = object.getString("phone_no").trim();
-                                        final String address = object.getString("address").trim();
+                                        final String address_01 = object.getString("address_01").trim();
+                                        final String address_02 = object.getString("address_02").trim();
+                                        final String city = object.getString("division").trim();
+                                        final String postcode = object.getString("postcode").trim();
                                         final String birthday = object.getString("birthday").trim();
                                         final String gender = object.getString("gender").trim();
                                         final String photo = object.getString("photo").trim();
                                         String id = object.getString("id").trim();
 
-                                        sessionManager.createSession(name, email, phone_no, address, birthday, gender, id);
+                                        sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
 
                                         Timer timer = new Timer();
                                         timer.schedule(new TimerTask() {
@@ -371,7 +374,10 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 intent.putExtra("name", name);
                                                 intent.putExtra("email", email);
                                                 intent.putExtra("phone_no", phone_no);
-                                                intent.putExtra("address", address);
+                                                intent.putExtra("address_01", address_01);
+                                                intent.putExtra("address_02", address_02);
+                                                intent.putExtra("division", city);
+                                                intent.putExtra("postcode", postcode);
                                                 intent.putExtra("birthday", birthday);
                                                 intent.putExtra("gender", gender);
                                                 getActivity().startActivity(intent);

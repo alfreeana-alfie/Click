@@ -59,7 +59,7 @@ public class Edit_Profile extends AppCompatActivity {
     private ArrayAdapter<CharSequence> adapter_gender;
     private DatePickerDialog datePickerDialog;
     private LinearLayout layout_gender_display, layout_gender;
-    private EditText name, email, phone_no, address, birthday, gender_display;
+    private EditText name, email, phone_no, address_01, address_02, city, postcode, birthday, gender_display;
     private Button button_logout, button_edit, button_accept;
     private ImageButton button_edit_photo;
     private Spinner gender;
@@ -95,7 +95,12 @@ public class Edit_Profile extends AppCompatActivity {
         button_edit_photo = findViewById(R.id.button_edit_photo);
         profile_image = findViewById(R.id.profile_image);
         gender = findViewById(R.id.gender_spinner);
-        address = findViewById(R.id.address_edit);
+
+        address_01 = findViewById(R.id.address_edit01);
+        address_02 = findViewById(R.id.address_edit02);
+        city = findViewById(R.id.city_edit);
+        postcode = findViewById(R.id.postcode_edit);
+
         birthday = findViewById(R.id.birthday_edit);
         gender_display = findViewById(R.id.textview_gender_display);
         gender_img = findViewById(R.id.gender_display_img);
@@ -113,14 +118,24 @@ public class Edit_Profile extends AppCompatActivity {
         name.setFocusable(false);
         email.setFocusable(false);
         phone_no.setFocusable(false);
-        address.setFocusable(false);
+
+        address_01.setFocusable(false);
+        address_02.setFocusable(false);
+        city.setFocusable(false);
+        postcode.setFocusable(false);
+
         birthday.setFocusable(false);
         gender_display.setFocusable(false);
 
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
         phone_no.setFocusableInTouchMode(false);
-        address.setFocusableInTouchMode(false);
+
+        address_01.setFocusableInTouchMode(false);
+        address_02.setFocusableInTouchMode(false);
+        city.setFocusableInTouchMode(false);
+        postcode.setFocusableInTouchMode(false);
+
         birthday.setFocusableInTouchMode(false);
         gender_display.setFocusableInTouchMode(false);
 
@@ -146,15 +161,22 @@ public class Edit_Profile extends AppCompatActivity {
         name.setFocusable(true);
         email.setFocusable(true);
         phone_no.setFocusable(true);
-        address.setFocusable(true);
+
+        address_01.setFocusable(true);
+        address_02.setFocusable(true);
+        city.setFocusable(true);
+        postcode.setFocusable(true);
+
         birthday.setFocusable(true);
 
         name.setFocusableInTouchMode(true);
         email.setFocusableInTouchMode(true);
         phone_no.setFocusableInTouchMode(true);
-        address.setFocusableInTouchMode(true);
-//        birthday.setFocusableInTouchMode(true);
-//        gender.setFocusableInTouchMode(true);
+
+        address_01.setFocusableInTouchMode(true);
+        address_02.setFocusableInTouchMode(true);
+        city.setFocusableInTouchMode(true);
+        postcode.setFocusableInTouchMode(true);
 
         birthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,14 +210,14 @@ public class Edit_Profile extends AppCompatActivity {
         name.setFocusable(false);
         email.setFocusable(false);
         phone_no.setFocusable(false);
-        address.setFocusable(false);
+        address_01.setFocusable(false);
         birthday.setFocusable(false);
         gender_display.setFocusable(false);
 
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
         phone_no.setFocusableInTouchMode(false);
-        address.setFocusableInTouchMode(false);
+        address_01.setFocusableInTouchMode(false);
         birthday.setFocusableInTouchMode(false);
         gender_display.setFocusableInTouchMode(false);
 
@@ -265,7 +287,10 @@ public class Edit_Profile extends AppCompatActivity {
                                     String strName = object.getString("name").trim();
                                     String strEmail = object.getString("email").trim();
                                     String strPhone_no = object.getString("phone_no").trim();
-                                    String strAddress = object.getString("address").trim();
+                                    String strAddress01 = object.getString("address_01").trim();
+                                    String strAddress02 = object.getString("address_02").trim();
+                                    String strCity = object.getString("division").trim();
+                                    String strPostCode = object.getString("postcode").trim();
                                     String strBirthday = object.getString("birthday").trim();
                                     String strGender = object.getString("gender");
                                     String strPhoto = object.getString("photo");
@@ -273,7 +298,10 @@ public class Edit_Profile extends AppCompatActivity {
                                     name.setText(strName);
                                     email.setText(strEmail);
                                     phone_no.setText(strPhone_no);
-                                    address.setText(strAddress);
+                                    address_01.setText(strAddress01);
+                                    address_02.setText(strAddress02);
+                                    city.setText(strCity);
+                                    postcode.setText(strPostCode);
                                     birthday.setText(strBirthday);
                                     gender.setSelection(adapter_gender.getPosition(strGender));
                                     gender_display.setText(strGender);
@@ -317,7 +345,12 @@ public class Edit_Profile extends AppCompatActivity {
         final String strName = this.name.getText().toString().trim();
         final String strEmail = this.email.getText().toString().trim();
         final String str_Phone_no = this.phone_no.getText().toString().trim();
-        final String strAddress = this.address.getText().toString().trim();
+
+        final String strAddress01 = this.address_01.getText().toString().trim();
+        final String strAddress02 = this.address_02.getText().toString().trim();
+        final String strCity = this.city.getText().toString().trim();
+        final String strPostCode = this.postcode.getText().toString().trim();
+
         final String strBirthday = this.birthday.getText().toString().trim();
         final String strGender = this.gender.getSelectedItem().toString().trim();
         final String id = getId;
@@ -336,7 +369,7 @@ public class Edit_Profile extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress, strBirthday, strGender, id);
+                                sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress01, strAddress02, strCity, strPostCode, strBirthday, strGender, id);
                                 Toast.makeText(Edit_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Edit_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -361,7 +394,10 @@ public class Edit_Profile extends AppCompatActivity {
                 params.put("name", strName);
                 params.put("email", strEmail);
                 params.put("phone_no", str_Phone_no);
-                params.put("address", strAddress);
+                params.put("address_01", strAddress01);
+                params.put("address_02", strAddress02);
+                params.put("division", strCity);
+                params.put("postcode", strPostCode);
                 params.put("birthday", strBirthday);
                 params.put("gender", strGender);
                 params.put("id", id);

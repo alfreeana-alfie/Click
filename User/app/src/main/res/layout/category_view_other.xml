@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_orange">
+
+
+    <RelativeLayout
+        android:id="@+id/search_find"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/login_part_border"
+            android:elevation="0dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/email_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:fontFamily="@font/open_sans"
+                android:hint="@string/email"
+                android:importantForAutofill="no"
+                android:inputType="text"
+
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/table_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_find"
+        android:background="@drawable/background_orange"
+        android:stretchColumns="1,2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1">
+
+                <Button
+                    android:id="@+id/price_sortlowest"
+                    style="@style/MyButtonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_down_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="@string/price"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/price_sorthighest"
+                    style="@style/MyButtonStyleSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_up_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Price"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_filter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:fontFamily="@font/open_sans"
+                android:textColor="@color/colorWhite"
+                android:drawableEnd="@drawable/ic_filter_foreground"
+                android:text="Filter" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/table_filter"
+        android:background="@drawable/background_white_curve">
+
+        <GridView
+            android:id="@+id/gridView_CarItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnWidth="80dp"
+            android:elevation="5dp"
+            android:horizontalSpacing="5dp"
+            android:numColumns="2"
+            android:paddingStart="5dp"
+            android:paddingTop="40dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="7dp"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
