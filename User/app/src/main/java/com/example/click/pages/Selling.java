@@ -24,10 +24,8 @@ import com.example.click.Order;
 import com.example.click.R;
 import com.example.click.Receipt;
 import com.example.click.adapter.Seller_OrderAdapter;
-import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +83,7 @@ public class Selling extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        NewApproval_List(view);
+        Approval_List(view);
         return view;
     }
 
@@ -95,7 +93,7 @@ public class Selling extends Fragment {
         gridView = v.findViewById(R.id.gridView_item);
     }
 
-    private void NewApproval_List(final View view) {
+    private void Approval_List(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -155,7 +153,7 @@ public class Selling extends Fragment {
                                         final String strDistrict = order.getDistrict();
                                         final String strPhoto = order.getPhoto();
 
-                                        Accept(view, strCustomer_id, strItem_id, strOrder_Id);
+                                        Accept(view, strOrder_Id);
                                     }
 
                                     @Override
@@ -174,7 +172,7 @@ public class Selling extends Fragment {
                                         final String strDistrict = order.getDistrict();
                                         final String strPhoto = order.getPhoto();
 
-                                        Reject(view, strCustomer_id, strItem_id, strOrder_Id);
+                                        Reject(view, strOrder_Id);
                                     }
                                 });
                             }
@@ -201,7 +199,7 @@ public class Selling extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void Accept(final View view, final String customer_id, final String item_id, final String order_id){
+    private void Accept(final View view, final String order_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_RECEIPT
                 , new Response.Listener<String>() {
             @Override
@@ -216,14 +214,6 @@ public class Selling extends Fragment {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             final String strReceipt_ID = object.getString("id").trim();
-                            String strCustomer_ID = object.getString("customer_id").trim();
-                            String strSeller_ID = object.getString("seller_id").trim();
-                            String strItem_ID = object.getString("item_id").trim();
-                            String strOrder_ID = object.getString("order_id").trim();
-                            String strQuantity = object.getString("quantity").trim();
-                            String strGrand_Total = object.getString("grand_total").trim();
-                            String strStatus = object.getString("status").trim();
-
 
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_APPROVAL
                                     , new Response.Listener<String>() {
@@ -473,7 +463,7 @@ public class Selling extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void Reject(final View view, final String customer_id, final String item_id, final String order_id){
+    private void Reject(final View view, final String order_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_RECEIPT
                 , new Response.Listener<String>() {
             @Override
