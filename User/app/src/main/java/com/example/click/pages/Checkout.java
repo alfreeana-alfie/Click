@@ -185,10 +185,12 @@ public class Checkout extends AppCompatActivity {
                                     String strPhone_no = object.getString("phone_no").trim();
                                     String strAddress01 = object.getString("address_01");
                                     String strAddress02 = object.getString("address_02");
-                                    String strCity = object.getString("city");
+                                    String strCity = object.getString("division");
                                     String strPostCode = object.getString("postcode");
 
-                                    AddressUser.setText(strName + " | " + strPhone_no + "\n" + strAddress01 + strAddress02 + "\n" + strPostCode + " " + strCity);
+                                    String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+
+                                    AddressUser.setText(Address);
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();

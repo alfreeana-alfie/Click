@@ -65,6 +65,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".pages.Checkout" />
         <activity android:name=".pages.After_Place_Order" />
+        <activity android:name=".pages.Row_Add" />
+        <activity android:name=".ActivityDelivery" />
 
         <meta-data
             android:name="preloaded_fonts"

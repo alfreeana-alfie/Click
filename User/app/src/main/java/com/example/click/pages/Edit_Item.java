@@ -62,8 +62,8 @@ public class Edit_Item extends AppCompatActivity {
     String id, sub_category, district;
     private Bitmap bitmap;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
-            Category_TextView, Location_TextView, Division_TextView, District_TextView;
-    private EditText EditText_Price, EditText_Ad_Detail;
+            Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
+    private EditText EditText_Price, EditText_Ad_Detail, Edittext_Order;
     private Button Button_AcceptCategory, Button_BackCategory,
             Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
             Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
@@ -126,6 +126,9 @@ public class Edit_Item extends AppCompatActivity {
         Location_TextView = findViewById(R.id.enter_location);
         Division_TextView = findViewById(R.id.division_TextView);
         District_TextView = findViewById(R.id.district_TextView);
+        Delivery_Location = findViewById(R.id.max_quantity_item);
+
+        Edittext_Order = findViewById(R.id.enter_max_order);
 
         EditText_Price = findViewById(R.id.enter_price);
         spinner_division = findViewById(R.id.spinner_division);
@@ -550,6 +553,7 @@ public class Edit_Item extends AppCompatActivity {
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final Double strPrice = Double.valueOf(this.EditText_Price.getText().toString().trim());
         final String strPrice_Text = String.format("%.2f", strPrice);
+        final String strOrder = this.Edittext_Order.getText().toString();
         final String strDivision = this.Division_TextView.getText().toString().trim();
         final String strDistrict = this.District_TextView.getText().toString().trim();
 
@@ -568,9 +572,6 @@ public class Edit_Item extends AppCompatActivity {
                                 Button_SavedEdit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Edit_Item.this, "Item Updated", Toast.LENGTH_SHORT).show();
                                 onBackPressed();
-//                                Intent intent1 = new Intent(Edit_Item.this, Homepage.class);
-//                                startActivity(intent1);
-
                             } else {
                                 loading.setVisibility(View.GONE);
                                 Button_SavedEdit.setVisibility(View.VISIBLE);
@@ -597,6 +598,7 @@ public class Edit_Item extends AppCompatActivity {
                 params.put("sub_category", strSub_category);
                 params.put("ad_detail", strAd_Detail);
                 params.put("price", strPrice_Text);
+                params.put("max_order", strOrder);
                 params.put("division", strDivision);
                 params.put("district", strDistrict);
                 params.put("id", id);

@@ -44,7 +44,6 @@ public class View_Item extends AppCompatActivity {
 
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    ArrayList<String> al = new ArrayList<>();
     String userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId;
     SessionManager sessionManager;
     Button add_to_cart_btn;

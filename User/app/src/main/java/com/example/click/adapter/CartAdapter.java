@@ -128,8 +128,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             decrease = view.findViewById(R.id.decrease);
             increase = view.findViewById(R.id.increase);
-
-
         }
     }
 }

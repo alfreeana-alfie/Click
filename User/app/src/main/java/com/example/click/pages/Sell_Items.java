@@ -32,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.ActivityDelivery;
 import com.example.click.R;
 import com.example.click.data.SessionManager;
 
@@ -50,6 +51,7 @@ public class Sell_Items extends Fragment {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
+
     SessionManager sessionManager;
     String getId;
     Uri filePath;
@@ -58,8 +60,8 @@ public class Sell_Items extends Fragment {
             adapter_home, adapter_leisure, adapter_business,
             adapter_jobs, adapter_travel, adapter_other;
     private Bitmap bitmap;
-    private TextView enter_category, enter_ad_detail, enter_location;
-    private EditText enter_price, edittext_ad_detail;
+    private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
+    private EditText enter_price, edittext_ad_detail, edittext_order;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
@@ -196,6 +198,17 @@ public class Sell_Items extends Fragment {
         enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
         enter_location = v.findViewById(R.id.enter_location);
         enter_price = v.findViewById(R.id.enter_price);
+        enter_setup = v.findViewById(R.id.enter_delivery_location);
+        enter_setup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ActivityDelivery.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        edittext_order = v.findViewById(R.id.enter_max_order);
+
 
         spinner_division = v.findViewById(R.id.spinner_division);
         spinner_district = v.findViewById(R.id.spinner_district);
@@ -448,11 +461,11 @@ public class Sell_Items extends Fragment {
     }
 
     private void saveEdit(final String id, final String photo) {
-
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
+        final String strOrder = this.edittext_order.getText().toString();
         final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
         final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
 
@@ -511,6 +524,7 @@ public class Sell_Items extends Fragment {
                     params.put("sub_category", strSub_category);
                     params.put("ad_detail", strAd_Detail);
                     params.put("price", String.format("%.2f", strPrice));
+                    params.put("max_order", strOrder);
                     params.put("division", strDivision);
                     params.put("district", strDistrict);
                     params.put("photo", photo);

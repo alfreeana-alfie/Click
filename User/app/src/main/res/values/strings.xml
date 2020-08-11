@@ -45,7 +45,6 @@
     <string name="ad_details">Ad Details</string>
     <string name="price_rm">Price (RM)</string>
     <string name="division">Division</string>
-    <string name="yes_i_want_to_receive_chat_messages_for_safer_and_faster_replies">Yes! I want to receive chat messages for safer and faster replies</string>
     <string name="uploaded_photo">Uploaded Photo</string>
     <string name="good_tips">Good Tips</string>
     <string name="cover_photo">Cover Photo</string>
@@ -132,6 +131,16 @@
     <string-array name="gender">
         <item>Female</item>
         <item>Male</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
     </string-array>
 
     <string-array name="main_category">

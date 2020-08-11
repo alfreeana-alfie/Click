@@ -181,6 +181,46 @@
         </LinearLayout>
 
         <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/login_part_border"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_location_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/location"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/enter_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:hint="@string/select_location"
+            android:paddingLeft="15dp"
+
+            android:paddingTop="10dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            tools:ignore="RtlCompat" />
+    </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
@@ -190,7 +230,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/item_location_item"
+                android:id="@+id/max_quantity_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -199,27 +239,58 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="@string/division"
+                android:text="Maximum Order"
                 android:textSize="16sp" />
 
-            <!--            <Spinner-->
-            <!--                android:id="@+id/spinner_division"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="center_vertical"-->
-            <!--                android:layout_marginLeft="15dp"-->
-            <!--                android:layout_marginRight="15dp"-->
-            <!--                android:textAlignment="textEnd"-->
-            <!--                tools:ignore="RtlCompat" />-->
+            <EditText
+                android:id="@+id/enter_max_order"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|end"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:hint="Max. Order"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textCursorDrawable="@drawable/color_cursor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/login_part_border"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/enter_location"
+                android:id="@+id/delivery_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Delivery Location"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/enter_delivery_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:clickable="true"
                 android:focusable="true"
-                android:hint="@string/select_location"
+                android:hint="Setup Delivery"
                 android:paddingLeft="15dp"
 
                 android:paddingTop="10dp"
