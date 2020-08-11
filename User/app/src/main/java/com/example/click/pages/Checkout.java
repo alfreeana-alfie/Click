@@ -39,6 +39,7 @@ import java.util.Map;
 public class Checkout extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
 
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
@@ -57,7 +58,7 @@ public class Checkout extends AppCompatActivity {
 
 
     Button Button_Checkout;
-    TextView Grand_Total, AddressUser;
+    TextView Grand_Total, AddressUser, Shipping_Price;
 
     RecyclerView recyclerView;
     UserOrderAdapter userOrderAdapter;
@@ -137,6 +138,7 @@ public class Checkout extends AppCompatActivity {
 
         Grand_Total = findViewById(R.id.grandtotal);
         AddressUser = findViewById(R.id.address);
+        Shipping_Price = findViewById(R.id.price);
 
         recyclerView = findViewById(R.id.item_view);
         recyclerView.setHasFixedSize(true);
@@ -191,6 +193,8 @@ public class Checkout extends AppCompatActivity {
                                     String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                     AddressUser.setText(Address);
+
+                                    addDelivery(strCity);
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -441,6 +445,99 @@ public class Checkout extends AppCompatActivity {
                                     };
                                     RequestQueue requestQueue2 = Volley.newRequestQueue(Checkout.this);
                                     requestQueue2.add(stringRequest);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Checkout.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void addDelivery(final String Division) {
+//        Toast.makeText(Checkout.this, Division, Toast.LENGTH_SHORT).show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ORDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    final String order_id = object.getString("id").trim();
+                                    final Double price = Double.valueOf(object.getString("price").trim());
+                                    final String seller_id_cart = object.getString("seller_id").trim();
+                                    final String item_id_cart = object.getString("item_id").trim();
+
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        String success = jsonObject.getString("success");
+                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                        if (success.equals("1")) {
+                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                JSONObject object = jsonArray.getJSONObject(i);
+                                                                String strDelivery_ID = object.getString("id").trim();
+                                                                String strUser_ID = object.getString("user_id").trim();
+                                                                String strDivision = object.getString("division");
+                                                                String strPrice = object.getString("price");
+                                                                String strDays = object.getString("days");
+
+                                                                if (strUser_ID.equals(seller_id_cart) && strDivision.equals(Division)) {
+
+                                                                    Shipping_Price.setText("MYR" + strPrice);
+                                                                }
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                        Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("user_id", seller_id_cart);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                    requestQueue.add(stringRequest);
                                 }
                             }
                         } catch (JSONException e) {
