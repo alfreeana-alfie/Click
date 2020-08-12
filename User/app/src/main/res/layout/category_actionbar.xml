@@ -13,10 +13,11 @@
     <ImageButton
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/btn_close2"
+        android:id="@+id/back_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_margin="5dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
         style="@style/Widget.AppCompat.Button.Borderless"
         app:srcCompat="@drawable/ic_back_foreground" />
 
@@ -24,10 +25,10 @@
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:background="@drawable/background_white_full_curves"
-        android:layout_toEndOf="@id/btn_close2"
+        android:layout_toEndOf="@id/back_button"
         android:layout_toStartOf="@id/relativeLayout"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
         android:layout_height="40dp">
 
         <EditText
@@ -44,6 +45,7 @@
             android:focusableInTouchMode="true"
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/color_cursor"
+            android:textColor="@color/colorPrimaryDark"
             android:hint="Name" />
 
         <ImageButton
@@ -71,7 +73,6 @@
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            style="@style/Widget.AppCompat.Button.Borderless"
             android:background="@drawable/background_white_full_curves"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/colorPrimaryDark"
@@ -89,6 +90,5 @@
             android:textSize="12sp"
             android:text="Filter" />
     </RelativeLayout>
-
 
 </RelativeLayout>

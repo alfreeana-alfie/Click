@@ -2,7 +2,6 @@ package com.example.click.category;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +35,6 @@ import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.View_Item;
-import com.example.click.user.Edit_Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,10 +56,13 @@ public class Cars_Activity extends AppCompatActivity {
     public static final String DISTRICT = "district";
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
+
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_cars.php";
-    private static String URL_DIVISION = "https://ketekmall.com/ketekmall/category/filter_category.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_search_cars.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_car.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_car.php";
 
     SessionManager sessionManager;
     String getId;
@@ -71,9 +72,10 @@ public class Cars_Activity extends AppCompatActivity {
 
     SearchView searchView;
     private Spinner spinner_division, spinner_district;
-    private ImageButton but_division, but_district;
-    private Button price_sortlowest, price_sorthighest;
+    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
+    RelativeLayout filter_layout, category_layout;
+    TextView no_result;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,7 +92,6 @@ public class Cars_Activity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setCustomView(R.layout.category_actionbar);
 
         View view = getSupportActionBar().getCustomView();
@@ -98,15 +99,18 @@ public class Cars_Activity extends AppCompatActivity {
         final Button Button_Search = view.findViewById(R.id.btn_search);
         final Button Button_Filter = view.findViewById(R.id.btn_filter);
         final ImageButton close_search = view.findViewById(R.id.btn_close);
+        ImageButton back_button = view.findViewById(R.id.back_button);
 
         Button_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Cars_Activity.this, Homepage.class);
-                startActivity(intent);
+                filter_layout.setVisibility(View.VISIBLE);
+                category_layout.setVisibility(View.GONE);
+                no_result.setVisibility(View.GONE);
             }
         });
 
+        search_find.setHint("Search");
         search_find.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -121,28 +125,248 @@ public class Cars_Activity extends AppCompatActivity {
                 }
             }
         });
-
         close_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 search_find.setFocusable(false);
                 search_find.setFocusable(true);
                 search_find.setFocusableInTouchMode(true);
+                search_find.getText().clear();
+                no_result.setVisibility(View.GONE);
 
                 InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                itemList.clear();
+                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item.notifyDataSetChanged();
+                gridView.setAdapter(adapter_item);
+                View_Item();
             }
         });
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                    getSupportFragmentManager().getBackStackEntryCount();
-                } else {
-                    Intent intent = new Intent(Cars_Activity.this, Homepage.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(Cars_Activity.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+
+        Button_Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                no_result.setVisibility(View.GONE);
+                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                itemList.clear();
+                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item.notifyDataSetChanged();
+                gridView.setAdapter(adapter_item);
+                final String strAd_Detail = search_find.getText().toString();
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEARCH,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    final JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+                                    final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                    if (success.equals("1")) {
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject object = jsonArray.getJSONObject(i);
+
+                                            String id = object.getString("id").trim();
+                                            String seller_id = object.getString("user_id").trim();
+                                            String main_category = object.getString("main_category").trim();
+                                            String sub_category = object.getString("sub_category").trim();
+                                            String ad_detail = object.getString("ad_detail").trim();
+                                            String price = object.getString("price").trim();
+                                            String division = object.getString("division");
+                                            String district = object.getString("district");
+                                            String image_item = object.getString("photo");
+
+                                            Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                            itemList.add(item);
+                                        }
+                                        if (itemList.isEmpty()) {
+                                            no_result.setVisibility(View.VISIBLE);
+                                        }else {
+                                            no_result.setVisibility(View.GONE);
+                                        }
+                                        adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                        adapter_item.notifyDataSetChanged();
+                                        gridView.setAdapter(adapter_item);
+                                        adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                            @Override
+                                            public void onViewClick(int position) {
+                                                Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                                Item_All_Details item = itemList.get(position);
+
+                                                detailIntent.putExtra(USERID, item.getSeller_id());
+                                                detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                                detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                                detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                                detailIntent.putExtra(PRICE, item.getPrice());
+                                                detailIntent.putExtra(DIVISION, item.getDivision());
+                                                detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                                detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                                startActivity(detailIntent);
+                                            }
+
+                                            @Override
+                                            public void onAddtoFavClick(int position) {
+                                                Item_All_Details item = itemList.get(position);
+
+                                                final String strItem_Id = item.getId();
+                                                final String strSeller_id = item.getSeller_id();
+                                                final String strMain_category = item.getMain_category();
+                                                final String strSub_category = item.getSub_category();
+                                                final String strAd_Detail = item.getAd_detail();
+                                                final Double strPrice = Double.valueOf(item.getPrice());
+                                                final String strDivision = item.getDivision();
+                                                final String strDistrict = item.getDistrict();
+                                                final String strPhoto = item.getPhoto();
+
+                                                if (getId.equals(item.getSeller_id())) {
+                                                    Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                            new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+                                                                    try {
+                                                                        JSONObject jsonObject1 = new JSONObject(response);
+                                                                        String success = jsonObject1.getString("success");
+
+                                                                        if (success.equals("1")) {
+                                                                            Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                        }
+
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                        Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }) {
+                                                        @Override
+                                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                                            Map<String, String> params = new HashMap<>();
+                                                            params.put("customer_id", getId);
+                                                            params.put("main_category", strMain_category);
+                                                            params.put("sub_category", strSub_category);
+                                                            params.put("ad_detail", strAd_Detail);
+                                                            params.put("price", String.format("%.2f", strPrice));
+                                                            params.put("division", strDivision);
+                                                            params.put("district", strDistrict);
+                                                            params.put("photo", strPhoto);
+                                                            params.put("seller_id", strSeller_id);
+                                                            params.put("item_id", strItem_Id);
+                                                            return params;
+                                                        }
+                                                    };
+                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                                    requestQueue.add(stringRequest1);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onAddtoCartClick(int position) {
+                                                Item_All_Details item = itemList.get(position);
+
+                                                final String strItem_Id = item.getId();
+                                                final String strSeller_id = item.getSeller_id();
+                                                final String strMain_category = item.getMain_category();
+                                                final String strSub_category = item.getSub_category();
+                                                final String strAd_Detail = item.getAd_detail();
+                                                final Double strPrice = Double.valueOf(item.getPrice());
+                                                final String strDivision = item.getDivision();
+                                                final String strDistrict = item.getDistrict();
+                                                final String strPhoto = item.getPhoto();
+
+                                                if (getId.equals(strSeller_id)) {
+                                                    Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                            new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+                                                                    try {
+                                                                        JSONObject jsonObject1 = new JSONObject(response);
+                                                                        String success = jsonObject1.getString("success");
+
+                                                                        if (success.equals("1")) {
+                                                                            Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                        }
+
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                        Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }) {
+                                                        @Override
+                                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                                            Map<String, String> params = new HashMap<>();
+                                                            params.put("customer_id", getId);
+                                                            params.put("main_category", strMain_category);
+                                                            params.put("sub_category", strSub_category);
+                                                            params.put("ad_detail", strAd_Detail);
+                                                            params.put("price", String.format("%.2f", strPrice));
+                                                            params.put("division", strDivision);
+                                                            params.put("district", strDistrict);
+                                                            params.put("photo", strPhoto);
+                                                            params.put("seller_id", strSeller_id);
+                                                            params.put("item_id", strItem_Id);
+                                                            return params;
+                                                        }
+                                                    };
+                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                                    requestQueue.add(stringRequest2);
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("ad_detail", strAd_Detail);
+                        return params;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                requestQueue.add(stringRequest);
             }
         });
     }
@@ -159,12 +383,53 @@ public class Cars_Activity extends AppCompatActivity {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
         searchView = findViewById(R.id.search_find);
+        filter_layout = findViewById(R.id.filter_layout);
+        filter_layout.setVisibility(View.GONE);
 
+        category_layout = findViewById(R.id.category_layout);
+        category_layout.setVisibility(View.VISIBLE);
+
+        Button_Cancel = findViewById(R.id.btn_cancel);
+        Button_Apply = findViewById(R.id.btn_apply);
+        no_result = findViewById(R.id.no_result);
+        no_result.setVisibility(View.GONE);
+
+        Button_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filter_layout.setVisibility(View.GONE);
+                category_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button_Apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemList.clear();
+                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item.notifyDataSetChanged();
+                gridView.setAdapter(adapter_item);
+
+                filter_layout.setVisibility(View.GONE);
+                category_layout.setVisibility(View.VISIBLE);
+
+                final String strDivision = spinner_division.getSelectedItem().toString();
+                final String strDistrict = spinner_district.getSelectedItem().toString();
+
+                if(strDistrict.equals("All")){
+                    Filter_Division(strDivision);
+                }
+                if(strDivision.equals("All")){
+                    View_Item();
+                }
+
+                Filter_District(strDivision, strDistrict);
+
+            }
+        });
 
         spinner_division = findViewById(R.id.spinner_division);
         spinner_district = findViewById(R.id.spinner_district);
-        but_division = findViewById(R.id.but_division);
-        but_district = findViewById(R.id.but_district);
         price_sortlowest = findViewById(R.id.price_sortlowest);
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
@@ -175,210 +440,8 @@ public class Cars_Activity extends AppCompatActivity {
 
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 showResult(position);
-                if (position != 0) {
-                    adapter_item.notifyDataSetChanged();
-                    but_division.setVisibility(View.VISIBLE);
-//                    adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
-                    final String filter_division = spinner_division.getSelectedItem().toString();
-
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DIVISION,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    try {
-                                        final JSONObject jsonObject = new JSONObject(response);
-                                        String success = jsonObject.getString("success");
-                                        final JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                                        if (success.equals("1")) {
-                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                                String id = object.getString("id").trim();
-                                                String seller_id = object.getString("user_id").trim();
-                                                String main_category = object.getString("main_category").trim();
-                                                String sub_category = object.getString("sub_category").trim();
-                                                String ad_detail = object.getString("ad_detail").trim();
-                                                String price = object.getString("price").trim();
-                                                String division = object.getString("division");
-                                                String district = object.getString("district");
-                                                String image_item = object.getString("photo");
-
-                                                Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                                itemList.add(item);
-                                            }
-                                            adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
-                                            adapter_item.notifyDataSetChanged();
-                                            gridView.setAdapter(adapter_item);
-                                            adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
-                                                @Override
-                                                public void onViewClick(int position) {
-                                                    Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
-                                                    Item_All_Details item = itemList.get(position);
-
-                                                    detailIntent.putExtra(USERID, item.getSeller_id());
-                                                    detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                                    detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                                    detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                                    detailIntent.putExtra(PRICE, item.getPrice());
-                                                    detailIntent.putExtra(DIVISION, item.getDivision());
-                                                    detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                                    detailIntent.putExtra(PHOTO, item.getPhoto());
-
-                                                    startActivity(detailIntent);
-                                                }
-
-                                                @Override
-                                                public void onAddtoFavClick(int position) {
-                                                    Item_All_Details item = itemList.get(position);
-
-                                                    final String strSeller_id = item.getSeller_id();
-                                                    final String strMain_category = item.getMain_category();
-                                                    final String strSub_category = item.getSub_category();
-                                                    final String strAd_Detail = item.getAd_detail();
-                                                    final Double strPrice = Double.valueOf(item.getPrice());
-                                                    final String strDivision = item.getDivision();
-                                                    final String strDistrict = item.getDistrict();
-                                                    final String strPhoto = item.getPhoto();
-
-                                                    if (getId.equals(item.getSeller_id())) {
-                                                        Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
-                                                                new Response.Listener<String>() {
-                                                                    @Override
-                                                                    public void onResponse(String response) {
-                                                                        try {
-                                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                                            String success = jsonObject1.getString("success");
-
-                                                                            if (success.equals("1")) {
-                                                                                Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
-
-                                                                            }
-
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
-                                                                            Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    }
-                                                                },
-                                                                new Response.ErrorListener() {
-                                                                    @Override
-                                                                    public void onErrorResponse(VolleyError error) {
-                                                                        Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }) {
-                                                            @Override
-                                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                                Map<String, String> params = new HashMap<>();
-                                                                params.put("customer_id", getId);
-                                                                params.put("main_category", strMain_category);
-                                                                params.put("sub_category", strSub_category);
-                                                                params.put("ad_detail", strAd_Detail);
-                                                                params.put("price", String.format("%.2f", strPrice));
-                                                                params.put("division", strDivision);
-                                                                params.put("district", strDistrict);
-                                                                params.put("photo", strPhoto);
-                                                                params.put("seller_id", strSeller_id);
-                                                                return params;
-                                                            }
-                                                        };
-                                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                                        requestQueue.add(stringRequest1);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onAddtoCartClick(int position) {
-                                                    Item_All_Details item = itemList.get(position);
-
-                                                    final String strSeller_id = item.getSeller_id();
-                                                    final String strMain_category = item.getMain_category();
-                                                    final String strSub_category = item.getSub_category();
-                                                    final String strAd_Detail = item.getAd_detail();
-                                                    final Double strPrice = Double.valueOf(item.getPrice());
-                                                    final String strDivision = item.getDivision();
-                                                    final String strDistrict = item.getDistrict();
-                                                    final String strPhoto = item.getPhoto();
-
-                                                    if (getId.equals(strSeller_id)) {
-                                                        Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                                new Response.Listener<String>() {
-                                                                    @Override
-                                                                    public void onResponse(String response) {
-                                                                        try {
-                                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                                            String success = jsonObject1.getString("success");
-
-                                                                            if (success.equals("1")) {
-                                                                                Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                            }
-
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
-                                                                            Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    }
-                                                                },
-                                                                new Response.ErrorListener() {
-                                                                    @Override
-                                                                    public void onErrorResponse(VolleyError error) {
-                                                                        Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }) {
-                                                            @Override
-                                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                                Map<String, String> params = new HashMap<>();
-                                                                params.put("customer_id", getId);
-                                                                params.put("main_category", strMain_category);
-                                                                params.put("sub_category", strSub_category);
-                                                                params.put("ad_detail", strAd_Detail);
-                                                                params.put("price", String.format("%.2f", strPrice));
-                                                                params.put("division", strDivision);
-                                                                params.put("district", strDistrict);
-                                                                params.put("photo", strPhoto);
-                                                                params.put("seller_id", strSeller_id);
-                                                                return params;
-                                                            }
-                                                        };
-                                                        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                                                        requestQueue.add(stringRequest2);
-                                                    }
-                                                }
-                                            });
-                                        } else {
-                                            Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-
-                                }
-                            }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-                            params.put("division", filter_division);
-                            return params;
-                        }
-                    };
-                    RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
-                    requestQueue.add(stringRequest);
-                }
-
             }
 
             @Override
@@ -404,308 +467,493 @@ public class Cars_Activity extends AppCompatActivity {
                 price_sortlowest.setVisibility(View.VISIBLE);
             }
         });
+    }
 
-        but_division.setVisibility(View.GONE);
-        but_division.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter_item.getFilter().filter(null);
-                spinner_division.setSelection(0);
-                but_division.setVisibility(View.GONE);
-                but_district.setVisibility(View.GONE);
-                spinner_district.setSelection(0);
-            }
-        });
+    private void Filter_Division(final String division){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DIVISION,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-        but_district.setVisibility(View.GONE);
-        but_district.setOnClickListener(new View.OnClickListener() {
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                if (itemList.isEmpty()) {
+                                    no_result.setVisibility(View.VISIBLE);
+                                }else {
+                                    no_result.setVisibility(View.GONE);
+                                }
+                                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(PRICE, item.getPrice());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onAddtoFavClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(item.getSeller_id())) {
+                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            requestQueue.add(stringRequest1);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
             @Override
-            public void onClick(View v) {
-                adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString());
-                spinner_district.setSelection(0);
-                but_district.setVisibility(View.GONE);
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("division", division);
+                return params;
             }
-        });
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void Filter_District(final String strDivision, final String strDistrict){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DISTRICT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                if (itemList.isEmpty()) {
+                                    no_result.setVisibility(View.VISIBLE);
+                                }else {
+                                    no_result.setVisibility(View.GONE);
+                                }
+                                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(PRICE, item.getPrice());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onAddtoFavClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(item.getSeller_id())) {
+                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            requestQueue.add(stringRequest1);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("division", strDivision);
+                params.put("district", strDistrict);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+        requestQueue.add(stringRequest);
     }
 
     private void showResult(int position) {
         switch (position) {
             case 0:
-                spinner_district.setVisibility(View.GONE);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.all, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
                 break;
 
             case 1:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 2:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
                 break;
 
             case 3:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 4:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 5:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 6:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 7:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 8:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 9:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 10:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 11:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
-
                 break;
 
             case 12:
-                spinner_district.setVisibility(View.VISIBLE);
-                adapter_district = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.limbang, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(this, R.array.limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                spinner_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
-                        if (position != 0) {
-                            but_district.setVisibility(View.VISIBLE);
-                            adapter_item.getFilter().filter(spinner_division.getSelectedItem().toString() + spinner_district.getSelectedItem().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        adapter_item.getFilter().filter(null);
-                    }
-                });
                 break;
         }
     }
@@ -737,6 +985,11 @@ public class Cars_Activity extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
+                                }
+                                if (itemList.isEmpty()) {
+                                    no_result.setVisibility(View.VISIBLE);
+                                }else {
+                                    no_result.setVisibility(View.GONE);
                                 }
                                 adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
                                 adapter_item.notifyDataSetChanged();

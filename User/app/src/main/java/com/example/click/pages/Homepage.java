@@ -314,8 +314,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Cars()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Cars_Activity.class);
+                startActivity(intent);
             }
         });
 

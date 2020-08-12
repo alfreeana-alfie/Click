@@ -297,6 +297,10 @@
         <item>Lundu</item>
     </string-array>
 
+    <string-array name="all">
+        <item>All</item>
+    </string-array>
+
     <string-array name="samarahan">
         <item>All</item>
         <item>Kota Samarahan</item>

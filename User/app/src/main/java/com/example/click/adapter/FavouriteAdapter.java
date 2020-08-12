@@ -38,9 +38,6 @@ public class FavouriteAdapter extends BaseAdapter {
         return itemList.size();
     }
 
-//    public Filter getFilter() {
-//        return itemFilter;
-//    }
 
     @Override
     public Object getItem(int position) {
