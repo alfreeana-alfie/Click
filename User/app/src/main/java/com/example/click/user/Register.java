@@ -53,10 +53,8 @@ public class Register extends Fragment {
 
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     private final int PICK_IMAGE_REQUEST = 22;
-    String name_firebase, email_firebase;
-    ImageView imageView;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    private String name_firebase, email_firebase;
+    private ImageView imageView;
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
@@ -67,6 +65,8 @@ public class Register extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.register, container, false);
         Declare(view);
+
+        Firebase.setAndroidContext(view.getContext());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,36 +74,12 @@ public class Register extends Fragment {
             }
         });
 
-        Firebase.setAndroidContext(view.getContext());
-
         button_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name_firebase = name.getText().toString();
                 email_firebase = email.getText().toString();
-                Register(v);
-
-                storage = FirebaseStorage.getInstance();
-                storageReference = storage.getReference();
-                if (filePath != null) {
-                    final StorageReference storageReference1 = storageReference.child("images").child(String.valueOf(filePath));
-                    storageReference1.putFile(filePath).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        String url = uri.toString();
-                                    }
-                                });
-                            }
-                        }
-                    });
-
-                }
-
-
+                SignUp(v);
             }
         });
 
@@ -125,12 +101,6 @@ public class Register extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
     private void Declare(View v) {
         name = v.findViewById(R.id.name_register);
         email = v.findViewById(R.id.email_register);
@@ -143,7 +113,7 @@ public class Register extends Fragment {
         imageView = v.findViewById(R.id.imageView);
     }
 
-    private void Register(View view) {
+    private void SignUp(View view) {
         final String strName = this.name.getText().toString().trim();
         final String strEmail = this.email.getText().toString().trim();
         final String strPhone_No = this.phone_no.getText().toString().trim();
@@ -194,17 +164,6 @@ public class Register extends Fragment {
             password.requestFocus();
             password.setError("At least 8 character lengths for email");
         }
-
-/*
-        //Confirm Password
-        if (strConfirm_Password.isEmpty()) {
-            confirm_password.requestFocus();
-            confirm_password.setError("Fields cannot be empty!");
-        } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
-            confirm_password.requestFocus();
-            confirm_password.setError("At least 8 character lengths for email");
-        }
-*/
 
         //Other
         if (!strConfirm_Password.equals(strPassword)) {

@@ -127,20 +127,22 @@
     <string name="district">District</string>
     <string name="select_location">Choose a Location</string>
 
-
     <string-array name="gender">
         <item>Female</item>
         <item>Male</item>
     </string-array>
 
     <string-array name="days">
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-        <item>Sunday</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
     <string-array name="main_category">

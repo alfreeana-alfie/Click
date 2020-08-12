@@ -1,7 +1,6 @@
 package com.example.click.user;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -46,8 +45,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,11 +62,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
-    private final int PICK_IMAGE_REQUEST = 22;
-    String name_firebase, email_firebase, token_firebase, token;
-    FirebaseStorage storage;
-    StorageReference storageReference;
-    String getId;
+
+    private String name_firebase, email_firebase;
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     private EditText email, password;
@@ -78,7 +72,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private SessionManager sessionManager;
     private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
-    private Uri filePath;
 
 
     @Nullable
@@ -89,9 +82,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
         Firebase.setAndroidContext(view.getContext());
         sessionManager = new SessionManager(view.getContext());
-
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference("uploads");
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(getContext()).enableAutoManage(getActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
@@ -108,7 +98,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             @Override
             public void onClick(View v) {
 //                ChatLogin(v);
-                Login(v);
+                SignIn(v);
             }
         });
 
@@ -156,165 +146,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-//                Toast.makeText(getContext(), "SUCCESS", Toast.LENGTH_SHORT).show();
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        if (response.getError() != null) {
-                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-                        } else {
-                            final String fbUserId = object.optString("id");
-                            final String fbUserName = object.optString("name");
-                            final String fbEmail = object.optString("email");
-                            final String phone_no = "1111111111";
-                            final String address = "";
-                            final String birthday = "";
-                            final String gender = "Female";
-                            final String strPassword = object.optString("name") + "Facebook";
-
-                            final String photo = "http://graph.facebook.com/" + fbUserId + "/picture?type=large";
-
-                            name_firebase = fbUserName;
-                            email_firebase = fbEmail;
-
-                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String s) {
-                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                    if (s.equals("null")) {
-                                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                                        reference.child(name_firebase).child("photo").setValue(photo);
-                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                    } else {
-                                        try {
-                                            JSONObject obj = new JSONObject(s);
-
-                                            if (!obj.has(name_firebase)) {
-                                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                reference.child(name_firebase).child("photo").setValue(photo);
-                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                            } else {
-                                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                reference.child(name_firebase).child("photo").setValue(photo);
-                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError volleyError) {
-                                    System.out.println("" + volleyError);
-                                }
-                            });
-
-                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
-                            rQueue.add(request);
-
-
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
-                                    new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(response);
-                                                String success = jsonObject.getString("success");
-
-                                                if (success.equals("1")) {
-//                                                    Toast.makeText(getContext(), fbEmail+" / "+fbUserName, Toast.LENGTH_LONG).show();
-                                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String s) {
-                                                            final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                                            if (s.equals("null")) {
-                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                reference.child(name_firebase).child("photo").setValue(photo);
-                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                            } else {
-                                                                try {
-                                                                    JSONObject obj = new JSONObject(s);
-                                                                    if (!obj.has(name_firebase)) {
-                                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                        reference.child(name_firebase).child("photo").setValue(photo);
-                                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                    } else {
-                                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                        reference.child(name_firebase).child("photo").setValue(photo);
-                                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                    }
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                }
-                                                            }
-                                                        }
-
-                                                    }, new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError volleyError) {
-                                                            System.out.println("" + volleyError);
-                                                        }
-                                                    });
-
-                                                    RequestQueue rQueue = Volley.newRequestQueue(getContext());
-                                                    rQueue.add(request);
-                                                }
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-
-                                        }
-                                    },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            if (error.getMessage() == null) {
-                                                Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    }) {
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> params = new HashMap<>();
-                                    params.put("name", fbUserName);
-                                    params.put("email", fbEmail);
-                                    params.put("phone_no", phone_no);
-                                    params.put("password", strPassword);
-                                    params.put("address", address);
-                                    params.put("birthday", birthday);
-                                    params.put("gender", gender);
-                                    params.put("photo", photo);
-                                    return params;
-                                }
-                            };
-                            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-                            requestQueue.add(stringRequest);
-
-                            email.setText(fbEmail);
-                            password.setText(strPassword);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    button_login.performClick();
-                                }
-                            }, 20);
-
-                        }
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender, birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
-
+                Facebook_SignIn(loginResult);
             }
 
             @Override
@@ -329,7 +161,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         });
     }
 
-    private void Login(final View view) {
+    private void SignIn(final View view) {
         final String mEmail = this.email.getText().toString().trim();
         final String mPassword = this.password.getText().toString().trim();
 
@@ -384,7 +216,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                             }
                                         }, 100);
-                                        Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
 
@@ -503,18 +335,184 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         }
     }
 
+    private void Facebook_SignIn(LoginResult loginResult) {
+        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                if (response.getError() != null) {
+                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                } else {
+                    final String fbUserId = object.optString("id");
+                    final String fbUserName = object.optString("name");
+                    final String fbEmail = object.optString("email");
+                    final String phone_no = "1111111111";
+                    final String strAddress01 = "";
+                    final String strAddress02 = "";
+                    final String strCity = "";
+                    final String strPostCode = "";
+                    final String birthday = "";
+                    final String gender = "Female";
+                    final String strPassword = object.optString("name") + "Facebook";
+
+                    final String photo = "http://graph.facebook.com/" + fbUserId + "/picture?type=large";
+
+                    name_firebase = fbUserName;
+                    email_firebase = fbEmail;
+
+                    String url = "https://click-1595830894120.firebaseio.com/users.json";
+                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String s) {
+                            final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                            if (s.equals("null")) {
+                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                reference.child(name_firebase).child("photo").setValue(photo);
+                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            } else {
+                                try {
+                                    JSONObject obj = new JSONObject(s);
+
+                                    if (!obj.has(name_firebase)) {
+                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                    } else {
+                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            System.out.println("" + volleyError);
+                        }
+                    });
+
+                    RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                    rQueue.add(request);
+
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        String success = jsonObject.getString("success");
+
+                                        if (success.equals("1")) {
+                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String s) {
+                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                                    if (s.equals("null")) {
+                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    } else {
+                                                        try {
+                                                            JSONObject obj = new JSONObject(s);
+                                                            if (!obj.has(name_firebase)) {
+                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                            } else {
+                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                }
+
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError volleyError) {
+                                                    System.out.println("" + volleyError);
+                                                }
+                                            });
+
+                                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                                            rQueue.add(request);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    if (error.getMessage() == null) {
+                                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("name", fbUserName);
+                            params.put("email", fbEmail);
+                            params.put("phone_no", phone_no);
+                            params.put("password", strPassword);
+                            params.put("address_01", strAddress01);
+                            params.put("address_02", strAddress02);
+                            params.put("division", strCity);
+                            params.put("postcode", strPostCode);
+                            params.put("birthday", birthday);
+                            params.put("gender", gender);
+                            params.put("photo", photo);
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                    requestQueue.add(stringRequest);
+
+                    email.setText(fbEmail);
+                    password.setText(strPassword);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button_login.performClick();
+                        }
+                    }, 20);
+
+                }
+            }
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email,gender, birthday");
+        request.setParameters(parameters);
+        request.executeAsync();
+    }
+
     private void Google_SignIn(GoogleSignInResult result) {
         final GoogleSignInAccount account = result.getSignInAccount();
         final String name = account.getDisplayName();
         final String email = account.getEmail();
         final String phone_no = "";
-        final String address = "";
+        final String strAddress01 = "";
+        final String strAddress02 = "";
+        final String strCity = "";
+        final String strPostCode = "";
         final String birthday = "";
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
         final String photo = String.valueOf(account.getPhotoUrl());
-
-        filePath = account.getPhotoUrl();
 
         name_firebase = name;
         email_firebase = email;
@@ -589,7 +587,10 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 params.put("email", email);
                 params.put("phone_no", phone_no);
                 params.put("password", password);
-                params.put("address", address);
+                params.put("address_01", strAddress01);
+                params.put("address_02", strAddress02);
+                params.put("division", strCity);
+                params.put("postcode", strPostCode);
                 params.put("birthday", birthday);
                 params.put("gender", gender);
                 params.put("photo", photo);
@@ -601,8 +602,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        int second = 1;
-
         if (result.isSuccess()) {
             Google_SignIn(result);
             GoogleSignInAccount account = result.getSignInAccount();
@@ -613,7 +612,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 public void run() {
                     button_login.performClick();
                 }
-            }, second * 100);
+            }, 100);
 
         } else {
             Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();

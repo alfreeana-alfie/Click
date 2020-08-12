@@ -81,7 +81,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:cursorVisible="true"
                 android:fontFamily="@font/open_sans"
                 android:hint="@string/email"
                 android:importantForAutofill="no"
@@ -89,6 +88,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textColor="@android:color/black"
+                android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
 

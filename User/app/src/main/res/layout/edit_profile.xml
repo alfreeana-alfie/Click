@@ -64,8 +64,7 @@
             <LinearLayout
                 android:id="@+id/layout_text"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
@@ -75,7 +74,6 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/ic_person_foreground" />
@@ -83,24 +81,24 @@
                 <EditText
                     android:id="@+id/name_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:ems="10"
                     android:hint="@string/name"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/color_cursor"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_email"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -119,23 +117,23 @@
                 <EditText
                     android:id="@+id/email_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:ems="10"
                     android:hint="@string/email"
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/color_cursor"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_phone"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -154,22 +152,22 @@
                 <EditText
                     android:id="@+id/phone_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:ems="10"
                     android:hint="@string/phone_no"
                     android:importantForAutofill="no"
                     android:inputType="phone"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/color_cursor"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -204,8 +202,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
@@ -227,28 +224,36 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:ems="10"
                     android:hint="Address 2"
                     android:importantForAutofill="no"
                     android:inputType="textPostalAddress"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:textCursorDrawable="@drawable/color_cursor" />
-
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/color_cursor"/>
             </LinearLayout>
 
             <LinearLayout
                 android:baselineAligned="false"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_address_foreground" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="2.5dp"
                     android:layout_marginStart="0dp"
@@ -267,13 +272,14 @@
                         android:inputType="textPostalAddress"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
+                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="0dp"
                     android:layout_marginStart="2.5dp"
@@ -292,6 +298,7 @@
                         android:inputType="textPostalAddress"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"
+                        android:cursorVisible="true"
                         android:textCursorDrawable="@drawable/color_cursor" />
 
                 </LinearLayout>
@@ -300,8 +307,7 @@
             <LinearLayout
                 android:id="@+id/layout_birthday"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
@@ -319,11 +325,10 @@
                 <EditText
                     android:id="@+id/birthday_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:ems="10"
                     android:hint="@string/birthday"
                     android:importantForAutofill="no"
                     android:inputType="date"
@@ -335,7 +340,7 @@
             <LinearLayout
                 android:id="@+id/layout_gender_display"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -355,7 +360,7 @@
                 <EditText
                     android:id="@+id/textview_gender_display"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:background="@null"
@@ -371,7 +376,7 @@
             <LinearLayout
                 android:id="@+id/layout_gender"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:layout_gravity="end"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -390,7 +395,7 @@
                 <Spinner
                     android:id="@+id/gender_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:paddingEnd="0dp"
@@ -410,9 +415,9 @@
         <Button
             android:id="@+id/button_edit"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/background_button_pink_curves"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/open_sans_semibold"
             android:text="@string/edit_profile"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -420,22 +425,12 @@
         <Button
             android:id="@+id/button_accept"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@drawable/background_button_pink_curves"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@@font/open_sans_semibold"
             android:text="@string/accept"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/button_logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_part_border_orange"
-            android:fontFamily="@font/open_sans"
-            android:text="@string/logout"
-            android:textColor="@android:color/black"
-            android:visibility="gone" />
 
     </RelativeLayout>
 

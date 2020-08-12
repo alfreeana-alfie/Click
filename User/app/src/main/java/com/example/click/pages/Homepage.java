@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,7 +29,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
-import com.example.click.adapter.Item_Adapter;
 import com.example.click.category.All;
 import com.example.click.category.Business;
 import com.example.click.category.Camera;
@@ -76,7 +73,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Item_Adapter.OnItemClickListener {
+public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String ID = "id";
     public static final String USERID = "userid";
@@ -87,34 +84,30 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String DISTRICT = "district";
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
+
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_VIEW = "https://ketekmall.com/ketekmall/category/readall.php";
-    private static String URL_ADD = "https://ketekmall.com/ketekmall/add_to_fav.php";
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
 
     List<Item_All_Details> itemList;
-    Item_Adapter adapter_item;
 
 
     CartAdapter _cart_adapter;
     RecyclerView recyclerView;
     ArrayList<Item_All_Details> itemAllDetailsArrayList;
 
-
     String getId;
     SessionManager sessionManager;
+
     TextView textCartItemCount;
     int mCartItemCount;
 
-    private SearchView searchView;
     private ScrollView scrollView;
     private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera,
             button_car_parts, button_business, button_computer, button_electronics, button_furniture,
             button_handcraft, button_home, button_men, button_mom, button_motorcycle,
             button_pets, button_rent, button_services, button_sport, button_travel,
             button_women, button_food, button_grocery;
-    private GridView gridViewSearch;
+
     private CircleImageView profile_display, profile_image;
     private TextView name_display, email_display, button_view_all, username;
     private DrawerLayout drawer;
@@ -127,19 +120,22 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         setContentView(R.layout.nav_drawer);
         Declare();
 
-        _cart_adapter = new CartAdapter(this, itemList);
+        getSession();
+
+        getUserDetail();
+
+        Category_Func();
+
+        Cart_Item();
+    }
+
+    private void getSession() {
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        getUserDetail();
-
-        Category_Func();
-
-        View_Item();
-        Cart_Item();
     }
 
     private void Declare() {
@@ -150,10 +146,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         recyclerView.setLayoutManager(new LinearLayoutManager(Homepage.this));
         itemAllDetailsArrayList = new ArrayList<>();
 
-        gridViewSearch = findViewById(R.id.gridView_itemSearch);
+        _cart_adapter = new CartAdapter(this, itemList);
         view = findViewById(R.id.support_layout);
         scrollView = findViewById(R.id.grid_category);
-        searchView = findViewById(R.id.search_find);
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
         button_business = findViewById(R.id.button_business);
@@ -181,8 +176,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
 
-        gridViewSearch.setVisibility(View.GONE);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
@@ -202,199 +195,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-    }
-
-    private void View_Item() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_VIEW,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-
-                                    String id = object.getString("id").trim();
-                                    String seller_id = object.getString("userid").trim();
-                                    String main_category = object.getString("main_category").trim();
-                                    String sub_category = object.getString("sub_category").trim();
-                                    String ad_detail = object.getString("ad_detail").trim();
-                                    String price = object.getString("price").trim();
-                                    String division = object.getString("division");
-                                    String district = object.getString("district");
-                                    String image_item = object.getString("photo");
-
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    itemList.add(item);
-
-                                }
-                                adapter_item = new Item_Adapter(itemList, Homepage.this);
-                                adapter_item.notifyDataSetChanged();
-                                gridViewSearch.invalidateViews();
-                                gridViewSearch.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
-                                    @Override
-                                    public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Homepage.this, View_Item.class);
-                                        Item_All_Details item = itemList.get(position);
-
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
-
-                                        startActivity(detailIntent);
-                                    }
-
-                                    @Override
-                                    public void onAddtoFavClick(int position) {
-                                        Item_All_Details item = itemList.get(position);
-
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                            String success = jsonObject1.getString("success");
-
-                                                            if (success.equals("1")) {
-                                                                Toast.makeText(Homepage.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
-
-                                                            }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(Homepage.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(Homepage.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("main_category", strMain_category);
-                                                params.put("sub_category", strSub_category);
-                                                params.put("ad_detail", strAd_Detail);
-                                                params.put("price", String.format("%.2f", strPrice));
-                                                params.put("division", strDivision);
-                                                params.put("district", strDistrict);
-                                                params.put("photo", strPhoto);
-                                                params.put("seller_id", strSeller_id);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
-                                        requestQueue.add(stringRequest1);
-                                    }
-
-                                    @Override
-                                    public void onAddtoCartClick(int position) {
-                                        Item_All_Details item = itemList.get(position);
-
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonObject1 = new JSONObject(response);
-                                                            String success = jsonObject1.getString("success");
-
-                                                            if (success.equals("1")) {
-                                                                Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-                                                                setupBadge();
-                                                            }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            Toast.makeText(Homepage.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                },
-                                                new Response.ErrorListener() {
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        Toast.makeText(Homepage.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("main_category", strMain_category);
-                                                params.put("sub_category", strSub_category);
-                                                params.put("ad_detail", strAd_Detail);
-                                                params.put("price", String.format("%.2f", strPrice));
-                                                params.put("division", strDivision);
-                                                params.put("district", strDistrict);
-                                                params.put("photo", strPhoto);
-                                                params.put("seller_id", strSeller_id);
-                                                return params;
-                                            }
-                                        };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
-                                        requestQueue.add(stringRequest2);
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Homepage.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        if (error.getMessage() == null) {
-//                            Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
-//                        } else {
-//                            Toast.makeText(Homepage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-//                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 
     private void Cart_Item() {
@@ -472,7 +272,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
-        searchView.setVisibility(View.GONE);
         Button_FindItem.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -741,8 +540,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_home:
                 view.setVisibility(View.VISIBLE);
                 scrollView.setVisibility(View.VISIBLE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Empty()).commit();
@@ -750,8 +547,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             case R.id.nav_sell:
                 view.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Sell_Items()).addToBackStack(null).commit();
@@ -759,8 +554,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             case R.id.nav_find:
                 view.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Find_My_Items()).addToBackStack(null).commit();
@@ -769,8 +562,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
             case R.id.nav_ads:
                 view.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Main_Order_Fragment()).addToBackStack(null).commit();
@@ -779,8 +570,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
             case R.id.nav_chat_inbox:
                 view.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Chat_Inbox()).addToBackStack(null).commit();
@@ -789,16 +578,10 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
             case R.id.nav_favourite_ads:
                 view.setVisibility(View.GONE);
-                searchView.setVisibility(View.GONE);
-                gridViewSearch.setVisibility(View.GONE);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
                         new Saved_Searches()).addToBackStack(null).commit();
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_saved_searches:
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_about_the_apps:
@@ -894,20 +677,4 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         }
 
     }
-
-    @Override
-    public void onViewClick(int position) {
-
-    }
-
-    @Override
-    public void onAddtoFavClick(int position) {
-
-    }
-
-    @Override
-    public void onAddtoCartClick(int position) {
-
-    }
-
 }

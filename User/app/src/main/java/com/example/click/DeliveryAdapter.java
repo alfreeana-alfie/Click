@@ -32,7 +32,7 @@ public class DeliveryAdapter extends RecyclerView.Adapter<DeliveryAdapter.ViewHo
         Delivery delivery = arrayList.get(position);
 
         holder.division.setText(delivery.getDivision());
-        holder.price.setText(delivery.getPrice());
+        holder.price.setText("MYR "  + delivery.getPrice());
         holder.days.setText(delivery.getDays());
     }
 

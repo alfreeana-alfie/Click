@@ -2,37 +2,84 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:background="@color/colorAccent"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/background_white_full_curves"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/text_division"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/open_sans"
             android:text="Division"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/text_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Price"
-            android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/text_days"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Days"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginLeft="15dp"
+                android:text="Price : "
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginLeft="5dp"
+                android:text="MYR 0.00"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginLeft="15dp"
+                android:text="Duration : "
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/open_sans"
+                android:layout_marginLeft="5dp"
+                android:text="0 Days"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 </LinearLayout>

@@ -60,7 +60,7 @@ public class Edit_Profile extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private LinearLayout layout_gender_display, layout_gender;
     private EditText name, email, phone_no, address_01, address_02, city, postcode, birthday, gender_display;
-    private Button button_logout, button_edit, button_accept;
+    private Button button_edit, button_accept;
     private ImageButton button_edit_photo;
     private Spinner gender;
     private Bitmap bitmap;
@@ -73,23 +73,25 @@ public class Edit_Profile extends AppCompatActivity {
         setContentView(R.layout.edit_profile);
 
         Declare();
+        getSession();
+        getUserDetail();
+
+        gender_display.setText(gender.getSelectedItem().toString());
+        Button_Func();
+    }
+
+    private void getSession() {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
-
-        getUserDetail();
-        gender_display.setText(gender.getSelectedItem().toString());
-
-        Button_Func();
     }
 
     private void Declare() {
         name = findViewById(R.id.name_edit);
         email = findViewById(R.id.email_edit);
         phone_no = findViewById(R.id.phone_edit);
-        button_logout = findViewById(R.id.button_logout);
         button_edit = findViewById(R.id.button_edit);
         button_accept = findViewById(R.id.button_accept);
         button_edit_photo = findViewById(R.id.button_edit_photo);
@@ -151,7 +153,12 @@ public class Edit_Profile extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Homepage.class));
+                if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+                    getSupportFragmentManager().getBackStackEntryCount();
+                } else {
+                    Intent intent = new Intent(Edit_Profile.this, Homepage.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -186,10 +193,12 @@ public class Edit_Profile extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
+
                 datePickerDialog = new DatePickerDialog(v.getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                        String Birthday = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        birthday.setText(Birthday);
                     }
                 }, year, month, day);
                 datePickerDialog.show();
@@ -230,12 +239,6 @@ public class Edit_Profile extends AppCompatActivity {
     }
 
     private void Button_Func() {
-        button_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sessionManager.logout();
-            }
-        });
 
         button_edit_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -498,7 +501,5 @@ public class Edit_Profile extends AppCompatActivity {
             Intent intent = new Intent(Edit_Profile.this, Homepage.class);
             startActivity(intent);
         }
-
     }
-
 }

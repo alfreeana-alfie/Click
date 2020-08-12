@@ -67,6 +67,7 @@
         <activity android:name=".pages.After_Place_Order" />
         <activity android:name=".pages.Row_Add" />
         <activity android:name=".ActivityDelivery" />
+        <activity android:name=".category.Cars_Activity" />
 
         <meta-data
             android:name="preloaded_fonts"

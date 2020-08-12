@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -48,8 +49,6 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
     ImageView imageView;
     ArrayList<Delivery> cricketersList = new ArrayList<>();
 
-    Delivery delivery;
-
     SessionManager sessionManager;
     String getId;
 
@@ -70,6 +69,19 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         buttonSubmit = findViewById(R.id.button_submit);
         buttonAdd.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Back");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ActivityDelivery.class));
+            }
+        });
 
         addView();
     }
@@ -119,34 +131,6 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private boolean checkIfValidAndRead() {
-        cricketersList.clear();
-        boolean result = true;
-
-        for (int i = 0; i < layout.getChildCount(); i++) {
-
-            View view = layout.getChildAt(i);
-
-            editText = view.findViewById(R.id.price);
-            imageView = view.findViewById(R.id.btn_close);
-            spinner_division = view.findViewById(R.id.spinner_division);
-            spinner_days = view.findViewById(R.id.spinner_day);
-
-            if (!editText.getText().toString().equals("")) {
-            } else {
-                result = false;
-                break;
-            }
-
-            if (spinner_division.getSelectedItemPosition() != 0) {
-            } else {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
     private boolean checkIfValidAndRead03() {
         cricketersList.clear();
         boolean result = true;
@@ -162,7 +146,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
             final String strDivision = spinner_division.getSelectedItem().toString();
             final String strPrice = editText.getText().toString().trim();
-            final String strDays = spinner_days.getSelectedItem().toString();
+            final String strDays = spinner_days.getSelectedItem().toString() + " Days";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                     new Response.Listener<String>() {
@@ -173,8 +157,8 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                                 String success = jsonObject.getString("success");
 
                                 if (success.equals("1")) {
-                                    Toast.makeText(Row_Add.this, "success", Toast.LENGTH_SHORT).show();
-                                    delivery = new Delivery(strDivision, strPrice, strDays);
+//                                    Toast.makeText(Row_Add.this, "success", Toast.LENGTH_SHORT).show();
+//                                    delivery = new Delivery(strDivision, strPrice, strDays);
                                 } else {
                                     Toast.makeText(Row_Add.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Homepage;
 import com.example.click.pages.Row_Add;
 
 import org.json.JSONArray;
@@ -59,6 +61,23 @@ public class ActivityDelivery extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerCricketers.setLayoutManager(layoutManager);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Setup Delivery");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Homepage.class));
+            }
+        });
+
+        Read_Delivery();
+    }
+
+    private void Read_Delivery(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                 new Response.Listener<String>() {
                     @Override
@@ -137,6 +156,5 @@ public class ActivityDelivery extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ActivityDelivery.this);
         requestQueue.add(stringRequest);
-
     }
 }

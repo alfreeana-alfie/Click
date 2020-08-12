@@ -1,37 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layout_list"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical" />
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:drawableRight="@drawable/ic_filter_foreground"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Add"
-        android:textAllCaps="false" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:elevation="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <Button
-        android:id="@+id/button_submit"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="Submit"
-        android:textAllCaps="false" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_white_curve"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/division_layout"
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/background_white_full_curves"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/price_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@id/close_layout"
+            android:layout_toEndOf="@id/division_layout"
+            android:background="@drawable/background_white_full_curves"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Price"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/close_layout"
+            android:layout_width="80dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@id/btn_close"
+            android:background="@drawable/background_white_full_curves"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Duration"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/com_facebook_tooltip_black_xout" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layout_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_add"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/background_dark_pink_full_curve"
+                android:drawableRight="@drawable/ic_add_foreground"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Add"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite" />
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/button_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:background="@drawable/background_dark_pink_full_curve"
+                    android:fontFamily="@font/open_sans"
+                    android:text="Submit"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

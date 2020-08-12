@@ -480,49 +480,6 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_find"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:visibility="gone"
-            app:iconifiedByDefault="false"
-            app:queryHint="Search Here" />
-
-        <GridView
-            android:id="@+id/gridView_itemSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/search_find"
-            android:columnWidth="80dp"
-            android:horizontalSpacing="1dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp" />
-
-        <GridView
-            android:id="@+id/gridView_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnWidth="80dp"
-            android:horizontalSpacing="1dp"
-            android:numColumns="2"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_view"
         android:layout_width="match_parent"

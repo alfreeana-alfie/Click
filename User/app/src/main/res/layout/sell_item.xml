@@ -167,7 +167,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:background="@null"
-                android:cursorVisible="true"
+
                 android:hint="@string/price_rm"
                 android:importantForAutofill="no"
                 android:inputType="numberDecimal"
@@ -176,6 +176,7 @@
                 android:paddingRight="15dp"
                 android:paddingBottom="10dp"
                 android:textAlignment="textEnd"
+                android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="16sp" />
         </LinearLayout>
