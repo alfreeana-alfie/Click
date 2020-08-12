@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void onResponse(String s) {
                                             if (s.equals("null")) {
-                                                Toast.makeText(MainActivity.this, "user not found", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(MainActivity.this, "user_actionbar not found", Toast.LENGTH_LONG).show();
                                             } else {
                                                 try {
                                                     JSONObject obj = new JSONObject(s);

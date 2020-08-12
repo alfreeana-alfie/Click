@@ -34,6 +34,7 @@ import com.example.click.category.Business;
 import com.example.click.category.Camera;
 import com.example.click.category.Car_Accessories;
 import com.example.click.category.Cars;
+import com.example.click.category.Cars_Activity;
 import com.example.click.category.Computer;
 import com.example.click.category.Electronics;
 import com.example.click.category.Food;
@@ -295,8 +296,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Camera()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Cars_Activity.class);
+                startActivity(intent);
             }
         });
 

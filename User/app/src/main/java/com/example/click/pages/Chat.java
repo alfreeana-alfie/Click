@@ -68,7 +68,7 @@ public class Chat extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.user);
+        getSupportActionBar().setCustomView(R.layout.user_actionbar);
 
         View view = getSupportActionBar().getCustomView();
         TextView chatname = view.findViewById(R.id.user_chatname);
@@ -128,7 +128,7 @@ public class Chat extends AppCompatActivity {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("time", currentTime);
                     map.put("message", messageText);
-                    map.put("user", UserDetails.username);
+                    map.put("user_actionbar", UserDetails.username);
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
 
@@ -181,7 +181,7 @@ public class Chat extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
                 String message = map.get("message").toString();
-                String userName = map.get("user").toString();
+                String userName = map.get("user_actionbar").toString();
                 String time = map.get("time").toString();
 
                 if (userName.equals(UserDetails.username)) {
