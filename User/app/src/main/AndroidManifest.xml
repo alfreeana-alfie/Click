@@ -52,7 +52,6 @@
             android:name=".pages.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".pages.Edit_Item" />
-        <activity android:name=".pages.View_Item_Favourite" />
         <activity android:name=".pages.Cart" />
         <activity
             android:name=".user.Edit_Profile"
@@ -111,6 +110,7 @@
         <activity android:name=".category_view_item.Women" />
         <activity android:name=".pages.Saved_Searches_View" />
         <activity android:name=".pages.Saved_Searches_Other" />
+        <activity android:name=".pages.Find_My_Items_Other" />
 
 
         <meta-data
