@@ -153,12 +153,7 @@ public class Edit_Profile extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                    getSupportFragmentManager().getBackStackEntryCount();
-                } else {
-                    Intent intent = new Intent(Edit_Profile.this, Homepage.class);
-                    startActivity(intent);
-                }
+                finish();
             }
         });
 
@@ -495,11 +490,6 @@ public class Edit_Profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-            getSupportFragmentManager().getBackStackEntryCount();
-        } else {
-            Intent intent = new Intent(Edit_Profile.this, Homepage.class);
-            startActivity(intent);
-        }
+        finish();
     }
 }

@@ -23,8 +23,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.Order;
 import com.example.click.R;
 import com.example.click.adapter.Buyer_OrderAdapter;
-import com.example.click.adapter.Seller_OrderAdapter;
-import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
 
@@ -46,8 +44,10 @@ public class Buying extends Fragment {
     public static final String PHOTO = "photo";
 
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done.php";
-    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_done.php";
+    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_order.php";
+
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -85,7 +85,7 @@ public class Buying extends Fragment {
         gridView = v.findViewById(R.id.gridView_item);
     }
 
-    private void Buying_List(final View view){
+    private void Buying_List(final View view) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -110,6 +110,7 @@ public class Buying extends Fragment {
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     final String item_id = object.getString("item_id").trim();
+                                    final String order_date = object.getString("order_date").trim();
 
 
                                     Order item = new Order(id,
@@ -122,7 +123,8 @@ public class Buying extends Fragment {
                                             district,
                                             item_id,
                                             customer_id,
-                                            image_item);
+                                            image_item,
+                                            order_date);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Buyer_OrderAdapter(getContext(), itemList);
@@ -144,6 +146,11 @@ public class Buying extends Fragment {
                                         final String strDivision = order.getDivision();
                                         final String strDistrict = order.getDistrict();
                                         final String strPhoto = order.getPhoto();
+                                        final String strOrder_Date = order.getDate();
+
+                                        final String remarks = "CANCEL";
+                                        Update_Order(view, strOrder_Date, remarks);
+
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
                                                 new Response.Listener<String>() {
@@ -182,7 +189,7 @@ public class Buying extends Fragment {
 
                                                                                                         TOPIC = obj.getJSONObject(strName).get("token").toString();
                                                                                                         NOTIFICATION_TITLE = "KetekMall";
-                                                                                                        NOTIFICATION_MESSAGE = "Hi, your order is being accepted!";
+                                                                                                        NOTIFICATION_MESSAGE = strAd_Detail + " has canceled order by " + strName;
 
                                                                                                         JSONObject notification = new JSONObject();
                                                                                                         JSONObject notifcationBody = new JSONObject();
@@ -253,9 +260,7 @@ public class Buying extends Fragment {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("item_id", strItem_id);
-                                                params.put("order_id", strOrder_Id);
+                                                params.put("id", strOrder_Id);
                                                 return params;
                                             }
                                         };
@@ -275,12 +280,50 @@ public class Buying extends Fragment {
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
+                }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void Update_Order(View view, final String strOrder_Date, final String remarks) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_ORDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                                Toast.makeText(getContext(), "Successfully Updated", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("order_date", strOrder_Date);
+                params.put("remarks", remarks);
                 return params;
             }
         };

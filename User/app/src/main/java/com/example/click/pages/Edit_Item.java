@@ -40,14 +40,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.click.pages.Find_My_Items.EXTRA_AD_DETAIL;
-import static com.example.click.pages.Find_My_Items.EXTRA_DISTRICT;
-import static com.example.click.pages.Find_My_Items.EXTRA_DIVISION;
-import static com.example.click.pages.Find_My_Items.EXTRA_ID;
-import static com.example.click.pages.Find_My_Items.EXTRA_IMG_ITEM;
-import static com.example.click.pages.Find_My_Items.EXTRA_MAIN;
-import static com.example.click.pages.Find_My_Items.EXTRA_PRICE;
-import static com.example.click.pages.Find_My_Items.EXTRA_SUB;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_AD_DETAIL;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_DISTRICT;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_DIVISION;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_ID;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_IMG_ITEM;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_MAIN;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_PRICE;
+import static com.example.click.pages.Find_My_Items_Other.EXTRA_SUB;
 
 public class Edit_Item extends AppCompatActivity {
 
@@ -687,6 +687,6 @@ public class Edit_Item extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().popBackStack();
+        finish();
     }
 }

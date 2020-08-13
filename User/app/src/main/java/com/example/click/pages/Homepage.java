@@ -269,8 +269,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Sell_Items()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Sell_Items_Other.class);
+                startActivity(intent);
             }
         });
 
@@ -540,47 +540,34 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                view.setVisibility(View.VISIBLE);
-                scrollView.setVisibility(View.VISIBLE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Empty()).commit();
+                Intent intent4 = new Intent(Homepage.this, Homepage.class);
+                startActivity(intent4);
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_sell:
-                view.setVisibility(View.GONE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Sell_Items()).addToBackStack(null).commit();
+                Intent intent2 = new Intent(Homepage.this, Sell_Items_Other.class);
+                startActivity(intent2);
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
-                view.setVisibility(View.GONE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Find_My_Items()).addToBackStack(null).commit();
+                Intent intent1 = new Intent(Homepage.this, Find_My_Items_Other.class);
+                startActivity(intent1);
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_ads:
-                view.setVisibility(View.GONE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Main_Order_Fragment()).addToBackStack(null).commit();
+                Intent intent3 = new Intent(Homepage.this, Main_Order_Other.class);
+                startActivity(intent3);
                 Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_chat_inbox:
-                view.setVisibility(View.GONE);
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Chat_Inbox()).addToBackStack(null).commit();
+                Intent intent5 = new Intent(Homepage.this, Chat_Inbox_Other.class);
+                startActivity(intent5);
                 Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_favourite_ads:
-                view.setVisibility(View.GONE);
-
                 Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
                 startActivity(intent);
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();

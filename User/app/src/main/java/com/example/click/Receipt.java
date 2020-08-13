@@ -2,9 +2,17 @@ package com.example.click;
 
 public class Receipt {
 
-    String id, customer_id, seller_id, item_id, order_id, quantity, grand_total, status;
+    String id;
+    String customer_id;
+    String seller_id;
+    String item_id;
+    String order_id;
+    String quantity;
+    String grand_total;
+    String status;
+    String date;
 
-    public Receipt(String id, String customer_id, String seller_id, String item_id, String order_id, String quantity, String grand_total, String status) {
+    public Receipt(String id, String customer_id, String seller_id, String item_id, String order_id, String quantity, String grand_total, String status, String date) {
         this.id = id;
         this.customer_id = customer_id;
         this.seller_id = seller_id;
@@ -13,6 +21,7 @@ public class Receipt {
         this.quantity = quantity;
         this.grand_total = grand_total;
         this.status = status;
+        this.date = date;
     }
 
     public String getId() {
@@ -78,4 +87,13 @@ public class Receipt {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 }

@@ -345,11 +345,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                     final String fbUserId = object.optString("id");
                     final String fbUserName = object.optString("name");
                     final String fbEmail = object.optString("email");
-                    final String phone_no = "1111111111";
-                    final String strAddress01 = "";
-                    final String strAddress02 = "";
-                    final String strCity = "";
-                    final String strPostCode = "";
+                    final String phone_no = "00000000000";
+
                     final String birthday = "";
                     final String gender = "Female";
                     final String strPassword = object.optString("name") + "Facebook";
@@ -469,10 +466,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             params.put("email", fbEmail);
                             params.put("phone_no", phone_no);
                             params.put("password", strPassword);
-                            params.put("address_01", strAddress01);
-                            params.put("address_02", strAddress02);
-                            params.put("division", strCity);
-                            params.put("postcode", strPostCode);
+
                             params.put("birthday", birthday);
                             params.put("gender", gender);
                             params.put("photo", photo);
@@ -505,10 +499,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         final String name = account.getDisplayName();
         final String email = account.getEmail();
         final String phone_no = "";
-        final String strAddress01 = "";
-        final String strAddress02 = "";
-        final String strCity = "";
-        final String strPostCode = "";
         final String birthday = "";
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
@@ -587,10 +577,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 params.put("email", email);
                 params.put("phone_no", phone_no);
                 params.put("password", password);
-                params.put("address_01", strAddress01);
-                params.put("address_02", strAddress02);
-                params.put("division", strCity);
-                params.put("postcode", strPostCode);
+
                 params.put("birthday", birthday);
                 params.put("gender", gender);
                 params.put("photo", photo);

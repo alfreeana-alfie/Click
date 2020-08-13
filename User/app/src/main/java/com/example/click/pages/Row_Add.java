@@ -123,7 +123,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.button_submit:
-                if (checkIfValidAndRead03()) {
+                if (checkIfValidAndRead()) {
                     Intent intent = new Intent(Row_Add.this, ActivityDelivery.class);
                     startActivity(intent);
                 }
@@ -131,7 +131,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    private boolean checkIfValidAndRead03() {
+    private boolean checkIfValidAndRead() {
         cricketersList.clear();
         boolean result = true;
 
@@ -189,5 +189,11 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
             requestQueue.add(stringRequest);
         }
         return result;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

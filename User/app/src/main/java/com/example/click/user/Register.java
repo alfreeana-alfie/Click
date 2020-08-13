@@ -119,13 +119,11 @@ public class Register extends Fragment {
         final String strPhone_No = this.phone_no.getText().toString().trim();
         final String strPassword = this.password.getText().toString().trim();
         final String strConfirm_Password = this.confirm_password.getText().toString().trim();
-        final String strAddress01 = "";
-        final String strAddress02 = "";
-        final String strCity = "";
-        final String strPostCode = "";
+
         final String strBirthday = "";
         final String strGender = "Female";
-        final String strPhoto_URL = "https://annkalina53.000webhostapp.com/android_register_login/profile_image/main_photo.png";
+
+        final String strPhoto_URL = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
         final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 
@@ -286,10 +284,7 @@ public class Register extends Fragment {
                     params.put("email", strEmail);
                     params.put("phone_no", strPhone_No);
                     params.put("password", strPassword);
-                    params.put("address_01", strAddress01);
-                    params.put("address_02", strAddress02);
-                    params.put("division", strCity);
-                    params.put("postcode", strPostCode);
+
                     params.put("birthday", strBirthday);
                     params.put("gender", strGender);
                     params.put("photo", strPhoto_URL);

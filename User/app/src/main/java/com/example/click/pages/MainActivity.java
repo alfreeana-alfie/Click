@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-            final Fragment fragment_login = new Login();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.framelayout, fragment_login);
-            fragmentTransaction.commit();
+        final Fragment fragment_login = new Login();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayout, fragment_login);
+        fragmentTransaction.commit();
 
-            getUserDetail();
+        getUserDetail();
     }
 
     @Override
@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtra("gender", gender);
                                     startActivity(intent);
                                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
 
                                     //Firebase
                                     String url = "https://click-1595830894120.firebaseio.com/users.json";

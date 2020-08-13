@@ -47,4 +47,17 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="No result found !"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="false"
+        android:layout_centerInParent="true"/>
+
 </RelativeLayout>

@@ -25,7 +25,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public Item_UserAdapter(Context context, List<Item_All_Details> itemList) {
+    public Item_UserAdapter(List<Item_All_Details> itemList, Context context) {
         this.itemList = itemList;
         this.itemListFull = itemList;
         this.context = context;

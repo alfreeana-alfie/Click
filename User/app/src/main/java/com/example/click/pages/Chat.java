@@ -181,7 +181,7 @@ public class Chat extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
                 String message = map.get("message").toString();
-                String userName = map.get("user_actionbar").toString();
+                String userName = map.get("user").toString();
                 String time = map.get("time").toString();
 
                 if (userName.equals(UserDetails.username)) {
@@ -328,6 +328,6 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().getBackStackEntryCount();
+        finish();
     }
 }

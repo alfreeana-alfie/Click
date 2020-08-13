@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.example.click.adapter.UserOrderAdapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
+import com.example.click.user.Edit_Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +43,7 @@ public class Checkout extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
+    private static String URL_DELETE_SINGLE = "https://ketekmall.com/ketekmall/delete_order.php";
 
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
@@ -63,6 +66,7 @@ public class Checkout extends AppCompatActivity {
     RecyclerView recyclerView;
     UserOrderAdapter userOrderAdapter;
     ArrayList<Item_All_Details> item_all_detailsList;
+    RelativeLayout address_layout;
 
     String getId;
     SessionManager sessionManager;
@@ -140,6 +144,15 @@ public class Checkout extends AppCompatActivity {
         AddressUser = findViewById(R.id.address);
         Shipping_Price = findViewById(R.id.price);
 
+        address_layout = findViewById(R.id.address_layout);
+        address_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Checkout.this, Edit_Profile.class);
+                startActivity(intent);
+            }
+        });
+
         recyclerView = findViewById(R.id.item_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Checkout.this));
@@ -162,7 +175,7 @@ public class Checkout extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrder();
+                DeleteOrder_Single();
             }
         });
 
@@ -471,8 +484,6 @@ public class Checkout extends AppCompatActivity {
     }
 
     private void addDelivery(final String Division) {
-//        Toast.makeText(Checkout.this, Division, Toast.LENGTH_SHORT).show();
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -592,11 +603,12 @@ public class Checkout extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        DeleteOrder();
+        finish();
+        DeleteOrder_Single();
     }
 
-    private void DeleteOrder() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+    private void DeleteOrder_Single() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_SINGLE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -632,5 +644,4 @@ public class Checkout extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
         requestQueue.add(stringRequest);
     }
-
 }

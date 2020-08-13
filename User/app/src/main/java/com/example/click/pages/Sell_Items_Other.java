@@ -6,9 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -21,9 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -45,9 +42,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.app.Activity.RESULT_OK;
-
-public class Sell_Items extends Fragment {
+public class Sell_Items_Other extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
@@ -69,16 +64,16 @@ public class Sell_Items extends Fragment {
     private ImageView upload_photo_img;
     private ProgressBar loading;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.sell_item, container, false);
-        Declare(view);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sell_item);
+        Declare();
 
-        sessionManager = new SessionManager(view.getContext());
+        sessionManager = new SessionManager(Sell_Items_Other.this);
         sessionManager.checkLogin();
 
-        getUserId(view);
+        getUserId();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
@@ -152,7 +147,7 @@ public class Sell_Items extends Fragment {
             @Override
             public void onClick(View v) {
                 if (filePath == null) {
-                    Toast.makeText(getContext(), "Please enter image of product", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
                 } else {
                     saveEdit(getId, getStringImage(bitmap));
                 }
@@ -163,7 +158,7 @@ public class Sell_Items extends Fragment {
         back_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), Homepage.class));
+                startActivity(new Intent(Sell_Items_Other.this, Homepage.class));
             }
         });
 
@@ -188,51 +183,48 @@ public class Sell_Items extends Fragment {
                 enter_ad_detail.setText(mAd_Detail);
             }
         });
-
-
-        return view;
     }
 
-    private void Declare(View v) {
-        enter_category = v.findViewById(R.id.enter_main_category);
-        enter_ad_detail = v.findViewById(R.id.enter_ad_detail);
-        enter_location = v.findViewById(R.id.enter_location);
-        enter_price = v.findViewById(R.id.enter_price);
-        enter_setup = v.findViewById(R.id.enter_delivery_location);
+    private void Declare() {
+        enter_category = findViewById(R.id.enter_main_category);
+        enter_ad_detail = findViewById(R.id.enter_ad_detail);
+        enter_location = findViewById(R.id.enter_location);
+        enter_price = findViewById(R.id.enter_price);
+        enter_setup = findViewById(R.id.enter_delivery_location);
         enter_setup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ActivityDelivery.class);
-                getActivity().startActivity(intent);
+                Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
+                startActivity(intent);
             }
         });
 
-        edittext_order = v.findViewById(R.id.enter_max_order);
+        edittext_order = findViewById(R.id.enter_max_order);
 
 
-        spinner_division = v.findViewById(R.id.spinner_division);
-        spinner_district = v.findViewById(R.id.spinner_district);
-        accept_location = v.findViewById(R.id.accept_location);
-        back_location = v.findViewById(R.id.back_location);
-        location_page_layout = v.findViewById(R.id.location_page_layout);
+        spinner_division = findViewById(R.id.spinner_division);
+        spinner_district = findViewById(R.id.spinner_district);
+        accept_location = findViewById(R.id.accept_location);
+        back_location = findViewById(R.id.back_location);
+        location_page_layout = findViewById(R.id.location_page_layout);
 
-        accept_item = v.findViewById(R.id.accept_item);
-        back_item = v.findViewById(R.id.back_item);
-        edittext_ad_detail = v.findViewById(R.id.edittext_ad_detail);
-        accept_ad_detail = v.findViewById(R.id.accept_ad_detail);
-        back_ad_detail = v.findViewById(R.id.back_ad_detail);
-        spinner_main_category = v.findViewById(R.id.spinner_main_category);
-        spinner_sub_category = v.findViewById(R.id.spinner_sub_category);
-        accept_category = v.findViewById(R.id.accept_category);
-        back_category = v.findViewById(R.id.back_category);
-        upload_photo_img = v.findViewById(R.id.upload_photo);
-        loading = v.findViewById(R.id.loading);
+        accept_item = findViewById(R.id.accept_item);
+        back_item = findViewById(R.id.back_item);
+        edittext_ad_detail = findViewById(R.id.edittext_ad_detail);
+        accept_ad_detail = findViewById(R.id.accept_ad_detail);
+        back_ad_detail = findViewById(R.id.back_ad_detail);
+        spinner_main_category = findViewById(R.id.spinner_main_category);
+        spinner_sub_category = findViewById(R.id.spinner_sub_category);
+        accept_category = findViewById(R.id.accept_category);
+        back_category = findViewById(R.id.back_category);
+        upload_photo_img = findViewById(R.id.upload_photo);
+        loading = findViewById(R.id.loading);
 
-        category_page_layout = v.findViewById(R.id.category_page_layout);
-        ad_detail_page_layout = v.findViewById(R.id.ad_detail_page_layout);
-        item_page_layout = v.findViewById(R.id.item_page_layout);
+        category_page_layout = findViewById(R.id.category_page_layout);
+        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
+        item_page_layout = findViewById(R.id.item_page_layout);
 
-        adapter_division = ArrayAdapter.createFromResource(v.getContext(), R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -247,7 +239,7 @@ public class Sell_Items extends Fragment {
             }
         });
 
-        adapter_category = ArrayAdapter.createFromResource(getContext(), R.array.main_category, android.R.layout.simple_spinner_item);
+        adapter_category = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.main_category, android.R.layout.simple_spinner_item);
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_main_category.setAdapter(adapter_category);
 
@@ -284,58 +276,58 @@ public class Sell_Items extends Fragment {
             case 0:
                 break;
             case 1:
-                adapter_car = ArrayAdapter.createFromResource(getContext(), R.array.vehicle_category, android.R.layout.simple_spinner_item);
+                adapter_car = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.vehicle_category, android.R.layout.simple_spinner_item);
                 adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_car);
-//                Toast.makeText(getContext(), "Car", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Car", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
-                adapter_properties = ArrayAdapter.createFromResource(getContext(), R.array.properties_category, android.R.layout.simple_spinner_item);
+                adapter_properties = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.properties_category, android.R.layout.simple_spinner_item);
                 adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_properties);
-//                Toast.makeText(getContext(), "Properties", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Properties", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                adapter_elctronic = ArrayAdapter.createFromResource(getContext(), R.array.electronic_category, android.R.layout.simple_spinner_item);
+                adapter_elctronic = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.electronic_category, android.R.layout.simple_spinner_item);
                 adapter_elctronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_elctronic);
-//                Toast.makeText(getContext(), "Electronics", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Electronics", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
-                adapter_home = ArrayAdapter.createFromResource(getContext(), R.array.home_category, android.R.layout.simple_spinner_item);
+                adapter_home = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.home_category, android.R.layout.simple_spinner_item);
                 adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_home);
-//                Toast.makeText(getContext(), "Home and Personal Items", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Home and Personal Items", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
-                adapter_leisure = ArrayAdapter.createFromResource(getContext(), R.array.leisure_category, android.R.layout.simple_spinner_item);
+                adapter_leisure = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.leisure_category, android.R.layout.simple_spinner_item);
                 adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_leisure);
-//                Toast.makeText(getContext(), "Leisure/Sport/Hobbies", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Leisure/Sport/Hobbies", Toast.LENGTH_SHORT).show();
                 break;
             case 6:
-                adapter_business = ArrayAdapter.createFromResource(getContext(), R.array.business_category, android.R.layout.simple_spinner_item);
+                adapter_business = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.business_category, android.R.layout.simple_spinner_item);
                 adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_business);
-//                Toast.makeText(getContext(), "Business to Business", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Business to Business", Toast.LENGTH_SHORT).show();
                 break;
             case 7:
-                adapter_jobs = ArrayAdapter.createFromResource(getContext(), R.array.jobs_category, android.R.layout.simple_spinner_item);
+                adapter_jobs = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.jobs_category, android.R.layout.simple_spinner_item);
                 adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_jobs);
-//                Toast.makeText(getContext(), "Jobs and Services", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Jobs and Services", Toast.LENGTH_SHORT).show();
                 break;
             case 8:
-                adapter_travel = ArrayAdapter.createFromResource(getContext(), R.array.travel_category, android.R.layout.simple_spinner_item);
+                adapter_travel = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.travel_category, android.R.layout.simple_spinner_item);
                 adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_travel);
-//                Toast.makeText(getContext(), "Travel", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Travel", Toast.LENGTH_SHORT).show();
                 break;
             case 9:
-                adapter_other = ArrayAdapter.createFromResource(getContext(), R.array.other_category, android.R.layout.simple_spinner_item);
+                adapter_other = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.other_category, android.R.layout.simple_spinner_item);
                 adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_other);
-//                Toast.makeText(getContext(), "Other", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Sell_Items_Other.this, "Other", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -346,73 +338,73 @@ public class Sell_Items extends Fragment {
                 break;
 
             case 1:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.kuching, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 2:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 3:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 4:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 5:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 6:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 7:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 8:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 9:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 10:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 11:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 12:
-                adapter_district = ArrayAdapter.createFromResource(getContext(), R.array.limbang, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
@@ -420,7 +412,7 @@ public class Sell_Items extends Fragment {
         }
     }
 
-    private void getUserId(View view) {
+    private void getUserId() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -434,18 +426,18 @@ public class Sell_Items extends Fragment {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                 }
                             } else {
-                                Toast.makeText(getContext(), "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sell_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Sell_Items_Other.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -456,7 +448,7 @@ public class Sell_Items extends Fragment {
             }
         };
 
-        RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
         requestQueue.add(stringRequest);
     }
 
@@ -470,7 +462,7 @@ public class Sell_Items extends Fragment {
         final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
 
         if (strAd_Detail.isEmpty()) {
-            Toast.makeText(getContext(), "Incomplete info", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Sell_Items_Other.this, "Incomplete info", Toast.LENGTH_SHORT).show();
         } else {
             loading.setVisibility(View.VISIBLE);
             accept_item.setVisibility(View.GONE);
@@ -485,11 +477,11 @@ public class Sell_Items extends Fragment {
                                 if (success.equals("1")) {
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                                            new Find_My_Items()).commit();
+                                    Toast.makeText(Sell_Items_Other.this, "Saved", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(Sell_Items_Other.this, Find_My_Items_Other.class);
+                                    startActivity(intent);
                                 } else {
-                                    Toast.makeText(getContext(), "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Sell_Items_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
@@ -498,7 +490,7 @@ public class Sell_Items extends Fragment {
                                 e.printStackTrace();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
-//                                    Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -506,11 +498,11 @@ public class Sell_Items extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.getMessage() == null) {
-//                                    Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Sell_Items_Other.this, "Connection Error", Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
                             } else {
-                                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sell_Items_Other.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
                             }
@@ -532,7 +524,7 @@ public class Sell_Items extends Fragment {
                 }
             };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
             requestQueue.add(stringRequest);
         }
     }
@@ -561,12 +553,18 @@ public class Sell_Items extends Fragment {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
                 upload_photo_img.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

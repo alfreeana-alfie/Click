@@ -205,6 +205,6 @@ public class Saved_Searches_View extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getSupportFragmentManager().getBackStackEntryCount();
+        finish();
     }
 }
