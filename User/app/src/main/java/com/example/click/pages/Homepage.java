@@ -581,8 +581,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_favourite_ads:
                 view.setVisibility(View.GONE);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Saved_Searches()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
+                startActivity(intent);
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
                 break;
 

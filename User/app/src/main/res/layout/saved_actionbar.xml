@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/back_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        app:srcCompat="@drawable/ic_back_foreground" />
+
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:background="@drawable/background_white_full_curves"
+        android:layout_toEndOf="@id/back_button"
+        android:layout_toStartOf="@id/relativeLayout"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="40dp">
+
+        <EditText
+            android:id="@+id/search_find"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_centerVertical="true"
+            android:drawableStart="@drawable/ic_search_gray_foreground"
+            android:inputType="textPersonName"
+            android:background="@null"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:focusableInTouchMode="true"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textColor="@color/colorPrimaryDark"
+            android:hint="Name" />
+
+        <ImageButton
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btn_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:srcCompat="@drawable/com_facebook_tooltip_black_xout" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true">
+
+        <Button
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@drawable/background_white_full_curves"
+            android:fontFamily="@font/open_sans"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Search" />
+    </RelativeLayout>
+
+</RelativeLayout>

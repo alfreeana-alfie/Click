@@ -70,7 +70,6 @@ public class All extends AppCompatActivity {
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
-    SearchView searchView;
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
@@ -195,7 +194,6 @@ public class All extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
-        searchView = findViewById(R.id.search_find);
         filter_layout = findViewById(R.id.filter_layout);
         filter_layout.setVisibility(View.GONE);
 

@@ -70,9 +70,6 @@ public class Saved_Searches extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         gridView = v.findViewById(R.id.gridView_item);
-//        ScrollView scrollView = v.findViewById(R.id.grid_category);
-//
-//        scrollView.setVisibility(View.GONE);
     }
 
     private void View_Item(final View view) {
@@ -103,7 +100,7 @@ public class Saved_Searches extends Fragment {
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList.add(item);
                                 }
-                                adapter_item = new FavouriteAdapter(getContext(), itemList);
+                                adapter_item = new FavouriteAdapter( itemList, getContext());
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {

@@ -23,7 +23,7 @@ public class FavouriteAdapter extends BaseAdapter {
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public FavouriteAdapter(Context context, List<Item_All_Details> itemList) {
+    public FavouriteAdapter(List<Item_All_Details> itemList, Context context) {
         this.context = context;
         this.itemList = itemList;
         itemListFull = new ArrayList<>(itemList);

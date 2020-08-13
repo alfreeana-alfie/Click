@@ -109,6 +109,8 @@
         <activity android:name=".category_view_item.Sport" />
         <activity android:name=".category_view_item.Travel" />
         <activity android:name=".category_view_item.Women" />
+        <activity android:name=".pages.Saved_Searches_View" />
+        <activity android:name=".pages.Saved_Searches_Other" />
 
 
         <meta-data
