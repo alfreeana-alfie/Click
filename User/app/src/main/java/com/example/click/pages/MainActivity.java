@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        final Fragment fragment_login = new Login();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout, fragment_login);
-        fragmentTransaction.commit();
+            final Fragment fragment_login = new Login();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.framelayout, fragment_login);
+            fragmentTransaction.commit();
 
-        getUserDetail();
+            getUserDetail();
     }
 
     @Override
