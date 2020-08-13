@@ -34,7 +34,6 @@ import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.View_Item;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -337,7 +336,7 @@ public class Business extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Business.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Business.this, com.example.click.category_view_item.Business.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -540,7 +539,7 @@ public class Business extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Business.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Business.this, com.example.click.category_view_item.Business.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -744,7 +743,7 @@ public class Business extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Business.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Business.this, com.example.click.category_view_item.Business.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -948,7 +947,7 @@ public class Business extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Business.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Business.this, com.example.click.category_view_item.Business.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -1235,7 +1234,7 @@ public class Business extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Business.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Business.this, com.example.click.category_view_item.Business.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());

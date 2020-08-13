@@ -1,4 +1,4 @@
-package com.example.click.pages;
+package com.example.click.category_view_item;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,26 +21,26 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
+import com.example.click.pages.Chat;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.click.pages.Homepage.AD_DETAIL;
-import static com.example.click.pages.Homepage.DISTRICT;
-import static com.example.click.pages.Homepage.DIVISION;
-import static com.example.click.pages.Homepage.MAIN_CATE;
-import static com.example.click.pages.Homepage.PHOTO;
-import static com.example.click.pages.Homepage.PRICE;
-import static com.example.click.pages.Homepage.SUB_CATE;
-import static com.example.click.pages.Homepage.USERID;
+import static com.example.click.category.Sport.AD_DETAIL;
+import static com.example.click.category.Sport.DISTRICT;
+import static com.example.click.category.Sport.DIVISION;
+import static com.example.click.category.Sport.MAIN_CATE;
+import static com.example.click.category.Sport.PHOTO;
+import static com.example.click.category.Sport.PRICE;
+import static com.example.click.category.Sport.SUB_CATE;
+import static com.example.click.category.Sport.USERID;
 
-public class View_Item extends AppCompatActivity {
+public class Sport extends AppCompatActivity {
 
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
@@ -74,10 +74,8 @@ public class View_Item extends AppCompatActivity {
 
         String Price_Text = "MYR" + strPrice;
 
-//        getUserDetail();
         ad_detail_item.setText(ad_detail);
         price_item.setText(Price_Text);
-//        Toast.makeText(this, userid, Toast.LENGTH_SHORT).show();
         Picasso.get().load(photo).into(img_item);
     }
 
@@ -101,7 +99,7 @@ public class View_Item extends AppCompatActivity {
         add_to_cart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(View_Item.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Sport.this, "Added to Cart", Toast.LENGTH_SHORT).show();
 
                 StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                         new Response.Listener<String>() {
@@ -112,20 +110,20 @@ public class View_Item extends AppCompatActivity {
                                     String success = jsonObject1.getString("success");
 
                                     if (success.equals("1")) {
-                                        Toast.makeText(View_Item.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                     }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(View_Item.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(View_Item.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }) {
                     @Override
@@ -143,7 +141,7 @@ public class View_Item extends AppCompatActivity {
                         return params;
                     }
                 };
-                RequestQueue requestQueue = Volley.newRequestQueue(View_Item.this);
+                RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                 requestQueue.add(stringRequest2);
             }
         });
@@ -176,11 +174,11 @@ public class View_Item extends AppCompatActivity {
                                     String strPhoto = object.getString("photo");
 
                                     UserDetails.chatWith = strName;
-                                    Intent intent = new Intent(View_Item.this, Chat.class);
+                                    Intent intent = new Intent(Sport.this, Chat.class);
                                     startActivity(intent);
                                 }
                             } else {
-                                Toast.makeText(View_Item.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

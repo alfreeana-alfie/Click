@@ -52,9 +52,6 @@
             android:name=".pages.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".pages.Edit_Item" />
-        <activity
-            android:name=".pages.View_Item"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".pages.View_Item_Favourite" />
         <activity android:name=".pages.Cart" />
         <activity
@@ -90,6 +87,28 @@
         <activity android:name=".category.Service" />
         <activity android:name=".category.Sport" />
         <activity android:name=".category.Travel" />
+        <activity android:name=".category_view_item.All" />
+        <activity android:name=".category_view_item.Business" />
+        <activity android:name=".category_view_item.Camera" />
+        <activity android:name=".category_view_item.Car" />
+        <activity android:name=".category_view_item.Car_Accessories" />
+        <activity android:name=".category_view_item.Computer" />
+        <activity android:name=".category_view_item.Electronics" />
+        <activity android:name=".category_view_item.Food" />
+        <activity android:name=".category_view_item.Furniture" />
+        <activity android:name=".category_view_item.Grocery" />
+        <activity android:name=".category_view_item.Handcraft" />
+        <activity android:name=".category_view_item.Home_Appliances" />
+        <activity android:name=".category_view_item.House_Rent" />
+        <activity android:name=".category_view_item.House_Sales" />
+        <activity android:name=".category_view_item.Men" />
+        <activity android:name=".category_view_item.Mom" />
+        <activity android:name=".category_view_item.Motorcycles" />
+        <activity android:name=".category_view_item.Pets" />
+        <activity android:name=".category_view_item.Service" />
+        <activity android:name=".category_view_item.Sport" />
+        <activity android:name=".category_view_item.Travel" />
+        <activity android:name=".category_view_item.Women" />
 
 
         <meta-data

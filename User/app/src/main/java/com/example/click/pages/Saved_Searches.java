@@ -109,15 +109,15 @@ public class Saved_Searches extends Fragment {
                                 adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(getContext(), View_Item.class);
-                                        Item_All_Details item = itemList.get(position);
-
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
-
-                                        startActivity(detailIntent);
+//                                        Intent detailIntent = new Intent(getContext(), All.class);
+//                                        Item_All_Details item = itemList.get(position);
+//
+//                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+//                                        detailIntent.putExtra(PRICE, item.getPrice());
+//                                        detailIntent.putExtra(ITEM_LOCATION, item.getDistrict());
+//                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+//
+//                                        startActivity(detailIntent);
                                     }
 
                                     @Override

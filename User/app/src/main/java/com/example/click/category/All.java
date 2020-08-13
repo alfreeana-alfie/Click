@@ -34,7 +34,6 @@ import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.View_Item;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,7 +82,7 @@ public class All extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_car);
         Declare();
-        View_Item();
+        View_List();
 
         ToolbarSetting();
         getSession();
@@ -119,6 +118,7 @@ public class All extends AppCompatActivity {
                     Button_Search.setVisibility(View.GONE);
                     Button_Filter.setVisibility(View.VISIBLE);
                     close_search.setVisibility(View.GONE);
+                    Button_Search.setVisibility(View.GONE);
                 } else {
                     Button_Search.setVisibility(View.VISIBLE);
                     Button_Filter.setVisibility(View.GONE);
@@ -142,7 +142,7 @@ public class All extends AppCompatActivity {
                 adapter_item = new Item_Adapter(itemList, All.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
-                View_Item();
+                View_List();
             }
         });
 
@@ -243,7 +243,7 @@ public class All extends AppCompatActivity {
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
-                    View_Item();
+                    View_List();
                 }
                 if(!strDivision.equals("All") && !strDistrict.equals("All")){
                     itemList.clear();
@@ -335,7 +335,7 @@ public class All extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item.class);
+                                        Intent detailIntent = new Intent(All.this, com.example.click.category_view_item.All.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -538,7 +538,7 @@ public class All extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item.class);
+                                        Intent detailIntent = new Intent(All.this, com.example.click.category_view_item.All.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -742,7 +742,7 @@ public class All extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item.class);
+                                        Intent detailIntent = new Intent(All.this, com.example.click.category_view_item.All.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -946,7 +946,7 @@ public class All extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item.class);
+                                        Intent detailIntent = new Intent(All.this, com.example.click.category_view_item.All.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -1194,7 +1194,7 @@ public class All extends AppCompatActivity {
         }
     }
 
-    private void View_Item() {
+    private void View_List() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -1233,7 +1233,7 @@ public class All extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item.class);
+                                        Intent detailIntent = new Intent(All.this, com.example.click.category_view_item.All.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());

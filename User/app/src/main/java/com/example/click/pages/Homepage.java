@@ -669,12 +669,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            sessionManager.logout();
-        } else {
-            getSupportFragmentManager().popBackStack();
-            view.setVisibility(View.VISIBLE);
-        }
-
+        super.onBackPressed();
+        System.exit(0);
     }
 }
