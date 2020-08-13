@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Cars_Activity extends AppCompatActivity {
+public class Car extends AppCompatActivity {
 
     public static final String ID = "id";
     public static final String USERID = "user_id";
@@ -63,6 +63,7 @@ public class Cars_Activity extends AppCompatActivity {
     private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_search_cars.php";
     private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_car.php";
     private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_car.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_filter_car.php";
 
     SessionManager sessionManager;
     String getId;
@@ -71,11 +72,11 @@ public class Cars_Activity extends AppCompatActivity {
     List<Item_All_Details> itemList;
 
     SearchView searchView;
+    RelativeLayout filter_layout, category_layout;
+    TextView no_result;
     private Spinner spinner_division, spinner_district;
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
-    RelativeLayout filter_layout, category_layout;
-    TextView no_result;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class Cars_Activity extends AppCompatActivity {
         getSession();
     }
 
-    private void ToolbarSetting(){
+    private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -114,11 +115,11 @@ public class Cars_Activity extends AppCompatActivity {
         search_find.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     Button_Search.setVisibility(View.GONE);
                     Button_Filter.setVisibility(View.VISIBLE);
                     close_search.setVisibility(View.GONE);
-                }else{
+                } else {
                     Button_Search.setVisibility(View.VISIBLE);
                     Button_Filter.setVisibility(View.GONE);
                     close_search.setVisibility(View.VISIBLE);
@@ -134,11 +135,11 @@ public class Cars_Activity extends AppCompatActivity {
                 search_find.getText().clear();
                 no_result.setVisibility(View.GONE);
 
-                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item = new Item_Adapter(itemList, Car.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_Item();
@@ -148,7 +149,7 @@ public class Cars_Activity extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Cars_Activity.this, Homepage.class);
+                Intent intent = new Intent(Car.this, Homepage.class);
                 startActivity(intent);
             }
         });
@@ -157,221 +158,33 @@ public class Cars_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 no_result.setVisibility(View.GONE);
-                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                Button_Search.setVisibility(View.GONE);
+                Button_Filter.setVisibility(View.VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item = new Item_Adapter(itemList, Car.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
+                final String strDivision = spinner_division.getSelectedItem().toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEARCH,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    final JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("success");
-                                    final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                if (!strAd_Detail.isEmpty() && !strDivision.isEmpty()) {
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, Car.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
 
-                                    if (success.equals("1")) {
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            JSONObject object = jsonArray.getJSONObject(i);
+                    Filter_Search(strAd_Detail, strDivision);
+                }
+                Search(strAd_Detail);
 
-                                            String id = object.getString("id").trim();
-                                            String seller_id = object.getString("user_id").trim();
-                                            String main_category = object.getString("main_category").trim();
-                                            String sub_category = object.getString("sub_category").trim();
-                                            String ad_detail = object.getString("ad_detail").trim();
-                                            String price = object.getString("price").trim();
-                                            String division = object.getString("division");
-                                            String district = object.getString("district");
-                                            String image_item = object.getString("photo");
-
-                                            Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                            itemList.add(item);
-                                        }
-                                        if (itemList.isEmpty()) {
-                                            no_result.setVisibility(View.VISIBLE);
-                                        }else {
-                                            no_result.setVisibility(View.GONE);
-                                        }
-                                        adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
-                                        adapter_item.notifyDataSetChanged();
-                                        gridView.setAdapter(adapter_item);
-                                        adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
-                                            @Override
-                                            public void onViewClick(int position) {
-                                                Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
-                                                Item_All_Details item = itemList.get(position);
-
-                                                detailIntent.putExtra(USERID, item.getSeller_id());
-                                                detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                                detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                                detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                                detailIntent.putExtra(PRICE, item.getPrice());
-                                                detailIntent.putExtra(DIVISION, item.getDivision());
-                                                detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                                detailIntent.putExtra(PHOTO, item.getPhoto());
-
-                                                startActivity(detailIntent);
-                                            }
-
-                                            @Override
-                                            public void onAddtoFavClick(int position) {
-                                                Item_All_Details item = itemList.get(position);
-
-                                                final String strItem_Id = item.getId();
-                                                final String strSeller_id = item.getSeller_id();
-                                                final String strMain_category = item.getMain_category();
-                                                final String strSub_category = item.getSub_category();
-                                                final String strAd_Detail = item.getAd_detail();
-                                                final Double strPrice = Double.valueOf(item.getPrice());
-                                                final String strDivision = item.getDivision();
-                                                final String strDistrict = item.getDistrict();
-                                                final String strPhoto = item.getPhoto();
-
-                                                if (getId.equals(item.getSeller_id())) {
-                                                    Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
-                                                            new Response.Listener<String>() {
-                                                                @Override
-                                                                public void onResponse(String response) {
-                                                                    try {
-                                                                        JSONObject jsonObject1 = new JSONObject(response);
-                                                                        String success = jsonObject1.getString("success");
-
-                                                                        if (success.equals("1")) {
-                                                                            Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
-
-                                                                        }
-
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                        Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-                                                            },
-                                                            new Response.ErrorListener() {
-                                                                @Override
-                                                                public void onErrorResponse(VolleyError error) {
-                                                                    Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }) {
-                                                        @Override
-                                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                                            Map<String, String> params = new HashMap<>();
-                                                            params.put("customer_id", getId);
-                                                            params.put("main_category", strMain_category);
-                                                            params.put("sub_category", strSub_category);
-                                                            params.put("ad_detail", strAd_Detail);
-                                                            params.put("price", String.format("%.2f", strPrice));
-                                                            params.put("division", strDivision);
-                                                            params.put("district", strDistrict);
-                                                            params.put("photo", strPhoto);
-                                                            params.put("seller_id", strSeller_id);
-                                                            params.put("item_id", strItem_Id);
-                                                            return params;
-                                                        }
-                                                    };
-                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
-                                                    requestQueue.add(stringRequest1);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onAddtoCartClick(int position) {
-                                                Item_All_Details item = itemList.get(position);
-
-                                                final String strItem_Id = item.getId();
-                                                final String strSeller_id = item.getSeller_id();
-                                                final String strMain_category = item.getMain_category();
-                                                final String strSub_category = item.getSub_category();
-                                                final String strAd_Detail = item.getAd_detail();
-                                                final Double strPrice = Double.valueOf(item.getPrice());
-                                                final String strDivision = item.getDivision();
-                                                final String strDistrict = item.getDistrict();
-                                                final String strPhoto = item.getPhoto();
-
-                                                if (getId.equals(strSeller_id)) {
-                                                    Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                            new Response.Listener<String>() {
-                                                                @Override
-                                                                public void onResponse(String response) {
-                                                                    try {
-                                                                        JSONObject jsonObject1 = new JSONObject(response);
-                                                                        String success = jsonObject1.getString("success");
-
-                                                                        if (success.equals("1")) {
-                                                                            Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                        }
-
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                        Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-                                                            },
-                                                            new Response.ErrorListener() {
-                                                                @Override
-                                                                public void onErrorResponse(VolleyError error) {
-                                                                    Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }) {
-                                                        @Override
-                                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                                            Map<String, String> params = new HashMap<>();
-                                                            params.put("customer_id", getId);
-                                                            params.put("main_category", strMain_category);
-                                                            params.put("sub_category", strSub_category);
-                                                            params.put("ad_detail", strAd_Detail);
-                                                            params.put("price", String.format("%.2f", strPrice));
-                                                            params.put("division", strDivision);
-                                                            params.put("district", strDistrict);
-                                                            params.put("photo", strPhoto);
-                                                            params.put("seller_id", strSeller_id);
-                                                            params.put("item_id", strItem_Id);
-                                                            return params;
-                                                        }
-                                                    };
-                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
-                                                    requestQueue.add(stringRequest2);
-                                                }
-                                            }
-                                        });
-                                    } else {
-                                        Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("ad_detail", strAd_Detail);
-                        return params;
-                    }
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
-                requestQueue.add(stringRequest);
             }
         });
     }
 
-    private void getSession(){
+    private void getSession() {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
@@ -406,7 +219,7 @@ public class Cars_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                adapter_item = new Item_Adapter(itemList, Car.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -416,15 +229,30 @@ public class Cars_Activity extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if(strDistrict.equals("All")){
+                if (strDistrict.equals("All")) {
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, Car.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
+
                     Filter_Division(strDivision);
                 }
-                if(strDivision.equals("All")){
+                if (strDivision.equals("All")) {
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, Car.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
+
                     View_Item();
                 }
+                if(!strDivision.equals("All") && !strDistrict.equals("All")){
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, Car.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
 
-                Filter_District(strDivision, strDistrict);
-
+                    Filter_District(strDivision, strDistrict);
+                }
             }
         });
 
@@ -434,7 +262,7 @@ public class Cars_Activity extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Cars_Activity.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Car.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -469,7 +297,7 @@ public class Cars_Activity extends AppCompatActivity {
         });
     }
 
-    private void Filter_Division(final String division){
+    private void Filter_Division(final String division) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DIVISION,
                 new Response.Listener<String>() {
                     @Override
@@ -498,16 +326,16 @@ public class Cars_Activity extends AppCompatActivity {
                                 }
                                 if (itemList.isEmpty()) {
                                     no_result.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                adapter_item = new Item_Adapter(itemList, Car.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Car.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -537,7 +365,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -548,20 +376,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -580,7 +408,7 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -600,7 +428,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -611,20 +439,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -643,13 +471,13 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Car.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -668,11 +496,419 @@ public class Cars_Activity extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
         requestQueue.add(stringRequest);
     }
 
-    private void Filter_District(final String strDivision, final String strDistrict){
+    private void Filter_Search(final String ad_detail, final String division) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_SEARCH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                if (itemList.isEmpty()) {
+                                    no_result.setVisibility(View.VISIBLE);
+                                } else {
+                                    no_result.setVisibility(View.GONE);
+                                }
+                                adapter_item = new Item_Adapter(itemList, Car.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Car.this, View_Item.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(PRICE, item.getPrice());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onAddtoFavClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(item.getSeller_id())) {
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Car.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+                                            requestQueue.add(stringRequest1);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Car.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(Car.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", ad_detail);
+                params.put("division", division);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void Search(final String strAd_detail) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEARCH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                if (itemList.isEmpty()) {
+                                    no_result.setVisibility(View.VISIBLE);
+                                } else {
+                                    no_result.setVisibility(View.GONE);
+                                }
+                                adapter_item = new Item_Adapter(itemList, Car.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Car.this, View_Item.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra(USERID, item.getSeller_id());
+                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
+                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
+                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(PRICE, item.getPrice());
+                                        detailIntent.putExtra(DIVISION, item.getDivision());
+                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
+                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onAddtoFavClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(item.getSeller_id())) {
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Car.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+                                            requestQueue.add(stringRequest1);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
+                                        Item_All_Details item = itemList.get(position);
+
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
+
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Car.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(Car.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", strAd_detail);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void Filter_District(final String strDivision, final String strDistrict) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DISTRICT,
                 new Response.Listener<String>() {
                     @Override
@@ -701,16 +937,16 @@ public class Cars_Activity extends AppCompatActivity {
                                 }
                                 if (itemList.isEmpty()) {
                                     no_result.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                adapter_item = new Item_Adapter(itemList, Car.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Car.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -740,7 +976,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -751,20 +987,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -783,7 +1019,7 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -803,7 +1039,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -814,20 +1050,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -846,13 +1082,13 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Car.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -872,7 +1108,7 @@ public class Cars_Activity extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
         requestQueue.add(stringRequest);
     }
 
@@ -988,16 +1224,16 @@ public class Cars_Activity extends AppCompatActivity {
                                 }
                                 if (itemList.isEmpty()) {
                                     no_result.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Cars_Activity.this);
+                                adapter_item = new Item_Adapter(itemList, Car.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Cars_Activity.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Car.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -1027,7 +1263,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1038,20 +1274,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1070,7 +1306,7 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1090,7 +1326,7 @@ public class Cars_Activity extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Cars_Activity.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Car.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1101,20 +1337,20 @@ public class Cars_Activity extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Cars_Activity.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Car.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Cars_Activity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Car.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Cars_Activity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Car.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1133,13 +1369,13 @@ public class Cars_Activity extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Cars_Activity.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Car.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1156,14 +1392,14 @@ public class Cars_Activity extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cars_Activity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Car.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Cars_Activity.this, Homepage.class);
+        Intent intent = new Intent(Car.this, Homepage.class);
         startActivity(intent);
     }
 

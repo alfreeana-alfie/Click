@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Motorcycles extends AppCompatActivity {
+public class Sport extends AppCompatActivity {
 
     public static final String ID = "id";
     public static final String USERID = "user_id";
@@ -57,13 +57,13 @@ public class Motorcycles extends AppCompatActivity {
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_motorcycles.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_sports.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_category_motorcycles.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_motorcycles.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_motorcycles.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_category_motorcycles.php";
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_category_sports.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_sports.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_sports.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_category_sports.php";
 
     SessionManager sessionManager;
     String getId;
@@ -139,7 +139,7 @@ public class Motorcycles extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                adapter_item = new Item_Adapter(itemList, Sport.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_Item();
@@ -149,7 +149,7 @@ public class Motorcycles extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Motorcycles.this, Homepage.class);
+                Intent intent = new Intent(Sport.this, Homepage.class);
                 startActivity(intent);
             }
         });
@@ -164,7 +164,7 @@ public class Motorcycles extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                adapter_item = new Item_Adapter(itemList, Sport.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -172,7 +172,7 @@ public class Motorcycles extends AppCompatActivity {
 
                 if (!strAd_Detail.isEmpty() && !strDivision.isEmpty()) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                    adapter_item = new Item_Adapter(itemList, Sport.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -219,7 +219,7 @@ public class Motorcycles extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                adapter_item = new Item_Adapter(itemList, Sport.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -231,7 +231,7 @@ public class Motorcycles extends AppCompatActivity {
 
                 if (strDistrict.equals("All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                    adapter_item = new Item_Adapter(itemList, Sport.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -239,7 +239,7 @@ public class Motorcycles extends AppCompatActivity {
                 }
                 if (strDivision.equals("All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                    adapter_item = new Item_Adapter(itemList, Sport.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -247,7 +247,7 @@ public class Motorcycles extends AppCompatActivity {
                 }
                 if(!strDivision.equals("All") && !strDistrict.equals("All")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                    adapter_item = new Item_Adapter(itemList, Sport.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -262,7 +262,7 @@ public class Motorcycles extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Motorcycles.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Sport.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -329,13 +329,13 @@ public class Motorcycles extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                                adapter_item = new Item_Adapter(itemList, Sport.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Motorcycles.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Sport.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -365,7 +365,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -376,20 +376,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -408,7 +408,7 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -428,7 +428,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -439,20 +439,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -471,13 +471,13 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Motorcycles.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -496,7 +496,7 @@ public class Motorcycles extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
         requestQueue.add(stringRequest);
     }
 
@@ -532,13 +532,13 @@ public class Motorcycles extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                                adapter_item = new Item_Adapter(itemList, Sport.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Motorcycles.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Sport.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -568,7 +568,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -579,20 +579,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -611,7 +611,7 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -631,7 +631,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -642,20 +642,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -674,13 +674,13 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Motorcycles.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -700,7 +700,7 @@ public class Motorcycles extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
         requestQueue.add(stringRequest);
     }
 
@@ -736,13 +736,13 @@ public class Motorcycles extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                                adapter_item = new Item_Adapter(itemList, Sport.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Motorcycles.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Sport.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -772,7 +772,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -783,20 +783,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -815,7 +815,7 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -835,7 +835,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -846,20 +846,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -878,13 +878,13 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Motorcycles.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -903,7 +903,7 @@ public class Motorcycles extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
         requestQueue.add(stringRequest);
 
     }
@@ -940,13 +940,13 @@ public class Motorcycles extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                                adapter_item = new Item_Adapter(itemList, Sport.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Motorcycles.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Sport.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -976,7 +976,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -987,20 +987,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1019,7 +1019,7 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1039,7 +1039,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1050,20 +1050,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1082,13 +1082,13 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Motorcycles.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1108,7 +1108,7 @@ public class Motorcycles extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1227,13 +1227,13 @@ public class Motorcycles extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Motorcycles.this);
+                                adapter_item = new Item_Adapter(itemList, Sport.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Motorcycles.this, View_Item.class);
+                                        Intent detailIntent = new Intent(Sport.this, View_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra(USERID, item.getSeller_id());
@@ -1263,7 +1263,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1274,20 +1274,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1306,7 +1306,7 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1326,7 +1326,7 @@ public class Motorcycles extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Motorcycles.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Sport.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1337,20 +1337,20 @@ public class Motorcycles extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Motorcycles.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Sport.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Motorcycles.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Sport.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Motorcycles.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Sport.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1369,13 +1369,13 @@ public class Motorcycles extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Motorcycles.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Sport.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1392,14 +1392,14 @@ public class Motorcycles extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Motorcycles.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Sport.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Motorcycles.this, Homepage.class);
+        Intent intent = new Intent(Sport.this, Homepage.class);
         startActivity(intent);
     }
 

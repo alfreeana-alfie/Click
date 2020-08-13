@@ -67,7 +67,30 @@
         <activity android:name=".pages.After_Place_Order" />
         <activity android:name=".pages.Row_Add" />
         <activity android:name=".ActivityDelivery" />
-        <activity android:name=".category.Cars_Activity" />
+
+        <activity android:name=".category.All" />
+        <activity android:name=".category.Business" />
+        <activity android:name=".category.Camera" />
+        <activity android:name=".category.Car" />
+        <activity android:name=".category.Car_Accessories" />
+        <activity android:name=".category.Computer" />
+        <activity android:name=".category.Electronics" />
+        <activity android:name=".category.Women" />
+        <activity android:name=".category.Food" />
+        <activity android:name=".category.Furniture" />
+        <activity android:name=".category.Grocery" />
+        <activity android:name=".category.Handcraft" />
+        <activity android:name=".category.Home_Appliances" />
+        <activity android:name=".category.House_Rent" />
+        <activity android:name=".category.House_Sales" />
+        <activity android:name=".category.Men" />
+        <activity android:name=".category.Mom" />
+        <activity android:name=".category.Motorcycles" />
+        <activity android:name=".category.Pets" />
+        <activity android:name=".category.Service" />
+        <activity android:name=".category.Sport" />
+        <activity android:name=".category.Travel" />
+
 
         <meta-data
             android:name="preloaded_fonts"

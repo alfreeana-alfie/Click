@@ -32,9 +32,8 @@ import com.example.click.adapter.CartAdapter;
 import com.example.click.category.All;
 import com.example.click.category.Business;
 import com.example.click.category.Camera;
+import com.example.click.category.Car;
 import com.example.click.category.Car_Accessories;
-import com.example.click.category.Cars;
-import com.example.click.category.Cars_Activity;
 import com.example.click.category.Computer;
 import com.example.click.category.Electronics;
 import com.example.click.category.Food;
@@ -48,8 +47,8 @@ import com.example.click.category.Men;
 import com.example.click.category.Mom;
 import com.example.click.category.Motorcycles;
 import com.example.click.category.Pets;
-import com.example.click.category.Services;
-import com.example.click.category.Sports;
+import com.example.click.category.Service;
+import com.example.click.category.Sport;
 import com.example.click.category.Travel;
 import com.example.click.category.Women;
 import com.example.click.data.Item_All_Details;
@@ -278,8 +277,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new All()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, All.class);
+                startActivity(intent);
             }
         });
 
@@ -287,8 +286,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Business()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Business.class);
+                startActivity(intent);
             }
         });
 
@@ -296,7 +295,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Cars_Activity.class);
+                Intent intent = new Intent(Homepage.this, Camera.class);
                 startActivity(intent);
             }
         });
@@ -305,8 +304,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Car_Accessories()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Car_Accessories.class);
+                startActivity(intent);
             }
         });
 
@@ -314,7 +313,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Cars_Activity.class);
+                Intent intent = new Intent(Homepage.this, Car.class);
                 startActivity(intent);
             }
         });
@@ -323,8 +322,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Computer()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Computer.class);
+                startActivity(intent);
             }
         });
 
@@ -332,8 +331,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Electronics()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Electronics.class);
+                startActivity(intent);
             }
         });
 
@@ -341,8 +340,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Furniture()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Furniture.class);
+                startActivity(intent);
             }
         });
 
@@ -350,8 +349,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Handcraft()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Handcraft.class);
+                startActivity(intent);
             }
         });
 
@@ -359,8 +358,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Home_Appliances()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Home_Appliances.class);
+                startActivity(intent);
             }
         });
 
@@ -368,8 +367,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Men()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Men.class);
+                startActivity(intent);
             }
         });
 
@@ -377,8 +376,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Mom()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Mom.class);
+                startActivity(intent);
             }
         });
 
@@ -386,8 +385,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Motorcycles()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Motorcycles.class);
+                startActivity(intent);
             }
         });
 
@@ -395,8 +394,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Pets()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Pets.class);
+                startActivity(intent);
             }
         });
 
@@ -404,8 +403,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new House_Rent()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, House_Rent.class);
+                startActivity(intent);
             }
         });
 
@@ -413,8 +412,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new House_Sales()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, House_Sales.class);
+                startActivity(intent);
             }
         });
 
@@ -422,8 +421,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Services()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Service.class);
+                startActivity(intent);
             }
         });
 
@@ -431,8 +430,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Sports()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Sport.class);
+                startActivity(intent);
             }
         });
 
@@ -440,8 +439,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Travel()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Travel.class);
+                startActivity(intent);
             }
         });
 
@@ -449,8 +448,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Women()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Women.class);
+                startActivity(intent);
             }
         });
 
@@ -458,8 +457,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Food()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Food.class);
+                startActivity(intent);
             }
         });
 
@@ -467,8 +466,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new Grocery()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, Grocery.class);
+                startActivity(intent);
             }
         });
 
@@ -476,8 +475,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container,
-                        new All()).addToBackStack(null).commit();
+                Intent intent = new Intent(Homepage.this, All.class);
+                startActivity(intent);
             }
         });
 
