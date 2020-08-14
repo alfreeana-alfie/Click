@@ -169,15 +169,22 @@ public class All extends AppCompatActivity {
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.isEmpty()) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
+                    Filter_Search(strAd_Detail, strDivision);
+                }
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
-                    Filter_Search(strAd_Detail, strDivision);
+                    Search(strAd_Detail);
                 }
-                Search(strAd_Detail);
+
 
             }
         });

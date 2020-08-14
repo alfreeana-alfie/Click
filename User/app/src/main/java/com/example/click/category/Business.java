@@ -171,15 +171,21 @@ public class Business extends AppCompatActivity {
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.isEmpty()) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                    itemList.clear();
+                    adapter_item = new Item_Adapter(itemList, Business.this);
+                    adapter_item.notifyDataSetChanged();
+                    gridView.setAdapter(adapter_item);
+                    Filter_Search(strAd_Detail, strDivision);
+                }
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Business.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
-                    Filter_Search(strAd_Detail, strDivision);
+                    Search(strAd_Detail);
                 }
-                Search(strAd_Detail);
 
             }
         });
@@ -196,7 +202,6 @@ public class Business extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
-        searchView = findViewById(R.id.search_find);
         filter_layout = findViewById(R.id.filter_layout);
         filter_layout.setVisibility(View.GONE);
 

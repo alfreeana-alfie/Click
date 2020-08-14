@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +39,7 @@ import java.util.List;
 public class Chat_Inbox_Other extends AppCompatActivity {
 
     public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
+    public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
     User user;
     RecyclerView recyclerView;
     TextView noUsersText;
@@ -62,7 +64,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        doOnSuccess(response);
+//                        doOnSuccess(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -73,6 +75,8 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Other.this);
         requestQueue.add(stringRequest);
+
+        doON();
     }
 
     private void ToolbarSetting() {
@@ -96,7 +100,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
 
     private void doOnSuccess(final String s) {
         try {
-            JSONObject obj = new JSONObject(s);
+            final JSONObject obj = new JSONObject(s);
 
             Iterator i = obj.keys();
             String key = "";
@@ -105,6 +109,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                 key = i.next().toString();
 
                 if (!key.equals(UserDetails.username)) {
+
                     user = new User(key, obj.getJSONObject(key).get("photo").toString());
                     usersArrayList.add(user);
                     user_adapter = new UserAdapter(Chat_Inbox_Other.this, usersArrayList);
@@ -133,6 +138,87 @@ public class Chat_Inbox_Other extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(user_adapter);
         }
+    }
+
+    private void doON(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject object =new JSONObject(response);
+                            Iterator i = object.keys();
+
+                            while (i.hasNext()){
+                                final String chat = i.next().toString();
+
+                                if(chat.contains(UserDetails.username + "_")){
+                                    StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject object =new JSONObject(response);
+                                                        Iterator i = object.keys();
+
+                                                        while (i.hasNext()){
+                                                            String key = i.next().toString();
+
+                                                            if(!key.equals(UserDetails.username)){
+                                                                if (chat.contains(key)){
+                                                                    user = new User(key, object.getJSONObject(key).get("photo").toString());
+                                                                    usersArrayList.add(user);
+                                                                    user_adapter = new UserAdapter(Chat_Inbox_Other.this, usersArrayList);
+                                                                }
+                                                            }
+                                                            totalUsers++;
+                                                        }
+                                                        recyclerView.setAdapter(user_adapter);
+                                                        user_adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(int position) {
+                                                                User user = usersArrayList.get(position);
+                                                                UserDetails.chatWith = user.getUsername();
+                                                                startActivity(new Intent(Chat_Inbox_Other.this, Chat.class));
+                                                            }
+                                                        });
+                                                    }catch (JSONException e){
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    if (totalUsers <= 1) {
+                                                        noUsersText.setVisibility(View.VISIBLE);
+                                                        recyclerView.setVisibility(View.GONE);
+                                                    } else {
+                                                        noUsersText.setVisibility(View.GONE);
+                                                        recyclerView.setVisibility(View.VISIBLE);
+                                                        recyclerView.setAdapter(user_adapter);
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+
+                                                }
+                                            });
+                                    RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Other.this);
+                                    requestQueue.add(stringRequest);
+                                }
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Other.this);
+        requestQueue.add(stringRequest);
     }
 
     @Override
