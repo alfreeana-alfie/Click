@@ -270,6 +270,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Sell_Items_Other.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -280,6 +281,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, All.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -289,6 +291,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Business.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -298,6 +301,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Camera.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -307,6 +311,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Car_Accessories.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -316,6 +321,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Car.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -325,6 +331,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Computer.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -334,6 +341,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Electronics.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -343,6 +351,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Furniture.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -352,6 +361,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Handcraft.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -361,6 +371,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Home_Appliances.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -370,6 +381,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Men.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -379,6 +391,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Mom.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -388,6 +401,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Motorcycles.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -397,6 +411,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Pets.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -406,6 +421,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, House_Rent.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -415,6 +431,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, House_Sales.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -424,6 +441,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Service.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -433,6 +451,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Sport.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -442,6 +461,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Travel.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -451,6 +471,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Women.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -460,6 +481,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Food.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -469,6 +491,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Grocery.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -478,6 +501,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, All.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -541,34 +565,40 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         switch (item.getItemId()) {
             case R.id.nav_home:
                 Intent intent4 = new Intent(Homepage.this, Homepage.class);
+                intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent4);
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_sell:
                 Intent intent2 = new Intent(Homepage.this, Sell_Items_Other.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent2);
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
                 Intent intent1 = new Intent(Homepage.this, Find_My_Items_Other.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
                 Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_ads:
                 Intent intent3 = new Intent(Homepage.this, Main_Order_Other.class);
+                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent3);
                 Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_chat_inbox:
                 Intent intent5 = new Intent(Homepage.this, Chat_Inbox_Other.class);
+                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent5);
                 Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.nav_favourite_ads:
                 Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
                 break;

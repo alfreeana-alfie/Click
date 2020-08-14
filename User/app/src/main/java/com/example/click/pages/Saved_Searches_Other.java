@@ -93,12 +93,10 @@ public class Saved_Searches_Other extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     Button_Search.setVisibility(View.GONE);
-
                     close_search.setVisibility(View.GONE);
                     Button_Search.setVisibility(View.GONE);
                 } else {
                     Button_Search.setVisibility(View.VISIBLE);
-
                     close_search.setVisibility(View.VISIBLE);
                 }
             }
@@ -127,6 +125,7 @@ public class Saved_Searches_Other extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Saved_Searches_Other.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -453,6 +452,8 @@ public class Saved_Searches_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(Saved_Searches_Other.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

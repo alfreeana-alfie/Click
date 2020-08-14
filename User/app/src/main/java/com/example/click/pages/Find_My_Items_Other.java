@@ -81,6 +81,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Find_My_Items_Other.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -243,7 +244,9 @@ public class Find_My_Items_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent4 = new Intent(Find_My_Items_Other.this, Homepage.class);
+        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent4);
     }
 
 }

@@ -279,55 +279,46 @@ public class Sell_Items_Other extends AppCompatActivity {
                 adapter_car = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.vehicle_category, android.R.layout.simple_spinner_item);
                 adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_car);
-//                Toast.makeText(Sell_Items_Other.this, "Car", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 adapter_properties = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.properties_category, android.R.layout.simple_spinner_item);
                 adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_properties);
-//                Toast.makeText(Sell_Items_Other.this, "Properties", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 adapter_elctronic = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.electronic_category, android.R.layout.simple_spinner_item);
                 adapter_elctronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_elctronic);
-//                Toast.makeText(Sell_Items_Other.this, "Electronics", Toast.LENGTH_SHORT).show();
                 break;
             case 4:
                 adapter_home = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.home_category, android.R.layout.simple_spinner_item);
                 adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_home);
-//                Toast.makeText(Sell_Items_Other.this, "Home and Personal Items", Toast.LENGTH_SHORT).show();
                 break;
             case 5:
                 adapter_leisure = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.leisure_category, android.R.layout.simple_spinner_item);
                 adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_leisure);
-//                Toast.makeText(Sell_Items_Other.this, "Leisure/Sport/Hobbies", Toast.LENGTH_SHORT).show();
                 break;
             case 6:
                 adapter_business = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.business_category, android.R.layout.simple_spinner_item);
                 adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_business);
-//                Toast.makeText(Sell_Items_Other.this, "Business to Business", Toast.LENGTH_SHORT).show();
                 break;
             case 7:
                 adapter_jobs = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.jobs_category, android.R.layout.simple_spinner_item);
                 adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_jobs);
-//                Toast.makeText(Sell_Items_Other.this, "Jobs and Services", Toast.LENGTH_SHORT).show();
                 break;
             case 8:
                 adapter_travel = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.travel_category, android.R.layout.simple_spinner_item);
                 adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_travel);
-//                Toast.makeText(Sell_Items_Other.this, "Travel", Toast.LENGTH_SHORT).show();
                 break;
             case 9:
                 adapter_other = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.other_category, android.R.layout.simple_spinner_item);
                 adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_other);
-//                Toast.makeText(Sell_Items_Other.this, "Other", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -430,7 +421,6 @@ public class Sell_Items_Other extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -479,6 +469,7 @@ public class Sell_Items_Other extends AppCompatActivity {
                                     accept_item.setVisibility(View.VISIBLE);
                                     Toast.makeText(Sell_Items_Other.this, "Saved", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(Sell_Items_Other.this, Find_My_Items_Other.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(Sell_Items_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
@@ -565,6 +556,8 @@ public class Sell_Items_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent4 = new Intent(Sell_Items_Other.this, Homepage.class);
+        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent4);
     }
 }

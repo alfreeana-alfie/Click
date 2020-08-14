@@ -54,7 +54,7 @@ public class Chat extends AppCompatActivity {
     ImageView sendButton;
     EditText messageArea;
     ScrollView scrollView;
-    Firebase reference1, reference2, reference1_other, reference2_other;
+    Firebase reference1, reference2;
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
     String TOPIC;
@@ -79,7 +79,9 @@ public class Chat extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Homepage.class));
+                Intent intent = new Intent(Chat.this, Chat_Inbox_Other.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
@@ -114,9 +116,7 @@ public class Chat extends AppCompatActivity {
         Firebase.setAndroidContext(this);
 
         reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-        reference1_other = new Firebase("https://click-1595830894120.firebaseio.com/users/" + UserDetails.username);
         reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
-        reference2_other = new Firebase("https://click-1595830894120.firebaseio.com/users/" + UserDetails.chatWith);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +128,7 @@ public class Chat extends AppCompatActivity {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("time", currentTime);
                     map.put("message", messageText);
-                    map.put("user_actionbar", UserDetails.username);
+                    map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
 
@@ -328,6 +328,8 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(Chat.this, Chat_Inbox_Other.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
