@@ -5,7 +5,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.click.pages.Buying;
+import com.example.click.pages.Buying_Other;
 import com.example.click.pages.Selling;
+import com.example.click.pages.Selling_Other;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm) {
@@ -17,10 +19,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new Selling();
+                fragment = new Selling_Other();
                 break;
             case 1:
-                fragment = new Buying();
+                fragment = new Buying_Other();
                 break;
         }
         return fragment;

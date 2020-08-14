@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.click.pages.Buying;
 import com.example.click.pages.Selling;
+import com.example.click.pages.Selling_Other;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
@@ -22,7 +23,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new Selling();
+                return new Selling_Other();
 
             case 1:
                 return new Buying();

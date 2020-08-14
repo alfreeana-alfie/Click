@@ -40,8 +40,10 @@ public class Cart extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
+
     private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
     private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
+
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
     private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
@@ -111,6 +113,7 @@ public class Cart extends AppCompatActivity {
                                             final String image_item = object.getString("photo");
                                             final String seller_id = object.getString("seller_id").trim();
                                             final String item_id = object.getString("item_id").trim();
+                                            final String quantity = object.getString("quantity").trim();
 
                                             //Add to order
                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
@@ -153,6 +156,7 @@ public class Cart extends AppCompatActivity {
                                                     params.put("district", district);
                                                     params.put("photo", image_item);
                                                     params.put("item_id", item_id);
+                                                    params.put("quantity", quantity);
                                                     return params;
                                                 }
                                             };

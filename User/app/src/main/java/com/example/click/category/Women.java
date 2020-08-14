@@ -199,7 +199,6 @@ public class Women extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
-
         filter_layout = findViewById(R.id.filter_layout);
         filter_layout.setVisibility(View.GONE);
 

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Order;
+import com.example.click.Order_BuyerAdapter;
 import com.example.click.R;
 import com.example.click.adapter.Buyer_OrderAdapter;
 import com.example.click.data.MySingleton;
@@ -35,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Buying extends Fragment {
+public class Buying_Other extends Fragment {
 
     public static final String ID = "id";
     public static final String AD_DETAIL = "ad_detail";
@@ -57,8 +60,8 @@ public class Buying extends Fragment {
     String NOTIFICATION_MESSAGE;
     String TOPIC;
 
-    GridView gridView;
-    Buyer_OrderAdapter adapter_item;
+    RecyclerView gridView;
+    Order_BuyerAdapter adapter_item;
     List<Order> itemList;
     String getId;
     SessionManager sessionManager;
@@ -66,7 +69,7 @@ public class Buying extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_orders_02, container, false);
+        View view = inflater.inflate(R.layout.my_orders_other, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());
@@ -82,7 +85,9 @@ public class Buying extends Fragment {
 
     private void Declare(View v) {
         itemList = new ArrayList<>();
-        gridView = v.findViewById(R.id.gridView_item);
+        gridView = v.findViewById(R.id.recyclerView);
+        gridView.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 
     private void Buying_List(final View view) {
@@ -115,7 +120,6 @@ public class Buying extends Fragment {
                                     final String quantity = object.getString("quantity").trim();
                                     final String status = object.getString("status").trim();
 
-
                                     Order item = new Order(id,
                                             seller_id,
                                             ad_detail,
@@ -124,19 +128,19 @@ public class Buying extends Fragment {
                                             String.format("%.2f", price),
                                             division,
                                             district,
+                                            image_item,
                                             item_id,
                                             customer_id,
-                                            image_item,
                                             order_date,
                                             date,
                                             quantity,
                                             status);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Buyer_OrderAdapter(getContext(), itemList);
+                                adapter_item = new Order_BuyerAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Buyer_OrderAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Order_BuyerAdapter.OnItemClickListener() {
                                     @Override
                                     public void onCancelClick(int position) {
                                         Order order = itemList.get(position);

@@ -5,7 +5,21 @@ public class Order {
     private String id, seller_id, customer_id, item_id;
     private String ad_detail, price, division, district;
     private String photo;
-    private String main_category, sub_category, date;
+    private String main_category;
+    private String sub_category;
+    private String date;
+    private String quantity;
+    private String status;
+
+    public String getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(String order_date) {
+        this.order_date = order_date;
+    }
+
+    private String order_date;
 
     public String getDate() {
         return date;
@@ -13,6 +27,22 @@ public class Order {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Order(String id,
@@ -26,7 +56,10 @@ public class Order {
                  String photo,
                  String item_id,
                  String customer_id,
-                 String date) {
+                 String order_date,
+                 String date,
+                 String quantity,
+                 String status) {
         this.id = id;
         this.seller_id = seller_id;
         this.customer_id = customer_id;
@@ -38,7 +71,10 @@ public class Order {
         this.photo = photo;
         this.main_category = main_category;
         this.sub_category = sub_category;
+        this.order_date = order_date;
         this.date = date;
+        this.quantity = quantity;
+        this.status = status;
     }
 
     public String getId() {

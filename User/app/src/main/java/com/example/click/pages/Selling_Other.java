@@ -1,6 +1,5 @@
 package com.example.click.pages;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Order;
+import com.example.click.Order_SellerAdapter;
 import com.example.click.R;
 import com.example.click.Receipt;
 import com.example.click.adapter.Seller_OrderAdapter;
@@ -37,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Selling extends Fragment {
+public class Selling_Other extends Fragment {
 
     public static final String ID = "id";
     public static final String AD_DETAIL = "ad_detail";
@@ -66,8 +68,8 @@ public class Selling extends Fragment {
     String NOTIFICATION_MESSAGE;
     String TOPIC;
 
-    GridView gridView;
-    Seller_OrderAdapter adapter_item;
+    RecyclerView recyclerView;
+    Order_SellerAdapter adapter_item;
     List<Order> itemList;
     List<Receipt> receiptList;
 
@@ -77,7 +79,7 @@ public class Selling extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_orders, container, false);
+        View view = inflater.inflate(R.layout.my_orders_other, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());
@@ -93,7 +95,8 @@ public class Selling extends Fragment {
     private void Declare(View v) {
         itemList = new ArrayList<>();
         receiptList = new ArrayList<>();
-        gridView = v.findViewById(R.id.gridView_item);
+        recyclerView = v.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private void Approval_List(final View view) {
@@ -134,18 +137,20 @@ public class Selling extends Fragment {
                                             String.format("%.2f", price),
                                             division,
                                             district,
+                                            image_item,
                                             item_id,
                                             customer_id,
-                                            image_item,
                                             order_date,
                                             date,
                                             quantity,
                                             status);
                                     itemList.add(item);
+
+                                    Toast.makeText(getContext(), image_item, Toast.LENGTH_SHORT).show();
                                 }
-                                adapter_item = new Seller_OrderAdapter(getContext(), itemList);
+                                adapter_item = new Order_SellerAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
-                                gridView.setAdapter(adapter_item);
+                                recyclerView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Seller_OrderAdapter.OnItemClickListener() {
                                     @Override
                                     public void onAcceptClick(int position) {
@@ -172,6 +177,10 @@ public class Selling extends Fragment {
                                         Accept(view, strOrder_Id);
                                         Update_Order(view, strOrder_Date, remarks);
                                         Delete_Order(view, strOrder_Id);
+
+                                        itemList.remove(position);
+                                        adapter_item.notifyDataSetChanged();
+                                        recyclerView.setAdapter(adapter_item);
                                     }
 
                                     @Override
@@ -194,10 +203,12 @@ public class Selling extends Fragment {
                                         final String REMARKS = "REJECT";
 
                                         Newreject(view, strOrder_Id);
-
                                         Update_Order(view, strOrder_Date, REMARKS);
-
                                         Delete_Order(view, strOrder_Id);
+
+                                        itemList.remove(position);
+                                        adapter_item.notifyDataSetChanged();
+                                        recyclerView.setAdapter(adapter_item);
                                     }
                                 });
                             }
