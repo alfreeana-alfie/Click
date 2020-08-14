@@ -194,8 +194,13 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_setup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
-                startActivity(intent);
+//                if (filePath == null) {
+//                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
+//                } else {
+//                    saveEdit(getId, getStringImage(bitmap));
+                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
+                    startActivity(intent);
+//                }
             }
         });
 

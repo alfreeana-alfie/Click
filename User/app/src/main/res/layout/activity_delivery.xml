@@ -70,7 +70,7 @@
 
     <Button
         android:id="@+id/btn_edit_delivery"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_semibold"
         android:textColor="@color/colorWhite"
@@ -78,6 +78,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
-        android:text="Edit" />
+        android:text="Add" />
 
 </RelativeLayout>

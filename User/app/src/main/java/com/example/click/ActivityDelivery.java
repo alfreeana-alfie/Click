@@ -35,10 +35,12 @@ import java.util.Map;
 public class ActivityDelivery extends AppCompatActivity {
 
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery.php";
+    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_delivery_two.php";
 
 
     RecyclerView recyclerCricketers;
     ArrayList<Delivery> cricketersList = new ArrayList<>();
+    DeliveryAdapter deliveryAdapter;
 
     String getId;
     SessionManager sessionManager;
@@ -98,6 +100,7 @@ public class ActivityDelivery extends AppCompatActivity {
                                     final String days = object.getString("days");
 
                                     Delivery delivery = new Delivery(division, String.format("%.2f", price), days);
+                                    delivery.setId(id);
                                     cricketersList.add(delivery);
                                 }
                                 if (cricketersList.size() == 0) {
@@ -111,6 +114,7 @@ public class ActivityDelivery extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent = new Intent(ActivityDelivery.this, Row_Add.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent);
                                         }
                                     });
@@ -118,7 +122,7 @@ public class ActivityDelivery extends AppCompatActivity {
                                 } else {
                                     TextView textView = findViewById(R.id.textView4);
 
-                                    Button Edit = findViewById(R.id.btn_edit_delivery);
+                                    final Button Edit = findViewById(R.id.btn_edit_delivery);
                                     Edit.setVisibility(View.VISIBLE);
                                     Edit.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -127,10 +131,68 @@ public class ActivityDelivery extends AppCompatActivity {
                                             startActivity(intent);
                                         }
                                     });
-                                    Button Add_Delivery = findViewById(R.id.btn_goto_delivery);
+                                    final Button Add_Delivery = findViewById(R.id.btn_goto_delivery);
                                     textView.setVisibility(View.GONE);
                                     Add_Delivery.setVisibility(View.GONE);
-                                    recyclerCricketers.setAdapter(new DeliveryAdapter(cricketersList));
+                                    deliveryAdapter = new DeliveryAdapter(cricketersList);
+                                    recyclerCricketers.setAdapter(deliveryAdapter);
+                                    deliveryAdapter.setOnItemClickListener(new DeliveryAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onEditClick(int position) {
+                                            Delivery delivery = cricketersList.get(position);
+                                            Intent intent = new Intent(ActivityDelivery.this, Edit_Delivery.class);
+
+                                            intent.putExtra("id", delivery.getId());
+                                            intent.putExtra("division", delivery.getDivision());
+                                            intent.putExtra("price", delivery.getPrice());
+                                            intent.putExtra("days", delivery.getDays());
+
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                        }
+
+                                        @Override
+                                        public void onDeleteClick(final int position) {
+                                            final Delivery delivery = cricketersList.get(position);
+
+                                            final String id = delivery.getId();
+
+                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                JSONObject jsonObject = new JSONObject(response);
+                                                                String success = jsonObject.getString("success");
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(ActivityDelivery.this, "Item Updated", Toast.LENGTH_SHORT).show();
+                                                                    cricketersList.remove(position);
+                                                                    deliveryAdapter.notifyDataSetChanged();
+                                                                } else {
+                                                                    Toast.makeText(ActivityDelivery.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("id", id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(ActivityDelivery.this);
+                                            requestQueue.add(stringRequest);
+                                        }
+                                    });
+
                                 }
                             } else {
                                 Toast.makeText(ActivityDelivery.this, "Failed to read", Toast.LENGTH_SHORT).show();

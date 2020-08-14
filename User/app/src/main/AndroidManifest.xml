@@ -114,6 +114,7 @@
         <activity android:name=".pages.Sell_Items_Other" />
         <activity android:name=".pages.Main_Order_Other" />
         <activity android:name=".pages.Chat_Inbox_Other" />
+        <activity android:name=".Edit_Delivery" />
 
 
         <meta-data

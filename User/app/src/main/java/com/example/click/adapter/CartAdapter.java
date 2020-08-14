@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -96,6 +98,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if ( isChecked )
+                {
+                    if (mListerner != null) {
+                        mListerner.onClick(position);
+                    }
+                }else{
+                    if (mListerner != null) {
+                        mListerner.onDeleteOrder(position);
+                    }
+                }
+
+            }
+        });
 
         Picasso.get().load(photo_URL).into(holder.ItemImageView);
     }
@@ -107,6 +125,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public interface OnItemClickListener {
         void onDeleteClick(int position);
+
+        void onDeleteOrder(int position);
+
+        void onClick(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -115,6 +137,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView AdDetail, UnitPrice, SubTotal, Quantity;
         Button decrease, increase;
         ImageView DeleteCart;
+
+        CheckBox checkBox;
 
         public ViewHolder(View view) {
             super(view);
@@ -125,6 +149,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             SubTotal = view.findViewById(R.id.subtotal_display);
             Quantity = view.findViewById(R.id.integer_number);
             DeleteCart = view.findViewById(R.id.delete_cart_item);
+
+            checkBox = view.findViewById(R.id.checkBox);
 
             decrease = view.findViewById(R.id.decrease);
             increase = view.findViewById(R.id.increase);

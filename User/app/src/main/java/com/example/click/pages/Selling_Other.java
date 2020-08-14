@@ -145,8 +145,6 @@ public class Selling_Other extends Fragment {
                                             quantity,
                                             status);
                                     itemList.add(item);
-
-                                    Toast.makeText(getContext(), image_item, Toast.LENGTH_SHORT).show();
                                 }
                                 adapter_item = new Order_SellerAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();

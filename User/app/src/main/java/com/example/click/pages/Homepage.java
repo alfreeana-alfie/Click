@@ -232,12 +232,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                 _cart_adapter.notifyDataSetChanged();
                                 _cart_adapter = new CartAdapter(Homepage.this, itemAllDetailsArrayList);
                                 recyclerView.setAdapter(_cart_adapter);
-                                _cart_adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onDeleteClick(final int position) {
-                                    }
-
-                                });
 
                             }
                             _cart_adapter.notifyDataSetChanged();
