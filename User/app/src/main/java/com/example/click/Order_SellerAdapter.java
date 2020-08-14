@@ -21,7 +21,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
     Context context;
     int mQuantity = 1;
     private List<Order> item_all_details;
-    private Seller_OrderAdapter.OnItemClickListener mListener;
+    private OnItemClickListener mListener;
 
 
     public Order_SellerAdapter(Context context, List<Order> item_all_details) {
@@ -29,7 +29,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         this.item_all_details = item_all_details;
     }
 
-    public void setOnItemClickListener(Seller_OrderAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 

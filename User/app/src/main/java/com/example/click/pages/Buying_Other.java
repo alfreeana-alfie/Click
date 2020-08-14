@@ -164,7 +164,6 @@ public class Buying_Other extends Fragment {
                                         final String remarks = "CANCEL";
                                         Update_Order(view, strOrder_Date, remarks);
 
-
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
                                                 new Response.Listener<String>() {
                                                     @Override
