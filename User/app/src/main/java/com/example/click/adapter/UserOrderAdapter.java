@@ -38,16 +38,17 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Item_All_Details itemAllDetails = item_all_details.get(position);
 
+        String order_id = itemAllDetails.getSeller_id();
         String ad_detail = itemAllDetails.getAd_detail();
         String price = itemAllDetails.getPrice();
         String photo_URL = itemAllDetails.getPhoto();
 
+        holder.Order_ID.setText(order_id);
+        Picasso.get().load(photo_URL).into(holder.photo);
+
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText("MYR" + price);
-        holder.SubTotal.setText("MYR" + price);
-        holder.Quantity.setText("1");
-
-        Picasso.get().load(photo_URL).into(holder.ItemImageView);
+        holder.Quantity.setText(itemAllDetails.getQuantity());
     }
 
     @Override
@@ -57,17 +58,17 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ItemImageView;
-        TextView AdDetail, UnitPrice, SubTotal, Quantity;
+        ImageView photo;
+        TextView Order_ID, AdDetail, UnitPrice, Quantity;
 
         public ViewHolder(View view) {
             super(view);
 
-            ItemImageView = view.findViewById(R.id.item_image);
+            Order_ID = view.findViewById(R.id.text_order_id);
+            photo = view.findViewById(R.id.item_image);
             AdDetail = view.findViewById(R.id.ad_detail_display);
             UnitPrice = view.findViewById(R.id.unit_price_display);
-            SubTotal = view.findViewById(R.id.subtotal_display);
-            Quantity = view.findViewById(R.id.integer_number);
+            Quantity = view.findViewById(R.id.quantity_display);
         }
     }
 }

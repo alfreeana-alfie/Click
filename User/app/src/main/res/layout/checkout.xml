@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -36,7 +37,8 @@
                 android:id="@+id/address_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/colorWhite"
+                android:layout_marginBottom="7dp"
                 android:padding="10dp">
 
                 <TextView
@@ -45,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/open_sans"
-                    android:text="Address"
+                    android:text="Delivery Address"
                     android:textColor="@color/colorGrey"
                     android:textSize="12sp" />
 
@@ -68,11 +70,19 @@
                     app:srcCompat="@drawable/ic_right_orange_foreground" />
             </RelativeLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/item_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:layout_marginBottom="7dp"/>
+
             <RelativeLayout
                 android:id="@+id/shipping_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/colorWhite"
+                android:layout_marginBottom="7dp"
                 android:padding="10dp">
 
                 <TextView
@@ -96,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Shipping Price"
+                        android:text="Standard Deliver"
                         android:textColor="@color/colorGrey"
                         android:textSize="14sp" />
 
@@ -114,16 +124,11 @@
 
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/item_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
             <RelativeLayout
                 android:id="@+id/payment_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@color/colorWhite"
                 android:padding="10dp">
 
                 <TextView
@@ -142,8 +147,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:drawableEnd="@drawable/ic_right_foreground"
-                    android:text="Payment Option"
+                    android:text="Coming Soon"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp" />
             </RelativeLayout>

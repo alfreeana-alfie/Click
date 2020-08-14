@@ -5,7 +5,17 @@ public class Item_All_Details {
     private String id, seller_id;
     private String ad_detail, price, division, district;
     private String photo;
-    private String main_category, sub_category;
+    private String main_category;
+    private String sub_category;
+    private String quantity;
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
 
     public Item_All_Details(String id, String seller_id, String main_category, String sub_category, String ad_detail, String price, String division, String district, String photo) {
         this.id = id;
@@ -17,6 +27,7 @@ public class Item_All_Details {
         this.division = division;
         this.district = district;
         this.photo = photo;
+        this.quantity = quantity;
     }
 
     public String getSeller_id() {

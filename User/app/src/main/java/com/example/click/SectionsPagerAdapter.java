@@ -4,9 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.click.pages.Buying;
 import com.example.click.pages.Buying_Other;
-import com.example.click.pages.Selling;
 import com.example.click.pages.Selling_Other;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -38,9 +36,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Selling";
+                return "Selling_Other";
             case 1:
-                return "Buying";
+                return "Buying_Other";
         }
         return null;
     }
