@@ -26,8 +26,8 @@
     <RelativeLayout
         android:background="@drawable/background_white_curve"
         android:layout_below="@id/appbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView5"

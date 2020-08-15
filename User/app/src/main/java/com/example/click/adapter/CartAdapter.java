@@ -22,7 +22,8 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     Context context;
-    int mQuantity = 1;
+    int mQuantity;
+    int mQuantity1;
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
 
@@ -50,42 +51,44 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         String price = itemAllDetails.getPrice();
         String photo_URL = itemAllDetails.getPhoto();
 
-//        final Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * 2;
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText("MYR" + price);
         holder.SubTotal.setText("MYR" + price);
-        holder.Quantity.setText(String.valueOf(mQuantity));
-        if (mQuantity == 0) {
-            mQuantity = 1;
-            Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-            holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-            holder.Quantity.setText(String.valueOf(mQuantity));
-        }
+        holder.Quantity.setText(itemAllDetails.getQuantity());
+
+        mQuantity = Integer.parseInt(itemAllDetails.getQuantity());
+        Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+        holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
 
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuantity = mQuantity + 1;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                mQuantity1 = mQuantity++;
+                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity1;
                 holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity));
+                holder.Quantity.setText(String.valueOf(mQuantity1));
+                if (mListerner != null) {
+                    mListerner.onAddClick(position);
+                }
             }
         });
 
         holder.decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mQuantity == 0) {
-                    mQuantity += 1;
-                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                    holder.Quantity.setText(String.valueOf(mQuantity));
-                } else {
-                    mQuantity = mQuantity - 1;
-                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                    holder.Quantity.setText(String.valueOf(mQuantity));
+                mQuantity1 = mQuantity--;
+                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity1;
+                holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                holder.Quantity.setText(String.valueOf(mQuantity1));
+                if (mListerner != null) {
+                    mListerner.onMinusClick(position);
                 }
+                if(Integer.parseInt(itemAllDetails.getQuantity()) == 0){
+                    if (mListerner != null) {
+                        mListerner.onDeleteClick(position);
+                    }
+                }
+
             }
         });
 
@@ -101,12 +104,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if ( isChecked )
-                {
+                if (isChecked) {
                     if (mListerner != null) {
                         mListerner.onClick(position);
                     }
-                }else{
+                } else {
                     if (mListerner != null) {
                         mListerner.onDeleteOrder(position);
                     }
@@ -129,6 +131,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         void onDeleteOrder(int position);
 
         void onClick(int position);
+
+        void onAddClick(int position);
+
+        void onMinusClick(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

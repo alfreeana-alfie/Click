@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class ActivityDelivery extends AppCompatActivity {
 
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_two.php";
+    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_delivery_two.php";
     private static String URL_READ_PRODUCT_SINGLE = "https://ketekmall.com/ketekmall/read_products.php";
 

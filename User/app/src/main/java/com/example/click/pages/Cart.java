@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.DeadObjectException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,12 +38,12 @@ import java.util.Map;
 
 public class Cart extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_cart.php";
 
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
 
     private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
-    private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
+    private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_two.php";
 
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
     private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
@@ -51,8 +51,6 @@ public class Cart extends AppCompatActivity {
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
     private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
     private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_to_checkout.php";
-
-
 
 
     final String TAG = "NOTIFICATION TAG";
@@ -73,6 +71,7 @@ public class Cart extends AppCompatActivity {
 
     String getId;
     SessionManager sessionManager;
+    int number;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -311,13 +310,16 @@ public class Cart extends AppCompatActivity {
                                     final String division = object.getString("division");
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
+                                    String quantity = object.getString("quantity");
 
                                     Double grandtotal = 0.00;
-                                    grandtotal += price;
+                                    grandtotal += (price * Integer.parseInt(quantity));
 
                                     Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
+                                    item.setQuantity(quantity);
+                                    number = Integer.parseInt(item.getQuantity());
                                     itemAllDetailsArrayList.add(item);
                                 }
                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);
@@ -476,6 +478,210 @@ public class Cart extends AppCompatActivity {
                                         requestQueue.add(stringRequest);
 
 
+                                    }
+
+                                    @Override
+                                    public void onAddClick(int position) {
+                                        final Item_All_Details item = itemAllDetailsArrayList.get(position);
+
+                                        final Double price = Double.valueOf(item.getPrice());
+
+                                        final int final_num = number++;
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            final JSONObject Object = new JSONObject(response);
+                                                            String success = Object.getString("success");
+                                                            JSONArray jsonArray = Object.getJSONArray("read");
+
+                                                            if (success.equals("1")) {
+                                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                                    JSONObject object = jsonArray.getJSONObject(i);
+                                                                    String max_order = object.getString("max_order");
+
+                                                                    if (final_num > Integer.parseInt(max_order)) {
+                                                                        Toast.makeText(Cart.this, "You have reach limit for this item", Toast.LENGTH_SHORT).show();
+                                                                    } else {
+                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
+                                                                                new Response.Listener<String>() {
+                                                                                    @Override
+                                                                                    public void onResponse(String response) {
+                                                                                        try {
+                                                                                            final JSONObject Object = new JSONObject(response);
+                                                                                            String success = Object.getString("success");
+
+                                                                                            if (success.equals("1")) {
+
+                                                                                                Double grandtotal = 0.00;
+                                                                                                grandtotal += (price * final_num);
+
+                                                                                                Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+//                                                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
+                                                                                            } else {
+                                                                                                Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                                            }
+
+                                                                                        } catch (JSONException e) {
+                                                                                            e.printStackTrace();
+                                                                                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                new Response.ErrorListener() {
+                                                                                    @Override
+                                                                                    public void onErrorResponse(VolleyError error) {
+                                                                                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                                                    }
+                                                                                }) {
+                                                                            @Override
+                                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                Map<String, String> params = new HashMap<>();
+                                                                                params.put("id", item.getId());
+                                                                                params.put("quantity", String.valueOf(final_num));
+                                                                                return params;
+                                                                            }
+                                                                        };
+                                                                        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                                                        requestQueue.add(stringRequest);
+                                                                    }
+                                                                }
+//                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("ad_detail", item.getAd_detail());
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                        requestQueue.add(stringRequest);
+
+
+                                    }
+
+                                    @Override
+                                    public void onMinusClick(final int position) {
+                                        final Item_All_Details item = itemAllDetailsArrayList.get(position);
+
+                                        final Double price = Double.valueOf(item.getPrice());
+
+                                        final int final_num = number--;
+                                        if (final_num == 0) {
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
+                                            builder.setTitle("Are you sure?");
+                                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+
+                                                    final Item_All_Details item = itemAllDetailsArrayList.get(position);
+
+                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+                                                            new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String response) {
+                                                                    try {
+                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                        String success = jsonObject.getString("success");
+
+                                                                        if (success.equals("1")) {
+                                                                            itemAllDetailsArrayList.remove(position);
+                                                                            _cart_adapter.notifyItemRemoved(position);
+                                                                        } else {
+//                                                                        Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                        }
+                                                                    } catch (JSONException e) {
+                                                                        e.printStackTrace();
+                                                                        Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            },
+                                                            new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+
+                                                                }
+                                                            }) {
+                                                        @Override
+                                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                                            Map<String, String> params = new HashMap<>();
+                                                            params.put("id", item.getId());
+                                                            return params;
+                                                        }
+                                                    };
+                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                                    requestQueue.add(stringRequest);
+                                                }
+                                            });
+
+                                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                }
+                                            });
+                                            AlertDialog alertDialog = builder.create();
+                                            alertDialog.show();
+                                        } else {
+                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            try {
+                                                                final JSONObject Object = new JSONObject(response);
+                                                                String success = Object.getString("success");
+
+                                                                if (success.equals("1")) {
+
+                                                                    Double grandtotal = 0.00;
+                                                                    grandtotal -= (price * final_num);
+
+                                                                    Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                    Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
+                                                                } else {
+                                                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                }
+
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("id", item.getId());
+                                                    params.put("quantity", String.valueOf(final_num));
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                            requestQueue.add(stringRequest);
+                                        }
                                     }
 
                                 });

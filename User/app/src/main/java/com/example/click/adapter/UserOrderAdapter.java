@@ -69,6 +69,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             AdDetail = view.findViewById(R.id.ad_detail_display);
             UnitPrice = view.findViewById(R.id.unit_price_display);
             Quantity = view.findViewById(R.id.quantity_display);
+
         }
     }
 }
