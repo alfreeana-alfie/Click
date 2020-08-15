@@ -144,9 +144,10 @@ public class ActivityDelivery extends AppCompatActivity {
                                     final String division = object.getString("division").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String days = object.getString("days");
+                                    final String item_id = object.getString("item_id");
 
-                                    Delivery delivery = new Delivery(division, String.format("%.2f", price), days);
-                                    delivery.setId(id);
+                                    Delivery delivery = new Delivery(division, String.format("%.2f", price), days, item_id);
+
                                     cricketersList.add(delivery);
                                 }
                                 if (cricketersList.size() == 0) {

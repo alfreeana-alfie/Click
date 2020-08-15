@@ -3,9 +3,12 @@ package com.example.click;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Single_Adapter;
+import com.example.click.category.Car;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
@@ -45,8 +49,10 @@ public class View_Item_Single extends AppCompatActivity {
 
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
 
-    String userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId;
+
+    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId;
     Item_Single_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
@@ -83,6 +89,7 @@ public class View_Item_Single extends AppCompatActivity {
         add_to_cart_btn = findViewById(R.id.add_to_cart_btn);
 
         final Intent intent = getIntent();
+        id = intent.getStringExtra("id");
         userid = intent.getStringExtra("user_id");
         strMain_category = intent.getStringExtra("main_category");
         strSub_category = intent.getStringExtra("sub_category");
@@ -118,6 +125,61 @@ public class View_Item_Single extends AppCompatActivity {
         });
 
         ToolbarSetting();
+
+        shipping_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    final JSONObject jsonObject = new JSONObject(response);
+                                    String success = jsonObject.getString("success");
+                                    final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                    if (success.equals("1")) {
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject object = jsonArray.getJSONObject(i);
+
+                                            final String id = object.getString("id").trim();
+                                            final String user_id = object.getString("user_id").trim();
+                                            final String division = object.getString("division").trim();
+                                            final Double price = Double.valueOf(object.getString("price").trim());
+                                            final String days = object.getString("days");
+                                            final String item_id = object.getString("item_id");
+
+                                            Delivery delivery = new Delivery(division, String.format("%.2f", price), days, item_id);
+
+                                            Intent intent1 = new Intent(View_Item_Single.this, Shipping_Info.class);
+                                            intent1.putExtra("item_id", item_id);
+                                            startActivity(intent1);
+                                        }
+
+                                    } else {
+                                        Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("item_id", id);
+                        return params;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+                requestQueue.add(stringRequest);
+            }
+        });
     }
 
     private void ToolbarSetting() {

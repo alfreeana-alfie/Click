@@ -95,6 +95,7 @@
         <activity android:name=".Edit_Delivery" />
         <activity android:name=".View_Item_Single" />
         <activity android:name=".Seller_Shop" />
+        <activity android:name=".Shipping_Info" />
 
 
         <meta-data

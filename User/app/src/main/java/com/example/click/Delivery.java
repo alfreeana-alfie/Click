@@ -3,12 +3,21 @@ package com.example.click;
 import java.io.Serializable;
 
 public class Delivery implements Serializable {
-    String id, user_id, division, price, days;
+    String id, user_id, division, price, days, item_id;
 
-    public Delivery(String division, String price, String days) {
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
+    }
+
+    public Delivery(String division, String price, String days, String item_id) {
         this.division = division;
         this.price = price;
         this.days = days;
+        this.item_id = item_id;
     }
 
     public String getId() {
