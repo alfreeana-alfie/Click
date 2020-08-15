@@ -58,6 +58,9 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.row_mainactivity);
 
+        Intent intent = getIntent();
+        String item_id = intent.getStringExtra("item_id");
+
         sessionManager = new SessionManager(Row_Add.this);
         sessionManager.checkLogin();
 
@@ -139,6 +142,9 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
             View view = layout.getChildAt(i);
 
+            Intent intent = getIntent();
+            final String item_id = intent.getStringExtra("item_id");
+
             editText = view.findViewById(R.id.price);
             imageView = view.findViewById(R.id.btn_close);
             spinner_division = view.findViewById(R.id.spinner_division);
@@ -180,6 +186,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                     params.put("user_id", getId);
                     params.put("division", strDivision);
                     params.put("price", strPrice);
+                    params.put("item_id", item_id);
                     params.put("days", strDays);
                     return params;
                 }

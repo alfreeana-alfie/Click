@@ -31,6 +31,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.ActivityDelivery;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
+import com.example.click.data.Item_All_Details_Other;
 import com.example.click.data.SessionManager;
 
 import org.json.JSONArray;
@@ -39,13 +41,20 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.xml.transform.stream.StreamSource;
 
 public class Sell_Items_Other extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
+    private static String URL_READ_PRODUCT = "https://ketekmall.com/ketekmall/readall_products.php";
+    private static String URL_READ_PRODUCT_SINGLE = "https://ketekmall.com/ketekmall/read_products.php";
+
 
     SessionManager sessionManager;
     String getId;
@@ -63,6 +72,7 @@ public class Sell_Items_Other extends AppCompatActivity {
     private LinearLayout item_page_layout;
     private ImageView upload_photo_img;
     private ProgressBar loading;
+    List<Item_All_Details_Other> itemList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -186,6 +196,7 @@ public class Sell_Items_Other extends AppCompatActivity {
     }
 
     private void Declare() {
+        itemList = new ArrayList<>();
         enter_category = findViewById(R.id.enter_main_category);
         enter_ad_detail = findViewById(R.id.enter_ad_detail);
         enter_location = findViewById(R.id.enter_location);
@@ -194,13 +205,110 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_setup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (filePath == null) {
-//                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
-//                } else {
-//                    saveEdit(getId, getStringImage(bitmap));
-                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
-                    startActivity(intent);
-//                }
+                if (filePath == null) {
+                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
+                } else {
+                    saveEdit(getId, getStringImage(bitmap));
+
+//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCT,
+//                            new Response.Listener<String>() {
+//                                @Override
+//                                public void onResponse(String response) {
+//                                    try {
+//                                        JSONObject jsonObject = new JSONObject(response);
+//                                        String success = jsonObject.getString("success");
+//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+//
+//                                        if (success.equals("1")) {
+//                                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                                JSONObject object = jsonArray.getJSONObject(i);
+//                                                final String id = object.getString("id").trim();
+//                                                String seller_id = object.getString("user_id").trim();
+//                                                String main_category = object.getString("main_category").trim();
+//                                                String sub_category = object.getString("sub_category").trim();
+//                                                final String ad_detail = object.getString("ad_detail").trim();
+//                                                String price = object.getString("price").trim();
+//                                                String division = object.getString("division");
+//                                                String district = object.getString("district");
+//                                                String image_item = object.getString("photo");
+//
+//                                                Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+//                                                itemList.add(item);
+//
+//                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCT_SINGLE,
+//                                                        new Response.Listener<String>() {
+//                                                            @Override
+//                                                            public void onResponse(String response) {
+//                                                                try {
+//                                                                    JSONObject jsonObject = new JSONObject(response);
+//                                                                    String success = jsonObject.getString("success");
+//                                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
+//
+//                                                                    if (success.equals("1")) {
+//                                                                        for (int i = 0; i < jsonArray.length(); i++) {
+//                                                                            JSONObject object = jsonArray.getJSONObject(i);
+//                                                                            String id = object.getString("id").trim();
+//                                                                            String seller_id = object.getString("user_id").trim();
+//                                                                            String main_category = object.getString("main_category").trim();
+//                                                                            String sub_category = object.getString("sub_category").trim();
+//                                                                            String ad_detail = object.getString("ad_detail").trim();
+//                                                                            String price = object.getString("price").trim();
+//                                                                            String division = object.getString("division");
+//                                                                            String district = object.getString("district");
+//                                                                            String image_item = object.getString("photo");
+//
+//                                                                        }
+//                                                                    } else {
+//                                                                        Toast.makeText(Sell_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
+//                                                                    }
+//                                                                } catch (JSONException e) {
+//                                                                    e.printStackTrace();
+//                                                                }
+//                                                            }
+//                                                        },
+//                                                        new Response.ErrorListener() {
+//                                                            @Override
+//                                                            public void onErrorResponse(VolleyError error) {
+//                                                            }
+//                                                        }) {
+//                                                    @Override
+//                                                    protected Map<String, String> getParams() throws AuthFailureError {
+//                                                        Map<String, String> params = new HashMap<>();
+//                                                        params.put("id", id);
+//                                                        params.put("ad_detail", ad_detail);
+//                                                        return params;
+//                                                    }
+//                                                };
+//
+//                                                RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
+//                                                requestQueue.add(stringRequest);
+//                                            }
+//                                        } else {
+//                                            Toast.makeText(Sell_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    } catch (JSONException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            },
+//                            new Response.ErrorListener() {
+//                                @Override
+//                                public void onErrorResponse(VolleyError error) {
+//                                }
+//                            }) {
+//                        @Override
+//                        protected Map<String, String> getParams() throws AuthFailureError {
+//                            Map<String, String> params = new HashMap<>();
+//                            params.put("user_id", getId);
+//                            return params;
+//                        }
+//                    };
+//
+//                    RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
+//                    requestQueue.add(stringRequest);
+//                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
+//                    startActivity(intent);
+                }
             }
         });
 
@@ -472,9 +580,14 @@ public class Sell_Items_Other extends AppCompatActivity {
                                 if (success.equals("1")) {
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
+
+                                    Item_All_Details_Other item = new Item_All_Details_Other(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
+                                    itemList.add(item);
+
                                     Toast.makeText(Sell_Items_Other.this, "Saved", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(Sell_Items_Other.this, Find_My_Items_Other.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
+                                    intent.putExtra("ad_detail", item.getAd_detail());
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(Sell_Items_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();

@@ -30,6 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
+import com.example.click.View_Item_Single;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
@@ -46,15 +47,15 @@ import java.util.Map;
 
 public class Pets extends AppCompatActivity {
 
-    public static final String ID = "id";
-    public static final String USERID = "user_id";
-    public static final String MAIN_CATE = "main_category";
-    public static final String SUB_CATE = "sub_category";
-    public static final String AD_DETAIL = "ad_detail";
-    public static final String PRICE = "price";
-    public static final String DISTRICT = "district";
-    public static final String DIVISION = "division";
-    public static final String PHOTO = "photo";
+//    public static final String ID = "id";
+//    public static final String USERID = "user_id";
+//    public static final String MAIN_CATE = "main_category";
+//    public static final String SUB_CATE = "sub_category";
+//    public static final String AD_DETAIL = "ad_detail";
+//    public static final String PRICE = "price";
+//    public static final String DISTRICT = "district";
+//    public static final String DIVISION = "division";
+//    public static final String PHOTO = "photo";
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_pets.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
@@ -338,17 +339,17 @@ public class Pets extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Pets.this, com.example.click.category_view_item.Pets.class);
+                                        Intent detailIntent = new Intent(Pets.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }
@@ -541,17 +542,17 @@ public class Pets extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Pets.this, com.example.click.category_view_item.Pets.class);
+                                        Intent detailIntent = new Intent(Pets.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }
@@ -745,17 +746,17 @@ public class Pets extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Pets.this, com.example.click.category_view_item.Pets.class);
+                                        Intent detailIntent = new Intent(Pets.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }
@@ -949,17 +950,17 @@ public class Pets extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Pets.this, com.example.click.category_view_item.Pets.class);
+                                        Intent detailIntent = new Intent(Pets.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }
@@ -1236,17 +1237,17 @@ public class Pets extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Pets.this, com.example.click.category_view_item.Pets.class);
+                                        Intent detailIntent = new Intent(Pets.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }
