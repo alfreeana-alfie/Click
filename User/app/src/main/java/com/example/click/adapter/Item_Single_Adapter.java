@@ -25,6 +25,7 @@ public class Item_Single_Adapter extends BaseAdapter{
 
     List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
+    private OnItemClickListener mListerner;
 
     public Item_Single_Adapter(List<Item_All_Details> itemList, Context context) {
         this.itemListFull = itemList;
@@ -33,6 +34,14 @@ public class Item_Single_Adapter extends BaseAdapter{
         if (itemListFull != null) {
             this.itemListFull02.addAll(itemListFull);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListerner = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onViewClick(int position);
     }
 
     @Override
@@ -67,6 +76,15 @@ public class Item_Single_Adapter extends BaseAdapter{
         TV_Price.setText(item.getPrice());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
+                    mListerner.onViewClick(position);
+                }
+            }
+        });
         return convertView;
     }
 }

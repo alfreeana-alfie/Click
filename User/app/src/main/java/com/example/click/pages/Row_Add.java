@@ -58,9 +58,6 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.row_mainactivity);
 
-        Intent intent = getIntent();
-        String item_id = intent.getStringExtra("item_id");
-
         sessionManager = new SessionManager(Row_Add.this);
         sessionManager.checkLogin();
 
@@ -127,8 +124,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
             case R.id.button_submit:
                 if (checkIfValidAndRead()) {
-                    Intent intent = new Intent(Row_Add.this, ActivityDelivery.class);
-                    startActivity(intent);
+                    finish();
                 }
                 break;
         }
@@ -144,6 +140,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
             Intent intent = getIntent();
             final String item_id = intent.getStringExtra("item_id");
+            final String ad_detail = intent.getStringExtra("ad_detail");
 
             editText = view.findViewById(R.id.price);
             imageView = view.findViewById(R.id.btn_close);

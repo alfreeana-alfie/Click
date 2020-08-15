@@ -346,6 +346,24 @@ public class View_Item_Single extends AppCompatActivity {
                                 adapter_item = new Item_Single_Adapter(itemList, View_Item_Single.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView_item.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(View_Item_Single.this, View_Item_Single.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+                                });
 
                             } else {
                                 Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();

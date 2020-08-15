@@ -9,6 +9,16 @@ public class Item_All_Details {
     private String sub_category;
     private String quantity;
 
+    public String getMax_order() {
+        return max_order;
+    }
+
+    public void setMax_order(String max_order) {
+        this.max_order = max_order;
+    }
+
+    private String max_order;
+
     public String getQuantity() {
         return quantity;
     }

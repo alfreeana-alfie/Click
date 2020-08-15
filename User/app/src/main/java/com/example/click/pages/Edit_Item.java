@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.ActivityDelivery;
 import com.example.click.R;
 import com.squareup.picasso.Picasso;
 
@@ -79,7 +80,7 @@ public class Edit_Item extends AppCompatActivity {
         setContentView(R.layout.edit_item);
         Declare();
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         id = intent.getStringExtra(EXTRA_ID);
 //        final String userid = intent.getStringExtra(EXTRA_USERID);
         final String main_category = intent.getStringExtra(EXTRA_MAIN);
@@ -91,8 +92,21 @@ public class Edit_Item extends AppCompatActivity {
         final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
         String Category_Text = main_category + ", " + sub_category;
         String Location_Text = division + ", " + district;
+        final String strMax_Order = intent.getStringExtra("max_order");
+
+        Edittext_Order.setText(strMax_Order);
 
         Category_TextView.setText(Category_Text);
+
+        Delivery_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Edit_Item.this, ActivityDelivery.class);
+                intent1.putExtra("item_id", id);
+                intent1.putExtra("ad_detail", ad_detail);
+                startActivity(intent1);
+            }
+        });
 
         if (main_category != null) {
             int main_catposition = adapter_category.getPosition(main_category);
@@ -126,7 +140,7 @@ public class Edit_Item extends AppCompatActivity {
         Location_TextView = findViewById(R.id.enter_location);
         Division_TextView = findViewById(R.id.division_TextView);
         District_TextView = findViewById(R.id.district_TextView);
-        Delivery_Location = findViewById(R.id.max_quantity_item);
+        Delivery_Location = findViewById(R.id.enter_delivery_location);
 
         Edittext_Order = findViewById(R.id.enter_max_order);
 

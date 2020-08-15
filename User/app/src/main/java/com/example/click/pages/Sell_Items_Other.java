@@ -202,115 +202,16 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_location = findViewById(R.id.enter_location);
         enter_price = findViewById(R.id.enter_price);
         enter_setup = findViewById(R.id.enter_delivery_location);
-        enter_setup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (filePath == null) {
-                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
-                } else {
-                    saveEdit(getId, getStringImage(bitmap));
-
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCT,
-//                            new Response.Listener<String>() {
-//                                @Override
-//                                public void onResponse(String response) {
-//                                    try {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//                                        String success = jsonObject.getString("success");
-//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                        if (success.equals("1")) {
-//                                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//                                                final String id = object.getString("id").trim();
-//                                                String seller_id = object.getString("user_id").trim();
-//                                                String main_category = object.getString("main_category").trim();
-//                                                String sub_category = object.getString("sub_category").trim();
-//                                                final String ad_detail = object.getString("ad_detail").trim();
-//                                                String price = object.getString("price").trim();
-//                                                String division = object.getString("division");
-//                                                String district = object.getString("district");
-//                                                String image_item = object.getString("photo");
-//
-//                                                Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-//                                                itemList.add(item);
-//
-//                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCT_SINGLE,
-//                                                        new Response.Listener<String>() {
-//                                                            @Override
-//                                                            public void onResponse(String response) {
-//                                                                try {
-//                                                                    JSONObject jsonObject = new JSONObject(response);
-//                                                                    String success = jsonObject.getString("success");
-//                                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                                                    if (success.equals("1")) {
-//                                                                        for (int i = 0; i < jsonArray.length(); i++) {
-//                                                                            JSONObject object = jsonArray.getJSONObject(i);
-//                                                                            String id = object.getString("id").trim();
-//                                                                            String seller_id = object.getString("user_id").trim();
-//                                                                            String main_category = object.getString("main_category").trim();
-//                                                                            String sub_category = object.getString("sub_category").trim();
-//                                                                            String ad_detail = object.getString("ad_detail").trim();
-//                                                                            String price = object.getString("price").trim();
-//                                                                            String division = object.getString("division");
-//                                                                            String district = object.getString("district");
-//                                                                            String image_item = object.getString("photo");
-//
-//                                                                        }
-//                                                                    } else {
-//                                                                        Toast.makeText(Sell_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
-//                                                                    }
-//                                                                } catch (JSONException e) {
-//                                                                    e.printStackTrace();
-//                                                                }
-//                                                            }
-//                                                        },
-//                                                        new Response.ErrorListener() {
-//                                                            @Override
-//                                                            public void onErrorResponse(VolleyError error) {
-//                                                            }
-//                                                        }) {
-//                                                    @Override
-//                                                    protected Map<String, String> getParams() throws AuthFailureError {
-//                                                        Map<String, String> params = new HashMap<>();
-//                                                        params.put("id", id);
-//                                                        params.put("ad_detail", ad_detail);
-//                                                        return params;
-//                                                    }
-//                                                };
-//
-//                                                RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
-//                                                requestQueue.add(stringRequest);
-//                                            }
-//                                        } else {
-//                                            Toast.makeText(Sell_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-//                            },
-//                            new Response.ErrorListener() {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error) {
-//                                }
-//                            }) {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError {
-//                            Map<String, String> params = new HashMap<>();
-//                            params.put("user_id", getId);
-//                            return params;
-//                        }
-//                    };
-//
-//                    RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
-//                    requestQueue.add(stringRequest);
-//                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
-//                    startActivity(intent);
-                }
-            }
-        });
+//        enter_setup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (filePath == null) {
+//                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
+//                } else {
+//                    saveEdit(getId, getStringImage(bitmap));
+//                }
+//            }
+//        });
 
         edittext_order = findViewById(R.id.enter_max_order);
 
