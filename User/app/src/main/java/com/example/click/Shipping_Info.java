@@ -163,4 +163,35 @@ public class Shipping_Info extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Shipping_Info.this);
         requestQueue.add(stringRequest);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1 = new Intent(Shipping_Info.this, View_Item_Single.class);
+
+        final Intent intent4 = getIntent();
+        String id1 = intent4.getStringExtra("id");
+        String userid1 = intent4.getStringExtra("user_id");
+        String strMain_category1 = intent4.getStringExtra("main_category");
+        String strSub_category1 = intent4.getStringExtra("sub_category");
+        String ad_detail1 = intent4.getStringExtra("ad_detail");
+        String strPrice1 = intent4.getStringExtra("price");
+        String division1 = intent4.getStringExtra("division");
+        String district1 = intent4.getStringExtra("district");
+        String photo1 = intent4.getStringExtra("photo");
+        String item_id = intent4.getStringExtra("item_id");
+
+        intent1.putExtra("item_id", item_id);
+        intent1.putExtra("id", id1);
+        intent1.putExtra("user_id", userid1);
+        intent1.putExtra("main_category", strMain_category1);
+        intent1.putExtra("sub_category", strSub_category1);
+        intent1.putExtra("ad_detail", ad_detail1);
+        intent1.putExtra("price", strPrice1);
+        intent1.putExtra("division", division1);
+        intent1.putExtra("district", district1);
+        intent1.putExtra("photo", photo1);
+
+        startActivity(intent1);
+    }
 }
