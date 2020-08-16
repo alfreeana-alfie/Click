@@ -344,6 +344,7 @@ public class All extends AppCompatActivity {
                                         Intent detailIntent = new Intent(All.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
@@ -547,6 +548,7 @@ public class All extends AppCompatActivity {
                                         Intent detailIntent = new Intent(All.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
@@ -751,6 +753,7 @@ public class All extends AppCompatActivity {
                                         Intent detailIntent = new Intent(All.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
@@ -956,6 +959,7 @@ public class All extends AppCompatActivity {
                                         Intent detailIntent = new Intent(All.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
@@ -1244,6 +1248,7 @@ public class All extends AppCompatActivity {
                                         Intent detailIntent = new Intent(All.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
