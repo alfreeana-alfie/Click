@@ -63,10 +63,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuantity1 = mQuantity++;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity1;
+                ++mQuantity;
+                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                 holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity1));
+                holder.Quantity.setText(String.valueOf(mQuantity));
                 if (mListerner != null) {
                     mListerner.onAddClick(position);
                 }
@@ -76,10 +76,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuantity1 = mQuantity--;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity1;
+                --mQuantity;
+                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                 holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity1));
+                holder.Quantity.setText(String.valueOf(mQuantity));
                 if (mListerner != null) {
                     mListerner.onMinusClick(position);
                 }
@@ -101,21 +101,26 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (mListerner != null) {
-                        mListerner.onClick(position);
-                    }
-                } else {
-                    if (mListerner != null) {
-                        mListerner.onDeleteCart_Temp(position);
-                    }
+            public void onClick(View v) {
+                if (holder.checkBox.isChecked()) {
+                    mListerner.onClick(position);
                 }
 
+                if(!holder.checkBox.isChecked()) {
+                    mListerner.onDeleteCart_Temp(position);
+                }
             }
         });
+
+//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//
+//            }
+//        });
 
         Picasso.get().load(photo_URL).into(holder.ItemImageView);
     }

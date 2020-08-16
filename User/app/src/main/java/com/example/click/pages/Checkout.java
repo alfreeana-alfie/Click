@@ -100,6 +100,7 @@ public class Checkout extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
+                            Double grandtotal = 0.00;
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -117,57 +118,14 @@ public class Checkout extends AppCompatActivity {
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
 
+                                    grandtotal += (price * Integer.parseInt(quantity));
+
+                                    Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+
 //                                    Toast.makeText(Checkout.this, item_id, Toast.LENGTH_SHORT).show();
 
                                     final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
                                     item.setQuantity(quantity);
-//                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
-//                                            new Response.Listener<String>() {
-//                                                @Override
-//                                                public void onResponse(String response) {
-//                                                    try {
-//                                                        JSONObject jsonObject = new JSONObject(response);
-//                                                        String success = jsonObject.getString("success");
-//                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                                        if (success.equals("1")) {
-//
-//                                                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                                                JSONObject object = jsonArray.getJSONObject(i);
-//                                                                String strDelivery_ID = object.getString("id").trim();
-//                                                                String strUser_ID = object.getString("user_id").trim();
-//                                                                String strDivision = object.getString("division");
-//                                                                String strPrice = object.getString("price");
-//                                                                String strDays = object.getString("days");
-//                                                                String strItemID = object.getString("item_id");
-//
-//                                                                Toast.makeText(Checkout.this, strDays, Toast.LENGTH_SHORT).show();
-//                                                            }
-//                                                        } else {
-//                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-//                                                        }
-//                                                    } catch (JSONException e) {
-//                                                        e.printStackTrace();
-//                                                        Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
-//
-//                                                    }
-//                                                }
-//                                            },
-//                                            new Response.ErrorListener() {
-//                                                @Override
-//                                                public void onErrorResponse(VolleyError error) {
-//                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
-//                                                }
-//                                            }) {
-//                                        @Override
-//                                        protected Map<String, String> getParams() throws AuthFailureError {
-//                                            Map<String, String> params = new HashMap<>();
-//                                            params.put("item_id", item_id);
-//                                            return params;
-//                                        }
-//                                    };
-//                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-//                                    requestQueue.add(stringRequest);
                                     item_all_detailsList.add(item);
                                 }
                                 userOrderAdapter = new UserOrderAdapter(Checkout.this, item_all_detailsList);
