@@ -137,37 +137,6 @@ public class Delivery_Combine {
         this.quantity = quantity;
     }
 
-    public Delivery_Combine(
-            String id,
-            String seller_id,
-            String main_category,
-            String sub_category,
-            String ad_detail,
-            String price,
-            String division,
-            String district,
-            String photo,
-            String delivery_id,
-            String delivery_user_id,
-            String delivery_division,
-            String delivery_price,
-            String delivery_days,
-            String delivery_item_id) {
-        this.delivery_id = delivery_id;
-        this.delivery_user_id = delivery_user_id;
-        this.delivery_division = delivery_division;
-        this.delivery_price = delivery_price;
-        this.delivery_days = delivery_days;
-        this.delivery_item_id = delivery_item_id;
-        this.id = id;
-        this.seller_id = seller_id;
-        this.ad_detail = ad_detail;
-        this.price = price;
-        this.division = division;
-        this.district = district;
-        this.photo = photo;
-        this.main_category = main_category;
-        this.sub_category = sub_category;
-        this.quantity = quantity;
+    public Delivery_Combine() {
     }
 }
