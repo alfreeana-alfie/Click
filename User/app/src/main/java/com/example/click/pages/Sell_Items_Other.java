@@ -168,7 +168,9 @@ public class Sell_Items_Other extends AppCompatActivity {
         back_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Sell_Items_Other.this, Homepage.class));
+                Intent intent4 = new Intent(Sell_Items_Other.this, Homepage.class);
+                intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent4);
             }
         });
 
@@ -202,17 +204,6 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_location = findViewById(R.id.enter_location);
         enter_price = findViewById(R.id.enter_price);
         enter_setup = findViewById(R.id.enter_delivery_location);
-//        enter_setup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (filePath == null) {
-//                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
-//                } else {
-//                    saveEdit(getId, getStringImage(bitmap));
-//                }
-//            }
-//        });
-
         edittext_order = findViewById(R.id.enter_max_order);
 
 

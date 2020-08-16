@@ -74,7 +74,7 @@ public class Camera extends AppCompatActivity {
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
-    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply;
+    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
     @Override
@@ -116,7 +116,7 @@ public class Camera extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     Button_Search.setVisibility(View.GONE);
-                    Button_Filter.setVisibility(View.VISIBLE);
+                    Button_Filter.setVisibility(View.GONE);
                     close_search.setVisibility(View.GONE);
                 } else {
                     Button_Search.setVisibility(View.VISIBLE);
@@ -158,7 +158,7 @@ public class Camera extends AppCompatActivity {
             public void onClick(View v) {
                 no_result.setVisibility(View.GONE);
                 Button_Search.setVisibility(View.GONE);
-                Button_Filter.setVisibility(View.VISIBLE);
+                Button_Filter.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
@@ -210,6 +210,17 @@ public class Camera extends AppCompatActivity {
         Button_Apply = findViewById(R.id.btn_apply);
         no_result = findViewById(R.id.no_result);
         no_result.setVisibility(View.GONE);
+
+        Button_Filter = findViewById(R.id.btn_filter);
+        Button_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filter_layout.setVisibility(View.VISIBLE);
+                category_layout.setVisibility(View.GONE);
+                no_result.setVisibility(View.GONE);
+            }
+        });
+
 
         Button_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override

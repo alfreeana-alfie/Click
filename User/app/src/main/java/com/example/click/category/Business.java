@@ -47,16 +47,6 @@ import java.util.Map;
 
 public class Business extends AppCompatActivity {
 
-//    public static final String ID = "id";
-//    public static final String USERID = "user_id";
-//    public static final String MAIN_CATE = "main_category";
-//    public static final String SUB_CATE = "sub_category";
-//    public static final String AD_DETAIL = "ad_detail";
-//    public static final String PRICE = "price";
-//    public static final String DISTRICT = "district";
-//    public static final String DIVISION = "division";
-//    public static final String PHOTO = "photo";
-
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_business.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
@@ -77,7 +67,7 @@ public class Business extends AppCompatActivity {
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
-    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply;
+    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
     @Override
@@ -119,7 +109,7 @@ public class Business extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     Button_Search.setVisibility(View.GONE);
-                    Button_Filter.setVisibility(View.VISIBLE);
+                    Button_Filter.setVisibility(View.GONE);
                     close_search.setVisibility(View.GONE);
                 } else {
                     Button_Search.setVisibility(View.VISIBLE);
@@ -161,7 +151,7 @@ public class Business extends AppCompatActivity {
             public void onClick(View v) {
                 no_result.setVisibility(View.GONE);
                 Button_Search.setVisibility(View.GONE);
-                Button_Filter.setVisibility(View.VISIBLE);
+                Button_Filter.setVisibility(View.GONE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
@@ -211,6 +201,16 @@ public class Business extends AppCompatActivity {
 
         Button_Cancel = findViewById(R.id.btn_cancel);
         Button_Apply = findViewById(R.id.btn_apply);
+        Button_Filter = findViewById(R.id.btn_filter);
+        Button_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filter_layout.setVisibility(View.VISIBLE);
+                category_layout.setVisibility(View.GONE);
+                no_result.setVisibility(View.GONE);
+            }
+        });
+
         no_result = findViewById(R.id.no_result);
         no_result.setVisibility(View.GONE);
 

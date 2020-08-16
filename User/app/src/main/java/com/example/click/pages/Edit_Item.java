@@ -573,7 +573,6 @@ public class Edit_Item extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         Button_SavedEdit.setVisibility(View.GONE);
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override

@@ -147,7 +147,7 @@ public class View_Item_Single extends AppCompatActivity {
                             params.put("main_category", strMain_category);
                             params.put("sub_category", strSub_category);
                             params.put("ad_detail", ad_detail);
-                            params.put("price", String.format("%.2f", strPrice));
+                            params.put("price", strPrice);
                             params.put("division", division);
                             params.put("district", district);
                             params.put("photo", photo);

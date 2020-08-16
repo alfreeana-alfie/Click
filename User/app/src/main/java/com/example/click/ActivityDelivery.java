@@ -24,6 +24,7 @@ import com.example.click.data.SessionManager;
 import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Row_Add;
+import com.example.click.pages.Sell_Items_Other;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +66,9 @@ public class ActivityDelivery extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent1 = new Intent(ActivityDelivery.this, Sell_Items_Other.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
             }
         });
 
@@ -387,5 +390,13 @@ public class ActivityDelivery extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ActivityDelivery.this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1 = new Intent(ActivityDelivery.this, Sell_Items_Other.class);
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent1);
     }
 }

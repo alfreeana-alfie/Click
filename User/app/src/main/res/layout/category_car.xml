@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_orange"
-            android:stretchColumns="1">
+            android:stretchColumns="1,2">
 
             <TableRow
                 android:layout_width="0dp"
@@ -86,6 +86,18 @@
                         android:textColor="@color/colorAccent"
                         android:textSize="13sp" />
                 </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_filter"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_column="2"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/colorWhite"
+                    android:drawableEnd="@drawable/ic_filter_foreground"
+                    android:textSize="12sp"
+                    android:text="Filter" />
 
             </TableRow>
 
