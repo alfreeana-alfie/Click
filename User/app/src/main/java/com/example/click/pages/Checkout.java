@@ -32,6 +32,7 @@ import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
 import com.example.click.user.Edit_Profile;
+import com.example.click.user.Edit_Profile_Address;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -163,7 +164,8 @@ public class Checkout extends AppCompatActivity {
         address_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Checkout.this, Edit_Profile.class);
+                Intent intent = new Intent(Checkout.this, Edit_Profile_Address.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });

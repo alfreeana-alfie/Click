@@ -26,10 +26,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Single_Adapter;
 import com.example.click.category.Car;
+import com.example.click.category.Travel;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
 import com.example.click.pages.Chat;
+import com.example.click.pages.Homepage;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
@@ -273,7 +275,9 @@ public class View_Item_Single extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(View_Item_Single.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
     }
@@ -526,6 +530,8 @@ public class View_Item_Single extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(View_Item_Single.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

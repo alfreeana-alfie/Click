@@ -97,6 +97,7 @@
         <activity android:name=".Seller_Shop" />
         <activity android:name=".Shipping_Info" />
         <activity android:name=".pages.Other_Cart" />
+        <activity android:name=".user.Edit_Profile_Address" />
 
 
         <meta-data

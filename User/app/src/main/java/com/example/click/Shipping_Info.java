@@ -60,7 +60,7 @@ public class Shipping_Info extends AppCompatActivity {
         final String item_id = intent.getStringExtra("item_id");
         itemList = new ArrayList<>();
 
-        Toast.makeText(Shipping_Info.this, userid, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Shipping_Info.this, userid, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerView);
 

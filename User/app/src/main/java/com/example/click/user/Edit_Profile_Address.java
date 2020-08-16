@@ -34,7 +34,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Checkout;
-import com.example.click.pages.Homepage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -49,7 +48,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Edit_Profile extends AppCompatActivity {
+public class Edit_Profile_Address extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
@@ -111,7 +110,7 @@ public class Edit_Profile extends AppCompatActivity {
         layout_gender_display = findViewById(R.id.layout_gender_display);
         layout_gender = findViewById(R.id.layout_gender);
 
-        adapter_gender = ArrayAdapter.createFromResource(Edit_Profile.this, R.array.gender, android.R.layout.simple_spinner_item);
+        adapter_gender = ArrayAdapter.createFromResource(Edit_Profile_Address.this, R.array.gender, android.R.layout.simple_spinner_item);
         adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender.setAdapter(adapter_gender);
 
@@ -154,8 +153,7 @@ public class Edit_Profile extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Edit_Profile.this, Homepage.class);
+                Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -266,7 +264,7 @@ public class Edit_Profile extends AppCompatActivity {
 
     // Getting User Details
     private void getUserDetail() {
-        final ProgressDialog progressDialog = new ProgressDialog(Edit_Profile.this);
+        final ProgressDialog progressDialog = new ProgressDialog(Edit_Profile_Address.this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
@@ -314,7 +312,7 @@ public class Edit_Profile extends AppCompatActivity {
                                 }
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Edit_Profile_Address.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -357,7 +355,7 @@ public class Edit_Profile extends AppCompatActivity {
         final String strGender = this.gender.getSelectedItem().toString().trim();
         final String id = getId;
 
-        final ProgressDialog progressDialog = new ProgressDialog(Edit_Profile.this);
+        final ProgressDialog progressDialog = new ProgressDialog(Edit_Profile_Address.this);
         progressDialog.setMessage("Saving...");
         progressDialog.show();
 
@@ -372,9 +370,12 @@ public class Edit_Profile extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress01, strAddress02, strCity, strPostCode, strBirthday, strGender, id);
-                                Toast.makeText(Edit_Profile.this, "Profile Saved", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                Toast.makeText(Edit_Profile_Address.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Edit_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -444,15 +445,15 @@ public class Edit_Profile extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile.this, "Success!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Edit_Profile_Address.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
                                 progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             progressDialog.dismiss();
-                            Toast.makeText(Edit_Profile.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Edit_Profile_Address.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -494,7 +495,7 @@ public class Edit_Profile extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Edit_Profile.this, Homepage.class);
+        Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

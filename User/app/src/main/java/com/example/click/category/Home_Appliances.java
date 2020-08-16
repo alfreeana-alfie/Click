@@ -140,6 +140,7 @@ public class Home_Appliances extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home_Appliances.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -1412,6 +1413,7 @@ public class Home_Appliances extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(Home_Appliances.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 

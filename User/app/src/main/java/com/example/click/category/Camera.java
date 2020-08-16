@@ -149,6 +149,7 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Camera.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -1420,6 +1421,7 @@ public class Camera extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(Camera.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
