@@ -696,8 +696,8 @@ public class Edit_Item extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            saveImage(getStringImage(bitmap));
         }
-        saveImage(getStringImage(bitmap));
     }
 
     @Override

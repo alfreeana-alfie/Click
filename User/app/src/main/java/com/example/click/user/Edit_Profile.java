@@ -53,7 +53,7 @@ public class Edit_Profile extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/upload.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/profile_image/upload.php";
     SessionManager sessionManager;
     String getId;
     Uri filePath;
@@ -487,8 +487,9 @@ public class Edit_Profile extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            UploadPicture(getId, getStringImage(bitmap));
         }
-        UploadPicture(getId, getStringImage(bitmap));
+
     }
 
     @Override
