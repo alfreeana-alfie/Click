@@ -96,6 +96,7 @@
         <activity android:name=".View_Item_Single" />
         <activity android:name=".Seller_Shop" />
         <activity android:name=".Shipping_Info" />
+        <activity android:name=".pages.Other_Cart" />
 
 
         <meta-data

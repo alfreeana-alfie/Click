@@ -110,7 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     }
                 } else {
                     if (mListerner != null) {
-                        mListerner.onDeleteOrder(position);
+                        mListerner.onDeleteCart_Temp(position);
                     }
                 }
 
@@ -128,7 +128,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public interface OnItemClickListener {
         void onDeleteClick(int position);
 
-        void onDeleteOrder(int position);
+        void onDeleteCart_Temp(int position);
 
         void onClick(int position);
 
