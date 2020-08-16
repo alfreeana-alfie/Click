@@ -80,7 +80,15 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = getIntent();
+                final String item_id = intent.getStringExtra("item_id");
+                final String ad_detail = intent.getStringExtra("ad_detail");
+
+                Intent intent1 = new Intent(Row_Add.this, ActivityDelivery.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent1.putExtra("item_id", item_id);
+                intent1.putExtra("ad_detail", ad_detail);
+                startActivity(intent1);
             }
         });
 

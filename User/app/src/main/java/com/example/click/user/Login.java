@@ -370,7 +370,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             } else {
                                 try {
                                     JSONObject obj = new JSONObject(s);
-
                                     if (!obj.has(name_firebase)) {
                                         reference.child(name_firebase).child("email").setValue(email_firebase);
                                         reference.child(name_firebase).child("photo").setValue(photo);
