@@ -129,6 +129,8 @@ public class Edit_Delivery extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(Edit_Delivery.this, ActivityDelivery.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent1.putExtra("item_id", item_id);
+                intent1.putExtra("ad_detail", ad_detail);
                 startActivity(intent1);
             }
         });
