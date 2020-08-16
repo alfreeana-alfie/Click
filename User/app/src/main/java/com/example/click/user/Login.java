@@ -244,6 +244,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                     if (s.equals("null")) {
                                                                         reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                        reference.child(name_firebase).child("photo").setValue(photo);
                                                                         reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                     } else {
                                                                         try {
@@ -516,18 +517,19 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                 if (s.equals("null")) {
                     reference.child(name_firebase).child("email").setValue(email_firebase);
-                    reference.child(name_firebase).child("photo").setValue(String.valueOf(account.getPhotoUrl()));
+                    reference.child(name_firebase).child("photo").setValue(photo);
                     reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                 } else {
                     try {
                         JSONObject obj = new JSONObject(s);
+
                         if (!obj.has(name_firebase)) {
                             reference.child(name_firebase).child("email").setValue(email_firebase);
-                            reference.child(name_firebase).child("photo").setValue(String.valueOf(account.getPhotoUrl()));
+                            reference.child(name_firebase).child("photo").setValue(photo);
                             reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         } else {
                             reference.child(name_firebase).child("email").setValue(email_firebase);
-                            reference.child(name_firebase).child("photo").setValue(String.valueOf(account.getPhotoUrl()));
+                            reference.child(name_firebase).child("photo").setValue(photo);
                             reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         }
                     } catch (JSONException e) {
@@ -555,8 +557,43 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Intent intent = new Intent(getContext(), Homepage.class);
-                                startActivity(intent);
+                                String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String s) {
+                                        final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                        if (s.equals("null")) {
+                                            reference.child(name_firebase).child("email").setValue(email_firebase);
+                                            reference.child(name_firebase).child("photo").setValue(photo);
+                                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                        } else {
+                                            try {
+                                                JSONObject obj = new JSONObject(s);
+                                                if (!obj.has(name_firebase)) {
+                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                } else {
+                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        System.out.println("" + volleyError);
+                                    }
+                                });
+
+                                RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                                rQueue.add(request);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -567,7 +604,11 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), "Connection Error" + error.toString(), Toast.LENGTH_SHORT).show();
+                        if (error.getMessage() == null) {
+                            Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }) {
             @Override

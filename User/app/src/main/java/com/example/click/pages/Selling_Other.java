@@ -173,7 +173,9 @@ public class Selling_Other extends Fragment {
                                         final String remarks = "ACCEPT";
 
                                         Accept(view, strOrder_Id);
+
                                         Update_Order(view, strOrder_Date, remarks);
+
                                         Delete_Order(view, strOrder_Id);
 
                                         itemList.remove(position);

@@ -201,7 +201,7 @@ public class Buying_Other extends Fragment {
 
                                                                                                         TOPIC = obj.getJSONObject(strName).get("token").toString();
                                                                                                         NOTIFICATION_TITLE = "KetekMall";
-                                                                                                        NOTIFICATION_MESSAGE = strAd_Detail + " has canceled order by " + strName;
+                                                                                                        NOTIFICATION_MESSAGE = " Canceled order";
 
                                                                                                         JSONObject notification = new JSONObject();
                                                                                                         JSONObject notifcationBody = new JSONObject();

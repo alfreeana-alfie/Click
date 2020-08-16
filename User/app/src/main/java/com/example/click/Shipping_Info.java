@@ -22,6 +22,7 @@ import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.pages.Cart;
+import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 
 import org.json.JSONArray;
@@ -45,13 +46,33 @@ public class Shipping_Info extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shipping_info);
+        final Intent intent = getIntent();
+        String id = intent.getStringExtra("id");
+        String userid = intent.getStringExtra("user_id");
+        String strMain_category = intent.getStringExtra("main_category");
+        String strSub_category = intent.getStringExtra("sub_category");
+        String ad_detail = intent.getStringExtra("ad_detail");
+        String strPrice = intent.getStringExtra("price");
+        String division = intent.getStringExtra("division");
+        String district = intent.getStringExtra("district");
+        String photo = intent.getStringExtra("photo");
+
+        final String item_id = intent.getStringExtra("item_id");
         itemList = new ArrayList<>();
+
+        Toast.makeText(Shipping_Info.this, userid, Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Shipping_Info.this));
 
+        ToolbarSetting();
+
+        View_Shipping(item_id);
+    }
+
+    private void ToolbarSetting(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,14 +82,37 @@ public class Shipping_Info extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent1 = new Intent(Shipping_Info.this, View_Item_Single.class);
+
+                final Intent intent4 = getIntent();
+                String id1 = intent4.getStringExtra("id");
+                String userid1 = intent4.getStringExtra("user_id");
+                String strMain_category1 = intent4.getStringExtra("main_category");
+                String strSub_category1 = intent4.getStringExtra("sub_category");
+                String ad_detail1 = intent4.getStringExtra("ad_detail");
+                String strPrice1 = intent4.getStringExtra("price");
+                String division1 = intent4.getStringExtra("division");
+                String district1 = intent4.getStringExtra("district");
+                String photo1 = intent4.getStringExtra("photo");
+                String item_id = intent4.getStringExtra("item_id");
+
+                intent1.putExtra("item_id", item_id);
+                intent1.putExtra("id", id1);
+                intent1.putExtra("user_id", userid1);
+                intent1.putExtra("main_category", strMain_category1);
+                intent1.putExtra("sub_category", strSub_category1);
+                intent1.putExtra("ad_detail", ad_detail1);
+                intent1.putExtra("price", strPrice1);
+                intent1.putExtra("division", division1);
+                intent1.putExtra("district", district1);
+                intent1.putExtra("photo", photo1);
+
+                startActivity(intent1);
             }
         });
+    }
 
-        Intent intent = getIntent();
-        final String item_id = intent.getStringExtra("item_id");
-
-//        Toast.makeText(Shipping_Info.this, item_id, Toast.LENGTH_SHORT).show();
+    private void View_Shipping(final String item_id){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                 new Response.Listener<String>() {
