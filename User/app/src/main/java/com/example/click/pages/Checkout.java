@@ -574,7 +574,83 @@ public class Checkout extends AppCompatActivity {
                                                         String success = jsonObject.getString("success");
 
                                                         if (success.equals("1")) {
-                                                            addReceipt();
+                                                            //addReceipt();
+                                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                                                                    new Response.Listener<String>() {
+                                                                        @Override
+                                                                        public void onResponse(String response) {
+                                                                            try {
+                                                                                JSONObject jsonObject = new JSONObject(response);
+                                                                                String success = jsonObject.getString("success");
+                                                                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                                                if (success.equals("1")) {
+                                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                                                                        final String strName = object.getString("name").trim();
+
+                                                                                        String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                                                                                        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                                            @Override
+                                                                                            public void onResponse(String s) {
+                                                                                                try {
+                                                                                                    JSONObject obj = new JSONObject(s);
+
+                                                                                                    TOPIC = obj.getJSONObject(strName).get("token").toString();
+                                                                                                    NOTIFICATION_TITLE = strName;
+                                                                                                    NOTIFICATION_MESSAGE = "You have new order";
+
+                                                                                                    JSONObject notification = new JSONObject();
+                                                                                                    JSONObject notifcationBody = new JSONObject();
+                                                                                                    try {
+                                                                                                        notifcationBody.put("title", NOTIFICATION_TITLE);
+                                                                                                        notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                                                                                                        notification.put("to", TOPIC);
+                                                                                                        notification.put("data", notifcationBody);
+                                                                                                        sendNotification(notification);
+
+                                                                                                        Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
+                                                                                                    } catch (JSONException e) {
+                                                                                                        Log.e(TAG, "onCreate: " + e.getMessage());
+                                                                                                    }
+                                                                                                } catch (JSONException e) {
+                                                                                                    e.printStackTrace();
+                                                                                                }
+                                                                                            }
+                                                                                        }, new Response.ErrorListener() {
+                                                                                            @Override
+                                                                                            public void onErrorResponse(VolleyError volleyError) {
+                                                                                                System.out.println("" + volleyError);
+                                                                                            }
+                                                                                        });
+                                                                                        RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
+                                                                                        rQueue.add(request);
+                                                                                    }
+                                                                                } else {
+                                                                                    Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    new Response.ErrorListener() {
+                                                                        @Override
+                                                                        public void onErrorResponse(VolleyError error) {
+                                                                        }
+                                                                    }) {
+                                                                @Override
+                                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                                    Map<String, String> params = new HashMap<>();
+                                                                    params.put("id", seller_id);
+                                                                    return params;
+                                                                }
+                                                            };
+                                                            RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                                            requestQueue.add(stringRequest);
                                                             DeleteOrder_Single();
                                                             Intent intent = new Intent(Checkout.this, After_Place_Order.class);
                                                             startActivity(intent);
