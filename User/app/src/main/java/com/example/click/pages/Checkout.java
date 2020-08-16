@@ -23,6 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Delivery;
+import com.example.click.Delivery_Combine;
+import com.example.click.Delivery_Other;
 import com.example.click.R;
 import com.example.click.adapter.UserOrderAdapter;
 import com.example.click.data.Item_All_Details;
@@ -41,11 +44,14 @@ import java.util.Map;
 public class Checkout extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery.php";
+    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single_delivery.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
+
     private static String URL_DELETE_SINGLE = "https://ketekmall.com/ketekmall/delete_order.php";
 
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
+    private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
+
+    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart_temp.php";
     private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
     private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
@@ -61,7 +67,7 @@ public class Checkout extends AppCompatActivity {
 
 
     Button Button_Checkout;
-    TextView Grand_Total, AddressUser, Shipping_Price;
+    TextView Grand_Total, AddressUser;
 
     RecyclerView recyclerView;
     UserOrderAdapter userOrderAdapter;
@@ -82,7 +88,7 @@ public class Checkout extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
+        final HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
@@ -98,8 +104,8 @@ public class Checkout extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
-                                    final String seller_id = object.getString("customer_id").trim();
+                                    final String id = object.getString("id").trim();
+                                    final String customer_id = object.getString("customer_id").trim();
                                     final String main_category = object.getString("main_category").trim();
                                     final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
@@ -107,14 +113,66 @@ public class Checkout extends AppCompatActivity {
                                     final String division = object.getString("division");
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
+                                    final String seller_id = object.getString("seller_id");
+                                    final String item_id = object.getString("item_id");
+                                    final String quantity = object.getString("quantity");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
+//                                    Toast.makeText(Checkout.this, item_id, Toast.LENGTH_SHORT).show();
+
+                                    final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
+                                    item.setQuantity(quantity);
+//                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+//                                            new Response.Listener<String>() {
+//                                                @Override
+//                                                public void onResponse(String response) {
+//                                                    try {
+//                                                        JSONObject jsonObject = new JSONObject(response);
+//                                                        String success = jsonObject.getString("success");
+//                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+//
+//                                                        if (success.equals("1")) {
+//
+//                                                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                                                JSONObject object = jsonArray.getJSONObject(i);
+//                                                                String strDelivery_ID = object.getString("id").trim();
+//                                                                String strUser_ID = object.getString("user_id").trim();
+//                                                                String strDivision = object.getString("division");
+//                                                                String strPrice = object.getString("price");
+//                                                                String strDays = object.getString("days");
+//                                                                String strItemID = object.getString("item_id");
+//
+//                                                                Toast.makeText(Checkout.this, strDays, Toast.LENGTH_SHORT).show();
+//                                                            }
+//                                                        } else {
+//                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+//                                                        }
+//                                                    } catch (JSONException e) {
+//                                                        e.printStackTrace();
+//                                                        Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+//
+//                                                    }
+//                                                }
+//                                            },
+//                                            new Response.ErrorListener() {
+//                                                @Override
+//                                                public void onErrorResponse(VolleyError error) {
+//                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+//                                                }
+//                                            }) {
+//                                        @Override
+//                                        protected Map<String, String> getParams() throws AuthFailureError {
+//                                            Map<String, String> params = new HashMap<>();
+//                                            params.put("item_id", item_id);
+//                                            return params;
+//                                        }
+//                                    };
+//                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+//                                    requestQueue.add(stringRequest);
                                     item_all_detailsList.add(item);
                                 }
                                 userOrderAdapter = new UserOrderAdapter(Checkout.this, item_all_detailsList);
                                 recyclerView.setAdapter(userOrderAdapter);
                             }
-                            userOrderAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
 //                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -142,7 +200,6 @@ public class Checkout extends AppCompatActivity {
 
         Grand_Total = findViewById(R.id.grandtotal);
         AddressUser = findViewById(R.id.address);
-        Shipping_Price = findViewById(R.id.price);
 
         address_layout = findViewById(R.id.address_layout);
         address_layout.setOnClickListener(new View.OnClickListener() {
@@ -159,12 +216,7 @@ public class Checkout extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         item_all_detailsList = new ArrayList<>();
 
-        Button_Checkout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addReceipt();
-            }
-        });
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -178,7 +230,6 @@ public class Checkout extends AppCompatActivity {
                 Intent intent = new Intent(Checkout.this, Cart.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                DeleteOrder_Single();
             }
         });
 
@@ -203,14 +254,19 @@ public class Checkout extends AppCompatActivity {
                                     String strPhone_no = object.getString("phone_no").trim();
                                     String strAddress01 = object.getString("address_01");
                                     String strAddress02 = object.getString("address_02");
-                                    String strCity = object.getString("division");
+                                    final String strCity = object.getString("division");
                                     String strPostCode = object.getString("postcode");
 
                                     String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                     AddressUser.setText(Address);
 
-                                    addDelivery(strCity);
+                                    Button_Checkout.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            AddOrder(strCity);
+                                        }
+                                    });
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -265,7 +321,7 @@ public class Checkout extends AppCompatActivity {
                                                         String success = Object.getString("success");
 
                                                         if (success.equals("1")) {
-                                                            Toast.makeText(Checkout.this, "Success Receipt!", Toast.LENGTH_SHORT).show();
+//                                                            Toast.makeText(Checkout.this, "Success Receipt!", Toast.LENGTH_SHORT).show();
                                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_RECEIPTS,
                                                                     new Response.Listener<String>() {
                                                                         @Override
@@ -293,7 +349,7 @@ public class Checkout extends AppCompatActivity {
                                                                                                             String success = Object.getString("success");
 
                                                                                                             if (success.equals("1")) {
-                                                                                                                Toast.makeText(Checkout.this, "Success Approved!", Toast.LENGTH_SHORT).show();
+//                                                                                                                Toast.makeText(Checkout.this, "Success Approved!", Toast.LENGTH_SHORT).show();
                                                                                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                                                                         new Response.Listener<String>() {
                                                                                                                             @Override
@@ -347,10 +403,6 @@ public class Checkout extends AppCompatActivity {
                                                                                                                                             });
                                                                                                                                             RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
                                                                                                                                             rQueue.add(request);
-
-                                                                                                                                            Intent intent = new Intent(Checkout.this, After_Place_Order.class);
-                                                                                                                                            startActivity(intent);
-
                                                                                                                                         }
                                                                                                                                     } else {
                                                                                                                                         Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -486,6 +538,106 @@ public class Checkout extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void AddOrder(final String User_Division){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String id = object.getString("id").trim();
+                                    final String customer_id = object.getString("customer_id").trim();
+                                    final String main_category = object.getString("main_category").trim();
+                                    final String sub_category = object.getString("sub_category").trim();
+                                    final String ad_detail = object.getString("ad_detail").trim();
+                                    final Double price = Double.valueOf(object.getString("price").trim());
+                                    final String division = object.getString("division");
+                                    final String district = object.getString("district");
+                                    final String image_item = object.getString("photo");
+                                    final String seller_id = object.getString("seller_id");
+                                    final String item_id = object.getString("item_id");
+                                    final String quantity = object.getString("quantity");
+
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        String success = jsonObject.getString("success");
+
+                                                        if (success.equals("1")) {
+                                                            addReceipt();
+                                                            DeleteOrder_Single();
+                                                            Intent intent = new Intent(Checkout.this, After_Place_Order.class);
+                                                            startActivity(intent);
+//                                                            Toast.makeText(Checkout.this, "SUCCESS", Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                        Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("seller_id", seller_id);
+                                            params.put("customer_id", getId);
+                                            params.put("ad_detail", ad_detail);
+                                            params.put("main_category", main_category);
+                                            params.put("sub_category", sub_category);
+                                            params.put("price", String.format("%.2f", price));
+                                            params.put("division", User_Division);
+                                            params.put("district", User_Division);
+                                            params.put("photo", image_item);
+                                            params.put("item_id", item_id);
+                                            params.put("quantity", quantity);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                    requestQueue.add(stringRequest);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void addDelivery(final String Division) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ORDER,
                 new Response.Listener<String>() {
@@ -521,11 +673,6 @@ public class Checkout extends AppCompatActivity {
                                                                 String strDivision = object.getString("division");
                                                                 String strPrice = object.getString("price");
                                                                 String strDays = object.getString("days");
-
-                                                                if (strUser_ID.equals(seller_id_cart) && strDivision.equals(Division)) {
-
-                                                                    Shipping_Price.setText("MYR" + strPrice);
-                                                                }
                                                             }
                                                         } else {
                                                             Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -609,12 +756,10 @@ public class Checkout extends AppCompatActivity {
         Intent intent = new Intent(Checkout.this, Cart.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-
-        DeleteOrder_Single();
     }
 
     private void DeleteOrder_Single() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_SINGLE,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -623,8 +768,7 @@ public class Checkout extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Intent intent = new Intent(Checkout.this, Cart.class);
-                                startActivity(intent);
+
                             } else {
                                 Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }

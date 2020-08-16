@@ -91,6 +91,7 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             mListener.onCancelClick(position);
+                            btn_cancel.setVisibility(View.GONE);
                         }
                     }
                 }

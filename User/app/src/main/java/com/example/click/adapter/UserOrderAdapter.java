@@ -10,16 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.click.Delivery;
+import com.example.click.Delivery_Combine;
+import com.example.click.Delivery_Other;
 import com.example.click.R;
 import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.ViewHolder> {
 
     Context context;
-    int mQuantity = 1;
     private List<Item_All_Details> item_all_details;
 
     public UserOrderAdapter(Context context, List<Item_All_Details> item_all_detailsList) {
@@ -38,7 +41,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Item_All_Details itemAllDetails = item_all_details.get(position);
 
-        String order_id = itemAllDetails.getSeller_id();
+        String order_id = itemAllDetails.getId();
         String ad_detail = itemAllDetails.getAd_detail();
         String price = itemAllDetails.getPrice();
         String photo_URL = itemAllDetails.getPhoto();
@@ -48,7 +51,8 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
 
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText("MYR" + price);
-        holder.Quantity.setText(itemAllDetails.getQuantity());
+        holder.Quantity.setText("x"+itemAllDetails.getQuantity());
+
     }
 
     @Override
@@ -59,7 +63,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView photo;
-        TextView Order_ID, AdDetail, UnitPrice, Quantity;
+        TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price;
 
         public ViewHolder(View view) {
             super(view);
@@ -69,6 +73,7 @@ public class UserOrderAdapter extends RecyclerView.Adapter<UserOrderAdapter.View
             AdDetail = view.findViewById(R.id.ad_detail_display);
             UnitPrice = view.findViewById(R.id.unit_price_display);
             Quantity = view.findViewById(R.id.quantity_display);
+            shippin_price = view.findViewById(R.id.shippin_price);
 
         }
     }

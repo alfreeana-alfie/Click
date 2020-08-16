@@ -140,17 +140,18 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                         Intent detailIntent = new Intent(Find_My_Items_Other.this, Edit_Item.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(EXTRA_USERID, getId);
+                                        detailIntent.putExtra("user_id", getId);
                                         detailIntent.putExtra("id", item.getId());
-                                        detailIntent.putExtra(EXTRA_MAIN, item.getMain_category());
-                                        detailIntent.putExtra(EXTRA_SUB, item.getSub_category());
-                                        detailIntent.putExtra(EXTRA_AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(EXTRA_PRICE, item.getPrice());
-                                        detailIntent.putExtra(EXTRA_DIVISION, item.getDivision());
-                                        detailIntent.putExtra(EXTRA_DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(EXTRA_IMG_ITEM, item.getPhoto());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("max_order", item.getMax_order());
 
+                                        detailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(detailIntent);
                                     }
 

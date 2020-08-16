@@ -23,6 +23,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Delivery;
+import com.example.click.Delivery_Combine;
+import com.example.click.Delivery_Other;
 import com.example.click.R;
 import com.example.click.adapter.UserOrderAdapter;
 import com.example.click.data.Item_All_Details;
@@ -66,6 +69,7 @@ public class Other_Checkout extends AppCompatActivity {
     RecyclerView recyclerView;
     UserOrderAdapter userOrderAdapter;
     ArrayList<Item_All_Details> item_all_detailsList;
+    ArrayList<Delivery_Other> deliveryArrayList;
     RelativeLayout address_layout;
 
     String getId;
@@ -108,8 +112,8 @@ public class Other_Checkout extends AppCompatActivity {
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
 
-                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
-                                    item_all_detailsList.add(item);
+//                                    Delivery_Combine item = new Delivery_Combine(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
+//                                    item_all_detailsList.add(item);
                                 }
                                 userOrderAdapter = new UserOrderAdapter(Other_Checkout.this, item_all_detailsList);
                                 recyclerView.setAdapter(userOrderAdapter);

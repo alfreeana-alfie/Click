@@ -50,6 +50,9 @@ public class Cart extends AppCompatActivity {
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
     private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
+
+    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
+
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
     private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
     private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_to_checkout.php";
@@ -97,57 +100,8 @@ public class Cart extends AppCompatActivity {
         Button_Checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("success");
-                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                                    if (success.equals("1")) {
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            JSONObject object = jsonArray.getJSONObject(i);
-
-                                            final String id = object.getString("id").trim();
-                                            final String customer_id = object.getString("customer_id").trim();
-                                            final String main_category = object.getString("main_category").trim();
-                                            final String sub_category = object.getString("sub_category").trim();
-                                            final String ad_detail = object.getString("ad_detail").trim();
-                                            final Double price = Double.valueOf(object.getString("price").trim());
-                                            final String division = object.getString("division");
-                                            final String district = object.getString("district");
-                                            final String image_item = object.getString("photo");
-                                            final String seller_id = object.getString("seller_id").trim();
-                                            final String item_id = object.getString("item_id").trim();
-                                            final String quantity = object.getString("quantity").trim();
-
-                                            Intent intent = new Intent(Cart.this, Checkout.class);
-                                            startActivity(intent);
-                                        }
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-                        params.put("customer_id", getId);
-                        return params;
-                    }
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(v.getContext());
-                requestQueue.add(stringRequest);
+                Intent intent = new Intent(Cart.this, Checkout.class);
+                startActivity(intent);
             }
         });
         recyclerView = findViewById(R.id.cart_view);
@@ -184,7 +138,7 @@ public class Cart extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
-                                    final String seller_id = object.getString("customer_id").trim();
+                                    final String seller_id = object.getString("seller_id").trim();
                                     final String main_category = object.getString("main_category").trim();
                                     final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
@@ -193,6 +147,7 @@ public class Cart extends AppCompatActivity {
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     String quantity = object.getString("quantity");
+                                    final String item_id = object.getString("item_id");
 
 //                                    Double grandtotal = 0.00;
 //                                    grandtotal += (price * Integer.parseInt(quantity));
@@ -201,6 +156,7 @@ public class Cart extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
                                     item.setQuantity(quantity);
+                                    item.setItem_id(item_id);
                                     number = Integer.parseInt(item.getQuantity());
                                     itemAllDetailsArrayList.add(item);
                                 }
@@ -247,6 +203,7 @@ public class Cart extends AppCompatActivity {
                                                     protected Map<String, String> getParams() throws AuthFailureError {
                                                         Map<String, String> params = new HashMap<>();
                                                         params.put("id", item.getId());
+                                                        params.put("cart_id", item.getId());
                                                         return params;
                                                     }
                                                 };
@@ -269,7 +226,7 @@ public class Cart extends AppCompatActivity {
                                     public void onDeleteCart_Temp(final int position) {
                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
 
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP,
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
@@ -297,9 +254,7 @@ public class Cart extends AppCompatActivity {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> params = new HashMap<>();
-                                                params.put("id", item.getId());
-                                                params.put("customer_id", getId);
-                                                params.put("ad_detail", item.getAd_detail());
+                                                params.put("cart_id", item.getId());
                                                 return params;
                                             }
                                         };
@@ -311,6 +266,12 @@ public class Cart extends AppCompatActivity {
                                     public void onClick(int position) {
                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
                                         final Double price = Double.valueOf(item.getPrice());
+
+                                        Double grandtotal = 0.00;
+                                        grandtotal += (price * Integer.parseInt(item.getQuantity()));
+
+                                        Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+
 
                                         //Add to cart_temp
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_CART_TEMP,
@@ -351,7 +312,7 @@ public class Cart extends AppCompatActivity {
                                                 params.put("district", item.getDistrict());
                                                 params.put("photo", item.getPhoto());
                                                 params.put("seller_id", item.getSeller_id());
-                                                params.put("item_id", item.getId());
+                                                params.put("item_id", item.getItem_id());
                                                 params.put("quantity", item.getQuantity());
                                                 params.put("cart_id", item.getId());
                                                 return params;

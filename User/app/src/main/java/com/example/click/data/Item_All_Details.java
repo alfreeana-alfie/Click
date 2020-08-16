@@ -2,7 +2,18 @@ package com.example.click.data;
 
 public class Item_All_Details {
 
-    private String id, seller_id;
+    private String id;
+    private String seller_id;
+
+    public String getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(String item_id) {
+        this.item_id = item_id;
+    }
+
+    private String item_id;
     private String ad_detail, price, division, district;
     private String photo;
     private String main_category;
@@ -27,7 +38,15 @@ public class Item_All_Details {
         this.quantity = quantity;
     }
 
-    public Item_All_Details(String id, String seller_id, String main_category, String sub_category, String ad_detail, String price, String division, String district, String photo) {
+    public Item_All_Details(String id,
+                            String seller_id,
+                            String main_category,
+                            String sub_category,
+                            String ad_detail,
+                            String price,
+                            String division,
+                            String district,
+                            String photo) {
         this.id = id;
         this.seller_id = seller_id;
         this.main_category = main_category;

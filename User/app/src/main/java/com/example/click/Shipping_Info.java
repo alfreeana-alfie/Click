@@ -68,7 +68,7 @@ public class Shipping_Info extends AppCompatActivity {
         Intent intent = getIntent();
         final String item_id = intent.getStringExtra("item_id");
 
-        Toast.makeText(Shipping_Info.this, item_id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Shipping_Info.this, item_id, Toast.LENGTH_SHORT).show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                 new Response.Listener<String>() {

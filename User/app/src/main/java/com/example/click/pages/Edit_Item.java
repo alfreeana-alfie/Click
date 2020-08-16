@@ -44,7 +44,6 @@ import java.util.Map;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_AD_DETAIL;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_DISTRICT;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_DIVISION;
-import static com.example.click.pages.Find_My_Items_Other.EXTRA_ID;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_IMG_ITEM;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_MAIN;
 import static com.example.click.pages.Find_My_Items_Other.EXTRA_PRICE;
@@ -81,7 +80,7 @@ public class Edit_Item extends AppCompatActivity {
         Declare();
 
         final Intent intent = getIntent();
-        id = intent.getStringExtra(EXTRA_ID);
+        id = intent.getStringExtra("id");
 //        final String userid = intent.getStringExtra(EXTRA_USERID);
         final String main_category = intent.getStringExtra(EXTRA_MAIN);
         sub_category = intent.getStringExtra(EXTRA_SUB);
@@ -561,7 +560,7 @@ public class Edit_Item extends AppCompatActivity {
 
     private void saveEdit() {
         Intent intent = getIntent();
-        id = intent.getStringExtra(EXTRA_ID);
+        id = intent.getStringExtra("id");
         final String strMain_category = this.Main_Category_TextView.getText().toString().trim();
         final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
@@ -574,6 +573,7 @@ public class Edit_Item extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         Button_SavedEdit.setVisibility(View.GONE);
 
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override
@@ -585,7 +585,10 @@ public class Edit_Item extends AppCompatActivity {
                                 loading.setVisibility(View.GONE);
                                 Button_SavedEdit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Edit_Item.this, "Item Updated", Toast.LENGTH_SHORT).show();
-                                onBackPressed();
+                                Intent intent1 = new Intent(Edit_Item.this, Find_My_Items_Other.class);
+                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent1);
+
                             } else {
                                 loading.setVisibility(View.GONE);
                                 Button_SavedEdit.setVisibility(View.VISIBLE);
@@ -625,7 +628,7 @@ public class Edit_Item extends AppCompatActivity {
 
     private void saveImage(final String photo) {
         Intent intent = getIntent();
-        id = intent.getStringExtra(EXTRA_ID);
+        id = intent.getStringExtra("id");
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_IMG,
                 new Response.Listener<String>() {

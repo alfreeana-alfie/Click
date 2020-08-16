@@ -109,6 +109,59 @@ public class View_Item_Single extends AppCompatActivity {
         View_Item();
         getSold();
 
+        add_to_cart_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getId.equals(userid)) {
+                    Toast.makeText(View_Item_Single.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                } else {
+                    StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject1 = new JSONObject(response);
+                                        String success = jsonObject1.getString("success");
+
+                                        if (success.equals("1")) {
+                                            Toast.makeText(View_Item_Single.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(View_Item_Single.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(View_Item_Single.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("customer_id", getId);
+                            params.put("main_category", strMain_category);
+                            params.put("sub_category", strSub_category);
+                            params.put("ad_detail", ad_detail);
+                            params.put("price", String.format("%.2f", strPrice));
+                            params.put("division", division);
+                            params.put("district", district);
+                            params.put("photo", photo);
+                            params.put("seller_id", userid);
+                            params.put("item_id", id);
+                            return params;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+                    requestQueue.add(stringRequest2);
+                }
+            }
+        });
+
         btn_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,12 +214,14 @@ public class View_Item_Single extends AppCompatActivity {
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
+                                    Toast.makeText(View_Item_Single.this, e.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(View_Item_Single.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }) {
                     @Override
