@@ -19,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.pages.Row_Add;
 import com.example.click.user.Edit_Profile;
 
 import org.json.JSONException;
@@ -46,6 +47,8 @@ public class Edit_Delivery extends AppCompatActivity {
         final Intent intent = getIntent();
 
         final String id = intent.getStringExtra("id");
+        final String item_id = intent.getStringExtra("item_id");
+        final String ad_detail = intent.getStringExtra("ad_detail");
         final String division = intent.getStringExtra("division");
         final String price_text = intent.getStringExtra("price");
         String days = intent.getStringExtra("days");
@@ -87,7 +90,11 @@ public class Edit_Delivery extends AppCompatActivity {
                                     String success = jsonObject.getString("success");
                                     if (success.equals("1")) {
                                         Toast.makeText(Edit_Delivery.this, "Item Updated", Toast.LENGTH_SHORT).show();
-                                        onBackPressed();
+                                        Intent intent1 = new Intent(Edit_Delivery.this, ActivityDelivery.class);
+                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent1.putExtra("item_id", item_id);
+                                        intent1.putExtra("ad_detail", ad_detail);
+                                        startActivity(intent1);
                                     } else {
                                         Toast.makeText(Edit_Delivery.this, "Failed to Update", Toast.LENGTH_SHORT).show();
                                     }

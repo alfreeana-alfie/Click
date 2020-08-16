@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Row_Add;
 
@@ -43,6 +44,8 @@ public class ActivityDelivery extends AppCompatActivity {
     ArrayList<Delivery> cricketersList = new ArrayList<>();
     DeliveryAdapter deliveryAdapter;
 
+    Button btn_accept, btn_back, btn_add;
+
     String getId;
     SessionManager sessionManager;
 
@@ -51,9 +54,30 @@ public class ActivityDelivery extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
+        String item_id = intent.getStringExtra("item_id");
         String ad_detail = intent.getStringExtra("ad_detail");
 
+        btn_accept = findViewById(R.id.accept_delivery);
+        btn_back = findViewById(R.id.back_delivery);
+        btn_add = findViewById(R.id.btn_add);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(ActivityDelivery.this, Find_My_Items_Other.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+
+            }
+        });
         recyclerCricketers = findViewById(R.id.recycler_cricketers);
 
         sessionManager = new SessionManager(this);
@@ -76,7 +100,7 @@ public class ActivityDelivery extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Homepage.class));
+                finish();
             }
         });
 
@@ -100,7 +124,7 @@ public class ActivityDelivery extends AppCompatActivity {
                                     final String id = object.getString("id").trim();
                                     final String ad_detail = object.getString("ad_detail");
 
-                                    Read_Delivery(id, ad_detail);
+                                    Read_Delivery(id);
                                 }
                             }
                         } catch (JSONException e) {
@@ -127,7 +151,7 @@ public class ActivityDelivery extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Read_Delivery(final String item_id, final String ad_detail) {
+    private void Read_Delivery(final String item_id) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                 new Response.Listener<String>() {
                     @Override
@@ -151,7 +175,6 @@ public class ActivityDelivery extends AppCompatActivity {
                                     Delivery delivery = new Delivery(division, String.format("%.2f", price), days, item_id);
                                     delivery.setId(id);
                                     cricketersList.add(delivery);
-                                    deliveryAdapter.notifyDataSetChanged();
                                 }
                                 if (cricketersList.size() == 0) {
                                     TextView textView = findViewById(R.id.textView4);
@@ -213,7 +236,7 @@ public class ActivityDelivery extends AppCompatActivity {
 
                                         }
                                     });
-                                    recyclerCricketers.setVisibility(View.GONE);
+//                                    recyclerCricketers.setVisibility(View.GONE);
                                 } else {
                                     TextView textView = findViewById(R.id.textView4);
 
@@ -223,6 +246,7 @@ public class ActivityDelivery extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent1 = getIntent();
+                                            final String item_id = intent1.getStringExtra("item_id");
                                             final String ad_detail = intent1.getStringExtra("ad_detail");
 
                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCT_SINGLE,
@@ -242,6 +266,7 @@ public class ActivityDelivery extends AppCompatActivity {
 
                                                                         Intent intent = new Intent(ActivityDelivery.this, Row_Add.class);
                                                                         intent.putExtra("item_id", id);
+                                                                        intent.putExtra("ad_detail", ad_detail);
                                                                         startActivity(intent);
                                                                     }
                                                                 }
@@ -273,13 +298,19 @@ public class ActivityDelivery extends AppCompatActivity {
                                     Add_Delivery.setVisibility(View.GONE);
                                     deliveryAdapter = new DeliveryAdapter(cricketersList);
                                     recyclerCricketers.setAdapter(deliveryAdapter);
-                                    deliveryAdapter.notifyDataSetChanged();
                                     deliveryAdapter.setOnItemClickListener(new DeliveryAdapter.OnItemClickListener() {
                                         @Override
                                         public void onEditClick(int position) {
                                             Delivery delivery = cricketersList.get(position);
+
+                                            Intent intent1 = getIntent();
+                                            final String item_id = intent1.getStringExtra("item_id");
+                                            final String ad_detail = intent1.getStringExtra("ad_detail");
+
                                             Intent intent = new Intent(ActivityDelivery.this, Edit_Delivery.class);
 
+                                            intent.putExtra("item_id",item_id);
+                                            intent.putExtra("ad_detail", ad_detail);
                                             intent.putExtra("id", delivery.getId());
                                             intent.putExtra("division", delivery.getDivision());
                                             intent.putExtra("price", delivery.getPrice());
