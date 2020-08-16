@@ -2,13 +2,17 @@ package com.example.click;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,6 +25,8 @@ import com.example.click.adapter.Item_Adapter;
 import com.example.click.category.Car;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Find_My_Items_Other;
+import com.example.click.pages.Homepage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -77,7 +83,27 @@ public class Seller_Shop extends AppCompatActivity {
         View_Item(seller_id);
         getSold(seller_id);
 
+        ToolbarSetting();
+
     }
+
+    private void ToolbarSetting() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.seller_actionbar);
+
+        View view = getSupportActionBar().getCustomView();
+        ImageButton back_button = view.findViewById(R.id.back_button);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
 
     private void getSession() {
         sessionManager = new SessionManager(this);
