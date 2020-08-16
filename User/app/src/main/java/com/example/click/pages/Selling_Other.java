@@ -49,6 +49,7 @@ public class Selling_Other extends Fragment {
 
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order.php";
 
+    private static String URL_READ_ORDER_DONE = "https://ketekmall.com/ketekmall/read_order_buyer_done_two.php";
     private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_detail_approval.php";
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
     private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_order.php";
@@ -100,7 +101,7 @@ public class Selling_Other extends Fragment {
     }
 
     private void Approval_List(final View view) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER_DONE,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -127,7 +128,7 @@ public class Selling_Other extends Fragment {
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
-                                    final String status = object.getString("status").trim();
+                                    final String status = object.getString("remarks").trim();
 
                                     Order item = new Order(id,
                                             seller_id,
@@ -165,16 +166,15 @@ public class Selling_Other extends Fragment {
                                         final String strDivision = order.getDivision();
                                         final String strDistrict = order.getDistrict();
                                         final String strPhoto = order.getPhoto();
-                                        final String strOrder_Date = order.getDate();
+                                        final String strOrder_Date = order.getOrder_date();
                                         final String strDate = order.getDate();
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
 
                                         final String remarks = "ACCEPT";
-
-                                        Accept(view, strOrder_Id);
-
                                         Update_Order(view, strOrder_Date, remarks);
+
+                                        Accept(view, strOrder_Id, strOrder_Date, remarks);
 
                                         Delete_Order(view, strOrder_Id);
 
@@ -198,12 +198,16 @@ public class Selling_Other extends Fragment {
                                         final String strDivision = order.getDivision();
                                         final String strDistrict = order.getDistrict();
                                         final String strPhoto = order.getPhoto();
-                                        final String strOrder_Date = order.getDate();
+                                        final String strOrder_Date = order.getOrder_date();
+                                        final String strDate = order.getDate();
+                                        final String strQuantity = order.getQuantity();
+                                        final String strStatus = order.getStatus();
 
-                                        final String REMARKS = "REJECT";
+                                        final String remarks = "REJECT";
+                                        Update_Order(view, strOrder_Date, remarks);
 
-                                        Newreject(view, strOrder_Id);
-                                        Update_Order(view, strOrder_Date, REMARKS);
+                                        Newreject(view, strOrder_Id, strOrder_Date, remarks);
+
                                         Delete_Order(view, strOrder_Id);
 
                                         itemList.remove(position);
@@ -273,7 +277,7 @@ public class Selling_Other extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void Accept(final View view, final String order_id) {
+    private void Accept(final View view, final String order_id, final String strOrder_Date, final String remarks) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_RECEIPT
                 , new Response.Listener<String>() {
             @Override
@@ -335,6 +339,7 @@ public class Selling_Other extends Fragment {
                                                                                                     String success = jsonObject.getString("success");
                                                                                                     if (success.equals("1")) {
                                                                                                         Toast.makeText(getContext(), "Your order has been updated", Toast.LENGTH_SHORT).show();
+                                                                                                        Update_Order(view, strOrder_Date, remarks);
                                                                                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                                                                 new Response.Listener<String>() {
                                                                                                                     @Override
@@ -537,7 +542,7 @@ public class Selling_Other extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void Newreject(final View view, final String order_id) {
+    private void Newreject(final View view, final String order_id, final String strOrder_Date, final String remarks) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_RECEIPT
                 , new Response.Listener<String>() {
             @Override
@@ -599,6 +604,7 @@ public class Selling_Other extends Fragment {
                                                                                                     String success = jsonObject.getString("success");
                                                                                                     if (success.equals("1")) {
                                                                                                         Toast.makeText(getContext(), "Your order has been updated", Toast.LENGTH_SHORT).show();
+                                                                                                        Update_Order(view, strOrder_Date, remarks);
                                                                                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                                                                 new Response.Listener<String>() {
                                                                                                                     @Override

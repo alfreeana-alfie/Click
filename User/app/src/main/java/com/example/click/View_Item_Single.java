@@ -207,6 +207,7 @@ public class View_Item_Single extends AppCompatActivity {
 
                                             Intent intent1 = new Intent(View_Item_Single.this, Shipping_Info.class);
 
+
                                             final Intent intent4 = getIntent();
                                             String id1 = intent4.getStringExtra("id");
                                             String userid1 = intent4.getStringExtra("user_id");

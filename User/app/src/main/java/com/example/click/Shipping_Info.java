@@ -107,6 +107,7 @@ public class Shipping_Info extends AppCompatActivity {
                 intent1.putExtra("district", district1);
                 intent1.putExtra("photo", photo1);
 
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
         });
@@ -192,6 +193,7 @@ public class Shipping_Info extends AppCompatActivity {
         intent1.putExtra("district", district1);
         intent1.putExtra("photo", photo1);
 
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent1);
     }
 }
