@@ -1,6 +1,8 @@
 package com.example.click;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -62,6 +64,7 @@ public class View_Item_Single extends AppCompatActivity {
     private TextView ad_detail_item, price_item, sold_text, shipping_info,
             seller_name, seller_location, view_all;
     private Button btn_chat, add_to_cart_btn;
+    private ImageButton btn_chat_wsp;
     private TwoWayGridView gridView_item;
 
     @Override
@@ -89,7 +92,7 @@ public class View_Item_Single extends AppCompatActivity {
         btn_chat = findViewById(R.id.btn_chat);
         gridView_item = findViewById(R.id.gridView_item);
         add_to_cart_btn = findViewById(R.id.add_to_cart_btn);
-
+        btn_chat_wsp = findViewById(R.id.btn_chat_wsp);
 
         final Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -263,6 +266,18 @@ public class View_Item_Single extends AppCompatActivity {
         });
     }
 
+    private boolean appInstalledOrNot(String url){
+        PackageManager packageManager = getPackageManager();
+        boolean app_installed;
+        try {
+            packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }catch (PackageManager.NameNotFoundException e){
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
     private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -345,11 +360,27 @@ public class View_Item_Single extends AppCompatActivity {
                                     final String strName = object.getString("name").trim();
                                     String strEmail = object.getString("email").trim();
                                     final String strPhoto = object.getString("photo");
+                                    final String mobile_num = object.getString("phone_no");
                                     final String strDivision = object.getString("division").trim();
 
                                     Picasso.get().load(strPhoto).into(seller_image);
                                     seller_name.setText(strName);
                                     seller_location.setText(strDivision);
+
+                                    btn_chat_wsp.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            boolean installed = appInstalledOrNot("com.whatsapp");
+                                            if(installed){
+                                                Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                                                intent1.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+6"+ mobile_num));
+                                                startActivity(intent1);
+                                            }else {
+                                                Toast.makeText(View_Item_Single.this, "Not Installed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
 
                                     view_all.setOnClickListener(new View.OnClickListener() {
                                         @Override

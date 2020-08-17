@@ -282,6 +282,9 @@ public class Cart extends AppCompatActivity {
                                                                                             final String quantity = object.getString("quantity");
 
                                                                                             grandtotal += (price * Integer.parseInt(quantity));
+//                                                                                             array1.push(3)
+//                                                                                                     array1.indexOf(price);
+//                                                                                             array1.pop
 
                                                                                             Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
 
@@ -508,11 +511,12 @@ public class Cart extends AppCompatActivity {
 
                                         final Double price = Double.valueOf(item.getPrice());
 
-                                        final int final_num = ++number;
+                                        final int final_num1 = ++number;
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
                                                 new Response.Listener<String>() {
                                                     @Override
                                                     public void onResponse(String response) {
+
                                                         try {
                                                             final JSONObject Object = new JSONObject(response);
                                                             String success = Object.getString("success");
@@ -523,9 +527,10 @@ public class Cart extends AppCompatActivity {
                                                                     JSONObject object = jsonArray.getJSONObject(i);
                                                                     String max_order = object.getString("max_order");
 
-                                                                    if (final_num > Integer.parseInt(max_order)) {
+                                                                    if (final_num1 > Integer.parseInt(max_order)) {
                                                                         Toast.makeText(Cart.this, "You have reach limit for this item", Toast.LENGTH_SHORT).show();
                                                                     } else {
+
                                                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                                                                                 new Response.Listener<String>() {
                                                                                     @Override
@@ -611,7 +616,7 @@ public class Cart extends AppCompatActivity {
                                                                                 Map<String, String> params = new HashMap<>();
                                                                                 params.put("id", item.getId());
                                                                                 params.put("cart_id", item.getId());
-                                                                                params.put("quantity", String.valueOf(final_num));
+                                                                                params.put("quantity", String.valueOf(final_num1));
                                                                                 return params;
                                                                             }
                                                                         };
