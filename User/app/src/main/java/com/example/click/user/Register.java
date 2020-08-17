@@ -119,9 +119,9 @@ public class Register extends Fragment {
         final String strPhone_No = this.phone_no.getText().toString().trim();
         final String strPassword = this.password.getText().toString().trim();
         final String strConfirm_Password = this.confirm_password.getText().toString().trim();
-
         final String strBirthday = "";
         final String strGender = "Female";
+        final String strVerification ="0";
 
         final String strPhoto_URL = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
@@ -284,10 +284,10 @@ public class Register extends Fragment {
                     params.put("email", strEmail);
                     params.put("phone_no", strPhone_No);
                     params.put("password", strPassword);
-
                     params.put("birthday", strBirthday);
                     params.put("gender", strGender);
                     params.put("photo", strPhoto_URL);
+                    params.put("verification", strVerification);
                     return params;
                 }
             };

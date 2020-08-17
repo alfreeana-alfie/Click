@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Goto_Register_Page;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.category.All;
@@ -263,9 +264,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Sell_Items_Other.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                SellerCheck(getId);
             }
         });
 
@@ -554,6 +553,58 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         requestQueue.add(stringRequest);
     }
 
+    private void SellerCheck(final String user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    if(strVerify == 0){
+                                        Intent intent1 = new Intent(Homepage.this, Goto_Register_Page.class);
+                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent1);
+                                    }else{
+                                        Intent intent1 = new Intent(Homepage.this, Sell_Items_Other.class);
+                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent1);
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -564,9 +615,10 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_sell:
-                Intent intent2 = new Intent(Homepage.this, Sell_Items_Other.class);
-                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent2);
+                SellerCheck(getId);
+//                Intent intent2 = new Intent(Homepage.this, Sell_Items_Other.class);
+//                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent2);
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:

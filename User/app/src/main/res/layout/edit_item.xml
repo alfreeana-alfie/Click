@@ -687,107 +687,370 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/ad_detail_page_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/login_part_border"
-        android:elevation="5dp"
-        android:orientation="vertical"
-        android:padding="20dp"
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/ad_detail_page_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:background="@drawable/login_part_border"-->
+<!--        android:elevation="5dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:padding="20dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/ad_text_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+
+<!--                android:layout_gravity="center"-->
+<!--                android:fontFamily="sans-serif-condensed"-->
+<!--                android:text="@string/add_product"-->
+<!--                android:textAllCaps="true"-->
+<!--                android:textColor="@color/colorPrimaryDark"-->
+<!--                android:textSize="25sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <View-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="5dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@drawable/login_part_border_orange" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="@string/what_are_you_selling"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/colorGrey"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold|italic" />-->
+<!--        </LinearLayout>-->
+
+
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/ad_detail_relative_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="300dp"-->
+<!--            android:layout_below="@id/ad_text_layout"-->
+<!--            android:layout_marginLeft="0dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginRight="0dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:background="@drawable/border">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/edittext_ad_detail"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@null"-->
+<!--                android:ems="10"-->
+<!--                android:hint="@string/please_enter_an_ad_detail"-->
+<!--                android:inputType="textMultiLine"-->
+<!--                android:padding="15dp"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textCursorDrawable="@drawable/color_cursor" />-->
+
+<!--        </RelativeLayout>-->
+
+<!--        <Button-->
+<!--            android:id="@+id/accept_ad_detail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_below="@id/ad_detail_relative_layout"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:background="@drawable/login_part_border_orange"-->
+<!--            android:fontFamily="@font/montserrat"-->
+<!--            android:text="@string/accept"-->
+<!--            android:textSize="14sp" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/back_ad_detail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_below="@id/accept_ad_detail"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:background="@drawable/login_part_border_orange"-->
+<!--            android:fontFamily="@font/montserrat"-->
+<!--            android:text="@string/back"-->
+<!--            android:textSize="14sp" />-->
+<!--    </RelativeLayout>-->
+
+    <ScrollView
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:id="@+id/ad_text_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="center"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/add_product"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border_orange" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/what_are_you_selling"
-                android:textAlignment="center"
-                android:textColor="@color/colorGrey"
-                android:textSize="16sp"
-                android:textStyle="bold|italic" />
-        </LinearLayout>
-
+        android:id="@+id/about_product"
+        android:fillViewport="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/ad_detail_relative_layout"
+            android:id="@+id/ad_detail_page_layout"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@id/ad_text_layout"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/border">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/login_part_border"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/edittext_ad_detail"
+            <LinearLayout
+                android:id="@+id/ad_text_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
-                android:ems="10"
-                android:hint="@string/please_enter_an_ad_detail"
-                android:inputType="textMultiLine"
-                android:padding="15dp"
-                android:textAlignment="textStart"
-                android:textCursorDrawable="@drawable/color_cursor" />
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/add_product"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/login_part_border_orange" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/what_are_you_selling"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/addetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ad_text_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/ad_details"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/ad_detail_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/addetail"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <EditText
+                    android:id="@+id/edittext_ad_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="@string/please_enter_an_ad_detail"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/brand_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ad_detail_relative_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Brand Material"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/brand_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brand_mate"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <EditText
+                    android:id="@+id/edittext_brand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="@string/please_enter_an_ad_detail"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/inner_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/brand_relative_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Inner Material"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/inner_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/inner_mate"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <EditText
+                    android:id="@+id/edittext_inner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="@string/please_enter_an_ad_detail"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/inner_relative_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/main_category"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/stock_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/stock"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <EditText
+                    android:id="@+id/edittext_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="@string/please_enter_an_ad_detail"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/stock_relative_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Description"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <RelativeLayout
+                android:id="@+id/desc_relative_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/border">
+
+                <EditText
+                    android:id="@+id/edittext_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@null"
+                    android:ems="10"
+                    android:hint="@string/please_enter_an_ad_detail"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
+                    android:textCursorDrawable="@drawable/color_cursor" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/accept_ad_detail"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/desc_relative_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/login_part_border_orange"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/accept"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/back_ad_detail"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_below="@id/accept_ad_detail"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/login_part_border_orange"
+                android:fontFamily="@font/montserrat"
+                android:text="@string/back"
+                android:textSize="14sp" />
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/accept_ad_detail"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@id/ad_detail_relative_layout"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/login_part_border_orange"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/accept"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/back_ad_detail"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@id/accept_ad_detail"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/login_part_border_orange"
-            android:fontFamily="@font/montserrat"
-            android:text="@string/back"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
+    </ScrollView>
 </RelativeLayout>

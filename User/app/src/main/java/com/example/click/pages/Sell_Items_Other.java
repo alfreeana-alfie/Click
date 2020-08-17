@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,10 +69,11 @@ public class Sell_Items_Other extends AppCompatActivity {
     private EditText enter_price, edittext_ad_detail, edittext_order;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
-    private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
+    private RelativeLayout category_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
     private ImageView upload_photo_img;
     private ProgressBar loading;
+    private ScrollView about_detail;
     List<Item_All_Details_Other> itemList;
 
     @Override
@@ -121,7 +123,7 @@ public class Sell_Items_Other extends AppCompatActivity {
         back_ad_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
+                about_detail.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -188,7 +190,7 @@ public class Sell_Items_Other extends AppCompatActivity {
         accept_ad_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
+                about_detail.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mAd_Detail = edittext_ad_detail.getText().toString();
@@ -205,7 +207,7 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_price = findViewById(R.id.enter_price);
         enter_setup = findViewById(R.id.enter_delivery_location);
         edittext_order = findViewById(R.id.enter_max_order);
-
+        about_detail = findViewById(R.id.about_product);
 
         spinner_division = findViewById(R.id.spinner_division);
         spinner_district = findViewById(R.id.spinner_district);
@@ -226,7 +228,7 @@ public class Sell_Items_Other extends AppCompatActivity {
         loading = findViewById(R.id.loading);
 
         category_page_layout = findViewById(R.id.category_page_layout);
-        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
+//        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
 
         adapter_division = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.division, android.R.layout.simple_spinner_item);
@@ -262,7 +264,7 @@ public class Sell_Items_Other extends AppCompatActivity {
     }
 
     private void gotoAdDetail() {
-        ad_detail_page_layout.setVisibility(View.VISIBLE);
+        about_detail.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
     }
 
