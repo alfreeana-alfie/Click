@@ -63,12 +63,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ++mQuantity;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-                holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity));
                 if (mListerner != null) {
                     mListerner.onAddClick(position);
+                    ++mQuantity;
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                    holder.Quantity.setText(String.valueOf(mQuantity));
                 }
             }
         });
@@ -76,12 +76,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.decrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                --mQuantity;
-                Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
-                holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                holder.Quantity.setText(String.valueOf(mQuantity));
                 if (mListerner != null) {
                     mListerner.onMinusClick(position);
+                    --mQuantity;
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                    holder.Quantity.setText(String.valueOf(mQuantity));
                 }
                 if(Integer.parseInt(itemAllDetails.getQuantity()) == 0){
                     if (mListerner != null) {
@@ -106,21 +106,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 if (holder.checkBox.isChecked()) {
                     mListerner.onClick(position);
-                }
-
-                if(!holder.checkBox.isChecked()) {
+                }else {
                     mListerner.onDeleteCart_Temp(position);
                 }
             }
         });
-
-//        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//
-//            }
-//        });
 
         Picasso.get().load(photo_URL).into(holder.ItemImageView);
     }
