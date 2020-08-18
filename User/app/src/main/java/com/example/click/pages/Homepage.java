@@ -2,6 +2,7 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -117,7 +118,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             button_women, button_food, button_grocery;
 
     private CircleImageView profile_display, profile_image;
-    private TextView name_display, email_display, button_view_all, username;
+    private TextView name_display, email_display, button_view_all, username, verify, verify1;
     private DrawerLayout drawer;
     private View view;
     Item_Single_Adapter adapter_item;
@@ -133,6 +134,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             "https://cdn.pixabay.com/photo/2017/10/10/15/28/butterfly-2837589_960_720.jpg"
     };
     String[] image;
+    PageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +156,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         View_TopSelling();
 
         View_Photo();
+
+        SellerCheck_Main(getId);
     }
 
     private void getSession() {
@@ -204,6 +208,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_view_all = findViewById(R.id.button_see);
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
+        verify = findViewById(R.id.verify);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -213,6 +218,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         profile_display.setBorderWidth(1);
         name_display = headerView.findViewById(R.id.name_display);
         email_display = headerView.findViewById(R.id.email_display);
+        verify1 = headerView.findViewById(R.id.verify1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -596,6 +602,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
                                     int strVerify = Integer.valueOf(object.getString("verification"));
                                     if(strVerify == 0){
+                                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                                        Menu nav_Menu = navigationView.getMenu();
+                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
+                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
+
                                         Intent intent1 = new Intent(Homepage.this, Goto_Register_Page.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
@@ -603,6 +614,63 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                         Intent intent1 = new Intent(Homepage.this, Sell_Items_Other.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void SellerCheck_Main(final String user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    if(strVerify == 0){
+                                        NavigationView navigationView = findViewById(R.id.nav_view);
+                                        Menu nav_Menu = navigationView.getMenu();
+                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
+                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
+                                        verify.setText("Buyer");
+                                        verify1.setText("Buyer");
+                                    }else{
+                                        NavigationView navigationView = findViewById(R.id.nav_view);
+                                        Menu nav_Menu = navigationView.getMenu();
+                                        nav_Menu.findItem(R.id.nav_sell).setVisible(true);
+                                        nav_Menu.findItem(R.id.nav_find).setVisible(true);
+                                        verify.setText("Seller");
+                                        verify1.setText("Seller");
                                     }
 
                                 }
@@ -641,10 +709,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_sell:
+
                 SellerCheck(getId);
-//                Intent intent2 = new Intent(Homepage.this, Sell_Items_Other.class);
-//                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent2);
                 Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_find:
@@ -920,10 +986,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
                                     String id = object.getString("id").trim();
                                     String image_item = object.getString("photo");
-                                    image = new String[]{image_item};
 
+                                    image = new String[]{image_item};
+                                    Log.d("TAG", image_item);
+
+                                    adapter = new PageAdapter(Homepage.this, image);
                                 }
-                                PageAdapter adapter = new PageAdapter(Homepage.this, imageUrls);
                                 viewPager.setAdapter(adapter);
 
                             } else {
