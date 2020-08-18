@@ -123,18 +123,6 @@
             android:text="Accept" />
 
         <Button
-            android:visibility="gone"
-            android:id="@+id/btn_reject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:background="@drawable/login_part_border_orange"
-            android:textColor="@color/colorWhite"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="Reject" />
-
-        <Button
             android:id="@+id/btn_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -144,5 +132,16 @@
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
             android:text="View" />
+
+        <Button
+            android:id="@+id/btn_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Reject" />
     </LinearLayout>
 </RelativeLayout>

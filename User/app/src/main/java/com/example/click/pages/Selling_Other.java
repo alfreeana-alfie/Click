@@ -237,7 +237,13 @@ public class Selling_Other extends Fragment {
 
                                         Intent intent1 = new Intent(getContext(), Selling_Detail.class);
                                         intent1.putExtra("id", strOrder_Id);
+                                        intent1.putExtra("photo", strPhoto);
+                                        intent1.putExtra("ad_detail", strAd_Detail);
+                                        intent1.putExtra("price", String.format("%.2f", strPrice));
+                                        intent1.putExtra("quantity", strQuantity);
+                                        intent1.putExtra("division", strDivision);
                                         intent1.putExtra("order_date", strOrder_Date);
+                                        intent1.putExtra("status", strStatus);
                                         getActivity().startActivity(intent1);
                                     }
                                 });

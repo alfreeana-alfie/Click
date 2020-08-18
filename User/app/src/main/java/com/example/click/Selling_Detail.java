@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Main_Order_Other;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +35,9 @@ public class Selling_Detail extends AppCompatActivity {
 
     EditText edit_review;
     Button btn_submit, btn_cancel;
+    ImageView photo;
+    TextView text_order_id, text_ad_detail, text_price, text_quantity;
+    TextView text_placed_date, text_status, text_ship_placed;
     String getId;
     SessionManager sessionManager;
 
@@ -42,12 +48,40 @@ public class Selling_Detail extends AppCompatActivity {
         getSession();
 
         Intent intent = getIntent();
+
         final String strID = intent.getStringExtra("id");
+        final String strPhoto = intent.getStringExtra("photo");
+        final String strAd_Detail = intent.getStringExtra("ad_detail");
+        final String strPrice = intent.getStringExtra("price");
+        final String strQuantity = intent.getStringExtra("quantity");
+        final String strDivision = intent.getStringExtra("division");
+        final String strStatus = intent.getStringExtra("status");
         final String strOrder_Date = intent.getStringExtra("order_date");
 
         edit_review = findViewById(R.id.editText_review);
         btn_submit = findViewById(R.id.btn_submit);
         btn_cancel = findViewById(R.id.btn_cancel);
+
+        text_order_id = findViewById(R.id.text_order_id);
+        photo = findViewById(R.id.photo);
+
+        text_ad_detail = findViewById(R.id.text_ad_detail);
+        text_price = findViewById(R.id.text_price);
+        text_quantity = findViewById(R.id.text_quantity);
+
+        text_placed_date = findViewById(R.id.text_placed_date);
+        text_status = findViewById(R.id.text_status);
+
+        text_ship_placed = findViewById(R.id.text_ship_placed);
+
+        text_order_id.setText("ID" + strID);
+        Picasso.get().load(strPhoto).into(photo);
+        text_ad_detail.setText(strAd_Detail);
+        text_price.setText("MYR"+strPrice);
+        text_quantity.setText("x" + strQuantity);
+        text_placed_date.setText("Order Placed on " + strOrder_Date);
+        text_status.setText(strStatus);
+        text_ship_placed.setText("Shipped out to "+ strDivision);
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

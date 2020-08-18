@@ -1066,4 +1066,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         backPressedTime = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onDestroy() {
+        timer.cancel();
+        super.onDestroy();
+    }
 }
