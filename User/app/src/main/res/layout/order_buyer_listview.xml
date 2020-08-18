@@ -104,14 +104,35 @@
         android:textSize="12sp"
         android:text="Shipped out to Sarawak" />
 
-    <Button
-        android:id="@+id/btn_cancel"
+    <LinearLayout
+        android:layout_below="@id/text_ship_placed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_ship_placed"
-        android:background="@drawable/login_part_border_orange"
-        android:textColor="@color/colorWhite"
-        android:fontFamily="@font/open_sans_semibold"
-        android:text="Cancel" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Review" />
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

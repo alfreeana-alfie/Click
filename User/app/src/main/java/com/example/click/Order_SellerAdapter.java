@@ -65,7 +65,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         TextView text_placed_date, text_status, text_ship_placed;
         ImageView photo;
 
-        Button btn_accept, btn_reject;
+        Button btn_accept, btn_reject, btn_view;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +84,19 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
 
             btn_accept = itemView.findViewById(R.id.btn_cancel);
             btn_reject = itemView.findViewById(R.id.btn_reject);
+            btn_view = itemView.findViewById(R.id.btn_view);
+
+            btn_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onViewClick(position);
+                        }
+                    }
+                }
+            });
 
             btn_accept.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -116,5 +129,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         void onAcceptClick(int position);
 
         void onRejectClick(int position);
+
+        void onViewClick(int position);
     }
 }

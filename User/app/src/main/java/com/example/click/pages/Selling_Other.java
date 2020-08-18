@@ -1,5 +1,6 @@
 package com.example.click.pages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.example.click.Order;
 import com.example.click.Order_SellerAdapter;
 import com.example.click.R;
 import com.example.click.Receipt;
+import com.example.click.Selling_Detail;
 import com.example.click.adapter.Seller_OrderAdapter;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
@@ -211,6 +213,32 @@ public class Selling_Other extends Fragment {
                                         itemList.remove(position);
                                         adapter_item.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter_item);
+                                    }
+
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Order order = itemList.get(position);
+
+                                        final String strOrder_Id = order.getId();
+                                        final String strSeller_id = order.getSeller_id();
+                                        final String strCustomer_id = order.getCustomer_id();
+                                        final String strItem_id = order.getItem_id();
+                                        final String strMain_category = order.getMain_category();
+                                        final String strSub_category = order.getSub_category();
+                                        final String strAd_Detail = order.getAd_detail();
+                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                        final String strDivision = order.getDivision();
+                                        final String strDistrict = order.getDistrict();
+                                        final String strPhoto = order.getPhoto();
+                                        final String strOrder_Date = order.getOrder_date();
+                                        final String strDate = order.getDate();
+                                        final String strQuantity = order.getQuantity();
+                                        final String strStatus = order.getStatus();
+
+                                        Intent intent1 = new Intent(getContext(), Selling_Detail.class);
+                                        intent1.putExtra("id", strOrder_Id);
+                                        intent1.putExtra("order_date", strOrder_Date);
+                                        getActivity().startActivity(intent1);
                                     }
                                 });
                             }

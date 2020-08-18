@@ -76,7 +76,7 @@
         <activity android:name=".category.Furniture_O" />
         <activity android:name=".category.Grocery_O" />
         <activity android:name=".category.Handcraft_O" />
-        <activity android:name=".category.Home_Appliances" />
+        <activity android:name=".category.Home_Appliances_O" />
         <activity android:name=".category.House_Rent" />
         <activity android:name=".category.House_Sales" />
         <activity android:name=".category.Men" />
@@ -101,6 +101,8 @@
         <activity android:name=".Goto_Register_Page" />
         <activity android:name=".Register_Seller" />
         <activity android:name=".Detail_Info" />
+        <activity android:name=".Review_Page" />
+        <activity android:name=".Selling_Detail" />
 
 
         <meta-data

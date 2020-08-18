@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -45,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Home_Appliances extends AppCompatActivity {
+public class Home_Appliances_O extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_home.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
@@ -129,7 +128,7 @@ public class Home_Appliances extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_Item();
@@ -139,7 +138,7 @@ public class Home_Appliances extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Home_Appliances.this, Homepage.class);
+                Intent intent = new Intent(Home_Appliances_O.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -155,7 +154,7 @@ public class Home_Appliances extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -163,14 +162,14 @@ public class Home_Appliances extends AppCompatActivity {
 
                 if (!strAd_Detail.isEmpty() && !strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                    adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
                 if(!strAd_Detail.isEmpty() && strDivision.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                    adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -227,7 +226,7 @@ public class Home_Appliances extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -239,7 +238,7 @@ public class Home_Appliances extends AppCompatActivity {
 
                 if (strDistrict.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                    adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -247,7 +246,7 @@ public class Home_Appliances extends AppCompatActivity {
                 }
                 if (strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                    adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -255,7 +254,7 @@ public class Home_Appliances extends AppCompatActivity {
                 }
                 if(!strDivision.equals("All_O") && !strDistrict.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                    adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -270,7 +269,7 @@ public class Home_Appliances extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Home_Appliances.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Home_Appliances_O.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -337,13 +336,13 @@ public class Home_Appliances extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home_Appliances.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home_Appliances_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -374,7 +373,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -385,20 +384,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -417,7 +416,7 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -437,7 +436,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -448,20 +447,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -480,13 +479,13 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Home_Appliances.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Home_Appliances_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -505,7 +504,7 @@ public class Home_Appliances extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -541,13 +540,13 @@ public class Home_Appliances extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home_Appliances.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home_Appliances_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -578,7 +577,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -589,20 +588,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -621,7 +620,7 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -641,7 +640,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -652,20 +651,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -684,13 +683,13 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Home_Appliances.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Home_Appliances_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -710,7 +709,7 @@ public class Home_Appliances extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -746,13 +745,13 @@ public class Home_Appliances extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home_Appliances.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home_Appliances_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -783,7 +782,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -794,20 +793,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -826,7 +825,7 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -846,7 +845,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -857,20 +856,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -889,13 +888,13 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Home_Appliances.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Home_Appliances_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -914,7 +913,7 @@ public class Home_Appliances extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
         requestQueue.add(stringRequest);
 
     }
@@ -951,13 +950,13 @@ public class Home_Appliances extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home_Appliances.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home_Appliances_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -988,7 +987,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -999,20 +998,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1031,7 +1030,7 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1051,7 +1050,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1062,20 +1061,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1094,13 +1093,13 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Home_Appliances.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Home_Appliances_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1120,7 +1119,7 @@ public class Home_Appliances extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1239,13 +1238,13 @@ public class Home_Appliances extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Home_Appliances.this);
+                                adapter_item = new Item_Adapter(itemList, Home_Appliances_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home_Appliances.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home_Appliances_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1276,7 +1275,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1287,20 +1286,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1319,7 +1318,7 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1339,7 +1338,7 @@ public class Home_Appliances extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Home_Appliances.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Home_Appliances_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1350,20 +1349,20 @@ public class Home_Appliances extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Home_Appliances.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Home_Appliances_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Home_Appliances.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Home_Appliances_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home_Appliances.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Home_Appliances_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1382,13 +1381,13 @@ public class Home_Appliances extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Home_Appliances.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Home_Appliances_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1405,14 +1404,14 @@ public class Home_Appliances extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Home_Appliances_O.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Home_Appliances.this, Homepage.class);
+        Intent intent = new Intent(Home_Appliances_O.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

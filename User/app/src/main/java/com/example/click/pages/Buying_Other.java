@@ -1,5 +1,6 @@
 package com.example.click.pages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.Order;
 import com.example.click.Order_BuyerAdapter;
 import com.example.click.R;
+import com.example.click.Review_Page;
 import com.example.click.adapter.Buyer_OrderAdapter;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
@@ -278,6 +280,21 @@ public class Buying_Other extends Fragment {
                                         };
                                         RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
                                         requestQueue.add(stringRequest1);
+                                    }
+
+                                    @Override
+                                    public void onReviewClick(int position) {
+                                        Order order = itemList.get(position);
+
+                                        final String strSeller_id = order.getSeller_id();
+                                        final String strCustomer_id = order.getCustomer_id();
+                                        final String strItem_id = order.getItem_id();
+
+                                        Intent intent1 = new Intent(getContext(), Review_Page.class);
+                                        intent1.putExtra("seller_id", strSeller_id);
+                                        intent1.putExtra("customer_id", strCustomer_id);
+                                        intent1.putExtra("item_id", strItem_id);
+                                        getActivity().startActivity(intent1);
                                     }
                                 });
                             }

@@ -19,7 +19,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
@@ -46,7 +45,7 @@ import com.example.click.category.Food_O;
 import com.example.click.category.Furniture_O;
 import com.example.click.category.Grocery_O;
 import com.example.click.category.Handcraft_O;
-import com.example.click.category.Home_Appliances;
+import com.example.click.category.Home_Appliances_O;
 import com.example.click.category.House_Rent;
 import com.example.click.category.House_Sales;
 import com.example.click.category.Men;
@@ -59,7 +58,6 @@ import com.example.click.category.Travel;
 import com.example.click.category.Women;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
-import com.example.click.promotion;
 import com.example.click.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -391,7 +389,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Home_Appliances.class);
+                Intent intent = new Intent(Homepage.this, Home_Appliances_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

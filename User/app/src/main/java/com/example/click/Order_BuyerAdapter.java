@@ -65,7 +65,7 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
         TextView text_placed_date, text_status, text_ship_placed;
         ImageView photo;
 
-        Button btn_cancel, btn_reject;
+        Button btn_cancel, btn_review;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +81,20 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
             text_status = itemView.findViewById(R.id.text_status);
 
             text_ship_placed = itemView.findViewById(R.id.text_ship_placed);
+
+            btn_review = itemView.findViewById(R.id.btn_review);
+
+            btn_review.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.onReviewClick(position);
+                        }
+                    }
+                }
+            });
 
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
 
@@ -102,6 +116,6 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
 
     public interface OnItemClickListener {
         void onCancelClick(int position);
-
+        void onReviewClick(int position);
     }
 }
