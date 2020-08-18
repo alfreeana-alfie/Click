@@ -59,8 +59,8 @@ public class View_Item_Single extends AppCompatActivity {
     private ImageView img_item, seller_image;
     private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
             seller_name, seller_location, view_all;
-    private Button btn_chat, add_to_cart_btn;
-    private ImageButton btn_chat_wsp;
+    private Button  add_to_cart_btn, btn_view_seller;
+    private ImageButton btn_chat, btn_chat_wsp;
     private TwoWayGridView gridView_item;
 
     @Override
@@ -91,6 +91,7 @@ public class View_Item_Single extends AppCompatActivity {
         gridView_item = findViewById(R.id.gridView_item);
         add_to_cart_btn = findViewById(R.id.add_to_cart_btn);
         btn_chat_wsp = findViewById(R.id.btn_chat_wsp);
+        btn_view_seller = findViewById(R.id.btn_view_seller);
 
         final Intent intent = getIntent();
         id = intent.getStringExtra("id");
@@ -118,6 +119,14 @@ public class View_Item_Single extends AppCompatActivity {
         getUserDetail();
         View_Item();
         getSold();
+
+        btn_view_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(View_Item_Single.this, Seller_Shop.class);
+                startActivity(intent1);
+            }
+        });
 
         detail_info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -419,6 +428,20 @@ public class View_Item_Single extends AppCompatActivity {
                                             intent1.putExtra("seller_name", strName);
                                             intent1.putExtra("seller_photo", strPhoto);
                                             intent1.putExtra("seller_location", strDivision);
+                                            intent1.putExtra("seller_phone", mobile_num);
+                                            startActivity(intent1);
+                                        }
+                                    });
+
+                                    btn_view_seller.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent1 = new Intent(View_Item_Single.this, Seller_Shop.class);
+                                            intent1.putExtra("id", userid);
+                                            intent1.putExtra("seller_name", strName);
+                                            intent1.putExtra("seller_photo", strPhoto);
+                                            intent1.putExtra("seller_location", strDivision);
+                                            intent1.putExtra("seller_phone", mobile_num);
                                             startActivity(intent1);
                                         }
                                     });

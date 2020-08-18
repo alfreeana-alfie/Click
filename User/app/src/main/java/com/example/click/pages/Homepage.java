@@ -820,6 +820,17 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 Intent intent = new Intent(Homepage.this, Cart.class);
                 startActivity(intent);
                 break;
+
+            case R.id.menu_search:
+                Intent intent2 = new Intent(Homepage.this, All_O.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.menu_chat:
+                Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Other.class);
+                startActivity(intent3);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

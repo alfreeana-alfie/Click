@@ -1,6 +1,8 @@
 package com.example.click;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -24,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.data.UserDetails;
+import com.example.click.pages.Chat;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -51,6 +55,8 @@ public class Seller_Shop extends AppCompatActivity {
     List<Item_All_Details> itemList, itemList2;
     private GridView gridView_item;
 
+    ImageButton btn_chat_wsp, btn_chat;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +70,39 @@ public class Seller_Shop extends AppCompatActivity {
         gridView_item = findViewById(R.id.gridView_CarItem);
         item_text = findViewById(R.id.item_text);
         sold_text = findViewById(R.id.sold_text);
+        btn_chat_wsp = findViewById(R.id.btn_chat_wsp);
+        btn_chat = findViewById(R.id.btn_chat);
 
         Intent intent = getIntent();
         String seller_id = intent.getStringExtra("id");
-        String seller_name = intent.getStringExtra("seller_name");
+        final String seller_name = intent.getStringExtra("seller_name");
         String seller_location = intent.getStringExtra("seller_location");
         String seller_photo = intent.getStringExtra("seller_photo");
+        final String seller_phone = intent.getStringExtra("seller_phone");
 
+        btn_chat_wsp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                boolean installed = appInstalledOrNot("com.whatsapp");
+                if(installed){
+                    Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                    intent1.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+6"+ seller_phone));
+                    startActivity(intent1);
+                }else {
+                    Toast.makeText(Seller_Shop.this, "Not Installed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDetails.chatWith = seller_name;
+                Intent intent = new Intent(Seller_Shop.this, Chat.class);
+                startActivity(intent);
+            }
+        });
 
         sellerName.setText(seller_name);
         sellerLocation.setText(seller_location);
@@ -101,6 +133,18 @@ public class Seller_Shop extends AppCompatActivity {
         });
     }
 
+
+    private boolean appInstalledOrNot(String url){
+        PackageManager packageManager = getPackageManager();
+        boolean app_installed;
+        try {
+            packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }catch (PackageManager.NameNotFoundException e){
+            app_installed = false;
+        }
+        return app_installed;
+    }
 
     private void getSession() {
         sessionManager = new SessionManager(this);

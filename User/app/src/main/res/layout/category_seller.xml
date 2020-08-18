@@ -56,16 +56,26 @@
             android:padding="5dp"
             android:text="Seller Location" />
 
+        <ImageButton
+            android:id="@+id/btn_chat_wsp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_toStartOf="@id/btn_chat"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:srcCompat="@mipmap/ic_whatsapp_foreground" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_chat"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:layout_marginEnd="15dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            app:srcCompat="@drawable/ic_chat_orange_foreground"
             android:text="Chat"
             android:textColor="@color/colorWhite" />
 
