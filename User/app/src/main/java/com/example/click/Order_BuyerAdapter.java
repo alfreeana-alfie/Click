@@ -44,7 +44,7 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
     public void onBindViewHolder(@NonNull Order_BuyerAdapter.ViewHolder holder, int position) {
         Order order = item_all_details.get(position);
 
-        holder.text_order_id.setText("ID" + order.getId());
+        holder.text_order_id.setText("KM" + order.getId());
         Picasso.get().load(order.getPhoto()).into(holder.photo);
         holder.text_ad_detail.setText(order.getAd_detail());
         holder.text_price.setText("MYR"+order.getPrice());

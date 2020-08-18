@@ -76,7 +76,7 @@ public class Review_Page extends AppCompatActivity {
         order_datetext = findViewById(R.id.order_date);
         ratingBar = findViewById(R.id.ratingBar);
 
-        order_idtext.setText("#" + order_id);
+        order_idtext.setText("KM" + order_id);
         order_datetext.setText(order_date);
 
         getUserDetail(getId);

@@ -46,7 +46,7 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
         String price = itemAllDetails.getPrice();
         String photo_URL = itemAllDetails.getPhoto();
 
-        holder.Order_ID.setText(order_id);
+        holder.Order_ID.setText("KM" + order_id);
         Picasso.get().load(photo_URL).into(holder.photo);
 
         holder.AdDetail.setText(ad_detail);
