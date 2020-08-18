@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
+import com.example.click.user.Edit_Profile;
 import com.example.click.user.Login;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -41,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     String getId;
     private SessionManager sessionManager;
+
+    private long backPressedTime;
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,5 +226,20 @@ public class MainActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            super.onBackPressed();
+            finish();
+            return;
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
     }
 }

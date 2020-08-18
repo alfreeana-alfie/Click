@@ -286,14 +286,29 @@ public class Buying_Other extends Fragment {
                                     public void onReviewClick(int position) {
                                         Order order = itemList.get(position);
 
+                                        final String strOrder_Id = order.getId();
                                         final String strSeller_id = order.getSeller_id();
                                         final String strCustomer_id = order.getCustomer_id();
                                         final String strItem_id = order.getItem_id();
+                                        final String strMain_category = order.getMain_category();
+                                        final String strSub_category = order.getSub_category();
+                                        final String strAd_Detail = order.getAd_detail();
+                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                        final String strDivision = order.getDivision();
+                                        final String strDistrict = order.getDistrict();
+                                        final String strPhoto = order.getPhoto();
+                                        final String strOrder_Date = order.getOrder_date();
+                                        final String strDate = order.getDate();
+                                        final String strQuantity = order.getQuantity();
+                                        final String strStatus = order.getStatus();
 
                                         Intent intent1 = new Intent(getContext(), Review_Page.class);
                                         intent1.putExtra("seller_id", strSeller_id);
                                         intent1.putExtra("customer_id", strCustomer_id);
                                         intent1.putExtra("item_id", strItem_id);
+                                        intent1.putExtra("remarks", strStatus);
+                                        intent1.putExtra("order_date", strOrder_Date);
+                                        intent1.putExtra("order_id", strOrder_Id);
                                         getActivity().startActivity(intent1);
                                     }
                                 });
