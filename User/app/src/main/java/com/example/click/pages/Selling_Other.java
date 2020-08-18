@@ -130,7 +130,7 @@ public class Selling_Other extends Fragment {
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
-                                    final String status = object.getString("remarks").trim();
+                                    final String status = object.getString("status").trim();
 
                                     Order item = new Order(id,
                                             seller_id,
