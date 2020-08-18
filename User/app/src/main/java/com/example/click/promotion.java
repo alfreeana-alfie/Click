@@ -2,11 +2,8 @@ package com.example.click;
 
 public class promotion {
 
-    String id, photo;
-
-    public promotion(String photo) {
-        this.photo = photo;
-    }
+    String id;
+    String[] photo;
 
     public String getId() {
         return id;
@@ -16,11 +13,15 @@ public class promotion {
         this.id = id;
     }
 
-    public String getPhoto() {
+    public String[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(String[] photo) {
+        this.photo = photo;
+    }
+
+    public promotion(String[] photo) {
         this.photo = photo;
     }
 }

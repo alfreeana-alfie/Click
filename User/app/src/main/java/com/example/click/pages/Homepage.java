@@ -2,6 +2,7 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,6 +78,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -123,6 +126,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private View view;
     Item_Single_Adapter adapter_item;
     ViewPager viewPager;
+    Timer timer;
 
     private long backPressedTime;
     private Toast backToast;
@@ -133,7 +137,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             "https://cdn.pixabay.com/photo/2017/11/07/00/07/fantasy-2925250_960_720.jpg",
             "https://cdn.pixabay.com/photo/2017/10/10/15/28/butterfly-2837589_960_720.jpg"
     };
-    String[] image;
+    String[] image = new String[3];
     PageAdapter adapter;
 
     @Override
@@ -154,6 +158,28 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         View_HardSelling();
 
         View_TopSelling();
+
+        final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
+        final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            public void run() {
+                if (viewPager.getCurrentItem() == adapter.getCount() - 1) { //adapter is your custom ViewPager's adapter
+                    viewPager.setCurrentItem(0);
+                }
+                else {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                }
+            }
+        };
+
+        timer = new Timer(); // This will create a new Thread
+        timer.schedule(new TimerTask() { // task to be scheduled
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, DELAY_MS, PERIOD_MS);
 
         View_Photo();
 
@@ -998,8 +1024,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     String id = object.getString("id").trim();
                                     String image_item = object.getString("photo");
 
-                                    image = new String[]{image_item};
-                                    Log.d("TAG", image_item);
+                                    image[i] = image_item;
 
                                     adapter = new PageAdapter(Homepage.this, image);
                                 }
