@@ -147,17 +147,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         Declare();
         viewPager = findViewById(R.id.view_pager);
 
-        getSession();
-
-        getUserDetail();
-
-        Category_Func();
-
-        Cart_Item();
-
-        View_HardSelling();
-
-        View_TopSelling();
 
         final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
         final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
@@ -180,6 +169,18 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 handler.post(update);
             }
         }, DELAY_MS, PERIOD_MS);
+
+        getSession();
+
+        getUserDetail();
+
+        Category_Func();
+
+        Cart_Item();
+
+        View_HardSelling();
+
+        View_TopSelling();
 
         View_Photo();
 
@@ -1056,6 +1057,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
+            timer.cancel();
             super.onBackPressed();
             finish();
             return;
@@ -1064,6 +1066,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onStart() {
+        timer.cancel();
+        super.onStart();
     }
 
     @Override

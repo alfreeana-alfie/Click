@@ -34,7 +34,7 @@ public class DeliveryAdapter_Single extends RecyclerView.Adapter<DeliveryAdapter
 
         holder.division.setText(delivery.getDivision());
         holder.price.setText("MYR "  + delivery.getPrice());
-        holder.days.setText(delivery.getDays());
+        holder.days.setText(delivery.getDays() + " Days");
     }
 
     @Override

@@ -35,8 +35,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Checkout extends AppCompatActivity {
@@ -75,7 +80,7 @@ public class Checkout extends AppCompatActivity {
     Item_All_Details item;
     Delivery_Combine delivery_combine;
 
-    String getId, Price;
+    String getId, Price, Delivery_Date;
     SessionManager sessionManager;
 
 
@@ -118,22 +123,6 @@ public class Checkout extends AppCompatActivity {
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
-
-
-
-
-
-//                                    Toast.makeText(Checkout.this, item_id, Toast.LENGTH_SHORT).show();
-
-//                                    delivery_combine = new Delivery_Combine();
-//                                    delivery_combine.setId(id);
-//                                    delivery_combine.setDelivery_item_id(item_id);
-//                                    delivery_combine.setSeller_id(seller_id);
-//                                    delivery_combine.setAd_detail(ad_detail);
-//                                    delivery_combine.setPhoto(image_item);
-//                                    delivery_combine.setPrice(String.valueOf(price));
-//                                    delivery_combine.setDivision(division);
-//                                    delivery_combine.setQuantity(quantity);
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                             new Response.Listener<String>() {
@@ -179,6 +168,22 @@ public class Checkout extends AppCompatActivity {
                                                                                             String strDivision = object.getString("division");
                                                                                             Price = object.getString("price");
                                                                                             String strDays = object.getString("days");
+
+                                                                                            Date date = Calendar.getInstance().getTime();
+
+                                                                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                                                            String oneDate = simpleDateFormat.format(date);
+
+                                                                                            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                            Calendar c = Calendar.getInstance();
+                                                                                            try {
+                                                                                                c.setTime(simpleDateFormat1.parse(oneDate));
+                                                                                            }catch (ParseException e){
+                                                                                                e.printStackTrace();
+                                                                                            }
+                                                                                            c.add(Calendar.DATE, Integer.parseInt(strDays));
+                                                                                            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                            Delivery_Date = simpleDateFormat2.format(c.getTime());
 
                                                                                             delivery_combine = new Delivery_Combine();
                                                                                             delivery_combine.setId(id);
@@ -639,8 +644,8 @@ public class Checkout extends AppCompatActivity {
                                     final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
-                                    final String division = object.getString("division");
-                                    final String district = object.getString("district");
+                                    final String seller_division = object.getString("division");
+                                    final String seller_district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
@@ -709,6 +714,68 @@ public class Checkout extends AppCompatActivity {
                                                                                         });
                                                                                         RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
                                                                                         rQueue.add(request);
+
+                                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+                                                                                                new Response.Listener<String>() {
+                                                                                                    @Override
+                                                                                                    public void onResponse(String response) {
+                                                                                                        try {
+                                                                                                            JSONObject jsonObject = new JSONObject(response);
+                                                                                                            String success = jsonObject.getString("success");
+                                                                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                                                                            if (success.equals("1")) {
+
+                                                                                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                                    JSONObject object = jsonArray.getJSONObject(i);
+                                                                                                                    String strDelivery_ID = object.getString("id").trim();
+                                                                                                                    String strUser_ID = object.getString("user_id").trim();
+                                                                                                                    String strDivision = object.getString("division");
+                                                                                                                    Price = object.getString("price");
+                                                                                                                    String strDays = object.getString("days");
+
+                                                                                                                    Date date = Calendar.getInstance().getTime();
+
+                                                                                                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                                                                                    String oneDate = simpleDateFormat.format(date);
+
+                                                                                                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                                                    Calendar c = Calendar.getInstance();
+                                                                                                                    try {
+                                                                                                                        c.setTime(simpleDateFormat1.parse(oneDate));
+                                                                                                                    }catch (ParseException e){
+                                                                                                                        e.printStackTrace();
+                                                                                                                    }
+                                                                                                                    c.add(Calendar.DATE, Integer.parseInt(strDays));
+                                                                                                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                                                    Delivery_Date = simpleDateFormat2.format(c.getTime());
+                                                                                                                }
+                                                                                                            } else {
+                                                                                                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                                            }
+                                                                                                        } catch (JSONException e) {
+                                                                                                            e.printStackTrace();
+                                                                                                            Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                new Response.ErrorListener() {
+                                                                                                    @Override
+                                                                                                    public void onErrorResponse(VolleyError error) {
+                                                                                                        Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                                                                    }
+                                                                                                }) {
+                                                                                            @Override
+                                                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                                Map<String, String> params = new HashMap<>();
+                                                                                                params.put("item_id", item_id);
+                                                                                                params.put("division", User_Division);
+                                                                                                return params;
+                                                                                            }
+                                                                                        };
+                                                                                        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                                                                        requestQueue.add(stringRequest);
                                                                                     }
                                                                                 } else {
                                                                                     Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -763,9 +830,13 @@ public class Checkout extends AppCompatActivity {
                                             params.put("price", String.format("%.2f", price));
                                             params.put("division", User_Division);
                                             params.put("district", User_Division);
+                                            params.put("seller_division", seller_division);
+                                            params.put("seller_district", seller_district);
                                             params.put("photo", image_item);
                                             params.put("item_id", item_id);
                                             params.put("quantity", quantity);
+                                            params.put("delivery_price", Price);
+                                            params.put("delivery_date", Delivery_Date);
                                             return params;
                                         }
                                     };

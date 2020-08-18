@@ -166,7 +166,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
             final String strDivision = spinner_division.getSelectedItem().toString();
             final String strPrice = editText.getText().toString().trim();
-            final String strDays = spinner_days.getSelectedItem().toString() + " Days";
+            final String strDays = spinner_days.getSelectedItem().toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                     new Response.Listener<String>() {
