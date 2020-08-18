@@ -401,6 +401,11 @@
     <!-- [END fcm_default_icon_string] -->
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>
+    <string name="brand_material">Brand Material</string>
+    <string name="stock">Stock</string>
+    <string name="inner_material">Inner Material</string>
+    <string name="description">Description</string>
+    <string name="ships_from">Ships From</string>
 
 </resources>
 

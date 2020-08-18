@@ -183,9 +183,46 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/linear_detail"
+                    android:layout_below="@id/linear_stock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="5dp"
+                        android:id="@+id/avail1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="@font/open_sans"
+                        android:text="More Details"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="5dp"
+                        android:id="@+id/detail_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end"
+                        android:drawableEnd="@drawable/ic_right_foreground"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_below="@id/linear_stock"
+                    android:layout_below="@id/linear_detail"
                     android:id="@+id/view1"
                     android:layout_height="1dp"
                     android:layout_marginTop="10dp"

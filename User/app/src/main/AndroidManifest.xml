@@ -64,18 +64,18 @@
         <activity android:name=".pages.Row_Add" />
         <activity android:name=".ActivityDelivery" />
 
-        <activity android:name=".category.All" />
-        <activity android:name=".category.Business" />
-        <activity android:name=".category.Camera" />
-        <activity android:name=".category.Car" />
-        <activity android:name=".category.Car_Accessories" />
-        <activity android:name=".category.Computer" />
-        <activity android:name=".category.Electronics" />
+        <activity android:name=".category.All_O" />
+        <activity android:name=".category.Business_O" />
+        <activity android:name=".category.Camera_O" />
+        <activity android:name=".category.Car_O" />
+        <activity android:name=".category.Car_Accessories_O" />
+        <activity android:name=".category.Computer_O" />
+        <activity android:name=".category.Electronics_O" />
         <activity android:name=".category.Women" />
-        <activity android:name=".category.Food" />
-        <activity android:name=".category.Furniture" />
-        <activity android:name=".category.Grocery" />
-        <activity android:name=".category.Handcraft" />
+        <activity android:name=".category.Food_O" />
+        <activity android:name=".category.Furniture_O" />
+        <activity android:name=".category.Grocery_O" />
+        <activity android:name=".category.Handcraft_O" />
         <activity android:name=".category.Home_Appliances" />
         <activity android:name=".category.House_Rent" />
         <activity android:name=".category.House_Sales" />
@@ -100,6 +100,7 @@
         <activity android:name=".user.Edit_Profile_Address" />
         <activity android:name=".Goto_Register_Page" />
         <activity android:name=".Register_Seller" />
+        <activity android:name=".Detail_Info" />
 
 
         <meta-data

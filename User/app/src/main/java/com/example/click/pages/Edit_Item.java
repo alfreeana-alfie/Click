@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,14 +64,15 @@ public class Edit_Item extends AppCompatActivity {
     private Bitmap bitmap;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
             Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
-    private EditText EditText_Price, EditText_Ad_Detail, Edittext_Order;
+    private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order;
     private Button Button_AcceptCategory, Button_BackCategory,
             Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
             Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
-    private RelativeLayout category_page_layout, ad_detail_page_layout, location_page_layout;
+    private RelativeLayout category_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
     private ImageView Upload_Photo;
+    private ScrollView about_detail;
     private ProgressBar loading;
 
     @Override
@@ -92,6 +94,11 @@ public class Edit_Item extends AppCompatActivity {
         String Category_Text = main_category + ", " + sub_category;
         String Location_Text = division + ", " + district;
         final String strMax_Order = intent.getStringExtra("max_order");
+
+        final String brand = intent.getStringExtra("brand_material");
+        final String inner = intent.getStringExtra("inner_material");
+        final String stock = intent.getStringExtra("stock");
+        final String desc = intent.getStringExtra("description");
 
         Edittext_Order.setText(strMax_Order);
 
@@ -128,6 +135,11 @@ public class Edit_Item extends AppCompatActivity {
         EditText_Price.setText(price);
         Picasso.get().load(photo).into(Upload_Photo);
 
+        edittext_brand.setText(brand);
+        edittext_inner.setText(inner);
+        edittext_stock.setText(stock);
+        edittext_desc.setText(desc);
+
         Button_Func();
     }
 
@@ -141,7 +153,15 @@ public class Edit_Item extends AppCompatActivity {
         District_TextView = findViewById(R.id.district_TextView);
         Delivery_Location = findViewById(R.id.enter_delivery_location);
 
+        about_detail = findViewById(R.id.about_product);
+
         Edittext_Order = findViewById(R.id.enter_max_order);
+
+        edittext_brand = findViewById(R.id.edittext_brand);
+        edittext_inner = findViewById(R.id.edittext_inner);
+        edittext_stock = findViewById(R.id.edittext_stock);
+        edittext_desc = findViewById(R.id.edittext_desc);
+
 
         EditText_Price = findViewById(R.id.enter_price);
         spinner_division = findViewById(R.id.spinner_division);
@@ -163,7 +183,7 @@ public class Edit_Item extends AppCompatActivity {
         Upload_Photo = findViewById(R.id.upload_photo);
         loading = findViewById(R.id.loading);
         category_page_layout = findViewById(R.id.category_page_layout);
-        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
+//        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         location_page_layout = findViewById(R.id.location_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
 
@@ -236,7 +256,7 @@ public class Edit_Item extends AppCompatActivity {
         Button_BackAdDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
+                about_detail.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
             }
         });
@@ -301,7 +321,7 @@ public class Edit_Item extends AppCompatActivity {
         Button_AcceptAdDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ad_detail_page_layout.setVisibility(View.GONE);
+                about_detail.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
                 final String mAd_Detail = EditText_Ad_Detail.getText().toString();
@@ -316,7 +336,7 @@ public class Edit_Item extends AppCompatActivity {
     }
 
     private void gotoAdDetail() {
-        ad_detail_page_layout.setVisibility(View.VISIBLE);
+        about_detail.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
     }
 
@@ -564,11 +584,17 @@ public class Edit_Item extends AppCompatActivity {
         final String strMain_category = this.Main_Category_TextView.getText().toString().trim();
         final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
+        final String strBrand = this.edittext_brand.getText().toString();
+        final String strInner = this.edittext_inner.getText().toString();
+        final String strStock = this.edittext_stock.getText().toString();
+        final String strDesc = this.edittext_desc.getText().toString();
+
         final Double strPrice = Double.valueOf(this.EditText_Price.getText().toString().trim());
         final String strPrice_Text = String.format("%.2f", strPrice);
         final String strOrder = this.Edittext_Order.getText().toString();
         final String strDivision = this.Division_TextView.getText().toString().trim();
         final String strDistrict = this.District_TextView.getText().toString().trim();
+
 
         loading.setVisibility(View.VISIBLE);
         Button_SavedEdit.setVisibility(View.GONE);
@@ -613,6 +639,11 @@ public class Edit_Item extends AppCompatActivity {
                 params.put("main_category", strMain_category);
                 params.put("sub_category", strSub_category);
                 params.put("ad_detail", strAd_Detail);
+                params.put("brand_material", strBrand);
+                params.put("inner_material", strInner);
+                params.put("stock", strStock);
+                params.put("description", strDesc);
+
                 params.put("price", strPrice_Text);
                 params.put("max_order", strOrder);
                 params.put("division", strDivision);

@@ -4,6 +4,44 @@ public class Item_All_Details {
 
     private String id;
     private String seller_id;
+    private String item_id;
+    private String ad_detail, price, division, district, brand, inner, stock, description;
+    private String photo;
+    private String main_category;
+    private String sub_category;
+    private String quantity;
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getInner() {
+        return inner;
+    }
+
+    public void setInner(String inner) {
+        this.inner = inner;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getItem_id() {
         return item_id;
@@ -13,12 +51,7 @@ public class Item_All_Details {
         this.item_id = item_id;
     }
 
-    private String item_id;
-    private String ad_detail, price, division, district;
-    private String photo;
-    private String main_category;
-    private String sub_category;
-    private String quantity;
+
 
     public String getMax_order() {
         return max_order;

@@ -45,15 +45,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class All extends AppCompatActivity {
+public class Business_O extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/readall.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_business.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/readall.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_filter.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_filter.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall.php";
+
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_category_business.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_business.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_business.php";
+
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_category_business.php";
 
     SessionManager sessionManager;
     String getId;
@@ -61,6 +63,7 @@ public class All extends AppCompatActivity {
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
+    SearchView searchView;
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
@@ -72,7 +75,7 @@ public class All extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_car);
         Declare();
-        View_List();
+        View_Item();
 
         ToolbarSetting();
         getSession();
@@ -108,7 +111,6 @@ public class All extends AppCompatActivity {
                     Button_Search.setVisibility(View.GONE);
                     Button_Filter.setVisibility(View.GONE);
                     close_search.setVisibility(View.GONE);
-                    Button_Search.setVisibility(View.GONE);
                 } else {
                     Button_Search.setVisibility(View.VISIBLE);
                     Button_Filter.setVisibility(View.GONE);
@@ -129,17 +131,17 @@ public class All extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, All.this);
+                adapter_item = new Item_Adapter(itemList, Business_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
-                View_List();
+                View_Item();
             }
         });
 
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(All.this, Homepage.class);
+                Intent intent = new Intent(Business_O.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -155,28 +157,27 @@ public class All extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, All.this);
+                adapter_item = new Item_Adapter(itemList, Business_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item = new Item_Adapter(itemList, Business_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
-                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item = new Item_Adapter(itemList, Business_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
                     Search(strAd_Detail);
                 }
-
 
             }
         });
@@ -226,7 +227,7 @@ public class All extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, All.this);
+                adapter_item = new Item_Adapter(itemList, Business_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -236,25 +237,25 @@ public class All extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if (strDistrict.equals("All")) {
+                if (strDistrict.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item = new Item_Adapter(itemList, Business_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
                     Filter_Division(strDivision);
                 }
-                if (strDivision.equals("All")) {
+                if (strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item = new Item_Adapter(itemList, Business_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
-                    View_List();
+                    View_Item();
                 }
-                if(!strDivision.equals("All") && !strDistrict.equals("All")){
+                if(!strDivision.equals("All_O") && !strDistrict.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, All.this);
+                    adapter_item = new Item_Adapter(itemList, Business_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -269,7 +270,7 @@ public class All extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(All.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Business_O.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -336,13 +337,13 @@ public class All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, All.this);
+                                adapter_item = new Item_Adapter(itemList, Business_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Business_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -373,7 +374,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -384,20 +385,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -416,7 +417,7 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -436,7 +437,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -447,20 +448,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -479,13 +480,13 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(All.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Business_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -504,7 +505,7 @@ public class All extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -540,13 +541,13 @@ public class All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, All.this);
+                                adapter_item = new Item_Adapter(itemList, Business_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Business_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -577,7 +578,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -588,20 +589,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -620,7 +621,7 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -640,7 +641,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -651,20 +652,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -683,13 +684,13 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(All.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Business_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -709,7 +710,7 @@ public class All extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -745,13 +746,13 @@ public class All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, All.this);
+                                adapter_item = new Item_Adapter(itemList, Business_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Business_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -765,7 +766,6 @@ public class All extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -783,7 +783,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -794,20 +794,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -826,7 +826,7 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -846,7 +846,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -857,20 +857,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -889,13 +889,13 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(All.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Business_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -914,7 +914,7 @@ public class All extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
         requestQueue.add(stringRequest);
 
     }
@@ -951,13 +951,13 @@ public class All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, All.this);
+                                adapter_item = new Item_Adapter(itemList, Business_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Business_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -971,7 +971,6 @@ public class All extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -989,7 +988,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1000,20 +999,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1032,7 +1031,7 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1052,7 +1051,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1063,20 +1062,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1095,13 +1094,13 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(All.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Business_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1121,7 +1120,7 @@ public class All extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1207,7 +1206,7 @@ public class All extends AppCompatActivity {
         }
     }
 
-    private void View_List() {
+    private void View_Item() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -1240,13 +1239,13 @@ public class All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, All.this);
+                                adapter_item = new Item_Adapter(itemList, Business_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(All.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Business_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1260,7 +1259,6 @@ public class All extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -1278,7 +1276,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1289,20 +1287,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1321,7 +1319,7 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1341,7 +1339,7 @@ public class All extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Business_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1352,20 +1350,20 @@ public class All extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(All.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Business_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(All.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Business_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(All.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Business_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1384,13 +1382,13 @@ public class All extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(All.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Business_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1407,14 +1405,14 @@ public class All extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(All.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Business_O.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(All.this, Homepage.class);
+        Intent intent = new Intent(Business_O.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

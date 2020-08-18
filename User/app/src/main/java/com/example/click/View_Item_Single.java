@@ -5,12 +5,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +24,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Single_Adapter;
-import com.example.click.category.Car;
-import com.example.click.category.Travel;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
@@ -56,12 +51,13 @@ public class View_Item_Single extends AppCompatActivity {
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
 
 
-    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId;
+    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo
+            , getId, brand, inner, stock, desc;
     Item_Single_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
     private ImageView img_item, seller_image;
-    private TextView ad_detail_item, price_item, sold_text, shipping_info,
+    private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
             seller_name, seller_location, view_all;
     private Button btn_chat, add_to_cart_btn;
     private ImageButton btn_chat_wsp;
@@ -85,6 +81,8 @@ public class View_Item_Single extends AppCompatActivity {
         price_item = findViewById(R.id.price_item);
         sold_text = findViewById(R.id.sold_text);
         shipping_info = findViewById(R.id.shipping_info);
+        detail_info = findViewById(R.id.detail_info);
+
         seller_name = findViewById(R.id.seller_name);
         seller_image = findViewById(R.id.seller_image);
         seller_location = findViewById(R.id.seller_location);
@@ -100,6 +98,12 @@ public class View_Item_Single extends AppCompatActivity {
         strMain_category = intent.getStringExtra("main_category");
         strSub_category = intent.getStringExtra("sub_category");
         ad_detail = intent.getStringExtra("ad_detail");
+
+        brand = intent.getStringExtra("brand_material");
+        inner = intent.getStringExtra("inner_material");
+        stock = intent.getStringExtra("stock");
+        desc = intent.getStringExtra("description");
+
         strPrice = intent.getStringExtra("price");
         division = intent.getStringExtra("division");
         district = intent.getStringExtra("district");
@@ -114,6 +118,32 @@ public class View_Item_Single extends AppCompatActivity {
         getUserDetail();
         View_Item();
         getSold();
+
+        detail_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(View_Item_Single.this, Detail_Info.class);
+
+                final Intent intent4 = getIntent();
+                String id1 = intent4.getStringExtra("id");
+                String stock = intent4.getStringExtra("stock");
+                String brand = intent4.getStringExtra("brand_material");
+                String inner = intent4.getStringExtra("inner_material");
+                String desc = intent4.getStringExtra("description");
+                String division = intent4.getStringExtra("division");
+                String district = intent4.getStringExtra("district");
+
+                intent1.putExtra("id", id1);
+                intent1.putExtra("stock", stock);
+                intent1.putExtra("brand_material", brand);
+                intent1.putExtra("inner_material", inner);
+                intent1.putExtra("description", desc);
+                intent1.putExtra("division", division);
+                intent1.putExtra("district", district);
+
+                startActivity(intent1);
+            }
+        });
 
         add_to_cart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,7 +241,6 @@ public class View_Item_Single extends AppCompatActivity {
                                             Delivery delivery = new Delivery(division, String.format("%.2f", price), days, item_id);
 
                                             Intent intent1 = new Intent(View_Item_Single.this, Shipping_Info.class);
-
 
                                             final Intent intent4 = getIntent();
                                             String id1 = intent4.getStringExtra("id");
@@ -500,6 +529,82 @@ public class View_Item_Single extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", userid);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void View_Detail(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String delivery_id = object.getString("id").trim();
+                                    final String user_id = object.getString("user_id").trim();
+                                    final String division = object.getString("division").trim();
+                                    final Double price = Double.valueOf(object.getString("price").trim());
+                                    final String days = object.getString("days");
+                                    final String item_id = object.getString("item_id");
+
+                                    Delivery delivery = new Delivery(division, String.format("%.2f", price), days, item_id);
+
+                                    Intent intent1 = new Intent(View_Item_Single.this, Shipping_Info.class);
+
+                                    final Intent intent4 = getIntent();
+                                    String id1 = intent4.getStringExtra("id");
+                                    String userid1 = intent4.getStringExtra("user_id");
+                                    String strMain_category1 = intent4.getStringExtra("main_category");
+                                    String strSub_category1 = intent4.getStringExtra("sub_category");
+                                    String ad_detail1 = intent4.getStringExtra("ad_detail");
+                                    String strPrice1 = intent4.getStringExtra("price");
+                                    String division1 = intent4.getStringExtra("division");
+                                    String district1 = intent4.getStringExtra("district");
+                                    String photo1 = intent4.getStringExtra("photo");
+
+                                    intent1.putExtra("item_id", item_id);
+                                    intent1.putExtra("id", id1);
+                                    intent1.putExtra("user_id", userid1);
+                                    intent1.putExtra("main_category", strMain_category1);
+                                    intent1.putExtra("sub_category", strSub_category1);
+                                    intent1.putExtra("ad_detail", ad_detail1);
+                                    intent1.putExtra("price", strPrice1);
+                                    intent1.putExtra("division", division1);
+                                    intent1.putExtra("district", district1);
+                                    intent1.putExtra("photo", photo1);
+
+                                    startActivity(intent1);
+                                }
+
+                            } else {
+                                Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(View_Item_Single.this, e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(View_Item_Single.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("item_id", id);
                 return params;
             }
         };

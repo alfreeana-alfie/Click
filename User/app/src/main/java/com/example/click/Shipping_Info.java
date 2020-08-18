@@ -46,6 +46,7 @@ public class Shipping_Info extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shipping_info);
+
         final Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         String userid = intent.getStringExtra("user_id");
@@ -60,10 +61,7 @@ public class Shipping_Info extends AppCompatActivity {
         final String item_id = intent.getStringExtra("item_id");
         itemList = new ArrayList<>();
 
-//        Toast.makeText(Shipping_Info.this, userid, Toast.LENGTH_SHORT).show();
-
         recyclerView = findViewById(R.id.recyclerView);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Shipping_Info.this));
 

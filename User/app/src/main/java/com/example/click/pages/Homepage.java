@@ -30,17 +30,17 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.Goto_Register_Page;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
-import com.example.click.category.All;
-import com.example.click.category.Business;
-import com.example.click.category.Camera;
-import com.example.click.category.Car;
-import com.example.click.category.Car_Accessories;
-import com.example.click.category.Computer;
-import com.example.click.category.Electronics;
-import com.example.click.category.Food;
-import com.example.click.category.Furniture;
-import com.example.click.category.Grocery;
-import com.example.click.category.Handcraft;
+import com.example.click.category.All_O;
+import com.example.click.category.Business_O;
+import com.example.click.category.Camera_O;
+import com.example.click.category.Car_O;
+import com.example.click.category.Car_Accessories_O;
+import com.example.click.category.Computer_O;
+import com.example.click.category.Electronics_O;
+import com.example.click.category.Food_O;
+import com.example.click.category.Furniture_O;
+import com.example.click.category.Grocery_O;
+import com.example.click.category.Handcraft_O;
 import com.example.click.category.Home_Appliances;
 import com.example.click.category.House_Rent;
 import com.example.click.category.House_Sales;
@@ -273,7 +273,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, All.class);
+                Intent intent = new Intent(Homepage.this, All_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -283,7 +283,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Business.class);
+                Intent intent = new Intent(Homepage.this, Business_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -293,7 +293,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Camera.class);
+                Intent intent = new Intent(Homepage.this, Camera_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -303,7 +303,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Car_Accessories.class);
+                Intent intent = new Intent(Homepage.this, Car_Accessories_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -313,7 +313,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Car.class);
+                Intent intent = new Intent(Homepage.this, Car_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -323,7 +323,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Computer.class);
+                Intent intent = new Intent(Homepage.this, Computer_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -333,7 +333,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Electronics.class);
+                Intent intent = new Intent(Homepage.this, Electronics_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -343,7 +343,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Furniture.class);
+                Intent intent = new Intent(Homepage.this, Furniture_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -353,7 +353,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Handcraft.class);
+                Intent intent = new Intent(Homepage.this, Handcraft_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -473,7 +473,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Food.class);
+                Intent intent = new Intent(Homepage.this, Food_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -483,7 +483,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Grocery.class);
+                Intent intent = new Intent(Homepage.this, Grocery_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -493,7 +493,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, All.class);
+                Intent intent = new Intent(Homepage.this, All_O.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

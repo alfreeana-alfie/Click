@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
@@ -45,25 +44,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Camera extends AppCompatActivity {
+public class Furniture_O extends AppCompatActivity {
 
-//    public static final String ID = "id";
-//    public static final String USERID = "user_id";
-//    public static final String MAIN_CATE = "main_category";
-//    public static final String SUB_CATE = "sub_category";
-//    public static final String AD_DETAIL = "ad_detail";
-//    public static final String PRICE = "price";
-//    public static final String DISTRICT = "district";
-//    public static final String DIVISION = "division";
-//    public static final String PHOTO = "photo";
-
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_camera.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_category_cars.php";
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_category_camera.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_camera.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_camera.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_category_camera.php";
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_search_cars.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_filter_car.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_filter_car.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_filter_car.php";
 
     SessionManager sessionManager;
     String getId;
@@ -74,7 +63,8 @@ public class Camera extends AppCompatActivity {
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
-    private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
+    private Button price_sortlowest, price_sorthighest,
+            Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
     @Override
@@ -138,7 +128,7 @@ public class Camera extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Camera.this);
+                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_Item();
@@ -148,7 +138,7 @@ public class Camera extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Camera.this, Homepage.class);
+                Intent intent = new Intent(Furniture_O.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -164,27 +154,28 @@ public class Camera extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Camera.this);
+                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Camera.this);
+                    adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
-                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Camera.this);
+                    adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
                     Search(strAd_Detail);
                 }
+
 
             }
         });
@@ -201,6 +192,7 @@ public class Camera extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
+
         filter_layout = findViewById(R.id.filter_layout);
         filter_layout.setVisibility(View.GONE);
 
@@ -211,7 +203,6 @@ public class Camera extends AppCompatActivity {
         Button_Apply = findViewById(R.id.btn_apply);
         no_result = findViewById(R.id.no_result);
         no_result.setVisibility(View.GONE);
-
         Button_Filter = findViewById(R.id.btn_filter);
         Button_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +226,7 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Camera.this);
+                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -245,25 +236,25 @@ public class Camera extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if (strDistrict.equals("All")) {
+                if (strDistrict.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Camera.this);
+                    adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
                     Filter_Division(strDivision);
                 }
-                if (strDivision.equals("All")) {
+                if (strDivision.equals("All_O")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Camera.this);
+                    adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
                     View_Item();
                 }
-                if(!strDivision.equals("All") && !strDistrict.equals("All")){
+                if(!strDivision.equals("All_O") && !strDistrict.equals("All_O")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Camera.this);
+                    adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -278,7 +269,7 @@ public class Camera extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Camera.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Furniture_O.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -345,13 +336,13 @@ public class Camera extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Camera.this);
+                                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Camera.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Furniture_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -382,7 +373,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -393,20 +384,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -425,7 +416,7 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -445,7 +436,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -456,20 +447,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -488,13 +479,13 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Camera.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Furniture_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -513,7 +504,7 @@ public class Camera extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -549,13 +540,13 @@ public class Camera extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Camera.this);
+                                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Camera.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Furniture_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -586,7 +577,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -597,20 +588,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -629,7 +620,7 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -649,7 +640,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -660,20 +651,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -692,13 +683,13 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Camera.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Furniture_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -718,7 +709,7 @@ public class Camera extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -754,13 +745,13 @@ public class Camera extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Camera.this);
+                                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Camera.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Furniture_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -791,7 +782,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -802,20 +793,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -834,7 +825,7 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -854,7 +845,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -865,20 +856,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -897,13 +888,13 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Camera.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Furniture_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -922,7 +913,7 @@ public class Camera extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
         requestQueue.add(stringRequest);
 
     }
@@ -959,13 +950,13 @@ public class Camera extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Camera.this);
+                                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Camera.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Furniture_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -996,7 +987,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1007,20 +998,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1039,7 +1030,7 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1059,7 +1050,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1070,20 +1061,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1102,13 +1093,13 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Camera.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Furniture_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1128,7 +1119,7 @@ public class Camera extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1247,13 +1238,13 @@ public class Camera extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Camera.this);
+                                adapter_item = new Item_Adapter(itemList, Furniture_O.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Camera.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Furniture_O.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1284,7 +1275,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1295,20 +1286,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1327,7 +1318,7 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1347,7 +1338,7 @@ public class Camera extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Camera.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Furniture_O.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1358,20 +1349,20 @@ public class Camera extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Camera.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Furniture_O.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Camera.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Furniture_O.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Camera.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Furniture_O.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1390,13 +1381,13 @@ public class Camera extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Camera.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Furniture_O.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1413,14 +1404,14 @@ public class Camera extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Camera.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(Furniture_O.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Camera.this, Homepage.class);
+        Intent intent = new Intent(Furniture_O.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

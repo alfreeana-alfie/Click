@@ -53,8 +53,6 @@ public class Sell_Items_Other extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
-    private static String URL_READ_PRODUCT = "https://ketekmall.com/ketekmall/readall_products.php";
-    private static String URL_READ_PRODUCT_SINGLE = "https://ketekmall.com/ketekmall/read_products.php";
 
 
     SessionManager sessionManager;
@@ -66,7 +64,7 @@ public class Sell_Items_Other extends AppCompatActivity {
             adapter_jobs, adapter_travel, adapter_other;
     private Bitmap bitmap;
     private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
-    private EditText enter_price, edittext_ad_detail, edittext_order;
+    private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, location_page_layout;
@@ -208,6 +206,11 @@ public class Sell_Items_Other extends AppCompatActivity {
         enter_setup = findViewById(R.id.enter_delivery_location);
         edittext_order = findViewById(R.id.enter_max_order);
         about_detail = findViewById(R.id.about_product);
+
+        edittext_brand = findViewById(R.id.edittext_brand);
+        edittext_inner = findViewById(R.id.edittext_inner);
+        edittext_stock = findViewById(R.id.edittext_stock);
+        edittext_desc = findViewById(R.id.edittext_desc);
 
         spinner_division = findViewById(R.id.spinner_division);
         spinner_district = findViewById(R.id.spinner_district);
@@ -453,6 +456,11 @@ public class Sell_Items_Other extends AppCompatActivity {
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
         final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
+        final String strBrand = this.edittext_brand.getText().toString();
+        final String strInner = this.edittext_inner.getText().toString();
+        final String strStock = this.edittext_stock.getText().toString();
+        final String strDesc = this.edittext_desc.getText().toString();
+
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
         final String strOrder = this.edittext_order.getText().toString();
         final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
@@ -518,6 +526,10 @@ public class Sell_Items_Other extends AppCompatActivity {
                     params.put("main_category", strMain_category);
                     params.put("sub_category", strSub_category);
                     params.put("ad_detail", strAd_Detail);
+                    params.put("brand_material", strBrand);
+                    params.put("inner_material", strInner);
+                    params.put("stock", strStock);
+                    params.put("description", strDesc);
                     params.put("price", String.format("%.2f", strPrice));
                     params.put("max_order", strOrder);
                     params.put("division", strDivision);

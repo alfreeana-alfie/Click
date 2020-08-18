@@ -22,11 +22,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Adapter;
-import com.example.click.category.Car;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
-import com.example.click.pages.Find_My_Items_Other;
-import com.example.click.pages.Homepage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

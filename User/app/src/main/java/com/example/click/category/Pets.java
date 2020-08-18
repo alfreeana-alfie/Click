@@ -161,14 +161,14 @@ public class Pets extends AppCompatActivity {
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All_O")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Pets.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
-                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All_O")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Pets.this);
                     adapter_item.notifyDataSetChanged();
@@ -235,7 +235,7 @@ public class Pets extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if (strDistrict.equals("All")) {
+                if (strDistrict.equals("All_O")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Pets.this);
                     adapter_item.notifyDataSetChanged();
@@ -243,7 +243,7 @@ public class Pets extends AppCompatActivity {
 
                     Filter_Division(strDivision);
                 }
-                if (strDivision.equals("All")) {
+                if (strDivision.equals("All_O")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Pets.this);
                     adapter_item.notifyDataSetChanged();
@@ -251,7 +251,7 @@ public class Pets extends AppCompatActivity {
 
                     View_Item();
                 }
-                if(!strDivision.equals("All") && !strDistrict.equals("All")){
+                if(!strDivision.equals("All_O") && !strDistrict.equals("All_O")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Pets.this);
                     adapter_item.notifyDataSetChanged();

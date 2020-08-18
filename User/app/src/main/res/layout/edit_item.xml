@@ -791,7 +791,6 @@
 <!--    </RelativeLayout>-->
 
     <ScrollView
-        android:visibility="gone"
         android:id="@+id/about_product"
         android:fillViewport="true"
         android:layout_width="wrap_content"
@@ -911,7 +910,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
-                    android:hint="@string/please_enter_an_ad_detail"
+                    android:hint="@string/brand_material"
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
@@ -947,7 +946,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
-                    android:hint="@string/please_enter_an_ad_detail"
+                    android:hint="@string/inner_material"
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
@@ -983,7 +982,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
-                    android:hint="@string/please_enter_an_ad_detail"
+                    android:hint="@string/stock"
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
@@ -1008,7 +1007,7 @@
             <RelativeLayout
                 android:id="@+id/desc_relative_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:layout_below="@id/desc"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/border">
@@ -1016,10 +1015,10 @@
                 <EditText
                     android:id="@+id/edittext_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:ems="10"
-                    android:hint="@string/please_enter_an_ad_detail"
+                    android:hint="@string/description"
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"

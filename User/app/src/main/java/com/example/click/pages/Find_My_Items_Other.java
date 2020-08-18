@@ -121,6 +121,12 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
@@ -129,6 +135,10 @@ public class Find_My_Items_Other extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setMax_order(max_order);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_UserAdapter(itemList, Find_My_Items_Other.this);
@@ -145,6 +155,12 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
                                         detailIntent.putExtra("ad_detail", item.getAd_detail());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
