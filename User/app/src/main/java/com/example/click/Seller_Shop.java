@@ -64,7 +64,7 @@ public class Seller_Shop extends AppCompatActivity {
 
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
-        sellerPhoto = findViewById(R.id.seller_image);
+        sellerPhoto = findViewById(R.id.image);
         sellerName = findViewById(R.id.seller_name);
         sellerLocation = findViewById(R.id.seller_location);
         gridView_item = findViewById(R.id.gridView_CarItem);

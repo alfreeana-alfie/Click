@@ -103,6 +103,7 @@
         <activity android:name=".Detail_Info" />
         <activity android:name=".Review_Page" />
         <activity android:name=".Selling_Detail" />
+        <activity android:name=".Review_Info" />
 
 
         <meta-data

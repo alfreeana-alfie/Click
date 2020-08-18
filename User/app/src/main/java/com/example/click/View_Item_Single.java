@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,11 @@ public class View_Item_Single extends AppCompatActivity {
     private static String URL_READ_SELLER = "https://ketekmall.com/ketekmall/read_order_done_seller.php";
 
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
+
+    String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
 
     String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo
@@ -56,12 +60,14 @@ public class View_Item_Single extends AppCompatActivity {
     Item_Single_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
-    private ImageView img_item, seller_image;
+    private ImageView img_item, seller_image, image20, image21;
     private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
-            seller_name, seller_location, view_all;
+            seller_name, seller_location, view_all, customer_name1, customer_name2,
+            btn_view_all_review, review1, review2;
     private Button  add_to_cart_btn, btn_view_seller;
     private ImageButton btn_chat, btn_chat_wsp;
     private TwoWayGridView gridView_item;
+    private RatingBar ratingBar, ratingBar20, ratingBar21;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,9 +88,24 @@ public class View_Item_Single extends AppCompatActivity {
         sold_text = findViewById(R.id.sold_text);
         shipping_info = findViewById(R.id.shipping_info);
         detail_info = findViewById(R.id.detail_info);
+        ratingBar = findViewById(R.id.ratingBar);
+
+        image20 = findViewById(R.id.image20);
+        image21 = findViewById(R.id.image21);
+
+        customer_name1 = findViewById(R.id.customer_name1);
+        customer_name2 = findViewById(R.id.customer_name2);
+
+        review1 = findViewById(R.id.review1);
+        review2 = findViewById(R.id.review2);
+
+        ratingBar20 = findViewById(R.id.ratingBar20);
+        ratingBar21 = findViewById(R.id.ratingBar21);
+
+        btn_view_all_review = findViewById(R.id.view_all_review);
 
         seller_name = findViewById(R.id.seller_name);
-        seller_image = findViewById(R.id.seller_image);
+        seller_image = findViewById(R.id.image);
         seller_location = findViewById(R.id.seller_location);
         view_all = findViewById(R.id.view_all);
         btn_chat = findViewById(R.id.btn_chat);
@@ -115,6 +136,12 @@ public class View_Item_Single extends AppCompatActivity {
         ad_detail_item.setText(ad_detail);
         price_item.setText(Price_Text);
         Picasso.get().load(photo).into(img_item);
+
+        //Review
+        Read_Review(id);
+
+        Picasso.get().load(image_default).into(image20);
+        Picasso.get().load(image_default).into(image21);
 
         getUserDetail();
         View_Item();
@@ -482,6 +509,56 @@ public class View_Item_Single extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void getUserDetail_ReviewOne(final String username) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String strName = object.getString("name").trim();
+                                    String strEmail = object.getString("email").trim();
+                                    final String strPhoto = object.getString("photo");
+                                    final String mobile_num = object.getString("phone_no");
+                                    final String strDivision = object.getString("division").trim();
+
+                                    customer_name1.setText(strName);
+                                    customer_name2.setText(strName);
+                                }
+                            } else {
+                                Toast.makeText(View_Item_Single.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Homepage.this, "JSON Parsing Eror: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", username);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void View_Item() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
                 new Response.Listener<String>() {
@@ -607,6 +684,70 @@ public class View_Item_Single extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", userid);
                 params.put("ad_detail", ad_detail);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void Read_Review(final String item_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_REVIEW,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("seller_id").trim();
+                                    String customer_id = object.getString("customer_id").trim();
+                                    String customer_name = object.getString("customer_name").trim();
+                                    final String item_id = object.getString("item_id").trim();
+                                    String review = object.getString("review").trim();
+                                    String rating = object.getString("rating").trim();
+
+                                    ratingBar20.setRating(Float.parseFloat(rating));
+                                    ratingBar21.setRating(Float.parseFloat(rating));
+
+                                    review1.setText(review);
+                                    review2.setText(review);
+
+                                    btn_view_all_review.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
+                                            intent1.putExtra("item_id", item_id);
+                                            startActivity(intent1);
+                                        }
+                                    });
+
+                                    getUserDetail_ReviewOne(customer_id);
+                                }
+
+                            } else {
+                                Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("item_id", item_id);
                 return params;
             }
         };

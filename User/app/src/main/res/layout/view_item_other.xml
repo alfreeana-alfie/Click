@@ -236,7 +236,7 @@
                     android:layout_below="@id/view1">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/seller_image"
+                        android:id="@+id/image"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         tools:srcCompat="@tools:sample/avatars" />
@@ -245,7 +245,7 @@
                         android:id="@+id/seller_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/seller_image"
+                        android:layout_toEndOf="@id/image"
                         android:padding="5dp"
                         android:text="Seller Name" />
 
@@ -254,7 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seller_name"
-                        android:layout_toEndOf="@id/seller_image"
+                        android:layout_toEndOf="@id/image"
                         android:padding="5dp"
                         android:text="Seller Location" />
 
@@ -306,9 +306,120 @@
                     android:background="@color/colorLightGrey" />
 
                 <RelativeLayout
+                    android:layout_below="@id/view2"
+                    android:id="@+id/review_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/text_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Review" />
+
+                    <RelativeLayout
+                        android:id="@+id/review11"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/colorWhite"
+                        android:padding="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/image20"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/customer_name1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/image20"
+                            android:layout_margin="5dp"
+                            android:text="Customer_Name" />
+
+                        <RatingBar
+                            android:id="@+id/ratingBar20"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/MyRatingBar"/>
+
+                        <TextView
+                            android:id="@+id/review1"
+                            android:layout_below="@id/image20"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/review12"
+                        android:layout_below="@id/review11"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/colorWhite"
+                        android:padding="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/image21"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:background="@drawable/login_part_border_orange"
+                            tools:srcCompat="@tools:sample/avatars" />
+
+                        <TextView
+                            android:id="@+id/customer_name2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/image21"
+                            android:layout_margin="5dp"
+                            android:text="Customer_Name" />
+
+                        <RatingBar
+                            android:id="@+id/ratingBar21"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/review2"
+                            android:layout_below="@id/image21"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TextView" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/view_all_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:drawableEnd="@drawable/ic_right_black_foreground"
+                        android:padding="5dp"
+                        android:text="View All"
+                        android:textColor="@color/colorPrimaryDark" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/view2">
+                    android:layout_below="@id/review_layout">
 
                     <TextView
                         android:id="@+id/text_shop"

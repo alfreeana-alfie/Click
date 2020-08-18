@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,8 +40,11 @@ public class Review_Page extends AppCompatActivity {
     TextView ordered, pending, shipped, received, name_display, order_idtext, order_datetext;
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_received;
-    String getId;
+    String getId, strName1;
     SessionManager sessionManager;
+    RatingBar ratingBar;
+    int numofStar;
+    float getRating;
 
 
     @Override
@@ -70,6 +74,7 @@ public class Review_Page extends AppCompatActivity {
         name_display = findViewById(R.id.name_display);
         order_idtext = findViewById(R.id.order_id);
         order_datetext = findViewById(R.id.order_date);
+        ratingBar = findViewById(R.id.ratingBar);
 
         order_idtext.setText("#" + order_id);
         order_datetext.setText(order_date);
@@ -98,7 +103,7 @@ public class Review_Page extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewList(strSeller_ID, getId, strItem_ID);
+                ViewList2(strSeller_ID, getId, strItem_ID);
             }
         });
 
@@ -119,50 +124,97 @@ public class Review_Page extends AppCompatActivity {
         });
     }
 
-    private void ViewList(final String strSeller_ID, final String strCustomer_ID, final String strItem_ID) {
+    private void ViewList2(final String strSeller_ID, final String strCustomer_ID, final String strItem_ID) {
         final String reviewtext = edit_review.getText().toString();
+        numofStar = ratingBar.getNumStars();
+        getRating = ratingBar.getRating();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REVIEW,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                Toast.makeText(Review_Page.this, "Saved", Toast.LENGTH_SHORT).show();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                                Intent intent = new Intent(Review_Page.this, Main_Order_Other.class);
-                                startActivity(intent);
+                                    final String strName = object.getString("name").trim();
+                                    String strEmail = object.getString("email").trim();
+                                    String strPhoto = object.getString("photo");
+
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REVIEW,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        String success = jsonObject.getString("success");
+
+                                                        if (success.equals("1")) {
+                                                            Toast.makeText(Review_Page.this, "Saved", Toast.LENGTH_SHORT).show();
+
+                                                            Intent intent = new Intent(Review_Page.this, Main_Order_Other.class);
+                                                            startActivity(intent);
+                                                        } else {
+                                                            Toast.makeText(Review_Page.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                            Toast.makeText(Review_Page.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(Review_Page.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }) {
+
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("seller_id", strSeller_ID);
+                                            params.put("customer_id", getId);
+                                            params.put("customer_name", strName);
+                                            params.put("item_id", strItem_ID);
+                                            params.put("review", reviewtext);
+                                            params.put("rating", String.valueOf(getRating));
+
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(Review_Page.this);
+                                    requestQueue.add(stringRequest);
+                                }
                             } else {
-                                Toast.makeText(Review_Page.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Review_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                                    Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+//                                            Toast.makeText(Rev.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
-
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("seller_id", strSeller_ID);
-                params.put("customer_id", strCustomer_ID);
-                params.put("item_id", strItem_ID);
-                params.put("review", reviewtext);
+                params.put("id", getId);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(Review_Page.this);
         requestQueue.add(stringRequest);
+
     }
 
     private void getSession() {
