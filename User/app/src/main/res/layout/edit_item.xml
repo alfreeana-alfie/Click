@@ -791,6 +791,7 @@
 <!--    </RelativeLayout>-->
 
     <ScrollView
+        android:visibility="gone"
         android:id="@+id/about_product"
         android:fillViewport="true"
         android:layout_width="wrap_content"

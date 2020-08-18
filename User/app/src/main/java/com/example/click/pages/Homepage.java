@@ -19,6 +19,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,7 +31,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Goto_Register_Page;
 import com.example.click.R;
+import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
+import com.example.click.adapter.Item_Single_Adapter;
+import com.example.click.adapter.PageAdapter;
 import com.example.click.category.All_O;
 import com.example.click.category.Business_O;
 import com.example.click.category.Camera_O;
@@ -54,6 +59,7 @@ import com.example.click.category.Travel;
 import com.example.click.category.Women;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.promotion;
 import com.example.click.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -61,6 +67,7 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
+import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -87,10 +94,11 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String PHOTO = "photo";
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
+    private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
 
     List<Item_All_Details> itemList;
-
 
     CartAdapter _cart_adapter;
     RecyclerView recyclerView;
@@ -101,6 +109,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     TextView textCartItemCount;
     int mCartItemCount;
+    private TwoWayGridView gridView_HardSelling, gridView_TopSelling;
 
     private ScrollView scrollView;
     private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera,
@@ -113,15 +122,26 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private TextView name_display, email_display, button_view_all, username;
     private DrawerLayout drawer;
     private View view;
+    Item_Single_Adapter adapter_item;
+    ViewPager viewPager;
 
     private long backPressedTime;
     private Toast backToast;
+    private String[] imageUrls = new String[]{
+            "https://cdn.pixabay.com/photo/2016/11/11/23/34/cat-1817970_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/12/21/12/26/glowworm-3031704_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/12/24/09/09/road-3036620_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/11/07/00/07/fantasy-2925250_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2017/10/10/15/28/butterfly-2837589_960_720.jpg"
+    };
+    String[] image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_drawer);
         Declare();
+        viewPager = findViewById(R.id.view_pager);
 
         getSession();
 
@@ -130,6 +150,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         Category_Func();
 
         Cart_Item();
+
+        View_HardSelling();
+
+        View_TopSelling();
+
+        View_Photo();
     }
 
     private void getSession() {
@@ -149,6 +175,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         recyclerView.setLayoutManager(new LinearLayoutManager(Homepage.this));
         itemAllDetailsArrayList = new ArrayList<>();
 
+        gridView_HardSelling = findViewById(R.id.gridView_HardSelling);
+        gridView_TopSelling = findViewById(R.id.gridView_TopSelling);
         _cart_adapter = new CartAdapter(this, itemList);
         view = findViewById(R.id.support_layout);
         scrollView = findViewById(R.id.grid_category);
@@ -732,6 +760,196 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         return super.onOptionsItemSelected(item);
     }
 
+    private void View_HardSelling() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView_HardSelling.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void View_TopSelling() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    itemList.add(item);
+                                }
+                                adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView_TopSelling.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                    @Override
+                                    public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+
+                                        startActivity(detailIntent);
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void View_Photo() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PROMOTION,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String image_item = object.getString("photo");
+                                    image = new String[]{image_item};
+
+                                }
+                                PageAdapter adapter = new PageAdapter(Homepage.this, imageUrls);
+                                viewPager.setAdapter(adapter);
+
+                            } else {
+                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                return super.getParams();
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+        requestQueue.add(stringRequest);
+    }
+
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
@@ -745,4 +963,5 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         }
         backPressedTime = System.currentTimeMillis();
     }
+
 }

@@ -122,6 +122,12 @@
                 android:background="@drawable/background_white_curve"
                 android:orientation="vertical">
 
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_margin="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -131,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_light"
@@ -146,7 +152,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="30dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_light"
@@ -155,13 +161,18 @@
                         android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
+                </RelativeLayout>
+
+                <HorizontalScrollView
+                    android:id="@+id/category_scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                     <androidx.gridlayout.widget.GridLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/button_see"
-                        android:layout_centerHorizontal="true"
-                        app:columnCount="3"
-                        app:rowCount="10">
+                        app:columnCount="10"
+                        app:rowCount="3">
 
                         <Button
                             android:id="@+id/button_cars"
@@ -472,8 +483,55 @@
                             android:textSize="15sp"
                             android:visibility="gone" />
                     </androidx.gridlayout.widget.GridLayout>
+                </HorizontalScrollView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_white_curve">
+
+                    <com.mhmtk.twowaygrid.TwoWayGridView
+                        android:id="@+id/gridView_HardSelling"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/colorWhite"
+                        app:cacheColorHint="@color/colorWhite"
+                        app:columnWidth="80dp"
+                        app:gravity="center"
+                        app:horizontalSpacing="5dp"
+                        app:numColumns="auto_fit"
+                        app:numRows="1"
+                        app:rowHeight="200dp"
+                        app:scrollDirectionLandscape="horizontal"
+                        app:scrollDirectionPortrait="horizontal"
+                        app:stretchMode="columnWidth"
+                        app:verticalSpacing="5dp" />
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_white_curve">
+
+                    <com.mhmtk.twowaygrid.TwoWayGridView
+                        android:id="@+id/gridView_TopSelling"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/colorWhite"
+                        app:cacheColorHint="@color/colorWhite"
+                        app:columnWidth="80dp"
+                        app:gravity="center"
+                        app:horizontalSpacing="5dp"
+                        app:numColumns="auto_fit"
+                        app:numRows="1"
+                        app:rowHeight="200dp"
+                        app:scrollDirectionLandscape="horizontal"
+                        app:scrollDirectionPortrait="horizontal"
+                        app:stretchMode="columnWidth"
+                        app:verticalSpacing="5dp" />
+                </RelativeLayout>
 
             </LinearLayout>
         </ScrollView>
