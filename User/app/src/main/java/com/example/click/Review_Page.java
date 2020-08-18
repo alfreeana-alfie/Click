@@ -1,16 +1,19 @@
 package com.example.click;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -20,9 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
-import com.example.click.pages.Homepage;
 import com.example.click.pages.Main_Order_Other;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,11 +38,12 @@ public class Review_Page extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_remarks_done.php";
 
-    TextView ordered, pending, shipped, received, name_display, order_idtext, order_datetext;
+    TextView ordered, pending, shipped, received, name_display, tracking_notext, order_datetext;
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_received;
     String getId, strName1;
     SessionManager sessionManager;
+    RelativeLayout order_layout, review_layout;
     RatingBar ratingBar;
     int numofStar;
     float getRating;
@@ -53,6 +55,7 @@ public class Review_Page extends AppCompatActivity {
         setContentView(R.layout.review_page);
 
         getSession();
+        ToolbarSetting();
 
         Intent intent = getIntent();
         final String strSeller_ID = intent.getStringExtra("seller_id");
@@ -61,6 +64,8 @@ public class Review_Page extends AppCompatActivity {
         final String remarks = intent.getStringExtra("remarks");
         final String order_date = intent.getStringExtra("order_date");
         final String order_id = intent.getStringExtra("order_id");
+        final String strTracking = intent.getStringExtra("tracking_no");
+        final String strDelivery_Date = intent.getStringExtra("delivery_date");
 
         edit_review = findViewById(R.id.editText_review);
         btn_received = findViewById(R.id.btn_received);
@@ -72,12 +77,23 @@ public class Review_Page extends AppCompatActivity {
         shipped = findViewById(R.id.shipped);
         received = findViewById(R.id.received);
         name_display = findViewById(R.id.name_display);
-        order_idtext = findViewById(R.id.order_id);
+        tracking_notext = findViewById(R.id.tracking_id);
         order_datetext = findViewById(R.id.order_date);
         ratingBar = findViewById(R.id.ratingBar);
 
-        order_idtext.setText("KM" + order_id);
-        order_datetext.setText(order_date);
+        order_layout = findViewById(R.id.order_layout);
+        review_layout = findViewById(R.id.review_layout);
+
+        tracking_notext.setText("KM" + strTracking);
+        order_datetext.setText(strDelivery_Date);
+        tracking_notext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Intent.ACTION_VIEW);
+                intent1.setData(Uri.parse("https://www.tracking.my/poslaju/" + "PL"+ strTracking));
+                startActivity(intent1);
+            }
+        });
 
         getUserDetail(getId);
 
@@ -120,6 +136,25 @@ public class Review_Page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Received(order_date);
+                order_layout.setVisibility(View.GONE);
+                review_layout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void ToolbarSetting(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Back");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Review_Page.this, Main_Order_Other.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
             }
         });
     }

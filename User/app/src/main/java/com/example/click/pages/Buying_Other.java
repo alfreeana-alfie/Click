@@ -115,12 +115,20 @@ public class Buying_Other extends Fragment {
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String division = object.getString("division");
                                     final String district = object.getString("district");
+
+                                    final String seller_division = object.getString("seller_division");
+                                    final String seller_district = object.getString("seller_district");
+
                                     final String image_item = object.getString("photo");
                                     final String item_id = object.getString("item_id").trim();
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
                                     final String status = object.getString("remarks").trim();
+                                    final String tracking_no = object.getString("tracking_no");
+                                    final String delivery_price = object.getString("delivery_price");
+                                    final String delivery_date = object.getString("delivery_date");
+
 
                                     Order item = new Order(id,
                                             seller_id,
@@ -137,6 +145,11 @@ public class Buying_Other extends Fragment {
                                             date,
                                             quantity,
                                             status);
+                                    item.setSeller_division(seller_division);
+                                    item.setSeller_district(seller_district);
+                                    item.setTracking_no(tracking_no);
+                                    item.setDelivery_price(delivery_price);
+                                    item.setDelivery_date(delivery_date);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Order_BuyerAdapter(getContext(), itemList);
@@ -296,11 +309,19 @@ public class Buying_Other extends Fragment {
                                         final Double strPrice = Double.valueOf(order.getPrice());
                                         final String strDivision = order.getDivision();
                                         final String strDistrict = order.getDistrict();
+
+                                        final String strSellerDivision = order.getSeller_division();
+                                        final String strSellerDistrict = order.getSeller_district();
+
                                         final String strPhoto = order.getPhoto();
                                         final String strOrder_Date = order.getOrder_date();
                                         final String strDate = order.getDate();
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
+
+                                        final String strTracking = order.getTracking_no();
+                                        final String strDelivery_Price = order.getDelivery_price();
+                                        final String strDelivery_Date = order.getDelivery_date();
 
                                         Intent intent1 = new Intent(getContext(), Review_Page.class);
                                         intent1.putExtra("seller_id", strSeller_id);
@@ -309,6 +330,8 @@ public class Buying_Other extends Fragment {
                                         intent1.putExtra("remarks", strStatus);
                                         intent1.putExtra("order_date", strOrder_Date);
                                         intent1.putExtra("order_id", strOrder_Id);
+                                        intent1.putExtra("tracking_no", strTracking);
+                                        intent1.putExtra("delivery_date", strDelivery_Date);
                                         getActivity().startActivity(intent1);
                                     }
                                 });

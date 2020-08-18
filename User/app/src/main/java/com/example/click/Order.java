@@ -3,13 +3,57 @@ package com.example.click;
 public class Order {
 
     private String id, seller_id, customer_id, item_id;
-    private String ad_detail, price, division, district;
+    private String ad_detail, price, division, district, seller_division, seller_district;
     private String photo;
     private String main_category;
     private String sub_category;
     private String date;
     private String quantity;
     private String status;
+    private String tracking_no;
+
+    public String getDelivery_price() {
+        return delivery_price;
+    }
+
+    public void setDelivery_price(String delivery_price) {
+        this.delivery_price = delivery_price;
+    }
+
+    private String delivery_price;
+    private String delivery_date;
+
+    public String getSeller_division() {
+        return seller_division;
+    }
+
+    public void setSeller_division(String seller_division) {
+        this.seller_division = seller_division;
+    }
+
+    public String getSeller_district() {
+        return seller_district;
+    }
+
+    public void setSeller_district(String seller_district) {
+        this.seller_district = seller_district;
+    }
+
+    public String getTracking_no() {
+        return tracking_no;
+    }
+
+    public void setTracking_no(String tracking_no) {
+        this.tracking_no = tracking_no;
+    }
+
+    public String getDelivery_date() {
+        return delivery_date;
+    }
+
+    public void setDelivery_date(String delivery_date) {
+        this.delivery_date = delivery_date;
+    }
 
     public String getOrder_date() {
         return order_date;
