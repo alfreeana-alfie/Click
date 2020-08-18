@@ -32,6 +32,7 @@ import java.util.Map;
 public class Selling_Detail extends AppCompatActivity {
 
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_tracking_no.php";
+    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
 
     EditText edit_review;
     Button btn_submit, btn_cancel;
@@ -115,6 +116,8 @@ public class Selling_Detail extends AppCompatActivity {
                             if (success.equals("1")) {
                                 Toast.makeText(Selling_Detail.this, "Saved", Toast.LENGTH_SHORT).show();
 
+                                Delete_Order(strOrder_ID);
+
                                 Intent intent = new Intent(Selling_Detail.this, Main_Order_Other.class);
                                 startActivity(intent);
                             } else {
@@ -146,6 +149,42 @@ public class Selling_Detail extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void Delete_Order(final String strOrder_ID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                                Toast.makeText(Selling_Detail.this, "Your order has been updated", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Selling_Detail.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Selling_Detail.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", strOrder_ID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Selling_Detail.this);
+        requestQueue.add(stringRequest);
+    }
 
     private void getSession() {
         sessionManager = new SessionManager(this);

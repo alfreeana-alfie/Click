@@ -205,10 +205,10 @@ public class Selling_Other extends Fragment {
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
 
-                                        final String remarks = "REJECT";
+                                        final String remarks = "Reject";
                                         Update_Order_Reject(view, strOrder_Date, remarks, strCustomer_id);
 
-                                        Delete_Order(view, strOrder_Id);
+//                                        Delete_Order(view, strOrder_Id);
 
                                         itemList.remove(position);
                                         adapter_item.notifyDataSetChanged();
@@ -494,6 +494,7 @@ public class Selling_Other extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("order_date", strOrder_Date);
                 params.put("remarks", remarks);
+                params.put("status", remarks);
                 return params;
             }
         };
