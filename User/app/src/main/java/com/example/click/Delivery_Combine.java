@@ -1,7 +1,31 @@
 package com.example.click;
 
 public class Delivery_Combine {
-    String delivery_id, delivery_user_id, delivery_division, delivery_price, delivery_days, delivery_item_id;
+    String delivery_id;
+    String delivery_user_id;
+    String delivery_division;
+    String delivery_price;
+    String delivery_division1;
+    String delivery_price1;
+
+    public String getDelivery_division1() {
+        return delivery_division1;
+    }
+
+    public void setDelivery_division1(String delivery_division1) {
+        this.delivery_division1 = delivery_division1;
+    }
+
+    public String getDelivery_price1() {
+        return delivery_price1;
+    }
+
+    public void setDelivery_price1(String delivery_price1) {
+        this.delivery_price1 = delivery_price1;
+    }
+
+    String delivery_days;
+    String delivery_item_id;
     private String id, seller_id;
     private String ad_detail, price, division, district;
     private String photo;

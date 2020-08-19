@@ -60,19 +60,16 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
         Picasso.get().load(photo_URL).into(holder.photo);
 
         holder.AdDetail.setText(ad_detail);
-        holder.UnitPrice.setText("MYR" + String.format("%.2f", Double.parseDouble(price)));
+        holder.UnitPrice.setText(String.format("%.2f", Double.parseDouble(price)));
         holder.Quantity.setText("x"+itemAllDetails.getQuantity());
-        holder.location_to.setText(itemAllDetails.getDivision() + " to " + itemAllDetails.getDelivery_division());
+        holder.location_to.setText(itemAllDetails.getDelivery_division1());
         holder.btn_self.setVisibility(View.GONE);
 
         if(itemAllDetails.getDivision().equals(itemAllDetails.getDelivery_division())){
             holder.btn_self.setVisibility(View.VISIBLE);
         }
-        if(itemAllDetails.getDelivery_division().isEmpty()){
-            holder.shippin_price.setText("Not Supported");
-        }else {
-            holder.shippin_price.setText("MYR" + itemAllDetails.getDelivery_price());
-        }
+
+        holder.shippin_price.setText(itemAllDetails.getDelivery_price1());
 
         holder.btn_self.setOnClickListener(new View.OnClickListener() {
             @Override

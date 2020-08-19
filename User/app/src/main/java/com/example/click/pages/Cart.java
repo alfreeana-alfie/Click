@@ -106,26 +106,8 @@ public class Cart extends AppCompatActivity {
         Button_Checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
-                builder.setTitle("Before you proceed...");
-                builder.setMessage("Some of products may not appeared on Checkout page. " +
-                        "Fear not, it's because the products does not have any shipment services to your location.");
-                builder.setPositiveButton("Proceed", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Cart.this, Checkout.class);
-                        startActivity(intent);
-                    }
-                });
-
-                builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                Intent intent = new Intent(Cart.this, Checkout.class);
+                startActivity(intent);
             }
         });
         recyclerView = findViewById(R.id.cart_view);

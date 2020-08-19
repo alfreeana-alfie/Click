@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Delivery_Combine;
+import com.example.click.Noti_Page;
 import com.example.click.R;
 import com.example.click.adapter.UserOrderAdapter_Other;
 import com.example.click.data.Item_All_Details;
@@ -74,7 +76,8 @@ public class Checkout extends AppCompatActivity {
 
 
     Button Button_Checkout;
-    TextView Grand_Total, AddressUser;
+    TextView Grand_Total, AddressUser, No_Address;
+    LinearLayout linear2;
 
     RecyclerView recyclerView;
     UserOrderAdapter_Other userOrderAdapter;
@@ -163,8 +166,29 @@ public class Checkout extends AppCompatActivity {
                                                                                     String success = jsonObject.getString("success");
                                                                                     JSONArray jsonArray = jsonObject.getJSONArray("read");
 
+
                                                                                     Double grandtotal = 0.00;
                                                                                     if (success.equals("1")) {
+                                                                                        if(jsonArray.length() ==0 ){
+
+                                                                                            delivery_combine = new Delivery_Combine();
+                                                                                            delivery_combine.setId(id);
+                                                                                            delivery_combine.setDelivery_item_id(item_id);
+                                                                                            delivery_combine.setSeller_id(seller_id);
+                                                                                            delivery_combine.setAd_detail(ad_detail);
+                                                                                            delivery_combine.setPhoto(image_item);
+                                                                                            delivery_combine.setPrice(String.valueOf(price));
+                                                                                            delivery_combine.setDivision(division);
+                                                                                            delivery_combine.setQuantity(quantity);
+                                                                                            delivery_combine.setDelivery_price1("Not Supported for selected area");
+                                                                                            delivery_combine.setDelivery_division1("");
+
+                                                                                            item_all_detailsList.add(delivery_combine);
+                                                                                            Button_Checkout.setVisibility(View.GONE);
+                                                                                            linear2.setVisibility(View.GONE);
+                                                                                            No_Address.setVisibility(View.VISIBLE);
+                                                                                            Toast.makeText(Checkout.this, "lol", Toast.LENGTH_SHORT).show();
+                                                                                        }
                                                                                         for (int i = 0; i < jsonArray.length(); i++) {
                                                                                             JSONObject object = jsonArray.getJSONObject(i);
                                                                                             String strDelivery_ID = object.getString("id").trim();
@@ -204,6 +228,8 @@ public class Checkout extends AppCompatActivity {
                                                                                             delivery_combine.setQuantity(quantity);
                                                                                             delivery_combine.setDelivery_price(Price);
                                                                                             delivery_combine.setDelivery_division(strDivision);
+                                                                                            delivery_combine.setDelivery_price1("MYR"+Price);
+                                                                                            delivery_combine.setDelivery_division1(division + " to " + strDivision);
 
                                                                                             item_all_detailsList.add(delivery_combine);
                                                                                         }
@@ -297,6 +323,8 @@ public class Checkout extends AppCompatActivity {
 
     private void Declare() {
         Button_Checkout = findViewById(R.id.btn_place_order);
+        No_Address = findViewById(R.id.no_address);
+        linear2 = findViewById(R.id.linear2);
 
         Grand_Total = findViewById(R.id.grandtotal);
         AddressUser = findViewById(R.id.address);

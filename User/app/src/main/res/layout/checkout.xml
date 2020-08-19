@@ -74,7 +74,6 @@
                 android:id="@+id/item_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
                 android:layout_marginBottom="7dp"/>
 
             <RelativeLayout
@@ -163,14 +162,30 @@
         android:background="@color/colorWhite"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_semibold"
+            android:layout_centerInParent="true"
+            android:text="Please change the delivery address"
+            android:textColor="@color/colorGrey"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/linear2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toStartOf="@id/btn_place_order"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Total"
                 android:textColor="@color/colorGrey"
