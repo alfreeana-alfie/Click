@@ -246,6 +246,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         Intent intent4 = new Intent(Homepage.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
 
@@ -254,6 +255,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
                     case R.id.nav_edit_profile:
                         Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
                 }

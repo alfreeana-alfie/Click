@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/nav_noti"
-        android:icon="@drawable/ic_search_foreground"
+        android:icon="@drawable/ic_noti_foreground"
         android:title="Notifications" />
 
     <item
