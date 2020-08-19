@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.R;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Checkout;
 import com.example.click.pages.Homepage;
 import com.squareup.picasso.Picasso;
 
@@ -169,9 +170,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Edit_Profile_Address.this, Homepage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
                 startActivity(intent);
             }
         });

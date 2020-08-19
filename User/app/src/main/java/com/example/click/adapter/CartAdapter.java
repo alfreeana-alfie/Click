@@ -59,6 +59,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
         holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
 
+
+
         holder.increase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +70,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity));
+
+                    holder.checkBox.setChecked(false);
+
+                    if(mQuantity == Integer.parseInt(itemAllDetails.getMax_order())){
+                            holder.increase.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -81,10 +89,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity));
+
+                    if(mQuantity != Integer.parseInt(itemAllDetails.getMax_order())){
+                        holder.increase.setVisibility(View.VISIBLE);
+                    }
                 }
                 if(Integer.parseInt(itemAllDetails.getQuantity()) == 0){
                     if (mListerner != null) {
                         mListerner.onDeleteClick(position);
+
                     }
                 }
 
@@ -105,8 +118,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 if (holder.checkBox.isChecked()) {
                     mListerner.onClick(position);
+                    holder.increase.setVisibility(View.INVISIBLE);
+                    holder.decrease.setVisibility(View.INVISIBLE);
                 }else {
                     mListerner.onDeleteCart_Temp(position);
+                    holder.increase.setVisibility(View.VISIBLE);
+                    holder.decrease.setVisibility(View.VISIBLE);
                 }
             }
         });

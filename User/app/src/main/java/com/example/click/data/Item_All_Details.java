@@ -9,7 +9,7 @@ public class Item_All_Details {
     private String photo;
     private String main_category;
     private String sub_category;
-    private String quantity;
+    private String quantity, max_order;
 
     public String getBrand() {
         return brand;
@@ -51,8 +51,6 @@ public class Item_All_Details {
         this.item_id = item_id;
     }
 
-
-
     public String getMax_order() {
         return max_order;
     }
@@ -60,8 +58,6 @@ public class Item_All_Details {
     public void setMax_order(String max_order) {
         this.max_order = max_order;
     }
-
-    private String max_order;
 
     public String getQuantity() {
         return quantity;

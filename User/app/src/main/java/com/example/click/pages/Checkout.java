@@ -165,7 +165,6 @@ public class Checkout extends AppCompatActivity {
 
                                                                                     Double grandtotal = 0.00;
                                                                                     if (success.equals("1")) {
-
                                                                                         for (int i = 0; i < jsonArray.length(); i++) {
                                                                                             JSONObject object = jsonArray.getJSONObject(i);
                                                                                             String strDelivery_ID = object.getString("id").trim();
@@ -191,6 +190,7 @@ public class Checkout extends AppCompatActivity {
                                                                                             }
                                                                                             c.add(Calendar.DATE, Integer.parseInt(strDays));
                                                                                             SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
                                                                                             Delivery_Date = simpleDateFormat2.format(c.getTime());
 
                                                                                             delivery_combine = new Delivery_Combine();
