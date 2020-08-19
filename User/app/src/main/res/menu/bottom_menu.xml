@@ -6,14 +6,10 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/nav_find_item"
+        android:id="@+id/nav_noti"
         android:icon="@drawable/ic_search_foreground"
-        android:title="Find" />
+        android:title="Notifications" />
 
-    <item
-        android:id="@+id/nav_cart"
-        android:icon="@drawable/ic_cart_foreground"
-        android:title="Cart" />
     <item
         android:id="@+id/nav_edit_profile"
         android:icon="@drawable/ic_edit_foreground"

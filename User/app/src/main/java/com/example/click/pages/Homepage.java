@@ -66,6 +66,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
@@ -128,6 +129,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     ViewPager viewPager;
     Timer timer;
 
+    BottomNavigationView bottomNav;
     private long backPressedTime;
     private Toast backToast;
     private String[] imageUrls = new String[]{
@@ -145,8 +147,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_drawer);
         Declare();
-        viewPager = findViewById(R.id.view_pager);
 
+        viewPager = findViewById(R.id.view_pager);
 
         final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
         final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
@@ -236,6 +238,29 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         verify = findViewById(R.id.verify);
+        bottomNav = findViewById(R.id.bottom_nav);
+
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Homepage.this, Homepage.class);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_noti:
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

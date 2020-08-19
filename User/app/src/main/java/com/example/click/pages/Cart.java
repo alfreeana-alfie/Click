@@ -281,7 +281,7 @@ public class Cart extends AppCompatActivity {
                                                                                             final String item_id = object.getString("item_id");
                                                                                             final String quantity = object.getString("quantity");
 
-                                                                                            grandtotal += (price * Integer.parseInt(quantity));
+                                                                                            grandtotal -= (price * Integer.parseInt(quantity));
 //                                                                                             array1.push(3)
 //                                                                                                     array1.indexOf(price);
 //                                                                                             array1.pop
@@ -879,5 +879,11 @@ public class Cart extends AppCompatActivity {
         Intent intent = new Intent(Cart.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        DeleteOrder_Single();
+        super.onDestroy();
     }
 }

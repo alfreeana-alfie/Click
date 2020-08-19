@@ -986,6 +986,11 @@ public class Checkout extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void DeleteOrder_Single() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
                 new Response.Listener<String>() {
