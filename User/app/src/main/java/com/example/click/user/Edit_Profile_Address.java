@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,8 +33,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
+import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
-import com.example.click.pages.Checkout;
+import com.example.click.pages.Homepage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -52,15 +54,18 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/upload.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/profile_image/upload.php";
+    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
+
     SessionManager sessionManager;
     String getId;
     Uri filePath;
     private ArrayAdapter<CharSequence> adapter_gender;
     private DatePickerDialog datePickerDialog;
-    private LinearLayout layout_gender_display, layout_gender;
-    private EditText name, email, phone_no, address_01, address_02, city, postcode, birthday, gender_display;
+    private LinearLayout layout_gender_display, layout_gender, layout_income, layout_icno, layout_bankName, layout_BankAcc;
+    private EditText name, email, phone_no, address_01, address_02, city, postcode, birthday, gender_display, icno, bank_name, bank_acc;
     private Button button_edit, button_accept;
+    private TextView income;
     private ImageButton button_edit_photo;
     private Spinner gender;
     private Bitmap bitmap;
@@ -75,6 +80,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         Declare();
         getSession();
         getUserDetail();
+        Buying_List();
 
         gender_display.setText(gender.getSelectedItem().toString());
         Button_Func();
@@ -97,6 +103,16 @@ public class Edit_Profile_Address extends AppCompatActivity {
         button_edit_photo = findViewById(R.id.button_edit_photo);
         profile_image = findViewById(R.id.profile_image);
         gender = findViewById(R.id.gender_spinner);
+
+        icno= findViewById(R.id.icno_edit);
+        bank_name = findViewById(R.id.bank_name_edit);
+        bank_acc = findViewById(R.id.bank_acc_edit);
+        income = findViewById(R.id.income_text);
+
+        layout_income = findViewById(R.id.layout_income);
+        layout_bankName = findViewById(R.id.layout_bankName);
+        layout_BankAcc = findViewById(R.id.layout_bankAcc);
+        layout_icno = findViewById(R.id.layout_icno);
 
         address_01 = findViewById(R.id.address_edit01);
         address_02 = findViewById(R.id.address_edit02);
@@ -153,7 +169,8 @@ public class Edit_Profile_Address extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
+
+                Intent intent = new Intent(Edit_Profile_Address.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -173,6 +190,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
         birthday.setFocusable(true);
 
+        icno.setFocusable(true);
+        bank_name.setFocusable(true);
+        bank_acc.setFocusable(true);
+
         name.setFocusableInTouchMode(true);
         email.setFocusableInTouchMode(true);
         phone_no.setFocusableInTouchMode(true);
@@ -181,6 +202,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
         address_02.setFocusableInTouchMode(true);
         city.setFocusableInTouchMode(true);
         postcode.setFocusableInTouchMode(true);
+
+        icno.setFocusableInTouchMode(true);
+        bank_name.setFocusableInTouchMode(true);
+        bank_acc.setFocusableInTouchMode(true);
 
         birthday.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +244,9 @@ public class Edit_Profile_Address extends AppCompatActivity {
         address_01.setFocusable(false);
         birthday.setFocusable(false);
         gender_display.setFocusable(false);
+        icno.setFocusable(false);
+        bank_name.setFocusable(false);
+        bank_acc.setFocusable(false);
 
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
@@ -226,6 +254,9 @@ public class Edit_Profile_Address extends AppCompatActivity {
         address_01.setFocusableInTouchMode(false);
         birthday.setFocusableInTouchMode(false);
         gender_display.setFocusableInTouchMode(false);
+        icno.setFocusableInTouchMode(false);
+        bank_name.setFocusableInTouchMode(false);
+        bank_acc.setFocusableInTouchMode(false);
 
         layout_gender_display.setVisibility(View.VISIBLE);
         button_edit.setVisibility(View.VISIBLE);
@@ -279,7 +310,6 @@ public class Edit_Profile_Address extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -294,6 +324,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
                                     String strBirthday = object.getString("birthday").trim();
                                     String strGender = object.getString("gender");
                                     String strPhoto = object.getString("photo");
+                                    String strICNO = object.getString("ic_no").trim();
+                                    String strBankName = object.getString("bank_name");
+                                    String strBankAcc = object.getString("bank_acc");
+                                    int strVerify = Integer.valueOf(object.getString("verification"));
 
                                     name.setText(strName);
                                     email.setText(strEmail);
@@ -305,6 +339,22 @@ public class Edit_Profile_Address extends AppCompatActivity {
                                     birthday.setText(strBirthday);
                                     gender.setSelection(adapter_gender.getPosition(strGender));
                                     gender_display.setText(strGender);
+
+                                    icno.setText(strICNO);
+                                    bank_name.setText(strBankName);
+                                    bank_acc.setText(strBankAcc);
+
+                                    if(strVerify == 0){
+                                        layout_icno.setVisibility(View.GONE);
+                                        layout_bankName.setVisibility(View.GONE);
+                                        layout_BankAcc.setVisibility(View.GONE);
+                                        layout_income.setVisibility(View.GONE);
+                                    }else{
+                                        layout_icno.setVisibility(View.VISIBLE);
+                                        layout_bankName.setVisibility(View.VISIBLE);
+                                        layout_BankAcc.setVisibility(View.VISIBLE);
+                                        layout_income.setVisibility(View.VISIBLE);
+                                    }
 
                                     gender.setVisibility(View.GONE);
                                     gender_img_spinner.setVisibility(View.GONE);
@@ -370,9 +420,6 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress01, strAddress02, strCity, strPostCode, strBirthday, strGender, id);
-                                Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
                                 Toast.makeText(Edit_Profile_Address.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -488,14 +535,74 @@ public class Edit_Profile_Address extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            UploadPicture(getId, getStringImage(bitmap));
         }
-        UploadPicture(getId, getStringImage(bitmap));
+
     }
+
+    private void Buying_List() {
+        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_READ_ORDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            Double grandtotal = 0.00;
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String id = object.getString("id").trim();
+                                    final String customer_id = object.getString("customer_id").trim();
+                                    final String main_category = object.getString("main_category").trim();
+                                    final String sub_category = object.getString("sub_category").trim();
+                                    final String ad_detail = object.getString("ad_detail").trim();
+                                    final Double price = Double.valueOf(object.getString("price").trim());
+                                    final String division = object.getString("division");
+                                    final String district = object.getString("district");
+                                    final String image_item = object.getString("photo");
+                                    final String seller_id = object.getString("seller_id");
+                                    final String item_id = object.getString("item_id");
+                                    final String quantity = object.getString("quantity");
+
+                                    grandtotal += (price * Integer.parseInt(quantity));
+                                    income.setText("MYR" + String.format("%.2f", grandtotal));
+
+                                    final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
+                                    item.setQuantity(quantity);
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("seller_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue1 = Volley.newRequestQueue(Edit_Profile_Address.this);
+        requestQueue1.add(stringRequest1);
+    }
+
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Edit_Profile_Address.this, Checkout.class);
+        Intent intent = new Intent(Edit_Profile_Address.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

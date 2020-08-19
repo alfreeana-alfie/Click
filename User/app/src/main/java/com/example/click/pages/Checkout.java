@@ -60,6 +60,9 @@ public class Checkout extends AppCompatActivity {
     private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
     private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
     private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
+    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
+    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
+
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -82,6 +85,8 @@ public class Checkout extends AppCompatActivity {
 
     String getId, Price, Delivery_Date;
     SessionManager sessionManager;
+
+    Double aFloat;
 
 
     @Override
@@ -169,6 +174,9 @@ public class Checkout extends AppCompatActivity {
                                                                                             Price = object.getString("price");
                                                                                             String strDays = object.getString("days");
 
+                                                                                            grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(Price));
+                                                                                            Grand_Total.setText(String.format("%.2f", grandtotal));
+
                                                                                             Date date = Calendar.getInstance().getTime();
 
                                                                                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -195,12 +203,23 @@ public class Checkout extends AppCompatActivity {
                                                                                             delivery_combine.setDivision(division);
                                                                                             delivery_combine.setQuantity(quantity);
                                                                                             delivery_combine.setDelivery_price(Price);
+                                                                                            delivery_combine.setDelivery_division(strDivision);
 
                                                                                             item_all_detailsList.add(delivery_combine);
-//                                                                                            Toast.makeText(Checkout.this, Price, Toast.LENGTH_SHORT).show();
                                                                                         }
                                                                                         userOrderAdapter = new UserOrderAdapter_Other(Checkout.this, item_all_detailsList, item_all_detailsList);
                                                                                         recyclerView.setAdapter(userOrderAdapter);
+                                                                                        userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
+                                                                                            @Override
+                                                                                            public void onSelfClick(int position) {
+                                                                                                delivery_combine = new Delivery_Combine();
+
+                                                                                                delivery_combine.setDelivery_price(Price);
+                                                                                                delivery_combine.setDelivery_division(division);
+
+                                                                                                item_all_detailsList.add(delivery_combine);
+                                                                                            }
+                                                                                        });
                                                                                     } else {
                                                                                         Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                     }
@@ -252,10 +271,6 @@ public class Checkout extends AppCompatActivity {
                                     };
                                     RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
                                     requestQueue.add(stringRequest);
-
-                                    grandtotal += (price * Integer.parseInt(quantity));
-
-                                    Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
                                 }
                             }
                         } catch (JSONException e) {
@@ -286,6 +301,8 @@ public class Checkout extends AppCompatActivity {
         Grand_Total = findViewById(R.id.grandtotal);
         AddressUser = findViewById(R.id.address);
 
+        aFloat = 0.00;
+
         address_layout = findViewById(R.id.address_layout);
         address_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,8 +319,6 @@ public class Checkout extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
         item_all_detailsList = new ArrayList<>();
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -313,6 +328,7 @@ public class Checkout extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DeleteOrder_Single2();
                 Intent intent = new Intent(Checkout.this, Cart.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -981,14 +997,10 @@ public class Checkout extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        DeleteOrder_Single2();
         Intent intent = new Intent(Checkout.this, Cart.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private void DeleteOrder_Single() {
@@ -1027,4 +1039,42 @@ public class Checkout extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
         requestQueue.add(stringRequest);
     }
+
+    private void DeleteOrder_Single2() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+
+                            } else {
+                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+        requestQueue.add(stringRequest);
+    }
+
 }

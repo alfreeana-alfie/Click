@@ -3,7 +3,6 @@ package com.example.click.pages;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,28 +35,18 @@ import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.Item_Single_Adapter;
 import com.example.click.adapter.PageAdapter;
-import com.example.click.category.All_O;
-import com.example.click.category.Business_O;
-import com.example.click.category.Camera_O;
-import com.example.click.category.Car_O;
-import com.example.click.category.Car_Accessories_O;
-import com.example.click.category.Computer_O;
-import com.example.click.category.Electronics_O;
-import com.example.click.category.Food_O;
-import com.example.click.category.Furniture_O;
-import com.example.click.category.Grocery_O;
-import com.example.click.category.Handcraft_O;
-import com.example.click.category.Home_Appliances_O;
-import com.example.click.category.House_Rent;
-import com.example.click.category.House_Sales;
-import com.example.click.category.Men;
-import com.example.click.category.Mom;
-import com.example.click.category.Motorcycles;
-import com.example.click.category.Pets;
-import com.example.click.category.Service;
-import com.example.click.category.Sport;
-import com.example.click.category.Travel;
-import com.example.click.category.Women;
+import com.example.click.category.Agriculture;
+import com.example.click.category.Cake;
+import com.example.click.category.Fashion;
+import com.example.click.category.Handcraft;
+import com.example.click.category.Health;
+import com.example.click.category.Home;
+import com.example.click.category.Pepper;
+import com.example.click.category.Personal;
+import com.example.click.category.Processed;
+import com.example.click.category.Retail;
+import com.example.click.category.Sevice;
+import com.example.click.category.View_All;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.user.Edit_Profile;
@@ -115,11 +104,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private TwoWayGridView gridView_HardSelling, gridView_TopSelling;
 
     private ScrollView scrollView;
-    private Button Button_SellItem, Button_FindItem, button_cars, button_sales, button_camera,
-            button_car_parts, button_business, button_computer, button_electronics, button_furniture,
-            button_handcraft, button_home, button_men, button_mom, button_motorcycle,
-            button_pets, button_rent, button_services, button_sport, button_travel,
-            button_women, button_food, button_grocery;
+    private Button Button_SellItem, Button_FindItem, button_retail, button_processed,
+            button_handcraft, button_cake, button_agriculture, button_service, button_health,
+            button_home, button_personal, button_pepper, button_fashion;
 
     private CircleImageView profile_display, profile_image;
     private TextView name_display, email_display, button_view_all, username, verify, verify1;
@@ -213,28 +200,20 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         scrollView = findViewById(R.id.grid_category);
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
-        button_business = findViewById(R.id.button_business);
-        button_camera = findViewById(R.id.button_camera);
-        button_car_parts = findViewById(R.id.button_car_parts);
-        button_cars = findViewById(R.id.button_cars);
-        button_computer = findViewById(R.id.button_computer);
-        button_electronics = findViewById(R.id.button_elect);
-        button_furniture = findViewById(R.id.button_furniture);
+
+        button_cake = findViewById(R.id.button_cake);
+        button_processed = findViewById(R.id.button_process_food);
         button_handcraft = findViewById(R.id.button_handcraft);
-        button_home = findViewById(R.id.button_home);
-        button_men = findViewById(R.id.button_men);
-        button_mom = findViewById(R.id.button_mom);
-        button_motorcycle = findViewById(R.id.button_motors);
-        button_pets = findViewById(R.id.button_pets);
-        button_rent = findViewById(R.id.button_rent);
-        button_sales = findViewById(R.id.button_sales);
-        button_services = findViewById(R.id.button_services);
-        button_sport = findViewById(R.id.button_sports);
-        button_travel = findViewById(R.id.button_travel);
-        button_women = findViewById(R.id.button_women);
-        button_food = findViewById(R.id.button_food);
-        button_grocery = findViewById(R.id.button_grocery);
+        button_retail = findViewById(R.id.button_retail);
+        button_agriculture = findViewById(R.id.button_agri);
+        button_service = findViewById(R.id.button_service);
+        button_health = findViewById(R.id.button_health);
+        button_home = findViewById(R.id.button_homes);
+        button_fashion = findViewById(R.id.button_fashion);
+        button_personal = findViewById(R.id.button_personal);
+        button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
+
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         verify = findViewById(R.id.verify);
@@ -359,77 +338,27 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, All_O.class);
+                Intent intent = new Intent(Homepage.this, View_All.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        button_business.setOnClickListener(new View.OnClickListener() {
+        button_cake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Business_O.class);
+                Intent intent = new Intent(Homepage.this, Cake.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        button_camera.setOnClickListener(new View.OnClickListener() {
+        button_processed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Camera_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_car_parts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Car_Accessories_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_cars.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Car_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_computer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Computer_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_electronics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Electronics_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_furniture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Furniture_O.class);
+                Intent intent = new Intent(Homepage.this, Processed.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -439,7 +368,47 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Handcraft_O.class);
+                Intent intent = new Intent(Homepage.this, Handcraft.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        button_retail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                Intent intent = new Intent(Homepage.this, Retail.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        button_agriculture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                Intent intent = new Intent(Homepage.this, Agriculture.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        button_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                Intent intent = new Intent(Homepage.this, Sevice.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        button_health.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.setVisibility(View.GONE);
+                Intent intent = new Intent(Homepage.this, Health.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -449,127 +418,37 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Home_Appliances_O.class);
+                Intent intent = new Intent(Homepage.this, Home.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        button_men.setOnClickListener(new View.OnClickListener() {
+        button_fashion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Men.class);
+                Intent intent = new Intent(Homepage.this, Fashion.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        button_mom.setOnClickListener(new View.OnClickListener() {
+        button_personal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Mom.class);
+                Intent intent = new Intent(Homepage.this, Personal.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
 
-        button_motorcycle.setOnClickListener(new View.OnClickListener() {
+        button_pepper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Motorcycles.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_pets.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Pets.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_rent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, House_Rent.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_sales.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, House_Sales.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_services.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Service.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_sport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Sport.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_travel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Travel.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_women.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Women.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_food.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Food_O.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_grocery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Grocery_O.class);
+                Intent intent = new Intent(Homepage.this, Pepper.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -579,7 +458,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, All_O.class);
+                Intent intent = new Intent(Homepage.this, View_All.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -876,7 +755,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 break;
 
             case R.id.menu_search:
-                Intent intent2 = new Intent(Homepage.this, All_O.class);
+                Intent intent2 = new Intent(Homepage.this, View_All.class);
                 startActivity(intent2);
                 break;
 

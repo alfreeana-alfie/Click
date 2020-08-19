@@ -296,8 +296,6 @@ public class Review_Page extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(Review_Page.this);
         requestQueue.add(stringRequest);
-        Intent intent = new Intent(Review_Page.this, Main_Order_Other.class);
-        startActivity(intent);
     }
 
     private void getUserDetail(final String user_id) {

@@ -122,4 +122,40 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_below="@id/shipping_layout"
+        android:id="@+id/self_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_marginBottom="7dp"
+        android:padding="10dp">
+
+            <TextView
+                android:id="@+id/location_to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="Standard Delivery"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_self"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:padding="5dp"
+                android:fontFamily="@font/open_sans_bold"
+                android:textColor="@color/colorPrimary"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:background="@drawable/button_border_orange"
+                android:text="Self Pick-Up" />
+
+
+    </RelativeLayout>
+
 </RelativeLayout>

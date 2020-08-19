@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,15 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
 
     Context context;
     private List<Delivery_Combine> item_all_details,item_all_details2;
+    private OnItemClickListener mListerner;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListerner = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onSelfClick(int position);
+    }
 
     public UserOrderAdapter_Other(Context context, List<Delivery_Combine> item_all_detailsList, List<Delivery_Combine> item_all_detailsList2) {
         this.context = context;
@@ -52,7 +62,28 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText("MYR" + String.format("%.2f", Double.parseDouble(price)));
         holder.Quantity.setText("x"+itemAllDetails.getQuantity());
-        holder.shippin_price.setText("MYR" + itemAllDetails.getDelivery_price());
+        holder.location_to.setText(itemAllDetails.getDivision() + " to " + itemAllDetails.getDelivery_division());
+        holder.btn_self.setVisibility(View.GONE);
+
+        if(itemAllDetails.getDivision().equals(itemAllDetails.getDelivery_division())){
+            holder.btn_self.setVisibility(View.VISIBLE);
+        }
+        if(itemAllDetails.getDelivery_division().isEmpty()){
+            holder.shippin_price.setText("Not Supported");
+        }else {
+            holder.shippin_price.setText("MYR" + itemAllDetails.getDelivery_price());
+        }
+
+        holder.btn_self.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
+                    mListerner.onSelfClick(position);
+                    holder.shippin_price.setText("MYR0.00");
+                }
+                holder.btn_self.setVisibility(View.GONE);
+            }
+        });
 
     }
 
@@ -64,7 +95,8 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView photo;
-        TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price;
+        TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price, location_to;
+        Button btn_self;
 
         public ViewHolder(View view) {
             super(view);
@@ -75,6 +107,8 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
             UnitPrice = view.findViewById(R.id.unit_price_display);
             Quantity = view.findViewById(R.id.quantity_display);
             shippin_price = view.findViewById(R.id.shippin_price);
+            location_to = view.findViewById(R.id.location_to);
+            btn_self = view.findViewById(R.id.btn_self);
 
         }
     }

@@ -29,4 +29,19 @@
         android:fontFamily="@font/open_sans"
         android:text="MYR0.00"
         android:textColor="@color/colorPrimaryDark" />
+
+    <Button
+        android:id="@+id/btn_view"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_gravity="end"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/view"
+        android:textAlignment="center"
+        android:textSize="12sp" />
 </LinearLayout>

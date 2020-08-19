@@ -67,17 +67,19 @@ public class Item_Single_Adapter extends BaseAdapter{
 
         ImageView img_item;
         TextView TV_addetail, TV_Price;
+        Button btn_view;
 
         img_item = convertView.findViewById(R.id.image_item);
         TV_addetail = convertView.findViewById(R.id.item_name);
         TV_Price = convertView.findViewById(R.id.item_price);
+        btn_view = convertView.findViewById(R.id.btn_view);
 
         TV_addetail.setText(item.getAd_detail());
         TV_Price.setText(item.getPrice());
 
         Picasso.get().load(item.getPhoto()).into(img_item);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+        btn_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {

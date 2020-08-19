@@ -134,7 +134,7 @@
             android:id="@+id/grid_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,7 +144,6 @@
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager"
-                    android:layout_margin="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
 
@@ -191,257 +190,33 @@
                     <androidx.gridlayout.widget.GridLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:columnCount="10"
-                        app:rowCount="3">
+                        app:columnCount="6"
+                        app:rowCount="2">
 
                         <Button
-                            android:id="@+id/button_cars"
+                            android:id="@+id/button_cake"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_margin="10dp"
                             android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_cars"
+                            android:drawableTop="@mipmap/ic_cake"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="@string/cars"
+                            android:text="Cake And pastries"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
 
                         <Button
-                            android:id="@+id/button_sales"
+                            android:id="@+id/button_process_food"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_margin="10dp"
                             android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_sale"
+                            android:drawableTop="@mipmap/ic_processed"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="@string/properties_for_sale"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_pets"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_pets"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/pets"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_men"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_men"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/men_collection"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_mom"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_momkids"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/mom_and_kids"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_women"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_women"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/women_collection"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_home"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_home"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/home_appliances"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_services"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_services"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/services"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_travel"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_travel"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/travel_and_holiday"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_elect"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_electronics"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/electronics"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_rent"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_rent"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/properties_for_rent"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_furniture"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_furniture"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/furniture"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_sports"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_sport"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/sport_and_hobbies"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_motors"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_motorcycles"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/motorcycles"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_car_parts"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_car"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/car_accessories_and_parts"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_camera"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_cameraphoto"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/camera_and_photography"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_computer"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_computer"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/computer_and_accessories"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_business"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_business"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="@string/business_for_sale"
+                            android:text="Process food"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -455,35 +230,119 @@
                             android:drawableTop="@mipmap/ic_handcraft"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="@string/handcraft"
+                            android:text="Handicraft"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
 
                         <Button
-                            android:id="@+id/button_food"
+                            android:id="@+id/button_retail"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_margin="10dp"
                             android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_food"
+                            android:drawableTop="@mipmap/ic_wholesale"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="@string/food"
+                            android:text="Retail and Wholesale"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
 
                         <Button
-                            android:id="@+id/button_grocery"
+                            android:id="@+id/button_agri"
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_margin="10dp"
                             android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_grocery"
+                            android:drawableTop="@mipmap/ic_agri"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="@string/grocery"
+                            android:text="Agriculture"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_service"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_service"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Service"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_health"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_health"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Health and Beauty"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_homes"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_home"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Home and living"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_fashion"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_fashion"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Fashion Accessories"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_personal"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_personal"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Personal Care"
+                            android:textAllCaps="false"
+                            android:textSize="9sp"
+                            tools:ignore="SmallSp" />
+
+                        <Button
+                            android:id="@+id/button_pepper"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/layout_border_white"
+                            android:drawableTop="@mipmap/ic_pepper"
+                            android:fontFamily="@font/open_sans_bold"
+                            android:padding="5dp"
+                            android:text="Sarawak Pepper-based Product"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />

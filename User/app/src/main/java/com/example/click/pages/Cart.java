@@ -55,6 +55,7 @@ public class Cart extends AppCompatActivity {
     private static String URL_DELETE_TWO = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
 
     private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
+    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
 
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
     private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
@@ -836,7 +837,7 @@ public class Cart extends AppCompatActivity {
     }
 
     private void DeleteOrder_Single() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
