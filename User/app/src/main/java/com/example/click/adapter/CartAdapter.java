@@ -23,7 +23,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     Context context;
     int mQuantity;
-    int mQuantity1;
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
 

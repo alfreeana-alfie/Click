@@ -152,6 +152,7 @@ public class Selling_Other extends Fragment {
                                 adapter_item = new Order_SellerAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 recyclerView.setAdapter(adapter_item);
+                                adapter_item.sortArrayHighest();
                                 adapter_item.setOnItemClickListener(new Order_SellerAdapter.OnItemClickListener() {
                                     @Override
                                     public void onAcceptClick(int position) {

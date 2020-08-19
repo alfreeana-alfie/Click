@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.click.adapter.Seller_OrderAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapter.ViewHolder> {
@@ -38,6 +40,17 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
     public Order_SellerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_seller_listview, parent, false);
         return new ViewHolder(view);
+    }
+
+    public void sortArrayHighest() {
+        Collections.sort(item_all_details, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return Double.compare(Double.parseDouble(o2.getId()), Double.parseDouble(o1.getId()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     @Override

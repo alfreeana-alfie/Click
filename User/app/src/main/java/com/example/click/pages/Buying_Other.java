@@ -155,6 +155,7 @@ public class Buying_Other extends Fragment {
                                 adapter_item = new Order_BuyerAdapter(getContext(), itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
+                                adapter_item.sortArrayHighest();
                                 adapter_item.setOnItemClickListener(new Order_BuyerAdapter.OnItemClickListener() {
                                     @Override
                                     public void onCancelClick(int position) {

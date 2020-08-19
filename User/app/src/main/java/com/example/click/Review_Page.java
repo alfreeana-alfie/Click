@@ -38,7 +38,7 @@ public class Review_Page extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_remarks_done.php";
 
-    TextView ordered, pending, shipped, received, name_display, tracking_notext, order_datetext;
+    TextView ordered, pending, shipped, received, name_display, tracking_notext, order_datetext, order_id1;
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_received;
     String getId, strName1;
@@ -80,11 +80,14 @@ public class Review_Page extends AppCompatActivity {
         tracking_notext = findViewById(R.id.tracking_id);
         order_datetext = findViewById(R.id.order_date);
         ratingBar = findViewById(R.id.ratingBar);
+        order_id1 = findViewById(R.id.order_id);
+
+        order_id1.setText("KM"+ order_id);
 
         order_layout = findViewById(R.id.order_layout);
         review_layout = findViewById(R.id.review_layout);
 
-        tracking_notext.setText("KM" + strTracking);
+        tracking_notext.setText(strTracking);
         order_datetext.setText(strDelivery_Date);
         tracking_notext.setOnClickListener(new View.OnClickListener() {
             @Override

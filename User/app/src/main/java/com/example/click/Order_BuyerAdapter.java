@@ -12,8 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.click.adapter.Seller_OrderAdapter;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.ViewHolder> {
@@ -27,6 +30,17 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
     public Order_BuyerAdapter(Context context, List<Order> item_all_details) {
         this.context = context;
         this.item_all_details = item_all_details;
+    }
+
+    public void sortArrayHighest() {
+        Collections.sort(item_all_details, new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return Double.compare(Double.parseDouble(o2.getId()), Double.parseDouble(o1.getId()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

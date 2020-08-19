@@ -378,7 +378,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Hard Selling"
+                        android:text="Hot Selling"
                         android:textAllCaps="true"
                         android:textColor="@color/colorGrey"
                         android:textSize="16sp" />
@@ -433,7 +433,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Top Selling"
+                        android:text="Shocking Sale"
                         android:textAllCaps="true"
                         android:textColor="@color/colorGrey"
                         android:textSize="16sp" />
