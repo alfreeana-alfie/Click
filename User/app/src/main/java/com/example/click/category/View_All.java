@@ -29,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.R;
+import com.example.click.Review_Info;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
@@ -53,6 +54,7 @@ public class View_All extends AppCompatActivity {
     private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_filter.php";
     private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_filter.php";
     private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall.php";
+    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
 
     SessionManager sessionManager;
     String getId;
@@ -1260,12 +1262,14 @@ public class View_All extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1457,5 +1461,4 @@ public class View_All extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }

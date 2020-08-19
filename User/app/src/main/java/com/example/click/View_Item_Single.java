@@ -52,6 +52,7 @@ public class View_Item_Single extends AppCompatActivity {
 
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
+    private static String URL_EDIT_RATING = "https://ketekmall.com/ketekmall/edit_detail_rating.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
 
@@ -73,10 +74,15 @@ public class View_Item_Single extends AppCompatActivity {
     private RatingBar ratingBar, ratingBar20, ratingBar21;
     RelativeLayout review11;
 
+    Float ratingfull, ratingfull2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_item_other);
+
+        ratingfull = 0.0F;
+        ratingfull2 = 0.0F;
 
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
@@ -729,18 +735,49 @@ public class View_Item_Single extends AppCompatActivity {
                                     ratingBar20.setRating(Float.parseFloat(rating));
                                     ratingBar21.setRating(Float.parseFloat(rating));
 
+                                    ratingfull += Float.parseFloat(rating) / 5;
+
+                                    ratingfull2 += Float.parseFloat(rating);
+
+                                    ratingBar.setRating(ratingfull);
+
                                     review1.setText(review);
                                     review2.setText(review);
+
+
 
                                     btn_view_all_review.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
+
+                                            final Intent intent4 = getIntent();
+                                            String id1 = intent4.getStringExtra("id");
+                                            String userid1 = intent4.getStringExtra("user_id");
+                                            String strMain_category1 = intent4.getStringExtra("main_category");
+                                            String strSub_category1 = intent4.getStringExtra("sub_category");
+                                            String ad_detail1 = intent4.getStringExtra("ad_detail");
+                                            String strPrice1 = intent4.getStringExtra("price");
+                                            String division1 = intent4.getStringExtra("division");
+                                            String district1 = intent4.getStringExtra("district");
+                                            String photo1 = intent4.getStringExtra("photo");
+
                                             intent1.putExtra("item_id", item_id);
+                                            intent1.putExtra("id", id1);
+                                            intent1.putExtra("user_id", userid1);
+                                            intent1.putExtra("main_category", strMain_category1);
+                                            intent1.putExtra("sub_category", strSub_category1);
+                                            intent1.putExtra("ad_detail", ad_detail1);
+                                            intent1.putExtra("price", strPrice1);
+                                            intent1.putExtra("division", division1);
+                                            intent1.putExtra("district", district1);
+                                            intent1.putExtra("photo", photo1);
+
                                             startActivity(intent1);
                                         }
                                     });
 
+                                    EditRating(item_id, String.valueOf(ratingfull2));
                                     getUserDetail_ReviewOne(customer_id);
                                 }
 
@@ -761,6 +798,42 @@ public class View_Item_Single extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("item_id", item_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void EditRating(final String item_id, final String rating){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_RATING,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+//                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", item_id);
+                params.put("rating", rating);
                 return params;
             }
         };

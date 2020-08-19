@@ -81,7 +81,7 @@
                 android:paddingTop="5dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="5dp"
-                android:rating="4"
+                android:rating="0"
                 android:theme="@style/MyRatingBar" />
 
             <TextView

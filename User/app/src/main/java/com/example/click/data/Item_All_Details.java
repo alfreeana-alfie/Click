@@ -9,7 +9,18 @@ public class Item_All_Details {
     private String photo;
     private String main_category;
     private String sub_category;
-    private String quantity, max_order;
+    private String quantity;
+    private String max_order;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    private String rating;
 
     public String getBrand() {
         return brand;

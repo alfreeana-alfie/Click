@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
                         android:numStars="5"
-                        android:rating="4"
+                        android:rating="0"
                         android:theme="@style/MyRatingBar2" />
 
                     <TextView
@@ -320,6 +320,7 @@
 
                     <RelativeLayout
                         android:id="@+id/review11"
+                        android:layout_below="@id/view_all_review"
                         android:layout_marginBottom="5dp"
                         android:background="@color/colorWhite"
                         android:padding="15dp"

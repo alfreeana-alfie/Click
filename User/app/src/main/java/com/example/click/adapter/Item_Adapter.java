@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.click.R;
@@ -87,7 +88,9 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
         Button view_item;
+        RatingBar ratingBar;
 
+        ratingBar = convertView.findViewById(R.id.ratingBar);
         img_item = convertView.findViewById(R.id.img_item);
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
         TV_price = convertView.findViewById(R.id.price_item);
@@ -119,6 +122,10 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
                 }
             }
         });
+
+        Float flo = 0.0F;
+        flo = Float.parseFloat(item.getRating()) / 5;
+        ratingBar.setRating(flo);
 
         TV_addetail.setText(item.getAd_detail());
         TV_price.setText("MYR" + item.getPrice());
