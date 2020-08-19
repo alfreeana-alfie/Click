@@ -91,7 +91,7 @@ public class Edit_Item extends AppCompatActivity {
         final String division = intent.getStringExtra(EXTRA_DIVISION);
         district = intent.getStringExtra(EXTRA_DISTRICT);
         final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
-        String Category_Text = main_category + ", " + sub_category;
+        String Category_Text = main_category;
         String Location_Text = division + ", " + district;
         final String strMax_Order = intent.getStringExtra("max_order");
 

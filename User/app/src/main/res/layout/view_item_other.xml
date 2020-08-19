@@ -360,6 +360,16 @@
 
                     </RelativeLayout>
 
+                    <TextView
+                        android:id="@+id/no_review"
+                        android:layout_below="@id/review11"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Review" />
+
                     <RelativeLayout
                         android:visibility="gone"
                         android:id="@+id/review12"

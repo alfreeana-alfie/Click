@@ -515,6 +515,7 @@
 
         <TextView
             android:id="@+id/sub_cat"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/spinner_main_category"
@@ -528,6 +529,7 @@
             android:textStyle="bold|italic" />
 
         <Spinner
+            android:visibility="gone"
             android:id="@+id/spinner_sub_category"
             android:layout_width="match_parent"
             android:layout_height="50dp"

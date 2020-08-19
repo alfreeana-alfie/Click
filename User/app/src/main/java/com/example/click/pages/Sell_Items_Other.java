@@ -180,7 +180,7 @@ public class Sell_Items_Other extends AppCompatActivity {
                 category_page_layout.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
-                final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
+                final String mCategory = spinner_main_category.getSelectedItem().toString();
                 enter_category.setText(mCategory);
             }
         });
@@ -255,8 +255,7 @@ public class Sell_Items_Other extends AppCompatActivity {
 
         spinner_main_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showResult(position);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { showResult(position);
             }
 
             @Override

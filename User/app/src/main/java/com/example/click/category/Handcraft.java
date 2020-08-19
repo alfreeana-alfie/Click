@@ -46,13 +46,15 @@ import java.util.Map;
 
 public class Handcraft extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/readall.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_handcraft.php";
+
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/readall.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_filter.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_filter.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall.php";
+
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_handcraft.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_handcraft.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_handcraft.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_handcraft.php";
 
     SessionManager sessionManager;
     String getId;

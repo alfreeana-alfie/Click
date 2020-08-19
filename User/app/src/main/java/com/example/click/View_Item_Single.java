@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.view.View.GONE;
+
 public class View_Item_Single extends AppCompatActivity {
 
     private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readall_seller.php";
@@ -63,11 +66,12 @@ public class View_Item_Single extends AppCompatActivity {
     private ImageView img_item, seller_image, image20, image21;
     private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
             seller_name, seller_location, view_all, customer_name1, customer_name2,
-            btn_view_all_review, review1, review2;
+            btn_view_all_review, review1, review2, no_review;
     private Button  add_to_cart_btn, btn_view_seller;
     private ImageButton btn_chat, btn_chat_wsp;
     private TwoWayGridView gridView_item;
     private RatingBar ratingBar, ratingBar20, ratingBar21;
+    RelativeLayout review11;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +102,11 @@ public class View_Item_Single extends AppCompatActivity {
 
         review1 = findViewById(R.id.review1);
         review2 = findViewById(R.id.review2);
+        review11 = findViewById(R.id.review11);
+        no_review = findViewById(R.id.no_review);
+        no_review.setVisibility(View.VISIBLE);
+        review11.setVisibility(GONE);
+        review1.setVisibility(GONE);
 
         ratingBar20 = findViewById(R.id.ratingBar20);
         ratingBar21 = findViewById(R.id.ratingBar21);
@@ -530,10 +539,14 @@ public class View_Item_Single extends AppCompatActivity {
                                     final String mobile_num = object.getString("phone_no");
                                     final String strDivision = object.getString("division").trim();
 
+                                    review1.setVisibility(View.VISIBLE);
+                                    review11.setVisibility(View.VISIBLE);
+                                    no_review.setVisibility(GONE);
                                     customer_name1.setText(strName);
                                     customer_name2.setText(strName);
                                 }
                             } else {
+                                review1.setVisibility(GONE);
                                 Toast.makeText(View_Item_Single.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

@@ -369,7 +369,38 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/background_white_curve">
 
+                    <TextView
+                        android:id="@+id/hard_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="Hard Selling"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_above="@id/gridView_HardSelling"
+                        android:id="@+id/button_view_hard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/see_all"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
                     <com.mhmtk.twowaygrid.TwoWayGridView
+                        android:layout_below="@id/hard_text"
                         android:id="@+id/gridView_HardSelling"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
@@ -393,7 +424,38 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/background_white_curve">
 
+                    <TextView
+                        android:id="@+id/top_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="Top Selling"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_above="@id/gridView_TopSelling"
+                        android:id="@+id/button_view_top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/see_all"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
                     <com.mhmtk.twowaygrid.TwoWayGridView
+                        android:layout_below="@id/top_text"
                         android:id="@+id/gridView_TopSelling"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"

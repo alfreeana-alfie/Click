@@ -29,7 +29,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Feed_page;
 import com.example.click.Goto_Register_Page;
+import com.example.click.Noti_Page;
 import com.example.click.R;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
@@ -47,6 +49,7 @@ import com.example.click.category.Processed;
 import com.example.click.category.Retail;
 import com.example.click.category.Sevice;
 import com.example.click.category.View_All;
+import com.example.click.category.View_All_Shock;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.user.Edit_Profile;
@@ -85,12 +88,14 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
 
+
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
+    private static String URL_READALL_SHOCK = "https://ketekmall.com/ketekmall/category/readall_shocking.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
 
-    List<Item_All_Details> itemList;
+    List<Item_All_Details> itemList, itemList2;
 
     CartAdapter _cart_adapter;
     RecyclerView recyclerView;
@@ -109,10 +114,10 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             button_home, button_personal, button_pepper, button_fashion;
 
     private CircleImageView profile_display, profile_image;
-    private TextView name_display, email_display, button_view_all, username, verify, verify1;
+    private TextView name_display, email_display, button_view_all, username, verify, verify1, button_view_hard, button_view_top;
     private DrawerLayout drawer;
     private View view;
-    Item_Single_Adapter adapter_item;
+    Item_Single_Adapter adapter_item, adapter_item2;
     ViewPager viewPager;
     Timer timer;
 
@@ -187,6 +192,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
 
     private void Declare() {
         itemList = new ArrayList<>();
+        itemList2 = new ArrayList<>();
 
         recyclerView = findViewById(R.id.cart_view);
         recyclerView.setHasFixedSize(true);
@@ -213,6 +219,26 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_personal = findViewById(R.id.button_personal);
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
+        button_view_hard = findViewById(R.id.button_view_hard);
+        button_view_top = findViewById(R.id.button_view_top);
+
+        button_view_hard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Homepage.this, View_All.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        button_view_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Homepage.this, View_All_Shock.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
 
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
@@ -229,7 +255,16 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         startActivity(intent4);
                         break;
 
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Homepage.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
                     case R.id.nav_noti:
+                        Intent intent6 = new Intent(Homepage.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
@@ -842,7 +877,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void View_TopSelling() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL_SHOCK,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -866,12 +901,12 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     String image_item = object.getString("photo");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    itemList.add(item);
+                                    itemList2.add(item);
                                 }
-                                adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
-                                adapter_item.notifyDataSetChanged();
-                                gridView_TopSelling.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                adapter_item2 = new Item_Single_Adapter(itemList2, Homepage.this);
+                                adapter_item2.notifyDataSetChanged();
+                                gridView_TopSelling.setAdapter(adapter_item2);
+                                adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
