@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_launcher_foreground"
-        android:title="Home" />
+        android:title="Home"
+        app:showAsAction="always|withText"/>
 
     <item
         android:id="@+id/nav_feed"
         android:icon="@drawable/ic_feed_foreground"
-        android:title="Feed" />
+        android:title="Feed"
+        app:showAsAction="always|withText"/>
 
     <item
         android:id="@+id/nav_noti"
         android:icon="@drawable/ic_noti_foreground"
-        android:title="Notifications" />
+        android:title="Notifications"
+        app:showAsAction="always|withText"/>
 
     <item
         android:id="@+id/nav_edit_profile"
         android:icon="@drawable/ic_edit_foreground"
-        android:title="Profile" />
+        android:title="Profile"
+        app:showAsAction="always|withText"/>
 </menu>

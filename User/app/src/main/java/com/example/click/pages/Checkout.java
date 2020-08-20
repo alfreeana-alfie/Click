@@ -1,7 +1,9 @@
 package com.example.click.pages;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -180,14 +182,17 @@ public class Checkout extends AppCompatActivity {
                                                                                             delivery_combine.setPrice(String.valueOf(price));
                                                                                             delivery_combine.setDivision(division);
                                                                                             delivery_combine.setQuantity(quantity);
-                                                                                            delivery_combine.setDelivery_price1("Not Supported for selected area");
+
+                                                                                            String delivery_text;
+                                                                                            delivery_text = "<font color='#FF3333'>Not Supported for selected area</font>";
+                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
                                                                                             delivery_combine.setDelivery_division1("");
 
                                                                                             item_all_detailsList.add(delivery_combine);
                                                                                             Button_Checkout.setVisibility(View.GONE);
                                                                                             linear2.setVisibility(View.GONE);
                                                                                             No_Address.setVisibility(View.VISIBLE);
-                                                                                            Toast.makeText(Checkout.this, "lol", Toast.LENGTH_SHORT).show();
+//                                                                                            Toast.makeText(Checkout.this, "lol", Toast.LENGTH_SHORT).show();
                                                                                         }
                                                                                         for (int i = 0; i < jsonArray.length(); i++) {
                                                                                             JSONObject object = jsonArray.getJSONObject(i);
@@ -228,7 +233,10 @@ public class Checkout extends AppCompatActivity {
                                                                                             delivery_combine.setQuantity(quantity);
                                                                                             delivery_combine.setDelivery_price(Price);
                                                                                             delivery_combine.setDelivery_division(strDivision);
-                                                                                            delivery_combine.setDelivery_price1("MYR"+Price);
+
+                                                                                            String delivery_text;
+                                                                                            delivery_text = "<font color='#000000'>MYR</font>"+Price;
+                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
                                                                                             delivery_combine.setDelivery_division1(division + " to " + strDivision);
 
                                                                                             item_all_detailsList.add(delivery_combine);

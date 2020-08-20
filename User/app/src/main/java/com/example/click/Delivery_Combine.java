@@ -1,5 +1,7 @@
 package com.example.click;
 
+import android.text.Spanned;
+
 public class Delivery_Combine {
     String delivery_id;
     String delivery_user_id;
@@ -7,6 +9,15 @@ public class Delivery_Combine {
     String delivery_price;
     String delivery_division1;
     String delivery_price1;
+    Spanned delivery_price2;
+
+    public Spanned getDelivery_price2() {
+        return delivery_price2;
+    }
+
+    public void setDelivery_price2(Spanned delivery_price2) {
+        this.delivery_price2 = delivery_price2;
+    }
 
     public String getDelivery_division1() {
         return delivery_division1;

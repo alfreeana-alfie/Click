@@ -165,6 +165,10 @@ public class Edit_Profile extends AppCompatActivity {
         birthday.setFocusableInTouchMode(false);
         gender_display.setFocusableInTouchMode(false);
 
+        icno.setFocusableInTouchMode(false);
+        bank_name.setFocusableInTouchMode(false);
+        bank_acc.setFocusableInTouchMode(false);
+
         layout_gender.setVisibility(View.GONE);
         button_accept.setVisibility(View.GONE);
 
@@ -198,7 +202,7 @@ public class Edit_Profile extends AppCompatActivity {
 
         birthday.setFocusable(true);
 
-        icno.setFocusable(true);
+        icno.setFocusable(false);
         bank_name.setFocusable(true);
         bank_acc.setFocusable(true);
 
@@ -211,7 +215,7 @@ public class Edit_Profile extends AppCompatActivity {
         city.setFocusableInTouchMode(true);
         postcode.setFocusableInTouchMode(true);
 
-        icno.setFocusableInTouchMode(true);
+        icno.setFocusableInTouchMode(false);
         bank_name.setFocusableInTouchMode(true);
         bank_acc.setFocusableInTouchMode(true);
 

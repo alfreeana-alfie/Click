@@ -110,7 +110,7 @@ public class Review_Page_Other extends AppCompatActivity {
 
         OrderID.setText("KM" + order_id);
 
-        TrackingNo.setText(strTracking);
+        TrackingNo.setText("PL" + strTracking);
         DateOrder.setText(order_date);
         DateReceived.setText(strDelivery_Date);
 

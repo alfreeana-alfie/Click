@@ -131,6 +131,7 @@ public class Selling_Other extends Fragment {
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
                                     final String status = object.getString("status").trim();
+                                    final String tracking_no = object.getString("tracking_no").trim();
 
                                     Order item = new Order(id,
                                             seller_id,
@@ -147,6 +148,7 @@ public class Selling_Other extends Fragment {
                                             date,
                                             quantity,
                                             status);
+                                    item.setTracking_no(tracking_no);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Order_SellerAdapter(getContext(), itemList);
@@ -234,6 +236,7 @@ public class Selling_Other extends Fragment {
                                         final String strDate = order.getDate();
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
+                                        final String strTracking_NO = order.getTracking_no();
 
                                         Intent intent1 = new Intent(getContext(), Selling_Detail.class);
                                         intent1.putExtra("id", strOrder_Id);
@@ -244,6 +247,7 @@ public class Selling_Other extends Fragment {
                                         intent1.putExtra("division", strDivision);
                                         intent1.putExtra("order_date", strOrder_Date);
                                         intent1.putExtra("status", strStatus);
+                                        intent1.putExtra("tracking_no", strTracking_NO);
                                         getActivity().startActivity(intent1);
                                     }
                                 });

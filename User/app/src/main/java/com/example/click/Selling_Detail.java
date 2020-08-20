@@ -58,6 +58,7 @@ public class Selling_Detail extends AppCompatActivity {
         final String strDivision = intent.getStringExtra("division");
         final String strStatus = intent.getStringExtra("status");
         final String strOrder_Date = intent.getStringExtra("order_date");
+        final String strTracking_NO = intent.getStringExtra("tracking_no");
 
         edit_review = findViewById(R.id.editText_review);
         btn_submit = findViewById(R.id.btn_submit);
@@ -75,6 +76,7 @@ public class Selling_Detail extends AppCompatActivity {
 
         text_ship_placed = findViewById(R.id.text_ship_placed);
 
+        edit_review.setText(strTracking_NO);
         text_order_id.setText("ID" + strID);
         Picasso.get().load(strPhoto).into(photo);
         text_ad_detail.setText(strAd_Detail);
