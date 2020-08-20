@@ -51,9 +51,9 @@ public class View_All_Hot extends AppCompatActivity {
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
     private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/readall_shocking.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_shocking.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_shocking.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall_shocking.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_sold.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_sold.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall_sold.php";
 
     SessionManager sessionManager;
     String getId;
