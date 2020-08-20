@@ -191,7 +191,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="Browse Categories"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorGrey"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
                     <TextView
@@ -206,7 +206,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="@string/see_all"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
                 </RelativeLayout>
@@ -410,7 +410,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="Hot Selling"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorGrey"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
                     <TextView
@@ -426,7 +426,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="@string/see_all"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
                     <com.mhmtk.twowaygrid.TwoWayGridView
@@ -466,7 +466,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="Shocking Sale"
                         android:textAllCaps="true"
-                        android:textColor="@color/colorGrey"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
                     <TextView
@@ -482,7 +482,7 @@
                         android:fontFamily="@font/open_sans_light"
                         android:text="@string/see_all"
                         android:textAllCaps="false"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
 
                     <com.mhmtk.twowaygrid.TwoWayGridView

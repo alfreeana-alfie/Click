@@ -26,16 +26,19 @@
             android:elevation="0dp"/>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
+        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:elevation="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             app:labelVisibilityMode="labeled"

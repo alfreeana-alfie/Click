@@ -235,7 +235,7 @@ public class Checkout extends AppCompatActivity {
                                                                                             delivery_combine.setDelivery_division(strDivision);
 
                                                                                             String delivery_text;
-                                                                                            delivery_text = "<font color='#000000'>MYR</font>"+Price;
+                                                                                            delivery_text = "<font color='#999999'>MYR</font>"+Price;
                                                                                             delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
                                                                                             delivery_combine.setDelivery_division1(division + " to " + strDivision);
 

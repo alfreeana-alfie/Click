@@ -778,63 +778,121 @@ public class View_Item_Single extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
+                                if (jsonArray.length() <= 1){
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
-                                    String seller_id = object.getString("seller_id").trim();
-                                    String customer_id = object.getString("customer_id").trim();
-                                    String customer_name = object.getString("customer_name").trim();
-                                    final String item_id = object.getString("item_id").trim();
-                                    String review = object.getString("review").trim();
-                                    String rating = object.getString("rating").trim();
+                                        String id = object.getString("id").trim();
+                                        String seller_id = object.getString("seller_id").trim();
+                                        String customer_id = object.getString("customer_id").trim();
+                                        String customer_name = object.getString("customer_name").trim();
+                                        final String item_id = object.getString("item_id").trim();
+                                        String review = object.getString("review").trim();
+                                        String rating = object.getString("rating").trim();
 
-                                    ratingBar20.setRating(Float.parseFloat(rating));
-                                    ratingBar21.setRating(Float.parseFloat(rating));
+                                        ratingBar20.setRating(Float.parseFloat(rating));
+                                        ratingBar21.setRating(Float.parseFloat(rating));
 
-                                    ratingfull += Float.parseFloat(rating) / 5;
+                                        ratingfull = Float.parseFloat(rating);
+                                        ratingfull2 = Float.parseFloat(rating);
 
-                                    ratingfull2 += Float.parseFloat(rating);
+                                        Toast.makeText(View_Item_Single.this, rating, Toast.LENGTH_SHORT).show();
+                                        ratingBar.setRating(ratingfull);
 
-                                    ratingBar.setRating(ratingfull);
+                                        review1.setText(review);
+                                        review2.setText(review);
 
-                                    review1.setText(review);
-                                    review2.setText(review);
+                                        btn_view_all_review.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
 
-                                    btn_view_all_review.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
+                                                final Intent intent4 = getIntent();
+                                                String id1 = intent4.getStringExtra("id");
+                                                String userid1 = intent4.getStringExtra("user_id");
+                                                String strMain_category1 = intent4.getStringExtra("main_category");
+                                                String strSub_category1 = intent4.getStringExtra("sub_category");
+                                                String ad_detail1 = intent4.getStringExtra("ad_detail");
+                                                String strPrice1 = intent4.getStringExtra("price");
+                                                String division1 = intent4.getStringExtra("division");
+                                                String district1 = intent4.getStringExtra("district");
+                                                String photo1 = intent4.getStringExtra("photo");
 
-                                            final Intent intent4 = getIntent();
-                                            String id1 = intent4.getStringExtra("id");
-                                            String userid1 = intent4.getStringExtra("user_id");
-                                            String strMain_category1 = intent4.getStringExtra("main_category");
-                                            String strSub_category1 = intent4.getStringExtra("sub_category");
-                                            String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                            String strPrice1 = intent4.getStringExtra("price");
-                                            String division1 = intent4.getStringExtra("division");
-                                            String district1 = intent4.getStringExtra("district");
-                                            String photo1 = intent4.getStringExtra("photo");
+                                                intent1.putExtra("item_id", item_id);
+                                                intent1.putExtra("id", id1);
+                                                intent1.putExtra("user_id", userid1);
+                                                intent1.putExtra("main_category", strMain_category1);
+                                                intent1.putExtra("sub_category", strSub_category1);
+                                                intent1.putExtra("ad_detail", ad_detail1);
+                                                intent1.putExtra("price", strPrice1);
+                                                intent1.putExtra("division", division1);
+                                                intent1.putExtra("district", district1);
+                                                intent1.putExtra("photo", photo1);
 
-                                            intent1.putExtra("item_id", item_id);
-                                            intent1.putExtra("id", id1);
-                                            intent1.putExtra("user_id", userid1);
-                                            intent1.putExtra("main_category", strMain_category1);
-                                            intent1.putExtra("sub_category", strSub_category1);
-                                            intent1.putExtra("ad_detail", ad_detail1);
-                                            intent1.putExtra("price", strPrice1);
-                                            intent1.putExtra("division", division1);
-                                            intent1.putExtra("district", district1);
-                                            intent1.putExtra("photo", photo1);
+                                                startActivity(intent1);
+                                            }
+                                        });
+                                        getUserDetail_ReviewOne(customer_id);
+                                    }
+                                }else{
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-                                            startActivity(intent1);
-                                        }
-                                    });
-                                    getUserDetail_ReviewOne(customer_id);
+                                        String id = object.getString("id").trim();
+                                        String seller_id = object.getString("seller_id").trim();
+                                        String customer_id = object.getString("customer_id").trim();
+                                        String customer_name = object.getString("customer_name").trim();
+                                        final String item_id = object.getString("item_id").trim();
+                                        String review = object.getString("review").trim();
+                                        String rating = object.getString("rating").trim();
+
+                                        ratingBar20.setRating(Float.parseFloat(rating));
+                                        ratingBar21.setRating(Float.parseFloat(rating));
+
+                                        ratingfull += Float.parseFloat(rating) / 2;
+
+                                        ratingfull2 += Float.parseFloat(rating) / 2;
+
+                                        ratingBar.setRating(ratingfull);
+
+                                        review1.setText(review);
+                                        review2.setText(review);
+
+                                        btn_view_all_review.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
+
+                                                final Intent intent4 = getIntent();
+                                                String id1 = intent4.getStringExtra("id");
+                                                String userid1 = intent4.getStringExtra("user_id");
+                                                String strMain_category1 = intent4.getStringExtra("main_category");
+                                                String strSub_category1 = intent4.getStringExtra("sub_category");
+                                                String ad_detail1 = intent4.getStringExtra("ad_detail");
+                                                String strPrice1 = intent4.getStringExtra("price");
+                                                String division1 = intent4.getStringExtra("division");
+                                                String district1 = intent4.getStringExtra("district");
+                                                String photo1 = intent4.getStringExtra("photo");
+
+                                                intent1.putExtra("item_id", item_id);
+                                                intent1.putExtra("id", id1);
+                                                intent1.putExtra("user_id", userid1);
+                                                intent1.putExtra("main_category", strMain_category1);
+                                                intent1.putExtra("sub_category", strSub_category1);
+                                                intent1.putExtra("ad_detail", ad_detail1);
+                                                intent1.putExtra("price", strPrice1);
+                                                intent1.putExtra("division", division1);
+                                                intent1.putExtra("district", district1);
+                                                intent1.putExtra("photo", photo1);
+
+                                                startActivity(intent1);
+                                            }
+                                        });
+                                        getUserDetail_ReviewOne(customer_id);
+                                    }
+
                                 }
                                 EditRating(id, String.valueOf(ratingfull2));
-
                             } else {
                                 Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }

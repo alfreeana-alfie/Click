@@ -124,7 +124,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
         });
 
         Float flo = 0.0F;
-        flo = Float.parseFloat(item.getRating()) / 5;
+        flo = Float.parseFloat(item.getRating());
         ratingBar.setRating(flo);
 
         TV_addetail.setText(item.getAd_detail());

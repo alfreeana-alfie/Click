@@ -104,6 +104,7 @@
                             android:textAlignment="textEnd"
                             android:layout_weight="1"
                             android:fontFamily="@font/open_sans"
+                            android:textColor="#FF0000"
                             android:text="TRACKING NO." />
                     </LinearLayout>
 

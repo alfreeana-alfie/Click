@@ -118,6 +118,7 @@ public class Selling_Detail extends AppCompatActivity {
 
         text_ship_placed = findViewById(R.id.text_ship_placed);
 
+//        Toast.makeText(Selling_Detail.this, strTracking_NO, Toast.LENGTH_SHORT).show();
         edit_review.setText(strTracking_NO);
         text_order_id.setText("ID" + strID);
         Picasso.get().load(strPhoto).into(photo);
@@ -147,7 +148,7 @@ public class Selling_Detail extends AppCompatActivity {
     }
 
     private void ViewList(final String strOrder_ID, final String strOrder_Date) {
-        final String reviewtext = edit_review.getText().toString();
+        final String reviewtext = this.edit_review.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                 new Response.Listener<String>() {
@@ -183,7 +184,6 @@ public class Selling_Detail extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", strOrder_ID);
                 params.put("order_date", strOrder_Date);
                 params.put("tracking_no", reviewtext);
                 return params;
