@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -122,6 +123,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     Item_Single_Adapter adapter_item, adapter_item2;
     ViewPager viewPager;
     Timer timer;
+    RelativeLayout hot_layout, top_layout;
 
     BottomNavigationView bottomNav;
     private long backPressedTime;
@@ -223,6 +225,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_view_all = findViewById(R.id.button_see);
         button_view_hard = findViewById(R.id.button_view_hard);
         button_view_top = findViewById(R.id.button_view_top);
+
+        hot_layout = findViewById(R.id.hot_layout);
+        top_layout = findViewById(R.id.top_layout);
 
         button_view_hard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -816,6 +821,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                if(jsonArray.length() == 0){
+                                    hot_layout.setVisibility(View.GONE);
+                                }
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -892,6 +900,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                if(jsonArray.length() == 0){
+                                    top_layout.setVisibility(View.GONE);
+                                }
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 

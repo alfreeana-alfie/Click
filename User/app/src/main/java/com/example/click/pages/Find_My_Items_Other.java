@@ -132,6 +132,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String max_order = object.getString("max_order");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setMax_order(max_order);
@@ -139,6 +140,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_UserAdapter(itemList, Find_My_Items_Other.this);
@@ -178,8 +180,6 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-
-                                                Intent detailIntent = new Intent(Find_My_Items_Other.this, Edit_Item.class);
                                                 final Item_All_Details item = itemList.get(position);
 
                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,

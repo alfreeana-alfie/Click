@@ -2,10 +2,12 @@ package com.example.click;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.storage.StorageReference;
 
@@ -17,6 +19,8 @@ public class Detail_Info extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_info);
+
+        ToolbarSetting();
 
         Intent intent = getIntent();
         String division = intent.getStringExtra("division");
@@ -40,5 +44,78 @@ public class Detail_Info extends AppCompatActivity {
         Ship_From.setText(ship_detail);
         Description.setText(desc);
 
+    }
+
+    private void ToolbarSetting(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("More Details");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Detail_Info.this, View_Item_Single.class);
+
+                final Intent intent4 = getIntent();
+                String id1 = intent4.getStringExtra("id");
+                String userid1 = intent4.getStringExtra("user_id");
+                String strMain_category1 = intent4.getStringExtra("main_category");
+                String strSub_category1 = intent4.getStringExtra("sub_category");
+                String ad_detail1 = intent4.getStringExtra("ad_detail");
+                String strPrice1 = intent4.getStringExtra("price");
+                String division1 = intent4.getStringExtra("division");
+                String district1 = intent4.getStringExtra("district");
+                String photo1 = intent4.getStringExtra("photo");
+                String item_id = intent4.getStringExtra("item_id");
+
+                intent1.putExtra("item_id", item_id);
+                intent1.putExtra("id", id1);
+                intent1.putExtra("user_id", userid1);
+                intent1.putExtra("main_category", strMain_category1);
+                intent1.putExtra("sub_category", strSub_category1);
+                intent1.putExtra("ad_detail", ad_detail1);
+                intent1.putExtra("price", strPrice1);
+                intent1.putExtra("division", division1);
+                intent1.putExtra("district", district1);
+                intent1.putExtra("photo", photo1);
+
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent1 = new Intent(Detail_Info.this, View_Item_Single.class);
+
+        final Intent intent4 = getIntent();
+        String id1 = intent4.getStringExtra("id");
+        String userid1 = intent4.getStringExtra("user_id");
+        String strMain_category1 = intent4.getStringExtra("main_category");
+        String strSub_category1 = intent4.getStringExtra("sub_category");
+        String ad_detail1 = intent4.getStringExtra("ad_detail");
+        String strPrice1 = intent4.getStringExtra("price");
+        String division1 = intent4.getStringExtra("division");
+        String district1 = intent4.getStringExtra("district");
+        String photo1 = intent4.getStringExtra("photo");
+        String item_id = intent4.getStringExtra("item_id");
+
+        intent1.putExtra("item_id", item_id);
+        intent1.putExtra("id", id1);
+        intent1.putExtra("user_id", userid1);
+        intent1.putExtra("main_category", strMain_category1);
+        intent1.putExtra("sub_category", strSub_category1);
+        intent1.putExtra("ad_detail", ad_detail1);
+        intent1.putExtra("price", strPrice1);
+        intent1.putExtra("division", division1);
+        intent1.putExtra("district", district1);
+        intent1.putExtra("photo", photo1);
+
+        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent1);
     }
 }

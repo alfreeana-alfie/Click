@@ -116,7 +116,7 @@ public class Selling_Detail extends AppCompatActivity {
                             if (success.equals("1")) {
                                 Toast.makeText(Selling_Detail.this, "Saved", Toast.LENGTH_SHORT).show();
 
-                                Delete_Order(strOrder_ID);
+//                                Delete_Order(strOrder_ID);
 
                                 Intent intent = new Intent(Selling_Detail.this, Main_Order_Other.class);
                                 startActivity(intent);

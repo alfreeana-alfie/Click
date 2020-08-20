@@ -50,7 +50,6 @@ public class Review_Info extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(Review_Info.this));
 
-
         Read_Review(item_id);
 
     }

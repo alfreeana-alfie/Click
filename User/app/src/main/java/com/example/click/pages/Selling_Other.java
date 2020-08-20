@@ -179,7 +179,7 @@ public class Selling_Other extends Fragment {
 
 //                                        Accept(view, strOrder_Id, strOrder_Date, remarks);
 
-                                        Delete_Order(view, strOrder_Id);
+//                                        Delete_Order(view, strOrder_Id);
 
                                         itemList.remove(position);
                                         adapter_item.notifyDataSetChanged();
@@ -211,7 +211,6 @@ public class Selling_Other extends Fragment {
 
 //                                        Delete_Order(view, strOrder_Id);
 
-                                        itemList.remove(position);
                                         adapter_item.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter_item);
                                     }

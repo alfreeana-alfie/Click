@@ -234,6 +234,7 @@ public class Cart extends AppCompatActivity {
                                                                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                                                                         @Override
                                                                         public void onClick(DialogInterface dialog, int which) {
+                                                                            number = 1;
                                                                             dialog.cancel();
                                                                         }
                                                                     });
@@ -336,7 +337,7 @@ public class Cart extends AppCompatActivity {
                                                                             params.put("photo", item.getPhoto());
                                                                             params.put("seller_id", item.getSeller_id());
                                                                             params.put("item_id", item.getItem_id());
-                                                                            params.put("quantity", item.getQuantity());
+                                                                            params.put("quantity", String.valueOf(number));
                                                                             params.put("cart_id", item.getId());
                                                                             return params;
                                                                         }
@@ -356,7 +357,7 @@ public class Cart extends AppCompatActivity {
                                                                 public void onAddClick(final int position) {
                                                                     final Item_All_Details item = itemAllDetailsArrayList.get(position);
 
-                                                                    final int final_num1 = ++number;
+                                                                    ++number;
                                                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
                                                                             new Response.Listener<String>() {
                                                                                 @Override
@@ -372,8 +373,8 @@ public class Cart extends AppCompatActivity {
                                                                                                 JSONObject object = jsonArray.getJSONObject(i);
                                                                                                 final String max_order = object.getString("max_order");
 
-                                                                                                if (final_num1 > Integer.parseInt(max_order)) {
-                                                                                                    Toast.makeText(Cart.this, "You have reach limit for this item", Toast.LENGTH_SHORT).show();
+                                                                                                if (number >= Integer.parseInt(max_order)) {
+                                                                                                    Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
                                                                                                 } else {
                                                                                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                                                                                                             new Response.Listener<String>() {
@@ -460,7 +461,7 @@ public class Cart extends AppCompatActivity {
                                                                                                             Map<String, String> params = new HashMap<>();
                                                                                                             params.put("id", item.getId());
                                                                                                             params.put("cart_id", item.getId());
-                                                                                                            params.put("quantity", String.valueOf(final_num1));
+                                                                                                            params.put("quantity", String.valueOf(number));
                                                                                                             return params;
                                                                                                         }
                                                                                                     };
@@ -500,8 +501,8 @@ public class Cart extends AppCompatActivity {
                                                                 @Override
                                                                 public void onMinusClick(final int position) {
                                                                     final Item_All_Details item = itemAllDetailsArrayList.get(position);
-                                                                    final int final_num = --number;
-                                                                    if (final_num == 0) {
+                                                                    --number;
+                                                                    if (number == 0) {
                                                                         AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
                                                                         builder.setTitle("Are you sure?");
                                                                         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -642,7 +643,7 @@ public class Cart extends AppCompatActivity {
                                                                                 Map<String, String> params = new HashMap<>();
                                                                                 params.put("id", item.getId());
                                                                                 params.put("cart_id", item.getId());
-                                                                                params.put("quantity", String.valueOf(final_num));
+                                                                                params.put("quantity", String.valueOf(number));
                                                                                 return params;
                                                                             }
                                                                         };

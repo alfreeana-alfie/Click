@@ -162,35 +162,57 @@
             android:id="@+id/withText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linear2"
             android:textColor="@color/colorGrey"
             android:textSize="14sp"
+            android:layout_below="@id/text_ship_placed"
             android:text="Pos Laju Tracking No." />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <RelativeLayout
             android:layout_below="@id/withText"
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_no_radius">
+            android:id="@+id/relative3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="0dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:padding="10dp"
+                android:id="@+id/pl"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                android:text="PL" />
 
-            <EditText
-                android:layout_below="@id/linear2"
-                android:id="@+id/editText_review"
+            <RelativeLayout
+                android:id="@+id/textView3"
+                android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="text"
-                android:hint="Pos Laju Tacking No." />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_toEndOf="@id/pl"
+                android:background="@drawable/background_white_full_curves">
 
+                <EditText
+                    android:id="@+id/editText_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@null"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:layout_centerVertical="true"
+                    android:inputType="text"
+                    android:hint="Pos Laju Tacking No." />
+            </RelativeLayout>
 
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView3"
+            android:layout_below="@id/relative3"
             android:layout_marginTop="15dp"
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
