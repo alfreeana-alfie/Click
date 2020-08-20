@@ -44,17 +44,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Agriculture extends AppCompatActivity {
+public class PersonalO extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_agri.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_personal.php";
 
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_agri.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_agri.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_agri.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_agri.php";
+    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_personal.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_personal.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_personal.php";
+    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_personal.php";
 
     SessionManager sessionManager;
     String getId;
@@ -130,7 +130,7 @@ public class Agriculture extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_List();
@@ -140,7 +140,7 @@ public class Agriculture extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Agriculture.this, Homepage.class);
+                Intent intent = new Intent(PersonalO.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -156,7 +156,7 @@ public class Agriculture extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -164,14 +164,14 @@ public class Agriculture extends AppCompatActivity {
 
                 if (!strAd_Detail.isEmpty() && !strDivision.equals("View_All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                    adapter_item = new Item_Adapter(itemList, PersonalO.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
                 if(!strAd_Detail.isEmpty() && strDivision.equals("View_All")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                    adapter_item = new Item_Adapter(itemList, PersonalO.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -227,7 +227,7 @@ public class Agriculture extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -239,7 +239,7 @@ public class Agriculture extends AppCompatActivity {
 
                 if (strDistrict.equals("View_All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                    adapter_item = new Item_Adapter(itemList, PersonalO.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -247,7 +247,7 @@ public class Agriculture extends AppCompatActivity {
                 }
                 if (strDivision.equals("View_All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                    adapter_item = new Item_Adapter(itemList, PersonalO.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -255,7 +255,7 @@ public class Agriculture extends AppCompatActivity {
                 }
                 if(!strDivision.equals("View_All") && !strDistrict.equals("View_All")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                    adapter_item = new Item_Adapter(itemList, PersonalO.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -270,7 +270,7 @@ public class Agriculture extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Agriculture.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(PersonalO.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -316,7 +316,6 @@ public class Agriculture extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -325,24 +324,12 @@ public class Agriculture extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
-
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
-
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    item.setBrand(brand);
-                                    item.setInner(inner);
-                                    item.setStock(stock);
-                                    item.setDescription(desc);
-                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -350,13 +337,13 @@ public class Agriculture extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Agriculture.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(PersonalO.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -376,7 +363,6 @@ public class Agriculture extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -394,7 +380,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -405,20 +391,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -437,7 +423,7 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -457,7 +443,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -468,20 +454,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -500,13 +486,13 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Agriculture.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalO.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -525,7 +511,7 @@ public class Agriculture extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
         requestQueue.add(stringRequest);
     }
 
@@ -540,7 +526,6 @@ public class Agriculture extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -549,24 +534,12 @@ public class Agriculture extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
-
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
-
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    item.setBrand(brand);
-                                    item.setInner(inner);
-                                    item.setStock(stock);
-                                    item.setDescription(desc);
-                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -574,13 +547,13 @@ public class Agriculture extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Agriculture.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(PersonalO.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -600,7 +573,6 @@ public class Agriculture extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -618,7 +590,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -629,20 +601,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -661,7 +633,7 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -681,7 +653,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -692,20 +664,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -724,13 +696,13 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Agriculture.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalO.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -750,7 +722,7 @@ public class Agriculture extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
         requestQueue.add(stringRequest);
     }
 
@@ -765,7 +737,6 @@ public class Agriculture extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -774,24 +745,12 @@ public class Agriculture extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
-
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
-
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    item.setBrand(brand);
-                                    item.setInner(inner);
-                                    item.setStock(stock);
-                                    item.setDescription(desc);
-                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -799,13 +758,13 @@ public class Agriculture extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Agriculture.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(PersonalO.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -843,7 +802,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -854,20 +813,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -886,7 +845,7 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -906,7 +865,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -917,20 +876,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -949,13 +908,13 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Agriculture.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalO.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -966,7 +925,7 @@ public class Agriculture extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -974,7 +933,7 @@ public class Agriculture extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
         requestQueue.add(stringRequest);
 
     }
@@ -990,7 +949,6 @@ public class Agriculture extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -999,24 +957,12 @@ public class Agriculture extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
-
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
-
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    item.setBrand(brand);
-                                    item.setInner(inner);
-                                    item.setStock(stock);
-                                    item.setDescription(desc);
-                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1024,13 +970,13 @@ public class Agriculture extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Agriculture.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(PersonalO.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1068,7 +1014,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1079,20 +1025,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1111,7 +1057,7 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1131,7 +1077,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1142,20 +1088,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1174,13 +1120,13 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Agriculture.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalO.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1200,7 +1146,7 @@ public class Agriculture extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1316,14 +1262,12 @@ public class Agriculture extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
-                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1331,13 +1275,13 @@ public class Agriculture extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, Agriculture.this);
+                                adapter_item = new Item_Adapter(itemList, PersonalO.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Agriculture.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(PersonalO.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1375,7 +1319,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1386,20 +1330,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1418,7 +1362,7 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest1);
                                         }
                                     }
@@ -1438,7 +1382,7 @@ public class Agriculture extends AppCompatActivity {
                                         final String strPhoto = item.getPhoto();
 
                                         if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Agriculture.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PersonalO.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                     new Response.Listener<String>() {
@@ -1449,20 +1393,20 @@ public class Agriculture extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Agriculture.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(PersonalO.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Agriculture.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(PersonalO.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Agriculture.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(PersonalO.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
                                                 @Override
@@ -1481,13 +1425,13 @@ public class Agriculture extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
                                             requestQueue.add(stringRequest2);
                                         }
                                     }
                                 });
                             } else {
-                                Toast.makeText(Agriculture.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(PersonalO.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1504,15 +1448,16 @@ public class Agriculture extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Agriculture.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(PersonalO.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Agriculture.this, Homepage.class);
+        Intent intent = new Intent(PersonalO.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
 }

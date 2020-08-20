@@ -316,6 +316,7 @@ public class Cake extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -324,12 +325,24 @@ public class Cake extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -363,6 +376,7 @@ public class Cake extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
+
                                     }
 
                                     @Override
@@ -526,6 +540,7 @@ public class Cake extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -534,12 +549,24 @@ public class Cake extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -573,6 +600,7 @@ public class Cake extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
+
                                     }
 
                                     @Override
@@ -737,6 +765,7 @@ public class Cake extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -745,12 +774,24 @@ public class Cake extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -925,7 +966,7 @@ public class Cake extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
-                }) {
+                }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -949,6 +990,7 @@ public class Cake extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -957,12 +999,24 @@ public class Cake extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1262,12 +1316,14 @@ public class Cake extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1459,5 +1515,4 @@ public class Cake extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }

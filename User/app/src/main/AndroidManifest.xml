@@ -83,22 +83,35 @@
         <activity android:name=".Review_Page" />
         <activity android:name=".Selling_Detail" />
         <activity android:name=".Review_Info" />
-        <activity android:name=".category.Cake" />
+        <activity android:name=".category.CakeO" />
+        <activity android:name=".category.Agriculture_O" />
+        <activity android:name=".category.FashionO" />
+        <activity android:name=".category.HandcraftO" />
+        <activity android:name=".category.HealthO" />
+        <activity android:name=".category.HomeO" />
+        <activity android:name=".category.PepperO" />
+        <activity android:name=".category.PersonalO" />
+        <activity android:name=".category.ProcessedO" />
+        <activity android:name=".category.RetailO" />
+        <activity android:name=".category.SeviceO" />
+        <activity android:name=".category.View_All_ShockO" />
+        <activity android:name=".Feed_page" />
+        <activity android:name=".Noti_Page" />
+        <activity android:name=".category.View_All_HotO" />
+        <activity android:name=".Review_Page_Other" />
         <activity android:name=".category.Agriculture" />
+        <activity android:name=".category.Cake" />
         <activity android:name=".category.Fashion" />
-        <activity android:name=".category.Handcraft" />
+        <activity android:name=".category.Handicraft" />
         <activity android:name=".category.Health" />
         <activity android:name=".category.Home" />
         <activity android:name=".category.Pepper" />
         <activity android:name=".category.Personal" />
         <activity android:name=".category.Processed" />
         <activity android:name=".category.Retail" />
-        <activity android:name=".category.Sevice" />
-        <activity android:name=".category.View_All_Shock" />
-        <activity android:name=".Feed_page" />
-        <activity android:name=".Noti_Page" />
+        <activity android:name=".category.Service" />
         <activity android:name=".category.View_All_Hot" />
-        <activity android:name=".Review_Page_Other" />
+        <activity android:name=".category.View_All_Shock" />
 
 
         <meta-data

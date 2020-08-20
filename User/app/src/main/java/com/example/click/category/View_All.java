@@ -48,13 +48,14 @@ import java.util.Map;
 public class View_All extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/category/readall.php";
+
     private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+
     private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/readall.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall_filter.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall_filter.php";
+    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/readall.php";
+    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/readall.php";
     private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/readall.php";
-    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
 
     SessionManager sessionManager;
     String getId;
@@ -316,6 +317,7 @@ public class View_All extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -324,12 +326,24 @@ public class View_All extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -363,6 +377,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
+
                                     }
 
                                     @Override
@@ -526,6 +541,7 @@ public class View_All extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -534,12 +550,24 @@ public class View_All extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -573,6 +601,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
+
                                     }
 
                                     @Override
@@ -737,6 +766,7 @@ public class View_All extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -745,12 +775,24 @@ public class View_All extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -925,7 +967,7 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                     }
-                }) {
+                }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -949,6 +991,7 @@ public class View_All extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -957,12 +1000,24 @@ public class View_All extends AppCompatActivity {
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {

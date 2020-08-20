@@ -136,8 +136,10 @@ public class Forgot_Password extends Fragment {
                                         loading.setVisibility(View.GONE);
                                         button_enter_email.setVisibility(View.VISIBLE);
 
-                                        password_linear_layout.setVisibility(View.VISIBLE);
-                                        email_linear_layout.setVisibility(View.GONE);
+                                        password_linear_layout.setVisibility(View.GONE);
+                                        Intent intent1 = new Intent(getContext(), MainActivity.class);
+                                        getActivity().startActivity(intent1);
+                                        Toast.makeText(getContext(), "Please check your email inbox", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Toast.makeText(getContext(), "Incorrect Email", Toast.LENGTH_SHORT).show();
