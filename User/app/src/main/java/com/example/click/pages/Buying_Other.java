@@ -27,6 +27,7 @@ import com.example.click.Order;
 import com.example.click.Order_BuyerAdapter;
 import com.example.click.R;
 import com.example.click.Review_Page;
+import com.example.click.Review_Page_Other;
 import com.example.click.adapter.Buyer_OrderAdapter;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
@@ -310,6 +311,7 @@ public class Buying_Other extends Fragment {
                                         final Double strPrice = Double.valueOf(order.getPrice());
                                         final String strDivision = order.getDivision();
                                         final String strDistrict = order.getDistrict();
+                                        final String photo = order.getPhoto();
 
                                         final String strSellerDivision = order.getSeller_division();
                                         final String strSellerDistrict = order.getSeller_district();
@@ -324,7 +326,7 @@ public class Buying_Other extends Fragment {
                                         final String strDelivery_Price = order.getDelivery_price();
                                         final String strDelivery_Date = order.getDelivery_date();
 
-                                        Intent intent1 = new Intent(getContext(), Review_Page.class);
+                                        Intent intent1 = new Intent(getContext(), Review_Page_Other.class);
                                         intent1.putExtra("seller_id", strSeller_id);
                                         intent1.putExtra("customer_id", strCustomer_id);
                                         intent1.putExtra("item_id", strItem_id);
@@ -333,6 +335,11 @@ public class Buying_Other extends Fragment {
                                         intent1.putExtra("order_id", strOrder_Id);
                                         intent1.putExtra("tracking_no", strTracking);
                                         intent1.putExtra("delivery_date", strDelivery_Date);
+                                        intent1.putExtra("ad_detail", strAd_Detail);
+                                        intent1.putExtra("price", String.format("%.2f", strPrice));
+                                        intent1.putExtra("quantity", strQuantity);
+                                        intent1.putExtra("ship_price", strDelivery_Price);
+                                        intent1.putExtra("photo", photo);
                                         getActivity().startActivity(intent1);
                                     }
                                 });
