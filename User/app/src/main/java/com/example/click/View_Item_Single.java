@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +32,10 @@ import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
 import com.example.click.pages.Chat;
+import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
+import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
@@ -74,6 +79,7 @@ public class View_Item_Single extends AppCompatActivity {
     private TwoWayGridView gridView_item;
     private RatingBar ratingBar, ratingBar20, ratingBar21;
     RelativeLayout review11;
+    BottomNavigationView bottomNav;
 
     Float ratingfull, ratingfull2;
 
@@ -130,6 +136,41 @@ public class View_Item_Single extends AppCompatActivity {
         btn_chat_wsp = findViewById(R.id.btn_chat_wsp);
         btn_view_seller = findViewById(R.id.btn_view_seller);
 
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(View_Item_Single.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(View_Item_Single.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(View_Item_Single.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(View_Item_Single.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
+
         final Intent intent = getIntent();
         id = intent.getStringExtra("id");
         userid = intent.getStringExtra("user_id");
@@ -162,14 +203,6 @@ public class View_Item_Single extends AppCompatActivity {
         getUserDetail();
         View_Item();
         getSold();
-
-        btn_view_seller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(View_Item_Single.this, Seller_Shop.class);
-                startActivity(intent1);
-            }
-        });
 
         detail_info.setOnClickListener(new View.OnClickListener() {
             @Override

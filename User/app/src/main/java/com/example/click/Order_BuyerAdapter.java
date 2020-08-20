@@ -66,6 +66,10 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
         holder.text_placed_date.setText("Order Placed on " + order.getDate());
         holder.text_status.setText(order.getStatus());
         holder.text_ship_placed.setText("Shipped out to "+ order.getDistrict());
+
+        if(order.getStatus().equals("Received")){
+            holder.btn_cancel.setVisibility(View.GONE);
+        }
     }
 
     @Override

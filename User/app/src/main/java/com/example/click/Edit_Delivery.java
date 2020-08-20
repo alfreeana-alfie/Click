@@ -2,6 +2,7 @@ package com.example.click;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.pages.Find_My_Items_Other;
+import com.example.click.pages.Homepage;
 import com.example.click.pages.Row_Add;
 import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +43,7 @@ public class Edit_Delivery extends AppCompatActivity {
     EditText price;
 
     Button Accept, Cancel;
+    BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +64,41 @@ public class Edit_Delivery extends AppCompatActivity {
         spinner_days = findViewById(R.id.spinner_day);
         Accept = findViewById(R.id.btn_accept);
         Cancel = findViewById(R.id.btn_cancel);
+
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Edit_Delivery.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Edit_Delivery.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Edit_Delivery.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Edit_Delivery.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         adapter_division = ArrayAdapter.createFromResource(this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -3,6 +3,7 @@ package com.example.click.pages;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -24,10 +25,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Feed_page;
+import com.example.click.Noti_Page;
 import com.example.click.R;
 import com.example.click.adapter.UserAdapter;
 import com.example.click.data.User;
 import com.example.click.data.UserDetails;
+import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,12 +51,47 @@ public class Chat_Inbox_Other extends AppCompatActivity {
     List<User> usersArrayList;
     UserAdapter user_adapter;
     int totalUsers = 0;
-
+    BottomNavigationView bottomNav;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_list);
         ToolbarSetting();
+
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Chat_Inbox_Other.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Chat_Inbox_Other.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Chat_Inbox_Other.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Chat_Inbox_Other.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         recyclerView = findViewById(R.id.usersList);
         usersArrayList = new ArrayList<>();

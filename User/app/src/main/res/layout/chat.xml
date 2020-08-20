@@ -55,9 +55,9 @@
 
     <RelativeLayout
         android:id="@+id/send_message"
+        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/colorLightOrange">
 
         <include
@@ -70,4 +70,13 @@
             android:gravity="bottom" />
 
     </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_menu"/>
 </RelativeLayout>

@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
                                                                 if (s.equals("null")) {
                                                                     reference.child(name).child("email").setValue(email);
+                                                                    reference.child(name).child("photo").setValue(photo);
                                                                     reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                 } else {
                                                                     try {

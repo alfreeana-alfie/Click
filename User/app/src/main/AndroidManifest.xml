@@ -75,12 +75,10 @@
         <activity android:name=".View_Item_Single" />
         <activity android:name=".Seller_Shop" />
         <activity android:name=".Shipping_Info" />
-        <activity android:name=".pages.Other_Cart" />
         <activity android:name=".user.Edit_Profile_Address" />
         <activity android:name=".Goto_Register_Page" />
         <activity android:name=".Register_Seller" />
         <activity android:name=".Detail_Info" />
-        <activity android:name=".Review_Page" />
         <activity android:name=".Selling_Detail" />
         <activity android:name=".Review_Info" />
         <activity android:name=".Feed_page" />

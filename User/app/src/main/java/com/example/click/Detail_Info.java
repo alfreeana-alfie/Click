@@ -2,18 +2,25 @@ package com.example.click;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.click.pages.Find_My_Items_Other;
+import com.example.click.pages.Homepage;
+import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.storage.StorageReference;
 
 public class Detail_Info extends AppCompatActivity {
 
     TextView Stock, Brand, Inner, Ship_From, Description;
+    BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +44,41 @@ public class Detail_Info extends AppCompatActivity {
         Inner = findViewById(R.id.inner_text);
         Ship_From = findViewById(R.id.ship_text);
         Description = findViewById(R.id.desc_text);
+
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Detail_Info.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Detail_Info.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Detail_Info.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Detail_Info.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         Stock.setText(stock);
         Brand.setText(brand);

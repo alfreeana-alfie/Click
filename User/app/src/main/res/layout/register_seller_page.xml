@@ -69,5 +69,14 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/open_sans_semibold"
             android:layout_centerHorizontal="true"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:labelVisibilityMode="labeled"
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorWhite"
+            app:menu="@menu/bottom_menu"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

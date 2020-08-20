@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,10 +28,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Feed_page;
+import com.example.click.Noti_Page;
 import com.example.click.R;
+import com.example.click.View_Item_Single;
 import com.example.click.adapter.FavouriteAdapter;
+import com.example.click.category.Agriculture;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
+import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +69,7 @@ public class Saved_Searches_Other extends AppCompatActivity {
     List<Item_All_Details> itemList;
     String getId;
     SessionManager sessionManager;
+    BottomNavigationView bottomNav;
 
     TextView no_result;
 
@@ -69,6 +78,40 @@ public class Saved_Searches_Other extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.saved_searches);
         Declare();
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Saved_Searches_Other.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Saved_Searches_Other.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Saved_Searches_Other.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Saved_Searches_Other.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
         ToolbarSetting();
         getSession();
         View_List();
@@ -200,19 +243,27 @@ public class Saved_Searches_Other extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Saved_Searches_Other.this, Saved_Searches_View.class);
+                                        Intent detailIntent = new Intent(Saved_Searches_Other.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
+
                                     }
 
                                     @Override
@@ -347,17 +398,24 @@ public class Saved_Searches_Other extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Saved_Searches_Other.this, Saved_Searches_View.class);
+                                        Intent detailIntent = new Intent(Saved_Searches_Other.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra(USERID, item.getSeller_id());
-                                        detailIntent.putExtra(MAIN_CATE, item.getMain_category());
-                                        detailIntent.putExtra(SUB_CATE, item.getSub_category());
-                                        detailIntent.putExtra(AD_DETAIL, item.getAd_detail());
-                                        detailIntent.putExtra(PRICE, item.getPrice());
-                                        detailIntent.putExtra(DIVISION, item.getDivision());
-                                        detailIntent.putExtra(DISTRICT, item.getDistrict());
-                                        detailIntent.putExtra(PHOTO, item.getPhoto());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
                                     }

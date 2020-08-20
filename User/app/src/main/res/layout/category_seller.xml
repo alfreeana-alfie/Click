@@ -153,6 +153,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:layout_above="@id/bottom_nav"
         android:layout_marginTop="5dp"
         android:id="@+id/category_layout"
         android:layout_width="wrap_content"
@@ -223,6 +224,7 @@
         </TableLayout>
 
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/table_filter"
@@ -282,96 +284,14 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/appbar1"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="16dp">
-
-            <TextView
-                android:id="@+id/division_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/division"
-                android:textColor="@color/colorGrey"
-                android:textSize="14sp"
-                android:textStyle="bold|italic" />
-
-            <Spinner
-                android:id="@+id/spinner_division"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/division_display"
-                android:background="@drawable/bg_spinner"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:spinnerMode="dropdown" />
-
-
-            <TextView
-                android:id="@+id/district_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinner_division"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="@string/district"
-                android:textColor="@color/colorGrey"
-                android:textSize="14sp"
-                android:textStyle="bold|italic" />
-
-            <Spinner
-                android:id="@+id/spinner_district"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@id/district_display"
-                android:background="@drawable/bg_spinner"
-                android:paddingStart="10dp"
-
-                android:paddingEnd="10dp" />
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-
-                <Button
-                    android:id="@+id/btn_cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/login_part_border_orange"
-                    android:fontFamily="@font/montserrat"
-                    android:text="@string/back"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btn_apply"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/login_part_border_orange"
-                    android:fontFamily="@font/montserrat"
-                    android:text="Apply"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp" />
-            </TableRow>
-
-        </RelativeLayout>
-
     </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_menu"/>
 </RelativeLayout>

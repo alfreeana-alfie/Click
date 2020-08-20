@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,8 +25,10 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
         android:background="@drawable/background_white_curve"
         android:padding="5dp">
 
@@ -42,9 +44,9 @@
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Location"
                 android:textAlignment="center" />
         </LinearLayout>
@@ -63,9 +65,9 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Price"
                 android:textAlignment="center" />
@@ -85,8 +87,8 @@
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="0dp"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Duration"
                 android:textAlignment="center" />
@@ -105,21 +107,23 @@
     </RelativeLayout>
 
     <ScrollView
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_nav"
+        android:layout_below="@id/relativeLayout"
+        android:background="@color/colorAccent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/layout_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
             <Button
                 android:id="@+id/button_add"
@@ -132,22 +136,31 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="Add"
-                android:textSize="16sp"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
 
-                <Button
-                    android:layout_margin="10dp"
-                    android:id="@+id/button_submit"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin"
-                    android:background="@drawable/background_dark_pink_full_curve"
-                    android:fontFamily="@font/open_sans"
-                    android:text="Submit"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="20sp" />
+            <Button
+                android:id="@+id/button_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/background_dark_pink_full_curve"
+                android:fontFamily="@font/open_sans"
+                android:text="Submit"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_menu" />
+
+</RelativeLayout>

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,9 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.Order;
 import com.example.click.Order_BuyerAdapter;
 import com.example.click.R;
-import com.example.click.Review_Page;
 import com.example.click.Review_Page_Other;
-import com.example.click.adapter.Buyer_OrderAdapter;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
 

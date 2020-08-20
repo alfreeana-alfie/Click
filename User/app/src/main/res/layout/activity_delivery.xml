@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -25,17 +25,17 @@
 
 
     <ScrollView
-        android:fillViewport="true"
         android:id="@+id/scrollable"
-        android:layout_below="@id/appbar"
-        android:layout_above="@id/button_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@id/button_layout"
+        android:layout_below="@id/appbar"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -80,9 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/colorPrimaryDark"
-        android:text="TextView" />
-
+        android:text="TextView"
+        android:textColor="@color/colorPrimaryDark" />
 
     <Button
         android:id="@+id/btn_goto_delivery"
@@ -90,42 +89,51 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textView4"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorWhite"
-        android:fontFamily="@font/open_sans_semibold"
         android:background="@drawable/login_part_border_orange"
-        android:text="Add Delivery" />
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Add Delivery"
+        android:textColor="@color/colorWhite" />
 
-        <LinearLayout
-            android:id="@+id/button_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:layout_above="@id/bottom_nav"
+        android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/back_delivery"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:background="@drawable/background_button_pink_left_curves"
-                android:fontFamily="@font/open_sans"
-                android:text="Cancel"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+        <Button
+            android:id="@+id/back_delivery"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button_pink_left_curves"
+            android:fontFamily="@font/open_sans"
+            android:text="Cancel"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
-            <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:id="@+id/accept_delivery"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_button_pink_right_curves"
-                android:fontFamily="@font/open_sans"
-                android:text="Accept"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
+        <Button
+            android:id="@+id/accept_delivery"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_button_pink_right_curves"
+            android:fontFamily="@font/open_sans"
+            android:text="Accept"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
-        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_menu"/>
 </RelativeLayout>

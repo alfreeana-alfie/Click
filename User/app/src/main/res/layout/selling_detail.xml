@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="15dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,6 +15,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:id="@+id/text_order_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,6 +28,8 @@
             android:textSize="16sp" />
 
         <ImageView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:id="@+id/photo"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -33,6 +37,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+            android:layout_marginEnd="15dp"
             android:id="@+id/text_ad_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,6 +50,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_marginEnd="15dp"
             android:id="@+id/text_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +64,7 @@
             android:textSize="12sp" />
 
         <TextView
+            android:layout_marginEnd="15dp"
             android:id="@+id/text_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,6 +78,8 @@
             android:textSize="12sp" />
 
         <LinearLayout
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +111,8 @@
         </LinearLayout>
 
         <TextView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:fontFamily="@font/open_sans"
             android:padding="10dp"
             android:id="@+id/text_ship_placed"
@@ -156,6 +167,8 @@
         </LinearLayout>
 
         <TextView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/open_sans_bold"
             android:padding="10dp"
@@ -168,6 +181,8 @@
             android:text="Pos Laju Tracking No." />
 
         <RelativeLayout
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_below="@id/withText"
             android:id="@+id/relative3"
             android:layout_width="wrap_content"
@@ -209,6 +224,8 @@
         </RelativeLayout>
 
         <Button
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -220,6 +237,8 @@
             android:text="Submit" />
 
         <Button
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -229,5 +248,14 @@
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
             android:text="Cancel" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:labelVisibilityMode="labeled"
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorWhite"
+            app:menu="@menu/bottom_menu"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

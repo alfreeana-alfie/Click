@@ -24,6 +24,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:layout_above="@id/bottom_nav"
         android:id="@+id/category_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -256,5 +257,14 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="false"
         android:layout_centerInParent="true"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_menu"/>
 
 </RelativeLayout>

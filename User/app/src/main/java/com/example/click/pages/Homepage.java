@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -125,6 +126,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     Timer timer;
     RelativeLayout hot_layout, top_layout;
 
+    ImageButton btn_next, btn_back;
+
     BottomNavigationView bottomNav;
     private long backPressedTime;
     private Toast backToast;
@@ -225,9 +228,35 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_view_all = findViewById(R.id.button_see);
         button_view_hard = findViewById(R.id.button_view_hard);
         button_view_top = findViewById(R.id.button_view_top);
+        btn_back = findViewById(R.id.btn_back);
+        btn_next = findViewById(R.id.btn_next);
 
         hot_layout = findViewById(R.id.hot_layout);
         top_layout = findViewById(R.id.top_layout);
+
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem() + 1;
+                if(current<viewPager.getChildCount()){
+                    viewPager.setCurrentItem(current);
+                } else {
+                    viewPager.setCurrentItem(0);
+                }
+            }
+        });
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int current = viewPager.getCurrentItem() - 1;
+                if(current<viewPager.getChildCount()){
+                    viewPager.setCurrentItem(current);
+                } else {
+                    viewPager.setCurrentItem(0);
+                }
+            }
+        });
 
         button_view_hard.setOnClickListener(new View.OnClickListener() {
             @Override

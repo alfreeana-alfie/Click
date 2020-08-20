@@ -8,6 +8,7 @@
 
     <ScrollView
         android:fillViewport="true"
+        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -610,107 +611,6 @@
 
     </RelativeLayout>
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/ad_detail_page_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:background="@drawable/login_part_border"-->
-<!--        android:elevation="5dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="20dp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/ad_text_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-
-<!--                android:layout_gravity="center"-->
-<!--                android:fontFamily="sans-serif-condensed"-->
-<!--                android:text="@string/add_product"-->
-<!--                android:textAllCaps="true"-->
-<!--                android:textColor="@color/colorPrimaryDark"-->
-<!--                android:textSize="25sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <View-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="5dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@drawable/login_part_border_orange" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:text="@string/what_are_you_selling"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/colorGrey"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold|italic" />-->
-<!--        </LinearLayout>-->
-
-
-<!--        <RelativeLayout-->
-<!--            android:id="@+id/ad_detail_relative_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="300dp"-->
-<!--            android:layout_below="@id/ad_text_layout"-->
-<!--            android:layout_marginLeft="0dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:layout_marginRight="0dp"-->
-<!--            android:layout_marginBottom="20dp"-->
-<!--            android:background="@drawable/border">-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edittext_ad_detail"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@null"-->
-<!--                android:cursorVisible="true"-->
-<!--                android:ems="10"-->
-<!--                android:hint="@string/please_enter_an_ad_detail"-->
-<!--                android:importantForAutofill="no"-->
-<!--                android:inputType="textMultiLine"-->
-<!--                android:padding="15dp"-->
-<!--                android:textAlignment="textStart"-->
-<!--                android:textCursorDrawable="@drawable/color_cursor" />-->
-
-<!--        </RelativeLayout>-->
-
-<!--        <Button-->
-<!--            android:id="@+id/accept_ad_detail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:layout_below="@id/ad_detail_relative_layout"-->
-<!--            android:background="@drawable/login_part_border_orange"-->
-<!--            android:fontFamily="@font/montserrat"-->
-<!--            android:text="@string/accept"-->
-<!--            android:textSize="14sp" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/back_ad_detail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:layout_below="@id/accept_ad_detail"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:background="@drawable/login_part_border_orange"-->
-<!--            android:fontFamily="@font/montserrat"-->
-<!--            android:text="@string/back"-->
-<!--            android:textSize="14sp" />-->
-<!--    </RelativeLayout>-->
-
     <ScrollView
         android:id="@+id/about_product"
         android:fillViewport="true"
@@ -977,5 +877,14 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:menu="@menu/bottom_menu"/>
 
 </RelativeLayout>

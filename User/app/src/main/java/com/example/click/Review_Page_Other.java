@@ -167,6 +167,8 @@ public class Review_Page_Other extends AppCompatActivity {
             Pending.setTextColor(getResources().getColor(R.color.colorGreen));
             Shippped.setTextColor(getResources().getColor(R.color.colorGreen));
             Received.setTextColor(getResources().getColor(R.color.colorGreen));
+
+            btn_received.setVisibility(View.INVISIBLE);
         }
 
         btn_submit.setOnClickListener(new View.OnClickListener() {

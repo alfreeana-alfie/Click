@@ -203,7 +203,7 @@ public class Checkout extends AppCompatActivity {
                                                                                             String strDays = object.getString("days");
 
                                                                                             grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(Price));
-                                                                                            Grand_Total.setText(String.format("%.2f", grandtotal));
+                                                                                            Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
 
                                                                                             Date date = Calendar.getInstance().getTime();
 

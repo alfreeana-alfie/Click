@@ -6,119 +6,136 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            app:elevation="0dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@id/bottom_nav">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:elevation="0dp"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:background="@color/colorWhite"
-            android:padding="15dp"
-            android:id="@+id/promotion_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_promo_foreground"
-                android:fontFamily="@font/open_sans_semibold"
-                android:textSize="20sp"
-                android:text="Promotion" />
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:elevation="0dp">
 
-            <TextView
-                android:id="@+id/promotion_text"
-                android:layout_width="wrap_content"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:elevation="0dp"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:padding="15dp"
+                android:id="@+id/promotion_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans"
-                android:textSize="14sp"
-                android:textAlignment="textEnd"
-                android:text="View" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_promo_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="20sp"
+                    android:text="Promotion" />
+
+                <TextView
+                    android:id="@+id/promotion_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:text="View" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:padding="15dp"
+                android:id="@+id/social_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_social_foreground"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="20sp"
+                    android:text="Social Updates" />
+
+                <TextView
+                    android:id="@+id/social_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:text="View" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:padding="15dp"
+                android:id="@+id/updates_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:drawableStart="@drawable/ic_order_foreground"
+                    android:textSize="20sp"
+                    android:text="Order Updates" />
+
+                <TextView
+                    android:id="@+id/updates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:text="View" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:background="@color/colorWhite"
-            android:padding="15dp"
-            android:id="@+id/social_layout"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:labelVisibilityMode="labeled"
+            android:id="@+id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableStart="@drawable/ic_social_foreground"
-                android:fontFamily="@font/open_sans_semibold"
-                android:textSize="20sp"
-                android:text="Social Updates" />
-
-            <TextView
-                android:id="@+id/social_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans"
-                android:textSize="14sp"
-                android:textAlignment="textEnd"
-                android:text="View" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
             android:background="@color/colorWhite"
-            android:padding="15dp"
-            android:id="@+id/updates_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:menu="@menu/bottom_menu"/>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans_semibold"
-                android:drawableStart="@drawable/ic_order_foreground"
-                android:textSize="20sp"
-                android:text="Order Updates" />
 
-            <TextView
-                android:id="@+id/updates"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/open_sans"
-                android:textSize="14sp"
-                android:textAlignment="textEnd"
-                android:text="View" />
-        </LinearLayout>
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +26,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.Item_Adapter;
+import com.example.click.category.Agriculture;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
 import com.example.click.pages.Chat;
+import com.example.click.pages.Find_My_Items_Other;
+import com.example.click.pages.Homepage;
+import com.example.click.user.Edit_Profile;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -54,7 +61,7 @@ public class Seller_Shop extends AppCompatActivity {
     Item_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     private GridView gridView_item;
-
+    BottomNavigationView bottomNav;
     ImageButton btn_chat_wsp, btn_chat;
 
     @Override
@@ -79,6 +86,41 @@ public class Seller_Shop extends AppCompatActivity {
         String seller_location = intent.getStringExtra("seller_location");
         String seller_photo = intent.getStringExtra("seller_photo");
         final String seller_phone = intent.getStringExtra("seller_phone");
+
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Seller_Shop.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_feed:
+                        Intent intent5 = new Intent(Seller_Shop.this, Feed_page.class);
+                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent5);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Seller_Shop.this, Noti_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Seller_Shop.this, Edit_Profile.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
 
         btn_chat_wsp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,15 +220,15 @@ public class Seller_Shop extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 String product = String.valueOf(itemList.size());
                                 item_text.setText(product);
                                 adapter_item = new Item_Adapter(itemList, Seller_Shop.this);
-                                adapter_item.notifyDataSetChanged();
                                 gridView_item.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
@@ -194,10 +236,17 @@ public class Seller_Shop extends AppCompatActivity {
                                         Intent detailIntent = new Intent(Seller_Shop.this, View_Item_Single.class);
                                         Item_All_Details item = itemList.get(position);
 
+                                        detailIntent.putExtra("id", item.getId());
                                         detailIntent.putExtra("user_id", item.getSeller_id());
                                         detailIntent.putExtra("main_category", item.getMain_category());
                                         detailIntent.putExtra("sub_category", item.getSub_category());
                                         detailIntent.putExtra("ad_detail", item.getAd_detail());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
@@ -385,7 +434,7 @@ public class Seller_Shop extends AppCompatActivity {
                                     itemList2.add(item);
                                 }
                                 String sold = String.valueOf(itemList2.size());
-                                sold_text.setText(sold);
+//                                sold_text.setText(sold);
 
                             } else {
                                 Toast.makeText(Seller_Shop.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
