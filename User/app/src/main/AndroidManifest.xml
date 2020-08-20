@@ -97,6 +97,7 @@
         <activity android:name=".category.View_All_Shock" />
         <activity android:name=".Feed_page" />
         <activity android:name=".Noti_Page" />
+        <activity android:name=".category.View_All_Hot" />
 
 
         <meta-data

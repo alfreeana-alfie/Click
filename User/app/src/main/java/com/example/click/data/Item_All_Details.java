@@ -12,6 +12,16 @@ public class Item_All_Details {
     private String quantity;
     private String max_order;
 
+    public String getSold() {
+        return sold;
+    }
+
+    public void setSold(String sold) {
+        this.sold = sold;
+    }
+
+    private String sold;
+
     public String getRating() {
         return rating;
     }

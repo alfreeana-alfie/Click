@@ -92,6 +92,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
     private static String URL_READALL_SHOCK = "https://ketekmall.com/ketekmall/category/readall_shocking.php";
+    private static String URL_READALL_HOT = "https://ketekmall.com/ketekmall/category/readall_sold.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
 
@@ -804,7 +805,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void View_HardSelling() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL_HOT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -826,11 +827,14 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String sold = object.getString("sold");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setSold(sold);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
+                                adapter_item.sortArrayHighest();
                                 adapter_item.notifyDataSetChanged();
                                 gridView_HardSelling.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {

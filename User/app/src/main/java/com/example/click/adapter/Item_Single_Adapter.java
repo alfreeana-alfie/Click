@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.click.Order;
 import com.example.click.R;
 import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
@@ -47,6 +48,17 @@ public class Item_Single_Adapter extends BaseAdapter{
     @Override
     public int getCount() {
         return itemListFull.size();
+    }
+
+    public void sortArrayHighest() {
+        Collections.sort(itemListFull, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o2.getSold()), Double.parseDouble(o1.getSold()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     @Override

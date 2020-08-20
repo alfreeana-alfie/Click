@@ -53,6 +53,7 @@ public class View_Item_Single extends AppCompatActivity {
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
     private static String URL_EDIT_RATING = "https://ketekmall.com/ketekmall/edit_detail_rating.php";
+    private static String URL_EDIT_SOLD = "https://ketekmall.com/ketekmall/edit_detail_sold.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
 
@@ -681,7 +682,10 @@ public class View_Item_Single extends AppCompatActivity {
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     itemList2.add(item);
+
+
                                 }
+                                EditSold(id, String.valueOf(itemList2.size()));
                                 String sold = String.valueOf(itemList2.size());
                                 sold_text.setText(sold);
 
@@ -744,8 +748,6 @@ public class View_Item_Single extends AppCompatActivity {
                                     review1.setText(review);
                                     review2.setText(review);
 
-
-
                                     btn_view_all_review.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -776,10 +778,9 @@ public class View_Item_Single extends AppCompatActivity {
                                             startActivity(intent1);
                                         }
                                     });
-
-                                    EditRating(item_id, String.valueOf(ratingfull2));
                                     getUserDetail_ReviewOne(customer_id);
                                 }
+                                EditRating(id, String.valueOf(ratingfull2));
 
                             } else {
                                 Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
@@ -834,6 +835,42 @@ public class View_Item_Single extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", item_id);
                 params.put("rating", rating);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Item_Single.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void EditSold(final String item_id, final String sold){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_SOLD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+//                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", item_id);
+                params.put("sold", sold);
                 return params;
             }
         };
