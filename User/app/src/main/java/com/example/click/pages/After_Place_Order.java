@@ -25,6 +25,7 @@ import com.example.click.data.SessionManager;
 import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,10 @@ import java.util.Map;
 
 public class After_Place_Order extends AppCompatActivity {
 
+    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer.php";
+    private static String URL_SEND_SELLER = "https://ketekmall.com/ketekmall/sendEmail_seller.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
     Button Continue_Shopping;
 
@@ -46,8 +50,14 @@ public class After_Place_Order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.after_place_order);
 
+        Intent intent1 = getIntent();
+        String sellerID = intent1.getStringExtra("seller_id");
+        getSellerDetail(sellerID);
+
+
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
+        getUserDetail();
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
@@ -128,6 +138,152 @@ public class After_Place_Order extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getUserDetail() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strEmail = object.getString("email");
+
+                                    sendEmail(strEmail);
+                                }
+                            } else {
+                                Toast.makeText(After_Place_Order.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendEmail(final String email){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getSellerDetail(final String sellerID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strEmail = object.getString("email");
+
+                                    sendEmailSeller(strEmail);
+                                }
+                            } else {
+                                Toast.makeText(After_Place_Order.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", sellerID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendEmailSeller(final String email){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND_SELLER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override

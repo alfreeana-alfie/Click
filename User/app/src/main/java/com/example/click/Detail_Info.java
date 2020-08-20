@@ -102,6 +102,13 @@ public class Detail_Info extends AppCompatActivity {
 
                 final Intent intent4 = getIntent();
                 String id1 = intent4.getStringExtra("id");
+                String stock = intent4.getStringExtra("stock");
+                String brand = intent4.getStringExtra("brand_material");
+                String inner = intent4.getStringExtra("inner_material");
+                String desc = intent4.getStringExtra("description");
+                String division = intent4.getStringExtra("division");
+                String district = intent4.getStringExtra("district");
+
                 String userid1 = intent4.getStringExtra("user_id");
                 String strMain_category1 = intent4.getStringExtra("main_category");
                 String strSub_category1 = intent4.getStringExtra("sub_category");
@@ -123,6 +130,16 @@ public class Detail_Info extends AppCompatActivity {
                 intent1.putExtra("district", district1);
                 intent1.putExtra("photo", photo1);
 
+
+
+                intent1.putExtra("id", id1);
+                intent1.putExtra("stock", stock);
+                intent1.putExtra("brand_material", brand);
+                intent1.putExtra("inner_material", inner);
+                intent1.putExtra("description", desc);
+                intent1.putExtra("division", division);
+                intent1.putExtra("district", district);
+
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
@@ -136,6 +153,13 @@ public class Detail_Info extends AppCompatActivity {
 
         final Intent intent4 = getIntent();
         String id1 = intent4.getStringExtra("id");
+        String stock = intent4.getStringExtra("stock");
+        String brand = intent4.getStringExtra("brand_material");
+        String inner = intent4.getStringExtra("inner_material");
+        String desc = intent4.getStringExtra("description");
+        String division = intent4.getStringExtra("division");
+        String district = intent4.getStringExtra("district");
+
         String userid1 = intent4.getStringExtra("user_id");
         String strMain_category1 = intent4.getStringExtra("main_category");
         String strSub_category1 = intent4.getStringExtra("sub_category");
@@ -156,6 +180,16 @@ public class Detail_Info extends AppCompatActivity {
         intent1.putExtra("division", division1);
         intent1.putExtra("district", district1);
         intent1.putExtra("photo", photo1);
+
+
+
+        intent1.putExtra("id", id1);
+        intent1.putExtra("stock", stock);
+        intent1.putExtra("brand_material", brand);
+        intent1.putExtra("inner_material", inner);
+        intent1.putExtra("description", desc);
+        intent1.putExtra("division", division);
+        intent1.putExtra("district", district);
 
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent1);

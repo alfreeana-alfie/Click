@@ -46,8 +46,11 @@ public class Review_Page_Other extends AppCompatActivity {
 //            tracking_notext, order_datetext, order_id1,
 //            address_user, text_addetail, text_price, ship_date,
 //            text_quantity, item_price, shipping_price, grandTotal;
-    TextView OrderID, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
-    ImageView Photo;
+    TextView OrderID,Rejected, Finished, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
+    ImageView Photo , OrderedBlack, OrderedGreen,
+            PendingBlack, PendingGreen,
+            ShippedBlack, ShippedGreen,
+            ReceivedBlack, ReceivedGreen;
 
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_received;
@@ -82,6 +85,20 @@ public class Review_Page_Other extends AppCompatActivity {
         String strQuantity = intent.getStringExtra("quantity");
         String strShipping = intent.getStringExtra("ship_price");
         String strPhoto = intent.getStringExtra("photo");
+        Rejected = findViewById(R.id.rejected);
+        Finished = findViewById(R.id.finished);
+
+        OrderedBlack = findViewById(R.id.ordered_black);
+        OrderedGreen = findViewById(R.id.ordered_green);
+
+        PendingBlack = findViewById(R.id.pending_black);
+        PendingGreen = findViewById(R.id.pending_green);
+
+        ShippedBlack = findViewById(R.id.shipped_black);
+        ShippedGreen = findViewById(R.id.shipped_green);
+
+        ReceivedBlack = findViewById(R.id.received_black);
+        ReceivedGreen = findViewById(R.id.received_green);
 
         edit_review = findViewById(R.id.editText_review);
         btn_received = findViewById(R.id.btn_received);
@@ -153,24 +170,46 @@ public class Review_Page_Other extends AppCompatActivity {
         getUserDetail(getId);
 
         if(remarks.equals("Ordered")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
             Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
         }
         if(remarks.equals("Pending")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            PendingBlack.setVisibility(View.GONE);
+            PendingGreen.setVisibility(View.VISIBLE);
             Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
             Pending.setTextColor(getResources().getColor(R.color.colorGreen));
         }
         if(remarks.equals("Shipped")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            PendingBlack.setVisibility(View.GONE);
+            PendingGreen.setVisibility(View.VISIBLE);
+            ShippedBlack.setVisibility(View.GONE);
+            ShippedGreen.setVisibility(View.VISIBLE);
             Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
             Pending.setTextColor(getResources().getColor(R.color.colorGreen));
             Shippped.setTextColor(getResources().getColor(R.color.colorGreen));
         }
         if(remarks.equals("Received")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            PendingBlack.setVisibility(View.GONE);
+            PendingGreen.setVisibility(View.VISIBLE);
+            ShippedBlack.setVisibility(View.GONE);
+            ShippedGreen.setVisibility(View.VISIBLE);
+            ReceivedBlack.setVisibility(View.GONE);
+            ReceivedGreen.setVisibility(View.VISIBLE);
             Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
             Pending.setTextColor(getResources().getColor(R.color.colorGreen));
             Shippped.setTextColor(getResources().getColor(R.color.colorGreen));
             Received.setTextColor(getResources().getColor(R.color.colorGreen));
-
+            Finished.setVisibility(View.VISIBLE);
             btn_received.setVisibility(View.INVISIBLE);
+        }if(remarks.equals("Reject")){
+            Rejected.setVisibility(View.VISIBLE);
         }
 
         btn_submit.setOnClickListener(new View.OnClickListener() {

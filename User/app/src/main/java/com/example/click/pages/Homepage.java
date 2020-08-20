@@ -91,7 +91,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
 
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/send_email.php";
+
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
@@ -147,39 +147,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_drawer);
         Declare();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-
-
-                            }
-                            _cart_adapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
 
         viewPager = findViewById(R.id.view_pager);
 

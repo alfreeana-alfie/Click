@@ -54,6 +54,8 @@ public class Selling_Other extends Fragment {
     public static final String PHOTO = "photo";
 
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order.php";
+    private static String URL_READ_EMAIL = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_product_reject.php";
 
     private static String URL_READ_ORDER_DONE = "https://ketekmall.com/ketekmall/read_order_buyer_done_two.php";
     private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_detail_approval.php";
@@ -219,7 +221,6 @@ public class Selling_Other extends Fragment {
                                         final String remarks = "Reject";
                                         Update_Order_Reject(view, strOrder_Date, remarks, strCustomer_id);
 
-//                                        Delete_Order(view, strOrder_Id);
 
                                         adapter_item.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter_item);
@@ -256,6 +257,7 @@ public class Selling_Other extends Fragment {
                                         intent1.putExtra("order_date", strOrder_Date);
                                         intent1.putExtra("status", strStatus);
                                         intent1.putExtra("tracking_no", strTracking_NO);
+                                        intent1.putExtra("customer_id", strCustomer_id);
                                         getActivity().startActivity(intent1);
                                     }
                                 });
@@ -622,6 +624,80 @@ public class Selling_Other extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void getCustomerDetail(final String customerID, final String OrderID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strEmail = object.getString("email");
+
+                                    sendEmail(strEmail, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", customerID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendEmail(final String email, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("order_id", OrderID);
                 return params;
             }
         };

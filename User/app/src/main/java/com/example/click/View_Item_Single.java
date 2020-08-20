@@ -353,6 +353,13 @@ public class View_Item_Single extends AppCompatActivity {
 
                                             final Intent intent4 = getIntent();
                                             String id1 = intent4.getStringExtra("id");
+                                            String stock = intent4.getStringExtra("stock");
+                                            String brand = intent4.getStringExtra("brand_material");
+                                            String inner = intent4.getStringExtra("inner_material");
+                                            String desc = intent4.getStringExtra("description");
+                                            String division2 = intent4.getStringExtra("division");
+                                            String district = intent4.getStringExtra("district");
+
                                             String userid1 = intent4.getStringExtra("user_id");
                                             String strMain_category1 = intent4.getStringExtra("main_category");
                                             String strSub_category1 = intent4.getStringExtra("sub_category");
@@ -373,7 +380,19 @@ public class View_Item_Single extends AppCompatActivity {
                                             intent1.putExtra("district", district1);
                                             intent1.putExtra("photo", photo1);
 
+
+
+                                            intent1.putExtra("id", id1);
+                                            intent1.putExtra("stock", stock);
+                                            intent1.putExtra("brand_material", brand);
+                                            intent1.putExtra("inner_material", inner);
+                                            intent1.putExtra("description", desc);
+                                            intent1.putExtra("division", division);
+                                            intent1.putExtra("district", district);
+
+                                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent1);
+
                                         }
 
                                     } else {
@@ -809,6 +828,13 @@ public class View_Item_Single extends AppCompatActivity {
 
                                                 final Intent intent4 = getIntent();
                                                 String id1 = intent4.getStringExtra("id");
+                                                String stock = intent4.getStringExtra("stock");
+                                                String brand = intent4.getStringExtra("brand_material");
+                                                String inner = intent4.getStringExtra("inner_material");
+                                                String desc = intent4.getStringExtra("description");
+                                                String division = intent4.getStringExtra("division");
+                                                String district = intent4.getStringExtra("district");
+
                                                 String userid1 = intent4.getStringExtra("user_id");
                                                 String strMain_category1 = intent4.getStringExtra("main_category");
                                                 String strSub_category1 = intent4.getStringExtra("sub_category");
@@ -817,6 +843,7 @@ public class View_Item_Single extends AppCompatActivity {
                                                 String division1 = intent4.getStringExtra("division");
                                                 String district1 = intent4.getStringExtra("district");
                                                 String photo1 = intent4.getStringExtra("photo");
+                                                String item_id = intent4.getStringExtra("item_id");
 
                                                 intent1.putExtra("item_id", item_id);
                                                 intent1.putExtra("id", id1);
@@ -829,6 +856,15 @@ public class View_Item_Single extends AppCompatActivity {
                                                 intent1.putExtra("district", district1);
                                                 intent1.putExtra("photo", photo1);
 
+                                                intent1.putExtra("id", id1);
+                                                intent1.putExtra("stock", stock);
+                                                intent1.putExtra("brand_material", brand);
+                                                intent1.putExtra("inner_material", inner);
+                                                intent1.putExtra("description", desc);
+                                                intent1.putExtra("division", division);
+                                                intent1.putExtra("district", district);
+
+                                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent1);
                                             }
                                         });
@@ -849,9 +885,9 @@ public class View_Item_Single extends AppCompatActivity {
                                         ratingBar20.setRating(Float.parseFloat(rating));
                                         ratingBar21.setRating(Float.parseFloat(rating));
 
-                                        ratingfull += Float.parseFloat(rating) / (i+1);
+                                        ratingfull += Float.parseFloat(rating) / jsonArray.length();
 
-                                        ratingfull2 += Float.parseFloat(rating) / (i+1);
+                                        ratingfull2 += Float.parseFloat(rating) / jsonArray.length();
 
                                         ratingBar.setRating(ratingfull);
 
@@ -865,6 +901,13 @@ public class View_Item_Single extends AppCompatActivity {
 
                                                 final Intent intent4 = getIntent();
                                                 String id1 = intent4.getStringExtra("id");
+                                                String stock = intent4.getStringExtra("stock");
+                                                String brand = intent4.getStringExtra("brand_material");
+                                                String inner = intent4.getStringExtra("inner_material");
+                                                String desc = intent4.getStringExtra("description");
+                                                String division = intent4.getStringExtra("division");
+                                                String district = intent4.getStringExtra("district");
+
                                                 String userid1 = intent4.getStringExtra("user_id");
                                                 String strMain_category1 = intent4.getStringExtra("main_category");
                                                 String strSub_category1 = intent4.getStringExtra("sub_category");
@@ -885,6 +928,17 @@ public class View_Item_Single extends AppCompatActivity {
                                                 intent1.putExtra("district", district1);
                                                 intent1.putExtra("photo", photo1);
 
+
+
+                                                intent1.putExtra("id", id1);
+                                                intent1.putExtra("stock", stock);
+                                                intent1.putExtra("brand_material", brand);
+                                                intent1.putExtra("inner_material", inner);
+                                                intent1.putExtra("description", desc);
+                                                intent1.putExtra("division", division);
+                                                intent1.putExtra("district", district);
+
+                                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent1);
                                             }
                                         });

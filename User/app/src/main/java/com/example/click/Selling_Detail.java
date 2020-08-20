@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.After_Place_Order;
 import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Main_Order_Other;
@@ -29,6 +30,7 @@ import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,8 +39,10 @@ import java.util.Map;
 
 public class Selling_Detail extends AppCompatActivity {
 
+    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_product_accept.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_tracking_no.php";
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
     EditText edit_review;
     Button btn_submit, btn_cancel;
@@ -101,6 +105,7 @@ public class Selling_Detail extends AppCompatActivity {
         final String strStatus = intent.getStringExtra("status");
         final String strOrder_Date = intent.getStringExtra("order_date");
         final String strTracking_NO = intent.getStringExtra("tracking_no");
+        final String strCustomer_ID = intent.getStringExtra("customer_id");
 
         edit_review = findViewById(R.id.editText_review);
         btn_submit = findViewById(R.id.btn_submit);
@@ -132,7 +137,7 @@ public class Selling_Detail extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewList(strID, strOrder_Date);
+                ViewList(strCustomer_ID, strID, strOrder_Date);
             }
         });
 
@@ -147,7 +152,7 @@ public class Selling_Detail extends AppCompatActivity {
 
     }
 
-    private void ViewList(final String strOrder_ID, final String strOrder_Date) {
+    private void ViewList(final String CustomerID, final String strOrder_ID, final String strOrder_Date) {
         final String reviewtext = this.edit_review.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
@@ -161,8 +166,7 @@ public class Selling_Detail extends AppCompatActivity {
                             if (success.equals("1")) {
                                 Toast.makeText(Selling_Detail.this, "Updated", Toast.LENGTH_SHORT).show();
 
-//                                Delete_Order(strOrder_ID);
-
+                                getCustomerDetail(CustomerID, strOrder_ID);
                                 Intent intent = new Intent(Selling_Detail.this, Main_Order_Other.class);
                                 startActivity(intent);
                             } else {
@@ -237,4 +241,79 @@ public class Selling_Detail extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
     }
+
+    private void getCustomerDetail(final String customerID, final String OrderID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strEmail = object.getString("email");
+
+                                    sendEmail(strEmail, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", customerID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendEmail(final String email, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("order_id", OrderID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 }

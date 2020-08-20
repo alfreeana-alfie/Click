@@ -38,6 +38,7 @@ import java.util.TimerTask;
 public class Forgot_Password extends Fragment {
 
     private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
+    private static String URL_SEND_EMAIL = "https://ketekmall.com/ketekmall/sendEmail_getPassword.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit.php";
     private EditText email, new_password, confirm_new_password;
     private Button button_enter_email, button_enter_new_password, button_back_pressed, button_back_password;
@@ -137,6 +138,8 @@ public class Forgot_Password extends Fragment {
                                         button_enter_email.setVisibility(View.VISIBLE);
 
                                         password_linear_layout.setVisibility(View.GONE);
+
+                                        sendEmail(mEmail);
                                         Intent intent1 = new Intent(getContext(), MainActivity.class);
                                         getActivity().startActivity(intent1);
                                         Toast.makeText(getContext(), "Please check your email inbox", Toast.LENGTH_SHORT).show();
@@ -181,6 +184,37 @@ public class Forgot_Password extends Fragment {
             email.setError("Fields cannot be empty!");
         }
     }
+
+    private void sendEmail(final String email){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND_EMAIL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
 
     private void Reset_Password(View view) {
         loading_password.setVisibility(View.VISIBLE);

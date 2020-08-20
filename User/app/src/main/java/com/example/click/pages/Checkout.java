@@ -403,6 +403,7 @@ public class Checkout extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             AddOrder(strCity);
+
                                         }
                                     });
                                 }
@@ -853,6 +854,7 @@ public class Checkout extends AppCompatActivity {
                                                             requestQueue.add(stringRequest);
                                                             DeleteOrder_Single();
                                                             Intent intent = new Intent(Checkout.this, After_Place_Order.class);
+                                                            intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);
 //                                                            Toast.makeText(Checkout.this, "SUCCESS", Toast.LENGTH_SHORT).show();
                                                         } else {
