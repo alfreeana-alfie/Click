@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.Goto_Register_Page;
 import com.example.click.Order;
 import com.example.click.Order_SellerAdapter;
 import com.example.click.R;
@@ -31,6 +34,7 @@ import com.example.click.Selling_Detail;
 import com.example.click.adapter.Seller_OrderAdapter;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,6 +82,7 @@ public class Selling_Other extends Fragment {
 
     String getId;
     SessionManager sessionManager;
+    TextView textView8, textView9;
 
     @Nullable
     @Override
@@ -91,6 +96,7 @@ public class Selling_Other extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        SellerCheck(getId);
         Approval_List(view);
         return view;
     }
@@ -100,6 +106,8 @@ public class Selling_Other extends Fragment {
         receiptList = new ArrayList<>();
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        textView8 = v.findViewById(R.id.textView8);
+        textView9 = v.findViewById(R.id.textView9);
     }
 
     private void Approval_List(final View view) {
@@ -567,5 +575,57 @@ public class Selling_Other extends Fragment {
             }
         };
         MySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void SellerCheck(final String user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    if(strVerify == 0){
+                                        textView8.setVisibility(View.VISIBLE);
+                                        textView9.setVisibility(View.VISIBLE);
+                                        recyclerView.setVisibility(View.GONE);
+                                    }else{
+                                        textView8.setVisibility(View.GONE);
+                                        textView9.setVisibility(View.GONE);
+                                        recyclerView.setVisibility(View.VISIBLE);
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 }

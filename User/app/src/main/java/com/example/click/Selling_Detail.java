@@ -159,7 +159,7 @@ public class Selling_Detail extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(Selling_Detail.this, "Saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Selling_Detail.this, "Updated", Toast.LENGTH_SHORT).show();
 
 //                                Delete_Order(strOrder_ID);
 

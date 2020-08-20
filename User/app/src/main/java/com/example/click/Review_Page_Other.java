@@ -121,6 +121,8 @@ public class Review_Page_Other extends AppCompatActivity {
 
         ratingBar = findViewById(R.id.ratingBar);
 
+
+
         Double sub_total = 0.00;
         sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
 
@@ -219,91 +221,96 @@ public class Review_Page_Other extends AppCompatActivity {
         numofStar = ratingBar.getNumStars();
         getRating = ratingBar.getRating();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+        if (reviewtext.isEmpty()) {
+            edit_review.requestFocus();
+            edit_review.setError("Fields cannot be empty!");
+        }else {
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strName = object.getString("name").trim();
-                                    String strEmail = object.getString("email").trim();
-                                    String strPhoto = object.getString("photo");
+                                        final String strName = object.getString("name").trim();
+                                        String strEmail = object.getString("email").trim();
+                                        String strPhoto = object.getString("photo");
 
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REVIEW,
-                                            new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    try {
-                                                        JSONObject jsonObject = new JSONObject(response);
-                                                        String success = jsonObject.getString("success");
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REVIEW,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                            String success = jsonObject.getString("success");
 
-                                                        if (success.equals("1")) {
-                                                            Toast.makeText(Review_Page_Other.this, "Saved", Toast.LENGTH_SHORT).show();
+                                                            if (success.equals("1")) {
+                                                                Toast.makeText(Review_Page_Other.this, "Saved", Toast.LENGTH_SHORT).show();
 
-                                                            Intent intent = new Intent(Review_Page_Other.this, Main_Order_Other.class);
-                                                            startActivity(intent);
-                                                        } else {
-                                                            Toast.makeText(Review_Page_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
+                                                                Intent intent = new Intent(Review_Page_Other.this, Main_Order_Other.class);
+                                                                startActivity(intent);
+                                                            } else {
+                                                                Toast.makeText(Review_Page_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
                                                             Toast.makeText(Review_Page_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
-                                                }
-                                            },
-                                            new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    Toast.makeText(Review_Page_Other.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }) {
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        Toast.makeText(Review_Page_Other.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }) {
 
-                                        @Override
-                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                            Map<String, String> params = new HashMap<>();
-                                            params.put("seller_id", strSeller_ID);
-                                            params.put("customer_id", getId);
-                                            params.put("customer_name", strName);
-                                            params.put("item_id", strItem_ID);
-                                            params.put("review", reviewtext);
-                                            params.put("rating", String.valueOf(getRating));
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("seller_id", strSeller_ID);
+                                                params.put("customer_id", getId);
+                                                params.put("customer_name", strName);
+                                                params.put("item_id", strItem_ID);
+                                                params.put("review", reviewtext);
+                                                params.put("rating", String.valueOf(getRating));
 
-                                            return params;
-                                        }
-                                    };
-                                    RequestQueue requestQueue = Volley.newRequestQueue(Review_Page_Other.this);
-                                    requestQueue.add(stringRequest);
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(Review_Page_Other.this);
+                                        requestQueue.add(stringRequest);
+                                    }
+                                } else {
+                                    Toast.makeText(Review_Page_Other.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(Review_Page_Other.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
 //                                            Toast.makeText(Rev.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Review_Page_Other.this);
-        requestQueue.add(stringRequest);
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", getId);
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(Review_Page_Other.this);
+            requestQueue.add(stringRequest);
+        }
 
     }
 

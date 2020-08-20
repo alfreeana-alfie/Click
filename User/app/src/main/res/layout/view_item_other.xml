@@ -338,22 +338,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/image20"
-                            android:layout_margin="5dp"
+                            android:layout_marginStart="5dp"
                             android:text="Customer_Name" />
 
                         <RatingBar
                             android:id="@+id/ratingBar20"
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_alignParentEnd="true"
-                            android:layout_margin="5dp"
+                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:theme="@style/MyRatingBar"/>
 
                         <TextView
                             android:id="@+id/review1"
-                            android:layout_below="@id/image20"
-                            android:layout_marginTop="15dp"
+                            android:layout_below="@id/customer_name1"
+                            android:layout_toEndOf="@id/image20"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginStart="5dp"
                             android:layout_marginBottom="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

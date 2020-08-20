@@ -179,13 +179,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toStartOf="@id/btn_place_order"
+            android:layout_alignParentStart="true"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="Total"
                 android:textColor="@color/colorGrey"

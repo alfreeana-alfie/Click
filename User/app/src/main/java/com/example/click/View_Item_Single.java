@@ -796,7 +796,7 @@ public class View_Item_Single extends AppCompatActivity {
                                         ratingfull = Float.parseFloat(rating);
                                         ratingfull2 = Float.parseFloat(rating);
 
-                                        Toast.makeText(View_Item_Single.this, rating, Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(View_Item_Single.this, rating, Toast.LENGTH_SHORT).show();
                                         ratingBar.setRating(ratingfull);
 
                                         review1.setText(review);
@@ -849,9 +849,9 @@ public class View_Item_Single extends AppCompatActivity {
                                         ratingBar20.setRating(Float.parseFloat(rating));
                                         ratingBar21.setRating(Float.parseFloat(rating));
 
-                                        ratingfull += Float.parseFloat(rating) / 2;
+                                        ratingfull += Float.parseFloat(rating) / (i+1);
 
-                                        ratingfull2 += Float.parseFloat(rating) / 2;
+                                        ratingfull2 += Float.parseFloat(rating) / (i+1);
 
                                         ratingBar.setRating(ratingfull);
 

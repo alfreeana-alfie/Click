@@ -69,7 +69,7 @@ public class Buying_Other extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.my_orders_other, container, false);
+        View view = inflater.inflate(R.layout.my_orders_other_buyer, container, false);
         Declare(view);
 
         sessionManager = new SessionManager(view.getContext());
