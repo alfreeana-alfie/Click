@@ -38,29 +38,19 @@ import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.Item_Single_Adapter;
 import com.example.click.adapter.PageAdapter;
 import com.example.click.category.Agriculture;
-import com.example.click.category.Agriculture_O;
 import com.example.click.category.Cake;
-import com.example.click.category.CakeO;
 import com.example.click.category.Fashion;
-import com.example.click.category.FashionO;
-import com.example.click.category.HandcraftO;
 import com.example.click.category.Handicraft;
 import com.example.click.category.Health;
-import com.example.click.category.HealthO;
 import com.example.click.category.Home;
-import com.example.click.category.HomeO;
 import com.example.click.category.Pepper;
-import com.example.click.category.PepperO;
 import com.example.click.category.Personal;
-import com.example.click.category.PersonalO;
 import com.example.click.category.Processed;
-import com.example.click.category.ProcessedO;
 import com.example.click.category.Retail;
-import com.example.click.category.RetailO;
 import com.example.click.category.Service;
-import com.example.click.category.SeviceO;
 import com.example.click.category.View_All;
-import com.example.click.category.View_All_ShockO;
+import com.example.click.category.View_All_Hot;
+import com.example.click.category.View_All_Shock;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.user.Edit_Profile;
@@ -237,7 +227,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_view_hard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, View_All.class);
+                Intent intent = new Intent(Homepage.this, View_All_Hot.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -246,7 +236,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_view_top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, View_All_ShockO.class);
+                Intent intent = new Intent(Homepage.this, View_All_Shock.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

@@ -162,14 +162,14 @@ public class Agriculture extends AppCompatActivity {
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.equals("View_All")) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Agriculture.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
-                if(!strAd_Detail.isEmpty() && strDivision.equals("View_All")){
+                if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Agriculture.this);
                     adapter_item.notifyDataSetChanged();
@@ -237,7 +237,7 @@ public class Agriculture extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if (strDistrict.equals("View_All")) {
+                if (strDistrict.equals("All")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Agriculture.this);
                     adapter_item.notifyDataSetChanged();
@@ -245,7 +245,7 @@ public class Agriculture extends AppCompatActivity {
 
                     Filter_Division(strDivision);
                 }
-                if (strDivision.equals("View_All")) {
+                if (strDivision.equals("All")) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Agriculture.this);
                     adapter_item.notifyDataSetChanged();
@@ -253,7 +253,7 @@ public class Agriculture extends AppCompatActivity {
 
                     View_List();
                 }
-                if(!strDivision.equals("View_All") && !strDistrict.equals("View_All")){
+                if(!strDivision.equals("All") && !strDistrict.equals("All")){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Agriculture.this);
                     adapter_item.notifyDataSetChanged();
