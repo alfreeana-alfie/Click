@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class Selling_Detail extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,6 +124,7 @@ public class Selling_Detail extends AppCompatActivity {
         text_status = findViewById(R.id.text_status);
 
         text_ship_placed = findViewById(R.id.text_ship_placed);
+        loading = findViewById(R.id.loading);
 
 //        Toast.makeText(Selling_Detail.this, strTracking_NO, Toast.LENGTH_SHORT).show();
         edit_review.setText(strTracking_NO);
@@ -153,6 +156,8 @@ public class Selling_Detail extends AppCompatActivity {
     }
 
     private void ViewList(final String CustomerID, final String strOrder_ID, final String strOrder_Date) {
+        loading.setVisibility(View.VISIBLE);
+        btn_submit.setVisibility(View.GONE);
         final String reviewtext = this.edit_review.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
@@ -164,15 +169,21 @@ public class Selling_Detail extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
+                                btn_submit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Selling_Detail.this, "Updated", Toast.LENGTH_SHORT).show();
 
                                 getCustomerDetail(CustomerID, strOrder_ID);
                                 Intent intent = new Intent(Selling_Detail.this, Main_Order_Other.class);
                                 startActivity(intent);
                             } else {
+                                loading.setVisibility(View.GONE);
+                                btn_submit.setVisibility(View.VISIBLE);
                                 Toast.makeText(Selling_Detail.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+                            loading.setVisibility(View.GONE);
+                            btn_submit.setVisibility(View.VISIBLE);
                             e.printStackTrace();
 //                                    Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
@@ -181,7 +192,8 @@ public class Selling_Detail extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        loading.setVisibility(View.GONE);
+                        btn_submit.setVisibility(View.VISIBLE);
                     }
                 }) {
 

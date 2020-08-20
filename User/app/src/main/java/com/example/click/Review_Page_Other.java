@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -59,6 +60,7 @@ public class Review_Page_Other extends AppCompatActivity {
     RelativeLayout review_layout;
     ScrollView order_layout;
     RatingBar ratingBar;
+    ProgressBar loading;
     int numofStar;
     float getRating;
 
@@ -124,6 +126,8 @@ public class Review_Page_Other extends AppCompatActivity {
         SubTotal = findViewById(R.id.sub_total);
         ShipTotal = findViewById(R.id.ship_total);
         GrandTotal = findViewById(R.id.grand_total);
+
+        loading = findViewById(R.id.loading);
 
         OrderID.setText("KM" + order_id);
 
@@ -260,6 +264,9 @@ public class Review_Page_Other extends AppCompatActivity {
         numofStar = ratingBar.getNumStars();
         getRating = ratingBar.getRating();
 
+        loading.setVisibility(View.VISIBLE);
+        btn_submit.setVisibility(View.GONE);
+
         if (reviewtext.isEmpty()) {
             edit_review.requestFocus();
             edit_review.setError("Fields cannot be empty!");
@@ -290,14 +297,20 @@ public class Review_Page_Other extends AppCompatActivity {
                                                             String success = jsonObject.getString("success");
 
                                                             if (success.equals("1")) {
+                                                                loading.setVisibility(View.GONE);
+                                                                btn_submit.setVisibility(View.VISIBLE);
                                                                 Toast.makeText(Review_Page_Other.this, "Saved", Toast.LENGTH_SHORT).show();
 
                                                                 Intent intent = new Intent(Review_Page_Other.this, Main_Order_Other.class);
                                                                 startActivity(intent);
                                                             } else {
+                                                                loading.setVisibility(View.GONE);
+                                                                btn_submit.setVisibility(View.VISIBLE);
                                                                 Toast.makeText(Review_Page_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (JSONException e) {
+                                                            loading.setVisibility(View.GONE);
+                                                            btn_submit.setVisibility(View.VISIBLE);
                                                             e.printStackTrace();
                                                             Toast.makeText(Review_Page_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
@@ -306,6 +319,8 @@ public class Review_Page_Other extends AppCompatActivity {
                                                 new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
+                                                        loading.setVisibility(View.GONE);
+                                                        btn_submit.setVisibility(View.VISIBLE);
                                                         Toast.makeText(Review_Page_Other.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                                                     }
                                                 }) {
@@ -337,6 +352,8 @@ public class Review_Page_Other extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            loading.setVisibility(View.GONE);
+                            btn_submit.setVisibility(View.VISIBLE);
 //                                            Toast.makeText(Rev.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {

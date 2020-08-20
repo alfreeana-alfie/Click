@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,7 @@ public class Register_Seller extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +95,8 @@ public class Register_Seller extends AppCompatActivity {
     }
 
     private void EditDetail(final String user_id){
+        loading.setVisibility(View.VISIBLE);
+        btn_accept.setVisibility(View.GONE);
         final String strICNO = Edit_IC_NO.getText().toString();
         final String strBankName = Edit_bank_name.getText().toString();
         final String strBankAcc = Edit_bank_acc.getText().toString();
@@ -112,14 +116,20 @@ public class Register_Seller extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
+                                btn_accept.setVisibility(View.VISIBLE);
                                 Toast.makeText(Register_Seller.this, "Profile Saved", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Register_Seller.this, Sell_Items_Other.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             } else {
+                                loading.setVisibility(View.GONE);
+                                btn_accept.setVisibility(View.VISIBLE);
                                 Toast.makeText(Register_Seller.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
+                            loading.setVisibility(View.GONE);
+                            btn_accept.setVisibility(View.VISIBLE);
                             e.printStackTrace();
                             progressDialog.dismiss();
 //                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -129,6 +139,8 @@ public class Register_Seller extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loading.setVisibility(View.GONE);
+                        btn_accept.setVisibility(View.VISIBLE);
                         progressDialog.dismiss();
 //                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
                     }
@@ -160,6 +172,7 @@ public class Register_Seller extends AppCompatActivity {
         Edit_IC_NO = findViewById(R.id.ic_no_edit);
         Edit_bank_name = findViewById(R.id.bank_name_edit);
         Edit_bank_acc = findViewById(R.id.bank_acc_edit);
+        loading = findViewById(R.id.loading);
 
         btn_accept = findViewById(R.id.btn_accept);
         btn_cancel = findViewById(R.id.btn_cancel);

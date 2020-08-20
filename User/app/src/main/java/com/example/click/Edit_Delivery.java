@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class Edit_Delivery extends AppCompatActivity {
     ArrayAdapter<CharSequence> adapter_division, adapter_days;
     Spinner spinner_division, spinner_days;
     EditText price;
+    ProgressBar loading;
 
     Button Accept, Cancel;
     BottomNavigationView bottomNav;
@@ -64,6 +66,7 @@ public class Edit_Delivery extends AppCompatActivity {
         spinner_days = findViewById(R.id.spinner_day);
         Accept = findViewById(R.id.btn_accept);
         Cancel = findViewById(R.id.btn_cancel);
+        loading = findViewById(R.id.loading);
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -118,6 +121,8 @@ public class Edit_Delivery extends AppCompatActivity {
         Accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loading.setVisibility(View.VISIBLE);
+                Accept.setVisibility(View.GONE);
                 final String division_edit = spinner_division.getSelectedItem().toString();
                 final String price_edit = price.getText().toString();
                 final String days_edit = spinner_days.getSelectedItem().toString();
@@ -130,6 +135,8 @@ public class Edit_Delivery extends AppCompatActivity {
                                     JSONObject jsonObject = new JSONObject(response);
                                     String success = jsonObject.getString("success");
                                     if (success.equals("1")) {
+                                        loading.setVisibility(View.GONE);
+                                        Accept.setVisibility(View.VISIBLE);
                                         Toast.makeText(Edit_Delivery.this, "Item Updated", Toast.LENGTH_SHORT).show();
                                         Intent intent1 = new Intent(Edit_Delivery.this, ActivityDelivery.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -137,9 +144,13 @@ public class Edit_Delivery extends AppCompatActivity {
                                         intent1.putExtra("ad_detail", ad_detail);
                                         startActivity(intent1);
                                     } else {
+                                        loading.setVisibility(View.GONE);
+                                        Accept.setVisibility(View.VISIBLE);
                                         Toast.makeText(Edit_Delivery.this, "Failed to Update", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
+                                    loading.setVisibility(View.GONE);
+                                    Accept.setVisibility(View.VISIBLE);
                                     e.printStackTrace();
                                 }
                             }
@@ -147,6 +158,8 @@ public class Edit_Delivery extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                loading.setVisibility(View.GONE);
+                                Accept.setVisibility(View.VISIBLE);
                             }
                         }) {
                     @Override

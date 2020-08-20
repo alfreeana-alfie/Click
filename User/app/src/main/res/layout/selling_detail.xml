@@ -249,6 +249,19 @@
             android:fontFamily="@font/open_sans_semibold"
             android:text="Cancel" />
 
+        <ProgressBar
+            android:layout_below="@id/btn_cancel"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/loading"
+            android:padding="10dp"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_atop" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             app:labelVisibilityMode="labeled"
             android:id="@+id/bottom_nav"

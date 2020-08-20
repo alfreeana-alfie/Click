@@ -1,5 +1,6 @@
 package com.example.click.pages;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -55,6 +57,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
     EditText editText;
     ImageView imageView;
     ArrayList<Delivery> cricketersList = new ArrayList<>();
+    ProgressBar loading;
 
     SessionManager sessionManager;
     String getId;
@@ -71,6 +74,8 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
+
+        loading = findViewById(R.id.loading);
 
         layout = findViewById(R.id.layout_list);
         buttonAdd = findViewById(R.id.button_add);
@@ -194,6 +199,8 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         boolean result = true;
 
         for (int i = 0; i < layout.getChildCount(); i++) {
+            loading.setVisibility(View.VISIBLE);
+            buttonSubmit.setVisibility(View.GONE);
 
             View view = layout.getChildAt(i);
 
@@ -219,12 +226,18 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                                 String success = jsonObject.getString("success");
 
                                 if (success.equals("1")) {
+                                    loading.setVisibility(View.GONE);
+                                    buttonSubmit.setVisibility(View.VISIBLE);
 //                                    Toast.makeText(Row_Add.this, "success", Toast.LENGTH_SHORT).show();
 //                                    delivery = new Delivery(strDivision, strPrice, strDays);
                                 } else {
+                                    loading.setVisibility(View.GONE);
+                                    buttonSubmit.setVisibility(View.VISIBLE);
                                     Toast.makeText(Row_Add.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
+                                loading.setVisibility(View.GONE);
+                                buttonSubmit.setVisibility(View.VISIBLE);
                                 e.printStackTrace();
                                 Toast.makeText(Row_Add.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
@@ -233,6 +246,8 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            loading.setVisibility(View.GONE);
+                            buttonSubmit.setVisibility(View.VISIBLE);
                             Toast.makeText(Row_Add.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         }
                     }) {
