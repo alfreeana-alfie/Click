@@ -277,6 +277,49 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                         } else if (obj.getJSONObject(name).getString("email").equals(email)) {
                                                             UserDetails.username = name;
                                                             UserDetails.email = email;
+
+                                                            name_firebase = name;
+                                                            email_firebase = email;
+
+                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String s) {
+                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                                                    if (s.equals("null")) {
+                                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                    } else {
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
+
+                                                                            if (!obj.has(name_firebase)) {
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            } else {
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            }
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError volleyError) {
+                                                                    System.out.println("" + volleyError);
+                                                                }
+                                                            });
+
+                                                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
+                                                            rQueue.add(request);
                                                         } else {
                                                             Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
                                                         }

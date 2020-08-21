@@ -23,8 +23,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
-import com.example.click.pages.After_Place_Order;
-import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Main_Order_Other;
 import com.example.click.user.Edit_Profile;
@@ -131,11 +129,11 @@ public class Selling_Detail extends AppCompatActivity {
         text_order_id.setText("ID" + strID);
         Picasso.get().load(strPhoto).into(photo);
         text_ad_detail.setText(strAd_Detail);
-        text_price.setText("MYR"+strPrice);
+        text_price.setText("MYR" + strPrice);
         text_quantity.setText("x" + strQuantity);
         text_placed_date.setText("Order Placed on " + strOrder_Date);
         text_status.setText(strStatus);
-        text_ship_placed.setText("Shipped out to "+ strDivision);
+        text_ship_placed.setText("Shipped out to " + strDivision);
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +207,7 @@ public class Selling_Detail extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Delete_Order(final String strOrder_ID){
+    private void Delete_Order(final String strOrder_ID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -234,7 +232,7 @@ public class Selling_Detail extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
+                }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -297,7 +295,7 @@ public class Selling_Detail extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void sendEmail(final String email, final String OrderID){
+    private void sendEmail(final String email, final String OrderID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
                 new Response.Listener<String>() {
                     @Override

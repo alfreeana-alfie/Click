@@ -111,23 +111,6 @@ public class MainActivity extends AppCompatActivity {
                                     final String photo = object.getString("photo").trim();
                                     String id = object.getString("id").trim();
 
-                                    sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
-
-
-                                    Intent intent = new Intent(MainActivity.this, Homepage.class);
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("phone_no", phone_no);
-                                    intent.putExtra("address_01", address_01);
-                                    intent.putExtra("address_02", address_02);
-                                    intent.putExtra("division", city);
-                                    intent.putExtra("postcode", postcode);
-                                    intent.putExtra("birthday", birthday);
-                                    intent.putExtra("gender", gender);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
-                                    //Firebase
                                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 
                                     StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -145,62 +128,31 @@ public class MainActivity extends AppCompatActivity {
                                                         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                                             @Override
                                                             public void onResponse(String s) {
+                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
                                                                 if (s.equals("null")) {
-                                                                    Toast.makeText(MainActivity.this, "user_actionbar not found", Toast.LENGTH_LONG).show();
+                                                                    reference.child(name).child("email").setValue(email);
+                                                                    reference.child(name).child("photo").setValue(photo);
+                                                                    reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                 } else {
                                                                     try {
                                                                         JSONObject obj = new JSONObject(s);
+
                                                                         if (!obj.has(name)) {
-                                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                                @Override
-                                                                                public void onResponse(String s) {
-                                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                                                                    if (s.equals("null")) {
-                                                                                        reference.child(name).child("email").setValue(email);
-                                                                                        reference.child(name).child("photo").setValue(photo);
-                                                                                        reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                    } else {
-                                                                                        try {
-                                                                                            JSONObject obj = new JSONObject(s);
-
-                                                                                            if (!obj.has(name)) {
-                                                                                                reference.child(name).child("email").setValue(email);
-                                                                                                reference.child(name).child("photo").setValue(photo);
-                                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                            } else {
-                                                                                                reference.child(name).child("email").setValue(email);
-                                                                                                reference.child(name).child("photo").setValue(photo);
-                                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                            }
-                                                                                        } catch (JSONException e) {
-                                                                                            e.printStackTrace();
-                                                                                        }
-                                                                                    }
-                                                                                }
-
-                                                                            }, new Response.ErrorListener() {
-                                                                                @Override
-                                                                                public void onErrorResponse(VolleyError volleyError) {
-                                                                                    System.out.println("" + volleyError);
-                                                                                }
-                                                                            });
-
-                                                                            RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-                                                                            rQueue.add(request);
-                                                                        } else if (obj.getJSONObject(name).getString("email").equals(email)) {
-                                                                            UserDetails.username = name;
-                                                                            UserDetails.email = email;
+                                                                            reference.child(name).child("email").setValue(email);
+                                                                            reference.child(name).child("photo").setValue(photo);
+                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                         } else {
-                                                                            Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
+                                                                            reference.child(name).child("email").setValue(email);
+                                                                            reference.child(name).child("photo").setValue(photo);
+                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                         }
                                                                     } catch (JSONException e) {
                                                                         e.printStackTrace();
                                                                     }
                                                                 }
                                                             }
+
                                                         }, new Response.ErrorListener() {
                                                             @Override
                                                             public void onErrorResponse(VolleyError volleyError) {
@@ -210,72 +162,40 @@ public class MainActivity extends AppCompatActivity {
 
                                                         RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
                                                         rQueue.add(request);
-                                                    } else if (obj.has(name)) {
+                                                    } else if (obj.getJSONObject(name).getString("email").equals(email)) {
+                                                        UserDetails.username = name;
+                                                        UserDetails.email = email;
+
                                                         String url = "https://click-1595830894120.firebaseio.com/users.json";
 
                                                         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                                             @Override
                                                             public void onResponse(String s) {
+                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
                                                                 if (s.equals("null")) {
-                                                                    Toast.makeText(MainActivity.this, "user_actionbar not found", Toast.LENGTH_LONG).show();
+                                                                    reference.child(name).child("email").setValue(email);
+                                                                    reference.child(name).child("photo").setValue(photo);
+                                                                    reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                 } else {
                                                                     try {
                                                                         JSONObject obj = new JSONObject(s);
+
                                                                         if (!obj.has(name)) {
-                                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                                @Override
-                                                                                public void onResponse(String s) {
-                                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                                                                    if (s.equals("null")) {
-                                                                                        reference.child(name).child("email").setValue(email);
-                                                                                        reference.child(name).child("photo").setValue(photo);
-                                                                                        reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                    } else {
-                                                                                        try {
-                                                                                            JSONObject obj = new JSONObject(s);
-
-                                                                                            if (!obj.has(name)) {
-                                                                                                reference.child(name).child("email").setValue(email);
-                                                                                                reference.child(name).child("photo").setValue(photo);
-                                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                            } else {
-                                                                                                reference.child(name).child("email").setValue(email);
-                                                                                                reference.child(name).child("photo").setValue(photo);
-                                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                            }
-                                                                                        } catch (JSONException e) {
-                                                                                            e.printStackTrace();
-                                                                                        }
-                                                                                    }
-                                                                                }
-
-                                                                            }, new Response.ErrorListener() {
-                                                                                @Override
-                                                                                public void onErrorResponse(VolleyError volleyError) {
-                                                                                    System.out.println("" + volleyError);
-                                                                                }
-                                                                            });
-
-                                                                            RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-                                                                            rQueue.add(request);
-
-                                                                            UserDetails.username = name;
-                                                                            UserDetails.email = email;
-
-                                                                        } else if (obj.getJSONObject(name).getString("email").equals(email)) {
-                                                                            UserDetails.username = name;
-                                                                            UserDetails.email = email;
+                                                                            reference.child(name).child("email").setValue(email);
+                                                                            reference.child(name).child("photo").setValue(photo);
+                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                         } else {
-                                                                            Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
+                                                                            reference.child(name).child("email").setValue(email);
+                                                                            reference.child(name).child("photo").setValue(photo);
+                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                         }
                                                                     } catch (JSONException e) {
                                                                         e.printStackTrace();
                                                                     }
                                                                 }
                                                             }
+
                                                         }, new Response.ErrorListener() {
                                                             @Override
                                                             public void onErrorResponse(VolleyError volleyError) {
@@ -285,9 +205,6 @@ public class MainActivity extends AppCompatActivity {
 
                                                         RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
                                                         rQueue.add(request);
-
-                                                        UserDetails.username = name;
-                                                        UserDetails.email = email;
                                                     } else {
                                                         Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
                                                     }
@@ -305,6 +222,21 @@ public class MainActivity extends AppCompatActivity {
 
                                     RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
                                     rQueue.add(request);
+
+                                    sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
+
+                                    Intent intent = new Intent(MainActivity.this, Homepage.class);
+                                    intent.putExtra("name", name);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("phone_no", phone_no);
+                                    intent.putExtra("address_01", address_01);
+                                    intent.putExtra("address_02", address_02);
+                                    intent.putExtra("division", city);
+                                    intent.putExtra("postcode", postcode);
+                                    intent.putExtra("birthday", birthday);
+                                    intent.putExtra("gender", gender);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
