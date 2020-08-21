@@ -179,7 +179,10 @@ public class ActivityDelivery extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ActivityDelivery.this, error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityDelivery.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityDelivery.this, "Please setup delivery using this page instead", Toast.LENGTH_SHORT).show();
+                        Intent intent1 = new Intent(ActivityDelivery.this, Find_My_Items_Other.class);
+                        startActivity(intent1);
                     }
                 }) {
             @Override

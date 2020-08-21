@@ -197,8 +197,8 @@ public class Sell_Items_Other extends AppCompatActivity {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filePath == null) {
-                    Toast.makeText(Sell_Items_Other.this, "Please enter image of product", Toast.LENGTH_LONG).show();
+                if (filePath == null || edittext_ad_detail.getText().toString().isEmpty() || enter_price.getText().toString().isEmpty() || edittext_order.getText().toString().isEmpty()) {
+                    Toast.makeText(Sell_Items_Other.this, "Incomplete information", Toast.LENGTH_LONG).show();
                 } else {
                     saveEdit(getId, getStringImage(bitmap));
                 }
@@ -541,7 +541,9 @@ public class Sell_Items_Other extends AppCompatActivity {
                                 e.printStackTrace();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
-//                                    Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                Intent intent1 = new Intent(Sell_Items_Other.this, Sell_Items_Other.class);
+                                startActivity(intent1);
+                                Toast.makeText(Sell_Items_Other.this, "Please re-enter the item details again", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -549,7 +551,7 @@ public class Sell_Items_Other extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             if (error.getMessage() == null) {
-//                                    Toast.makeText(Sell_Items_Other.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Sell_Items_Other.this, "Connection Error", Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 accept_item.setVisibility(View.VISIBLE);
                             } else {

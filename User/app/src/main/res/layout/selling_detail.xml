@@ -254,6 +254,7 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/loading"
             android:padding="10dp"
+            android:visibility="gone"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

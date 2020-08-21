@@ -439,6 +439,7 @@
     </ScrollView>
 
     <RelativeLayout
+
         android:id="@+id/category_page_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -691,6 +692,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:layout_above="@id/bottom_nav"
         android:visibility="gone"
         android:id="@+id/about_product"
         android:fillViewport="true"

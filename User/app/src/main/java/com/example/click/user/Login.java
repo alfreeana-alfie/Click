@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
 public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
-    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
+    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/login.php";
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 
@@ -222,6 +222,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                         //Firebase
                                         String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                        final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
                                         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                             @Override
@@ -244,7 +245,12 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                     if (s.equals("null")) {
                                                                         reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                                                        if(photo.equals("null")){
+                                                                            reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                        }else {
+                                                                            reference.child(name_firebase).child("photo").setValue(photo);
+                                                                        }
+
                                                                         reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                     } else {
                                                                         try {
@@ -252,11 +258,19 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                             if (!obj.has(name_firebase)) {
                                                                                 reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                }
                                                                                 reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             } else {
                                                                                 reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                }
                                                                                 reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             }
                                                                         } catch (JSONException e) {
@@ -290,6 +304,9 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                     if (s.equals("null")) {
                                                                         reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                        if(photo.equals("null")){
+                                                                            reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                        }
                                                                         reference.child(name_firebase).child("photo").setValue(photo);
                                                                         reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                     } else {
@@ -298,11 +315,19 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                             if (!obj.has(name_firebase)) {
                                                                                 reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                }
                                                                                 reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             } else {
                                                                                 reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                                                }
                                                                                 reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             }
                                                                         } catch (JSONException e) {
@@ -341,6 +366,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                 } else {
                                     loading.setVisibility(View.GONE);
                                     button_login.setVisibility(View.VISIBLE);
+                                    Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -546,6 +572,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
         final String photo = String.valueOf(account.getPhotoUrl());
+        final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
         name_firebase = name;
         email_firebase = email;
@@ -559,7 +586,9 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                 if (s.equals("null")) {
                     reference.child(name_firebase).child("email").setValue(email_firebase);
-                    reference.child(name_firebase).child("photo").setValue(photo);
+                    if(photo.equals("null")){
+                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                    }
                     reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                 } else {
                     try {
@@ -567,11 +596,15 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                         if (!obj.has(name_firebase)) {
                             reference.child(name_firebase).child("email").setValue(email_firebase);
-                            reference.child(name_firebase).child("photo").setValue(photo);
+                            if(photo.equals("null")){
+                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                            }
                             reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         } else {
                             reference.child(name_firebase).child("email").setValue(email_firebase);
-                            reference.child(name_firebase).child("photo").setValue(photo);
+                            if(photo.equals("null")){
+                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                            }
                             reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         }
                     } catch (JSONException e) {
@@ -607,18 +640,24 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                         if (s.equals("null")) {
                                             reference.child(name_firebase).child("email").setValue(email_firebase);
-                                            reference.child(name_firebase).child("photo").setValue(photo);
+                                            if(photo.equals("null")){
+                                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                                            }
                                             reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                         } else {
                                             try {
                                                 JSONObject obj = new JSONObject(s);
                                                 if (!obj.has(name_firebase)) {
                                                     reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                    if(photo.equals("null")){
+                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                    }
                                                     reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                 } else {
                                                     reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                    reference.child(name_firebase).child("photo").setValue(photo);
+                                                    if(photo.equals("null")){
+                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                    }
                                                     reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                 }
                                             } catch (JSONException e) {
@@ -660,7 +699,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 params.put("email", email);
                 params.put("phone_no", phone_no);
                 params.put("password", password);
-
                 params.put("birthday", birthday);
                 params.put("gender", gender);
                 params.put("photo", photo);

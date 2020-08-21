@@ -612,6 +612,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:layout_above="@id/bottom_nav"
         android:id="@+id/about_product"
         android:fillViewport="true"
         android:visibility="gone"

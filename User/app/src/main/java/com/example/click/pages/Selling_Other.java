@@ -84,7 +84,7 @@ public class Selling_Other extends Fragment {
 
     String getId;
     SessionManager sessionManager;
-    TextView textView8, textView9;
+    TextView textView8, textView9, getTextView10;
 
     @Nullable
     @Override
@@ -110,6 +110,8 @@ public class Selling_Other extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         textView8 = v.findViewById(R.id.textView8);
         textView9 = v.findViewById(R.id.textView9);
+        getTextView10 = v.findViewById(R.id.textView10);
+
     }
 
     private void Approval_List(final View view) {
@@ -123,6 +125,10 @@ public class Selling_Other extends Fragment {
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                if(jsonArray.length()==0){
+                                    getTextView10.setVisibility(View.VISIBLE);
+                                }
+                                getTextView10.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -220,7 +226,7 @@ public class Selling_Other extends Fragment {
 
                                         final String remarks = "Reject";
                                         Update_Order_Reject(view, strOrder_Date, remarks, strCustomer_id);
-
+                                        getCustomerDetail(strCustomer_id, strOrder_Id);
 
                                         adapter_item.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter_item);

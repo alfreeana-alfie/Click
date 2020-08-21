@@ -262,14 +262,14 @@ public class Find_My_Items_Other extends AppCompatActivity {
                                                 RequestQueue requestQueue = Volley.newRequestQueue(Find_My_Items_Other.this);
                                                 requestQueue.add(stringRequest);
                                             }
-                                        }).create().show();
+                                        });
 
                                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.cancel();
                                             }
-                                        }).create().show();
+                                        });
                                         AlertDialog alertDialog = builder.create();
                                         alertDialog.show();
                                     }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,8 @@ public class Buying_Other extends Fragment {
     String getId;
     SessionManager sessionManager;
 
+    TextView textView10;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,6 +91,8 @@ public class Buying_Other extends Fragment {
         gridView = v.findViewById(R.id.recyclerView);
         gridView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        textView10 = v.findViewById(R.id.textView10);
+
     }
 
     private void Buying_List(final View view) {
@@ -101,6 +106,10 @@ public class Buying_Other extends Fragment {
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                if(jsonArray.length() == 0){
+                                    textView10.setVisibility(View.VISIBLE);
+                                }
+                                textView10.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
