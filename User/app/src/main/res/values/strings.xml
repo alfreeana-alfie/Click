@@ -38,8 +38,8 @@
     <string name="my_favourite_ads">My Favourite Ads</string>
     <string name="my_chat_inbox">My Chat Inbox</string>
     <string name="my_order">My Order</string>
-    <string name="find_items">Find My Items</string>
-    <string name="sell_my_item">Sell My Item</string>
+    <string name="find_items">My Product</string>
+    <string name="sell_my_item">Add New Product</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
     <string name="ad_details">Ad Details</string>
