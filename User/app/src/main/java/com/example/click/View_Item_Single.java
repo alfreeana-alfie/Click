@@ -32,7 +32,6 @@ import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.data.UserDetails;
 import com.example.click.pages.Chat;
-import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,23 +64,21 @@ public class View_Item_Single extends AppCompatActivity {
     String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
 
-    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo
-            , getId, brand, inner, stock, desc;
+    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId, brand, inner, stock, desc;
     Item_Single_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
+    RelativeLayout review11;
+    BottomNavigationView bottomNav;
+    Float ratingfull, ratingfull2;
     private ImageView img_item, seller_image, image20, image21;
     private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
             seller_name, seller_location, view_all, customer_name1, customer_name2,
             btn_view_all_review, review1, review2, no_review;
-    private Button  add_to_cart_btn, btn_view_seller;
+    private Button add_to_cart_btn, btn_view_seller;
     private ImageButton btn_chat, btn_chat_wsp;
     private TwoWayGridView gridView_item;
     private RatingBar ratingBar, ratingBar20, ratingBar21;
-    RelativeLayout review11;
-    BottomNavigationView bottomNav;
-
-    Float ratingfull, ratingfull2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -196,6 +193,7 @@ public class View_Item_Single extends AppCompatActivity {
 
         //Review
         Read_Review(id);
+//        Toast.makeText(View_Item_Single.this, id, Toast.LENGTH_SHORT).show();
 
         Picasso.get().load(image_default).into(image20);
         Picasso.get().load(image_default).into(image21);
@@ -238,7 +236,6 @@ public class View_Item_Single extends AppCompatActivity {
                 intent1.putExtra("division", division1);
                 intent1.putExtra("district", district1);
                 intent1.putExtra("photo", photo1);
-
 
 
                 intent1.putExtra("id", id1);
@@ -381,7 +378,6 @@ public class View_Item_Single extends AppCompatActivity {
                                             intent1.putExtra("photo", photo1);
 
 
-
                                             intent1.putExtra("id", id1);
                                             intent1.putExtra("stock", stock);
                                             intent1.putExtra("brand_material", brand);
@@ -423,13 +419,13 @@ public class View_Item_Single extends AppCompatActivity {
         });
     }
 
-    private boolean appInstalledOrNot(String url){
+    private boolean appInstalledOrNot(String url) {
         PackageManager packageManager = getPackageManager();
         boolean app_installed;
         try {
             packageManager.getPackageInfo(url, PackageManager.GET_ACTIVITIES);
             app_installed = true;
-        }catch (PackageManager.NameNotFoundException e){
+        } catch (PackageManager.NameNotFoundException e) {
             app_installed = false;
         }
         return app_installed;
@@ -529,11 +525,11 @@ public class View_Item_Single extends AppCompatActivity {
                                         public void onClick(View v) {
 
                                             boolean installed = appInstalledOrNot("com.whatsapp");
-                                            if(installed){
+                                            if (installed) {
                                                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                                                intent1.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+6"+ mobile_num));
+                                                intent1.setData(Uri.parse("http://api.whatsapp.com/send?phone=" + "+6" + mobile_num));
                                                 startActivity(intent1);
-                                            }else {
+                                            } else {
                                                 Toast.makeText(View_Item_Single.this, "Not Installed", Toast.LENGTH_SHORT).show();
                                             }
                                         }
@@ -786,7 +782,7 @@ public class View_Item_Single extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Read_Review(final String item_id){
+    private void Read_Review(final String item_id) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_REVIEW,
                 new Response.Listener<String>() {
                     @Override
@@ -797,155 +793,80 @@ public class View_Item_Single extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                if (jsonArray.length() <= 1){
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String id = object.getString("id").trim();
-                                        String seller_id = object.getString("seller_id").trim();
-                                        String customer_id = object.getString("customer_id").trim();
-                                        String customer_name = object.getString("customer_name").trim();
-                                        final String item_id = object.getString("item_id").trim();
-                                        String review = object.getString("review").trim();
-                                        String rating = object.getString("rating").trim();
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("seller_id").trim();
+                                    String customer_id = object.getString("customer_id").trim();
+                                    String customer_name = object.getString("customer_name").trim();
+                                    final String item_id = object.getString("item_id").trim();
+                                    String review = object.getString("review").trim();
+                                    String rating = object.getString("rating").trim();
 
-                                        ratingBar20.setRating(Float.parseFloat(rating));
-                                        ratingBar21.setRating(Float.parseFloat(rating));
+                                    ratingBar20.setRating(Float.parseFloat(rating));
+                                    ratingBar21.setRating(Float.parseFloat(rating));
 
-                                        ratingfull = Float.parseFloat(rating);
-                                        ratingfull2 = Float.parseFloat(rating);
+                                    ratingfull += Float.parseFloat(rating) / jsonArray.length();
+                                    ratingfull2 += Float.parseFloat(rating) / jsonArray.length();
 
-//                                        Toast.makeText(View_Item_Single.this, rating, Toast.LENGTH_SHORT).show();
-                                        ratingBar.setRating(ratingfull);
+                                    ratingBar.setRating(ratingfull);
 
-                                        review1.setText(review);
-                                        review2.setText(review);
+                                    review1.setText(review);
+                                    review2.setText(review);
 
-                                        btn_view_all_review.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
+                                    getUserDetail_ReviewOne(customer_id);
 
-                                                final Intent intent4 = getIntent();
-                                                String id1 = intent4.getStringExtra("id");
-                                                String stock = intent4.getStringExtra("stock");
-                                                String brand = intent4.getStringExtra("brand_material");
-                                                String inner = intent4.getStringExtra("inner_material");
-                                                String desc = intent4.getStringExtra("description");
-                                                String division = intent4.getStringExtra("division");
-                                                String district = intent4.getStringExtra("district");
+                                    btn_view_all_review.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
 
-                                                String userid1 = intent4.getStringExtra("user_id");
-                                                String strMain_category1 = intent4.getStringExtra("main_category");
-                                                String strSub_category1 = intent4.getStringExtra("sub_category");
-                                                String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                                String strPrice1 = intent4.getStringExtra("price");
-                                                String division1 = intent4.getStringExtra("division");
-                                                String district1 = intent4.getStringExtra("district");
-                                                String photo1 = intent4.getStringExtra("photo");
-                                                String item_id = intent4.getStringExtra("item_id");
+                                            final Intent intent4 = getIntent();
+                                            String id1 = intent4.getStringExtra("id");
+                                            String stock = intent4.getStringExtra("stock");
+                                            String brand = intent4.getStringExtra("brand_material");
+                                            String inner = intent4.getStringExtra("inner_material");
+                                            String desc = intent4.getStringExtra("description");
+                                            String division = intent4.getStringExtra("division");
+                                            String district = intent4.getStringExtra("district");
 
-                                                intent1.putExtra("item_id", item_id);
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("user_id", userid1);
-                                                intent1.putExtra("main_category", strMain_category1);
-                                                intent1.putExtra("sub_category", strSub_category1);
-                                                intent1.putExtra("ad_detail", ad_detail1);
-                                                intent1.putExtra("price", strPrice1);
-                                                intent1.putExtra("division", division1);
-                                                intent1.putExtra("district", district1);
-                                                intent1.putExtra("photo", photo1);
+                                            String userid1 = intent4.getStringExtra("user_id");
+                                            String strMain_category1 = intent4.getStringExtra("main_category");
+                                            String strSub_category1 = intent4.getStringExtra("sub_category");
+                                            String ad_detail1 = intent4.getStringExtra("ad_detail");
+                                            String strPrice1 = intent4.getStringExtra("price");
+                                            String division1 = intent4.getStringExtra("division");
+                                            String district1 = intent4.getStringExtra("district");
+                                            String photo1 = intent4.getStringExtra("photo");
 
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("stock", stock);
-                                                intent1.putExtra("brand_material", brand);
-                                                intent1.putExtra("inner_material", inner);
-                                                intent1.putExtra("description", desc);
-                                                intent1.putExtra("division", division);
-                                                intent1.putExtra("district", district);
-
-                                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(intent1);
-                                            }
-                                        });
-                                        getUserDetail_ReviewOne(customer_id);
-                                    }
-                                }else{
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
-
-                                        String id = object.getString("id").trim();
-                                        String seller_id = object.getString("seller_id").trim();
-                                        String customer_id = object.getString("customer_id").trim();
-                                        String customer_name = object.getString("customer_name").trim();
-                                        final String item_id = object.getString("item_id").trim();
-                                        String review = object.getString("review").trim();
-                                        String rating = object.getString("rating").trim();
-
-                                        ratingBar20.setRating(Float.parseFloat(rating));
-                                        ratingBar21.setRating(Float.parseFloat(rating));
-
-                                        ratingfull += Float.parseFloat(rating) / jsonArray.length();
-
-                                        ratingfull2 += Float.parseFloat(rating) / jsonArray.length();
-
-                                        ratingBar.setRating(ratingfull);
-
-                                        review1.setText(review);
-                                        review2.setText(review);
-
-                                        btn_view_all_review.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent1 = new Intent(View_Item_Single.this, Review_Info.class);
-
-                                                final Intent intent4 = getIntent();
-                                                String id1 = intent4.getStringExtra("id");
-                                                String stock = intent4.getStringExtra("stock");
-                                                String brand = intent4.getStringExtra("brand_material");
-                                                String inner = intent4.getStringExtra("inner_material");
-                                                String desc = intent4.getStringExtra("description");
-                                                String division = intent4.getStringExtra("division");
-                                                String district = intent4.getStringExtra("district");
-
-                                                String userid1 = intent4.getStringExtra("user_id");
-                                                String strMain_category1 = intent4.getStringExtra("main_category");
-                                                String strSub_category1 = intent4.getStringExtra("sub_category");
-                                                String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                                String strPrice1 = intent4.getStringExtra("price");
-                                                String division1 = intent4.getStringExtra("division");
-                                                String district1 = intent4.getStringExtra("district");
-                                                String photo1 = intent4.getStringExtra("photo");
-
-                                                intent1.putExtra("item_id", item_id);
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("user_id", userid1);
-                                                intent1.putExtra("main_category", strMain_category1);
-                                                intent1.putExtra("sub_category", strSub_category1);
-                                                intent1.putExtra("ad_detail", ad_detail1);
-                                                intent1.putExtra("price", strPrice1);
-                                                intent1.putExtra("division", division1);
-                                                intent1.putExtra("district", district1);
-                                                intent1.putExtra("photo", photo1);
+                                            intent1.putExtra("item_id", item_id);
+                                            intent1.putExtra("id", id1);
+                                            intent1.putExtra("user_id", userid1);
+                                            intent1.putExtra("main_category", strMain_category1);
+                                            intent1.putExtra("sub_category", strSub_category1);
+                                            intent1.putExtra("ad_detail", ad_detail1);
+                                            intent1.putExtra("price", strPrice1);
+                                            intent1.putExtra("division", division1);
+                                            intent1.putExtra("district", district1);
+                                            intent1.putExtra("photo", photo1);
 
 
+                                            intent1.putExtra("id", id1);
+                                            intent1.putExtra("stock", stock);
+                                            intent1.putExtra("brand_material", brand);
+                                            intent1.putExtra("inner_material", inner);
+                                            intent1.putExtra("description", desc);
+                                            intent1.putExtra("division", division);
+                                            intent1.putExtra("district", district);
 
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("stock", stock);
-                                                intent1.putExtra("brand_material", brand);
-                                                intent1.putExtra("inner_material", inner);
-                                                intent1.putExtra("description", desc);
-                                                intent1.putExtra("division", division);
-                                                intent1.putExtra("district", district);
-
-                                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(intent1);
-                                            }
-                                        });
-                                        getUserDetail_ReviewOne(customer_id);
-                                    }
+                                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent1);
+                                        }
+                                    });
 
                                 }
+
                                 EditRating(id, String.valueOf(ratingfull2));
                             } else {
                                 Toast.makeText(View_Item_Single.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
@@ -971,7 +892,7 @@ public class View_Item_Single extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void EditRating(final String item_id, final String rating){
+    private void EditRating(final String item_id, final String rating) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_RATING,
                 new Response.Listener<String>() {
                     @Override
@@ -1007,7 +928,7 @@ public class View_Item_Single extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void EditSold(final String item_id, final String sold){
+    private void EditSold(final String item_id, final String sold) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_SOLD,
                 new Response.Listener<String>() {
                     @Override

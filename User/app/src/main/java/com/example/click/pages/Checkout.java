@@ -91,7 +91,8 @@ public class Checkout extends AppCompatActivity {
     String getId, Price, Delivery_Date;
     SessionManager sessionManager;
 
-    Double aFloat;
+    Double aFloat, grandtotal;
+
 
 
     @Override
@@ -116,7 +117,6 @@ public class Checkout extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            Double grandtotal = 0.00;
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -168,8 +168,6 @@ public class Checkout extends AppCompatActivity {
                                                                                     String success = jsonObject.getString("success");
                                                                                     JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-
-                                                                                    Double grandtotal = 0.00;
                                                                                     if (success.equals("1")) {
                                                                                         if(jsonArray.length() ==0 ){
 
@@ -338,6 +336,7 @@ public class Checkout extends AppCompatActivity {
         AddressUser = findViewById(R.id.address);
 
         aFloat = 0.00;
+        grandtotal = 0.00;
 
         address_layout = findViewById(R.id.address_layout);
         address_layout.setOnClickListener(new View.OnClickListener() {
