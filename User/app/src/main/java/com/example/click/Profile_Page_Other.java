@@ -45,7 +45,7 @@ public class Profile_Page_Other extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
 
     CircleImageView profile_image;
-    TextView Username;
+    TextView Username, verify;
 
     SessionManager sessionManager;
     private String getId;
@@ -61,6 +61,8 @@ public class Profile_Page_Other extends AppCompatActivity {
         ToolbarSetting();
         getSession();
         getUserDetail();
+        SellerCheck_Main(getId);
+        verify = findViewById(R.id.verify);
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -134,7 +136,52 @@ public class Profile_Page_Other extends AppCompatActivity {
         getId = user.get(SessionManager.ID);
     }
 
+    private void SellerCheck_Main(final String user_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
 
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    if(strVerify == 0){
+                                        verify.setText("Buyer");
+                                    }else{
+                                        verify.setText("Seller");
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(Profile_Page_Other.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 
     private void getUserDetail() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,

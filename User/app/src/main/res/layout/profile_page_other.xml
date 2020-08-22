@@ -54,6 +54,23 @@
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@id/profile_image"
                     android:text="@string/name" />
+
+                <TextView
+                    android:id="@+id/verify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/username"
+                    android:layout_alignBottom="@id/profile_image"
+                    android:background="@drawable/background_pink_full_curve"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/verification"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/open_sans"
+                    android:textColor="@color/colorAccent" />
             </RelativeLayout>
 
             <com.google.android.material.tabs.TabLayout
