@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:fontFamily="@font/open_sans"
-        android:text="MYR0.00"
+        android:text="@string/myr0_00"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="14sp" />
 
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
             android:layout_gravity="center"
-            android:text="Delivered in "
+            android:text="@string/delivered_in"
             android:textColor="@color/colorGrey"
             android:textSize="12sp" />
 
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="0 Days"
+            android:text="@string/_0_days"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 

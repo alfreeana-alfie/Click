@@ -24,6 +24,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_above="@id/bottom_nav"
         android:id="@+id/category_layout"
         android:layout_width="wrap_content"
@@ -83,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_up_foreground"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Price"
+                        android:text="@string/price"
                         android:textColor="@color/colorAccent"
                         android:textSize="13sp" />
                 </RelativeLayout>
@@ -98,7 +99,7 @@
                     android:textColor="@color/colorWhite"
                     android:drawableEnd="@drawable/ic_filter_foreground"
                     android:textSize="12sp"
-                    android:text="Filter" />
+                    android:text="@string/filter" />
 
             </TableRow>
 
@@ -129,7 +130,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:layout_above="@id/bottom_nav"
         android:id="@+id/filter_layout"
         android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="Filter"
+                android:text="@string/filter"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold|italic" />
@@ -211,15 +211,12 @@
 
                 android:paddingEnd="10dp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-
                 <Button
                     android:id="@+id/btn_cancel"
-                    android:layout_width="0dp"
+                    android:layout_below="@id/btn_apply"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
@@ -231,17 +228,18 @@
 
                 <Button
                     android:id="@+id/btn_apply"
-                    android:layout_width="0dp"
+                    android:layout_below="@id/spinner_district"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/login_part_border_orange"
                     android:fontFamily="@font/montserrat"
-                    android:text="Apply"
+                    android:text="@string/apply"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp" />
-            </TableRow>
 
         </RelativeLayout>
 
@@ -252,7 +250,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="No result found !"
+        android:text="@string/no_result_found"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:layout_centerVertical="true"

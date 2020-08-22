@@ -78,6 +78,7 @@
                 android:textSize="12sp" />
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -85,7 +86,7 @@
                 <Button
                     android:id="@+id/view_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="end"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -94,14 +95,14 @@
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/view"
-                    android:textAlignment="center"
+
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/delete_fav_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="end"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
@@ -111,7 +112,7 @@
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/remove"
-                    android:textAlignment="center"
+
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
             </LinearLayout>

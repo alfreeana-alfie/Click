@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
-                    android:text="Stock: "
+                    android:text="@string/stock"
                     android:textColor="@color/colorGreen"
                     android:textSize="14sp" />
 

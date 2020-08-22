@@ -94,8 +94,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
-                    android:text="Accept"
-                    android:textAlignment="center"
+                    android:text="@string/accept"
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
 
@@ -111,8 +110,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_noradius"
                     android:fontFamily="@font/montserrat"
-                    android:text="Reject"
-                    android:textAlignment="center"
+                    android:text="@string/reject"
                     android:textSize="12sp"
                     tools:ignore="ButtonStyle" />
             </LinearLayout>

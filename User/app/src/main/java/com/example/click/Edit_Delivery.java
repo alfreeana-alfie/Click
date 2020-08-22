@@ -93,7 +93,7 @@ public class Edit_Delivery extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Edit_Delivery.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Edit_Delivery.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

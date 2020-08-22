@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/image"
             android:padding="5dp"
-            android:text="Seller Name" />
+            android:text="@string/seller_name" />
 
         <TextView
             android:id="@+id/seller_location"
@@ -54,7 +54,7 @@
             android:layout_below="@id/seller_name"
             android:layout_toEndOf="@id/image"
             android:padding="5dp"
-            android:text="Seller Location" />
+            android:text="@string/seller_location" />
 
         <ImageButton
             android:id="@+id/btn_chat_wsp"
@@ -76,7 +76,7 @@
             android:layout_marginEnd="15dp"
             style="@style/Widget.AppCompat.Button.Borderless"
             app:srcCompat="@drawable/ic_chat_orange_foreground"
-            android:text="Chat"
+            android:text="@string/chat"
             android:textColor="@color/colorWhite" />
 
     </RelativeLayout>
@@ -105,7 +105,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"
-                android:text="0" />
+                android:text="@string/_0" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
                 android:fontFamily="@font/open_sans"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
-                android:text="Products" />
+                android:text="@string/products" />
 
         </LinearLayout>
 
@@ -135,7 +135,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="25sp"
-                android:text="0" />
+                android:text="@string/_0" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                 android:fontFamily="@font/open_sans"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
-                android:text="Sold" />
+                android:text="@string/sold" />
 
         </LinearLayout>
 
@@ -214,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_up_foreground"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Price"
+                        android:text="@string/price"
                         android:textColor="@color/colorAccent"
                         android:textSize="13sp" />
                 </RelativeLayout>
@@ -238,7 +238,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/colorGrey"
                 android:textSize="14sp"
-                android:text="List of Product(s)"/>
+                android:text="@string/list_of_product_s"/>
 
             <GridView
                 android:layout_below="@id/textView35"
@@ -277,7 +277,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="Filter"
+                android:text="@string/filter"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp"
                 android:textStyle="bold|italic" />

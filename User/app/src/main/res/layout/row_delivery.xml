@@ -25,7 +25,7 @@
             android:fontFamily="@font/open_sans_semibold"
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
-            android:text="Edit" />
+            android:text="@string/edit" />
 
         <Button
             android:id="@+id/btn_delete"
@@ -36,7 +36,7 @@
             android:fontFamily="@font/open_sans_semibold"
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
-            android:text="Delete" />
+            android:text="@string/delete" />
 
         <TextView
             android:id="@+id/text_division"
@@ -47,7 +47,7 @@
             android:layout_marginRight="5dp"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="@font/open_sans"
-            android:text="Division"
+            android:text="@string/division"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -62,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginLeft="15dp"
-                android:text="Price : "
+                android:layout_marginStart="15dp"
+                android:text="@string/price_"
                 android:textSize="14sp" />
 
             <TextView
@@ -72,8 +72,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginLeft="5dp"
-                android:text="MYR 0.00"
+                android:layout_marginStart="5dp"
+                android:text="@string/myr_0_00"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -89,8 +89,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginLeft="15dp"
-                android:text="Duration : "
+                android:layout_marginStart="15dp"
+                android:text="@string/duration"
                 android:textSize="14sp" />
 
             <TextView
@@ -99,8 +99,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/open_sans"
-                android:layout_marginLeft="5dp"
-                android:text="0 Days"
+                android:layout_marginStart="5dp"
+                android:text="@string/_0_days"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -54,7 +54,7 @@
                     android:drawableStart="@drawable/ic_promo_foreground"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="20sp"
-                    android:text="Promotion" />
+                    android:text="@string/promotion" />
 
                 <TextView
                     android:id="@+id/promotion_text"
@@ -64,7 +64,7 @@
                     android:fontFamily="@font/open_sans"
                     android:textSize="14sp"
                     android:textAlignment="textEnd"
-                    android:text="View" />
+                    android:text="@string/view" />
             </LinearLayout>
 
             <LinearLayout
@@ -83,7 +83,7 @@
                     android:drawableStart="@drawable/ic_social_foreground"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="20sp"
-                    android:text="Social Updates" />
+                    android:text="@string/social_updates" />
 
                 <TextView
                     android:id="@+id/social_text"
@@ -93,7 +93,7 @@
                     android:fontFamily="@font/open_sans"
                     android:textSize="14sp"
                     android:textAlignment="textEnd"
-                    android:text="View" />
+                    android:text="@string/view" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,7 +113,7 @@
                     android:fontFamily="@font/open_sans_semibold"
                     android:drawableStart="@drawable/ic_order_foreground"
                     android:textSize="20sp"
-                    android:text="Order Updates" />
+                    android:text="@string/order_updates" />
 
                 <TextView
                     android:id="@+id/updates"
@@ -123,7 +123,7 @@
                     android:fontFamily="@font/open_sans"
                     android:textSize="14sp"
                     android:textAlignment="textEnd"
-                    android:text="View" />
+                    android:text="@string/view" />
             </LinearLayout>
         </LinearLayout>
 

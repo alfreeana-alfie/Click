@@ -26,6 +26,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
+import com.example.click.Profile_Page_Other;
 import com.example.click.R;
 import com.example.click.adapter.Item_UserAdapter;
 import com.example.click.data.Item_All_Details;
@@ -57,6 +59,8 @@ public class Find_My_Items_Other extends AppCompatActivity {
 
     private static String URL_VIEW = "https://ketekmall.com/ketekmall/readuser.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_item.php";
+    private static String URL_EDIT_BOOST = "https://ketekmall.com/ketekmall/edit_boost_ad.php";
+
     SessionManager sessionManager;
     TextView no_result;
     private String getId;
@@ -87,7 +91,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Find_My_Items_Other.this, Homepage.class);
+                Intent intent = new Intent(Find_My_Items_Other.this, Profile_Page_Other.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -132,7 +136,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Find_My_Items_Other.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Find_My_Items_Other.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -213,6 +217,45 @@ public class Find_My_Items_Other extends AppCompatActivity {
 
                                         detailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onBoostClick(int position) {
+                                        final Item_All_Details item = itemList.get(position);
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_EDIT_BOOST,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                            String success = jsonObject.getString("success");
+
+                                                            if (success.equals("1")) {
+                                                                Toast.makeText(Find_My_Items_Other.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(Find_My_Items_Other.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                            Toast.makeText(Find_My_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+
+                                                    }
+                                                }){
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("id", item.getId());
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(Find_My_Items_Other.this);
+                                        requestQueue.add(stringRequest1);
                                     }
 
                                     @Override
@@ -306,7 +349,7 @@ public class Find_My_Items_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent4 = new Intent(Find_My_Items_Other.this, Homepage.class);
+        Intent intent4 = new Intent(Find_My_Items_Other.this, Profile_Page_Other.class);
         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent4);
     }

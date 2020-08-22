@@ -48,7 +48,6 @@
                 android:id="@+id/linear2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_item"
                 android:background="@drawable/background_orange_curve"
                 android:orientation="vertical">
 
@@ -102,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="Rating"
+                        android:text="@string/rating"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp" />
 
@@ -119,7 +118,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="0"
+                        android:text="@string/_0"
                         android:layout_marginStart="0dp"
                         android:layout_marginEnd="5dp"
                         android:textColor="@color/colorWhite"
@@ -130,7 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
-                        android:text="Sold"
+                        android:text="@string/sold"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -140,7 +139,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/linear2"
                 android:background="@drawable/background_white_curve"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
@@ -162,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:fontFamily="@font/open_sans"
-                        android:text="Shipping Information"
+                        android:text="@string/shipping_information"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
@@ -199,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:fontFamily="@font/open_sans"
-                        android:text="More Details"
+                        android:text="@string/more_details"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp" />
 
@@ -247,7 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/image"
                         android:padding="5dp"
-                        android:text="Seller Name" />
+                        android:text="@string/seller_name" />
 
                     <TextView
                         android:id="@+id/seller_location"
@@ -256,7 +254,7 @@
                         android:layout_below="@id/seller_name"
                         android:layout_toEndOf="@id/image"
                         android:padding="5dp"
-                        android:text="Seller Location" />
+                        android:text="@string/seller_location" />
 
 
                     <ImageButton
@@ -279,7 +277,7 @@
                         android:layout_marginEnd="5dp"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         app:srcCompat="@drawable/ic_chat_orange_foreground"
-                        android:text="Chat"
+                        android:text="@string/chat"
                         android:textColor="@color/colorWhite" />
 
                     <Button
@@ -290,7 +288,7 @@
                         android:layout_centerVertical="true"
                         android:background="@drawable/button_border_orange"
                         style="@style/Widget.AppCompat.Button.Borderless"
-                        android:text="View"
+                        android:text="@string/view"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary" />
 
@@ -316,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Review" />
+                        android:text="@string/review" />
 
                     <RelativeLayout
                         android:id="@+id/review11"
@@ -339,7 +337,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/image20"
                             android:layout_marginStart="5dp"
-                            android:text="Customer_Name" />
+                            android:text="@string/customer_name" />
 
                         <RatingBar
                             android:id="@+id/ratingBar20"
@@ -359,7 +357,7 @@
                             android:layout_marginBottom="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView" />
+                            android:text="@string/textview" />
 
                     </RelativeLayout>
 
@@ -371,7 +369,7 @@
                         android:layout_marginBottom="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Review" />
+                        android:text="@string/no_review" />
 
                     <RelativeLayout
                         android:visibility="gone"
@@ -396,7 +394,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/image21"
                             android:layout_margin="5dp"
-                            android:text="Customer_Name" />
+                            android:text="@string/customer_name" />
 
                         <RatingBar
                             android:id="@+id/ratingBar21"
@@ -413,7 +411,7 @@
                             android:layout_marginBottom="15dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView" />
+                            android:text="@string/textview" />
 
                     </RelativeLayout>
 
@@ -424,7 +422,7 @@
                         android:layout_alignParentEnd="true"
                         android:drawableEnd="@drawable/ic_right_black_foreground"
                         android:padding="5dp"
-                        android:text="View All"
+                        android:text="@string/view_all"
                         android:textColor="@color/colorPrimaryDark" />
                 </RelativeLayout>
 
@@ -439,7 +437,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="From the same shop" />
+                        android:text="@string/from_the_same_shop" />
 
                     <TextView
                         android:id="@+id/view_all"
@@ -448,7 +446,7 @@
                         android:layout_alignParentEnd="true"
                         android:drawableEnd="@drawable/ic_right_black_foreground"
                         android:padding="5dp"
-                        android:text="View All"
+                        android:text="@string/view_all"
                         android:textColor="@color/colorPrimaryDark" />
 
                     <com.mhmtk.twowaygrid.TwoWayGridView
@@ -476,7 +474,6 @@
                 android:id="@+id/linear1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:orientation="horizontal"
                 android:background="@color/colorWhite"
                 android:paddingTop="5dp">

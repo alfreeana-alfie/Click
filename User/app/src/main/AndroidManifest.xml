@@ -100,6 +100,10 @@
         <activity android:name=".Buying" />
         <activity android:name=".Selling" />
         <activity android:name=".Profile_Page" />
+        <activity android:name=".MyIncome" />
+        <activity android:name=".MyRating" />
+        <activity android:name=".Profile_Page_Other" />
+        <activity android:name=".BoostAd" />
 
 
         <meta-data

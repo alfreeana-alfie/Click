@@ -59,7 +59,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
 
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
-        Button edit_item, delete_item;
+        Button edit_item, delete_item, boost_ad;
         RatingBar ratingBar;
 
         ratingBar = convertView.findViewById(R.id.ratingBar);
@@ -85,7 +85,15 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-
+        boost_ad = convertView.findViewById(R.id.btn_BoostAds);
+        boost_ad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
+                    mListerner.onBoostClick(position);
+                }
+            }
+        });
         Float flo = 0.0F;
         flo = Float.parseFloat(item.getRating());
         ratingBar.setRating(flo);
@@ -137,7 +145,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
 
     public interface OnItemClickListener {
         void onEditClick(int position);
-
+        void onBoostClick(int position);
         void onDeleteClick(int position);
     }
 }

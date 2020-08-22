@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:fontFamily="@font/open_sans"
-                    android:text="Quantity"
+                    android:text="@string/quantity"
                     android:textAlignment="center"
                     android:textSize="14sp" />
 
@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="2"
                     android:fontFamily="@font/open_sans"
-                    android:text="SubTotal"
+                    android:text="@string/subtotal"
                     android:textAlignment="center"
                     android:textSize="14sp" />
             </TableRow>
@@ -151,7 +151,7 @@
                         android:background="@drawable/login_part_border_orange"
                         android:elevation="2dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="-"
+                        android:text="@string/minus"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
@@ -162,7 +162,7 @@
                         android:paddingTop="2dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="2dp"
-                        android:text="1"
+                        android:text="@string/_1"
                         android:textSize="14sp" />
 
                     <Button
@@ -172,7 +172,7 @@
                         android:background="@drawable/login_part_border_orange"
                         android:elevation="2dp"
                         android:fontFamily="@font/montserrat"
-                        android:text="+"
+                        android:text="@string/plus"
                         android:textColor="@color/colorAccent" />
                 </LinearLayout>
 
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="2"
                     android:fontFamily="@font/open_sans"
-                    android:text="RM0.00"
+                    android:text="@string/myr0_00"
                     android:textAlignment="center"
                     android:textSize="14sp" />
             </TableRow>

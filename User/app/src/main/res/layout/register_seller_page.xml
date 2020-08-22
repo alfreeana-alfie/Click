@@ -43,7 +43,7 @@
             android:textSize="14sp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_margin="5dp"
-            android:text="Before you can start selling your products" />
+            android:text="@string/before_you_can_start_selling_your_products" />
 
         <TextView
             android:id="@+id/textView9"
@@ -55,13 +55,13 @@
             android:textSize="14sp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_margin="5dp"
-            android:text="You need to register as KetekMall Seller" />
+            android:text="@string/you_need_to_register_as_ketekmall_seller" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Become A Seller Today"
+            android:text="@string/become_a_seller_today"
             android:layout_below="@id/textView9"
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"

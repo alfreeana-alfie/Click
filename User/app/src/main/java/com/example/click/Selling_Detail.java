@@ -47,7 +47,8 @@ public class Selling_Detail extends AppCompatActivity {
     Button btn_submit, btn_cancel;
     ImageView photo;
     TextView text_order_id, text_ad_detail, text_price, text_quantity;
-    TextView text_placed_date, text_status, text_ship_placed;
+    TextView text_placed_date, text_status, text_ship_placed,
+            customer_name, customer_address, customer_phone;
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
@@ -58,6 +59,10 @@ public class Selling_Detail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selling_detail);
         getSession();
+
+        customer_name = findViewById(R.id.customer_name);
+        customer_address = findViewById(R.id.customer_addr);
+        customer_phone = findViewById(R.id.customer_phone);
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -84,7 +89,7 @@ public class Selling_Detail extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Selling_Detail.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Selling_Detail.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -107,6 +112,7 @@ public class Selling_Detail extends AppCompatActivity {
         final String strTracking_NO = intent.getStringExtra("tracking_no");
         final String strCustomer_ID = intent.getStringExtra("customer_id");
 
+        getCustomerDetailTwo(strCustomer_ID);
         edit_review = findViewById(R.id.editText_review);
         btn_submit = findViewById(R.id.btn_submit);
         btn_cancel = findViewById(R.id.btn_cancel);
@@ -266,9 +272,70 @@ public class Selling_Detail extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
+                                    String strName = object.getString("name");
                                     String strEmail = object.getString("email");
+                                    String strAddr1 = object.getString("address_01");
+                                    String strAddr2 = object.getString("address_02");
+                                    String strDivision = object.getString("division");
+                                    String strPostCode = object.getString("postcode");
+                                    String strPhone_NO = object.getString("phone_no");
+
+                                    customer_name.setText(strName);
+                                    customer_address.setText(strAddr1 + strAddr2 + "\n" + strDivision + strPostCode);
+                                    customer_phone.setText(strPhone_NO);
 
                                     sendEmail(strEmail, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", customerID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getCustomerDetailTwo(final String customerID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strName = object.getString("name");
+                                    String strEmail = object.getString("email");
+                                    String strAddr1 = object.getString("address_01");
+                                    String strAddr2 = object.getString("address_02");
+                                    String strDivision = object.getString("division");
+                                    String strPostCode = object.getString("postcode");
+                                    String strPhone_NO = object.getString("phone_no");
+
+                                    customer_name.setText(strName);
+                                    customer_address.setText(strAddr1 + strAddr2 + "\n" + strDivision + strPostCode);
+                                    customer_phone.setText(strPhone_NO);
                                 }
                             } else {
                                 Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/sellerchecked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/upper_table"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/MySelling"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/SellingImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_selling_foreground" />
+
+                        <TextView
+                            android:id="@+id/SellingText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/SellingImage"
+                            android:text="@string/selling"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorLightGrey" />
+
+                    <RelativeLayout
+                        android:id="@+id/AddNewProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/myLikeImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_addproduct_foreground" />
+
+                        <TextView
+                            android:id="@+id/myLikeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/myLikeImage"
+                            android:text="@string/add_product"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorLightGrey" />
+
+                    <RelativeLayout
+                        android:id="@+id/MyProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/RecentlyViewedImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_myproduct_foreground" />
+
+                        <TextView
+                            android:id="@+id/RecentlyViewedText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/RecentlyViewedImage"
+                            android:text="@string/my_products"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorLightGrey" />
+
+                    <RelativeLayout
+                        android:id="@+id/MyIncome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/IncomeImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_myincome_foreground" />
+
+                        <TextView
+                            android:id="@+id/IncomeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/IncomeImage"
+                            android:text="@string/my_income_"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorLightGrey" />
+
+                    <RelativeLayout
+                        android:id="@+id/MyRating"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/MyRatingImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_myrating_foreground" />
+
+                        <TextView
+                            android:id="@+id/MyRatingText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/MyRatingImage"
+                            android:text="@string/shop_rating"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorLightGrey" />
+
+                    <RelativeLayout
+                        android:id="@+id/BoostAds"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/BuyingImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_boost_foreground" />
+
+                        <TextView
+                            android:id="@+id/BuyingText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/BuyingImage"
+                            android:text="@string/boost_ad"
+                            android:textAlignment="center" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sellerunchecked"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/before_you_can_start_selling_your_products"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView12"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/you_need_to_register_as_ketekmall_seller"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView13"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/open_sans_semibold"
+            android:padding="5dp"
+            android:text="@string/become_a_seller_today"
+            android:textColor="@color/colorWhite" />
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,7 +70,7 @@ public class Detail_Info extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Detail_Info.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Detail_Info.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

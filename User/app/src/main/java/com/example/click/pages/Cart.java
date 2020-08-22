@@ -27,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.UserOrderAdapter;
@@ -134,7 +135,7 @@ public class Cart extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Cart.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Cart.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

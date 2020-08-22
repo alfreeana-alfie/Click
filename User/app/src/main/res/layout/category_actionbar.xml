@@ -46,7 +46,7 @@
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="@color/colorPrimaryDark"
-            android:hint="Name" />
+            android:hint="@string/name" />
 
         <ImageButton
             android:visibility="gone"
@@ -76,7 +76,7 @@
             android:background="@drawable/background_white_full_curves"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/colorPrimaryDark"
-            android:text="Search" />
+            android:text="@string/search" />
 
         <Button
             android:visibility="gone"
@@ -89,7 +89,7 @@
             android:textColor="@color/colorWhite"
             android:drawableEnd="@drawable/ic_filter_foreground"
             android:textSize="12sp"
-            android:text="Filter" />
+            android:text="@string/filter" />
     </RelativeLayout>
 
 </RelativeLayout>

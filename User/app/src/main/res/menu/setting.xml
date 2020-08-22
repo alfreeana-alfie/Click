@@ -30,8 +30,12 @@
             android:title="@string/edit_profile" />
 
         <item
+            android:id="@+id/language"
+            android:title="Change to BM/BI" />
+
+        <item
             android:id="@+id/setting"
-            android:title="@string/settings" />
+            android:title="Logout" />
 
     </group>
 </menu>

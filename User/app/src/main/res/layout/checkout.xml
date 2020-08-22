@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/open_sans"
-                    android:text="Delivery Address"
+                    android:text="@string/delivery_address"
                     android:textColor="@color/colorGrey"
                     android:textSize="12sp" />
 
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/addr1"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp" />
 
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:fontFamily="@font/open_sans"
-                    android:text="Shipping Option"
+                    android:text="@string/shipping_option"
                     android:textColor="@color/colorGrey"
                     android:textSize="12sp" />
 
@@ -106,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="Standard Deliver"
+                        android:text="@string/standard_delivery"
                         android:textColor="@color/colorGrey"
                         android:textSize="14sp" />
 
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
                         android:fontFamily="@font/open_sans_semibold"
-                        android:text="MYR0.00"
+                        android:text="@string/myr0_00"
                         android:textColor="@color/colorGrey"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -137,7 +137,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/open_sans"
-                    android:text="Payment Option"
+                    android:text="@string/payment_option"
                     android:textColor="@color/colorGrey"
                     android:textSize="12sp" />
 
@@ -147,7 +147,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:text="Coming Soon"
+                    android:text="@string/coming_soon"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
             android:layout_centerInParent="true"
-            android:text="Please change the delivery address"
+            android:text="@string/please_change_the_delivery_address"
             android:textColor="@color/colorGrey"
             android:textSize="14sp" />
 
@@ -187,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textStart"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Total"
+                android:text="@string/total"
                 android:textColor="@color/colorGrey"
                 android:textSize="12sp" />
 
@@ -195,9 +195,8 @@
                 android:id="@+id/grandtotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="RM0.00"
+                android:text="@string/myr0_00"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -209,7 +208,7 @@
             android:background="@drawable/background_orange_full_curve"
             android:drawableEnd="@drawable/ic_right_arrow_foreground"
             android:fontFamily="@font/open_sans"
-            android:text="Place Order"
+            android:text="@string/place_order"
             android:textColor="@color/colorAccent" />
     </RelativeLayout>
 

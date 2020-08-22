@@ -151,7 +151,6 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="sans-serif-black"
                 android:text="@string/forgot_your_password"
-                android:textAlignment="center"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -214,7 +213,6 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="sans-serif-black"
                 android:text="@string/don_t_have_an_account"
-                android:textAlignment="center"
                 android:textColor="@color/colorGrey"
                 android:textSize="16sp" />
 

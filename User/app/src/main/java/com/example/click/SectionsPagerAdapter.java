@@ -17,10 +17,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new Selling_Other();
+                fragment = new Buying_Other_Frag();
                 break;
             case 1:
-                fragment = new Buying_Other();
+                fragment = new Selling_Other_Frag();
                 break;
         }
         return fragment;
@@ -36,9 +36,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Selling";
-            case 1:
                 return "Buying";
+            case 1:
+                return "Selling";
         }
         return null;
     }

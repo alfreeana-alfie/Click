@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/image"
             android:layout_marginStart="5dp"
-            android:text="Customer_Name" />
+            android:text="@string/customer_name" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -48,7 +48,7 @@
             android:layout_marginBottom="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="@string/review" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

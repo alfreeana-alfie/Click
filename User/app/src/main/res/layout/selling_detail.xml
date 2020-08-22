@@ -45,7 +45,7 @@
             android:layout_toEndOf="@id/photo"
             android:fontFamily="@font/open_sans_semibold"
             android:padding="10dp"
-            android:text="Ad Detail"
+            android:text="@string/ad_detail"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
@@ -59,7 +59,7 @@
             android:fontFamily="@font/open_sans"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="MYR0.00"
+            android:text="@string/myr0_00"
             android:textColor="@color/colorGrey"
             android:textSize="12sp" />
 
@@ -73,7 +73,7 @@
             android:fontFamily="@font/open_sans"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="x1"
+            android:text="@string/x1"
             android:textColor="@color/colorGrey"
             android:textSize="12sp" />
 
@@ -93,7 +93,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans"
                 android:padding="10dp"
-                android:text="Placed on YYYY-MM-DD"
+                android:text="@string/placed_on_yyyy_mm_dd"
                 android:textColor="@color/colorGrey"
                 android:textSize="12sp" />
 
@@ -104,7 +104,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans"
                 android:padding="10dp"
-                android:text="Status"
+                android:text="@string/status"
                 android:textAlignment="textEnd"
                 android:textColor="@color/colorGrey"
                 android:textSize="12sp" />
@@ -121,7 +121,58 @@
             android:layout_below="@id/linearLayout"
             android:textColor="@color/colorGrey"
             android:textSize="12sp"
-            android:text="Shipped out to Sarawak" />
+            android:text="@string/shipped_out_to_sarawak" />
+
+        <View
+            android:layout_below="@id/text_ship_placed"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLightGrey" />
+
+        <TextView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/open_sans"
+            android:padding="10dp"
+            android:id="@+id/customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_ship_placed"
+            android:textColor="@color/colorGrey"
+            android:textSize="12sp"
+            android:text="@string/customer_name" />
+
+        <TextView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/open_sans"
+            android:padding="10dp"
+            android:id="@+id/customer_addr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customer_name"
+            android:textColor="@color/colorGrey"
+            android:textSize="12sp"
+            android:text="@string/customer_address" />
+
+        <TextView
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/open_sans"
+            android:padding="10dp"
+            android:id="@+id/customer_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customer_addr"
+            android:textColor="@color/colorGrey"
+            android:textSize="12sp"
+            android:text="@string/customer_phone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/customer_phone"
+            android:background="@color/colorLightGrey" />
 
         <LinearLayout
             android:visibility="gone"
@@ -141,7 +192,7 @@
                 android:background="@drawable/login_part_border_orange"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Accept" />
+                android:text="@string/accept" />
 
             <Button
                 android:id="@+id/btn_view"
@@ -152,7 +203,7 @@
                 android:background="@drawable/login_part_border_orange"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="View" />
+                android:text="@string/view" />
 
             <Button
                 android:id="@+id/btn_reject"
@@ -163,7 +214,7 @@
                 android:background="@drawable/login_part_border_orange"
                 android:textColor="@color/colorWhite"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Reject" />
+                android:text="@string/reject" />
         </LinearLayout>
 
         <TextView
@@ -177,8 +228,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorGrey"
             android:textSize="14sp"
-            android:layout_below="@id/text_ship_placed"
-            android:text="Pos Laju Tracking No." />
+            android:layout_below="@id/customer_phone"
+            android:text="@string/pos_laju_tracking_no" />
 
         <RelativeLayout
             android:layout_marginStart="15dp"
@@ -188,6 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                android:visibility="gone"
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/open_sans_semibold"
                 android:padding="10dp"
@@ -218,7 +270,7 @@
                     android:textCursorDrawable="@drawable/color_cursor"
                     android:layout_centerVertical="true"
                     android:inputType="text"
-                    android:hint="Pos Laju Tacking No." />
+                    android:hint="@string/pos_laju_tacking_no" />
             </RelativeLayout>
 
         </RelativeLayout>
@@ -234,7 +286,7 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Submit" />
+            android:text="@string/submit" />
 
         <Button
             android:layout_marginStart="15dp"
@@ -247,7 +299,7 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
 
         <ProgressBar
             android:layout_below="@id/btn_cancel"

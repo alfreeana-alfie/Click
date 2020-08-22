@@ -63,7 +63,7 @@
                         android:padding="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@id/profile_image"
-                        android:text="Name" />
+                        android:text="@string/name" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -94,7 +94,7 @@
                             android:layout_toEndOf="@id/myLikeImage"
                             android:textAlignment="center"
                             android:layout_marginStart="10dp"
-                            android:text="My Likes" />
+                            android:text="@string/my_likes" />
                     </RelativeLayout>
 
                     <View
@@ -122,7 +122,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/RecentlyViewedImage"
                             android:textAlignment="center"
-                            android:text="Recently Viewed" />
+                            android:text="@string/recently_viewed" />
                     </RelativeLayout>
 
                     <View
@@ -150,7 +150,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/BuyingImage"
                             android:textAlignment="center"
-                            android:text="Buying" />
+                            android:text="@string/buying" />
                     </RelativeLayout>
 
                     <View
@@ -178,7 +178,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/SellingImage"
                             android:textAlignment="center"
-                            android:text="Selling" />
+                            android:text="@string/selling" />
                     </RelativeLayout>
 
                     <View
@@ -206,7 +206,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/MyRatingImage"
                             android:textAlignment="center"
-                            android:text="My Rating" />
+                            android:text="@string/my_rating" />
                     </RelativeLayout>
 
                     <View
@@ -234,7 +234,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/IncomeImage"
                             android:textAlignment="center"
-                            android:text="My Income" />
+                            android:text="@string/my_income_" />
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -268,7 +268,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/AccountSettingImage"
                             android:textAlignment="center"
-                            android:text="Account Settings" />
+                            android:text="@string/account_settings" />
                     </RelativeLayout>
 
                     <View
@@ -296,7 +296,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/HelpCentreImage"
                             android:textAlignment="center"
-                            android:text="Help Centre" />
+                            android:text="@string/help_centre" />
                     </RelativeLayout>
 
                     <View
@@ -324,7 +324,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/ChatwithShoppeeImage"
                             android:textAlignment="center"
-                            android:text="Chat with KetekMall" />
+                            android:text="@string/chat_with_ketekmall" />
                     </RelativeLayout>
 
                 </LinearLayout>

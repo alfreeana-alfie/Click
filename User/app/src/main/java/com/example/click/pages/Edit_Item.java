@@ -35,6 +35,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.ActivityDelivery;
 import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
+import com.example.click.Profile_Page_Other;
 import com.example.click.R;
 import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -222,7 +224,7 @@ public class Edit_Item extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Edit_Item.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Edit_Item.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -321,7 +323,7 @@ public class Edit_Item extends AppCompatActivity {
         Button_BackEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Edit_Item.this, Homepage.class);
+                Intent intent = new Intent(Edit_Item.this, Find_My_Items_Other.class);
                 startActivity(intent);
             }
         });

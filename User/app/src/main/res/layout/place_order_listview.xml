@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:padding="5dp"
-        android:text="Order ID"
+        android:text="@string/order_id"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -33,7 +33,7 @@
         android:layout_toEndOf="@id/item_image"
         android:fontFamily="@font/open_sans_semibold"
         android:padding="10dp"
-        android:text="Ad Detail"
+        android:text="@string/ad_detail"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -46,7 +46,7 @@
         android:fontFamily="@font/open_sans"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="MYR0.00"
+        android:text="@string/myr0_00"
         android:textColor="@color/colorGrey"
         android:textSize="12sp" />
 
@@ -59,7 +59,7 @@
         android:fontFamily="@font/open_sans"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="x1"
+        android:text="@string/x1"
         android:textColor="@color/colorGrey"
         android:textSize="12sp" />
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:fontFamily="@font/open_sans"
-            android:text="Shipping Option"
+            android:text="@string/shipping_option"
             android:textColor="@color/colorGrey"
             android:textSize="12sp" />
 
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Standard Delivery"
+                android:text="@string/standard_delivery"
                 android:textColor="@color/colorGrey"
                 android:textSize="14sp" />
 
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="textEnd"
                 android:fontFamily="@font/open_sans"
-                android:text="MYR0.00"
+                android:text="@string/myr0_00"
                 android:textColor="@color/colorGrey"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -135,7 +135,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/open_sans_semibold"
-                android:text="Standard Delivery"
+                android:text="@string/standard_delivery"
                 android:textColor="@color/colorGrey"
                 android:textSize="14sp" />
 
@@ -150,7 +150,7 @@
                 android:textColor="@color/colorPrimary"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:background="@drawable/button_border_orange"
-                android:text="Self Pick-Up" />
+                android:text="@string/self_pick_up" />
 
 
     </RelativeLayout>

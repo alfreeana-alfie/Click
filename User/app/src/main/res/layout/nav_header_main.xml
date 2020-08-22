@@ -45,7 +45,7 @@
             android:paddingBottom="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="Verification"
+            android:text="@string/verification"
             android:textAllCaps="true"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/colorAccent" />

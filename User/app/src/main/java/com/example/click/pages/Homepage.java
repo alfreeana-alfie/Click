@@ -35,6 +35,7 @@ import com.example.click.Feed_page;
 import com.example.click.Goto_Register_Page;
 import com.example.click.Noti_Page;
 import com.example.click.Profile_Page;
+import com.example.click.Profile_Page_Other;
 import com.example.click.R;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
@@ -91,8 +92,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     public static final String DISTRICT = "district";
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
-
-
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
@@ -305,7 +304,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Homepage.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Homepage.this, Profile_Page_Other.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -808,7 +807,8 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                 startActivity(intent1);
                 break;
             case R.id.setting:
-                Toast.makeText(this, "Settings is Clicked!", Toast.LENGTH_SHORT).show();
+                disconnectFromFacebook();
+                sessionManager.logout();
                 break;
 
             case R.id.menu_cart:

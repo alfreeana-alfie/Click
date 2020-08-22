@@ -78,7 +78,7 @@ public class Feed_page extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Feed_page.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Feed_page.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.FavouriteAdapter;
@@ -167,7 +168,7 @@ public class Saved_Searches_Other extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Saved_Searches_Other.this, Homepage.class);
+                Intent intent = new Intent(Saved_Searches_Other.this, Profile_Page.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -510,7 +511,7 @@ public class Saved_Searches_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Saved_Searches_Other.this, Homepage.class);
+        Intent intent = new Intent(Saved_Searches_Other.this, Profile_Page.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

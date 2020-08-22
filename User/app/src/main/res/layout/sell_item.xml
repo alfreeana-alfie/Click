@@ -242,7 +242,7 @@
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Maximum Order"
+                    android:text="@string/maximum_order"
                     android:textSize="16sp" />
 
                 <EditText
@@ -252,7 +252,7 @@
                     android:layout_gravity="center_vertical|end"
                     android:background="@null"
                     android:cursorVisible="true"
-                    android:hint="Max. Order"
+                    android:hint="@string/max_order"
                     android:importantForAutofill="no"
                     android:inputType="number"
                     android:paddingLeft="15dp"
@@ -284,7 +284,7 @@
                     android:fontFamily="@font/open_sans_bold"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:text="Delivery Location"
+                    android:text="@string/delivery_location"
                     android:textSize="15sp" />
 
                 <TextView
@@ -294,7 +294,7 @@
                     android:layout_gravity="center_vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:hint="Setup Delivery"
+                    android:hint="@string/setup_delivery"
                     android:paddingLeft="15dp"
 
                     android:paddingTop="10dp"
@@ -335,7 +335,7 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:background="@drawable/background_button_pink_left_curves"
                         android:fontFamily="@font/open_sans"
-                        android:text="Cancel"
+                        android:text="@string/cancel"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
 
@@ -347,7 +347,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/background_button_pink_right_curves"
                         android:fontFamily="@font/open_sans"
-                        android:text="Next"
+                        android:text="@string/next"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
 
@@ -719,7 +719,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Brand Material"
+                    android:text="@string/brand_material"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:textStyle="bold|italic" />
@@ -738,7 +738,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
-                        android:hint="Brand Material"
+                        android:hint="@string/brand_material"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
                         android:textAlignment="textStart"
@@ -755,7 +755,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Inner Material"
+                    android:text="@string/inner_material"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:textStyle="bold|italic" />
@@ -774,7 +774,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
-                        android:hint="Inner Material"
+                        android:hint="@string/inner_material"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
                         android:textAlignment="textStart"
@@ -791,7 +791,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Stock"
+                    android:text="@string/stock"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:textStyle="bold|italic" />
@@ -810,7 +810,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
-                        android:hint="Stock"
+                        android:hint="@string/stock"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
                         android:textAlignment="textStart"
@@ -827,7 +827,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:textStyle="bold|italic" />
@@ -846,7 +846,7 @@
                         android:layout_height="wrap_content"
                         android:background="@null"
                         android:ems="10"
-                        android:hint="Description"
+                        android:hint="@string/description"
                         android:inputType="textMultiLine"
                         android:padding="15dp"
                         android:textAlignment="textStart"

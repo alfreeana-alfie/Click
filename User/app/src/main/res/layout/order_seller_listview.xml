@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:padding="5dp"
-        android:text="Order ID"
+        android:text="@string/order_id"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -32,7 +32,7 @@
         android:layout_toEndOf="@id/photo"
         android:fontFamily="@font/open_sans_semibold"
         android:padding="10dp"
-        android:text="Ad Detail"
+        android:text="@string/ad_detail"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -45,7 +45,7 @@
         android:fontFamily="@font/open_sans"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="MYR0.00"
+        android:text="@string/myr0_00"
         android:textColor="@color/colorGrey"
         android:textSize="12sp" />
 
@@ -58,7 +58,7 @@
         android:fontFamily="@font/open_sans"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:text="x1"
+        android:text="@string/x1"
         android:textColor="@color/colorGrey"
         android:textSize="12sp" />
 
@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/open_sans"
             android:padding="10dp"
-            android:text="Placed on YYYY-MM-DD"
+            android:text="@string/placed_on_yyyy_mm_dd"
             android:textColor="@color/colorGrey"
             android:textSize="12sp" />
 
@@ -102,7 +102,7 @@
         android:layout_below="@id/linearLayout"
         android:textColor="@color/colorGrey"
         android:textSize="12sp"
-        android:text="Shipped out to Sarawak" />
+        android:text="@string/shipped_out_to_sarawak" />
 
     <LinearLayout
         android:layout_below="@id/text_ship_placed"
@@ -120,7 +120,7 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Accept" />
+            android:text="@string/accept" />
 
         <Button
             android:id="@+id/btn_view"
@@ -131,7 +131,7 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="View" />
+            android:text="@string/view" />
 
         <Button
             android:id="@+id/btn_reject"
@@ -142,6 +142,6 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Reject" />
+            android:text="@string/reject" />
     </LinearLayout>
 </RelativeLayout>

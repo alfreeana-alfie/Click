@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans"
-        android:text="Item Name"
+        android:text="@string/item_name"
         android:textColor="@color/colorPrimaryDark" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans"
-        android:text="MYR0.00"
+        android:text="@string/myr0_00"
         android:textColor="@color/colorPrimaryDark" />
 
     <Button
@@ -42,6 +42,5 @@
         android:background="@drawable/button_border"
         android:fontFamily="@font/montserrat"
         android:text="@string/view"
-        android:textAlignment="center"
         android:textSize="12sp" />
 </LinearLayout>

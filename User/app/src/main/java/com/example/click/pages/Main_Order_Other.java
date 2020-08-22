@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.SectionsPagerAdapter;
 import com.example.click.data.SessionManager;
@@ -65,7 +66,7 @@ public class Main_Order_Other extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Main_Order_Other.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Main_Order_Other.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

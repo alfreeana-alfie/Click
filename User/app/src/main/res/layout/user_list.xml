@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:fontFamily="@font/open_sans"
-        android:text="Contact(s) : "
+        android:text="@string/contact_s"
         android:textSize="14sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:fontFamily="@font/open_sans"
-        android:text="No User"
+        android:text="@string/no_user"
         android:textSize="14sp" />
 
     <RelativeLayout

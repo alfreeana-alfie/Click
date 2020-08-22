@@ -29,7 +29,7 @@
         android:textColor="@color/colorGrey"
         android:textSize="16sp"
         android:layout_margin="10dp"
-        android:text="Continue Shopping !" />
+        android:text="@string/continue_shopping" />
 
     <Button
         android:id="@+id/btn_continue"
@@ -40,7 +40,7 @@
         android:background="@drawable/login_part_border_orange"
         android:textColor="@color/colorWhite"
         android:padding="5dp"
-        android:text="Continue Shopping" />
+        android:text="@string/continue_shopping" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:labelVisibilityMode="labeled"

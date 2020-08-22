@@ -59,7 +59,7 @@ public class Noti_Page extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Noti_Page.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Noti_Page.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

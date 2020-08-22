@@ -34,7 +34,7 @@
             android:paddingBottom="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="username"
+            android:text="@string/username"
             android:textColor="@color/colorAccent" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:paddingBottom="2dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="Verification"
+            android:text="@string/verification"
             android:textAllCaps="true"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/colorAccent" />
@@ -65,7 +65,7 @@
             android:text="@string/greeting"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/welcome_text1"
@@ -78,7 +78,7 @@
             android:text="@string/buy_sell_find_almost_everything"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            android:textSize="12dp" />
+            android:textSize="12sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="Browse Categories"
+                        android:text="@string/browse_categories"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
@@ -231,7 +231,7 @@
                             android:drawableTop="@mipmap/ic_cake"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Cake And pastries"
+                            android:text="@string/cake_and_pastries"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -245,7 +245,7 @@
                             android:drawableTop="@mipmap/ic_processed"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Process food"
+                            android:text="@string/processed_food"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -259,7 +259,7 @@
                             android:drawableTop="@mipmap/ic_handcraft"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Handicraft"
+                            android:text="@string/handicraft"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -273,7 +273,7 @@
                             android:drawableTop="@mipmap/ic_wholesale"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Retail and Wholesale"
+                            android:text="@string/retail_and_wholesale"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -287,7 +287,7 @@
                             android:drawableTop="@mipmap/ic_agri"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Agriculture"
+                            android:text="@string/agriculture"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -301,7 +301,7 @@
                             android:drawableTop="@mipmap/ic_service"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Service"
+                            android:text="@string/service"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -315,7 +315,7 @@
                             android:drawableTop="@mipmap/ic_health"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Health and Beauty"
+                            android:text="@string/health_and_beauty"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -329,7 +329,7 @@
                             android:drawableTop="@mipmap/ic_home"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Home and living"
+                            android:text="@string/home_and_living"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -343,7 +343,7 @@
                             android:drawableTop="@mipmap/ic_fashion"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Fashion Accessories"
+                            android:text="@string/fashion_accessories"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -357,7 +357,7 @@
                             android:drawableTop="@mipmap/ic_pepper"
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
-                            android:text="Sarawak - Based Product"
+                            android:text="@string/sarawak_based_product"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
@@ -394,7 +394,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="Hot Selling"
+                        android:text="@string/hot_selling"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
@@ -450,7 +450,7 @@
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="Shocking Sale"
+                        android:text="@string/shocking_sale"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />

@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_semibold"
-        android:text="No result found !"
+        android:text="@string/no_result_found"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
         android:layout_centerVertical="true"
