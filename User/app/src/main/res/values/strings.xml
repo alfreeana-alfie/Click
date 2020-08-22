@@ -545,5 +545,6 @@
     <string name="delivery_price">Delivery Price</string>
     <string name="delivery_time">Delivery Time: </string>
     <string name="shipping_total_">Shipping Total: </string>
+    <string name="posting">Posting</string>
 </resources>
 

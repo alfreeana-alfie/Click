@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -48,17 +49,42 @@ public class Selling_Detail extends AppCompatActivity {
     ImageView photo;
     TextView text_order_id, text_ad_detail, text_price, text_quantity;
     TextView text_placed_date, text_status, text_ship_placed,
-            customer_name, customer_address, customer_phone;
+            customer_name, customer_address, customer_phone,Rejected, Cancel, Finished, Ordered, Pending, Shippped, Received, WithText;
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
     ProgressBar loading;
+    ImageView Photo , OrderedBlack, OrderedGreen,
+            PendingBlack, PendingGreen,
+            ShippedBlack, ShippedGreen,
+            ReceivedBlack, ReceivedGreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selling_detail);
         getSession();
+        ToolbarSetting();
+        Rejected = findViewById(R.id.rejected);
+        Finished = findViewById(R.id.finished);
+        Cancel = findViewById(R.id.cancel);
+
+        Ordered = findViewById(R.id.ordered);
+        Pending = findViewById(R.id.pending);
+        Shippped = findViewById(R.id.shipped);
+        Received = findViewById(R.id.received);
+
+        OrderedBlack = findViewById(R.id.ordered_black);
+        OrderedGreen = findViewById(R.id.ordered_green);
+
+        PendingBlack = findViewById(R.id.pending_black);
+        PendingGreen = findViewById(R.id.pending_green);
+
+        ShippedBlack = findViewById(R.id.shipped_black);
+        ShippedGreen = findViewById(R.id.shipped_green);
+
+        ReceivedBlack = findViewById(R.id.received_black);
+        ReceivedGreen = findViewById(R.id.received_green);
 
         customer_name = findViewById(R.id.customer_name);
         customer_address = findViewById(R.id.customer_addr);
@@ -113,6 +139,7 @@ public class Selling_Detail extends AppCompatActivity {
         final String strCustomer_ID = intent.getStringExtra("customer_id");
 
         getCustomerDetailTwo(strCustomer_ID);
+        WithText = findViewById(R.id.withText);
         edit_review = findViewById(R.id.editText_review);
         btn_submit = findViewById(R.id.btn_submit);
         btn_cancel = findViewById(R.id.btn_cancel);
@@ -141,6 +168,60 @@ public class Selling_Detail extends AppCompatActivity {
         text_status.setText(strStatus);
         text_ship_placed.setText("Shipped out to " + strDivision);
 
+        if(strStatus.equals("Pending")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
+        }
+//        if(strStatus.equals("Pending")){
+//            OrderedBlack.setVisibility(View.GONE);
+//            OrderedGreen.setVisibility(View.VISIBLE);
+//            PendingBlack.setVisibility(View.GONE);
+//            PendingGreen.setVisibility(View.VISIBLE);
+//            Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
+//            Pending.setTextColor(getResources().getColor(R.color.colorGreen));
+//        }
+        if(strStatus.equals("Shipped")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            PendingBlack.setVisibility(View.GONE);
+            PendingGreen.setVisibility(View.VISIBLE);
+            ShippedBlack.setVisibility(View.GONE);
+            ShippedGreen.setVisibility(View.VISIBLE);
+            Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
+            Pending.setTextColor(getResources().getColor(R.color.colorGreen));
+            Shippped.setTextColor(getResources().getColor(R.color.colorGreen));
+        }
+        if(strStatus.equals("Received")){
+            OrderedBlack.setVisibility(View.GONE);
+            OrderedGreen.setVisibility(View.VISIBLE);
+            PendingBlack.setVisibility(View.GONE);
+            PendingGreen.setVisibility(View.VISIBLE);
+            ShippedBlack.setVisibility(View.GONE);
+            ShippedGreen.setVisibility(View.VISIBLE);
+            ReceivedBlack.setVisibility(View.GONE);
+            ReceivedGreen.setVisibility(View.VISIBLE);
+            Ordered.setTextColor(getResources().getColor(R.color.colorGreen));
+            Pending.setTextColor(getResources().getColor(R.color.colorGreen));
+            Shippped.setTextColor(getResources().getColor(R.color.colorGreen));
+            Received.setTextColor(getResources().getColor(R.color.colorGreen));
+            Finished.setVisibility(View.VISIBLE);
+            btn_submit.setVisibility(View.INVISIBLE);
+            edit_review.setFocusable(false);
+            edit_review.setFocusableInTouchMode(false);
+        }if(strStatus.equals("Cancel")){
+            Cancel.setVisibility(View.VISIBLE);
+            WithText.setVisibility(View.GONE);
+            edit_review.setVisibility(View.GONE);
+            btn_submit.setVisibility(View.GONE);
+        }
+        if(strStatus.equals("Reject")){
+            Rejected.setVisibility(View.VISIBLE);
+            WithText.setVisibility(View.GONE);
+            edit_review.setVisibility(View.GONE);
+            btn_submit.setVisibility(View.GONE);
+        }
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,12 +232,29 @@ public class Selling_Detail extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Selling_Detail.this, Main_Order_Other.class);
+                Intent intent1 = new Intent(Selling_Detail.this, Selling.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
         });
 
+    }
+
+    private void ToolbarSetting(){
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Back");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(Selling_Detail.this, Main_Order_Other.class);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent1);
+            }
+        });
     }
 
     private void ViewList(final String CustomerID, final String strOrder_ID, final String strOrder_Date) {
@@ -178,7 +276,7 @@ public class Selling_Detail extends AppCompatActivity {
                                 Toast.makeText(Selling_Detail.this, "Updated", Toast.LENGTH_SHORT).show();
 
                                 getCustomerDetail(CustomerID, strOrder_ID);
-                                Intent intent = new Intent(Selling_Detail.this, Main_Order_Other.class);
+                                Intent intent = new Intent(Selling_Detail.this, Selling.class);
                                 startActivity(intent);
                             } else {
                                 loading.setVisibility(View.GONE);

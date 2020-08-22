@@ -46,7 +46,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         Collections.sort(item_all_details, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                return Double.compare(Double.parseDouble(o2.getId()), Double.parseDouble(o1.getId()));
+                return o1.getStatus().compareToIgnoreCase(o2.getStatus());
             }
         });
         notifyDataSetChanged();

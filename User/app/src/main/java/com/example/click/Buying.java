@@ -215,7 +215,7 @@ public class Buying extends AppCompatActivity {
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
 
-                                        final String remarks = "CANCEL";
+                                        final String remarks = "Cancel";
                                         Update_Order(strOrder_Date, remarks);
 
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_DELETE_ORDER,
