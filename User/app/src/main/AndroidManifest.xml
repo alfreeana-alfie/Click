@@ -103,7 +103,8 @@
         <activity android:name=".MyIncome" />
         <activity android:name=".MyRating" />
         <activity android:name=".Profile_Page_Other" />
-        <activity android:name=".BoostAd" />
+        <activity android:name=".Boost_Ad" />
+        <activity android:name=".MyRatingSeller" />
 
 
         <meta-data

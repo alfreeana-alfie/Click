@@ -104,7 +104,7 @@ public class Selling_Other_Frag extends Fragment {
         MyRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyRating.class);
+                Intent intent = new Intent(getContext(), MyRatingSeller.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 getActivity().startActivity(intent);
             }
@@ -122,7 +122,9 @@ public class Selling_Other_Frag extends Fragment {
         BoostAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), Boost_Ad.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().startActivity(intent);
             }
         });
     }

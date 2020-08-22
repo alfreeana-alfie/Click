@@ -51,13 +51,14 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
 
         Picasso.get().load(ItemImage).into(holder.ItemImageView);
         holder.AdDetail.setText(addetail);
-        holder.Price.setText(ItemPrice);
+        holder.Price.setText("MYR" + ItemPrice);
 
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
                     mListerner.onCancelClick(position);
+                    holder.btn_cancel.setVisibility(View.GONE);
                 }
             }
         });
@@ -78,7 +79,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
             super(itemView);
 
             ItemImageView = itemView.findViewById(R.id.item_image);
-            AdDetail = itemView.findViewById(R.id.ad_detail);
+            AdDetail = itemView.findViewById(R.id.item_name);
 
             Price = itemView.findViewById(R.id.item_price);
 

@@ -101,6 +101,7 @@ public class Selling extends AppCompatActivity {
         itemList = new ArrayList<>();
         receiptList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         textView8 = findViewById(R.id.textView8);
         textView9 = findViewById(R.id.textView9);
