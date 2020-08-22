@@ -81,7 +81,7 @@ import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Homepage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Homepage extends AppCompatActivity {
 
     public static final String ID = "id";
     public static final String USERID = "userid";
@@ -145,7 +145,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nav_drawer);
+        setContentView(R.layout.app_bar_main);
         Declare();
 
         viewPager = findViewById(R.id.view_pager);
@@ -314,26 +314,9 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
-
-        profile_display = headerView.findViewById(R.id.profile_display);
-        profile_display.setBorderWidth(1);
-        name_display = headerView.findViewById(R.id.name_display);
-        email_display = headerView.findViewById(R.id.email_display);
-        verify1 = headerView.findViewById(R.id.verify1);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
-
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
     }
 
     private void Cart_Item() {
@@ -400,7 +383,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-                SellerCheck(getId);
+//                SellerCheck(getId);
             }
         });
 
@@ -546,10 +529,10 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     String strEmail = object.getString("email").trim();
                                     String strPhoto = object.getString("photo");
 
-                                    name_display.setText(strName);
-                                    email_display.setText(strEmail);
-
-                                    Picasso.get().load(strPhoto).into(profile_display);
+//                                    name_display.setText(strName);
+//                                    email_display.setText(strEmail);
+//
+//                                    Picasso.get().load(strPhoto).into(profile_display);
 
                                     username.setText(strName);
                                     Picasso.get().load(strPhoto).into(profile_image);
@@ -579,7 +562,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         requestQueue.add(stringRequest);
     }
 
-    private void SellerCheck(final String user_id){
+    /*private void SellerCheck(final String user_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -634,7 +617,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
+    }*/
 
     private void SellerCheck_Main(final String user_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
@@ -652,19 +635,19 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     int strVerify = Integer.valueOf(object.getString("verification"));
                                     if(strVerify == 0){
-                                        NavigationView navigationView = findViewById(R.id.nav_view);
-                                        Menu nav_Menu = navigationView.getMenu();
-                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
-                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
+//                                        NavigationView navigationView = findViewById(R.id.nav_view);
+//                                        Menu nav_Menu = navigationView.getMenu();
+//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
+//                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
                                         verify.setText("Buyer");
-                                        verify1.setText("Buyer");
+//                                        verify1.setText("Buyer");
                                     }else{
-                                        NavigationView navigationView = findViewById(R.id.nav_view);
-                                        Menu nav_Menu = navigationView.getMenu();
-                                        nav_Menu.findItem(R.id.nav_sell).setVisible(true);
-                                        nav_Menu.findItem(R.id.nav_find).setVisible(true);
+//                                        NavigationView navigationView = findViewById(R.id.nav_view);
+//                                        Menu nav_Menu = navigationView.getMenu();
+//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(true);
+//                                        nav_Menu.findItem(R.id.nav_find).setVisible(true);
                                         verify.setText("Seller");
-                                        verify1.setText("Seller");
+//                                        verify1.setText("Seller");
                                     }
 
                                 }
@@ -693,59 +676,59 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home:
-                Intent intent4 = new Intent(Homepage.this, Homepage.class);
-                intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent4);
-                Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_sell:
-
-                SellerCheck(getId);
-                Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_find:
-                Intent intent1 = new Intent(Homepage.this, Find_My_Items_Other.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent1);
-                Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_ads:
-                Intent intent3 = new Intent(Homepage.this, Main_Order_Other.class);
-                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent3);
-                Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_chat_inbox:
-                Intent intent5 = new Intent(Homepage.this, Chat_Inbox_Other.class);
-                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent5);
-                Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_favourite_ads:
-                Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_about_the_apps:
-                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_log_out:
-                disconnectFromFacebook();
-                sessionManager.logout();
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.nav_home:
+//                Intent intent4 = new Intent(Homepage.this, Homepage.class);
+//                intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent4);
+//                Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.nav_sell:
+//
+//                SellerCheck(getId);
+//                Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.nav_find:
+//                Intent intent1 = new Intent(Homepage.this, Find_My_Items_Other.class);
+//                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent1);
+//                Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_ads:
+//                Intent intent3 = new Intent(Homepage.this, Main_Order_Other.class);
+//                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent3);
+//                Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_chat_inbox:
+//                Intent intent5 = new Intent(Homepage.this, Chat_Inbox_Other.class);
+//                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent5);
+//                Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_favourite_ads:
+//                Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//                Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_about_the_apps:
+//                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+//                break;
+//
+//            case R.id.nav_log_out:
+//                disconnectFromFacebook();
+//                sessionManager.logout();
+//        }
+//        drawer.closeDrawer(GravityCompat.START);
+//        return true;
+//    }
 
     public void disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -814,11 +797,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.menu_cart:
                 Intent intent = new Intent(Homepage.this, Cart.class);
                 startActivity(intent);
-                break;
-
-            case R.id.menu_search:
-                Intent intent2 = new Intent(Homepage.this, View_All.class);
-                startActivity(intent2);
                 break;
 
             case R.id.menu_chat:

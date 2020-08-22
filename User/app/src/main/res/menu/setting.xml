@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_search_foreground"
-        android:title="@string/search"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menu_chat"
         android:icon="@drawable/ic_chat_foreground"
         android:title="@string/add_to_cart"
