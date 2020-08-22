@@ -94,11 +94,11 @@ public class View_All extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-                    case R.id.nav_feed:
-                        Intent intent5 = new Intent(View_All.this, Feed_page.class);
-                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent5);
-                        break;
+//                    case R.id.nav_feed:
+//                        Intent intent5 = new Intent(View_All.this, Feed_page.class);
+//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent5);
+//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(View_All.this, Noti_Page.class);

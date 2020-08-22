@@ -54,7 +54,7 @@ public class Feed_page extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(Feed_page.this));
 
         bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setSelectedItemId(R.id.nav_feed);
+//        bottomNav.setSelectedItemId(R.id.nav_feed);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,11 +65,11 @@ public class Feed_page extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-                    case R.id.nav_feed:
-                        Intent intent5 = new Intent(Feed_page.this, Feed_page.class);
-                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent5);
-                        break;
+//                    case R.id.nav_feed:
+//                        Intent intent5 = new Intent(Feed_page.this, Feed_page.class);
+//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent5);
+//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Feed_page.this, Noti_Page.class);

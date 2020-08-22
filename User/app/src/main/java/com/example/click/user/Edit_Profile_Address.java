@@ -145,11 +145,11 @@ public class Edit_Profile_Address extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-                    case R.id.nav_feed:
-                        Intent intent5 = new Intent(Edit_Profile_Address.this, Feed_page.class);
-                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent5);
-                        break;
+//                    case R.id.nav_feed:
+//                        Intent intent5 = new Intent(Edit_Profile_Address.this, Feed_page.class);
+//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent5);
+//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Edit_Profile_Address.this, Noti_Page.class);

@@ -98,11 +98,11 @@ public class Sell_Items_Other extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-                    case R.id.nav_feed:
-                        Intent intent5 = new Intent(Sell_Items_Other.this, Feed_page.class);
-                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent5);
-                        break;
+//                    case R.id.nav_feed:
+//                        Intent intent5 = new Intent(Sell_Items_Other.this, Feed_page.class);
+//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent5);
+//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Sell_Items_Other.this, Noti_Page.class);

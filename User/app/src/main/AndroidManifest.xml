@@ -97,6 +97,8 @@
         <activity android:name=".category.Service" />
         <activity android:name=".category.View_All_Hot" />
         <activity android:name=".category.View_All_Shock" />
+        <activity android:name=".Buying" />
+        <activity android:name=".Selling" />
 
 
         <meta-data
