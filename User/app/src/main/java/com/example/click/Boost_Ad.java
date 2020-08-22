@@ -180,6 +180,7 @@ public class Boost_Ad extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -3,6 +3,7 @@ package com.example.click.pages;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -433,14 +434,15 @@ public class Checkout extends AppCompatActivity {
                                     final String strCity = object.getString("division");
                                     String strPostCode = object.getString("postcode");
 
-                                    String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                    final String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                    final String Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                     AddressUser.setText(Address);
 
                                     Button_Checkout.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            AddOrder(strCity);
+                                            AddOrder(strCity, Address2);
 
                                         }
                                     });
@@ -715,7 +717,8 @@ public class Checkout extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void AddOrder(final String User_Division){
+    private void AddOrder(final String User_Division, final String Address){
+//        Toast.makeText(Checkout.this, Address, Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -929,6 +932,7 @@ public class Checkout extends AppCompatActivity {
                                             params.put("quantity", quantity);
                                             params.put("delivery_price", Price);
                                             params.put("delivery_date", Delivery_Date);
+                                            params.put("delivery_addr", Address);
                                             return params;
                                         }
                                     };

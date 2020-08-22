@@ -6,11 +6,14 @@ import android.provider.ContactsContract;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.click.adapter.OrderAdapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
@@ -29,16 +33,24 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyIncome extends AppCompatActivity {
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
+    private static String URL_READ_ORDERTWO = "https://ketekmall.com/ketekmall/read_order_two.php";
     TextView sold;
 
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    RecyclerView recyclerView;
+
+    OrderAdapter orderAdapter;
+    List<OrderDone> orderList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +61,7 @@ public class MyIncome extends AppCompatActivity {
         ToolbarSettings();
         getIncome();
 
+        Approval_List();
     }
 
     private void getIncome() {
@@ -136,8 +149,13 @@ public class MyIncome extends AppCompatActivity {
     }
 
     private void Declare() {
+        orderList = new ArrayList<>();
+        recyclerView = findViewById(R.id.order_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sold = findViewById(R.id.sold_text);
         bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -170,6 +188,76 @@ public class MyIncome extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void Approval_List() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDERTWO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            Double grand = 0.00;
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                    Toast.makeText(MyIncome.this, "JSON Parsing Error: ", Toast.LENGTH_SHORT).show();
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String id = object.getString("id").trim();
+                                    final String seller_id = object.getString("seller_id").trim();
+                                    final String ad_detail = object.getString("ad_detail").trim();
+                                    final Double price = Double.valueOf(object.getString("price").trim());
+                                    final String image_item = object.getString("photo");
+                                    final String date = object.getString("date").trim();
+                                    final String quantity = object.getString("quantity").trim();
+                                    final String status = object.getString("status").trim();
+                                    final String delivery_price = object.getString("delivery_price").trim();
+                                    final String delivery_date = object.getString("delivery_date").trim();
+                                    final String delivery_addr = object.getString("delivery_addr").trim();
+                                    final String photo = object.getString("photo");
+
+                                    grand += (price * Integer.parseInt(quantity))+ Double.parseDouble(delivery_price);
+
+                                    OrderDone orderDone = new OrderDone();
+                                    orderDone.setItemImage(photo);
+                                    orderDone.setItemName(ad_detail);
+                                    orderDone.setItemPrice(String.valueOf(price));
+                                    orderDone.setDeliveryPrice(delivery_price);
+                                    orderDone.setDeliveryTime(delivery_date);
+                                    orderDone.setDeliveryAddress(delivery_addr);
+                                    orderDone.setStatus(status);
+                                    orderDone.setGrandtotal(String.format("%.2f", grand));
+                                    orderDone.setQuantity(quantity);
+                                    orderList.add(orderDone);
+                                }
+                                orderAdapter = new OrderAdapter(MyIncome.this, orderList);
+                                orderAdapter.sortArrayHighest();
+                                recyclerView.setAdapter(orderAdapter);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MyIncome.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MyIncome.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("seller_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override

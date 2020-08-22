@@ -107,6 +107,7 @@ public class Selling extends AppCompatActivity {
         textView9 = findViewById(R.id.textView9);
         getTextView10 = findViewById(R.id.textView10);
         bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -34,6 +34,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
+            android:id="@+id/income_layout"
             android:layout_below="@id/appbar"
             android:background="@drawable/background_white_full_curves"
             android:layout_margin="10dp"
@@ -84,6 +85,24 @@
                 android:text="@string/my_income_" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_below="@id/income_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:padding="10dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="14sp"
+            android:text="History: " />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/order_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView14"
+            android:layout_above="@id/bottom_nav"/>
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             app:labelVisibilityMode="labeled"
             android:id="@+id/bottom_nav"
@@ -93,4 +112,6 @@
             android:background="@color/colorWhite"
             app:menu="@menu/bottom_menu"/>
     </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

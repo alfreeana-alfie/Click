@@ -167,7 +167,7 @@ public class MyRatingSeller extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("My Rating");
+        getSupportActionBar().setTitle("Shop Rating");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +186,7 @@ public class MyRatingSeller extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setSelectedItemId(R.id.nav_edit_profile);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

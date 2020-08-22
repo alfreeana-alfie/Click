@@ -10,6 +10,14 @@ public class Delivery_Combine {
     String delivery_division1;
     String delivery_price1;
     Spanned delivery_price2;
+    String delivery_days;
+    String delivery_item_id;
+    private String id, seller_id;
+    private String ad_detail, price, division, district;
+    private String photo;
+    private String main_category;
+    private String sub_category;
+    private String quantity;
 
     public Spanned getDelivery_price2() {
         return delivery_price2;
@@ -35,14 +43,7 @@ public class Delivery_Combine {
         this.delivery_price1 = delivery_price1;
     }
 
-    String delivery_days;
-    String delivery_item_id;
-    private String id, seller_id;
-    private String ad_detail, price, division, district;
-    private String photo;
-    private String main_category;
-    private String sub_category;
-    private String quantity;
+
 
     public String getDelivery_id() {
         return delivery_id;

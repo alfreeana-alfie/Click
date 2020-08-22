@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
 
     <RelativeLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -14,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:layout_marginBottom="3dp"
             android:id="@+id/item_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -42,6 +45,19 @@
             android:textSize="12sp"
             android:text="Item Price" />
 
+        <TextView
+            android:id="@+id/item_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/item_image"
+            android:fontFamily="@font/open_sans_semibold"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="12sp"
+            android:text="Quantity" />
+
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
@@ -50,32 +66,60 @@
             android:background="@color/colorLightGrey" />
 
         <RelativeLayout
-            android:padding="10dp"
+
             android:layout_below="@id/view1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-
             <TextView
                 android:layout_marginBottom="5dp"
-                android:id="@+id/delivery_addr"
+                android:id="@+id/addr_view"
+                android:fontFamily="@font/open_sans_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delivery_address" />
 
             <TextView
                 android:layout_marginBottom="5dp"
+                android:id="@+id/delivery_addr"
+                android:layout_below="@id/addr_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delivery_address" />
+
+            <TextView
+                android:id="@+id/timeview"
+                android:layout_below="@id/delivery_addr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/delivery_time" />
+
+            <TextView
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:id="@+id/delivery_time"
                 android:layout_below="@id/delivery_addr"
+                android:layout_toEndOf="@id/timeview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delivery_time" />
 
             <TextView
+                android:id="@+id/shipview"
+                android:layout_below="@id/delivery_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/shipping_total_" />
+
+            <TextView
                 android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:id="@+id/delivery_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/shipview"
                 android:layout_below="@id/delivery_time"
                 android:text="@string/delivery_price" />
 
@@ -95,6 +139,7 @@
                 android:layout_below="@id/delivery_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
                 android:text="@string/grand_total" />
 
             <TextView

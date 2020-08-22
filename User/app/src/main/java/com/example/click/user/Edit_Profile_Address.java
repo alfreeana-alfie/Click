@@ -134,7 +134,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         layout_gender = findViewById(R.id.layout_gender);
 
         bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setSelectedItemId(R.id.nav_edit_profile);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
