@@ -34,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.click.Feed_page;
 import com.example.click.Goto_Register_Page;
 import com.example.click.Noti_Page;
+import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
@@ -116,7 +117,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
     private ScrollView scrollView;
     private Button Button_SellItem, Button_FindItem, button_retail, button_processed,
             button_handcraft, button_cake, button_agriculture, button_service, button_health,
-            button_home, button_personal, button_pepper, button_fashion;
+            button_home, button_pepper, button_fashion;
 
     private CircleImageView profile_display, profile_image;
     private TextView name_display, email_display, button_view_all, username, verify, verify1, button_view_hard, button_view_top;
@@ -224,7 +225,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
         button_health = findViewById(R.id.button_health);
         button_home = findViewById(R.id.button_homes);
         button_fashion = findViewById(R.id.button_fashion);
-        button_personal = findViewById(R.id.button_personal);
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
         button_view_hard = findViewById(R.id.button_view_hard);
@@ -305,7 +305,7 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
+                        Intent intent1 = new Intent(Homepage.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -501,16 +501,6 @@ public class Homepage extends AppCompatActivity implements NavigationView.OnNavi
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Fashion.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-        button_personal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.setVisibility(View.GONE);
-                Intent intent = new Intent(Homepage.this, Personal.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

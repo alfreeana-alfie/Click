@@ -99,6 +99,7 @@
         <activity android:name=".category.View_All_Shock" />
         <activity android:name=".Buying" />
         <activity android:name=".Selling" />
+        <activity android:name=".Profile_Page" />
 
 
         <meta-data

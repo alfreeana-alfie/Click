@@ -219,7 +219,7 @@
                     <androidx.gridlayout.widget.GridLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:columnCount="6"
+                        app:columnCount="5"
                         app:rowCount="2">
 
                         <Button
@@ -344,20 +344,6 @@
                             android:fontFamily="@font/open_sans_bold"
                             android:padding="5dp"
                             android:text="Fashion Accessories"
-                            android:textAllCaps="false"
-                            android:textSize="9sp"
-                            tools:ignore="SmallSp" />
-
-                        <Button
-                            android:id="@+id/button_personal"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/layout_border_white"
-                            android:drawableTop="@mipmap/ic_personal"
-                            android:fontFamily="@font/open_sans_bold"
-                            android:padding="5dp"
-                            android:text="Personal Care"
                             android:textAllCaps="false"
                             android:textSize="9sp"
                             tools:ignore="SmallSp" />
