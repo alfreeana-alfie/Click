@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -231,7 +232,7 @@ public class Edit_Item extends AppCompatActivity {
             }
         });
 
-        adapter_division = ArrayAdapter.createFromResource(this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(this, R.array.new_division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -494,128 +495,76 @@ public class Edit_Item extends AppCompatActivity {
     private void showLocationResult(int position) {
         switch (position) {
             case 0:
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_kuching, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
                 break;
 
             case 1:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 2:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 3:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 4:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 5:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 6:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 7:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 8:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 9:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 10:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
 
             case 11:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Edit_Item.this, R.array.new_limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
                 break;
-
-            case 12:
-                adapter_district = ArrayAdapter.createFromResource(this, R.array.limbang, android.R.layout.simple_spinner_item);
-                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_district.setAdapter(adapter_district);
-                if (district != null) {
-                    int district_position = adapter_district.getPosition(district);
-                    spinner_district.setSelection(district_position);
-                }
-                break;
-
         }
     }
 
@@ -694,6 +643,7 @@ public class Edit_Item extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
     }
 

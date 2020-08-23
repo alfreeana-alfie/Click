@@ -505,4 +505,5 @@
     <string name="register_seller">Daftar Penjual</string>
     <string name="already_boosted_up">Sudah Dinaikkan oleh Admin</string>
     <string name="pending_request">Masih Menunggu</string>
+    <string name="no_delivery">No Delivery</string>
 </resources>

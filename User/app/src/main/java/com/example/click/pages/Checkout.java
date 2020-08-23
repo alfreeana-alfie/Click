@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -937,6 +938,7 @@ public class Checkout extends AppCompatActivity {
                                         }
                                     };
                                     RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                    stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                     requestQueue.add(stringRequest);
                                 }
                             }

@@ -10,7 +10,15 @@ public class Item_All_Details {
     private String main_category;
     private String sub_category;
     private String quantity;
-    private String max_order, shocking;
+    private String max_order, shocking, delivery_status;
+
+    public String getDelivery_status() {
+        return delivery_status;
+    }
+
+    public void setDelivery_status(String delivery_status) {
+        this.delivery_status = delivery_status;
+    }
 
     public String getShocking() {
         return shocking;

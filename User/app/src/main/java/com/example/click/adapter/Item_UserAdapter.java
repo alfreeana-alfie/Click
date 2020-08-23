@@ -58,7 +58,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;
-        TextView TV_addetail, TV_price, TV_item_location;
+        TextView TV_addetail, TV_price, TV_item_location, Delivery_Status;
         Button edit_item, delete_item, boost_ad;
         RatingBar ratingBar;
 
@@ -67,6 +67,18 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
         TV_price = convertView.findViewById(R.id.price_item);
         TV_item_location = convertView.findViewById(R.id.item_location_item);
+        Delivery_Status = convertView.findViewById(R.id.delivery_status);
+        boost_ad = convertView.findViewById(R.id.btn_BoostAds);
+
+
+        if(item.getDelivery_status().equals("0")){
+            Delivery_Status.setVisibility(View.VISIBLE);
+            boost_ad.setVisibility(View.GONE);
+        }else{
+            Delivery_Status.setVisibility(View.GONE);
+            boost_ad.setVisibility(View.VISIBLE);
+        }
+
         edit_item = convertView.findViewById(R.id.edit_item);
         edit_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +97,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        boost_ad = convertView.findViewById(R.id.btn_BoostAds);
+
         boost_ad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

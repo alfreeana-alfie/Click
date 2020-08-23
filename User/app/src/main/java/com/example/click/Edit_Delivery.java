@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,9 +40,9 @@ public class Edit_Delivery extends AppCompatActivity {
 
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/edit_delivery.php";
 
-    ArrayAdapter<CharSequence> adapter_division, adapter_days;
-    Spinner spinner_division, spinner_days;
-    EditText price;
+    ArrayAdapter<CharSequence> adapter_division;
+    Spinner spinner_division;
+    EditText price, days_editText;
     ProgressBar loading;
 
     Button Accept, Cancel;
@@ -62,8 +63,8 @@ public class Edit_Delivery extends AppCompatActivity {
         String days = intent.getStringExtra("days");
 
         price = findViewById(R.id.price);
+        days_editText = findViewById(R.id.days_edit);
         spinner_division = findViewById(R.id.spinner_division);
-        spinner_days = findViewById(R.id.spinner_day);
         Accept = findViewById(R.id.btn_accept);
         Cancel = findViewById(R.id.btn_cancel);
         loading = findViewById(R.id.loading);
@@ -107,16 +108,11 @@ public class Edit_Delivery extends AppCompatActivity {
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
-        adapter_days = ArrayAdapter.createFromResource(this, R.array.days, android.R.layout.simple_spinner_item);
-        adapter_days.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_days.setAdapter(adapter_days);
-
         price.setText(price_text);
+        days_editText.setText(days);
 
         int division_position = adapter_division.getPosition(division);
-        int days_position = adapter_division.getPosition(days);
         spinner_division.setSelection(division_position);
-        spinner_days.setSelection(days_position);
 
         Accept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +121,7 @@ public class Edit_Delivery extends AppCompatActivity {
                 Accept.setVisibility(View.GONE);
                 final String division_edit = spinner_division.getSelectedItem().toString();
                 final String price_edit = price.getText().toString();
-                final String days_edit = spinner_days.getSelectedItem().toString();
+                final String strDays = days_editText.getText().toString();
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                         new Response.Listener<String>() {
@@ -167,12 +163,13 @@ public class Edit_Delivery extends AppCompatActivity {
                         Map<String, String> params = new HashMap<>();
                         params.put("division", division_edit);
                         params.put("price", price_edit);
-                        params.put("days", days_edit);
+                        params.put("days", strDays);
                         params.put("id", id);
                         return params;
                     }
                 };
                 RequestQueue requestQueue = Volley.newRequestQueue(Edit_Delivery.this);
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 requestQueue.add(stringRequest);
 
             }

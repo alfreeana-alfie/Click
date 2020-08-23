@@ -280,6 +280,98 @@
         <item>Limbang</item>
     </string-array>
 
+    <string-array name="new_division">
+        <item>Kuching</item>
+        <item>Kota Samarahan</item>
+        <item>Serian</item>
+        <item>Sri Aman</item>
+        <item>Betong</item>
+        <item>Sarikei</item>
+        <item>Sibu</item>
+        <item>Mukah</item>
+        <item>Bintulu</item>
+        <item>Kapit</item>
+        <item>Miri</item>
+        <item>Limbang</item>
+    </string-array>
+
+    <string-array name="new_kuching">
+        <item>Kuching</item>
+        <item>Bau</item>
+        <item>Lundu</item>
+    </string-array>
+
+    <string-array name="new_samarahan">
+        <item>Kota Samarahan</item>
+        <item>Asajaya</item>
+        <item>Simunjan</item>
+    </string-array>
+
+    <string-array name="new_serian">
+        <item>Serian</item>
+        <item>Tebedu</item>
+    </string-array>
+
+    <string-array name="new_sri_aman">
+        <item>Sri Aman</item>
+        <item>Lubok Antu</item>
+    </string-array>
+
+    <string-array name="new_betong">
+        <item>Betong</item>
+        <item>Saratok</item>
+        <item>Pusa</item>
+        <item>Kabong</item>
+    </string-array>
+
+    <string-array name="new_sarikei">
+        <item>Sarikei</item>
+        <item>Meradong</item>
+        <item>Julau</item>
+        <item>Pakan</item>
+    </string-array>
+
+    <string-array name="new_sibu">
+        <item>Sibu</item>
+        <item>Kanowit</item>
+        <item>Selangau</item>
+    </string-array>
+
+    <string-array name="new_mukah">
+        <item>Mukah</item>
+        <item>Dalat</item>
+        <item>Matu</item>
+        <item>Daro</item>
+        <item>Tanjung Manis</item>
+    </string-array>
+
+    <string-array name="new_bintulu">
+        <item>Bintulu</item>
+        <item>Sebauh</item>
+        <item>Tatau</item>
+    </string-array>
+
+    <string-array name="new_kapit">
+        <item>Kapit</item>
+        <item>Song</item>
+        <item>Belaga</item>
+        <item>Bukit Mabong</item>
+    </string-array>
+
+    <string-array name="new_miri">
+        <item>Miri</item>
+        <item>Marudi</item>
+        <item>Subis</item>
+        <item>Beluru</item>
+        <item>Telang Usan</item>
+    </string-array>
+
+    <string-array name="new_limbang">
+        <item>Limbang</item>
+        <item>Lawas</item>
+    </string-array>
+
+
     <string-array name="kuching">
         <item>All</item>
         <item>Kuching</item>
@@ -553,5 +645,6 @@
     <string name="register_seller">Register Seller</string>
     <string name="already_boosted_up">Already Boosted Up by Admin</string>
     <string name="pending_request">Pending Request</string>
+    <string name="no_delivery">No Delivery</string>
 </resources>
 

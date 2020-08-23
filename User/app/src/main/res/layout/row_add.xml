@@ -46,6 +46,7 @@
             android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"
+            android:inputType="number"
             android:layout_margin="5dp"/>
     </LinearLayout>
 
@@ -60,12 +61,26 @@
         android:orientation="horizontal">
 
         <Spinner
+            android:visibility="gone"
             android:id="@+id/spinner_day"
             android:textAlignment="textEnd"
             android:textSize="14sp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/days"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/_0_days"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:inputType="number"
+            android:layout_margin="5dp"/>
     </LinearLayout>
 
     <ImageView

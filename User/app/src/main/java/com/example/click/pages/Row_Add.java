@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -47,6 +48,7 @@ import java.util.Map;
 public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/add_delivery_partone.php";
+    private static String URL_EDIT_DEL_STATUS = "https://ketekmall.com/ketekmall/edit_delivery_status.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_delivery.php";
 
     LinearLayout layout;
@@ -54,7 +56,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
 
     ArrayAdapter<CharSequence> adapter_division, adapter_days;
     Spinner spinner_division, spinner_days;
-    EditText editText;
+    EditText editText, edit_day;
     ImageView imageView;
     ArrayList<Delivery> cricketersList = new ArrayList<>();
     ProgressBar loading;
@@ -146,6 +148,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         final View view = getLayoutInflater().inflate(R.layout.row_add, null, false);
 
         editText = view.findViewById(R.id.price);
+        edit_day = view.findViewById(R.id.days);
         imageView = view.findViewById(R.id.btn_close);
         spinner_division = view.findViewById(R.id.spinner_division);
         spinner_days = view.findViewById(R.id.spinner_day);
@@ -209,12 +212,14 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
             final String ad_detail = intent.getStringExtra("ad_detail");
 
             editText = view.findViewById(R.id.price);
+            edit_day = view.findViewById(R.id.days);
             imageView = view.findViewById(R.id.btn_close);
             spinner_division = view.findViewById(R.id.spinner_division);
             spinner_days = view.findViewById(R.id.spinner_day);
 
             final String strDivision = spinner_division.getSelectedItem().toString();
             final String strPrice = editText.getText().toString().trim();
+            final String strDaysText= edit_day.getText().toString().trim();
             final String strDays = spinner_days.getSelectedItem().toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
@@ -228,6 +233,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                                 if (success.equals("1")) {
                                     loading.setVisibility(View.GONE);
                                     buttonSubmit.setVisibility(View.VISIBLE);
+                                    onEditStatus(item_id);
 //                                    Toast.makeText(Row_Add.this, "success", Toast.LENGTH_SHORT).show();
 //                                    delivery = new Delivery(strDivision, strPrice, strDays);
                                 } else {
@@ -258,15 +264,53 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
                     params.put("division", strDivision);
                     params.put("price", strPrice);
                     params.put("item_id", item_id);
-                    params.put("days", strDays);
+                    params.put("days", strDaysText);
                     return params;
                 }
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(Row_Add.this);
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
         }
         return result;
+    }
+
+    private void onEditStatus(final String item_id){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_DEL_STATUS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                            } else {
+                                Toast.makeText(Row_Add.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Row_Add.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Row_Add.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", item_id);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Row_Add.this);
+        requestQueue.add(stringRequest);
     }
 
     @Override

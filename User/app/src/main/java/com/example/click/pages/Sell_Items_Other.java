@@ -272,7 +272,7 @@ public class Sell_Items_Other extends AppCompatActivity {
 //        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
 
-        adapter_division = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
         spinner_division.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -378,80 +378,76 @@ public class Sell_Items_Other extends AppCompatActivity {
     private void showLocationResult(int position) {
         switch (position) {
             case 0:
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_kuching, android.R.layout.simple_spinner_item);
+                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_district.setAdapter(adapter_district);
                 break;
 
             case 1:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.kuching, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_samarahan, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 2:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.samarahan, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_serian, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 3:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.serian, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_sri_aman, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 4:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sri_aman, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_betong, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 5:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.betong, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_sarikei, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 6:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sarikei, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_sibu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 7:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.sibu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_mukah, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 8:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.mukah, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_bintulu, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 9:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.bintulu, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_kapit, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 10:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.kapit, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_miri, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
 
             case 11:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.miri, android.R.layout.simple_spinner_item);
+                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.new_limbang, android.R.layout.simple_spinner_item);
                 adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_district.setAdapter(adapter_district);
                 break;
-
-            case 12:
-                adapter_district = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.limbang, android.R.layout.simple_spinner_item);
-                adapter_district.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_district.setAdapter(adapter_district);
-                break;
-
         }
     }
 
@@ -527,8 +523,6 @@ public class Sell_Items_Other extends AppCompatActivity {
 
                                     Item_All_Details_Other item = new Item_All_Details_Other(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
                                     itemList.add(item);
-
-                                    Toast.makeText(Sell_Items_Other.this, "Please edit the setup delivery in this page", Toast.LENGTH_SHORT).show();
 
                                     Intent intent = new Intent(Sell_Items_Other.this, Find_My_Items_Other.class);
                                     startActivity(intent);
