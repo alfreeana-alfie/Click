@@ -410,7 +410,7 @@ public class Buying extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Buying");
+        getSupportActionBar().setTitle(getResources().getString(R.string.buying));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

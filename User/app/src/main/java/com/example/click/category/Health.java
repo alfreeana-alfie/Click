@@ -145,7 +145,7 @@ public class Health extends AppCompatActivity {
             }
         });
 
-        search_find.setHint("Search");
+        search_find.setHint(getResources().getString(R.string.search));
         search_find.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -206,7 +206,7 @@ public class Health extends AppCompatActivity {
                 final String strAd_Detail = search_find.getText().toString();
                 final String strDivision = spinner_division.getSelectedItem().toString();
 
-                if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
+                if (!strAd_Detail.isEmpty() && !strDivision.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Health.this);
                     adapter_item.notifyDataSetChanged();
@@ -281,7 +281,7 @@ public class Health extends AppCompatActivity {
                 final String strDivision = spinner_division.getSelectedItem().toString();
                 final String strDistrict = spinner_district.getSelectedItem().toString();
 
-                if (strDistrict.equals("All")) {
+                if (strDistrict.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Health.this);
                     adapter_item.notifyDataSetChanged();
@@ -289,7 +289,7 @@ public class Health extends AppCompatActivity {
 
                     Filter_Division(strDivision);
                 }
-                if (strDivision.equals("All")) {
+                if (strDivision.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Health.this);
                     adapter_item.notifyDataSetChanged();
@@ -297,7 +297,7 @@ public class Health extends AppCompatActivity {
 
                     View_List();
                 }
-                if(!strDivision.equals("All") && !strDistrict.equals("All")){
+                if(!strDivision.equals(getResources().getString(R.string.All)) && !strDistrict.equals(getResources().getString(R.string.All))){
                     itemList.clear();
                     adapter_item = new Item_Adapter(itemList, Health.this);
                     adapter_item.notifyDataSetChanged();

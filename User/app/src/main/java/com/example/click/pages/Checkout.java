@@ -398,7 +398,7 @@ public class Checkout extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Checkout");
+        getSupportActionBar().setTitle(getResources().getString(R.string.checkout));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

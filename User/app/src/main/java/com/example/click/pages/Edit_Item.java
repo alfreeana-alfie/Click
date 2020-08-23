@@ -33,12 +33,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.ActivityDelivery;
-import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
 import com.example.click.Profile_Page;
-import com.example.click.Profile_Page_Other;
 import com.example.click.R;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 

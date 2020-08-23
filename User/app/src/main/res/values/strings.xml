@@ -506,7 +506,6 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="pos_laju_tracking_no">Pos Laju Tracking No.</string>
-    <string name="pos_laju_tracking_no">Pos Laju Tacking No.</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="shipping_to">Shipping to :</string>
@@ -545,5 +544,14 @@
     <string name="delivery_time">Delivery Time: </string>
     <string name="shipping_total_">Shipping Total: </string>
     <string name="posting">Posting</string>
+    <string name="seller">SELLER</string>
+    <string name="buyer">BUYER</string>
+    <string name="notifications">Notifications</string>
+    <string name="me">Me</string>
+    <string name="All">All</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="register_seller">Register Seller</string>
+    <string name="already_boosted_up">Already Boosted Up by Admin</string>
+    <string name="pending_request">Pending Request</string>
 </resources>
 

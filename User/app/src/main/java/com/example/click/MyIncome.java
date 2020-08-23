@@ -127,7 +127,7 @@ public class MyIncome extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("My Income");
+        getSupportActionBar().setTitle(getResources().getString(R.string.my_income));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

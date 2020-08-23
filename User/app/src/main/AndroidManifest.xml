@@ -69,7 +69,6 @@
         <activity android:name=".pages.Saved_Searches_Other" />
         <activity android:name=".pages.Find_My_Items_Other" />
         <activity android:name=".pages.Sell_Items_Other" />
-        <activity android:name=".pages.Main_Order_Other" />
         <activity android:name=".pages.Chat_Inbox_Other" />
         <activity android:name=".Edit_Delivery" />
         <activity android:name=".View_Item_Single" />
@@ -102,7 +101,6 @@
         <activity android:name=".Profile_Page" />
         <activity android:name=".MyIncome" />
         <activity android:name=".MyRating" />
-        <activity android:name=".Profile_Page_Other" />
         <activity android:name=".Boost_Ad" />
         <activity android:name=".MyRatingSeller" />
 

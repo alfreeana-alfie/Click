@@ -4,9 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="7dp">
 
     <RelativeLayout
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
@@ -25,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/item_image"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/open_sans_semibold"
             android:textSize="16sp"
@@ -42,6 +44,18 @@
             android:layout_marginStart="5dp"
             android:textSize="12sp"
             android:text="Item Price" />
+
+        <TextView
+            android:id="@+id/item_shocking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_price"
+            android:layout_toEndOf="@id/item_image"
+
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="12sp"
+            android:text="Shocking Sale" />
 
         <Button
             android:id="@+id/btn_cancel"

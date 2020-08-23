@@ -93,7 +93,7 @@ public class Detail_Info extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("More Details");
+        getSupportActionBar().setTitle(getResources().getString(R.string.more_details));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

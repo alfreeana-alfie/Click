@@ -100,7 +100,7 @@ public class Review_Info extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Review");
+        getSupportActionBar().setTitle(getResources().getString(R.string.review));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

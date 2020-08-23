@@ -22,8 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.adapter.FeedAdapter;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.Main_Order_Other;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;

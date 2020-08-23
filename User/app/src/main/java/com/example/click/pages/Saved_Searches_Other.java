@@ -131,7 +131,7 @@ public class Saved_Searches_Other extends AppCompatActivity {
         final ImageButton close_search = view.findViewById(R.id.btn_close);
         ImageButton back_button = view.findViewById(R.id.back_button);
 
-        search_find.setHint("Search");
+        search_find.setHint(getResources().getString(R.string.search));
         search_find.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

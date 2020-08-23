@@ -24,8 +24,12 @@
             android:title="@string/edit_profile" />
 
         <item
-            android:id="@+id/language"
-            android:title="Change to BM/BI" />
+            android:id="@+id/malaylang"
+            android:title="Change to BM" />
+
+        <item
+            android:id="@+id/englang"
+            android:title="Change to BI" />
 
         <item
             android:id="@+id/setting"

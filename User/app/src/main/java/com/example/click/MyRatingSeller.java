@@ -167,7 +167,7 @@ public class MyRatingSeller extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Shop Rating");
+        getSupportActionBar().setTitle(getResources().getString(R.string.shop_rating));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

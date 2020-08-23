@@ -10,7 +10,15 @@ public class Item_All_Details {
     private String main_category;
     private String sub_category;
     private String quantity;
-    private String max_order;
+    private String max_order, shocking;
+
+    public String getShocking() {
+        return shocking;
+    }
+
+    public void setShocking(String shocking) {
+        this.shocking = shocking;
+    }
 
     public String getSold() {
         return sold;

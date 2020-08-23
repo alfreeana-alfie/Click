@@ -1,8 +1,12 @@
 package com.example.click.pages;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,12 +33,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Feed_page;
 import com.example.click.Goto_Register_Page;
 import com.example.click.LocaleHelper;
 import com.example.click.Noti_Page;
 import com.example.click.Profile_Page;
-import com.example.click.Profile_Page_Other;
 import com.example.click.R;
 import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
@@ -49,7 +49,6 @@ import com.example.click.category.Handicraft;
 import com.example.click.category.Health;
 import com.example.click.category.Home;
 import com.example.click.category.Pepper;
-import com.example.click.category.Personal;
 import com.example.click.category.Processed;
 import com.example.click.category.Retail;
 import com.example.click.category.Service;
@@ -65,7 +64,6 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
@@ -76,6 +74,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -84,6 +83,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Homepage extends AppCompatActivity {
 
+    public static final String MyPREFERENCES = "myPref";
     public static final String ID = "id";
     public static final String USERID = "userid";
     public static final String MAIN_CATE = "main_category";
@@ -129,6 +129,7 @@ public class Homepage extends AppCompatActivity {
     RelativeLayout hot_layout, top_layout;
 
     ImageButton btn_next, btn_back;
+    String lang;
 
     BottomNavigationView bottomNav;
     private long backPressedTime;
@@ -142,6 +143,13 @@ public class Homepage extends AppCompatActivity {
     };
     String[] image = new String[3];
     PageAdapter adapter;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        LocaleHelper.onAttach(newBase, lang);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,7 +313,7 @@ public class Homepage extends AppCompatActivity {
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Homepage.this, Profile_Page_Other.class);
+                        Intent intent1 = new Intent(Homepage.this, Profile_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -384,7 +392,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
-//                SellerCheck(getId);
+                SellerCheck(getId);
             }
         });
 
@@ -394,7 +402,6 @@ public class Homepage extends AppCompatActivity {
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, View_All.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -504,7 +511,7 @@ public class Homepage extends AppCompatActivity {
             public void onClick(View v) {
                 view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, View_All.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -563,7 +570,7 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    /*private void SellerCheck(final String user_id){
+    private void SellerCheck(final String user_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
                     @Override
@@ -580,10 +587,10 @@ public class Homepage extends AppCompatActivity {
 
                                     int strVerify = Integer.valueOf(object.getString("verification"));
                                     if(strVerify == 0){
-                                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                                        Menu nav_Menu = navigationView.getMenu();
-                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
-                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
+//                                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//                                        Menu nav_Menu = navigationView.getMenu();
+//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
+//                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
 
                                         Intent intent1 = new Intent(Homepage.this, Goto_Register_Page.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -618,7 +625,7 @@ public class Homepage extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }*/
+    }
 
     private void SellerCheck_Main(final String user_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
@@ -640,14 +647,14 @@ public class Homepage extends AppCompatActivity {
 //                                        Menu nav_Menu = navigationView.getMenu();
 //                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
 //                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
-                                        verify.setText("Buyer");
+                                        verify.setText(getResources().getString(R.string.buyer));
 //                                        verify1.setText("Buyer");
                                     }else{
 //                                        NavigationView navigationView = findViewById(R.id.nav_view);
 //                                        Menu nav_Menu = navigationView.getMenu();
 //                                        nav_Menu.findItem(R.id.nav_sell).setVisible(true);
 //                                        nav_Menu.findItem(R.id.nav_find).setVisible(true);
-                                        verify.setText("Seller");
+                                        verify.setText(getResources().getString(R.string.seller));
 //                                        verify1.setText("Seller");
                                     }
 
@@ -795,8 +802,36 @@ public class Homepage extends AppCompatActivity {
                 sessionManager.logout();
                 break;
 
-            case R.id.language:
-                LocaleHelper.setLocale(this,"ms");
+            case R.id.malaylang:
+                String languageToLoad  = "ms"; // your language
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = lang.edit();
+                editor.putString("lang", languageToLoad);
+                editor.apply();
+
+                this.recreate();
+                break;
+
+            case R.id.englang:
+                String languageToLoad1  = "en"; // your language
+                Locale locale1 = new Locale(languageToLoad1);
+                Locale.setDefault(locale1);
+                Configuration config1 = new Configuration();
+                config1.locale = locale1;
+                getBaseContext().getResources().updateConfiguration(config1,
+                        getBaseContext().getResources().getDisplayMetrics());
+                SharedPreferences lang1 = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor1 = lang1.edit();
+                editor1.putString("lang", languageToLoad1);
+                editor1.apply();
+
+                this.recreate();
                 break;
 
             case R.id.menu_cart:

@@ -133,7 +133,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Chat_Inbox_Other.this, Homepage.class);
+                Intent intent = new Intent(Chat_Inbox_Other.this, Profile_Page.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

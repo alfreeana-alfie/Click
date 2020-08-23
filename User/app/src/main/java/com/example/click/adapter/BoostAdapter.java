@@ -1,6 +1,8 @@
 package com.example.click.adapter;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,15 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
         holder.AdDetail.setText(addetail);
         holder.Price.setText("MYR" + ItemPrice);
 
+
+        if (itemAllDetails.getShocking().equals("1")){
+            String newString = "<font color='#FF3333'>" + "Approved" +"</font>";
+            holder.Shocking.setText(Html.fromHtml(newString));
+        }else {
+            String newString = "<font color='#3DDC84'>" + "Pending Request" +"</font>";
+            holder.Shocking.setText(Html.fromHtml(newString));
+        }
+
         holder.btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +83,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView;
-        TextView AdDetail, Price;
+        TextView AdDetail, Price, Shocking;
         Button btn_cancel;
 
         public ViewHolder(View itemView) {
@@ -80,6 +91,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
 
             ItemImageView = itemView.findViewById(R.id.item_image);
             AdDetail = itemView.findViewById(R.id.item_name);
+            Shocking = itemView.findViewById(R.id.item_shocking);
 
             Price = itemView.findViewById(R.id.item_price);
 

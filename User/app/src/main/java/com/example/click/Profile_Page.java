@@ -1,14 +1,10 @@
 package com.example.click;
 
-import android.accounts.Account;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,8 +24,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.Saved_Searches_Other;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
@@ -97,7 +91,7 @@ public class Profile_Page extends AppCompatActivity {
                 return true;
             }
         });
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
         mViewPager = findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 

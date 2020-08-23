@@ -122,7 +122,7 @@ public class Row_Add extends AppCompatActivity implements View.OnClickListener {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Back");
+        getSupportActionBar().setTitle(getResources().getString(R.string.back));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

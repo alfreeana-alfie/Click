@@ -161,7 +161,7 @@ public class Cart extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Shopping Cart");
+        getSupportActionBar().setTitle(getResources().getString(R.string.shopping_cart));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

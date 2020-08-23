@@ -4,18 +4,18 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_two_foreground"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="always|withText"/>
 
     <item
         android:id="@+id/nav_noti"
         android:icon="@drawable/ic_noti_foreground"
-        android:title="Notifications"
+        android:title="@string/notifications"
         app:showAsAction="always|withText"/>
 
     <item
         android:id="@+id/nav_edit_profile"
         android:icon="@drawable/ic_edit_two_foreground"
-        android:title="Me"
+        android:title="@string/me"
         app:showAsAction="always|withText"/>
 </menu>

@@ -14,8 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.click.category.View_All;
 import com.example.click.pages.Chat_Inbox_Other;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.Main_Order_Other;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Noti_Page extends AppCompatActivity {
@@ -90,7 +88,7 @@ public class Noti_Page extends AppCompatActivity {
         update_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Noti_Page.this, Main_Order_Other.class);
+                Intent intent1 = new Intent(Noti_Page.this, Noti_Page.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }

@@ -33,15 +33,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.ActivityDelivery;
-import com.example.click.Feed_page;
 import com.example.click.Noti_Page;
 import com.example.click.Profile_Page;
-import com.example.click.Profile_Page_Other;
 import com.example.click.R;
-import com.example.click.data.Item_All_Details;
 import com.example.click.data.Item_All_Details_Other;
 import com.example.click.data.SessionManager;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -54,8 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.transform.stream.StreamSource;
 
 public class Sell_Items_Other extends AppCompatActivity {
 
@@ -211,7 +205,7 @@ public class Sell_Items_Other extends AppCompatActivity {
         back_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent4 = new Intent(Sell_Items_Other.this, Profile_Page_Other.class);
+                Intent intent4 = new Intent(Sell_Items_Other.this, Profile_Page.class);
                 intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent4);
             }
@@ -624,7 +618,7 @@ public class Sell_Items_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent4 = new Intent(Sell_Items_Other.this, Profile_Page_Other.class);
+        Intent intent4 = new Intent(Sell_Items_Other.this, Profile_Page.class);
         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent4);
     }

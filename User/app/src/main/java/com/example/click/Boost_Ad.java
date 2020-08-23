@@ -63,7 +63,6 @@ public class Boost_Ad extends AppCompatActivity {
         ToolbarSettings();
 
         getSession();
-
         getBoost();
     }
 
@@ -98,8 +97,10 @@ public class Boost_Ad extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String shocking = object.getString("shocking_sale");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setShocking(shocking);
                                     item_all_details.add(item);
                                 }
                                 boostAdapter = new BoostAdapter(Boost_Ad.this, item_all_details);
@@ -220,7 +221,7 @@ public class Boost_Ad extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Boost Ads");
+        getSupportActionBar().setTitle(getResources().getString(R.string.boost_ad));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,5 +232,13 @@ public class Boost_Ad extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Boost_Ad.this, Profile_Page.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

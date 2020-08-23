@@ -169,7 +169,7 @@ public class MyRating extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("My Rating");
+        getSupportActionBar().setTitle(getResources().getString(R.string.my_rating));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

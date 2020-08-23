@@ -199,7 +199,7 @@ public class Register_Seller extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Register Seller");
+        getSupportActionBar().setTitle(getResources().getString(R.string.register_seller));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

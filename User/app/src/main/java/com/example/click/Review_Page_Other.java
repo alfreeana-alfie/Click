@@ -1,7 +1,6 @@
 package com.example.click;
 
 import android.content.Intent;
-import android.media.SubtitleData;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
 import com.example.click.pages.Homepage;
-import com.example.click.pages.Main_Order_Other;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
@@ -266,7 +264,7 @@ public class Review_Page_Other extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Review_Page_Other.this, Main_Order_Other.class);
+                Intent intent1 = new Intent(Review_Page_Other.this, Profile_Page.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
@@ -287,12 +285,12 @@ public class Review_Page_Other extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Back");
+        getSupportActionBar().setTitle(getResources().getString(R.string.back));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Review_Page_Other.this, Main_Order_Other.class);
+                Intent intent1 = new Intent(Review_Page_Other.this, Profile_Page.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
@@ -341,7 +339,7 @@ public class Review_Page_Other extends AppCompatActivity {
                                                                 btn_submit.setVisibility(View.VISIBLE);
                                                                 Toast.makeText(Review_Page_Other.this, "Saved", Toast.LENGTH_SHORT).show();
 
-                                                                Intent intent = new Intent(Review_Page_Other.this, Main_Order_Other.class);
+                                                                Intent intent = new Intent(Review_Page_Other.this, Profile_Page.class);
                                                                 startActivity(intent);
                                                             } else {
                                                                 loading.setVisibility(View.GONE);
