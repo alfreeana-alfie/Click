@@ -195,9 +195,8 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                             while (i.hasNext()){
                                 final String chat = i.next().toString();
 
-                                String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
-                                Log.d("TAG: " , newemail);
-                                if(chat.contains(UserDetails.username + newemail + "_")){
+                                final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+                                if(chat.contains(newemail + "_" )){
                                     StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                                             new Response.Listener<String>() {
                                                 @Override
@@ -208,12 +207,13 @@ public class Chat_Inbox_Other extends AppCompatActivity {
 
                                                         while (i.hasNext()){
                                                             String key = i.next().toString();
+                                                            String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
 
                                                             if(!key.equals(UserDetails.username)){
-                                                                if (chat.contains(key)){
+                                                                if (chat.contains(newemail1)){
                                                                     user = new User(key, object.getJSONObject(key).get("photo").toString());
-                                                                    String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
-                                                                    user.setChatwith(newemail1);
+                                                                    String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
+                                                                    user.setChatwith(newemail2);
                                                                     usersArrayList.add(user);
                                                                     user_adapter = new UserAdapter(Chat_Inbox_Other.this, usersArrayList);
                                                                 }
@@ -225,7 +225,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                                                             @Override
                                                             public void onItemClick(int position) {
                                                                 User user = usersArrayList.get(position);
-                                                                UserDetails.chatWith = user.getUsername() + user.getChatwith();
+                                                                UserDetails.chatWith = user.getChatwith();
                                                                 UserDetails.chatWith1 = user.getUsername();
                                                                 startActivity(new Intent(Chat_Inbox_Other.this, Chat.class));
                                                             }
@@ -272,7 +272,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Chat_Inbox_Other.this, Homepage.class);
+        Intent intent = new Intent(Chat_Inbox_Other.this, Profile_Page.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

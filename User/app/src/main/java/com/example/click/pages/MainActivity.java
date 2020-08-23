@@ -112,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
                                     final String photo = object.getString("photo").trim();
                                     String id = object.getString("id").trim();
 
-//                                    String newemail = email.substring(0, email.lastIndexOf("@"));
-//
-//                                    Log.d("TAG: ", newemail);
+                                    String newemail = email.substring(0, email.lastIndexOf("@"));
+
+                                    Log.d("TAG: ", newemail);
 
                                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 

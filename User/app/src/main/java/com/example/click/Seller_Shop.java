@@ -83,6 +83,7 @@ public class Seller_Shop extends AppCompatActivity {
         Intent intent = getIntent();
         String seller_id = intent.getStringExtra("id");
         final String seller_name = intent.getStringExtra("seller_name");
+        final String seller_email = intent.getStringExtra("seller_email");
         String seller_location = intent.getStringExtra("seller_location");
         String seller_photo = intent.getStringExtra("seller_photo");
         final String seller_phone = intent.getStringExtra("seller_phone");
@@ -140,7 +141,9 @@ public class Seller_Shop extends AppCompatActivity {
         btn_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserDetails.chatWith = seller_name;
+                String newemail1 = seller_email.substring(0, seller_email.lastIndexOf("@"));
+                UserDetails.chatWith = newemail1;
+                UserDetails.chatWith1 = seller_name;
                 Intent intent = new Intent(Seller_Shop.this, Chat.class);
                 startActivity(intent);
             }

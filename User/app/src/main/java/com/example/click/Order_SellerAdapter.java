@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.click.adapter.Seller_OrderAdapter;
+import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -46,7 +47,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         Collections.sort(item_all_details, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                return o1.getStatus().compareToIgnoreCase(o2.getStatus());
+                return Double.compare(Double.parseDouble(o2.getId()), Double.parseDouble(o1.getId()));
             }
         });
         notifyDataSetChanged();

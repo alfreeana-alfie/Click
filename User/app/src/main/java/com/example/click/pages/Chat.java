@@ -159,8 +159,8 @@ public class Chat extends AppCompatActivity {
         String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
         Firebase.setAndroidContext(this);
 
-        reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.username + newemail + "_" + UserDetails.chatWith);
-        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username + newemail);
+        reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + newemail + "_" + UserDetails.chatWith);
+        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + newemail);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

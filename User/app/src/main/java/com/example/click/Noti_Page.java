@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.click.category.View_All;
+import com.example.click.category.View_All_Shock;
 import com.example.click.pages.Chat_Inbox_Other;
 import com.example.click.pages.Homepage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -70,7 +71,7 @@ public class Noti_Page extends AppCompatActivity {
         promotion_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Noti_Page.this, View_All.class);
+                Intent intent1 = new Intent(Noti_Page.this, View_All_Shock.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
@@ -88,7 +89,7 @@ public class Noti_Page extends AppCompatActivity {
         update_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Noti_Page.this, Noti_Page.class);
+                Intent intent1 = new Intent(Noti_Page.this, Buying.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }

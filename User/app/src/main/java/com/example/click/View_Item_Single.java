@@ -304,12 +304,12 @@ public class View_Item_Single extends AppCompatActivity {
             }
         });
 
-        btn_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddCart();
-            }
-        });
+//        btn_chat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AddCart();
+//            }
+//        });
 
         view_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -511,7 +511,7 @@ public class View_Item_Single extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String strName = object.getString("name").trim();
-                                    String strEmail = object.getString("email").trim();
+                                    final String strEmail = object.getString("email").trim();
                                     final String strPhoto = object.getString("photo");
                                     final String mobile_num = object.getString("phone_no");
                                     final String strDivision = object.getString("division").trim();
@@ -554,6 +554,7 @@ public class View_Item_Single extends AppCompatActivity {
                                             Intent intent1 = new Intent(View_Item_Single.this, Seller_Shop.class);
                                             intent1.putExtra("id", userid);
                                             intent1.putExtra("seller_name", strName);
+                                            intent1.putExtra("seller_email", strEmail);
                                             intent1.putExtra("seller_photo", strPhoto);
                                             intent1.putExtra("seller_location", strDivision);
                                             intent1.putExtra("seller_phone", mobile_num);
@@ -564,7 +565,9 @@ public class View_Item_Single extends AppCompatActivity {
                                     btn_chat.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            UserDetails.chatWith = strName;
+                                            String newemail1 = strEmail.substring(0, strEmail.lastIndexOf("@"));
+                                            UserDetails.chatWith = newemail1;
+                                            UserDetails.chatWith1 = strName;
                                             Intent intent = new Intent(View_Item_Single.this, Chat.class);
                                             startActivity(intent);
                                         }

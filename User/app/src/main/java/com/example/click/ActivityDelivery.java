@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Edit_Item;
 import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Row_Add;
@@ -80,12 +82,6 @@ public class ActivityDelivery extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(ActivityDelivery.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
-
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(ActivityDelivery.this, Noti_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -106,7 +102,7 @@ public class ActivityDelivery extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(ActivityDelivery.this, Homepage.class);
+                Intent intent1 = new Intent(ActivityDelivery.this, Edit_Item.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
@@ -169,10 +165,13 @@ public class ActivityDelivery extends AppCompatActivity {
 
                                     Read_Delivery(id);
                                 }
+                            }else {
+                                Toast.makeText(ActivityDelivery.this, "Failed to Read Product", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityDelivery.this, "Please try again later", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(ActivityDelivery.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityDelivery.this, "Failed to Read Product", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -194,6 +193,7 @@ public class ActivityDelivery extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(ActivityDelivery.this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
     }
 

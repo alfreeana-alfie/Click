@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -366,6 +367,11 @@ public class Sell_Items_Other extends AppCompatActivity {
                 adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner_sub_category.setAdapter(adapter_other);
                 break;
+            case 10:
+                adapter_other = ArrayAdapter.createFromResource(Sell_Items_Other.this, R.array.other_category, android.R.layout.simple_spinner_item);
+                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_other);
+                break;
         }
     }
 
@@ -522,10 +528,9 @@ public class Sell_Items_Other extends AppCompatActivity {
                                     Item_All_Details_Other item = new Item_All_Details_Other(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
                                     itemList.add(item);
 
-                                    Toast.makeText(Sell_Items_Other.this, "Saved", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Sell_Items_Other.this, "Please edit the setup delivery in this page", Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(Sell_Items_Other.this, ActivityDelivery.class);
-                                    intent.putExtra("ad_detail", item.getAd_detail());
+                                    Intent intent = new Intent(Sell_Items_Other.this, Find_My_Items_Other.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(Sell_Items_Other.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
@@ -578,6 +583,7 @@ public class Sell_Items_Other extends AppCompatActivity {
             };
 
             RequestQueue requestQueue = Volley.newRequestQueue(Sell_Items_Other.this);
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             requestQueue.add(stringRequest);
         }
     }
