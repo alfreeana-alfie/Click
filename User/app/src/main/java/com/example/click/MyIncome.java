@@ -93,7 +93,7 @@ public class MyIncome extends AppCompatActivity {
                                     final String quantity = object.getString("quantity");
 
                                     grantotal += (price * Integer.parseInt(quantity));
-                                    sold.setText("MYR" + String.format("%.2f", grantotal));
+                                    sold.setText(String.format("%.2f", grantotal));
 
                                     final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
                                     item.setQuantity(quantity);

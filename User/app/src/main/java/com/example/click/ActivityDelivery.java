@@ -63,8 +63,22 @@ public class ActivityDelivery extends AppCompatActivity {
         setContentView(R.layout.activity_delivery);
 
         final Intent intent = getIntent();
-        String item_id = intent.getStringExtra("item_id");
-        String ad_detail = intent.getStringExtra("ad_detail");
+        final String item_id = intent.getStringExtra("item_id");
+        final String ad_detail = intent.getStringExtra("ad_detail");
+        final String main_category = intent.getStringExtra("main_category");
+        final String sub_category = intent.getStringExtra("sub_category");
+        final String price = intent.getStringExtra("price");
+        final String division = intent.getStringExtra("division");
+        final String district = intent.getStringExtra("district");
+        final String photo = intent.getStringExtra("photo");
+        String Category_Text = main_category;
+        String Location_Text = division + ", " + district;
+        final String strMax_Order = intent.getStringExtra("max_order");
+
+        final String brand = intent.getStringExtra("brand_material");
+        final String inner = intent.getStringExtra("inner_material");
+        final String stock = intent.getStringExtra("stock");
+        final String desc = intent.getStringExtra("description");
 
         btn_accept = findViewById(R.id.accept_delivery);
         btn_back = findViewById(R.id.back_delivery);
@@ -102,8 +116,21 @@ public class ActivityDelivery extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(ActivityDelivery.this, Edit_Item.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent1 = new Intent(ActivityDelivery.this, ActivityDelivery.class);
+                intent1.putExtra("item_id", item_id);
+                intent1.putExtra("ad_detail", ad_detail);
+                intent1.putExtra("main_category", main_category);
+                intent1.putExtra("sub_category", sub_category);
+                intent1.putExtra("price", price);
+                intent1.putExtra("division", division);
+                intent1.putExtra("district", district);
+                intent1.putExtra("photo", photo);
+                intent1.putExtra("max_order", strMax_Order);
+
+                intent1.putExtra("division", brand);
+                intent1.putExtra("district", inner);
+                intent1.putExtra("photo", stock);
+                intent1.putExtra("max_order", desc);
                 startActivity(intent1);
             }
         });

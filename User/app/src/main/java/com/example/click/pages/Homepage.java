@@ -972,7 +972,7 @@ public class Homepage extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
-
+                                    String rating = object.getString("rating");
                                     String brand = object.getString("brand_material").trim();
                                     String inner = object.getString("inner_material").trim();
                                     String stock = object.getString("stock").trim();
@@ -982,6 +982,7 @@ public class Homepage extends AppCompatActivity {
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList2.add(item);
                                 }
                                 adapter_item2 = new Item_Single_Adapter(itemList2, Homepage.this);

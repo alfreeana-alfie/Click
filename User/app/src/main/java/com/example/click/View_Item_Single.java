@@ -513,7 +513,7 @@ public class View_Item_Single extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String strName = object.getString("name").trim();
-                                    final String strEmail = object.getString("email").trim();
+                                    final String strEmail = object.getString("email");
                                     final String strPhoto = object.getString("photo");
                                     final String mobile_num = object.getString("phone_no");
                                     final String strDivision = object.getString("division").trim();
@@ -679,8 +679,18 @@ public class View_Item_Single extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setRating(rating);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Single_Adapter(itemList, View_Item_Single.this);

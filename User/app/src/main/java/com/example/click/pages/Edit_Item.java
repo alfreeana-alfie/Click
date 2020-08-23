@@ -91,13 +91,13 @@ public class Edit_Item extends AppCompatActivity {
         final Intent intent = getIntent();
         id = intent.getStringExtra("id");
 //        final String userid = intent.getStringExtra(EXTRA_USERID);
-        final String main_category = intent.getStringExtra(EXTRA_MAIN);
-        sub_category = intent.getStringExtra(EXTRA_SUB);
-        final String ad_detail = intent.getStringExtra(EXTRA_AD_DETAIL);
-        final String price = intent.getStringExtra(EXTRA_PRICE);
-        final String division = intent.getStringExtra(EXTRA_DIVISION);
-        district = intent.getStringExtra(EXTRA_DISTRICT);
-        final String photo = intent.getStringExtra(EXTRA_IMG_ITEM);
+        final String main_category = intent.getStringExtra("main_category");
+        sub_category = intent.getStringExtra("sub_category");
+        final String ad_detail = intent.getStringExtra("ad_detail");
+        final String price = intent.getStringExtra("price");
+        final String division = intent.getStringExtra("division");
+        district = intent.getStringExtra("district");
+        final String photo = intent.getStringExtra("photo");
         String Category_Text = main_category;
         String Location_Text = division + ", " + district;
         final String strMax_Order = intent.getStringExtra("max_order");
@@ -117,6 +117,18 @@ public class Edit_Item extends AppCompatActivity {
                 Intent intent1 = new Intent(Edit_Item.this, ActivityDelivery.class);
                 intent1.putExtra("item_id", id);
                 intent1.putExtra("ad_detail", ad_detail);
+                intent1.putExtra("main_category", main_category);
+                intent1.putExtra("sub_category", sub_category);
+                intent1.putExtra("price", price);
+                intent1.putExtra("division", division);
+                intent1.putExtra("district", district);
+                intent1.putExtra("photo", photo);
+                intent1.putExtra("max_order", strMax_Order);
+
+                intent1.putExtra("division", brand);
+                intent1.putExtra("district", inner);
+                intent1.putExtra("photo", stock);
+                intent1.putExtra("max_order", desc);
                 startActivity(intent1);
             }
         });
@@ -322,6 +334,7 @@ public class Edit_Item extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Edit_Item.this, Find_My_Items_Other.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -339,9 +352,7 @@ public class Edit_Item extends AppCompatActivity {
                 category_page_layout.setVisibility(View.GONE);
                 item_page_layout.setVisibility(View.VISIBLE);
 
-                final String mCategory = spinner_main_category.getSelectedItem().toString() + ", " + spinner_sub_category.getSelectedItem().toString();
-                Main_Category_TextView.setText(spinner_main_category.getSelectedItem().toString());
-                Sub_Category_TextView.setText(spinner_sub_category.getSelectedItem().toString());
+                final String mCategory = spinner_main_category.getSelectedItem().toString();
                 Category_TextView.setText(mCategory);
             }
         });
@@ -487,7 +498,17 @@ public class Edit_Item extends AppCompatActivity {
                     spinner_sub_category.setSelection(main_catposition);
 
                 }
+                break;
 
+            case 10:
+                adapter_other = ArrayAdapter.createFromResource(this, R.array.other_category, android.R.layout.simple_spinner_item);
+                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner_sub_category.setAdapter(adapter_other);
+                if (sub_category != null) {
+                    int main_catposition = adapter_other.getPosition(sub_category);
+                    spinner_sub_category.setSelection(main_catposition);
+
+                }
                 break;
         }
     }
@@ -571,7 +592,7 @@ public class Edit_Item extends AppCompatActivity {
     private void saveEdit() {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        final String strMain_category = this.Main_Category_TextView.getText().toString().trim();
+        final String strMain_category = this.spinner_main_category.getSelectedItem().toString();
         final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final String strBrand = this.edittext_brand.getText().toString();
@@ -627,7 +648,7 @@ public class Edit_Item extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("main_category", strMain_category);
-                params.put("sub_category", strSub_category);
+                params.put("sub_category", strMain_category);
                 params.put("ad_detail", strAd_Detail);
                 params.put("brand_material", strBrand);
                 params.put("inner_material", strInner);

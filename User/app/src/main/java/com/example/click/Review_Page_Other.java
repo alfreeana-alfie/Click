@@ -170,7 +170,7 @@ public class Review_Page_Other extends AppCompatActivity {
 
         OrderID.setText("KM" + order_id);
 
-        TrackingNo.setText("PL" + strTracking);
+        TrackingNo.setText(strTracking);
         DateOrder.setText(order_date);
         DateReceived.setText(strDelivery_Date);
 
@@ -203,7 +203,7 @@ public class Review_Page_Other extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                intent1.setData(Uri.parse("https://www.tracking.my/poslaju/" + "PL"+ strTracking));
+                intent1.setData(Uri.parse("https://www.tracking.my/poslaju/" + strTracking));
                 startActivity(intent1);
             }
         });
