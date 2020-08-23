@@ -43,6 +43,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/open_sans_bold"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:text="@string/my_income_" />
+
             <TableRow
                 android:padding="10dp"
                 android:layout_gravity="center"
@@ -73,16 +84,7 @@
             </TableRow>
 
 
-            <TextView
-                android:padding="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:fontFamily="@font/open_sans_bold"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp"
-                android:text="@string/my_income_" />
+
         </LinearLayout>
 
         <TextView

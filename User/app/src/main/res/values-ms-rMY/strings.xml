@@ -142,7 +142,7 @@
     <string name="pending">Masih Tertangguh</string>
     <string name="shipped">Dalam Perjalanan</string>
     <string name="rejected">DITOLAK</string>
-    <string name="shop_rating">Rating Kedai</string>
+    <string name="shop_rating">Rating Produk</string>
 
     <string-array name="gender">
         <item>Perempuan</item>

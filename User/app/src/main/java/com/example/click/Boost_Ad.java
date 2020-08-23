@@ -160,7 +160,9 @@ public class Boost_Ad extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", getId);
+                return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
