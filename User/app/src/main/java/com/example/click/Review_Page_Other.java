@@ -49,7 +49,7 @@ public class Review_Page_Other extends AppCompatActivity {
 //            tracking_notext, order_datetext, order_id1,
 //            address_user, text_addetail, text_price, ship_date,
 //            text_quantity, item_price, shipping_price, grandTotal;
-    TextView OrderID,Rejected, Finished, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
+    TextView OrderID,Rejected, Finished, Cancel, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
     ImageView Photo , OrderedBlack, OrderedGreen,
             PendingBlack, PendingGreen,
             ShippedBlack, ShippedGreen,
@@ -127,6 +127,7 @@ public class Review_Page_Other extends AppCompatActivity {
 
         Rejected = findViewById(R.id.rejected);
         Finished = findViewById(R.id.finished);
+        Cancel = findViewById(R.id.cancel);
 
         OrderedBlack = findViewById(R.id.ordered_black);
         OrderedGreen = findViewById(R.id.ordered_green);
@@ -179,8 +180,6 @@ public class Review_Page_Other extends AppCompatActivity {
         Picasso.get().load(strPhoto).into(Photo);
 
         ratingBar = findViewById(R.id.ratingBar);
-
-
 
         Double sub_total = 0.00;
         sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
@@ -252,6 +251,9 @@ public class Review_Page_Other extends AppCompatActivity {
             btn_received.setVisibility(View.INVISIBLE);
         }if(remarks.equals("Reject")){
             Rejected.setVisibility(View.VISIBLE);
+        }
+        if(remarks.equals("Cancel")){
+            Cancel.setVisibility(View.VISIBLE);
         }
 
         btn_submit.setOnClickListener(new View.OnClickListener() {

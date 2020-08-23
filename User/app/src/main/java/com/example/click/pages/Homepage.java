@@ -63,6 +63,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.appevents.ml.Utils;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
@@ -805,18 +806,18 @@ public class Homepage extends AppCompatActivity {
 
             case R.id.malaylang:
                 String languageToLoad  = "ms"; // your language
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
-                SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = lang.edit();
-                editor.putString("lang", languageToLoad);
-                editor.apply();
+                    Locale locale = new Locale(languageToLoad);
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getBaseContext().getResources().updateConfiguration(config,
+                            getBaseContext().getResources().getDisplayMetrics());
+                    SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
+                    SharedPreferences.Editor editor = lang.edit();
+                    editor.putString("lang", languageToLoad);
+                    editor.apply();
 
-                this.recreate();
+                    this.recreate();
                 break;
 
             case R.id.englang:
@@ -877,8 +878,19 @@ public class Homepage extends AppCompatActivity {
                                     String image_item = object.getString("photo");
                                     String sold = object.getString("sold");
 
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+                                    String rating = object.getString("rating");
+
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setSold(sold);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
@@ -888,50 +900,26 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent intent1 = new Intent(Homepage.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Item_All_Details item = itemList.get(position);
 
-                                        final Intent intent4 = getIntent();
-                                        String id1 = intent4.getStringExtra("id");
-                                        String stock = intent4.getStringExtra("stock");
-                                        String brand = intent4.getStringExtra("brand_material");
-                                        String inner = intent4.getStringExtra("inner_material");
-                                        String desc = intent4.getStringExtra("description");
-                                        String division = intent4.getStringExtra("division");
-                                        String district = intent4.getStringExtra("district");
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                        String userid1 = intent4.getStringExtra("user_id");
-                                        String strMain_category1 = intent4.getStringExtra("main_category");
-                                        String strSub_category1 = intent4.getStringExtra("sub_category");
-                                        String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                        String strPrice1 = intent4.getStringExtra("price");
-                                        String division1 = intent4.getStringExtra("division");
-                                        String district1 = intent4.getStringExtra("district");
-                                        String photo1 = intent4.getStringExtra("photo");
-                                        String item_id = intent4.getStringExtra("item_id");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                        intent1.putExtra("item_id", item_id);
-                                        intent1.putExtra("id", id1);
-                                        intent1.putExtra("user_id", userid1);
-                                        intent1.putExtra("main_category", strMain_category1);
-                                        intent1.putExtra("sub_category", strSub_category1);
-                                        intent1.putExtra("ad_detail", ad_detail1);
-                                        intent1.putExtra("price", strPrice1);
-                                        intent1.putExtra("division", division1);
-                                        intent1.putExtra("district", district1);
-                                        intent1.putExtra("photo", photo1);
-
-
-
-                                        intent1.putExtra("id", id1);
-                                        intent1.putExtra("stock", stock);
-                                        intent1.putExtra("brand_material", brand);
-                                        intent1.putExtra("inner_material", inner);
-                                        intent1.putExtra("description", desc);
-                                        intent1.putExtra("division", division);
-                                        intent1.putExtra("district", district);
-
-                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent1);
+                                        startActivity(detailIntent);
                                     }
                                 });
 
@@ -984,7 +972,16 @@ public class Homepage extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
                                     itemList2.add(item);
                                 }
                                 adapter_item2 = new Item_Single_Adapter(itemList2, Homepage.this);
@@ -993,50 +990,26 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent intent1 = new Intent(Homepage.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Item_All_Details item = itemList2.get(position);
 
-                                        final Intent intent4 = getIntent();
-                                        String id1 = intent4.getStringExtra("id");
-                                        String stock = intent4.getStringExtra("stock");
-                                        String brand = intent4.getStringExtra("brand_material");
-                                        String inner = intent4.getStringExtra("inner_material");
-                                        String desc = intent4.getStringExtra("description");
-                                        String division = intent4.getStringExtra("division");
-                                        String district = intent4.getStringExtra("district");
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                        String userid1 = intent4.getStringExtra("user_id");
-                                        String strMain_category1 = intent4.getStringExtra("main_category");
-                                        String strSub_category1 = intent4.getStringExtra("sub_category");
-                                        String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                        String strPrice1 = intent4.getStringExtra("price");
-                                        String division1 = intent4.getStringExtra("division");
-                                        String district1 = intent4.getStringExtra("district");
-                                        String photo1 = intent4.getStringExtra("photo");
-                                        String item_id = intent4.getStringExtra("item_id");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                        intent1.putExtra("item_id", item_id);
-                                        intent1.putExtra("id", id1);
-                                        intent1.putExtra("user_id", userid1);
-                                        intent1.putExtra("main_category", strMain_category1);
-                                        intent1.putExtra("sub_category", strSub_category1);
-                                        intent1.putExtra("ad_detail", ad_detail1);
-                                        intent1.putExtra("price", strPrice1);
-                                        intent1.putExtra("division", division1);
-                                        intent1.putExtra("district", district1);
-                                        intent1.putExtra("photo", photo1);
-
-
-
-                                        intent1.putExtra("id", id1);
-                                        intent1.putExtra("stock", stock);
-                                        intent1.putExtra("brand_material", brand);
-                                        intent1.putExtra("inner_material", inner);
-                                        intent1.putExtra("description", desc);
-                                        intent1.putExtra("division", division);
-                                        intent1.putExtra("district", district);
-
-                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent1);
+                                        startActivity(detailIntent);
                                     }
                                 });
 

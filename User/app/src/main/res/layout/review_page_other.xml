@@ -351,6 +351,20 @@
 
                     <TextView
                         android:visibility="gone"
+                        android:id="@+id/cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:padding="10dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:background="#FF0000"
+                        android:textColor="@color/colorWhite"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:text="@string/cancel" />
+
+                    <TextView
+                        android:visibility="gone"
                         android:id="@+id/rejected"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
