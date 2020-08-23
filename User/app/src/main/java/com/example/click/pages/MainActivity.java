@@ -2,6 +2,7 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -110,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
                                     final String gender = object.getString("gender").trim();
                                     final String photo = object.getString("photo").trim();
                                     String id = object.getString("id").trim();
+
+                                    String newemail = email.substring(0, email.lastIndexOf("@"));
+
+                                    Log.d("TAG: ", newemail);
 
                                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 

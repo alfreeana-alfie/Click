@@ -3,6 +3,15 @@ package com.example.click.data;
 public class User {
     public String username;
     public String photo;
+    String chatwith;
+
+    public String getChatwith() {
+        return chatwith;
+    }
+
+    public void setChatwith(String chatwith) {
+        this.chatwith = chatwith;
+    }
 
     public User(String username, String photo) {
         this.username = username;

@@ -2,6 +2,7 @@ package com.example.click.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -138,7 +139,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
             }
         });
     }
-
+/*
     private void doOnSuccess(final String s) {
         try {
             final JSONObject obj = new JSONObject(s);
@@ -180,6 +181,7 @@ public class Chat_Inbox_Other extends AppCompatActivity {
             recyclerView.setAdapter(user_adapter);
         }
     }
+*/
 
     private void doON(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
@@ -193,13 +195,15 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                             while (i.hasNext()){
                                 final String chat = i.next().toString();
 
-                                if(chat.contains(UserDetails.username + "_")){
+                                String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+                                Log.d("TAG: " , newemail);
+                                if(chat.contains(UserDetails.username + newemail + "_")){
                                     StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                                             new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String response) {
                                                     try {
-                                                        JSONObject object =new JSONObject(response);
+                                                        final JSONObject object =new JSONObject(response);
                                                         Iterator i = object.keys();
 
                                                         while (i.hasNext()){
@@ -208,6 +212,8 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                                                             if(!key.equals(UserDetails.username)){
                                                                 if (chat.contains(key)){
                                                                     user = new User(key, object.getJSONObject(key).get("photo").toString());
+                                                                    String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
+                                                                    user.setChatwith(newemail1);
                                                                     usersArrayList.add(user);
                                                                     user_adapter = new UserAdapter(Chat_Inbox_Other.this, usersArrayList);
                                                                 }
@@ -219,7 +225,8 @@ public class Chat_Inbox_Other extends AppCompatActivity {
                                                             @Override
                                                             public void onItemClick(int position) {
                                                                 User user = usersArrayList.get(position);
-                                                                UserDetails.chatWith = user.getUsername();
+                                                                UserDetails.chatWith = user.getUsername() + user.getChatwith();
+                                                                UserDetails.chatWith1 = user.getUsername();
                                                                 startActivity(new Intent(Chat_Inbox_Other.this, Chat.class));
                                                             }
                                                         });

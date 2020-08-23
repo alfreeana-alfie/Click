@@ -145,7 +145,6 @@
         <item>Health and Beauty</item>
         <item>Home and living</item>
         <item>Fashion Accessories</item>
-        <item>Personal Care</item>
         <item>Sarawak Pepper-based Product</item>
     </string-array>
 
@@ -507,7 +506,7 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="pos_laju_tracking_no">Pos Laju Tracking No.</string>
-    <string name="pos_laju_tacking_no">Pos Laju Tacking No.</string>
+    <string name="pos_laju_tracking_no">Pos Laju Tacking No.</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="shipping_to">Shipping to :</string>

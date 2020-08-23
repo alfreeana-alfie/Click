@@ -33,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.Feed_page;
 import com.example.click.Goto_Register_Page;
+import com.example.click.LocaleHelper;
 import com.example.click.Noti_Page;
 import com.example.click.Profile_Page;
 import com.example.click.Profile_Page_Other;
@@ -792,6 +793,10 @@ public class Homepage extends AppCompatActivity {
             case R.id.setting:
                 disconnectFromFacebook();
                 sessionManager.logout();
+                break;
+
+            case R.id.language:
+                LocaleHelper.setLocale(this,"ms");
                 break;
 
             case R.id.menu_cart:

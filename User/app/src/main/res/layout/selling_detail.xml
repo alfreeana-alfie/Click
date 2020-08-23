@@ -515,7 +515,7 @@
                             android:textCursorDrawable="@drawable/color_cursor"
                             android:layout_centerVertical="true"
                             android:inputType="text"
-                            android:hint="@string/pos_laju_tacking_no" />
+                            android:hint="@string/pos_laju_tracking_no" />
                     </RelativeLayout>
 
                 </RelativeLayout>

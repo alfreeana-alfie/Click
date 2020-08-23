@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
+import com.example.click.pages.Chat_Inbox_Other;
 import com.example.click.pages.Homepage;
 import com.example.click.pages.Saved_Searches_Other;
 import com.example.click.user.Edit_Profile;
@@ -47,7 +48,7 @@ public class Buying_Other_Frag extends Fragment {
     SessionManager sessionManager;
 
     RelativeLayout Mylikes, Buying, MyRating,
-            AccountSettings, HelpCentre;
+            AccountSettings, HelpCentre, ChatInbox;
 
     @Nullable
     @Override
@@ -110,6 +111,15 @@ public class Buying_Other_Frag extends Fragment {
                 startActivity(intent1);
             }
         });
+
+        ChatInbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent account = new Intent(getContext(), Chat_Inbox_Other.class);
+                account.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(account);
+            }
+        });
     }
 
     private void Declare(View view){
@@ -119,5 +129,6 @@ public class Buying_Other_Frag extends Fragment {
         MyRating = view.findViewById(R.id.myrating);
         AccountSettings = view.findViewById(R.id.accountsettings);
         HelpCentre = view.findViewById(R.id.helpcentre);
+        ChatInbox = view.findViewById(R.id.Chat);
     }
 }

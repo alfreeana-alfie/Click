@@ -82,7 +82,7 @@ public class Chat extends AppCompatActivity {
         TextView chatname = view.findViewById(R.id.user_chatname);
         final CircleImageView circleImageView = view.findViewById(R.id.profile_image);
 
-        chatname.setText(UserDetails.chatWith);
+        chatname.setText(UserDetails.chatWith1);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,10 +156,11 @@ public class Chat extends AppCompatActivity {
             }
         });
 
+        String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
         Firebase.setAndroidContext(this);
 
-        reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.username + "_" + UserDetails.chatWith);
-        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
+        reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.username + newemail + "_" + UserDetails.chatWith);
+        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username + newemail);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

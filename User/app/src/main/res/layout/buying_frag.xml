@@ -179,6 +179,29 @@
                         android:layout_height="1dp"
                         android:background="@color/colorLightGrey" />
 
+                    <RelativeLayout
+                        android:id="@+id/Chat"
+                        android:padding="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/ChatImage"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/ic_chatketekmall_foreground"/>
+
+                        <TextView
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/ChatText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/ChatImage"
+                            android:textAlignment="center"
+                            android:text="@string/my_chat_inbox" />
+                    </RelativeLayout>
+
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
