@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/item_name"
         android:textColor="@color/colorPrimaryDark" />
 

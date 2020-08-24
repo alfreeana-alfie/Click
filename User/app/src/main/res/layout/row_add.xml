@@ -46,7 +46,7 @@
             android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:layout_margin="5dp"/>
     </LinearLayout>
 

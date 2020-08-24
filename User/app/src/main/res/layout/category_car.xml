@@ -24,7 +24,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:layout_above="@id/bottom_nav"
         android:id="@+id/category_layout"
         android:layout_width="wrap_content"
@@ -130,6 +129,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_above="@id/bottom_nav"
         android:id="@+id/filter_layout"
         android:layout_width="match_parent"
