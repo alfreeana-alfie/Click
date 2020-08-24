@@ -147,12 +147,6 @@ public class Homepage extends AppCompatActivity {
     PageAdapter adapter;
 
 
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(newBase);
-//        LocaleHelper.onAttach(newBase, lang);
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,6 +155,7 @@ public class Homepage extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
 
+/*
         final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
         final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
         final Handler handler = new Handler();
@@ -182,6 +177,7 @@ public class Homepage extends AppCompatActivity {
                 handler.post(update);
             }
         }, DELAY_MS, PERIOD_MS);
+*/
 
         getSession();
 
@@ -251,8 +247,6 @@ public class Homepage extends AppCompatActivity {
                 int current = viewPager.getCurrentItem() + 1;
                 if(current<viewPager.getChildCount()){
                     viewPager.setCurrentItem(current);
-                } else {
-                    viewPager.setCurrentItem(0);
                 }
             }
         });
@@ -263,8 +257,6 @@ public class Homepage extends AppCompatActivity {
                 int current = viewPager.getCurrentItem() - 1;
                 if(current<viewPager.getChildCount()){
                     viewPager.setCurrentItem(current);
-                } else {
-                    viewPager.setCurrentItem(0);
                 }
             }
         });
@@ -686,60 +678,6 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.nav_home:
-//                Intent intent4 = new Intent(Homepage.this, Homepage.class);
-//                intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent4);
-//                Toast.makeText(this, "Homepage", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.nav_sell:
-//
-//                SellerCheck(getId);
-//                Toast.makeText(this, "Sell My Items", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.nav_find:
-//                Intent intent1 = new Intent(Homepage.this, Find_My_Items_Other.class);
-//                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent1);
-//                Toast.makeText(this, "Find My Items", Toast.LENGTH_SHORT).show();
-//                break;
-//
-//            case R.id.nav_ads:
-//                Intent intent3 = new Intent(Homepage.this, Main_Order_Other.class);
-//                intent3.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent3);
-//                Toast.makeText(this, "My Orders", Toast.LENGTH_SHORT).show();
-//                break;
-//
-//            case R.id.nav_chat_inbox:
-//                Intent intent5 = new Intent(Homepage.this, Chat_Inbox_Other.class);
-//                intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent5);
-//                Toast.makeText(this, "My Chat Inbox", Toast.LENGTH_SHORT).show();
-//                break;
-//
-//            case R.id.nav_favourite_ads:
-//                Intent intent = new Intent(Homepage.this, Saved_Searches_Other.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//                Toast.makeText(this, "My Favourite Ads", Toast.LENGTH_SHORT).show();
-//                break;
-//
-//            case R.id.nav_about_the_apps:
-//                Toast.makeText(this, "Coming Soon!", Toast.LENGTH_SHORT).show();
-//                break;
-//
-//            case R.id.nav_log_out:
-//                disconnectFromFacebook();
-//                sessionManager.logout();
-//        }
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-
     public void disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return; // already logged out
@@ -1095,6 +1033,7 @@ public class Homepage extends AppCompatActivity {
         }
         backPressedTime = System.currentTimeMillis();
     }
+/*
 
     @Override
     protected void onStart() {
@@ -1107,4 +1046,6 @@ public class Homepage extends AppCompatActivity {
         timer.cancel();
         super.onDestroy();
     }
+*/
+
 }
