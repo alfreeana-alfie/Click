@@ -1,11 +1,9 @@
 package com.example.click.pages;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,13 +31,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Goto_Register_Page;
-import com.example.click.LocaleHelper;
-import com.example.click.Noti_Page;
-import com.example.click.Profile_Page;
 import com.example.click.R;
-import com.example.click.Review_Info;
-import com.example.click.View_Item_Single;
 import com.example.click.adapter.CartAdapter;
 import com.example.click.adapter.Item_Single_Adapter;
 import com.example.click.adapter.PageAdapter;
@@ -63,7 +55,6 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.appevents.ml.Utils;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
@@ -79,7 +70,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -136,13 +126,6 @@ public class Homepage extends AppCompatActivity {
     BottomNavigationView bottomNav;
     private long backPressedTime;
     private Toast backToast;
-    private String[] imageUrls = new String[]{
-            "https://cdn.pixabay.com/photo/2016/11/11/23/34/cat-1817970_960_720.jpg",
-            "https://cdn.pixabay.com/photo/2017/12/21/12/26/glowworm-3031704_960_720.jpg",
-            "https://cdn.pixabay.com/photo/2017/12/24/09/09/road-3036620_960_720.jpg",
-            "https://cdn.pixabay.com/photo/2017/11/07/00/07/fantasy-2925250_960_720.jpg",
-            "https://cdn.pixabay.com/photo/2017/10/10/15/28/butterfly-2837589_960_720.jpg"
-    };
     String[] image = new String[3];
     PageAdapter adapter;
 
@@ -301,13 +284,13 @@ public class Homepage extends AppCompatActivity {
 //                        break;
 
                     case R.id.nav_noti:
-                        Intent intent6 = new Intent(Homepage.this, Noti_Page.class);
+                        Intent intent6 = new Intent(Homepage.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Homepage.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Homepage.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -586,11 +569,11 @@ public class Homepage extends AppCompatActivity {
 //                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
 //                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
 
-                                        Intent intent1 = new Intent(Homepage.this, Goto_Register_Page.class);
+                                        Intent intent1 = new Intent(Homepage.this, Register_Seller_MainPage.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
                                     }else{
-                                        Intent intent1 = new Intent(Homepage.this, Sell_Items_Other.class);
+                                        Intent intent1 = new Intent(Homepage.this, Product_Add.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
                                     }
@@ -780,7 +763,7 @@ public class Homepage extends AppCompatActivity {
                 break;
 
             case R.id.menu_chat:
-                Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Other.class);
+                Intent intent3 = new Intent(Homepage.this, Chat_Inbox.class);
                 startActivity(intent3);
                 break;
 
@@ -838,7 +821,7 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("item_id", item.getItem_id());
@@ -929,7 +912,7 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Homepage.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
                                         Item_All_Details item = itemList2.get(position);
 
                                         detailIntent.putExtra("item_id", item.getItem_id());

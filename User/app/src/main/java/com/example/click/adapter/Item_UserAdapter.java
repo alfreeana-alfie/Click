@@ -19,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_UserAdapter extends BaseAdapter implements Filterable {
+public class Item_UserAdapter extends BaseAdapter{
 
     private Context context;
     private List<Item_All_Details> itemList;
@@ -71,10 +71,10 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
         boost_ad = convertView.findViewById(R.id.btn_BoostAds);
 
 
-        if(item.getDelivery_status().equals("0")){
+        if (item.getDelivery_status().equals("0")) {
             Delivery_Status.setVisibility(View.VISIBLE);
             boost_ad.setVisibility(View.GONE);
-        }else{
+        } else {
             Delivery_Status.setVisibility(View.GONE);
             boost_ad.setVisibility(View.VISIBLE);
         }
@@ -118,6 +118,7 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
 
         return convertView;
     }
+/*
 
     @Override
     public Filter getFilter() {
@@ -154,10 +155,13 @@ public class Item_UserAdapter extends BaseAdapter implements Filterable {
         };
         return filter;
     }
+*/
 
     public interface OnItemClickListener {
         void onEditClick(int position);
+
         void onBoostClick(int position);
+
         void onDeleteClick(int position);
     }
 }

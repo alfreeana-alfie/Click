@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.DeadObjectException;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -25,15 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Feed_page;
-import com.example.click.Noti_Page;
-import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.adapter.CartAdapter;
-import com.example.click.adapter.UserOrderAdapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -129,13 +123,13 @@ public class Cart extends AppCompatActivity {
 //                        break;
 
                     case R.id.nav_noti:
-                        Intent intent6 = new Intent(Cart.this, Noti_Page.class);
+                        Intent intent6 = new Intent(Cart.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Cart.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Cart.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;

@@ -6,14 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.click.Order;
 import com.example.click.R;
 import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
@@ -23,7 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Item_Single_Adapter extends BaseAdapter{
+public class Item_Single_Adapter extends BaseAdapter {
 
     List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
@@ -40,10 +36,6 @@ public class Item_Single_Adapter extends BaseAdapter{
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListerner = listener;
-    }
-
-    public interface OnItemClickListener {
-        void onViewClick(int position);
     }
 
     @Override
@@ -105,5 +97,9 @@ public class Item_Single_Adapter extends BaseAdapter{
             }
         });
         return convertView;
+    }
+
+    public interface OnItemClickListener {
+        void onViewClick(int position);
     }
 }

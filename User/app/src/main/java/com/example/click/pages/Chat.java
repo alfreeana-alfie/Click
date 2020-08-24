@@ -27,13 +27,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Feed_page;
-import com.example.click.Noti_Page;
-import com.example.click.Profile_Page;
 import com.example.click.R;
 import com.example.click.data.MySingleton;
 import com.example.click.data.UserDetails;
-import com.example.click.user.Edit_Profile;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -87,7 +83,7 @@ public class Chat extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Chat.this, Chat_Inbox_Other.class);
+                Intent intent = new Intent(Chat.this, Chat_Inbox.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -140,13 +136,13 @@ public class Chat extends AppCompatActivity {
 //                        break;
 
                     case R.id.nav_noti:
-                        Intent intent6 = new Intent(Chat.this, Noti_Page.class);
+                        Intent intent6 = new Intent(Chat.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Chat.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Chat.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -372,7 +368,7 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Chat.this, Chat_Inbox_Other.class);
+        Intent intent = new Intent(Chat.this, Chat_Inbox.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

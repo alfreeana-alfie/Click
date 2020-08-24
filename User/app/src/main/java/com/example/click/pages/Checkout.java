@@ -1,9 +1,7 @@
 package com.example.click.pages;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -30,15 +28,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Delivery_Combine;
-import com.example.click.Noti_Page;
-import com.example.click.Profile_Page;
+import com.example.click.data.Delivery_Combine;
 import com.example.click.R;
 import com.example.click.adapter.UserOrderAdapter_Other;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.MySingleton;
 import com.example.click.data.SessionManager;
-import com.example.click.user.Edit_Profile;
 import com.example.click.user.Edit_Profile_Address;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -363,13 +358,13 @@ public class Checkout extends AppCompatActivity {
 //                        break;
 
                     case R.id.nav_noti:
-                        Intent intent6 = new Intent(Checkout.this, Noti_Page.class);
+                        Intent intent6 = new Intent(Checkout.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Checkout.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Checkout.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -895,7 +890,7 @@ public class Checkout extends AppCompatActivity {
                                                             RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
                                                             requestQueue.add(stringRequest);
                                                             DeleteOrder_Single();
-                                                            Intent intent = new Intent(Checkout.this, After_Place_Order.class);
+                                                            Intent intent = new Intent(Checkout.this, Place_Order.class);
                                                             intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);
 //                                                            Toast.makeText(Checkout.this, "SUCCESS", Toast.LENGTH_SHORT).show();

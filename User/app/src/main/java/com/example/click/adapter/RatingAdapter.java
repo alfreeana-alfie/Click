@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -14,8 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.click.R;
-import com.example.click.Rating;
-import com.example.click.data.Item_All_Details;
+import com.example.click.data.Rating;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,7 +20,6 @@ import java.util.List;
 public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
 
     Context context;
-    int mQuantity;
     private List<Rating> item_all_details;
 
     public RatingAdapter(Context context, List<Rating> item_all_detailsList) {

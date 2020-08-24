@@ -4,17 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.click.Order;
-import com.example.click.OrderDone;
+import com.example.click.data.OrderDone;
 import com.example.click.R;
-import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -28,13 +25,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     private List<OrderDone> item_all_details;
     private OnItemClickListener mListerner;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListerner = listener;
-    }
-
     public OrderAdapter(Context context, List<OrderDone> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListerner = listener;
     }
 
     @NonNull
@@ -69,17 +66,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Picasso.get().load(ItemImage).into(holder.ItemImageView);
         holder.AdDetail.setText(addetail);
         holder.Price.setText(ItemPrice);
-        holder.Delivery_Price.setText("MYR"+ delivery_price);
+        holder.Delivery_Price.setText("MYR" + delivery_price);
         holder.Delivery_Time.setText(delivery_date);
         holder.Delivery_Address.setText(delivery_Addr);
-        holder.GrandTotal.setText("MYR"+ itemAllDetails.getGrandtotal());
+        holder.GrandTotal.setText("MYR" + itemAllDetails.getGrandtotal());
         holder.Status.setText(itemAllDetails.getStatus());
-        holder.Quantity.setText("x"+ itemAllDetails.getQuantity());
+        holder.Quantity.setText("x" + itemAllDetails.getQuantity());
     }
 
     @Override
     public int getItemCount() {
         return item_all_details.size();
+    }
+
+    public interface OnItemClickListener {
+        void onCancelClick(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -101,9 +102,5 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             Status = itemView.findViewById(R.id.status);
 
         }
-    }
-
-    public interface OnItemClickListener {
-        void onCancelClick(int position);
     }
 }

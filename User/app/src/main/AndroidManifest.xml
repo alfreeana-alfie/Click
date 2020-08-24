@@ -38,7 +38,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".Splashscreen">
+        <activity android:name=".pages.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +51,7 @@
         <activity
             android:name=".pages.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pages.Edit_Item" />
+        <activity android:name=".pages.Product_Edit" />
         <activity android:name=".pages.Cart" />
         <activity
             android:name=".user.Edit_Profile"
@@ -60,29 +60,27 @@
             android:name=".pages.Chat"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".pages.Checkout" />
-        <activity android:name=".pages.After_Place_Order" />
-        <activity android:name=".pages.Row_Add" />
-        <activity android:name=".ActivityDelivery" />
+        <activity android:name=".pages.Place_Order" />
+        <activity android:name=".pages.Delivery_Add" />
+        <activity android:name=".pages.Delivery_MainPage" />
 
         <activity android:name=".category.View_All" />
-        <activity android:name=".pages.Saved_Searches_View" />
-        <activity android:name=".pages.Saved_Searches_Other" />
-        <activity android:name=".pages.Find_My_Items_Other" />
-        <activity android:name=".pages.Sell_Items_Other" />
-        <activity android:name=".pages.Chat_Inbox_Other" />
-        <activity android:name=".Edit_Delivery" />
-        <activity android:name=".View_Item_Single" />
-        <activity android:name=".Seller_Shop" />
-        <activity android:name=".Shipping_Info" />
+        <activity android:name=".pages.MyLikes" />
+        <activity android:name=".pages.MyProducts" />
+        <activity android:name=".pages.Product_Add" />
+        <activity android:name=".pages.Chat_Inbox" />
+        <activity android:name=".pages.Delivery_Edit" />
+        <activity android:name=".pages.View_Product" />
+        <activity android:name=".pages.About_Seller" />
+        <activity android:name=".pages.Shipping_Information" />
         <activity android:name=".user.Edit_Profile_Address" />
-        <activity android:name=".Goto_Register_Page" />
-        <activity android:name=".Register_Seller" />
-        <activity android:name=".Detail_Info" />
-        <activity android:name=".Selling_Detail" />
-        <activity android:name=".Review_Info" />
-        <activity android:name=".Feed_page" />
-        <activity android:name=".Noti_Page" />
-        <activity android:name=".Review_Page_Other" />
+        <activity android:name=".pages.Register_Seller_MainPage" />
+        <activity android:name=".pages.Register_Seller" />
+        <activity android:name=".pages.More_Details" />
+        <activity android:name=".pages.Selling_Detail" />
+        <activity android:name=".pages.Review_Info" />
+        <activity android:name=".pages.Notification_Page" />
+        <activity android:name=".pages.Review_Page" />
         <activity android:name=".category.Agriculture" />
         <activity android:name=".category.Cake" />
         <activity android:name=".category.Fashion" />
@@ -96,13 +94,13 @@
         <activity android:name=".category.Service" />
         <activity android:name=".category.View_All_Hot" />
         <activity android:name=".category.View_All_Shock" />
-        <activity android:name=".Buying" />
-        <activity android:name=".Selling" />
-        <activity android:name=".Profile_Page" />
-        <activity android:name=".MyIncome" />
-        <activity android:name=".MyRating" />
-        <activity android:name=".Boost_Ad" />
-        <activity android:name=".MyRatingSeller" />
+        <activity android:name=".pages.MyBuying" />
+        <activity android:name=".pages.MySelling" />
+        <activity android:name=".pages.Me_Page" />
+        <activity android:name=".pages.MyIncome" />
+        <activity android:name=".pages.MyRating" />
+        <activity android:name=".pages.BoostAd" />
+        <activity android:name=".pages.ProductRating" />
 
 
         <meta-data

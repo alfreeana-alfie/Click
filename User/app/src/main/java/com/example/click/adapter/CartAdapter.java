@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,8 +68,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity));
 
-                    if(mQuantity == Integer.parseInt(itemAllDetails.getMax_order())){
-                            holder.increase.setVisibility(View.INVISIBLE);
+                    if (mQuantity == Integer.parseInt(itemAllDetails.getMax_order())) {
+                        holder.increase.setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -87,11 +85,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity));
 
-                    if(mQuantity != Integer.parseInt(itemAllDetails.getMax_order())) {
+                    if (mQuantity != Integer.parseInt(itemAllDetails.getMax_order())) {
                         holder.increase.setVisibility(View.VISIBLE);
                     }
                 }
-                if(Integer.parseInt(itemAllDetails.getQuantity()) == 0){
+                if (Integer.parseInt(itemAllDetails.getQuantity()) == 0) {
                     if (mListerner != null) {
                         mListerner.onDeleteClick(position);
                     }
@@ -117,12 +115,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     mListerner.onClick(position);
                     holder.increase.setVisibility(View.INVISIBLE);
                     holder.decrease.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     mListerner.onDeleteCart_Temp(position);
                     holder.increase.setVisibility(View.VISIBLE);
                     holder.decrease.setVisibility(View.VISIBLE);
 
-                    if(mQuantity >= Integer.parseInt(itemAllDetails.getMax_order())){
+                    if (mQuantity >= Integer.parseInt(itemAllDetails.getMax_order())) {
                         holder.increase.setVisibility(View.INVISIBLE);
                     }
                 }

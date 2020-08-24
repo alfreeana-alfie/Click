@@ -2,20 +2,17 @@ package com.example.click.adapter;
 
 import android.content.Context;
 import android.text.Html;
-import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.click.R;
-import com.example.click.Rating;
 import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
@@ -24,17 +21,16 @@ import java.util.List;
 public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> {
 
     Context context;
-    int mQuantity;
     private List<Item_All_Details> item_all_details;
     private OnItemClickListener mListerner;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListerner = listener;
-    }
 
     public BoostAdapter(Context context, List<Item_All_Details> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListerner = listener;
     }
 
     @NonNull
@@ -56,11 +52,11 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
         holder.Price.setText("MYR" + ItemPrice);
 
 
-        if (itemAllDetails.getShocking().equals("1")){
-            String newString = "<font color='#3DDC84'>" + "Approved" +"</font>";
+        if (itemAllDetails.getShocking().equals("1")) {
+            String newString = "<font color='#3DDC84'>" + "Approved" + "</font>";
             holder.Shocking.setText(Html.fromHtml(newString));
-        }else {
-            String newString = "<font color='#FF3333'>" + "Pending Request" +"</font>";
+        } else {
+            String newString = "<font color='#FF3333'>" + "Pending Request" + "</font>";
             holder.Shocking.setText(Html.fromHtml(newString));
         }
 
@@ -78,6 +74,10 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return item_all_details.size();
+    }
+
+    public interface OnItemClickListener {
+        void onCancelClick(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -98,9 +98,5 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
             btn_cancel = itemView.findViewById(R.id.btn_cancel);
 
         }
-    }
-
-    public interface OnItemClickListener {
-        void onCancelClick(int position);
     }
 }

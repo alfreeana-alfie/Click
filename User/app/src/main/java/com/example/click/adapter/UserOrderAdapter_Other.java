@@ -11,9 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.click.Delivery_Combine;
+import com.example.click.data.Delivery_Combine;
 import com.example.click.R;
-import com.example.click.data.Item_All_Details;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,21 +20,17 @@ import java.util.List;
 public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapter_Other.ViewHolder> {
 
     Context context;
-    private List<Delivery_Combine> item_all_details,item_all_details2;
+    private List<Delivery_Combine> item_all_details, item_all_details2;
     private OnItemClickListener mListerner;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListerner = listener;
-    }
-
-    public interface OnItemClickListener {
-        void onSelfClick(int position);
-    }
 
     public UserOrderAdapter_Other(Context context, List<Delivery_Combine> item_all_detailsList, List<Delivery_Combine> item_all_detailsList2) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
         this.item_all_details2 = item_all_detailsList2;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListerner = listener;
     }
 
     @NonNull
@@ -61,11 +56,11 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
 
         holder.AdDetail.setText(ad_detail);
         holder.UnitPrice.setText(String.format("%.2f", Double.parseDouble(price)));
-        holder.Quantity.setText("x"+itemAllDetails.getQuantity());
+        holder.Quantity.setText("x" + itemAllDetails.getQuantity());
         holder.location_to.setText(itemAllDetails.getDelivery_division1());
         holder.btn_self.setVisibility(View.GONE);
 
-        if(itemAllDetails.getDivision().equals(itemAllDetails.getDelivery_division())){
+        if (itemAllDetails.getDivision().equals(itemAllDetails.getDelivery_division())) {
             holder.btn_self.setVisibility(View.VISIBLE);
         }
 
@@ -87,6 +82,10 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
     @Override
     public int getItemCount() {
         return item_all_details.size();
+    }
+
+    public interface OnItemClickListener {
+        void onSelfClick(int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

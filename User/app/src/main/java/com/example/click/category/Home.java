@@ -31,17 +31,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.click.Feed_page;
-import com.example.click.Noti_Page;
-import com.example.click.Profile_Page;
+import com.example.click.pages.Notification_Page;
+import com.example.click.pages.Me_Page;
 import com.example.click.R;
-import com.example.click.View_Item_Single;
+import com.example.click.pages.View_Product;
 import com.example.click.adapter.Item_Adapter;
 import com.example.click.data.Item_All_Details;
 import com.example.click.data.SessionManager;
-import com.example.click.pages.Find_My_Items_Other;
 import com.example.click.pages.Homepage;
-import com.example.click.user.Edit_Profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -102,13 +99,13 @@ public class Home extends AppCompatActivity {
 //                        break;
 
                     case R.id.nav_noti:
-                        Intent intent6 = new Intent(Home.this, Noti_Page.class);
+                        Intent intent6 = new Intent(Home.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Home.this, Profile_Page.class);
+                        Intent intent1 = new Intent(Home.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
                         break;
@@ -400,7 +397,7 @@ public class Home extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -626,7 +623,7 @@ public class Home extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -853,7 +850,7 @@ public class Home extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1080,7 +1077,7 @@ public class Home extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1389,7 +1386,7 @@ public class Home extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Home.this, View_Item_Single.class);
+                                        Intent detailIntent = new Intent(Home.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
