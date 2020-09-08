@@ -32,6 +32,10 @@
             android:title="Change to ENG" />
 
         <item
+            android:id="@+id/contact_us"
+            android:title="Contact Us" />
+
+        <item
             android:id="@+id/setting"
             android:title="Logout" />
 

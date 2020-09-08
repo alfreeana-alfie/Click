@@ -725,6 +725,12 @@ public class Homepage extends AppCompatActivity {
                 sessionManager.logout();
                 break;
 
+            case R.id.contact_us:
+                view.setVisibility(View.GONE);
+                Intent intent2 = new Intent(Homepage.this, Contact_Us.class);
+                startActivity(intent2);
+                break;
+
             case R.id.malaylang:
                 String languageToLoad  = "ms"; // your language
                     Locale locale = new Locale(languageToLoad);

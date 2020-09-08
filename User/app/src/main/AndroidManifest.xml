@@ -101,6 +101,7 @@
         <activity android:name=".pages.MyRating" />
         <activity android:name=".pages.BoostAd" />
         <activity android:name=".pages.ProductRating" />
+        <activity android:name=".pages.Contact_Us" />
 
 
         <meta-data

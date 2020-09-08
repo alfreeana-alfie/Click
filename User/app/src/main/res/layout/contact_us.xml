@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <TableLayout
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="14sp"
+                    android:textColor="@android:color/black"
+                    android:text="Company Name: " />
+
+                <TextView
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:layout_width="200dp"
+                    android:textColor="@android:color/black"
+                    android:layout_height="wrap_content"
+                    android:text="Edaran Venture Sdn Bhd" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Registration No: " />
+
+                <TextView
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="818068-H" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address:" />
+
+                <TextView
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lot 830, Sublot III Of Parent Lot 714, Block 8, MTLD, Jalan Bako, 93050 Kuching, Sarawak." />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact No: " />
+
+                <TextView
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0137718613" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email Address: " />
+
+                <TextView
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:textColor="@color/com_facebook_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="info@ketekmall.com" />
+            </TableRow>
+
+        </TableLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorWhite"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_menu" />
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
