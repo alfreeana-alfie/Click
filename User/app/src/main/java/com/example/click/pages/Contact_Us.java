@@ -26,7 +26,6 @@ public class Contact_Us extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.contact_us);
-
         ToolbarSettings();
 
         bottomNav = findViewById(R.id.bottom_nav);
@@ -76,10 +75,19 @@ public class Contact_Us extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Contact_Us.this, Me_Page.class);
+                Intent intent = new Intent(Contact_Us.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Contact_Us.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
 }
