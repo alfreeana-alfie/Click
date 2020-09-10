@@ -29,7 +29,7 @@ public class ReturnRefundPolicy extends AppCompatActivity {
         ToolbarSettings();
 
         bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setSelectedItemId(R.id.nav_noti);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -69,7 +69,7 @@ public class ReturnRefundPolicy extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.about_ketekMall));
+        getSupportActionBar().setTitle(getResources().getString(R.string.return_and_refund_policy));
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
