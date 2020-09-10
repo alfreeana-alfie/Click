@@ -39,155 +39,156 @@
             android:padding="10dp"
             android:text="Delivery Policy KetekMall.com" />
 
-        <TableLayout
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+        <ScrollView
             android:layout_below="@id/textView24"
             android:layout_above="@id/bottom_nav"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="1. " />
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="For the time being, KetekMall is only doing deliveries within Malaysia. Street name and Poscode must be accurate.
-*No P.O Box is allowed" />
-
-            </TableRow>
-
-            <TableRow
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/textView18"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="2. " />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="1. "/>
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="DO NOT accept and receive if the packaging seal is opened or damaged. " />
-            </TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="For the time being, KetekMall is only doing deliveries within Malaysia. Street name and Poscode must be accurate.
+*No P.O Box is allowed"/>
+                </LinearLayout>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:id="@+id/textView20"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="3. " />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="2. "/>
 
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="Shipping and Delivery Method: " />
-            </TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="DO NOT accept and receive if the packaging seal is opened or damaged. "/>
+                </LinearLayout>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:text="4. " />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="3. "/>
 
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text=" - Peninsular Malaysia	: 3 – 5 business days with exceptions on weekends and public holidays " />
-            </TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="Shipping and Delivery Method: "/>
+                </LinearLayout>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:visibility="invisible"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4. " />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:visibility="invisible"
+                        android:text="3.  "/>
 
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text=" - Sabah / Sarawak	: 3 – 7 business days with exceptions on weekends and public holidays." />
-            </TableRow>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text=" - Peninsular Malaysia	: 3 – 5 business days with exceptions on weekends and public holidays "/>
+                </LinearLayout>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" >
-
-                <TextView
-                    android:id="@+id/textView22"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="4. " />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:visibility="invisible"
+                        android:text="1. "/>
 
-                <TextView
-                    android:id="@+id/textView23"
-                    android:layout_width="363dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans"
-                    android:textColor="@android:color/black"
-                    android:textSize="14sp"
-                    android:padding="5dp"
-                    android:text="It’s up to your choice/convenience either to your home or office address. But please ensure there is someone who would be able to standby at that address by the moment Courier Service delivers the parcel. In the event of no one is physically able to collect your parcel on delivery after two attempts, your parcel will either be held at the nearest Courier Service office.
-" />
-            </TableRow>
-        </TableLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text=" - Sabah / Sarawak	: 3 – 7 business days with exceptions on weekends and public holidays."/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="4. "/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans"
+                        android:textColor="@android:color/black"
+                        android:padding="5dp"
+                        android:textSize="14sp"
+                        android:text="It’s up to your choice/convenience either to your home or office address. But please ensure there is someone who would be able to standby at that address by the moment Courier Service delivers the parcel. In the event of no one is physically able to collect your parcel on delivery after two attempts, your parcel will either be held at the nearest Courier Service office.
+"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
