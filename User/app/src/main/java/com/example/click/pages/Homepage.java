@@ -726,7 +726,7 @@ public class Homepage extends AppCompatActivity {
                 break;
 
             case R.id.contact_us:
-                Intent intent2 = new Intent(Homepage.this, Contact_Us.class);
+                Intent intent2 = new Intent(Homepage.this, About_KetekMall.class);
                 startActivity(intent2);
                 break;
 

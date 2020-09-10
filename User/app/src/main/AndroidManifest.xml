@@ -102,6 +102,9 @@
         <activity android:name=".pages.BoostAd" />
         <activity android:name=".pages.ProductRating" />
         <activity android:name=".pages.Contact_Us" />
+        <activity android:name=".pages.About_KetekMall" />
+        <activity android:name=".pages.ReturnRefundPolicy" />
+        <activity android:name=".pages.DeliveryPolicy" />
 
 
         <meta-data

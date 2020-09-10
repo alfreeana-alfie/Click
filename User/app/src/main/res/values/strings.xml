@@ -648,5 +648,8 @@
     <string name="already_boosted_up">Already Boosted Up by Admin</string>
     <string name="pending_request">Pending Request</string>
     <string name="no_delivery">No Delivery</string>
+    <string name="return_and_refund_policy">Return and Refund policy</string>
+    <string name="delivery_policy">Delivery Policy</string>
+    <string name="about_ketekMall">About KetekMall</string>
 </resources>
 

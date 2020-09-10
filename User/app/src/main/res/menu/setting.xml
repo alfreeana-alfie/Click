@@ -33,7 +33,7 @@
 
         <item
             android:id="@+id/contact_us"
-            android:title="Contact Us" />
+            android:title="About KetekMall" />
 
         <item
             android:id="@+id/setting"
