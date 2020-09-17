@@ -105,7 +105,7 @@ public class TermsAndConditions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(TermsAndConditions.this, Homepage.class);
+                Intent intent = new Intent(TermsAndConditions.this, Register_Seller_MainPage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -115,7 +115,7 @@ public class TermsAndConditions extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(TermsAndConditions.this, Homepage.class);
+        Intent intent = new Intent(TermsAndConditions.this, Register_Seller_MainPage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

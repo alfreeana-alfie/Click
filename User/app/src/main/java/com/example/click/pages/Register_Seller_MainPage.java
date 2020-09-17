@@ -64,7 +64,7 @@ public class Register_Seller_MainPage extends AppCompatActivity {
         btn_goto_register_seller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Register_Seller_MainPage.this, Register_Seller.class);
+                Intent intent = new Intent(Register_Seller_MainPage.this, TermsAndConditions.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
