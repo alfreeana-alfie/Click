@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import java.util.HashMap;
+
 import com.example.click.pages.Homepage;
 import com.example.click.pages.MainActivity;
-
-import java.util.HashMap;
 
 public class SessionManager {
 

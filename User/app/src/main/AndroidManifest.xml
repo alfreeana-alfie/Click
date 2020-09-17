@@ -105,6 +105,7 @@
         <activity android:name=".pages.About_KetekMall" />
         <activity android:name=".pages.ReturnRefundPolicy" />
         <activity android:name=".pages.DeliveryPolicy" />
+        <activity android:name=".pages.TermsAndConditions" />
 
 
         <meta-data

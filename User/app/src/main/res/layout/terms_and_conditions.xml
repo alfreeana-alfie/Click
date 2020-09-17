@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:elevation="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_margin="7dp"
+            android:layout_below="@id/appbar"
+            android:layout_above="@id/checkTerms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:text="By entering into this Marketplace Agreement (“Agreement”) you (“Seller”, “You”, “Your”) represent that you are an adult of at least 18 years of age, capable of validity entering into agreement and performing your obligations hereunder.  BY REGISTERING FOR AND USING THE SERVICES, YOU AGREE TO BE BOUND BY ALL TERMS AND CONDITIONS OF THIS AGREEMENT, AND ALL POLICIES OF THE PLATFORM ARE INCORPORATED BY REFERENCE.  "
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:text="KetekMall reserves the right to notify you from time to time of changes to the terms and conditions of this Agreement. " />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="10dp"
+                    android:text="Acceptance" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Any person who wants to access the Platform and use the Services to sell Goods must accept the      terms and conditions of this Agreement (“Terms”) without change.  " />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall reserves the right to change at any time and in its sole discretion any of the terms and      conditions contained in these Terms, any any fee and procedures. Policies governing the Services,  the Platform or Seller Center. on who wants to access the Platform and use the Services to sell Goods must accept the     terms and conditions of this Agreement (“Terms”) without change.  " />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="These changes will take effect seven (7) days from notification by   notice to Seller of posting on the Platform, seller Center or otherwise. Changes to fees and Policies  may be posted without notice. Seller is responsible for reviewing notices and Policies. Seller’s   continued use of the Services, the Platform and/or Seller Center following the changes taking effect   will constitute Seller’s acceptance of such changes and if Seller does not agree to any changes to     these Terms or to the Policies, Seller must discontinue the use of the Services, the Platform and  Seller Center and the Agreement will be terminated.  " />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Use of The Service,s the Platform and Seller Center is limited to parties that can enter into and form   contracts under applicable law. Your represent and warrant that:" />
+
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Use of The Service,s the Platform and Seller Center is limited to parties that can enter into and form   contracts under applicable law. Your represent and warrant that:" />
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="In KetekMall Platform are strongly restricted to HALAL products only.  " />
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Services - Fees " />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall provides a platform for thirs-party sellers and buyers to complete transactions. Except as     set out in the Agreement, KetekMall is not involved in the actual transaction between Seller and      Clients. As owner of provider of the Goods and vendor thereof, it is up to Seller to, among others,    ensure the sales is legally authorised, accurately describe the Goods, package, ship, insure, warrant  and fulfil all other sale and after sale obligations applicable by law or by trade. Seller uses the    Services, the Platform and Seller Center, at its own risk. " />
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall will charge 5% or RM0.50 from total amount of the product’s price. " />
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Seller authorizes KetekMall to act as its exclusive payment processing agent for the purpose of:" />
+
+                <TextView
+                    android:id="@+id/textView38"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="collecting the Sales Proceeds and in general any sums due or owing under Agreement and holding the same;" />
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="processing customer payment and refunds;" />
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="remitting the Payment and;" />
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="paying to KetekMall, to third parties (including Clients) any amounts Seller owes to them.  " />
+
+                <TextView
+                    android:id="@+id/textView42"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seller agrees that Customers satisfy their obligations to Seller as regards the Customer Agreement   when   KetekMall receives the Sales Proceeds. KetekMall’s obligation to remit funds received by it    on Seller’s behalf is limited to the Payment. " />
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall will provide to Seller information in relation to each Order as necessary under the       Agreement.  " />
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall will provide support services to Seller by way of coordinating and answering Customers        enquiries and processing returns as provided in the Policies.  " />
+
+                <TextView
+                    android:id="@+id/textView45"
+                    android:layout_width="match_parent"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Sellers agrees that KetekMall may provide Seller with electronic documents such as tax invoice,  receipt, or any other document KetekMall may isuue in compliance with the laws. " />
+
+                <TextView
+                    android:id="@+id/textView46"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Terms of Payment " />
+
+                <TextView
+                    android:id="@+id/textView47"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="The Customer shall be entitled to make payment for the Products using the payment methods made   available on the Platform. All Payments shall be made to KetekMall. " />
+
+                <TextView
+                    android:id="@+id/textView48"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="The terms and conditions applicable to each type of payment, as prescribed by KetekMall on the   Platform, shall be applicable to the Contract. The payment methods may also be subject to the  following terms:" />
+
+                <TextView
+                    android:id="@+id/textView49"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Cash on Delivery" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="*Cash on Delivery (Pay Cash Upon Delivery) is available within the service area. " />
+
+                <TextView
+                    android:id="@+id/textView51"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Payment Gateway" />
+
+                <TextView
+                    android:id="@+id/textView52"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="*By choosing this payment method, the Customer shall pay through the gateway the amount of the   total purchase price for the Products purchased by Customer (including any applicable taxes, fees  and delivery costs). The transaction must be payable in Ringgit Malaysia. KetekMall, in its sole   discretion, may refuse this payment option service to anyone or any user without notice for any    reason at any time.  " />
+
+                <TextView
+                    android:id="@+id/textView53"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Payment will be made by KetekMall to Seller after Buyes received the products. " />
+
+                <TextView
+                    android:id="@+id/textView54"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall may delay, suspend or cancel any Payment in case Seller breaches any term of the      Agreement or Customer Agreement and any Payment made to Seller will not in any way be     considered as a waiver of KetekMall’s rights. " />
+
+                <TextView
+                    android:id="@+id/textView55"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall reserves the right to impose limits on Order or transaction values, on Customers or on     Seller and will not be liable if;" />
+
+                <TextView
+                    android:id="@+id/textView56"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="KetekMall allows a Customer to cancel an Order because the Platform of the Goods are unavailable     following the commencement of a transaction. " />
+
+                <TextView
+                    android:id="@+id/textView57"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Any enquiry or dispute about any Payment will be made by in compliance with the claims/dispute   process/policy of KetekMall, which may be changed from time to time. Notwithstanding which any     such enquiry or dispute will be received by KetekMall on or before the expiration of one hundred of    twenty (120) days after the Order date, failing which, Seller waives the right to dispute such Payment.  " />
+
+                <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Seller Undertakings " />
+
+                <TextView
+                    android:id="@+id/textView59"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Seller Undertakings " />
+
+                <TextView
+                    android:id="@+id/textView60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="comply with all applicable laws, treaties, ordinances, codes and regulations; " />
+
+                <TextView
+                    android:id="@+id/textView61"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="comply with all Policies; " />
+
+                <TextView
+                    android:id="@+id/textView62"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="be responsible and pay all fees, taxes, duties and others charges arising out of of associated with the  order, the Payment or in any other way owed by Seller under the Agreement or the Customer     Agreement.  " />
+
+                <TextView
+                    android:id="@+id/textView63"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="will issue a valid invoice to the Customer, if required by the laws.  " />
+
+                <TextView
+                    android:id="@+id/textView64"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="ensure that any information provided under this Agreement, including for the listing of the Goods, is    accurate, current and complete and is not misleading or otherwise deceptive;" />
+
+                <TextView
+                    android:id="@+id/textView65"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="fulfil all Orders for Goods at their stated quantity and price to Customers who meet KetekMall’s        eligibility conditions; " />
+
+                <TextView
+                    android:id="@+id/textView66"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="provide, in the format and at such times as KetekMall may require, accurate, updated and complete    information about the availability status, stock level and Price of the Goods; " />
+
+                <TextView
+                    android:id="@+id/textView67"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Undertakings In Relations to Goods" />
+
+                <TextView
+                    android:id="@+id/textView68"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="Seller undertakes, represents and warrants that:" />
+
+                <TextView
+                    android:id="@+id/textView69"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="the Goods are of merchantable quality, fit for their purpose, free from detects and strictly conform to  their listed specifications; " />
+
+                <TextView
+                    android:id="@+id/textView70"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="the Goods and their offer for sale are not prohibited and comply with the Laws (including marking    and labelling requirement, product warranties, specifications and performance criteria and conform     with   Policies, including prohibited and restricted items; " />
+
+                <TextView
+                    android:id="@+id/textView71"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="it will provide KetekMall and/or Customer any document pertaining to the sale of the Goods or       Customer Agreement (including sales invoice and tax invoice) as may be requested by KetekMall  and/or Customer;" />
+
+                <TextView
+                    android:id="@+id/textView72"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="it will not, directly or indirectly, sell expired or soon to be expired products; and " />
+
+                <TextView
+                    android:id="@+id/textView73"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text="it will not, directly or indirectly, sell defect product or products violating.  " />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+        <CheckBox
+            android:id="@+id/checkTerms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/button"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="I agree to the terms and conditions" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_above="@id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_part_border_orange"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="ACCEPT" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            app:labelVisibilityMode="labeled"
+            android:id="@+id/bottom_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorWhite"
+            app:menu="@menu/bottom_menu"/>
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
