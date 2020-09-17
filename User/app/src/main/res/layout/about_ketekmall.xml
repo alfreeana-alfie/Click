@@ -138,8 +138,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="20sp"
-                    android:text="@string/contact_us" />
+                    android:text="@string/terms_and_conditions"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/terms_text"

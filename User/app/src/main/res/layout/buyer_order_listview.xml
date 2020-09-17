@@ -34,6 +34,8 @@
                 android:paddingTop="0dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="0dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/ad_details"
                 android:textAlignment="center"
                 android:textSize="15sp" />
