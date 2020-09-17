@@ -122,6 +122,35 @@
                     android:textAlignment="textEnd"
                     android:text="@string/view" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite"
+                android:padding="15dp"
+                android:id="@+id/terms_and_conditions_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="20sp"
+                    android:text="@string/contact_us" />
+
+                <TextView
+                    android:id="@+id/terms_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:text="@string/view" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

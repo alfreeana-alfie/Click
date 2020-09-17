@@ -499,6 +499,7 @@
             android:layout_above="@id/button"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
+            android:buttonTint="@color/colorPrimary"
             android:text="I agree to the terms and conditions" />
 
         <Button
