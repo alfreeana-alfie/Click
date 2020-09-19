@@ -162,7 +162,7 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String messageText = messageArea.getText().toString();
-                String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
                 if (!messageText.equals("")) {
                     Map<String, String> map = new HashMap<String, String>();

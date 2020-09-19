@@ -25,9 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -137,30 +142,6 @@ public class Homepage extends AppCompatActivity {
         Declare();
 
         viewPager = findViewById(R.id.view_pager);
-
-/*
-        final long DELAY_MS = 500;//delay in milliseconds before task is to be executed
-        final long PERIOD_MS = 3000; // time in milliseconds between successive task executions.
-        final Handler handler = new Handler();
-        final Runnable update = new Runnable() {
-            public void run() {
-                if (viewPager.getCurrentItem() == adapter.getCount() - 1) { //adapter is your custom ViewPager's adapter
-                    viewPager.setCurrentItem(0);
-                }
-                else {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                }
-            }
-        };
-
-        timer = new Timer(); // This will create a new Thread
-        timer.schedule(new TimerTask() { // task to be scheduled
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        }, DELAY_MS, PERIOD_MS);
-*/
 
         getSession();
 
@@ -860,6 +841,38 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+
+                    }
                     }
                 }) {
             @Override
