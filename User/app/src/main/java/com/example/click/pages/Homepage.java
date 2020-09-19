@@ -330,8 +330,38 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
 
                     }
+
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -515,6 +545,34 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+                        }
                     }
                 }) {
             @Override
@@ -545,11 +603,6 @@ public class Homepage extends AppCompatActivity {
 
                                     int strVerify = Integer.valueOf(object.getString("verification"));
                                     if(strVerify == 0){
-//                                        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//                                        Menu nav_Menu = navigationView.getMenu();
-//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
-//                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
-
                                         Intent intent1 = new Intent(Homepage.this, Register_Seller_MainPage.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
@@ -572,6 +625,34 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                        }
+
                     }
                 }) {
             @Override
@@ -601,19 +682,9 @@ public class Homepage extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     int strVerify = Integer.valueOf(object.getString("verification"));
                                     if(strVerify == 0){
-//                                        NavigationView navigationView = findViewById(R.id.nav_view);
-//                                        Menu nav_Menu = navigationView.getMenu();
-//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(false);
-//                                        nav_Menu.findItem(R.id.nav_find).setVisible(false);
                                         verify.setText(getResources().getString(R.string.buyer));
-//                                        verify1.setText("Buyer");
                                     }else{
-//                                        NavigationView navigationView = findViewById(R.id.nav_view);
-//                                        Menu nav_Menu = navigationView.getMenu();
-//                                        nav_Menu.findItem(R.id.nav_sell).setVisible(true);
-//                                        nav_Menu.findItem(R.id.nav_find).setVisible(true);
                                         verify.setText(getResources().getString(R.string.seller));
-//                                        verify1.setText("Seller");
                                     }
 
                                 }
@@ -629,6 +700,35 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -712,23 +812,23 @@ public class Homepage extends AppCompatActivity {
                 break;
 
             case R.id.malaylang:
-                String languageToLoad  = "ms"; // your language
-                    Locale locale = new Locale(languageToLoad);
-                    Locale.setDefault(locale);
-                    Configuration config = new Configuration();
-                    config.locale = locale;
-                    getBaseContext().getResources().updateConfiguration(config,
-                            getBaseContext().getResources().getDisplayMetrics());
-                    SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
-                    SharedPreferences.Editor editor = lang.edit();
-                    editor.putString("lang", languageToLoad);
-                    editor.apply();
+                String languageToLoad = "ms"; // your language
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+                SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = lang.edit();
+                editor.putString("lang", languageToLoad);
+                editor.apply();
 
-                    this.recreate();
+                this.recreate();
                 break;
 
             case R.id.englang:
-                String languageToLoad1  = "en"; // your language
+                String languageToLoad1 = "en"; // your language
                 Locale locale1 = new Locale(languageToLoad1);
                 Locale.setDefault(locale1);
                 Configuration config1 = new Configuration();
@@ -873,7 +973,6 @@ public class Homepage extends AppCompatActivity {
                         }
 
                     }
-                    }
                 }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -964,6 +1063,35 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -1009,6 +1137,35 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -1034,19 +1191,4 @@ public class Homepage extends AppCompatActivity {
         }
         backPressedTime = System.currentTimeMillis();
     }
-/*
-
-    @Override
-    protected void onStart() {
-        timer.cancel();
-        super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        timer.cancel();
-        super.onDestroy();
-    }
-*/
-
 }

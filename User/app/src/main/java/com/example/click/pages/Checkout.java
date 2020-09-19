@@ -21,9 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -266,6 +271,35 @@ public class Checkout extends AppCompatActivity {
                                                                         new Response.ErrorListener() {
                                                                             @Override
                                                                             public void onErrorResponse(VolleyError error) {
+                                                                                try {
+
+                                                                                    if (error instanceof TimeoutError ) {
+                                                                                        //Time out error
+
+                                                                                    }else if(error instanceof NoConnectionError){
+                                                                                        //net work error
+
+                                                                                    } else if (error instanceof AuthFailureError) {
+                                                                                        //error
+
+                                                                                    } else if (error instanceof ServerError) {
+                                                                                        //Erroor
+                                                                                    } else if (error instanceof NetworkError) {
+                                                                                        //Error
+
+                                                                                    } else if (error instanceof ParseError) {
+                                                                                        //Error
+
+                                                                                    }else{
+                                                                                        //Error
+                                                                                    }
+                                                                                    //End
+
+
+                                                                                } catch (Exception e) {
+
+
+                                                                                }
                                                                                 Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                                             }
                                                                         }) {
@@ -292,6 +326,35 @@ public class Checkout extends AppCompatActivity {
                                             new Response.ErrorListener() {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
+                                                    try {
+
+                                                        if (error instanceof TimeoutError) {
+                                                            //Time out error
+
+                                                        }else if(error instanceof NoConnectionError){
+                                                            //net work error
+
+                                                        } else if (error instanceof AuthFailureError) {
+                                                            //error
+
+                                                        } else if (error instanceof ServerError) {
+                                                            //Erroor
+                                                        } else if (error instanceof NetworkError) {
+                                                            //Error
+
+                                                        } else if (error instanceof ParseError) {
+                                                            //Error
+
+                                                        }else{
+                                                            //Error
+                                                        }
+                                                        //End
+
+
+                                                    } catch (Exception e) {
+
+
+                                                    }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                                                 }
                                             }) {
@@ -314,7 +377,35 @@ public class Checkout extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                try {
 
+                    if (error instanceof TimeoutError ) {
+                        //Time out error
+
+                    }else if(error instanceof NoConnectionError){
+                        //net work error
+
+                    } else if (error instanceof AuthFailureError) {
+                        //error
+
+                    } else if (error instanceof ServerError) {
+                        //Erroor
+                    } else if (error instanceof NetworkError) {
+                        //Error
+
+                    } else if (error instanceof ParseError) {
+                        //Error
+
+                    }else{
+                        //Error
+                    }
+                    //End
+
+
+                } catch (Exception e) {
+
+
+                }
             }
         }) {
             @Override
@@ -350,12 +441,6 @@ public class Checkout extends AppCompatActivity {
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
-
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Edit_Item.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Checkout.this, Notification_Page.class);
@@ -454,6 +539,35 @@ public class Checkout extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -714,7 +828,6 @@ public class Checkout extends AppCompatActivity {
     }
 
     private void AddOrder(final String User_Division, final String Address){
-//        Toast.makeText(Checkout.this, Address, Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -750,7 +863,6 @@ public class Checkout extends AppCompatActivity {
                                                         String success = jsonObject.getString("success");
 
                                                         if (success.equals("1")) {
-                                                            //addReceipt();
                                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                     new Response.Listener<String>() {
                                                                         @Override
@@ -798,8 +910,36 @@ public class Checkout extends AppCompatActivity {
                                                                                             }
                                                                                         }, new Response.ErrorListener() {
                                                                                             @Override
-                                                                                            public void onErrorResponse(VolleyError volleyError) {
-                                                                                                System.out.println("" + volleyError);
+                                                                                            public void onErrorResponse(VolleyError error) {
+                                                                                                try {
+
+                                                                                                    if (error instanceof TimeoutError ) {
+                                                                                                        //Time out error
+
+                                                                                                    }else if(error instanceof NoConnectionError){
+                                                                                                        //net work error
+
+                                                                                                    } else if (error instanceof AuthFailureError) {
+                                                                                                        //error
+
+                                                                                                    } else if (error instanceof ServerError) {
+                                                                                                        //Erroor
+                                                                                                    } else if (error instanceof NetworkError) {
+                                                                                                        //Error
+
+                                                                                                    } else if (error instanceof ParseError) {
+                                                                                                        //Error
+
+                                                                                                    }else{
+                                                                                                        //Error
+                                                                                                    }
+                                                                                                    //End
+
+
+                                                                                                } catch (Exception e) {
+
+
+                                                                                                }
                                                                                             }
                                                                                         });
                                                                                         RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
@@ -853,7 +993,35 @@ public class Checkout extends AppCompatActivity {
                                                                                                 new Response.ErrorListener() {
                                                                                                     @Override
                                                                                                     public void onErrorResponse(VolleyError error) {
-                                                                                                        Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                                                                        try {
+
+                                                                                                            if (error instanceof TimeoutError ) {
+                                                                                                                //Time out error
+
+                                                                                                            }else if(error instanceof NoConnectionError){
+                                                                                                                //net work error
+
+                                                                                                            } else if (error instanceof AuthFailureError) {
+                                                                                                                //error
+
+                                                                                                            } else if (error instanceof ServerError) {
+                                                                                                                //Erroor
+                                                                                                            } else if (error instanceof NetworkError) {
+                                                                                                                //Error
+
+                                                                                                            } else if (error instanceof ParseError) {
+                                                                                                                //Error
+
+                                                                                                            }else{
+                                                                                                                //Error
+                                                                                                            }
+                                                                                                            //End
+
+
+                                                                                                        } catch (Exception e) {
+
+
+                                                                                                        }
                                                                                                     }
                                                                                                 }) {
                                                                                             @Override
@@ -878,6 +1046,35 @@ public class Checkout extends AppCompatActivity {
                                                                     new Response.ErrorListener() {
                                                                         @Override
                                                                         public void onErrorResponse(VolleyError error) {
+                                                                            try {
+
+                                                                                if (error instanceof TimeoutError ) {
+                                                                                    //Time out error
+
+                                                                                }else if(error instanceof NoConnectionError){
+                                                                                    //net work error
+
+                                                                                } else if (error instanceof AuthFailureError) {
+                                                                                    //error
+
+                                                                                } else if (error instanceof ServerError) {
+                                                                                    //Erroor
+                                                                                } else if (error instanceof NetworkError) {
+                                                                                    //Error
+
+                                                                                } else if (error instanceof ParseError) {
+                                                                                    //Error
+
+                                                                                }else{
+                                                                                    //Error
+                                                                                }
+                                                                                //End
+
+
+                                                                            } catch (Exception e) {
+
+
+                                                                            }
                                                                         }
                                                                     }) {
                                                                 @Override
@@ -893,7 +1090,6 @@ public class Checkout extends AppCompatActivity {
                                                             Intent intent = new Intent(Checkout.this, Place_Order.class);
                                                             intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);
-//                                                            Toast.makeText(Checkout.this, "SUCCESS", Toast.LENGTH_SHORT).show();
                                                         } else {
                                                             Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                         }
@@ -907,7 +1103,35 @@ public class Checkout extends AppCompatActivity {
                                             new Response.ErrorListener() {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
-                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                    try {
+
+                                                        if (error instanceof TimeoutError ) {
+                                                            //Time out error
+
+                                                        }else if(error instanceof NoConnectionError){
+                                                            //net work error
+
+                                                        } else if (error instanceof AuthFailureError) {
+                                                            //error
+
+                                                        } else if (error instanceof ServerError) {
+                                                            //Erroor
+                                                        } else if (error instanceof NetworkError) {
+                                                            //Error
+
+                                                        } else if (error instanceof ParseError) {
+                                                            //Error
+
+                                                        }else{
+                                                            //Error
+                                                        }
+                                                        //End
+
+
+                                                    } catch (Exception e) {
+
+
+                                                    }
                                                 }
                                             }) {
                                         @Override
@@ -938,14 +1162,41 @@ public class Checkout extends AppCompatActivity {
                                 }
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                try {
 
+                    if (error instanceof TimeoutError ) {
+                        //Time out error
+
+                    }else if(error instanceof NoConnectionError){
+                        //net work error
+
+                    } else if (error instanceof AuthFailureError) {
+                        //error
+
+                    } else if (error instanceof ServerError) {
+                        //Erroor
+                    } else if (error instanceof NetworkError) {
+                        //Error
+
+                    } else if (error instanceof ParseError) {
+                        //Error
+
+                    }else{
+                        //Error
+                    }
+                    //End
+
+
+                } catch (Exception e) {
+
+
+                }
             }
         }) {
             @Override
@@ -1008,7 +1259,35 @@ public class Checkout extends AppCompatActivity {
                                             new Response.ErrorListener() {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
-                                                    Toast.makeText(Checkout.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                    try {
+
+                                                        if (error instanceof TimeoutError ) {
+                                                            //Time out error
+
+                                                        }else if(error instanceof NoConnectionError){
+                                                            //net work error
+
+                                                        } else if (error instanceof AuthFailureError) {
+                                                            //error
+
+                                                        } else if (error instanceof ServerError) {
+                                                            //Erroor
+                                                        } else if (error instanceof NetworkError) {
+                                                            //Error
+
+                                                        } else if (error instanceof ParseError) {
+                                                            //Error
+
+                                                        }else{
+                                                            //Error
+                                                        }
+                                                        //End
+
+
+                                                    } catch (Exception e) {
+
+
+                                                    }
                                                 }
                                             }) {
                                         @Override
@@ -1031,7 +1310,35 @@ public class Checkout extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Checkout.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override

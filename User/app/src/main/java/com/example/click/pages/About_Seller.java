@@ -20,9 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -96,12 +101,6 @@ public class About_Seller extends AppCompatActivity {
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
-
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Seller_Shop.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(About_Seller.this, Notification_Page.class);
@@ -305,6 +304,35 @@ public class About_Seller extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError) {
+                                                                    //Time out error
+
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+
+                                                                }else{
+                                                                    //Error
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
                                                             Toast.makeText(About_Seller.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
@@ -368,6 +396,35 @@ public class About_Seller extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+
+                                                                }else{
+                                                                    //Error
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
                                                             Toast.makeText(About_Seller.this, error.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }) {
@@ -404,6 +461,35 @@ public class About_Seller extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -458,6 +544,35 @@ public class About_Seller extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override

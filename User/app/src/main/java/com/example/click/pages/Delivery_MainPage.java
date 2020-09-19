@@ -17,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -202,6 +207,35 @@ public class Delivery_MainPage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                         Toast.makeText(Delivery_MainPage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         Toast.makeText(Delivery_MainPage.this, "Please setup delivery using this page instead", Toast.LENGTH_SHORT).show();
                         Intent intent1 = new Intent(Delivery_MainPage.this, MyProducts.class);
@@ -290,7 +324,36 @@ public class Delivery_MainPage extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Delivery_MainPage.this, error.toString(), Toast.LENGTH_SHORT).show(); }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+
+                                                                }else{
+                                                                    //Error
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
+                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -306,7 +369,6 @@ public class Delivery_MainPage extends AppCompatActivity {
 
                                         }
                                     });
-//                                    recyclerCricketers.setVisibility(View.GONE);
                                 } else {
                                     TextView textView = findViewById(R.id.textView4);
 
@@ -349,6 +411,35 @@ public class Delivery_MainPage extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+
+                                                                }else{
+                                                                    //Error
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
                                                             Toast.makeText(Delivery_MainPage.this, error.toString(), Toast.LENGTH_SHORT).show(); }
                                                     }) {
                                                 @Override
@@ -418,6 +509,35 @@ public class Delivery_MainPage extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+
+                                                                }else{
+                                                                    //Error
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
                                                         }
                                                     }) {
                                                 @Override
@@ -445,6 +565,35 @@ public class Delivery_MainPage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                         Toast.makeText(Delivery_MainPage.this, error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {

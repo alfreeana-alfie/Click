@@ -27,9 +27,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -91,12 +96,6 @@ public class Product_Add extends AppCompatActivity {
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
-
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Sell_Items_Other.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Product_Add.this, Notification_Page.class);
@@ -472,6 +471,37 @@ public class Product_Add extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
 //                        Toast.makeText(Sell_Items_Other.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -542,14 +572,38 @@ public class Product_Add extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            if (error.getMessage() == null) {
-                                    Toast.makeText(Product_Add.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                                loading.setVisibility(View.GONE);
-                                accept_item.setVisibility(View.VISIBLE);
-                            } else {
-                                Toast.makeText(Product_Add.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                                loading.setVisibility(View.GONE);
-                                accept_item.setVisibility(View.VISIBLE);
+                            loading.setVisibility(View.GONE);
+                            accept_item.setVisibility(View.VISIBLE);
+                            try {
+
+                                if (error instanceof TimeoutError ) {
+                                    //Time out error
+                                    System.out.println("" + error);
+                                }else if(error instanceof NoConnectionError){
+                                    //net work error
+                                    System.out.println("" + error);
+                                } else if (error instanceof AuthFailureError) {
+                                    //error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ServerError) {
+                                    //Erroor
+                                    System.out.println("" + error);
+                                } else if (error instanceof NetworkError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ParseError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                }else{
+                                    //Error
+                                    System.out.println("" + error);
+                                }
+                                //End
+
+
+                            } catch (Exception e) {
+
+
                             }
                         }
                     }) {

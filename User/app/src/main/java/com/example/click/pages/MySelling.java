@@ -16,9 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -121,11 +126,6 @@ public class MySelling extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Homepage.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(MySelling.this, Notification_Page.class);
@@ -243,11 +243,6 @@ public class MySelling extends AppCompatActivity {
 
                                         final String remarks = "ACCEPT";
                                         Update_Order(strOrder_Date, remarks, strCustomer_id);
-
-//                                        Accept(view, strOrder_Id, strOrder_Date, remarks);
-
-//                                        Delete_Order(view, strOrder_Id);
-
                                         itemList.remove(position);
                                         adapter_item.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter_item);
@@ -326,6 +321,35 @@ public class MySelling extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                         Toast.makeText(MySelling.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -397,8 +421,36 @@ public class MySelling extends AppCompatActivity {
                                                                 }
                                                             }, new Response.ErrorListener() {
                                                                 @Override
-                                                                public void onErrorResponse(VolleyError volleyError) {
-                                                                    System.out.println("" + volleyError);
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    try {
+
+                                                                        if (error instanceof TimeoutError ) {
+                                                                            //Time out error
+
+                                                                        }else if(error instanceof NoConnectionError){
+                                                                            //net work error
+
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
+
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
+
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
+
+                                                                        }else{
+                                                                            //Error
+                                                                        }
+                                                                        //End
+
+
+                                                                    } catch (Exception e) {
+
+
+                                                                    }
                                                                 }
                                                             });
                                                             RequestQueue rQueue = Volley.newRequestQueue(MySelling.this);
@@ -417,6 +469,35 @@ public class MySelling extends AppCompatActivity {
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
+                                                try {
+
+                                                    if (error instanceof TimeoutError ) {
+                                                        //Time out error
+
+                                                    }else if(error instanceof NoConnectionError){
+                                                        //net work error
+
+                                                    } else if (error instanceof AuthFailureError) {
+                                                        //error
+
+                                                    } else if (error instanceof ServerError) {
+                                                        //Erroor
+                                                    } else if (error instanceof NetworkError) {
+                                                        //Error
+
+                                                    } else if (error instanceof ParseError) {
+                                                        //Error
+
+                                                    }else{
+                                                        //Error
+                                                    }
+                                                    //End
+
+
+                                                } catch (Exception e) {
+
+
+                                                }
                                             }
                                         }) {
                                     @Override
@@ -440,7 +521,35 @@ public class MySelling extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
 
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }){
             @Override
@@ -512,8 +621,39 @@ public class MySelling extends AppCompatActivity {
                                                                 }
                                                             }, new Response.ErrorListener() {
                                                                 @Override
-                                                                public void onErrorResponse(VolleyError volleyError) {
-                                                                    System.out.println("" + volleyError);
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    try {
+
+                                                                        if (error instanceof TimeoutError ) {
+                                                                            //Time out error
+                                                                            System.out.println("" + error);
+                                                                        }else if(error instanceof NoConnectionError){
+                                                                            //net work error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }else{
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }
+                                                                        //End
+
+
+                                                                    } catch (Exception e) {
+
+
+                                                                    }
+
                                                                 }
                                                             });
                                                             RequestQueue rQueue = Volley.newRequestQueue(MySelling.this);
@@ -532,6 +672,37 @@ public class MySelling extends AppCompatActivity {
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
+                                                try {
+
+                                                    if (error instanceof TimeoutError ) {
+                                                        //Time out error
+                                                        System.out.println("" + error);
+                                                    }else if(error instanceof NoConnectionError){
+                                                        //net work error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof AuthFailureError) {
+                                                        //error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof ServerError) {
+                                                        //Erroor
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof NetworkError) {
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof ParseError) {
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    }else{
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    }
+                                                    //End
+
+
+                                                } catch (Exception e) {
+
+
+                                                }
                                             }
                                         }) {
                                     @Override
@@ -635,6 +806,37 @@ public class MySelling extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -678,6 +880,37 @@ public class MySelling extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
@@ -708,7 +941,37 @@ public class MySelling extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
 
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override

@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "30.0.0"
     defaultConfig {
         applicationId "com.example.click"
         minSdkVersion 17
-        targetSdkVersion 28
+        targetSdkVersion 29
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -49,6 +49,4 @@ dependencies {
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'androidx.core:core:1.0.0'
-
-
 }

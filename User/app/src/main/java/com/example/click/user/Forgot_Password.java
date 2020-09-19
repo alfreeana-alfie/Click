@@ -17,9 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -162,9 +167,40 @@ public class Forgot_Password extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.GONE);
                     button_enter_email.setVisibility(View.VISIBLE);
+                    try {
+
+                        if (error instanceof TimeoutError) {
+                            //Time out error
+                            System.out.println("" + error);
+                        }else if(error instanceof NoConnectionError){
+                            //net work error
+                            System.out.println("" + error);
+                        } else if (error instanceof AuthFailureError) {
+                            //error
+                            System.out.println("" + error);
+                        } else if (error instanceof ServerError) {
+                            //Erroor
+                            System.out.println("" + error);
+                        } else if (error instanceof NetworkError) {
+                            //Error
+                            System.out.println("" + error);
+                        } else if (error instanceof ParseError) {
+                            //Error
+                            System.out.println("" + error);
+                        }else{
+                            //Error
+                            System.out.println("" + error);
+                        }
+                        //End
+
+
+                    } catch (Exception e) {
+
+
+                    }
 
                 }
             }) {
@@ -201,7 +237,37 @@ public class Forgot_Password extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
 
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -271,10 +337,41 @@ public class Forgot_Password extends Fragment {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "Connection Error " + error.toString(), Toast.LENGTH_SHORT).show();
 
                             loading_password.setVisibility(View.GONE);
                             button_enter_new_password.setVisibility(View.VISIBLE);
+                            try {
+
+                                if (error instanceof TimeoutError ) {
+                                    //Time out error
+                                    System.out.println("" + error);
+                                }else if(error instanceof NoConnectionError){
+                                    //net work error
+                                    System.out.println("" + error);
+                                } else if (error instanceof AuthFailureError) {
+                                    //error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ServerError) {
+                                    //Erroor
+                                    System.out.println("" + error);
+                                } else if (error instanceof NetworkError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ParseError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                }else{
+                                    //Error
+                                    System.out.println("" + error);
+                                }
+                                //End
+
+
+                            } catch (Exception e) {
+
+
+                            }
                         }
                     }) {
                 @Override

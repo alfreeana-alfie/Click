@@ -12,9 +12,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -160,11 +165,38 @@ public class MainActivity extends AppCompatActivity {
 
                                                         }, new Response.ErrorListener() {
                                                             @Override
-                                                            public void onErrorResponse(VolleyError volleyError) {
-                                                                System.out.println("" + volleyError);
+                                                            public void onErrorResponse(VolleyError error) {
+                                                                try {
+
+                                                                    if (error instanceof TimeoutError) {
+                                                                        //Time out error
+
+                                                                    } else if (error instanceof NoConnectionError) {
+                                                                        //net work error
+
+                                                                    } else if (error instanceof AuthFailureError) {
+                                                                        //error
+
+                                                                    } else if (error instanceof ServerError) {
+                                                                        //Erroor
+                                                                    } else if (error instanceof NetworkError) {
+                                                                        //Error
+
+                                                                    } else if (error instanceof ParseError) {
+                                                                        //Error
+
+                                                                    } else {
+                                                                        //Error
+                                                                    }
+                                                                    //End
+
+
+                                                                } catch (Exception e) {
+
+
+                                                                }
                                                             }
                                                         });
-
                                                         RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
                                                         rQueue.add(request);
                                                     } else if (obj.getJSONObject(name).getString("email").equals(email)) {
@@ -203,8 +235,37 @@ public class MainActivity extends AppCompatActivity {
 
                                                         }, new Response.ErrorListener() {
                                                             @Override
-                                                            public void onErrorResponse(VolleyError volleyError) {
-                                                                System.out.println("" + volleyError);
+                                                            public void onErrorResponse(VolleyError error) {
+
+                                                                try {
+
+                                                                    if (error instanceof TimeoutError ) {
+                                                                        //Time out error
+
+                                                                    }else if(error instanceof NoConnectionError){
+                                                                        //net work error
+
+                                                                    } else if (error instanceof AuthFailureError) {
+                                                                        //error
+
+                                                                    } else if (error instanceof ServerError) {
+                                                                        //Erroor
+                                                                    } else if (error instanceof NetworkError) {
+                                                                        //Error
+
+                                                                    } else if (error instanceof ParseError) {
+                                                                        //Error
+
+                                                                    }else{
+                                                                        //Error
+                                                                    }
+                                                                    //End
+
+
+                                                                } catch (Exception e) {
+
+
+                                                                }
                                                             }
                                                         });
 
@@ -257,6 +318,35 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -284,5 +374,4 @@ public class MainActivity extends AppCompatActivity {
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();
-    }
-}
+    }}

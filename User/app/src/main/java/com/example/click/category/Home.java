@@ -25,9 +25,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -459,7 +464,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
+                                                            try {
+
+                                                                if (error instanceof TimeoutError) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }
                                                         }
                                                     }) {
                                                 @Override
@@ -523,8 +558,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -559,6 +623,37 @@ public class Home extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -685,8 +780,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -749,8 +873,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -785,6 +938,37 @@ public class Home extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -912,8 +1096,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -976,8 +1189,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1012,6 +1254,37 @@ public class Home extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }){
             @Override
@@ -1139,8 +1412,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1203,8 +1505,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1239,6 +1570,37 @@ public class Home extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override
@@ -1448,8 +1810,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1512,8 +1903,37 @@ public class Home extends AppCompatActivity {
                                                     new Response.ErrorListener() {
                                                         @Override
                                                         public void onErrorResponse(VolleyError error) {
-                                                            Toast.makeText(Home.this, error.toString(), Toast.LENGTH_SHORT).show();
-                                                        }
+                                                            try {
+
+                                                                if (error instanceof TimeoutError ) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                }else if(error instanceof NoConnectionError){
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }else{
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+
+
+                                                            }                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1548,6 +1968,37 @@ public class Home extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
                     }
                 }) {
             @Override

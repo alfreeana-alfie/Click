@@ -129,12 +129,6 @@ public class Chat extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Chat.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
-
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Chat.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -308,24 +302,11 @@ public class Chat extends AppCompatActivity {
             lp2.setMargins(0, 0, 0, 10);
             lp2.gravity = Gravity.START;
 
-//            LinearLayout lp3 = new LinearLayout(Chat.this);
-//            lp3.setOrientation(LinearLayout.HORIZONTAL);
-//            lp3.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
             textView.setLayoutParams(lp2);
             textView.setBackgroundResource(R.drawable.rounded_corner2);
             textView.setElevation(3);
             textView.setPadding(45, 25, 45, 25);
             textView.setTextSize(18);
-
-
-//            circleImageView.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
-//            circleImageView.setImageURI(Uri.parse(UserDetails.photo));
-//            circleImageView.setElevation(3);
-//            circleImageView.setPadding(0, 0, 0 ,0);
-//
-//            lp3.addView(circleImageView);
-//            lp3.addView(textView);
 
             layout.addView(textView);
             scrollView.fullScroll(View.FOCUS_DOWN);
@@ -339,7 +320,6 @@ public class Chat extends AppCompatActivity {
         textView.setText(message);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, 10);
-//        textView.setLayoutParams(lp);
 
         if (type == 1) {
             LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -361,7 +341,6 @@ public class Chat extends AppCompatActivity {
             textView.setTextSize(12);
             layout.addView(textView);
         }
-//        layout.addView(textView);
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
