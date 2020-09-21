@@ -65,7 +65,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         Picasso.get().load(ItemImage).into(holder.ItemImageView);
         holder.AdDetail.setText(addetail);
-        holder.Price.setText(ItemPrice);
+        holder.Price.setText("MYR" + ItemPrice);
         holder.Delivery_Price.setText("MYR" + delivery_price);
         holder.Delivery_Time.setText(delivery_date);
         holder.Delivery_Address.setText(delivery_Addr);

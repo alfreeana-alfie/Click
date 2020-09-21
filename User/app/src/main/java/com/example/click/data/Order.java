@@ -1,5 +1,7 @@
 package com.example.click.data;
 
+import android.text.Spanned;
+
 public class Order {
 
     private String id, seller_id, customer_id, item_id;
@@ -11,6 +13,16 @@ public class Order {
     private String quantity;
     private String status;
     private String tracking_no;
+
+    public Spanned getStatus1() {
+        return status1;
+    }
+
+    public void setStatus1(Spanned status1) {
+        this.status1 = status1;
+    }
+
+    private Spanned status1;
 
     public String getDelivery_price() {
         return delivery_price;

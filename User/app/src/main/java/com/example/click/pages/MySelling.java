@@ -1,7 +1,12 @@
 package com.example.click.pages;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -195,8 +200,12 @@ public class MySelling extends AppCompatActivity {
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
-                                    final String status = object.getString("status").trim();
+                                    String status = object.getString("status").trim();
+
                                     final String tracking_no = object.getString("tracking_no").trim();
+
+                                    Spanned status1;
+
 
                                     Order item = new Order(id,
                                             seller_id,
@@ -213,6 +222,12 @@ public class MySelling extends AppCompatActivity {
                                             date,
                                             quantity,
                                             status);
+                                    if(status.equals("Reject")){
+                                        String delivery_text;
+
+                                        delivery_text = "<font color='#FF3333'>Reject</font>";
+                                        item.setStatus1(Html.fromHtml(delivery_text));
+                                    }
                                     item.setTracking_no(tracking_no);
                                     itemList.add(item);
                                 }
@@ -249,31 +264,48 @@ public class MySelling extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onRejectClick(int position) {
-                                        Order order = itemList.get(position);
+                                    public void onRejectClick(final int position) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(MySelling.this, R.style.MyDialogTheme);
+                                        builder.setTitle("Are you sure?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
 
-                                        final String strOrder_Id = order.getId();
-                                        final String strSeller_id = order.getSeller_id();
-                                        final String strCustomer_id = order.getCustomer_id();
-                                        final String strItem_id = order.getItem_id();
-                                        final String strMain_category = order.getMain_category();
-                                        final String strSub_category = order.getSub_category();
-                                        final String strAd_Detail = order.getAd_detail();
-                                        final Double strPrice = Double.valueOf(order.getPrice());
-                                        final String strDivision = order.getDivision();
-                                        final String strDistrict = order.getDistrict();
-                                        final String strPhoto = order.getPhoto();
-                                        final String strOrder_Date = order.getOrder_date();
-                                        final String strDate = order.getDate();
-                                        final String strQuantity = order.getQuantity();
-                                        final String strStatus = order.getStatus();
+                                                Order order = itemList.get(position);
 
-                                        final String remarks = "Reject";
-                                        Update_Order_Reject(strOrder_Date, remarks, strCustomer_id);
-                                        getCustomerDetail(strCustomer_id, strOrder_Id);
+                                                final String strOrder_Id = order.getId();
+                                                final String strSeller_id = order.getSeller_id();
+                                                final String strCustomer_id = order.getCustomer_id();
+                                                final String strItem_id = order.getItem_id();
+                                                final String strMain_category = order.getMain_category();
+                                                final String strSub_category = order.getSub_category();
+                                                final String strAd_Detail = order.getAd_detail();
+                                                final Double strPrice = Double.valueOf(order.getPrice());
+                                                final String strDivision = order.getDivision();
+                                                final String strDistrict = order.getDistrict();
+                                                final String strPhoto = order.getPhoto();
+                                                final String strOrder_Date = order.getOrder_date();
+                                                final String strDate = order.getDate();
+                                                final String strQuantity = order.getQuantity();
+                                                final String strStatus = order.getStatus();
 
-                                        adapter_item.notifyDataSetChanged();
-                                        recyclerView.setAdapter(adapter_item);
+                                                final String remarks = "Reject";
+                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id);
+                                                getCustomerDetail(strCustomer_id, strOrder_Id);
+
+                                                adapter_item.notifyDataSetChanged();
+                                                recyclerView.setAdapter(adapter_item);
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
                                     }
 
                                     @Override

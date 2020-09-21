@@ -287,7 +287,7 @@ public class Review_Page extends AppCompatActivity {
         btn_received.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Received(order_date);
+                Received(order_date, ShipTotal.getText().toString());
                 order_layout.setVisibility(View.GONE);
                 review_layout.setVisibility(View.VISIBLE);
             }
@@ -491,7 +491,7 @@ public class Review_Page extends AppCompatActivity {
         getId = user.get(SessionManager.ID);
     }
 
-    private void Received(final String strOrder_Date) {
+    private void Received(final String strOrder_Date, final String strPrice) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                 new Response.Listener<String>() {
                     @Override
@@ -552,6 +552,7 @@ public class Review_Page extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("order_date", strOrder_Date);
+                params.put("delivery_price", strPrice);
                 return params;
             }
         };

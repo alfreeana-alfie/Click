@@ -91,6 +91,7 @@ public class MyIncome extends AppCompatActivity {
                                     final String ad_detail = object.getString("ad_detail").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String division = object.getString("division");
+                                    final String seller_division = object.getString("seller_division");
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     final String seller_id = object.getString("seller_id");
