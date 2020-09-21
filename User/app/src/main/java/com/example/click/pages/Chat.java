@@ -1,6 +1,7 @@
 package com.example.click.pages;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -211,6 +213,7 @@ public class Chat extends AppCompatActivity {
         });
 
         reference1.addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
@@ -276,6 +279,7 @@ public class Chat extends AppCompatActivity {
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void addMessageBox(String message, int type) {
         TextView textView = new TextView(Chat.this);
         CircleImageView circleImageView = new CircleImageView(Chat.this);
@@ -315,6 +319,7 @@ public class Chat extends AppCompatActivity {
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void addTimeBox(String message, int type) {
         TextView textView = new TextView(Chat.this);
         textView.setText(message);

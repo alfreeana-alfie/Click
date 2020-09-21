@@ -153,55 +153,126 @@
                     android:text="@string/shipped_out_to_sarawak" />
 
                 <View
+                    android:id="@+id/border1"
                     android:layout_below="@id/text_ship_placed"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/colorLightGrey" />
 
                 <TextView
+                    android:layout_below="@id/border1"
+                    android:id="@+id/textView1"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/open_sans"
-                    android:padding="10dp"
-                    android:id="@+id/customer_name"
-                    android:layout_width="match_parent"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:paddingTop="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/text_ship_placed"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="12sp"
-                    android:text="@string/customer_name" />
+                    android:textSize="14sp"
+                    android:text="Customer Details:-" />
 
-                <TextView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/open_sans"
-                    android:padding="10dp"
-                    android:id="@+id/customer_addr"
+                <LinearLayout
+                    android:layout_below="@id/textView1"
+                    android:id="@+id/CustomerName_Layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/customer_name"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="12sp"
-                    android:text="@string/customer_address" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/open_sans"
-                    android:padding="10dp"
-                    android:id="@+id/customer_phone"
+                    <TextView
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="0dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="10dp"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="Name: " />
+
+                    <TextView
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="15dp"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:id="@+id/customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="Customer Name" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/CustomerAddr_Layout"
+                    android:layout_below="@id/CustomerName_Layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/customer_addr"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="12sp"
-                    android:text="@string/customer_phone" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="0dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="10dp"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="Address: " />
+
+                    <TextView
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="15dp"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:id="@+id/customer_addr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="@string/customer_address" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/CustomerPhone_Layout"
+                    android:layout_below="@id/CustomerAddr_Layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="0dp"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:padding="10dp"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="Phone Number: " />
+
+                    <TextView
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="15dp"
+                        android:fontFamily="@font/open_sans"
+                        android:padding="10dp"
+                        android:id="@+id/customer_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGrey"
+                        android:textSize="12sp"
+                        android:text="@string/customer_phone" />
+                </LinearLayout>
+
 
                 <View
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/customer_phone"
+                    android:layout_below="@id/CustomerPhone_Layout"
                     android:background="@color/colorLightGrey" />
 
                 <TextView

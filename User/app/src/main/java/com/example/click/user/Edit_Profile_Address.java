@@ -235,7 +235,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
         birthday.setFocusable(true);
 
-        icno.setFocusable(true);
+        icno.setFocusable(false);
         bank_name.setFocusable(true);
         bank_acc.setFocusable(true);
 
@@ -248,7 +248,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         city.setFocusableInTouchMode(true);
         postcode.setFocusableInTouchMode(true);
 
-        icno.setFocusableInTouchMode(true);
+        icno.setFocusableInTouchMode(false);
         bank_name.setFocusableInTouchMode(true);
         bank_acc.setFocusableInTouchMode(true);
 
