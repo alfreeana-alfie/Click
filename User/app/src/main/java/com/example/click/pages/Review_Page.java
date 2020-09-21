@@ -182,8 +182,6 @@ public class Review_Page extends AppCompatActivity {
 
         assert strDivision != null;
 
-        Log.d("DIVISION",strDivision);
-        Log.d("SELLER",strSeller_Division);
         if(strDivision.equals(strSeller_Division)){
             Price.setText("MYR" + strPrice);
             Double sub_total = 0.00;
