@@ -201,6 +201,17 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_place_order2"
+            android:visibility="gone"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/background_orange_full_curve"
+            android:drawableEnd="@drawable/ic_right_arrow_foreground"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/place_order"
+            android:textColor="@color/colorAccent" />
+        <Button
             android:id="@+id/btn_place_order"
             android:layout_width="150dp"
             android:layout_height="wrap_content"

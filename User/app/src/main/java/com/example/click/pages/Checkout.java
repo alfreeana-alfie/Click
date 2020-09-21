@@ -250,12 +250,26 @@ public class Checkout extends AppCompatActivity {
                                                                                         userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
                                                                                             @Override
                                                                                             public void onSelfClick(int position) {
+                                                                                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                                 delivery_combine = new Delivery_Combine();
-
-                                                                                                delivery_combine.setDelivery_price(Price);
+                                                                                                delivery_combine.setId(id);
+                                                                                                delivery_combine.setDelivery_item_id(item_id);
+                                                                                                delivery_combine.setSeller_id(seller_id);
+                                                                                                delivery_combine.setAd_detail(ad_detail);
+                                                                                                delivery_combine.setPhoto(image_item);
+                                                                                                delivery_combine.setPrice(String.valueOf(price));
+                                                                                                delivery_combine.setDivision(division);
+                                                                                                delivery_combine.setQuantity(quantity);
+                                                                                                delivery_combine.setDelivery_price("0.00");
                                                                                                 delivery_combine.setDelivery_division(division);
 
-                                                                                                item_all_detailsList.add(delivery_combine);
+                                                                                                String delivery_text;
+                                                                                                delivery_text = "<font color='#999999'>MYR0.00</font>";
+                                                                                                delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                                delivery_combine.setDelivery_division1(division + " to " + division);
+
+                                                                                                grandtotal -= Double.parseDouble(Price);
+                                                                                                Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
                                                                                             }
                                                                                         });
                                                                                     } else {

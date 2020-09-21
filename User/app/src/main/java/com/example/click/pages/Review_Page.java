@@ -3,6 +3,7 @@ package com.example.click.pages;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -91,6 +92,9 @@ public class Review_Page extends AppCompatActivity {
         String strQuantity = intent.getStringExtra("quantity");
         String strShipping = intent.getStringExtra("ship_price");
         String strPhoto = intent.getStringExtra("photo");
+        String strSeller_Division = intent.getStringExtra("seller_division");
+        String strDivision = intent.getStringExtra("division");
+
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -176,20 +180,38 @@ public class Review_Page extends AppCompatActivity {
 
         ratingBar = findViewById(R.id.ratingBar);
 
-        Double sub_total = 0.00;
-        sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
+        assert strDivision != null;
 
-        SubTotal.setText("MYR" + String.format("%.2f", sub_total));
-        ShipTotal.setText("MYR" + strShipping);
+        Log.d("DIVISION",strDivision);
+        Log.d("SELLER",strSeller_Division);
+        if(strDivision.equals(strSeller_Division)){
+            Price.setText("MYR" + strPrice);
+            Double sub_total = 0.00;
+            sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
+
+            SubTotal.setText("MYR" + String.format("%.2f", sub_total));
+            ShipTotal.setText("MYR0.00");
 
 
-        Double grandtotal = 0.00;
-        grandtotal = sub_total + Double.parseDouble(strShipping);
+            Double grandtotal = 0.00;
+            grandtotal = sub_total;
 
-        GrandTotal.setText("MYR" + String.format("%.2f", grandtotal));
-        order_layout = findViewById(R.id.order_layout);
-        review_layout = findViewById(R.id.review_layout);
+            GrandTotal.setText("MYR" + String.format("%.2f", sub_total));
+        }else {
+            Double sub_total = 0.00;
+            sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
 
+            SubTotal.setText("MYR" + String.format("%.2f", sub_total));
+            ShipTotal.setText("MYR" + strShipping);
+
+
+            Double grandtotal = 0.00;
+            grandtotal = sub_total + Double.parseDouble(strShipping);
+
+            GrandTotal.setText("MYR" + String.format("%.2f", grandtotal));
+            order_layout = findViewById(R.id.order_layout);
+            review_layout = findViewById(R.id.review_layout);
+        }
         TrackingNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

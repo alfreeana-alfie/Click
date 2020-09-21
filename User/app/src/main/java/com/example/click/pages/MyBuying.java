@@ -463,6 +463,8 @@ public class MyBuying extends AppCompatActivity {
                                         intent1.putExtra("quantity", strQuantity);
                                         intent1.putExtra("ship_price", strDelivery_Price);
                                         intent1.putExtra("photo", photo);
+                                        intent1.putExtra("seller_division", strSellerDivision);
+                                        intent1.putExtra("division", strDivision);
                                         startActivity(intent1);
                                     }
                                 });

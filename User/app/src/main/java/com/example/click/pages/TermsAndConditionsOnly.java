@@ -86,7 +86,7 @@ public class TermsAndConditionsOnly extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(TermsAndConditionsOnly.this, Register_Seller_MainPage.class);
+                Intent intent = new Intent(TermsAndConditionsOnly.this, About_KetekMall.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -96,7 +96,7 @@ public class TermsAndConditionsOnly extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(TermsAndConditionsOnly.this, Register_Seller_MainPage.class);
+        Intent intent = new Intent(TermsAndConditionsOnly.this, About_KetekMall.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

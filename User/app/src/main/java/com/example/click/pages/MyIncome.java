@@ -79,6 +79,7 @@ public class MyIncome extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             Double grantotal = 0.00;
+                            Double grantotal2 = 0.00;
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -95,8 +96,9 @@ public class MyIncome extends AppCompatActivity {
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
+                                    final Double delivery_price = Double.valueOf(object.getString("delivery_price"));
 
-                                    grantotal += (price * Integer.parseInt(quantity));
+                                    grantotal += (price * Integer.parseInt(quantity) + delivery_price);
                                     sold.setText(String.format("%.2f", grantotal));
 
                                     final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
@@ -226,7 +228,9 @@ public class MyIncome extends AppCompatActivity {
                             String success = jsonObject.getString("success");
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            Double grand = 0.00;
+
+                            Double grantotal = 0.00;
+                            Double gran2total = 0.00;
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
 //                                    Toast.makeText(MyIncome.this, "JSON Parsing Error: ", Toast.LENGTH_SHORT).show();
@@ -244,8 +248,9 @@ public class MyIncome extends AppCompatActivity {
                                     final String delivery_date = object.getString("delivery_date").trim();
                                     final String delivery_addr = object.getString("delivery_addr").trim();
                                     final String photo = object.getString("photo");
-
+                                    Double grand = 0.00;
                                     grand += (price * Integer.parseInt(quantity))+ Double.parseDouble(delivery_price);
+
 
                                     OrderDone orderDone = new OrderDone();
                                     orderDone.setItemImage(photo);

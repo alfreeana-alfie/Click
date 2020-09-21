@@ -531,7 +531,7 @@ public class About_Seller extends AppCompatActivity {
                                     itemList2.add(item);
                                 }
                                 String sold = String.valueOf(itemList2.size());
-//                                sold_text.setText(sold);
+                                sold_text.setText(sold);
 
                             } else {
                                 Toast.makeText(About_Seller.this, "Login Failed! ", Toast.LENGTH_SHORT).show();

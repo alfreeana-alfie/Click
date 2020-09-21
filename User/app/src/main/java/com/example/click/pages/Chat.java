@@ -176,9 +176,10 @@ public class Chat extends AppCompatActivity {
                             try {
                                 JSONObject obj = new JSONObject(s);
 
-                                TOPIC = obj.getJSONObject(UserDetails.chatWith).get("token").toString();
-                                NOTIFICATION_TITLE = UserDetails.username;
-                                NOTIFICATION_MESSAGE = messageText;
+                                TOPIC = obj.getJSONObject(UserDetails.chatWith1).get("token").toString();
+                                Log.d("CHAT", TOPIC);
+                                NOTIFICATION_TITLE = "KetekMall";
+                                NOTIFICATION_MESSAGE = UserDetails.username + ": " + messageText;
 
                                 JSONObject notification = new JSONObject();
                                 JSONObject notifcationBody = new JSONObject();

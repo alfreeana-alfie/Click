@@ -106,6 +106,7 @@
         <activity android:name=".pages.ReturnRefundPolicy" />
         <activity android:name=".pages.DeliveryPolicy" />
         <activity android:name=".pages.TermsAndConditions" />
+        <activity android:name=".pages.TermsAndConditionsOnly" />
 
 
         <meta-data
