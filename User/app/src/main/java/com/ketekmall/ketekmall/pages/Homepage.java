@@ -1179,12 +1179,11 @@ public class Homepage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
-            timer.cancel();
             super.onBackPressed();
             finish();
-            return;
         } else {
             backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
             backToast.show();

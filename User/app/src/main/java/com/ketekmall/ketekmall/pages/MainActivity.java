@@ -373,4 +373,5 @@ public class MainActivity extends AppCompatActivity {
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();
-    }}
+    }
+}
