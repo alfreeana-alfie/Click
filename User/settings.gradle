@@ -1,2 +1,4 @@
+include ':mylibrary'
+include ':IpayHostedStandard_MY_SDK_Aar_08072019'
 include ':app'
 rootProject.name='Click'

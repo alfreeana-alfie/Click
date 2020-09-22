@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.click">
+    package="com.ketekmall.ketekmall"
+    android:versionCode="1"
+    android:versionName="1.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+<!--    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="18" />-->
+
     <application
+
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -38,89 +44,94 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".pages.Splashscreen">
+        <activity android:name="com.ketekmall.ketekmall.pages.Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <activity android:name="com.ipay.IPayIHActivity" android:configChanges="orientation|screenSize"/>
+        <activity android:name="com.ipay.IPayIHAcitivityR" android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".pages.MainActivity"
+            android:name="com.ketekmall.ketekmall.pages.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".pages.Homepage"
+            android:name="com.ketekmall.ketekmall.pages.Homepage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pages.Product_Edit" />
-        <activity android:name=".pages.Cart" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Product_Edit" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Cart" />
         <activity
-            android:name=".user.Edit_Profile"
+            android:name="com.ketekmall.ketekmall.user.Edit_Profile"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".pages.Chat"
+            android:name="com.ketekmall.ketekmall.pages.Chat"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".pages.Checkout" />
-        <activity android:name=".pages.Place_Order" />
-        <activity android:name=".pages.Delivery_Add" />
-        <activity android:name=".pages.Delivery_MainPage" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Checkout" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Place_Order" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Delivery_Add" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Delivery_MainPage" />
 
-        <activity android:name=".category.View_All" />
-        <activity android:name=".pages.MyLikes" />
-        <activity android:name=".pages.MyProducts" />
-        <activity android:name=".pages.Product_Add" />
-        <activity android:name=".pages.Chat_Inbox" />
-        <activity android:name=".pages.Delivery_Edit" />
-        <activity android:name=".pages.View_Product" />
-        <activity android:name=".pages.About_Seller" />
-        <activity android:name=".pages.Shipping_Information" />
-        <activity android:name=".user.Edit_Profile_Address" />
-        <activity android:name=".pages.Register_Seller_MainPage" />
-        <activity android:name=".pages.Register_Seller" />
-        <activity android:name=".pages.More_Details" />
-        <activity android:name=".pages.Selling_Detail" />
-        <activity android:name=".pages.Review_Info" />
-        <activity android:name=".pages.Notification_Page" />
-        <activity android:name=".pages.Review_Page" />
-        <activity android:name=".category.Agriculture" />
-        <activity android:name=".category.Cake" />
-        <activity android:name=".category.Fashion" />
-        <activity android:name=".category.Handicraft" />
-        <activity android:name=".category.Health" />
-        <activity android:name=".category.Home" />
-        <activity android:name=".category.Pepper" />
-        <activity android:name=".category.Personal" />
-        <activity android:name=".category.Processed" />
-        <activity android:name=".category.Retail" />
-        <activity android:name=".category.Service" />
-        <activity android:name=".category.View_All_Hot" />
-        <activity android:name=".category.View_All_Shock" />
-        <activity android:name=".pages.MyBuying" />
-        <activity android:name=".pages.MySelling" />
-        <activity android:name=".pages.Me_Page" />
-        <activity android:name=".pages.MyIncome" />
-        <activity android:name=".pages.MyRating" />
-        <activity android:name=".pages.BoostAd" />
-        <activity android:name=".pages.ProductRating" />
-        <activity android:name=".pages.Contact_Us" />
-        <activity android:name=".pages.About_KetekMall" />
-        <activity android:name=".pages.ReturnRefundPolicy" />
-        <activity android:name=".pages.DeliveryPolicy" />
-        <activity android:name=".pages.TermsAndConditions" />
-        <activity android:name=".pages.TermsAndConditionsOnly" />
+        <activity android:name="com.ketekmall.ketekmall.category.View_All" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MyLikes" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MyProducts" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Product_Add" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Chat_Inbox" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Delivery_Edit" />
+        <activity android:name="com.ketekmall.ketekmall.pages.View_Product" />
+        <activity android:name="com.ketekmall.ketekmall.pages.About_Seller" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Shipping_Information" />
+        <activity android:name="com.ketekmall.ketekmall.user.Edit_Profile_Address" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Register_Seller_MainPage" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Register_Seller" />
+        <activity android:name="com.ketekmall.ketekmall.pages.More_Details" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Selling_Detail" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Review_Info" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Notification_Page" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Review_Page" />
+        <activity android:name="com.ketekmall.ketekmall.category.Agriculture" />
+        <activity android:name="com.ketekmall.ketekmall.category.Cake" />
+        <activity android:name="com.ketekmall.ketekmall.category.Fashion" />
+        <activity android:name="com.ketekmall.ketekmall.category.Handicraft" />
+        <activity android:name="com.ketekmall.ketekmall.category.Health" />
+        <activity android:name="com.ketekmall.ketekmall.category.Home" />
+        <activity android:name="com.ketekmall.ketekmall.category.Pepper" />
+        <activity android:name="com.ketekmall.ketekmall.category.Personal" />
+        <activity android:name="com.ketekmall.ketekmall.category.Processed" />
+        <activity android:name="com.ketekmall.ketekmall.category.Retail" />
+        <activity android:name="com.ketekmall.ketekmall.category.Service" />
+        <activity android:name="com.ketekmall.ketekmall.category.View_All_Hot" />
+        <activity android:name="com.ketekmall.ketekmall.category.View_All_Shock" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MyBuying" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MySelling" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Me_Page" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MyIncome" />
+        <activity android:name="com.ketekmall.ketekmall.pages.MyRating" />
+        <activity android:name="com.ketekmall.ketekmall.pages.BoostAd" />
+        <activity android:name="com.ketekmall.ketekmall.pages.ProductRating" />
+        <activity android:name="com.ketekmall.ketekmall.pages.Contact_Us" />
+        <activity android:name="com.ketekmall.ketekmall.pages.About_KetekMall" />
+        <activity android:name="com.ketekmall.ketekmall.pages.ReturnRefundPolicy" />
+        <activity android:name="com.ketekmall.ketekmall.pages.DeliveryPolicy" />
+        <activity android:name="com.ketekmall.ketekmall.pages.TermsAndConditions" />
+        <activity android:name="com.ketekmall.ketekmall.pages.TermsAndConditionsOnly" />
 
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <service android:name=".service.MyFirebaseInstanceIDService">
+        <service android:name="com.ketekmall.ketekmall.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <service
-            android:name=".service.MyFirebaseMessagingService"
+            android:name="com.ketekmall.ketekmall.service.MyFirebaseMessagingService"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
