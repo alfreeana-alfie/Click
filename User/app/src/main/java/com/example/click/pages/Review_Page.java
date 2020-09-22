@@ -88,12 +88,12 @@ public class Review_Page extends AppCompatActivity {
         final String strTracking = intent.getStringExtra("tracking_no");
         final String strDelivery_Date = intent.getStringExtra("delivery_date");
         String strAd_Detail = intent.getStringExtra("ad_detail");
-        String strPrice = intent.getStringExtra("price");
-        String strQuantity = intent.getStringExtra("quantity");
-        String strShipping = intent.getStringExtra("ship_price");
+        final String strPrice = intent.getStringExtra("price");
+        final String strQuantity = intent.getStringExtra("quantity");
+        final String strShipping = intent.getStringExtra("ship_price");
         String strPhoto = intent.getStringExtra("photo");
-        String strSeller_Division = intent.getStringExtra("seller_division");
-        String strDivision = intent.getStringExtra("division");
+        final String strSeller_Division = intent.getStringExtra("seller_division");
+        final String strDivision = intent.getStringExtra("division");
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -166,6 +166,8 @@ public class Review_Page extends AppCompatActivity {
         GrandTotal = findViewById(R.id.grand_total);
 
         loading = findViewById(R.id.loading);
+        order_layout = findViewById(R.id.order_layout);
+        review_layout = findViewById(R.id.review_layout);
 
         OrderID.setText("KM" + order_id);
 
@@ -207,8 +209,7 @@ public class Review_Page extends AppCompatActivity {
             grandtotal = sub_total + Double.parseDouble(strShipping);
 
             GrandTotal.setText("MYR" + String.format("%.2f", grandtotal));
-            order_layout = findViewById(R.id.order_layout);
-            review_layout = findViewById(R.id.review_layout);
+
         }
         TrackingNo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,7 +288,13 @@ public class Review_Page extends AppCompatActivity {
         btn_received.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Received(order_date, ShipTotal.getText().toString());
+                if(strDivision.equals(strSeller_Division)){
+                    Received(order_date, "0.00");
+                }else {
+                    Received(order_date, strShipping);
+                }
+
+
                 order_layout.setVisibility(View.GONE);
                 review_layout.setVisibility(View.VISIBLE);
             }
