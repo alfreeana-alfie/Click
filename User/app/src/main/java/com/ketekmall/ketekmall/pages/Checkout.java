@@ -43,8 +43,6 @@ import com.ketekmall.ketekmall.data.MySingleton;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.user.Edit_Profile_Address;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ipay.IPayIH;
-import com.ipay.IPayIHPayment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +60,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import com.ipay.IPayIH;
+import com.ipay.IPayIHPayment;
+import com.ipay.IPayIHR;
 
 public class Checkout extends AppCompatActivity implements Serializable{
     String RefID = UUID.randomUUID().toString();
@@ -95,7 +96,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
 
     Button Button_Checkout;
-    TextView Grand_Total, AddressUser, No_Address;
+    TextView Grand_Total, Grand_Total2, AddressUser, No_Address;
     LinearLayout linear2;
 
     RecyclerView recyclerView;
@@ -185,7 +186,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                     JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                                                                                     if (success.equals("1")) {
-                                                                                        if(jsonArray.length() ==0 ){
+                                                                                        if(jsonArray.length() == 0){
 
                                                                                             delivery_combine = new Delivery_Combine();
                                                                                             delivery_combine.setId(id);
@@ -218,7 +219,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                                             grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(Price));
                                                                                             Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
-
+                                                                                            Grand_Total2.setText(String.format("%.2f", grandtotal));
                                                                                             Date date = Calendar.getInstance().getTime();
 
                                                                                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -548,33 +549,115 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     Button_Checkout.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            AddOrder(strCity, Address2);
-//                                            try{
-//                                                String backendPostURL;
-//                                                backendPostURL = decodeBase64("https://ketekmall.com/ketekmall/backendURL.php");
-//                                                IPayIHPayment payment = new IPayIHPayment();
-//                                                payment.setMerchantKey ("8bgBOjTkij");
-//                                                payment.setMerchantCode ("M29640");
-//                                                payment.setPaymentId ("");
-//                                                payment.setCurrency ("MYR");
-//                                                payment.setRefNo (RefID);
-//                                                payment.setAmount ("1.00");
-//                                                payment.setProdDesc ("KetekMall");
-//                                                payment.setUserName (strName);
-//                                                payment.setUserEmail (strEmail);
-//                                                payment.setUserContact (strPhone_no);
-//                                                payment.setRemark ("KetekMall");
-//                                                payment.setLang ("ISO-8859-1");
-//                                                payment.setCountry ("MY");
-//                                                payment.setBackendPostURL (backendPostURL);
-//                                                Intent checkoutIntent = IPayIH.getInstance().checkout(payment, Checkout.this, new ResultDelegate(), IPayIH.PAY_METHOD_CREDIT_CARD);
-//                                                startActivityForResult(checkoutIntent, 1);
-//                                            }catch (Exception e){
-//                                                Log.d("ERROR", e.toString());
-//                                            }
-//
+                                            Log.d("TAG", Grand_Total2.getText().toString());
+                                            String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
+                                            try{
+                                                IPayIHPayment payment = new IPayIHPayment();
+                                                payment.setMerchantKey ("8bgBOjTkij");
+                                                payment.setMerchantCode ("M29640");
+                                                payment.setPaymentId ("");
+                                                payment.setCurrency ("MYR");
+                                                payment.setRefNo (RefID);
+                                                payment.setAmount (Grand_Total2.getText().toString());
+                                                payment.setProdDesc ("KetekMall");
+                                                payment.setUserName (strName);
+                                                payment.setUserEmail (strEmail);
+                                                payment.setRemark ("KetekMall");
+                                                payment.setLang ("ISO-8859-1");
+                                                payment.setCountry ("MY");
+                                                payment.setBackendPostURL (backendPostURL2);
+                                                Intent checkoutIntent = IPayIH.getInstance().checkout(payment
+                                                        , Checkout.this, new ResultDelegate(), IPayIH.PAY_METHOD_CREDIT_CARD);
+                                                startActivityForResult(checkoutIntent, 1);
+                                            }catch (Exception e){
+                                                Log.d("ERROR", e.toString());
+                                            }
                                         }
                                     });
+                                }
+                            } else {
+                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getUserDetail2() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String strName = object.getString("name").trim();
+                                    final String strEmail = object.getString("email").trim();
+                                    final String strPhone_no = object.getString("phone_no").trim();
+                                    String strAddress01 = object.getString("address_01");
+                                    String strAddress02 = object.getString("address_02");
+                                    final String strCity = object.getString("division");
+                                    String strPostCode = object.getString("postcode");
+
+                                    final String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                    final String Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+
+                                    AddressUser.setText(Address);
+
+                                    AddOrder(strCity, Address2);
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -695,29 +778,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         final String strEmail = object.getString("email").trim();
                                                                                         final String strPhone_no = object.getString("phone_no").trim();
 
-                                                                                        try{
-                                                                                            String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
-                                                                                            String backendPostURL = decodeBase64("https://ketekmall.com/ketekmall/backendURL.php");
-                                                                                            IPayIHPayment payment = new IPayIHPayment();
-                                                                                            payment.setMerchantKey ("8bgBOjTkij");
-                                                                                            payment.setMerchantCode ("M29640");
-                                                                                            payment.setPaymentId ("");
-                                                                                            payment.setCurrency ("MYR");
-                                                                                            payment.setRefNo (RefID);
-                                                                                            payment.setAmount ("1.00");
-                                                                                            payment.setProdDesc ("KetekMall");
-                                                                                            payment.setUserName (strName);
-                                                                                            payment.setUserEmail (strEmail);
-                                                                                            payment.setUserContact (strPhone_no);
-                                                                                            payment.setRemark ("KetekMall");
-                                                                                            payment.setLang ("ISO-8859-1");
-                                                                                            payment.setCountry ("MY");
-                                                                                            payment.setBackendPostURL (backendPostURL2);
-                                                                                            Intent checkoutIntent = IPayIH.getInstance().checkout(payment, Checkout.this, new ResultDelegate(), IPayIH.PAY_METHOD_CREDIT_CARD);
-                                                                                            startActivityForResult(checkoutIntent, 1);
-                                                                                        }catch (Exception e){
-                                                                                            Log.d("ERROR", e.toString());
-                                                                                        }
                                                                                         String url = "https://click-1595830894120.firebaseio.com/users.json";
 
                                                                                         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -1090,22 +1150,18 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response == null){
-                            Log.e("onResponse", "Return NULL");
-                        }else{
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
 
-                                if (success.equals("1")) {
-                                    Log.d("Message", "Return SUCCESS");
-                                } else {
-                                    Log.e("Message", "Return FAILED");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            if (success.equals("1")) {
+
+                            } else {
+                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -1117,7 +1173,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
                 return params;
@@ -1132,22 +1188,18 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response == null){
-                            Log.e("onResponse", "Return NULL");
-                        }else{
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
 
-                                if (success.equals("1")) {
-                                    Log.d("Message", "Return SUCCESS");
-                                } else {
-                                    Log.e("Message", "Return FAILED");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            if (success.equals("1")) {
+
+                            } else {
+                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -1174,6 +1226,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != 1 || data == null) {
             Log.d("TAG", "NULL");
+        }else{
+            getUserDetail2();
         }
     }
 }
