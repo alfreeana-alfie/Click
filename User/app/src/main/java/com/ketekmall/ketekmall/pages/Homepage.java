@@ -1,10 +1,12 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -99,6 +101,7 @@ public class Homepage extends AppCompatActivity {
     private static String URL_READALL_HOT = "https://ketekmall.com/ketekmall/category/readall_sold.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
+    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
     List<Item_All_Details> itemList, itemList2;
 
@@ -923,26 +926,101 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra("item_id", item.getItem_id());
-                                        detailIntent.putExtra("id", item.getId());
-                                        detailIntent.putExtra("user_id", item.getSeller_id());
-                                        detailIntent.putExtra("main_category", item.getMain_category());
-                                        detailIntent.putExtra("sub_category", item.getSub_category());
-                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
-                                        detailIntent.putExtra("price", item.getPrice());
-                                        detailIntent.putExtra("division", item.getDivision());
-                                        detailIntent.putExtra("district", item.getDistrict());
-                                        detailIntent.putExtra("photo", item.getPhoto());
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
 
-                                        detailIntent.putExtra("brand_material", item.getBrand());
-                                        detailIntent.putExtra("inner_material", item.getInner());
-                                        detailIntent.putExtra("stock", item.getStock());
-                                        detailIntent.putExtra("description", item.getDescription());
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Homepage.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            if (response == null) {
+                                                                Log.e("onResponse", "Return NULL");
+                                                            } else {
+                                                                try {
+                                                                    JSONObject jsonObject1 = new JSONObject(response);
+                                                                    String success = jsonObject1.getString("success");
 
-                                        startActivity(detailIntent);
+                                                                    if (success.equals("1")) {
+                                                                        Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    } else {
+                                                                        Toast.makeText(Homepage.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                    Toast.makeText(Homepage.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NoConnectionError) {
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                        }
+                                                    }) {
+                                                @SuppressLint("DefaultLocale")
+                                                @Override
+                                                protected Map<String, String> getParams() {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
                                     }
                                 });
 
@@ -1046,26 +1124,101 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
-                                        Item_All_Details item = itemList2.get(position);
+                                        Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra("item_id", item.getItem_id());
-                                        detailIntent.putExtra("id", item.getId());
-                                        detailIntent.putExtra("user_id", item.getSeller_id());
-                                        detailIntent.putExtra("main_category", item.getMain_category());
-                                        detailIntent.putExtra("sub_category", item.getSub_category());
-                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
-                                        detailIntent.putExtra("price", item.getPrice());
-                                        detailIntent.putExtra("division", item.getDivision());
-                                        detailIntent.putExtra("district", item.getDistrict());
-                                        detailIntent.putExtra("photo", item.getPhoto());
+                                        final String strItem_Id = item.getId();
+                                        final String strSeller_id = item.getSeller_id();
+                                        final String strMain_category = item.getMain_category();
+                                        final String strSub_category = item.getSub_category();
+                                        final String strAd_Detail = item.getAd_detail();
+                                        final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strDivision = item.getDivision();
+                                        final String strDistrict = item.getDistrict();
+                                        final String strPhoto = item.getPhoto();
 
-                                        detailIntent.putExtra("brand_material", item.getBrand());
-                                        detailIntent.putExtra("inner_material", item.getInner());
-                                        detailIntent.putExtra("stock", item.getStock());
-                                        detailIntent.putExtra("description", item.getDescription());
+                                        if (getId.equals(strSeller_id)) {
+                                            Toast.makeText(Homepage.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                    new Response.Listener<String>() {
+                                                        @Override
+                                                        public void onResponse(String response) {
+                                                            if (response == null) {
+                                                                Log.e("onResponse", "Return NULL");
+                                                            } else {
+                                                                try {
+                                                                    JSONObject jsonObject1 = new JSONObject(response);
+                                                                    String success = jsonObject1.getString("success");
 
-                                        startActivity(detailIntent);
+                                                                    if (success.equals("1")) {
+                                                                        Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    } else {
+                                                                        Toast.makeText(Homepage.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                    Toast.makeText(Homepage.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            try {
+
+                                                                if (error instanceof TimeoutError) {
+                                                                    //Time out error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NoConnectionError) {
+                                                                    //net work error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof AuthFailureError) {
+                                                                    //error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ServerError) {
+                                                                    //Erroor
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof NetworkError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else if (error instanceof ParseError) {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                } else {
+                                                                    //Error
+                                                                    System.out.println("" + error);
+                                                                }
+                                                                //End
+
+
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+
+                                                        }
+                                                    }) {
+                                                @SuppressLint("DefaultLocale")
+                                                @Override
+                                                protected Map<String, String> getParams() {
+                                                    Map<String, String> params = new HashMap<>();
+                                                    params.put("customer_id", getId);
+                                                    params.put("main_category", strMain_category);
+                                                    params.put("sub_category", strSub_category);
+                                                    params.put("ad_detail", strAd_Detail);
+                                                    params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("division", strDivision);
+                                                    params.put("district", strDistrict);
+                                                    params.put("photo", strPhoto);
+                                                    params.put("seller_id", strSeller_id);
+                                                    params.put("item_id", strItem_Id);
+                                                    return params;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+                                            requestQueue.add(stringRequest2);
+                                        }
                                     }
                                 });
 
