@@ -198,9 +198,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                             delivery_combine.setQuantity(quantity);
 
                                                                                             String delivery_text;
-                                                                                            delivery_text = "<font color='#FF3333'>Not Supported for selected area</font>";
+                                                                                            delivery_text = "<font color='#FF3333'>MYR0.00</font>";
                                                                                             delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            delivery_combine.setDelivery_division1("");
+                                                                                            delivery_combine.setDelivery_division1("No Delivery");
 
                                                                                             item_all_detailsList.add(delivery_combine);
                                                                                             Button_Checkout.setVisibility(View.GONE);

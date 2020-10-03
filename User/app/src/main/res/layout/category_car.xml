@@ -71,10 +71,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_down_foreground"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans_bold"
                         android:text="@string/price"
                         android:textColor="@color/colorAccent"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
 
                     <Button
                         android:id="@+id/price_sorthighest"
@@ -82,10 +82,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_up_foreground"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="@font/open_sans_bold"
                         android:text="@string/price"
                         android:textColor="@color/colorAccent"
-                        android:textSize="13sp" />
+                        android:textSize="18sp" />
                 </RelativeLayout>
 
                 <Button
@@ -94,10 +94,10 @@
                     android:layout_height="40dp"
                     android:layout_column="2"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/open_sans_bold"
                     android:textColor="@color/colorWhite"
                     android:drawableEnd="@drawable/ic_filter_foreground"
-                    android:textSize="12sp"
+                    android:textSize="18sp"
                     android:text="@string/filter" />
 
             </TableRow>

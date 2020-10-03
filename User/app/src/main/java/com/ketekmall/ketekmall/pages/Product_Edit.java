@@ -1,11 +1,13 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,6 +44,7 @@ import com.ketekmall.ketekmall.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,18 +53,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.view.View.VISIBLE;
+
 public class Product_Edit extends AppCompatActivity {
 
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/edituser.php";
-    private static String URL_IMG = "https://ketekmall.com/ketekmall/uploadimg02.php";
+    private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
+    private static String URL_IMG = "https://ketekmall.com/ketekmall/products/uploadimg02.php";
+    private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
+    private static String URL_READ_PHOTO = "https://ketekmall.com/ketekmall/products_img/read_photo.php";
+    private static String URL_EDIT_PROD = "https://ketekmall.com/ketekmall/edit_product_detail.php";
 
     ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category, adapter_car,
             adapter_properties, adapter_electronic, adapter_home,
             adapter_leisure, adapter_business, adapter_jobs,
             adapter_travel, adapter_other;
-    Uri filePath;
+    Uri filePath1,filePath2,filePath3,filePath4,filePath5;
     String id, sub_category, district;
-    private Bitmap bitmap;
+    private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
             Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
     private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order;
@@ -71,10 +80,12 @@ public class Product_Edit extends AppCompatActivity {
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
-    private ImageView Upload_Photo;
+    private ImageView upload_photo_img1,upload_photo_img2,upload_photo_img3,upload_photo_img4,upload_photo_img5;
+    private ImageView delete_2,delete_3,delete_4,delete_5;
     private ScrollView about_detail;
     private ProgressBar loading;
     BottomNavigationView bottomNav;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +102,6 @@ public class Product_Edit extends AppCompatActivity {
         final String division = intent.getStringExtra("division");
         district = intent.getStringExtra("district");
         final String photo = intent.getStringExtra("photo");
-        String Category_Text = main_category;
         String Location_Text = division + ", " + district;
         final String strMax_Order = intent.getStringExtra("max_order");
 
@@ -100,9 +110,12 @@ public class Product_Edit extends AppCompatActivity {
         final String stock = intent.getStringExtra("stock");
         final String desc = intent.getStringExtra("description");
 
+        saveItemID();
+        View_Photo();
+
         Edittext_Order.setText(strMax_Order);
 
-        Category_TextView.setText(Category_Text);
+        Category_TextView.setText(main_category);
 
         Delivery_Location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +158,7 @@ public class Product_Edit extends AppCompatActivity {
         District_TextView.setText(district);
         EditText_Ad_Detail.setText(ad_detail);
         EditText_Price.setText(price);
-        Picasso.get().load(photo).into(Upload_Photo);
+        Picasso.get().load(photo).into(upload_photo_img1);
 
         edittext_brand.setText(brand);
         edittext_inner.setText(inner);
@@ -153,6 +166,7 @@ public class Product_Edit extends AppCompatActivity {
         edittext_desc.setText(desc);
 
         Button_Func();
+
     }
 
     private void Declare() {
@@ -174,7 +188,6 @@ public class Product_Edit extends AppCompatActivity {
         edittext_stock = findViewById(R.id.edittext_stock);
         edittext_desc = findViewById(R.id.edittext_desc);
 
-
         EditText_Price = findViewById(R.id.enter_price);
         spinner_division = findViewById(R.id.spinner_division);
         spinner_district = findViewById(R.id.spinner_district);
@@ -192,10 +205,23 @@ public class Product_Edit extends AppCompatActivity {
         Button_AcceptLocation = findViewById(R.id.accept_location);
         Button_BackLocation = findViewById(R.id.back_location);
 
-        Upload_Photo = findViewById(R.id.upload_photo);
+        upload_photo_img1 = findViewById(R.id.upload_photo1);
+        upload_photo_img2 = findViewById(R.id.upload_photo2);
+        upload_photo_img3 = findViewById(R.id.upload_photo3);
+        upload_photo_img4 = findViewById(R.id.upload_photo4);
+        upload_photo_img5 = findViewById(R.id.upload_photo5);
+        delete_2 = findViewById(R.id.delete_2);
+        delete_3 = findViewById(R.id.delete_3);
+        delete_4 = findViewById(R.id.delete_4);
+        delete_5 = findViewById(R.id.delete_5);
+
+        delete_2.setVisibility(View.GONE);
+        delete_3.setVisibility(View.GONE);
+        delete_4.setVisibility(View.GONE);
+        delete_5.setVisibility(View.GONE);
+
         loading = findViewById(R.id.loading);
         category_page_layout = findViewById(R.id.category_page_layout);
-//        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         location_page_layout = findViewById(R.id.location_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
 
@@ -264,11 +290,74 @@ public class Product_Edit extends AppCompatActivity {
     }
 
     private void Button_Func() {
-        Upload_Photo.setOnClickListener(new View.OnClickListener() {
+        upload_photo_img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseFile();
+                chooseFile1();
+            }
+        });
 
+        upload_photo_img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile2();
+            }
+        });
+
+        upload_photo_img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile3();
+            }
+        });
+
+        upload_photo_img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile4();
+            }
+        });
+
+        upload_photo_img5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile5();
+            }
+        });
+
+        delete_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img2.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
+                delete_2.setVisibility(View.GONE);
+                deletePhoto("2");
+            }
+        });
+
+        delete_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img3.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
+                delete_3.setVisibility(View.GONE);
+                deletePhoto("3");
+            }
+        });
+
+        delete_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img4.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
+                delete_4.setVisibility(View.GONE);
+                deletePhoto("4");
+            }
+        });
+
+        delete_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img5.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
+                delete_5.setVisibility(View.GONE);
+                deletePhoto("5");
             }
         });
 
@@ -580,7 +669,6 @@ public class Product_Edit extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString();
-        final String strSub_category = this.Sub_Category_TextView.getText().toString().trim();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final String strBrand = this.edittext_brand.getText().toString();
         final String strInner = this.edittext_inner.getText().toString();
@@ -588,6 +676,7 @@ public class Product_Edit extends AppCompatActivity {
         final String strDesc = this.edittext_desc.getText().toString();
 
         final Double strPrice = Double.valueOf(this.EditText_Price.getText().toString().trim());
+        @SuppressLint("DefaultLocale")
         final String strPrice_Text = String.format("%.2f", strPrice);
         final String strOrder = this.Edittext_Order.getText().toString();
         final String strDivision = this.Division_TextView.getText().toString().trim();
@@ -654,16 +743,13 @@ public class Product_Edit extends AppCompatActivity {
                                 System.out.println("" + error);
                             }
                             //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("main_category", strMain_category);
                 params.put("sub_category", strMain_category);
@@ -678,6 +764,7 @@ public class Product_Edit extends AppCompatActivity {
                 params.put("division", strDivision);
                 params.put("district", strDistrict);
                 params.put("id", id);
+                params.put("item_id", id);
                 return params;
             }
         };
@@ -686,7 +773,287 @@ public class Product_Edit extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void saveImage(final String photo) {
+    private void saveItemID() {
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        final String ad_detail = intent.getStringExtra("ad_detail");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_PROD,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+
+                                Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
+
+
+                            } else {
+
+                                Toast.makeText(Product_Edit.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.setVisibility(View.GONE);
+                        Button_SavedEdit.setVisibility(View.VISIBLE);
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", ad_detail);
+                params.put("item_id", id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+    }
+
+    private void View_Photo() {
+        Intent intent = getIntent();
+        final String ad_detail = intent.getStringExtra("ad_detail");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PHOTO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String[] image = new String[jsonArray.length()];
+                            if(jsonArray.length() == 0 || jsonArray.length() == 1){
+                                upload_photo_img3.setVisibility(VISIBLE);
+                                upload_photo_img4.setVisibility(VISIBLE);
+                                upload_photo_img5.setVisibility(VISIBLE);
+                                delete_2.setVisibility(View.GONE);
+                                delete_3.setVisibility(View.GONE);
+                                delete_4.setVisibility(View.GONE);
+                                delete_5.setVisibility(View.GONE);
+                            }else {
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+//                                        String id = object.getString("id").trim();
+                                        String image_item = object.getString("filepath");
+                                        image[i] = image_item;
+                                    }
+                                    delete_2.setVisibility(View.GONE);
+                                    delete_3.setVisibility(View.GONE);
+                                    delete_4.setVisibility(View.GONE);
+                                    delete_5.setVisibility(View.GONE);
+
+                                    Log.d("PHOTO", String.valueOf(image.length));
+                                    if(image.length == 2){
+                                        Picasso.get().load(image[1]).into(upload_photo_img2);
+                                        upload_photo_img3.setVisibility(VISIBLE);
+                                        upload_photo_img4.setVisibility(VISIBLE);
+                                        upload_photo_img5.setVisibility(VISIBLE);
+
+                                        delete_2.setVisibility(View.VISIBLE);
+                                        delete_3.setVisibility(View.GONE);
+                                        delete_4.setVisibility(View.GONE);
+                                        delete_5.setVisibility(View.GONE);
+                                    } else if(image.length == 3) {
+                                        Picasso.get().load(image[1]).into(upload_photo_img2);
+                                        Picasso.get().load(image[2]).into(upload_photo_img3);
+                                        upload_photo_img4.setVisibility(VISIBLE);
+                                        upload_photo_img5.setVisibility(VISIBLE);
+
+                                        delete_2.setVisibility(View.VISIBLE);
+                                        delete_3.setVisibility(View.VISIBLE);
+                                        delete_4.setVisibility(View.GONE);
+                                        delete_5.setVisibility(View.GONE);
+                                    } else if(image.length == 4) {
+                                        Picasso.get().load(image[1]).into(upload_photo_img2);
+                                        Picasso.get().load(image[2]).into(upload_photo_img3);
+                                        Picasso.get().load(image[3]).into(upload_photo_img4);
+                                        upload_photo_img5.setVisibility(VISIBLE);
+
+                                        delete_2.setVisibility(View.VISIBLE);
+                                        delete_3.setVisibility(View.VISIBLE);
+                                        delete_4.setVisibility(View.VISIBLE);
+                                        delete_5.setVisibility(View.GONE);
+                                    } else if(image.length == 5) {
+                                        Picasso.get().load(image[1]).into(upload_photo_img2);
+                                        Picasso.get().load(image[2]).into(upload_photo_img3);
+                                        Picasso.get().load(image[3]).into(upload_photo_img4);
+                                        Picasso.get().load(image[4]).into(upload_photo_img5);
+                                        delete_5.setVisibility(View.VISIBLE);
+                                        delete_2.setVisibility(View.VISIBLE);
+                                        delete_3.setVisibility(View.VISIBLE);
+                                        delete_4.setVisibility(View.VISIBLE);
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(Product_Edit.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", ad_detail);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Product_Edit.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void deletePhoto(final String number){
+        Intent intent = getIntent();
+        final String ad_detail = intent.getStringExtra("ad_detail");
+
+        final String Filename = ad_detail + number;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_PHOTO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response != null){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                if (success.equals("1")) {
+//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }else{
+                            Log.e("onResponse", "Return NULL");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("filename", Filename);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void saveImage2(final String photo) {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
@@ -697,8 +1064,8 @@ public class Product_Edit extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
-                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
+                            if ("1".equals(success)) {
+//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
                             }
@@ -740,8 +1107,7 @@ public class Product_Edit extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -758,37 +1124,201 @@ public class Product_Edit extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void saveImage(final String number, final String photo) {
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
+
+        final String Filename = strAd_Detail + number;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD_EXTRA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("item_id", id);
+                params.put("ad_detail", strAd_Detail);
+                params.put("filename", Filename);
+                params.put("filepath", photo);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     public String getStringImage(Bitmap bitmap) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 
         byte[] imageByteArray = byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
 
-        return encodedImage;
-    }
-
-    private void chooseFile() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+        return Base64.encodeToString(imageByteArray, Base64.DEFAULT);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
+            filePath1 = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                Upload_Photo.setImageBitmap(bitmap);
+                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
+                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 300, 300, false);
+                upload_photo_img1.setImageBitmap(bitmap1);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage(getStringImage(bitmap));
+            saveImage2(getStringImage(bitmap1));
         }
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath2 = data.getData();
+            try {
+                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 300, 300, false);
+                upload_photo_img2.setImageBitmap(bitmap2);
+
+
+                delete_2.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            saveImage("2", getStringImage(bitmap2));
+        }
+        if (requestCode == 3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath3 = data.getData();
+            try {
+
+                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 300, 300, false);
+                upload_photo_img3.setImageBitmap(bitmap3);
+
+
+                delete_3.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            saveImage("3", getStringImage(bitmap3));
+        }
+        if (requestCode == 4 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath4 = data.getData();
+            try {
+
+                bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 300, 300, false);
+                upload_photo_img4.setImageBitmap(bitmap4);
+
+                delete_4.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            saveImage("4", getStringImage(bitmap4));
+        }
+        if (requestCode == 5 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath5 = data.getData();
+            try {
+
+                bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 300, 300, false);
+                upload_photo_img5.setImageBitmap(bitmap5);
+
+                delete_5.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            saveImage("5", getStringImage(bitmap5));
+        }
+    }
+
+    private void chooseFile1() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+    }
+
+    private void chooseFile2() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
+    }
+
+    private void chooseFile3() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 3);
+    }
+
+    private void chooseFile4() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 4);
+    }
+
+    private void chooseFile5() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 5);
     }
 
     @Override

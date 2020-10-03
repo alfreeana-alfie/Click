@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
@@ -19,7 +20,9 @@
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         style="@style/Widget.AppCompat.Button.Borderless"
-        app:srcCompat="@drawable/ic_back_foreground" />
+        app:srcCompat="@drawable/ic_back_foreground"
+        tools:ignore="VectorDrawableCompat"
+        android:contentDescription="@string/todo" />
 
     <RelativeLayout
         android:layout_centerVertical="true"
@@ -46,7 +49,8 @@
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/color_cursor"
             android:textColor="@color/colorPrimaryDark"
-            android:hint="@string/search" />
+            android:hint="@string/search"
+            android:importantForAutofill="no" />
 
         <ImageButton
             android:visibility="gone"
@@ -57,7 +61,8 @@
             android:layout_height="30dp"
             android:layout_margin="5dp"
             style="@style/Widget.AppCompat.Button.Borderless"
-            app:srcCompat="@drawable/com_facebook_tooltip_black_xout" />
+            app:srcCompat="@drawable/com_facebook_tooltip_black_xout"
+            android:contentDescription="@string/todo" />
     </RelativeLayout>
 
     <RelativeLayout

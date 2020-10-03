@@ -143,6 +143,7 @@ public class Homepage extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         getSession();
+
         Declare();
 
         viewPager = findViewById(R.id.view_pager);
@@ -165,7 +166,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void getSession() {
-        sessionManager = new SessionManager(view.getContext());
+        sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
         HashMap<String, String> user = sessionManager.getUserDetail();

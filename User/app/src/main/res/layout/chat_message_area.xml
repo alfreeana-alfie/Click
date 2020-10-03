@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fcf3cf"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal">
 
     <RelativeLayout
@@ -15,13 +16,14 @@
         android:layout_weight="1"
         android:background="@drawable/background_white_full_curves_02"
         android:elevation="2dp"
+        android:layout_marginBottom="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp">
 
         <EditText
             android:id="@+id/messageArea"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:layout_height="match_parent"
             android:background="@null"
             android:cursorVisible="true"
             android:fontFamily="@font/open_sans"

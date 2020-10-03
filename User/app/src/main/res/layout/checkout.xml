@@ -125,6 +125,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/payment_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -218,7 +219,8 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/background_orange_full_curve"
             android:drawableEnd="@drawable/ic_right_arrow_foreground"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="15sp"
             android:text="@string/place_order"
             android:textColor="@color/colorAccent" />
     </RelativeLayout>

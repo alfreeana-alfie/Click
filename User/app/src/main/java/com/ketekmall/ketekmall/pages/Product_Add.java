@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,22 +59,25 @@ public class Product_Add extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
+    private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
+    private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
 
     SessionManager sessionManager;
     String getId;
-    Uri filePath;
+    Uri filePath1,filePath2,filePath3,filePath4,filePath5;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category,
             adapter_car, adapter_properties, adapter_elctronic,
             adapter_home, adapter_leisure, adapter_business,
             adapter_jobs, adapter_travel, adapter_other;
-    private Bitmap bitmap;
+    private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
     private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, location_page_layout;
     private LinearLayout item_page_layout;
-    private ImageView upload_photo_img;
+    private ImageView upload_photo_img1,upload_photo_img2,upload_photo_img3,upload_photo_img4,upload_photo_img5;
+    private ImageView delete_2,delete_3,delete_4,delete_5;
     private ProgressBar loading;
     private ScrollView about_detail;
     List<Item_All_Details_Other> itemList;
@@ -122,13 +126,77 @@ public class Product_Add extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        upload_photo_img.setOnClickListener(new View.OnClickListener() {
+        upload_photo_img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseFile();
-
+                chooseFile1();
             }
         });
+
+        upload_photo_img2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile2();
+            }
+        });
+
+        upload_photo_img3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile3();
+            }
+        });
+
+        upload_photo_img4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile4();
+            }
+        });
+
+        upload_photo_img5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile5();
+            }
+        });
+
+        delete_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img2.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
+                delete_2.setVisibility(View.GONE);
+                deletePhoto("2");
+            }
+        });
+
+        delete_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img3.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
+                delete_3.setVisibility(View.GONE);
+                deletePhoto("3");
+            }
+        });
+
+        delete_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img4.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
+                delete_4.setVisibility(View.GONE);
+                deletePhoto("4");
+            }
+        });
+
+        delete_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upload_photo_img5.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
+                delete_5.setVisibility(View.GONE);
+                deletePhoto("5");
+            }
+        });
+
 
         enter_category.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,10 +258,10 @@ public class Product_Add extends AppCompatActivity {
         accept_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filePath == null || edittext_ad_detail.getText().toString().isEmpty() || enter_price.getText().toString().isEmpty() || edittext_order.getText().toString().isEmpty()) {
+                if (filePath1 == null || edittext_ad_detail.getText().toString().isEmpty() || enter_price.getText().toString().isEmpty() || edittext_order.getText().toString().isEmpty()) {
                     Toast.makeText(Product_Add.this, "Incomplete information", Toast.LENGTH_LONG).show();
                 } else {
-                    saveEdit(getId, getStringImage(bitmap));
+                    saveEdit(getId, getStringImage(bitmap1));
                 }
 
             }
@@ -261,12 +329,25 @@ public class Product_Add extends AppCompatActivity {
         spinner_sub_category = findViewById(R.id.spinner_sub_category);
         accept_category = findViewById(R.id.accept_category);
         back_category = findViewById(R.id.back_category);
-        upload_photo_img = findViewById(R.id.upload_photo);
         loading = findViewById(R.id.loading);
 
         category_page_layout = findViewById(R.id.category_page_layout);
-//        ad_detail_page_layout = findViewById(R.id.ad_detail_page_layout);
         item_page_layout = findViewById(R.id.item_page_layout);
+
+        upload_photo_img1 = findViewById(R.id.upload_photo1);
+        upload_photo_img2 = findViewById(R.id.upload_photo2);
+        upload_photo_img3 = findViewById(R.id.upload_photo3);
+        upload_photo_img4 = findViewById(R.id.upload_photo4);
+        upload_photo_img5 = findViewById(R.id.upload_photo5);
+        delete_2 = findViewById(R.id.delete_2);
+        delete_3 = findViewById(R.id.delete_3);
+        delete_4 = findViewById(R.id.delete_4);
+        delete_5 = findViewById(R.id.delete_5);
+
+        delete_2.setVisibility(View.GONE);
+        delete_3.setVisibility(View.GONE);
+        delete_4.setVisibility(View.GONE);
+        delete_5.setVisibility(View.GONE);
 
         adapter_division = ArrayAdapter.createFromResource(Product_Add.this, R.array.new_division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -551,6 +632,38 @@ public class Product_Add extends AppCompatActivity {
                                     Item_All_Details_Other item = new Item_All_Details_Other(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
                                     itemList.add(item);
 
+                                    if (upload_photo_img2.getDrawable().getConstantState().equals
+                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                        Log.d("PHOTO", "NO");
+                                    }else{
+//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
+                                        saveImage("2", getStringImage(bitmap2));
+                                    }
+
+                                    if (upload_photo_img3.getDrawable().getConstantState().equals
+                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                        Log.d("PHOTO", "NO");
+                                    }else{
+//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
+                                        saveImage("3", getStringImage(bitmap2));
+                                    }
+
+                                    if (upload_photo_img4.getDrawable().getConstantState().equals
+                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                        Log.d("PHOTO", "NO");
+                                    }else{
+//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
+                                        saveImage("4", getStringImage(bitmap2));
+                                    }
+
+                                    if (upload_photo_img5.getDrawable().getConstantState().equals
+                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                        Log.d("PHOTO", "NO");
+                                    }else{
+//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
+                                        saveImage("5", getStringImage(bitmap2));
+                                    }
+
                                     Intent intent = new Intent(Product_Add.this, MyProducts.class);
                                     startActivity(intent);
                                 } else {
@@ -623,6 +736,8 @@ public class Product_Add extends AppCompatActivity {
                     params.put("division", strDivision);
                     params.put("district", strDistrict);
                     params.put("photo", photo);
+                    params.put("filename", strAd_Detail + "1");
+                    params.put("filepath", photo);
                     return params;
                 }
             };
@@ -633,11 +748,182 @@ public class Product_Add extends AppCompatActivity {
         }
     }
 
-    private void chooseFile() {
+    private void saveImage(final String number, final String photo) {
+        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
+
+        final String Filename = strAd_Detail + number;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD_EXTRA,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Product_Add.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", strAd_Detail);
+                params.put("filename", Filename);
+                params.put("filepath", photo);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void chooseFile1() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+    }
+
+    private void chooseFile2() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
+    }
+
+    private void chooseFile3() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 3);
+    }
+
+    private void chooseFile4() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 4);
+    }
+
+    private void chooseFile5() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 5);
+    }
+
+    private void deletePhoto(final String number){
+        Intent intent = getIntent();
+        final String ad_detail = intent.getStringExtra("ad_detail");
+
+        final String Filename = ad_detail + number;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_PHOTO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Product_Add.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("filename", Filename);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     public String getStringImage(Bitmap bitmap) {
@@ -655,14 +941,76 @@ public class Product_Add extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
+            filePath1 = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, false);
-                upload_photo_img.setImageBitmap(bitmap);
+                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
+                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 300, 300, false);
+                upload_photo_img1.setImageBitmap(bitmap1);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath2 = data.getData();
+            try {
+                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 300, 300, false);
+                upload_photo_img2.setImageBitmap(bitmap2);
+
+
+                delete_2.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == 3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath3 = data.getData();
+            try {
+
+                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 300, 300, false);
+                upload_photo_img3.setImageBitmap(bitmap3);
+
+
+                delete_3.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (requestCode == 4 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath4 = data.getData();
+            try {
+
+                bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 300, 300, false);
+                upload_photo_img4.setImageBitmap(bitmap4);
+
+
+                delete_4.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if (requestCode == 5 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath5 = data.getData();
+            try {
+
+                bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 300, 300, false);
+                upload_photo_img5.setImageBitmap(bitmap5);
+
+                delete_5.setVisibility(View.VISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
