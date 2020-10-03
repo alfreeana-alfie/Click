@@ -80,7 +80,8 @@
 
                     android:id="@+id/img_item"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="410dp"
+                    android:scaleType="centerCrop"
                     android:background="@drawable/background_white"
                     android:contentDescription="@string/item_image"
                     tools:srcCompat="@tools:sample/avatars[1]" />

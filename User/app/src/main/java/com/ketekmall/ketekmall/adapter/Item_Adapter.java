@@ -123,6 +123,15 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
             }
         });
 
+        img_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
+                    mListerner.onViewClick(position);
+                }
+            }
+        });
+
         Float flo = 0.0F;
         flo = Float.parseFloat(item.getRating());
         ratingBar.setRating(flo);
