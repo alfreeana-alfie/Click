@@ -1,7 +1,6 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -18,7 +16,6 @@ import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class About_KetekMall extends AppCompatActivity {
 
@@ -28,7 +25,6 @@ public class About_KetekMall extends AppCompatActivity {
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,11 +111,10 @@ public class About_KetekMall extends AppCompatActivity {
         TermsConditions_Layout = findViewById(R.id.terms_and_conditions_layout);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSettings(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.about_ketekMall));
 

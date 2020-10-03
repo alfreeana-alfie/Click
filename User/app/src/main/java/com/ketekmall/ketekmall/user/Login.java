@@ -1,8 +1,6 @@
 package com.ketekmall.ketekmall.user;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -60,12 +57,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("deprecation")
 public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
@@ -75,6 +70,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
     private String name_firebase, email_firebase;
     private CallbackManager callbackManager;
+    private LoginButton loginButton;
     private EditText email, password;
     private ProgressBar loading;
     private Button button_login, button_goto_register_page, button_goto_forgot_page;
@@ -83,7 +79,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private GoogleApiClient googleApiClient;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,7 +89,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         sessionManager = new SessionManager(view.getContext());
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage(requireActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+        googleApiClient = new GoogleApiClient.Builder(getContext()).enableAutoManage(getActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +112,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             public void onClick(View v) {
                 final Fragment fragment_register = new Register();
                 FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
                 fragmentTransaction.replace(R.id.framelayout, fragment_register);
                 fragmentTransaction.commit();
@@ -129,7 +124,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             public void onClick(View v) {
                 final Fragment fragment_forgot_password = new Forgot_Password();
                 FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
                 fragmentTransaction.replace(R.id.framelayout, fragment_forgot_password);
                 fragmentTransaction.commit();
@@ -149,7 +144,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         signInButton.setSize(SignInButton.SIZE_WIDE);
 
         callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = v.findViewById(R.id.login_button);
+        loginButton = v.findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
         loginButton.setFragment(this);
 
@@ -185,7 +180,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-<<<<<<< Updated upstream
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String success = jsonObject.getString("success");
@@ -261,182 +255,65 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                         }else {
                                                                             reference.child(name_firebase).child("photo").setValue(photo);
                                                                         }
-=======
-                            if(response != null){
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    String success = jsonObject.getString("success");
-                                    JSONArray jsonArray = jsonObject.getJSONArray("login");
 
-                                    if (success.equals("1")) {
-                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                            JSONObject object = jsonArray.getJSONObject(i);
+                                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                    } else {
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
 
-                                            final String name = object.getString("name").trim();
-                                            final String email = object.getString("email").trim();
-                                            final String phone_no = object.getString("phone_no").trim();
-                                            final String address_01 = object.getString("address_01").trim();
-                                            final String address_02 = object.getString("address_02").trim();
-                                            final String city = object.getString("division").trim();
-                                            final String postcode = object.getString("postcode").trim();
-                                            final String birthday = object.getString("birthday").trim();
-                                            final String gender = object.getString("gender").trim();
-                                            final String photo = object.getString("photo").trim();
-                                            String id = object.getString("id").trim();
-
-                                            sessionManager.createSession(name, email,
-                                                    phone_no, address_01,
-                                                    address_02, city,
-                                                    postcode, birthday,
-                                                    gender, id);
-
-                                            Timer timer = new Timer();
-                                            timer.schedule(new TimerTask() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(getContext(), Homepage.class);
-                                                    intent.putExtra("name", name);
-                                                    intent.putExtra("email", email);
-                                                    intent.putExtra("phone_no", phone_no);
-                                                    intent.putExtra("address_01", address_01);
-                                                    intent.putExtra("address_02", address_02);
-                                                    intent.putExtra("division", city);
-                                                    intent.putExtra("postcode", postcode);
-                                                    intent.putExtra("birthday", birthday);
-                                                    intent.putExtra("gender", gender);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    requireActivity().startActivity(intent);
-                                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                                }
-                                            }, 100);
-                                            Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
-                                            loading.setVisibility(View.GONE);
-                                            button_login.setVisibility(View.VISIBLE);
->>>>>>> Stashed changes
-
-                                            //Firebase
-                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                            final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
-
-                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String s) {
-                                                    if(s != null){
-                                                        if (s.equals("null")) {
-                                                            Toast.makeText(getContext(), "user_actionbar not found", Toast.LENGTH_LONG).show();
-                                                        } else {
-                                                            try {
-                                                                JSONObject obj = new JSONObject(s);
-                                                                if (!obj.has(name)) {
-                                                                    name_firebase = name;
-                                                                    email_firebase = email;
-
-                                                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                        @Override
-                                                                        public void onResponse(String s) {
-                                                                            if (s != null){
-                                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                                                                if (s.equals("null")) {
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("email")
-                                                                                            .setValue(email_firebase);
-                                                                                    if(photo.equals("null")){
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo_url);
-                                                                                    }else {
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo);
-                                                                                    }
-
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("token")
-                                                                                            .setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                } else {
-                                                                                    try {
-                                                                                        JSONObject obj = new JSONObject(s);
-
-                                                                                        if (!obj.has(name_firebase)) {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("email")
-                                                                                                    .setValue(email_firebase);
-                                                                                            if(photo.equals("null")){
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo_url);
-                                                                                            }else {
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo);
-                                                                                            }
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("token")
-                                                                                                    .setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                        } else {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("email")
-                                                                                                    .setValue(email_firebase);
-                                                                                            if(photo.equals("null")){
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo_url);
-                                                                                            }else {
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo);
-                                                                                            }
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("token")
-                                                                                                    .setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                        }
-                                                                                    } catch (JSONException e) {
-                                                                                        e.printStackTrace();
-                                                                                    }
+                                                                            if (!obj.has(name_firebase)) {
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
                                                                                 }
-                                                                            }else{
-                                                                                Log.e("onResponse", "Return NULL");
-                                                                            }
-
-                                                                        }
-
-                                                                    }, new Response.ErrorListener() {
-                                                                        @Override
-                                                                        public void onErrorResponse(VolleyError error) {
-                                                                            try {
-
-                                                                                if (error instanceof TimeoutError) {
-                                                                                    //Time out error
-                                                                                    System.out.println("" + error);
-                                                                                }else if(error instanceof NoConnectionError){
-                                                                                    //net work error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof AuthFailureError) {
-                                                                                    //error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof ServerError) {
-                                                                                    //Erroor
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof NetworkError) {
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof ParseError) {
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
-                                                                                }else{
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            } else {
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
                                                                                 }
-                                                                            } catch (Exception e) {
-                                                                                e.printStackTrace();
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             }
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
                                                                         }
-                                                                    });
+                                                                    }
+                                                                }
 
-<<<<<<< Updated upstream
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    try {
+
+                                                                        if (error instanceof TimeoutError) {
+                                                                            //Time out error
+                                                                            System.out.println("" + error);
+                                                                        }else if(error instanceof NoConnectionError){
+                                                                            //net work error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }else{
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }
+                                                                        //End
+
+
                                                                     } catch (Exception e) {
 
 
@@ -449,174 +326,149 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                         } else if (obj.getJSONObject(name).getString("email").equals(email)) {
                                                             UserDetails.username = name;
                                                             UserDetails.email = email;
-=======
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
-                                                                    rQueue.add(request);
-                                                                } else if (obj.getJSONObject(name).getString("email").equals(email)) {
-                                                                    UserDetails.username = name;
-                                                                    UserDetails.email = email;
->>>>>>> Stashed changes
 
-                                                                    name_firebase = name;
-                                                                    email_firebase = email;
+                                                            name_firebase = name;
+                                                            email_firebase = email;
 
-                                                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
 
-                                                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                        @Override
-                                                                        public void onResponse(String s) {
-                                                                            final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String s) {
+                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                                                            if (s.equals("null")) {
-                                                                                reference.child(name_firebase)
-                                                                                        .child("email")
-                                                                                        .setValue(email_firebase);
+                                                                    if (s.equals("null")) {
+                                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                        if(photo.equals("null")){
+                                                                            reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                        }
+                                                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                    } else {
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
+
+                                                                            if (!obj.has(name_firebase)) {
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
                                                                                 if(photo.equals("null")){
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("photo")
-                                                                                            .setValue(photo_url);
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
                                                                                 }
-                                                                                reference.child(name_firebase)
-                                                                                        .child("photo")
-                                                                                        .setValue(photo);
-                                                                                reference.child(name_firebase)
-                                                                                        .child("token")
-                                                                                        .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             } else {
-                                                                                try {
-                                                                                    new JSONObject(s);
-
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("email")
-                                                                                            .setValue(email_firebase);
-                                                                                    if(photo.equals("null")){
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo_url);
-                                                                                    }else {
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo);
-                                                                                    }
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("token")
-                                                                                            .setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                                } catch (JSONException e) {
-                                                                                    e.printStackTrace();
+                                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                                if(photo.equals("null")){
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                                                }else {
+                                                                                    reference.child(name_firebase).child("photo").setValue(photo);
                                                                                 }
+                                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             }
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
                                                                         }
-
-                                                                    }, new Response.ErrorListener() {
-                                                                        @Override
-                                                                        public void onErrorResponse(VolleyError error) {
-                                                                            try {
-
-                                                                                if (error instanceof TimeoutError ) {
-                                                                                    //Time out error
-                                                                                    System.out.println("" + error);
-                                                                                }else if(error instanceof NoConnectionError){
-                                                                                    //net work error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof AuthFailureError) {
-                                                                                    //error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof ServerError) {
-                                                                                    //Erroor
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof NetworkError) {
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
-                                                                                } else if (error instanceof ParseError) {
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
-                                                                                }else{
-                                                                                    //Error
-                                                                                    System.out.println("" + error);
-                                                                                }
-                                                                            } catch (Exception e) {
-                                                                                e.printStackTrace();
-                                                                            }
-                                                                        }
-                                                                    });
-
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
-                                                                    rQueue.add(request);
-                                                                } else {
-                                                                    Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 }
-<<<<<<< Updated upstream
+
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    try {
+
+                                                                        if (error instanceof TimeoutError ) {
+                                                                            //Time out error
+                                                                            System.out.println("" + error);
+                                                                        }else if(error instanceof NoConnectionError){
+                                                                            //net work error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }else{
+                                                                            //Error
+                                                                            System.out.println("" + error);
+                                                                        }
+                                                                        //End
+
+
+                                                                    } catch (Exception e) {
+
+
+                                                                    }
+                                                                }
                                                             });
 
                                                             RequestQueue rQueue = Volley.newRequestQueue(getContext());
                                                             rQueue.add(request);
                                                         } else {
                                                             Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
-=======
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
->>>>>>> Stashed changes
                                                         }
-                                                    }else{
-                                                        Log.e("onResponse", "Return NULL");
-                                                    }
-                                                }
-                                            }, new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    try {
-
-                                                        if (error instanceof TimeoutError ) {
-                                                            //Time out error
-                                                            System.out.println("" + error);
-                                                        }else if(error instanceof NoConnectionError){
-                                                            //net work error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof AuthFailureError) {
-                                                            //error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof ServerError) {
-                                                            //Erroor
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof NetworkError) {
-                                                            //Error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof ParseError) {
-                                                            //Error
-                                                            System.out.println("" + error);
-                                                        }else{
-                                                            //Error
-                                                            System.out.println("" + error);
-                                                        }
-                                                    } catch (Exception e) {
+                                                    } catch (JSONException e) {
                                                         e.printStackTrace();
                                                     }
                                                 }
-                                            });
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                try {
 
-<<<<<<< Updated upstream
+                                                    if (error instanceof TimeoutError ) {
+                                                        //Time out error
+                                                        System.out.println("" + error);
+                                                    }else if(error instanceof NoConnectionError){
+                                                        //net work error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof AuthFailureError) {
+                                                        //error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof ServerError) {
+                                                        //Erroor
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof NetworkError) {
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    } else if (error instanceof ParseError) {
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    }else{
+                                                        //Error
+                                                        System.out.println("" + error);
+                                                    }
+                                                    //End
+
+
+                                                } catch (Exception e) {
+
+
+                                                }
+                                            }
+                                        });
+
                                         RequestQueue rQueue = Volley.newRequestQueue(getContext());
                                         rQueue.add(request);
-=======
-                                            RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
-                                            rQueue.add(request);
-                                        }
-                                    } else {
-                                        loading.setVisibility(View.GONE);
-                                        button_login.setVisibility(View.VISIBLE);
-                                        Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
->>>>>>> Stashed changes
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
-
+                                } else {
                                     loading.setVisibility(View.GONE);
                                     button_login.setVisibility(View.VISIBLE);
+                                    Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                 }
-                            }else{
-                                Log.e("onResponse", "Return NULL");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+
+                                loading.setVisibility(View.GONE);
+                                button_login.setVisibility(View.VISIBLE);
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -646,13 +498,17 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             //Error
                             System.out.println("" + error);
                         }
+                        //End
+
+
                     } catch (Exception e) {
-                        e.printStackTrace();
+
+
                     }
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() {
+                protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
                     params.put("password", mPassword);
@@ -695,29 +551,20 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
                             if (s.equals("null")) {
-                                reference.child(name_firebase).child("email")
-                                        .setValue(email_firebase);
-                                reference.child(name_firebase).child("photo")
-                                        .setValue(photo);
-                                reference.child(name_firebase).child("token")
-                                        .setValue(FirebaseInstanceId.getInstance().getToken());
+                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                reference.child(name_firebase).child("photo").setValue(photo);
+                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                             } else {
                                 try {
                                     JSONObject obj = new JSONObject(s);
                                     if (!obj.has(name_firebase)) {
-                                        reference.child(name_firebase).child("email")
-                                                .setValue(email_firebase);
-                                        reference.child(name_firebase).child("photo")
-                                                .setValue(photo);
-                                        reference.child(name_firebase).child("token")
-                                                .setValue(FirebaseInstanceId.getInstance().getToken());
+                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                     } else {
-                                        reference.child(name_firebase).child("email")
-                                                .setValue(email_firebase);
-                                        reference.child(name_firebase).child("photo")
-                                                .setValue(photo);
-                                        reference.child(name_firebase).child("token")
-                                                .setValue(FirebaseInstanceId.getInstance().getToken());
+                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -732,7 +579,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                         }
                     });
 
-                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                    RequestQueue rQueue = Volley.newRequestQueue(getContext());
                     rQueue.add(request);
 
 
@@ -746,37 +593,26 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                         if (success.equals("1")) {
                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                            StringRequest request = new StringRequest(Request.Method.GET, url,
-                                                    new Response.Listener<String>() {
+                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String s) {
-                                                    final Firebase reference =
-                                                            new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
                                                     if (s.equals("null")) {
-                                                        reference.child(name_firebase).child("email")
-                                                                .setValue(email_firebase);
-                                                        reference.child(name_firebase).child("photo")
-                                                                .setValue(photo);
-                                                        reference.child(name_firebase).child("token")
-                                                                .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                        reference.child(name_firebase).child("photo").setValue(photo);
+                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                     } else {
                                                         try {
                                                             JSONObject obj = new JSONObject(s);
                                                             if (!obj.has(name_firebase)) {
-                                                                reference.child(name_firebase).child("email")
-                                                                        .setValue(email_firebase);
-                                                                reference.child(name_firebase).child("photo")
-                                                                        .setValue(photo);
-                                                                reference.child(name_firebase).child("token")
-                                                                        .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                             } else {
-                                                                reference.child(name_firebase).child("email")
-                                                                        .setValue(email_firebase);
-                                                                reference.child(name_firebase).child("photo")
-                                                                        .setValue(photo);
-                                                                reference.child(name_firebase).child("token")
-                                                                        .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
+                                                                reference.child(name_firebase).child("photo").setValue(photo);
+                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
@@ -811,13 +647,17 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                             //Error
                                                             System.out.println("" + error);
                                                         }
+                                                        //End
+
+
                                                     } catch (Exception e) {
-                                                        e.printStackTrace();
+
+
                                                     }
                                                 }
                                             });
 
-                                            RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                            RequestQueue rQueue = Volley.newRequestQueue(getContext());
                                             rQueue.add(request);
                                         }
                                     } catch (JSONException e) {
@@ -853,13 +693,17 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             //Error
                                             System.out.println("" + error);
                                         }
+                                        //End
+
+
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+
+
                                     }
                                 }
                             }) {
                         @Override
-                        protected Map<String, String> getParams() {
+                        protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> params = new HashMap<>();
                             params.put("name", fbUserName);
                             params.put("email", fbEmail);
@@ -872,7 +716,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             return params;
                         }
                     };
-                    RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+                    RequestQueue requestQueue = Volley.newRequestQueue(getContext());
                     requestQueue.add(stringRequest);
 
                     email.setText(fbEmail);
@@ -893,10 +737,9 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         request.executeAsync();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Google_SignIn(GoogleSignInResult result) {
         final GoogleSignInAccount account = result.getSignInAccount();
-        final String name = Objects.requireNonNull(account).getDisplayName();
+        final String name = account.getDisplayName();
         final String email = account.getEmail();
         final String phone_no = "";
         final String birthday = "";
@@ -916,36 +759,27 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
                 if (s.equals("null")) {
-                    reference.child(name_firebase).child("email")
-                            .setValue(email_firebase);
+                    reference.child(name_firebase).child("email").setValue(email_firebase);
                     if(photo.equals("null")){
-                        reference.child(name_firebase).child("photo")
-                                .setValue(photo_url);
+                        reference.child(name_firebase).child("photo").setValue(photo_url);
                     }
-                    reference.child(name_firebase).child("token")
-                            .setValue(FirebaseInstanceId.getInstance().getToken());
+                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                 } else {
                     try {
                         JSONObject obj = new JSONObject(s);
 
                         if (!obj.has(name_firebase)) {
-                            reference.child(name_firebase).child("email")
-                                    .setValue(email_firebase);
+                            reference.child(name_firebase).child("email").setValue(email_firebase);
                             if(photo.equals("null")){
-                                reference.child(name_firebase).child("photo")
-                                        .setValue(photo_url);
+                                reference.child(name_firebase).child("photo").setValue(photo_url);
                             }
-                            reference.child(name_firebase).child("token")
-                                    .setValue(FirebaseInstanceId.getInstance().getToken());
+                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         } else {
-                            reference.child(name_firebase).child("email")
-                                    .setValue(email_firebase);
+                            reference.child(name_firebase).child("email").setValue(email_firebase);
                             if(photo.equals("null")){
-                                reference.child(name_firebase).child("photo")
-                                        .setValue(photo_url);
+                                reference.child(name_firebase).child("photo").setValue(photo_url);
                             }
-                            reference.child(name_firebase).child("token")
-                                    .setValue(FirebaseInstanceId.getInstance().getToken());
+                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -960,7 +794,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+        RequestQueue rQueue = Volley.newRequestQueue(getContext());
         rQueue.add(request);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
@@ -979,35 +813,26 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                         final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
                                         if (s.equals("null")) {
-                                            reference.child(name_firebase).child("email")
-                                                    .setValue(email_firebase);
+                                            reference.child(name_firebase).child("email").setValue(email_firebase);
                                             if(photo.equals("null")){
-                                                reference.child(name_firebase).child("photo")
-                                                        .setValue(photo_url);
+                                                reference.child(name_firebase).child("photo").setValue(photo_url);
                                             }
-                                            reference.child(name_firebase).child("token")
-                                                    .setValue(FirebaseInstanceId.getInstance().getToken());
+                                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                         } else {
                                             try {
                                                 JSONObject obj = new JSONObject(s);
                                                 if (!obj.has(name_firebase)) {
-                                                    reference.child(name_firebase).child("email")
-                                                            .setValue(email_firebase);
+                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
                                                     if(photo.equals("null")){
-                                                        reference.child(name_firebase).child("photo")
-                                                                .setValue(photo_url);
+                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
                                                     }
-                                                    reference.child(name_firebase).child("token")
-                                                            .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                 } else {
-                                                    reference.child(name_firebase).child("email")
-                                                            .setValue(email_firebase);
+                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
                                                     if(photo.equals("null")){
-                                                        reference.child(name_firebase).child("photo")
-                                                                .setValue(photo_url);
+                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
                                                     }
-                                                    reference.child(name_firebase).child("token")
-                                                            .setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                 }
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -1046,12 +871,13 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
 
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+
+
                                         }
                                     }
                                 });
 
-                                RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                RequestQueue rQueue = Volley.newRequestQueue(getContext());
                                 rQueue.add(request);
                             }
                         } catch (JSONException e) {
@@ -1087,13 +913,17 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                 //Error
                                 System.out.println("" + error);
                             }
+                            //End
+
+
                         } catch (Exception e) {
-                            e.printStackTrace();
+
+
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("email", email);
@@ -1105,17 +935,15 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
     }
 
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
             Google_SignIn(result);
             GoogleSignInAccount account = result.getSignInAccount();
-            email.setText(Objects.requireNonNull(account).getEmail());
+            email.setText(account.getEmail());
             password.setText(account.getFamilyName() + account.getGivenName());
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -1134,14 +962,13 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(Objects.requireNonNull(result));
+            handleSignInResult(result);
         }
     }
 }

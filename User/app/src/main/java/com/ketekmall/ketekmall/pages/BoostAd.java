@@ -1,16 +1,13 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,12 +39,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class BoostAd extends AppCompatActivity {
 
+
     private static String URL_READ_BOOST = "https://ketekmall.com/ketekmall/read_products_boost.php";
     private static String URL_EDIT_BOOST = "https://ketekmall.com/ketekmall/edit_boost_ad_cancel.php";
+
 
     RecyclerView recyclerView;
     String getId;
@@ -57,7 +55,6 @@ public class BoostAd extends AppCompatActivity {
     List<Item_All_Details> item_all_details;
     BoostAdapter boostAdapter;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,158 +71,152 @@ public class BoostAd extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response == null){
-                            Log.e("onResponse", "Return NULL");
-                        }else{
-                            try {
-                                final JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                                if (success.equals("1")) {
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
+                            if (success.equals("1")) {
+//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String id = object.getString("id").trim();
-                                        String seller_id = object.getString("user_id").trim();
-                                        String main_category = object.getString("main_category").trim();
-                                        String sub_category = object.getString("sub_category").trim();
-                                        String ad_detail = object.getString("ad_detail").trim();
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
 
-                                        String price = object.getString("price").trim();
-                                        String division = object.getString("division");
-                                        String district = object.getString("district");
-                                        String image_item = object.getString("photo");
-                                        String shocking = object.getString("shocking_sale");
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
 
-                                        Item_All_Details item = new Item_All_Details(
-                                                id,
-                                                seller_id,
-                                                main_category,
-                                                sub_category,
-                                                ad_detail,
-                                                price,
-                                                division,
-                                                district,
-                                                image_item);
-                                        item.setShocking(shocking);
-                                        item_all_details.add(item);
-                                    }
-                                    boostAdapter = new BoostAdapter(BoostAd.this, item_all_details);
-                                    recyclerView.setAdapter(boostAdapter);
-                                    boostAdapter.setOnItemClickListener(new BoostAdapter.OnItemClickListener() {
-                                        @Override
-                                        public void onCancelClick(int position) {
-                                            final Item_All_Details item = item_all_details.get(position);
-                                            StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_EDIT_BOOST,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            if(response == null){
-                                                                Log.e("onResponse", "Return NULL");
-                                                            }else {
-                                                                try {
-                                                                    JSONObject jsonObject = new JSONObject(response);
-                                                                    String success = jsonObject.getString("success");
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+                                    String rating = object.getString("rating");
+                                    String shocking = object.getString("shocking_sale");
 
-                                                                    if (success.equals("1")) {
-                                                                        Toast.makeText(BoostAd.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
-                                                                    } else {
-                                                                        Toast.makeText(BoostAd.this, "Failed to Boost the ad", Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
-                                                                    Toast.makeText(BoostAd.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NoConnectionError) {
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                            } catch (Exception e) {
-                                                                e.printStackTrace();
-                                                            }
-                                                        }
-                                                    }){
-                                                @Override
-                                                protected Map<String, String> getParams() {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("id", item.getId());
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(BoostAd.this);
-                                            requestQueue.add(stringRequest1);
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(BoostAd.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setShocking(shocking);
+                                    item_all_details.add(item);
                                 }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                                boostAdapter = new BoostAdapter(BoostAd.this, item_all_details);
+                                recyclerView.setAdapter(boostAdapter);
+                                boostAdapter.setOnItemClickListener(new BoostAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onCancelClick(int position) {
+                                        final Item_All_Details item = item_all_details.get(position);
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_EDIT_BOOST,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                            String success = jsonObject.getString("success");
 
+                                                            if (success.equals("1")) {
+                                                                Toast.makeText(BoostAd.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(BoostAd.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                            Toast.makeText(BoostAd.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        try {
+
+                                                            if (error instanceof TimeoutError) {
+                                                                //Time out error
+
+                                                            }else if(error instanceof NoConnectionError){
+                                                                //net work error
+
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+
+                                                            }else{
+                                                                //Error
+                                                            }
+                                                            //End
+
+
+                                                        } catch (Exception e) {
+
+
+                                                        }
+                                                    }
+                                                }){
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("id", item.getId());
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(BoostAd.this);
+                                        requestQueue.add(stringRequest1);
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(BoostAd.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-                            if (error instanceof TimeoutError) {
+
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
+
+                            }else if(error instanceof NoConnectionError){
                                 //net work error
-                                System.out.println("" + error);
+
                             } else if (error instanceof AuthFailureError) {
                                 //error
-                                System.out.println("" + error);
+
                             } else if (error instanceof ServerError) {
                                 //Erroor
-                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-                                System.out.println("" + error);
+
                             } else if (error instanceof ParseError) {
                                 //Error
-                                System.out.println("" + error);
-                            } else {
+
+                            }else{
                                 //Error
-                                System.out.println("" + error);
                             }
+                            //End
+
+
                         } catch (Exception e) {
-                            e.printStackTrace();
+
+
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", getId);
                 return params;
@@ -278,11 +269,10 @@ public class BoostAd extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSettings(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.boost_ad));
 
