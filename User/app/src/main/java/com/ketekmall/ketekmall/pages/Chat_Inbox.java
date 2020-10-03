@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -39,6 +41,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Chat_Inbox extends AppCompatActivity {
 
@@ -51,6 +54,7 @@ public class Chat_Inbox extends AppCompatActivity {
     UserAdapter user_adapter;
     int totalUsers = 0;
     BottomNavigationView bottomNav;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,10 +116,11 @@ public class Chat_Inbox extends AppCompatActivity {
         doON();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.userlist_actionbar);
 
         View view = getSupportActionBar().getCustomView();
@@ -196,33 +201,30 @@ public class Chat_Inbox extends AppCompatActivity {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
                                                     try {
-
                                                         if (error instanceof TimeoutError) {
                                                             //Time out error
-
-                                                        }else if(error instanceof NoConnectionError){
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof NoConnectionError) {
                                                             //net work error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof AuthFailureError) {
                                                             //error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof ServerError) {
                                                             //Erroor
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof NetworkError) {
                                                             //Error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof ParseError) {
                                                             //Error
-
-                                                        }else{
+                                                            System.out.println("" + error);
+                                                        } else {
                                                             //Error
+                                                            System.out.println("" + error);
                                                         }
-                                                        //End
-
-
                                                     } catch (Exception e) {
-
-
+                                                        e.printStackTrace();
                                                     }
                                                 }
                                             });
@@ -239,33 +241,30 @@ public class Chat_Inbox extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
                                 //Erroor
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 });

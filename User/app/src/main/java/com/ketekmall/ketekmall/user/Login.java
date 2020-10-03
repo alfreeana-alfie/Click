@@ -108,7 +108,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignIn(v);
+                SignIn();
             }
         });
 
@@ -171,7 +171,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         });
     }
 
-    private void SignIn(final View view) {
+    private void SignIn() {
         final String mEmail = this.email.getText().toString().trim();
         final String mPassword = this.password.getText().toString().trim();
 
@@ -358,7 +358,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                         }
                                                                     });
 
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
+                                                                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                                                     rQueue.add(request);
                                                                 } else if (obj.getJSONObject(name).getString("email").equals(email)) {
                                                                     UserDetails.username = name;
@@ -465,7 +465,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                         }
                                                                     });
 
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
+                                                                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                                                     rQueue.add(request);
                                                                 } else {
                                                                     Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
@@ -511,17 +511,17 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 }
                                             });
 
-                                            RequestQueue rQueue = Volley.newRequestQueue(view.getContext());
+                                            RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                             rQueue.add(request);
                                         }
                                     } else {
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
-                                        Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(requireContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(getContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(requireContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     button_login.setVisibility(View.VISIBLE);
@@ -570,7 +570,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                     return params;
                 }
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
             requestQueue.add(stringRequest);
         } else {
             email.setError("Fields cannot be empty!");
@@ -583,7 +583,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 if (response.getError() != null) {
-                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show();
                 } else {
                     final String fbUserId = object.optString("id");
                     final String fbUserName = object.optString("name");

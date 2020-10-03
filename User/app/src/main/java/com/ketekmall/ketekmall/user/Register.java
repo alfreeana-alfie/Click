@@ -3,6 +3,7 @@ package com.ketekmall.ketekmall.user;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Patterns;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -42,12 +44,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressWarnings("deprecation")
 public class Register extends Fragment {
 
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
@@ -57,7 +61,6 @@ public class Register extends Fragment {
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
-    private Uri filePath;
 
     @Nullable
     @Override
@@ -90,8 +93,8 @@ public class Register extends Fragment {
                     @Override
                     public void run() {
                         Intent intent = new Intent(getContext(), MainActivity.class);
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                        requireActivity().startActivity(intent);
+                        requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
                     }
                 }, 100);
 
@@ -240,8 +243,8 @@ public class Register extends Fragment {
                                 @Override
                                 public void run() {
                                     Intent intent = new Intent(getContext(), MainActivity.class);
-                                    getActivity().startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                    requireActivity().startActivity(intent);
+                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                 }
                             }, 100);
                         } else {
@@ -264,11 +267,10 @@ public class Register extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     try {
-
                         if (error instanceof TimeoutError) {
                             //Time out error
                             System.out.println("" + error);
-                        }else if(error instanceof NoConnectionError){
+                        } else if (error instanceof NoConnectionError) {
                             //net work error
                             System.out.println("" + error);
                         } else if (error instanceof AuthFailureError) {
@@ -283,22 +285,18 @@ public class Register extends Fragment {
                         } else if (error instanceof ParseError) {
                             //Error
                             System.out.println("" + error);
-                        }else{
+                        } else {
                             //Error
                             System.out.println("" + error);
                         }
-                        //End
-
-
                     } catch (Exception e) {
-
-
+                        e.printStackTrace();
                     }
 
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("name", strName);
                     params.put("email", strEmail);
@@ -317,19 +315,20 @@ public class Register extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST
                 && resultCode == RESULT_OK
-                && data.getData() != null) {
+                && Objects.requireNonNull(data).getData() != null) {
 
             // Get the Uri of data
-            filePath = data.getData();
+            Uri filePath = data.getData();
             try {
 
                 // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 // Log the exception

@@ -48,7 +48,7 @@ public class Forgot_Password extends Fragment {
     private EditText email, new_password, confirm_new_password;
     private Button button_enter_email, button_enter_new_password, button_back_pressed, button_back_password;
     private ProgressBar loading, loading_password;
-    private LinearLayout password_linear_layout, email_linear_layout;
+    private LinearLayout password_linear_layout;
 
     @Nullable
     @Override
@@ -67,7 +67,6 @@ public class Forgot_Password extends Fragment {
         loading = v.findViewById(R.id.loading);
         loading_password = v.findViewById(R.id.loading_new_password);
         password_linear_layout = v.findViewById(R.id.password_linear_layout);
-        email_linear_layout = v.findViewById(R.id.email_linear_layout);
         new_password = v.findViewById(R.id.edittext_new_password);
         confirm_new_password = v.findViewById(R.id.edittext_confirm_new_password);
         button_enter_new_password = v.findViewById(R.id.button_enter_new_password);
@@ -79,7 +78,7 @@ public class Forgot_Password extends Fragment {
         button_enter_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Verify_Email(v);
+                Verify_Email();
             }
         });
 
@@ -112,13 +111,13 @@ public class Forgot_Password extends Fragment {
             @Override
             public void run() {
                 Intent intent = new Intent(getContext(), MainActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                requireActivity().startActivity(intent);
+                requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
             }
         }, 100);
     }
 
-    private void Verify_Email(View view) {
+    private void Verify_Email() {
         final String mEmail = this.email.getText().toString().trim();
 
         if (!mEmail.isEmpty()) {
@@ -146,7 +145,7 @@ public class Forgot_Password extends Fragment {
 
                                         sendEmail(mEmail);
                                         Intent intent1 = new Intent(getContext(), MainActivity.class);
-                                        getActivity().startActivity(intent1);
+                                        requireActivity().startActivity(intent1);
                                         Toast.makeText(getContext(), "Please check your email inbox", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
@@ -171,11 +170,10 @@ public class Forgot_Password extends Fragment {
                     loading.setVisibility(View.GONE);
                     button_enter_email.setVisibility(View.VISIBLE);
                     try {
-
                         if (error instanceof TimeoutError) {
                             //Time out error
                             System.out.println("" + error);
-                        }else if(error instanceof NoConnectionError){
+                        } else if (error instanceof NoConnectionError) {
                             //net work error
                             System.out.println("" + error);
                         } else if (error instanceof AuthFailureError) {
@@ -190,29 +188,24 @@ public class Forgot_Password extends Fragment {
                         } else if (error instanceof ParseError) {
                             //Error
                             System.out.println("" + error);
-                        }else{
+                        } else {
                             //Error
                             System.out.println("" + error);
                         }
-                        //End
-
-
                     } catch (Exception e) {
-
-
+                        e.printStackTrace();
                     }
-
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
                     return params;
                 }
             };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(view.getContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
             requestQueue.add(stringRequest);
 
 
@@ -228,7 +221,7 @@ public class Forgot_Password extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            jsonObject.getString("success");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -238,11 +231,10 @@ public class Forgot_Password extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -257,27 +249,23 @@ public class Forgot_Password extends Fragment {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
     }
 
@@ -318,8 +306,8 @@ public class Forgot_Password extends Fragment {
                                         @Override
                                         public void run() {
                                             Intent intent = new Intent(getContext(), MainActivity.class);
-                                            getActivity().startActivity(intent);
-                                            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                            requireActivity().startActivity(intent);
+                                            requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                         }
                                     }, 100);
                                 }
@@ -342,11 +330,10 @@ public class Forgot_Password extends Fragment {
                             loading_password.setVisibility(View.GONE);
                             button_enter_new_password.setVisibility(View.VISIBLE);
                             try {
-
-                                if (error instanceof TimeoutError ) {
+                                if (error instanceof TimeoutError) {
                                     //Time out error
                                     System.out.println("" + error);
-                                }else if(error instanceof NoConnectionError){
+                                } else if (error instanceof NoConnectionError) {
                                     //net work error
                                     System.out.println("" + error);
                                 } else if (error instanceof AuthFailureError) {
@@ -361,21 +348,17 @@ public class Forgot_Password extends Fragment {
                                 } else if (error instanceof ParseError) {
                                     //Error
                                     System.out.println("" + error);
-                                }else{
+                                } else {
                                     //Error
                                     System.out.println("" + error);
                                 }
-                                //End
-
-
                             } catch (Exception e) {
-
-
+                                e.printStackTrace();
                             }
                         }
                     }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
                     params.put("password", mNew_Password);
