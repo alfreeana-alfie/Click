@@ -1,8 +1,10 @@
 package com.ketekmall.ketekmall.category;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -66,6 +68,7 @@ public class Retail extends AppCompatActivity {
     private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_retail.php";
     private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_retail.php";
     private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_retail.php";
+    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
 
     SessionManager sessionManager;
     String getId;
@@ -353,6 +356,178 @@ public class Retail extends AppCompatActivity {
         });
     }
 
+    private boolean View_Cart2(final Item_All_Details item) {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                if(jsonArray.length() == 0){
+                                    final String strItem_Id = item.getId();
+                                    final String strSeller_id = item.getSeller_id();
+                                    final String strMain_category = item.getMain_category();
+                                    final String strSub_category = item.getSub_category();
+                                    final String strAd_Detail = item.getAd_detail();
+                                    final Double strPrice = Double.valueOf(item.getPrice());
+                                    final String strDivision = item.getDivision();
+                                    final String strDistrict = item.getDistrict();
+                                    final String strPhoto = item.getPhoto();
+
+                                    if (getId.equals(strSeller_id)) {
+                                        Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        if (response == null) {
+                                                            Log.e("onResponse", "Return NULL");
+                                                        } else {
+                                                            try {
+                                                                JSONObject jsonObject1 = new JSONObject(response);
+                                                                String success = jsonObject1.getString("success");
+
+                                                                if (success.equals("1")) {
+                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                } else {
+                                                                    Toast.makeText(Retail.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        try {
+
+                                                            if (error instanceof TimeoutError) {
+                                                                //Time out error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof NoConnectionError) {
+                                                                //net work error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            } else {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            }
+                                                            //End
+
+
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+                                                }) {
+                                            @SuppressLint("DefaultLocale")
+                                            @Override
+                                            protected Map<String, String> getParams() {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("customer_id", getId);
+                                                params.put("main_category", strMain_category);
+                                                params.put("sub_category", strSub_category);
+                                                params.put("ad_detail", strAd_Detail);
+                                                params.put("price", String.format("%.2f", strPrice));
+                                                params.put("division", strDivision);
+                                                params.put("district", strDistrict);
+                                                params.put("photo", strPhoto);
+                                                params.put("seller_id", strSeller_id);
+                                                params.put("item_id", strItem_Id);
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
+                                        requestQueue.add(stringRequest2);
+                                    }
+                                }
+
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        final String item_id = object.getString("item_id");
+
+                                        Toast.makeText(Retail.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                params.put("item_id", item.getId());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+        return true;
+    }
+
     private void Filter_Division(final String division) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DIVISION,
                 new Response.Listener<String>() {
@@ -525,94 +700,7 @@ public class Retail extends AppCompatActivity {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
-
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                }
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            }
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
+                                        View_Cart2(item);
                                     }
                                 });
                             } else {
@@ -843,94 +931,7 @@ public class Retail extends AppCompatActivity {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
-
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                }
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            }
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
+                                        View_Cart2(item);
                                     }
                                 });
                             } else {
@@ -1162,94 +1163,7 @@ public class Retail extends AppCompatActivity {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
-
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                }
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            }
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
+                                        View_Cart2(item);
                                     }
                                 });
                             } else {
@@ -1481,94 +1395,7 @@ public class Retail extends AppCompatActivity {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
-
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                }
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            }
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
+                                        View_Cart2(item);
                                     }
                                 });
                             } else {
@@ -1882,94 +1709,7 @@ public class Retail extends AppCompatActivity {
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
-
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Retail.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
-
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Retail.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-
-                                                                }
-
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Retail.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            }
-                                                        }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Retail.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
+                                        View_Cart2(item);
                                     }
                                 });
                             } else {

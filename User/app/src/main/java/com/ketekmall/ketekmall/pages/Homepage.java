@@ -50,7 +50,6 @@ import com.ketekmall.ketekmall.category.Handicraft;
 import com.ketekmall.ketekmall.category.Health;
 import com.ketekmall.ketekmall.category.Home;
 import com.ketekmall.ketekmall.category.Pepper;
-import com.ketekmall.ketekmall.category.Processed;
 import com.ketekmall.ketekmall.category.Retail;
 import com.ketekmall.ketekmall.category.Service;
 import com.ketekmall.ketekmall.category.View_All;
