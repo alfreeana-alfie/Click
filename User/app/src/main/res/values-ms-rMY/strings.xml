@@ -506,4 +506,6 @@
     <string name="already_boosted_up">Sudah Dinaikkan oleh Admin</string>
     <string name="pending_request">Masih Menunggu</string>
     <string name="no_delivery">No Delivery</string>
+    <string name="click_to_edit_details">Click to Edit Details</string>
+    <string name="product_details">Product Details</string>
 </resources>

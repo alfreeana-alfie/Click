@@ -26,6 +26,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:cursorVisible="true"
+            android:padding="10dp"
             android:fontFamily="@font/open_sans"
             android:hint="@string/type_your_message_here"
             android:textColor="@color/colorPrimaryDark"

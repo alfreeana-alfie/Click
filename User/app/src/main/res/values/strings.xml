@@ -652,5 +652,7 @@
     <string name="delivery_policy">Delivery Policy</string>
     <string name="about_ketekMall">About KetekMall</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="click_to_edit_details">Click to Edit Details</string>
+    <string name="product_details">Product Details</string>
 </resources>
 

@@ -77,7 +77,8 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             app:srcCompat="@drawable/ic_chat_orange_foreground"
             android:text="@string/chat"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            tools:ignore="VectorDrawableCompat" />
 
     </RelativeLayout>
 
