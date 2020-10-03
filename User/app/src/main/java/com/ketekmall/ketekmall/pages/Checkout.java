@@ -1,6 +1,8 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Base64;
@@ -9,12 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +62,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import com.ipay.IPayIH;
@@ -94,7 +99,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
     String NOTIFICATION_MESSAGE;
     String TOPIC;
 
-
     Button Button_Checkout;
     TextView Grand_Total, Grand_Total2, AddressUser, No_Address;
     LinearLayout linear2;
@@ -111,6 +115,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
     Double aFloat, grandtotal;
     BottomNavigationView bottomNav;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -135,6 +140,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -178,90 +184,21 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                                                                         new Response.Listener<String>() {
+                                                                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                                                                            @SuppressLint({"DefaultLocale", "SetTextI18n"})
                                                                             @Override
                                                                             public void onResponse(String response) {
-                                                                                try {
-                                                                                    JSONObject jsonObject = new JSONObject(response);
-                                                                                    String success = jsonObject.getString("success");
-                                                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                                                                if(response == null){
+                                                                                    Log.e("onResponse", "Return NULL");
+                                                                                }else {
+                                                                                    try {
+                                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                                        String success = jsonObject.getString("success");
+                                                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                                                                                    if (success.equals("1")) {
-                                                                                        if(jsonArray.length() == 0){
+                                                                                        if (success.equals("1")) {
+                                                                                            if(jsonArray.length() == 0){
 
-                                                                                            delivery_combine = new Delivery_Combine();
-                                                                                            delivery_combine.setId(id);
-                                                                                            delivery_combine.setDelivery_item_id(item_id);
-                                                                                            delivery_combine.setSeller_id(seller_id);
-                                                                                            delivery_combine.setAd_detail(ad_detail);
-                                                                                            delivery_combine.setPhoto(image_item);
-                                                                                            delivery_combine.setPrice(String.valueOf(price));
-                                                                                            delivery_combine.setDivision(division);
-                                                                                            delivery_combine.setQuantity(quantity);
-
-                                                                                            String delivery_text;
-                                                                                            delivery_text = "<font color='#FF3333'>MYR0.00</font>";
-                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            delivery_combine.setDelivery_division1("No Delivery");
-
-                                                                                            item_all_detailsList.add(delivery_combine);
-                                                                                            Button_Checkout.setVisibility(View.GONE);
-                                                                                            linear2.setVisibility(View.GONE);
-                                                                                            No_Address.setVisibility(View.VISIBLE);
-//                                                                                            Toast.makeText(Checkout.this, "lol", Toast.LENGTH_SHORT).show();
-                                                                                        }
-                                                                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                            JSONObject object = jsonArray.getJSONObject(i);
-                                                                                            String strDelivery_ID = object.getString("id").trim();
-                                                                                            String strUser_ID = object.getString("user_id").trim();
-                                                                                            String strDivision = object.getString("division");
-                                                                                            Price = object.getString("price");
-                                                                                            String strDays = object.getString("days");
-
-                                                                                            grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(Price));
-                                                                                            Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
-                                                                                            Grand_Total2.setText(String.format("%.2f", grandtotal));
-                                                                                            Date date = Calendar.getInstance().getTime();
-
-                                                                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                                                                            String oneDate = simpleDateFormat.format(date);
-
-                                                                                            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-                                                                                            Calendar c = Calendar.getInstance();
-                                                                                            try {
-                                                                                                c.setTime(simpleDateFormat1.parse(oneDate));
-                                                                                            }catch (ParseException e){
-                                                                                                e.printStackTrace();
-                                                                                            }
-                                                                                            c.add(Calendar.DATE, Integer.parseInt(strDays));
-                                                                                            SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-
-                                                                                            Delivery_Date = simpleDateFormat2.format(c.getTime());
-
-                                                                                            delivery_combine = new Delivery_Combine();
-                                                                                            delivery_combine.setId(id);
-                                                                                            delivery_combine.setDelivery_item_id(item_id);
-                                                                                            delivery_combine.setSeller_id(seller_id);
-                                                                                            delivery_combine.setAd_detail(ad_detail);
-                                                                                            delivery_combine.setPhoto(image_item);
-                                                                                            delivery_combine.setPrice(String.valueOf(price));
-                                                                                            delivery_combine.setDivision(division);
-                                                                                            delivery_combine.setQuantity(quantity);
-                                                                                            delivery_combine.setDelivery_price(Price);
-                                                                                            delivery_combine.setDelivery_division(strDivision);
-
-                                                                                            String delivery_text;
-                                                                                            delivery_text = "<font color='#999999'>MYR</font>"+Price;
-                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            delivery_combine.setDelivery_division1(division + " to " + strDivision);
-
-                                                                                            item_all_detailsList.add(delivery_combine);
-                                                                                        }
-                                                                                        userOrderAdapter = new UserOrderAdapter_Other(Checkout.this, item_all_detailsList, item_all_detailsList);
-                                                                                        recyclerView.setAdapter(userOrderAdapter);
-                                                                                        userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
-                                                                                            @Override
-                                                                                            public void onSelfClick(int position) {
-                                                                                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                                 delivery_combine = new Delivery_Combine();
                                                                                                 delivery_combine.setId(id);
                                                                                                 delivery_combine.setDelivery_item_id(item_id);
@@ -271,26 +208,103 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                                 delivery_combine.setPrice(String.valueOf(price));
                                                                                                 delivery_combine.setDivision(division);
                                                                                                 delivery_combine.setQuantity(quantity);
-                                                                                                delivery_combine.setDelivery_price("0.00");
-                                                                                                delivery_combine.setDelivery_division(division);
 
                                                                                                 String delivery_text;
-                                                                                                delivery_text = "<font color='#999999'>MYR0.00</font>";
+                                                                                                delivery_text = "<font color='#FF3333'>MYR0.00</font>";
                                                                                                 delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                                delivery_combine.setDelivery_division1(division + " to " + division);
+                                                                                                delivery_combine.setDelivery_division1("No Delivery");
 
-                                                                                                grandtotal -= Double.parseDouble(Price);
+                                                                                                item_all_detailsList.add(delivery_combine);
+                                                                                                Button_Checkout.setVisibility(View.GONE);
+                                                                                                linear2.setVisibility(View.GONE);
+                                                                                                No_Address.setVisibility(View.VISIBLE);
+                                                                                           }
+                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                JSONObject object = jsonArray.getJSONObject(i);
+                                                                                                String strDelivery_ID = object.getString("id").trim();
+                                                                                                String strUser_ID = object.getString("user_id").trim();
+                                                                                                String strDivision = object.getString("division");
+                                                                                                Price = object.getString("price");
+                                                                                                String strDays = object.getString("days");
+
+                                                                                                grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(Price));
                                                                                                 Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
-                                                                                            }
-                                                                                        });
-                                                                                    } else {
-                                                                                        Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                                                                                    }
-                                                                                } catch (JSONException e) {
-                                                                                    e.printStackTrace();
-                                                                                    Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                                                Grand_Total2.setText(String.format("%.2f", grandtotal));
+                                                                                                Date date = Calendar.getInstance().getTime();
 
+                                                                                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                                                                String oneDate = simpleDateFormat.format(date);
+
+                                                                                                @SuppressLint("SimpleDateFormat")
+                                                                                                SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                                                                                Calendar c = Calendar.getInstance();
+                                                                                                try {
+                                                                                                    c.setTime(Objects.requireNonNull(simpleDateFormat1.parse(oneDate)));
+                                                                                                }catch (ParseException e){
+                                                                                                    e.printStackTrace();
+                                                                                                }
+                                                                                                c.add(Calendar.DATE, Integer.parseInt(strDays));
+                                                                                                @SuppressLint("SimpleDateFormat")
+                                                                                                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
+                                                                                                Delivery_Date = simpleDateFormat2.format(c.getTime());
+
+                                                                                                delivery_combine = new Delivery_Combine();
+                                                                                                delivery_combine.setId(id);
+                                                                                                delivery_combine.setDelivery_item_id(item_id);
+                                                                                                delivery_combine.setSeller_id(seller_id);
+                                                                                                delivery_combine.setAd_detail(ad_detail);
+                                                                                                delivery_combine.setPhoto(image_item);
+                                                                                                delivery_combine.setPrice(String.valueOf(price));
+                                                                                                delivery_combine.setDivision(division);
+                                                                                                delivery_combine.setQuantity(quantity);
+                                                                                                delivery_combine.setDelivery_price(Price);
+                                                                                                delivery_combine.setDelivery_division(strDivision);
+
+                                                                                                String delivery_text;
+                                                                                                delivery_text = "<font color='#999999'>MYR</font>"+Price;
+                                                                                                delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                                delivery_combine.setDelivery_division1(division + " to " + strDivision);
+
+                                                                                                item_all_detailsList.add(delivery_combine);
+                                                                                            }
+                                                                                            userOrderAdapter = new UserOrderAdapter_Other(Checkout.this, item_all_detailsList, item_all_detailsList);
+                                                                                            recyclerView.setAdapter(userOrderAdapter);
+                                                                                            userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
+                                                                                                @Override
+                                                                                                public void onSelfClick(int position) {
+                                                                                                    Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                                    delivery_combine = new Delivery_Combine();
+                                                                                                    delivery_combine.setId(id);
+                                                                                                    delivery_combine.setDelivery_item_id(item_id);
+                                                                                                    delivery_combine.setSeller_id(seller_id);
+                                                                                                    delivery_combine.setAd_detail(ad_detail);
+                                                                                                    delivery_combine.setPhoto(image_item);
+                                                                                                    delivery_combine.setPrice(String.valueOf(price));
+                                                                                                    delivery_combine.setDivision(division);
+                                                                                                    delivery_combine.setQuantity(quantity);
+                                                                                                    delivery_combine.setDelivery_price("0.00");
+                                                                                                    delivery_combine.setDelivery_division(division);
+
+                                                                                                    String delivery_text;
+                                                                                                    delivery_text = "<font color='#999999'>MYR0.00</font>";
+                                                                                                    delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                                    delivery_combine.setDelivery_division1(division + " to " + division);
+
+                                                                                                    grandtotal -= Double.parseDouble(Price);
+                                                                                                    Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                                                }
+                                                                                            });
+                                                                                        } else {
+                                                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                        }
+                                                                                    } catch (JSONException e) {
+                                                                                        e.printStackTrace();
+                                                                                        Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+
+                                                                                    }
                                                                                 }
+
                                                                             }
                                                                         },
                                                                         new Response.ErrorListener() {
@@ -448,8 +462,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
         Button_Checkout = findViewById(R.id.btn_place_order);
         No_Address = findViewById(R.id.no_address);
         linear2 = findViewById(R.id.linear2);
+        loading = findViewById(R.id.loading);
 
         Grand_Total = findViewById(R.id.grandtotal);
+        Grand_Total2 = findViewById(R.id.grandtotal2);
         AddressUser = findViewById(R.id.address);
 
         aFloat = 0.00;

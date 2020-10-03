@@ -70,6 +70,19 @@
                     app:srcCompat="@drawable/ic_right_orange_foreground" />
             </RelativeLayout>
 
+            <ProgressBar
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/colorPrimary"
+                android:indeterminateTintMode="src_atop"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_view"
@@ -195,6 +208,15 @@
 
             <TextView
                 android:id="@+id/grandtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/myr0_00"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/grandtotal2"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
