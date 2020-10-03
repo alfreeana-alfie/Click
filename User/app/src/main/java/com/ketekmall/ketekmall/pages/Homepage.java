@@ -133,19 +133,17 @@ public class Homepage extends AppCompatActivity {
     private Toast backToast;
     String[] image = new String[3];
     PageAdapter adapter;
+    RequestQueue queue;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
-<<<<<<< Updated upstream
-=======
         queue = Volley.newRequestQueue(this);
 
         getSession();
 
->>>>>>> Stashed changes
         Declare();
 
         viewPager = findViewById(R.id.view_pager);
@@ -168,12 +166,8 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void getSession() {
-<<<<<<< Updated upstream
         sessionManager = new SessionManager(view.getContext());
         sessionManager.checkLogin();
-=======
-        sessionManager = new SessionManager(this);
->>>>>>> Stashed changes
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
