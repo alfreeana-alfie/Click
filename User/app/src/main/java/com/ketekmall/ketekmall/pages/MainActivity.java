@@ -3,6 +3,9 @@ package com.ketekmall.ketekmall.pages;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -47,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     String getId;
     private SessionManager sessionManager;
+    private FrameLayout frameLayout;
+    private RelativeLayout loading_layout;
 
     private long backPressedTime;
     private Toast backToast;
@@ -55,10 +60,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        frameLayout = findViewById(R.id.framelayout);
+        loading_layout = findViewById(R.id.loading_layout);
+
         sessionManager = new SessionManager(this);
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        if(!sessionManager.isLoggin()){
+            frameLayout.setVisibility(View.VISIBLE);
+            loading_layout.setVisibility(View.GONE);
+        }else{
+            frameLayout.setVisibility(View.GONE);
+            loading_layout.setVisibility(View.VISIBLE);
+        }
         final Fragment fragment_login = new Login();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -95,223 +111,228 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String name = object.getString("name").trim();
-                                    final String email = object.getString("email").trim();
-                                    final String phone_no = object.getString("phone_no").trim();
-                                    final String address_01 = object.getString("address_01").trim();
-                                    final String address_02 = object.getString("address_02").trim();
-                                    final String city = object.getString("division").trim();
-                                    final String postcode = object.getString("postcode").trim();
-                                    final String birthday = object.getString("birthday").trim();
-                                    final String gender = object.getString("gender").trim();
-                                    final String photo = object.getString("photo").trim();
-                                    String id = object.getString("id").trim();
+                                        final String name = object.getString("name").trim();
+                                        final String email = object.getString("email").trim();
+                                        final String phone_no = object.getString("phone_no").trim();
+                                        final String address_01 = object.getString("address_01").trim();
+                                        final String address_02 = object.getString("address_02").trim();
+                                        final String city = object.getString("division").trim();
+                                        final String postcode = object.getString("postcode").trim();
+                                        final String birthday = object.getString("birthday").trim();
+                                        final String gender = object.getString("gender").trim();
+                                        final String photo = object.getString("photo").trim();
+                                        String id = object.getString("id").trim();
 
-                                    String newemail = email.substring(0, email.lastIndexOf("@"));
+                                        String newemail = email.substring(0, email.lastIndexOf("@"));
 
-                                    Log.d("TAG: ", newemail);
+                                        Log.d("TAG: ", newemail);
 
-                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                        String url = "https://click-1595830894120.firebaseio.com/users.json";
 
-                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String s) {
-                                            if (s.equals("null")) {
-                                                Toast.makeText(MainActivity.this, "user_actionbar not found", Toast.LENGTH_LONG).show();
-                                            } else {
-                                                try {
-                                                    JSONObject obj = new JSONObject(s);
-                                                    if (!obj.has(name)) {
+                                        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String s) {
+                                                if (s.equals("null")) {
+                                                    Toast.makeText(MainActivity.this, "user_actionbar not found", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    try {
+                                                        JSONObject obj = new JSONObject(s);
+                                                        if (!obj.has(name)) {
 
-                                                        String url = "https://click-1595830894120.firebaseio.com/users.json";
+                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
 
-                                                        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String s) {
-                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String s) {
+                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                                                if (s.equals("null")) {
-                                                                    reference.child(name).child("email").setValue(email);
-                                                                    reference.child(name).child("photo").setValue(photo);
-                                                                    reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                } else {
-                                                                    try {
-                                                                        JSONObject obj = new JSONObject(s);
-
-                                                                        if (!obj.has(name)) {
-                                                                            reference.child(name).child("email").setValue(email);
-                                                                            reference.child(name).child("photo").setValue(photo);
-                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                        } else {
-                                                                            reference.child(name).child("email").setValue(email);
-                                                                            reference.child(name).child("photo").setValue(photo);
-                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                        }
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                    }
-                                                                }
-                                                            }
-
-                                                        }, new Response.ErrorListener() {
-                                                            @Override
-                                                            public void onErrorResponse(VolleyError error) {
-                                                                try {
-
-                                                                    if (error instanceof TimeoutError) {
-                                                                        //Time out error
-
-                                                                    } else if (error instanceof NoConnectionError) {
-                                                                        //net work error
-
-                                                                    } else if (error instanceof AuthFailureError) {
-                                                                        //error
-
-                                                                    } else if (error instanceof ServerError) {
-                                                                        //Erroor
-                                                                    } else if (error instanceof NetworkError) {
-                                                                        //Error
-
-                                                                    } else if (error instanceof ParseError) {
-                                                                        //Error
-
+                                                                    if (s.equals("null")) {
+                                                                        reference.child(name).child("email").setValue(email);
+                                                                        reference.child(name).child("photo").setValue(photo);
+                                                                        reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
                                                                     } else {
-                                                                        //Error
-                                                                    }
-                                                                    //End
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
 
-
-                                                                } catch (Exception e) {
-
-
-                                                                }
-                                                            }
-                                                        });
-                                                        RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-                                                        rQueue.add(request);
-                                                    } else if (obj.getJSONObject(name).getString("email").equals(email)) {
-                                                        UserDetails.username = name;
-                                                        UserDetails.email = email;
-
-                                                        String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String s) {
-                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                                                                if (s.equals("null")) {
-                                                                    reference.child(name).child("email").setValue(email);
-                                                                    reference.child(name).child("photo").setValue(photo);
-                                                                    reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                } else {
-                                                                    try {
-                                                                        JSONObject obj = new JSONObject(s);
-
-                                                                        if (!obj.has(name)) {
-                                                                            reference.child(name).child("email").setValue(email);
-                                                                            reference.child(name).child("photo").setValue(photo);
-                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                                                                        } else {
-                                                                            reference.child(name).child("email").setValue(email);
-                                                                            reference.child(name).child("photo").setValue(photo);
-                                                                            reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            if (!obj.has(name)) {
+                                                                                reference.child(name).child("email").setValue(email);
+                                                                                reference.child(name).child("photo").setValue(photo);
+                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            } else {
+                                                                                reference.child(name).child("email").setValue(email);
+                                                                                reference.child(name).child("photo").setValue(photo);
+                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            }
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
                                                                         }
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
                                                                     }
                                                                 }
-                                                            }
 
-                                                        }, new Response.ErrorListener() {
-                                                            @Override
-                                                            public void onErrorResponse(VolleyError error) {
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+                                                                    try {
 
-                                                                try {
+                                                                        if (error instanceof TimeoutError) {
+                                                                            //Time out error
 
-                                                                    if (error instanceof TimeoutError ) {
-                                                                        //Time out error
+                                                                        } else if (error instanceof NoConnectionError) {
+                                                                            //net work error
 
-                                                                    }else if(error instanceof NoConnectionError){
-                                                                        //net work error
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
 
-                                                                    } else if (error instanceof AuthFailureError) {
-                                                                        //error
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
 
-                                                                    } else if (error instanceof ServerError) {
-                                                                        //Erroor
-                                                                    } else if (error instanceof NetworkError) {
-                                                                        //Error
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
 
-                                                                    } else if (error instanceof ParseError) {
-                                                                        //Error
+                                                                        } else {
+                                                                            //Error
+                                                                        }
+                                                                        //End
 
-                                                                    }else{
-                                                                        //Error
+
+                                                                    } catch (Exception e) {
+
+
                                                                     }
-                                                                    //End
-
-
-                                                                } catch (Exception e) {
-
-
                                                                 }
-                                                            }
-                                                        });
+                                                            });
+                                                            RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
+                                                            rQueue.add(request);
+                                                        } else if (obj.getJSONObject(name).getString("email").equals(email)) {
+                                                            UserDetails.username = name;
+                                                            UserDetails.email = email;
 
-                                                        RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-                                                        rQueue.add(request);
-                                                    } else {
-                                                        Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
+                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
+
+                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                @Override
+                                                                public void onResponse(String s) {
+                                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+
+                                                                    if (s.equals("null")) {
+                                                                        reference.child(name).child("email").setValue(email);
+                                                                        reference.child(name).child("photo").setValue(photo);
+                                                                        reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                    } else {
+                                                                        try {
+                                                                            JSONObject obj = new JSONObject(s);
+
+                                                                            if (!obj.has(name)) {
+                                                                                reference.child(name).child("email").setValue(email);
+                                                                                reference.child(name).child("photo").setValue(photo);
+                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            } else {
+                                                                                reference.child(name).child("email").setValue(email);
+                                                                                reference.child(name).child("photo").setValue(photo);
+                                                                                reference.child(name).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                            }
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                            }, new Response.ErrorListener() {
+                                                                @Override
+                                                                public void onErrorResponse(VolleyError error) {
+
+                                                                    try {
+
+                                                                        if (error instanceof TimeoutError ) {
+                                                                            //Time out error
+
+                                                                        }else if(error instanceof NoConnectionError){
+                                                                            //net work error
+
+                                                                        } else if (error instanceof AuthFailureError) {
+                                                                            //error
+
+                                                                        } else if (error instanceof ServerError) {
+                                                                            //Erroor
+                                                                        } else if (error instanceof NetworkError) {
+                                                                            //Error
+
+                                                                        } else if (error instanceof ParseError) {
+                                                                            //Error
+
+                                                                        }else{
+                                                                            //Error
+                                                                        }
+                                                                        //End
+
+
+                                                                    } catch (Exception e) {
+
+
+                                                                    }
+                                                                }
+                                                            });
+
+                                                            RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
+                                                            rQueue.add(request);
+                                                        } else {
+                                                            Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
                                                     }
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
                                                 }
                                             }
-                                        }
-                                    }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError volleyError) {
-                                            System.out.println("" + volleyError);
-                                        }
-                                    });
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError volleyError) {
+                                                System.out.println("" + volleyError);
+                                            }
+                                        });
 
-                                    RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
-                                    rQueue.add(request);
+                                        RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
+                                        rQueue.add(request);
 
-                                    sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
+                                        sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
 
-                                    Intent intent = new Intent(MainActivity.this, Homepage.class);
-                                    intent.putExtra("name", name);
-                                    intent.putExtra("email", email);
-                                    intent.putExtra("phone_no", phone_no);
-                                    intent.putExtra("address_01", address_01);
-                                    intent.putExtra("address_02", address_02);
-                                    intent.putExtra("division", city);
-                                    intent.putExtra("postcode", postcode);
-                                    intent.putExtra("birthday", birthday);
-                                    intent.putExtra("gender", gender);
-                                    startActivity(intent);
-                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                        Intent intent = new Intent(MainActivity.this, Homepage.class);
+                                        intent.putExtra("name", name);
+                                        intent.putExtra("email", email);
+                                        intent.putExtra("phone_no", phone_no);
+                                        intent.putExtra("address_01", address_01);
+                                        intent.putExtra("address_02", address_02);
+                                        intent.putExtra("division", city);
+                                        intent.putExtra("postcode", postcode);
+                                        intent.putExtra("birthday", birthday);
+                                        intent.putExtra("gender", gender);
+                                        startActivity(intent);
+                                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                Toast.makeText(MainActivity.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {

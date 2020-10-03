@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
+import com.ketekmall.ketekmall.adapter.PageAdapter;
 import com.ketekmall.ketekmall.data.Delivery;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -53,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class View_Product extends AppCompatActivity {
 
@@ -65,6 +68,7 @@ public class View_Product extends AppCompatActivity {
     private static String URL_EDIT_SOLD = "https://ketekmall.com/ketekmall/edit_detail_sold.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
+    private static String URL_READ_PHOTO = "https://ketekmall.com/ketekmall/products_img/read_photo.php";
 
     String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
@@ -79,11 +83,15 @@ public class View_Product extends AppCompatActivity {
     private ImageView img_item, seller_image, image20, image21;
     private TextView ad_detail_item, price_item, sold_text, shipping_info, detail_info,
             seller_name, seller_location, view_all, customer_name1, customer_name2,
-            btn_view_all_review, review1, review2, no_review;
+            btn_view_all_review, review1, review2, no_review, Page_Text;
     private Button add_to_cart_btn, btn_view_seller;
     private ImageButton btn_chat, btn_chat_wsp;
     private TwoWayGridView gridView_item;
     private RatingBar ratingBar, ratingBar20, ratingBar21;
+
+    ViewPager viewPager;
+    PageAdapter pageAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,6 +107,9 @@ public class View_Product extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        viewPager = findViewById(R.id.view_pager);
+
+
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
         img_item = findViewById(R.id.img_item);
@@ -108,6 +119,7 @@ public class View_Product extends AppCompatActivity {
         shipping_info = findViewById(R.id.shipping_info);
         detail_info = findViewById(R.id.detail_info);
         ratingBar = findViewById(R.id.ratingBar);
+        Page_Text = findViewById(R.id.page_text);
 
         image20 = findViewById(R.id.image20);
         image21 = findViewById(R.id.image21);
@@ -119,7 +131,7 @@ public class View_Product extends AppCompatActivity {
         review2 = findViewById(R.id.review2);
         review11 = findViewById(R.id.review11);
         no_review = findViewById(R.id.no_review);
-        no_review.setVisibility(View.VISIBLE);
+        no_review.setVisibility(VISIBLE);
         review11.setVisibility(GONE);
         review1.setVisibility(GONE);
 
@@ -345,6 +357,10 @@ public class View_Product extends AppCompatActivity {
 
         ToolbarSetting();
 
+        View_Photo();
+
+
+
         shipping_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -503,6 +519,116 @@ public class View_Product extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void View_Photo() {
+        final Intent intent = getIntent();
+        ad_detail = intent.getStringExtra("ad_detail");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PHOTO,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            final JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String[] image = new String[jsonArray.length()];
+                            if(jsonArray.length() == 0 || jsonArray.length() == 1){
+                                viewPager.setVisibility(GONE);
+                                Page_Text.setVisibility(GONE);
+                                img_item.setVisibility(VISIBLE);
+                            }
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String image_item = object.getString("filepath");
+
+                                    image[i] = image_item;
+
+                                    pageAdapter = new PageAdapter(View_Product.this, image);
+
+
+                                }
+                                viewPager.setAdapter(pageAdapter);
+
+                                Page_Text.setText("1/" + jsonArray.length());
+
+                                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                    @Override
+                                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                    }
+
+                                    @Override
+                                    public void onPageSelected(int position) {
+                                        int NEWposition = position + 1;
+                                        if(position == 0){
+                                            Page_Text.setText("1/5");
+                                        }else{
+                                            Page_Text.setText(NEWposition + "/" + jsonArray.length());
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onPageScrollStateChanged(int state) {
+
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ad_detail", ad_detail);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Product.this);
+        requestQueue.add(stringRequest);
     }
 
     private void AddCart() {
@@ -738,8 +864,8 @@ public class View_Product extends AppCompatActivity {
                                     final String mobile_num = object.getString("phone_no");
                                     final String strDivision = object.getString("division").trim();
 
-                                    review1.setVisibility(View.VISIBLE);
-                                    review11.setVisibility(View.VISIBLE);
+                                    review1.setVisibility(VISIBLE);
+                                    review11.setVisibility(VISIBLE);
                                     no_review.setVisibility(GONE);
                                     customer_name1.setText(strName);
                                     customer_name2.setText(strName);

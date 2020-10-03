@@ -1090,19 +1090,24 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
 
-                            if (success.equals("1")) {
-
-                            } else {
-                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                if (success.equals("1")) {
+                                    Log.d("Message", "Return SUCCESS");
+                                } else {
+                                    Log.e("Message", "Return FAILED");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -1112,7 +1117,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
                 return params;
@@ -1127,19 +1132,24 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
 
-                            if (success.equals("1")) {
-
-                            } else {
-                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                if (success.equals("1")) {
+                                    Log.d("Message", "Return SUCCESS");
+                                } else {
+                                    Log.e("Message", "Return FAILED");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {

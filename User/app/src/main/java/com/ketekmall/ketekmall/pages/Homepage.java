@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -75,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -128,6 +130,8 @@ public class Homepage extends AppCompatActivity {
     ImageButton btn_next, btn_back;
     String lang;
 
+    ProgressBar loading_hot, loading_shock;
+
     BottomNavigationView bottomNav;
     private long backPressedTime;
     private Toast backToast;
@@ -154,7 +158,15 @@ public class Homepage extends AppCompatActivity {
 
         Category_Func();
 
-        Cart_Item();
+        new Timer().schedule(
+                new TimerTask(){
+
+                    @Override
+                    public void run(){
+                        Cart_Item();
+                    }
+
+                }, 1000);
 
         View_HardSelling();
 
@@ -177,6 +189,9 @@ public class Homepage extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
+
+        loading_hot = findViewById(R.id.loading_hot);
+        loading_shock = findViewById(R.id.loading_shock);
 
         recyclerView = findViewById(R.id.cart_view);
         recyclerView.setHasFixedSize(true);
@@ -530,11 +545,6 @@ public class Homepage extends AppCompatActivity {
                                     String strEmail = object.getString("email").trim();
                                     String strPhoto = object.getString("photo");
 
-//                                    name_display.setText(strName);
-//                                    email_display.setText(strEmail);
-//
-//                                    Picasso.get().load(strPhoto).into(profile_display);
-
                                     username.setText(strName);
                                     Picasso.get().load(strPhoto).into(profile_image);
                                 }
@@ -876,6 +886,7 @@ public class Homepage extends AppCompatActivity {
                                 if(jsonArray.length() == 0){
                                     hot_layout.setVisibility(View.GONE);
                                 }
+                                loading_hot.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -1002,6 +1013,7 @@ public class Homepage extends AppCompatActivity {
                                 if(jsonArray.length() == 0){
                                     top_layout.setVisibility(View.GONE);
                                 }
+                                loading_shock.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 

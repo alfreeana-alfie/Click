@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,6 +73,8 @@ public class Cart extends AppCompatActivity {
     int number;
     BottomNavigationView bottomNav;
 
+    ProgressBar loading;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +94,8 @@ public class Cart extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
         Grand_Total = findViewById(R.id.grandtotal);
+
+        loading = findViewById(R.id.loading);
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -164,6 +169,7 @@ public class Cart extends AppCompatActivity {
                                 JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                                 if (success.equals("1")) {
+                                    loading.setVisibility(View.GONE);
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 

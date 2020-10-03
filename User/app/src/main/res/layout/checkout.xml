@@ -70,6 +70,7 @@
                     app:srcCompat="@drawable/ic_right_orange_foreground" />
             </RelativeLayout>
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/item_view"
                 android:layout_width="match_parent"

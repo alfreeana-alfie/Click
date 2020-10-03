@@ -36,13 +36,55 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/img_item"
-                android:layout_width="match_parent"
-                android:layout_height="410dp"
-                android:background="@drawable/background_white"
-                android:contentDescription="@string/item_image"
-                tools:srcCompat="@tools:sample/avatars[1]" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/loading_shock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorWhite"
+                    android:indeterminateTintMode="src_atop"/>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp" />
+
+                <TextView
+                    android:id="@+id/page_text"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.5"
+                    android:padding="7dp"
+                    android:fontFamily="@font/open_sans"
+                    android:textAlignment="center"
+                    android:text="1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/background_white"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp" />
+
+                <ImageView
+
+                    android:id="@+id/img_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@drawable/background_white"
+                    android:contentDescription="@string/item_image"
+                    tools:srcCompat="@tools:sample/avatars[1]" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/linear2"
@@ -59,10 +101,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/open_sans"
                     android:text="@string/ad_details"
                     android:textAlignment="textStart"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp" />
 
                 <TextView
@@ -75,7 +117,7 @@
                     android:text="@string/price_rm"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -278,8 +320,7 @@
                         style="@style/Widget.AppCompat.Button.Borderless"
                         app:srcCompat="@drawable/ic_chat_orange_foreground"
                         android:text="@string/chat"
-                        android:textColor="@color/colorWhite"
-                        tools:ignore="VectorDrawableCompat" />
+                        android:textColor="@color/colorWhite" />
 
                     <Button
                         android:id="@+id/btn_view_seller"
@@ -453,7 +494,7 @@
                     <com.mhmtk.twowaygrid.TwoWayGridView
                         android:id="@+id/gridView_item"
                         android:layout_width="match_parent"
-                        android:layout_height="237dp"
+                        android:layout_height="200dp"
                         android:layout_below="@id/view_all"
                         android:background="@color/colorWhite"
                         app:cacheColorHint="@color/colorWhite"
@@ -480,14 +521,16 @@
                 android:paddingTop="5dp">
 
                 <Button
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/add_to_cart_btn"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:background="@drawable/background_button_pink_curves"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="@font/open_sans_bold"
                     android:padding="10dp"
-                    android:layout_margin="10dp"
                     android:text="@string/add_to_cart"
                     android:textAlignment="center"
                     android:textColor="@android:color/white"

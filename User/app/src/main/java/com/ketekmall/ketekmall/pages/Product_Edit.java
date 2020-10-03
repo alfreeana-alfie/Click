@@ -690,27 +690,32 @@ public class Product_Edit extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
-                                Button_SavedEdit.setVisibility(View.VISIBLE);
-                                Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
-                                Intent intent1 = new Intent(Product_Edit.this, MyProducts.class);
-                                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent1);
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                if (success.equals("1")) {
+                                    loading.setVisibility(View.GONE);
+                                    Button_SavedEdit.setVisibility(View.VISIBLE);
+                                    Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
+                                    Intent intent1 = new Intent(Product_Edit.this, MyProducts.class);
+                                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent1);
 
-                            } else {
+                                } else {
+                                    loading.setVisibility(View.GONE);
+                                    Button_SavedEdit.setVisibility(View.VISIBLE);
+                                    Toast.makeText(Product_Edit.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
                                 loading.setVisibility(View.GONE);
                                 Button_SavedEdit.setVisibility(View.VISIBLE);
-                                Toast.makeText(Product_Edit.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            loading.setVisibility(View.GONE);
-                            Button_SavedEdit.setVisibility(View.VISIBLE);
-                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -782,22 +787,23 @@ public class Product_Edit extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                if (success.equals("1")) {
+                                    Log.d("Message", "Return SUCCESS");
+                                } else {
+                                    Log.e("Message", "Return FAILED");
+                                }
+                            } catch (JSONException e) {
 
-                                Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
-
-
-                            } else {
-
-                                Toast.makeText(Product_Edit.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -857,85 +863,88 @@ public class Product_Edit extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
-                            String[] image = new String[jsonArray.length()];
-                            if(jsonArray.length() == 0 || jsonArray.length() == 1){
-                                upload_photo_img3.setVisibility(VISIBLE);
-                                upload_photo_img4.setVisibility(VISIBLE);
-                                upload_photo_img5.setVisibility(VISIBLE);
-                                delete_2.setVisibility(View.GONE);
-                                delete_3.setVisibility(View.GONE);
-                                delete_4.setVisibility(View.GONE);
-                                delete_5.setVisibility(View.GONE);
-                            }else {
-                                if (success.equals("1")) {
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
-
-//                                        String id = object.getString("id").trim();
-                                        String image_item = object.getString("filepath");
-                                        image[i] = image_item;
-                                    }
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                final JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                String[] image = new String[jsonArray.length()];
+                                if(jsonArray.length() == 0 || jsonArray.length() == 1){
+                                    upload_photo_img3.setVisibility(VISIBLE);
+                                    upload_photo_img4.setVisibility(VISIBLE);
+                                    upload_photo_img5.setVisibility(VISIBLE);
                                     delete_2.setVisibility(View.GONE);
                                     delete_3.setVisibility(View.GONE);
                                     delete_4.setVisibility(View.GONE);
                                     delete_5.setVisibility(View.GONE);
-
-                                    Log.d("PHOTO", String.valueOf(image.length));
-                                    if(image.length == 2){
-                                        Picasso.get().load(image[1]).into(upload_photo_img2);
-                                        upload_photo_img3.setVisibility(VISIBLE);
-                                        upload_photo_img4.setVisibility(VISIBLE);
-                                        upload_photo_img5.setVisibility(VISIBLE);
-
-                                        delete_2.setVisibility(View.VISIBLE);
+                                }else {
+                                    if (success.equals("1")) {
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject object = jsonArray.getJSONObject(i);
+                                            String image_item = object.getString("filepath");
+                                            image[i] = image_item;
+                                        }
+                                        delete_2.setVisibility(View.GONE);
                                         delete_3.setVisibility(View.GONE);
                                         delete_4.setVisibility(View.GONE);
                                         delete_5.setVisibility(View.GONE);
-                                    } else if(image.length == 3) {
-                                        Picasso.get().load(image[1]).into(upload_photo_img2);
-                                        Picasso.get().load(image[2]).into(upload_photo_img3);
-                                        upload_photo_img4.setVisibility(VISIBLE);
-                                        upload_photo_img5.setVisibility(VISIBLE);
 
-                                        delete_2.setVisibility(View.VISIBLE);
-                                        delete_3.setVisibility(View.VISIBLE);
-                                        delete_4.setVisibility(View.GONE);
-                                        delete_5.setVisibility(View.GONE);
-                                    } else if(image.length == 4) {
-                                        Picasso.get().load(image[1]).into(upload_photo_img2);
-                                        Picasso.get().load(image[2]).into(upload_photo_img3);
-                                        Picasso.get().load(image[3]).into(upload_photo_img4);
-                                        upload_photo_img5.setVisibility(VISIBLE);
+                                        Log.d("PHOTO", String.valueOf(image.length));
+                                        if(image.length == 2){
+                                            Picasso.get().load(image[1]).into(upload_photo_img2);
+                                            upload_photo_img3.setVisibility(VISIBLE);
+                                            upload_photo_img4.setVisibility(VISIBLE);
+                                            upload_photo_img5.setVisibility(VISIBLE);
 
-                                        delete_2.setVisibility(View.VISIBLE);
-                                        delete_3.setVisibility(View.VISIBLE);
-                                        delete_4.setVisibility(View.VISIBLE);
-                                        delete_5.setVisibility(View.GONE);
-                                    } else if(image.length == 5) {
-                                        Picasso.get().load(image[1]).into(upload_photo_img2);
-                                        Picasso.get().load(image[2]).into(upload_photo_img3);
-                                        Picasso.get().load(image[3]).into(upload_photo_img4);
-                                        Picasso.get().load(image[4]).into(upload_photo_img5);
-                                        delete_5.setVisibility(View.VISIBLE);
-                                        delete_2.setVisibility(View.VISIBLE);
-                                        delete_3.setVisibility(View.VISIBLE);
-                                        delete_4.setVisibility(View.VISIBLE);
+                                            delete_2.setVisibility(View.VISIBLE);
+                                            delete_3.setVisibility(View.GONE);
+                                            delete_4.setVisibility(View.GONE);
+                                            delete_5.setVisibility(View.GONE);
+                                        } else if(image.length == 3) {
+                                            Picasso.get().load(image[1]).into(upload_photo_img2);
+                                            Picasso.get().load(image[2]).into(upload_photo_img3);
+                                            upload_photo_img4.setVisibility(VISIBLE);
+                                            upload_photo_img5.setVisibility(VISIBLE);
+
+                                            delete_2.setVisibility(View.VISIBLE);
+                                            delete_3.setVisibility(View.VISIBLE);
+                                            delete_4.setVisibility(View.GONE);
+                                            delete_5.setVisibility(View.GONE);
+                                        } else if(image.length == 4) {
+                                            Picasso.get().load(image[1]).into(upload_photo_img2);
+                                            Picasso.get().load(image[2]).into(upload_photo_img3);
+                                            Picasso.get().load(image[3]).into(upload_photo_img4);
+                                            upload_photo_img5.setVisibility(VISIBLE);
+
+                                            delete_2.setVisibility(View.VISIBLE);
+                                            delete_3.setVisibility(View.VISIBLE);
+                                            delete_4.setVisibility(View.VISIBLE);
+                                            delete_5.setVisibility(View.GONE);
+                                        } else if(image.length == 5) {
+                                            Picasso.get().load(image[1]).into(upload_photo_img2);
+                                            Picasso.get().load(image[2]).into(upload_photo_img3);
+                                            Picasso.get().load(image[3]).into(upload_photo_img4);
+                                            Picasso.get().load(image[4]).into(upload_photo_img5);
+                                            delete_5.setVisibility(View.VISIBLE);
+                                            delete_2.setVisibility(View.VISIBLE);
+                                            delete_3.setVisibility(View.VISIBLE);
+                                            delete_4.setVisibility(View.VISIBLE);
+                                        }
+
+
+                                    } else {
+                                        Toast.makeText(Product_Edit.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                                     }
 
-
-                                } else {
-                                    Toast.makeText(Product_Edit.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                                 }
 
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -971,7 +980,7 @@ public class Product_Edit extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("ad_detail", ad_detail);
                 return params;
@@ -995,9 +1004,9 @@ public class Product_Edit extends AppCompatActivity {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String success = jsonObject.getString("success");
                                 if (success.equals("1")) {
-//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
+                                    Log.d("Message", "Return SUCCESS");
                                 } else {
-                                    Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                    Log.e("Message", "Return FAILED");
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -1043,7 +1052,7 @@ public class Product_Edit extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("filename", Filename);
                 return params;
@@ -1061,19 +1070,24 @@ public class Product_Edit extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if ("1".equals(success)) {
-//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                if (success.equals("1")) {
+                                    Log.d("Message", "Return SUCCESS");
+                                } else {
+                                    Log.e("Message", "Return FAILED");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
+                            }
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -1112,7 +1126,7 @@ public class Product_Edit extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("ad_detail", strAd_Detail);
                 params.put("photo", photo);
@@ -1134,19 +1148,24 @@ public class Product_Edit extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
-//                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Product_Edit.this, "Failed! ", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                if (success.equals("1")) {
+                                    Log.d("Message", "Return SUCCESS");
+                                } else {
+                                    Log.e("Message", "Return FAILED");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
+                            }
                         }
+
                     }
                 },
                 new Response.ErrorListener() {

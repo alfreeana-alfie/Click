@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -82,7 +83,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private SessionManager sessionManager;
     private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
-
+    private String getId;
+    private RelativeLayout loading_layout;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
@@ -92,7 +94,9 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         Declare(view);
 
         Firebase.setAndroidContext(view.getContext());
-        sessionManager = new SessionManager(view.getContext());
+        sessionManager = new SessionManager(requireContext());
+
+        loading_layout = view.findViewById(R.id.loading_layout);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage(requireActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
@@ -463,7 +467,12 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                                 e.printStackTrace();
                                                                             }
                                                                         }
-                                                                    });
+                                                                    })  {
+                                                                        @Override
+                                                                        protected Map<String, String> getParams() {
+                                                                            return getParams();
+                                                                        }
+                                                                    };
 
                                                                     RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                                                     rQueue.add(request);
@@ -509,8 +518,12 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                         e.printStackTrace();
                                                     }
                                                 }
-                                            });
-
+                                            })  {
+                                                @Override
+                                                protected Map<String, String> getParams() {
+                                                    return getParams();
+                                                }
+                                            };
                                             RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                             rQueue.add(request);
                                         }

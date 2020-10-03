@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color"
+    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -29,6 +29,22 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_atop"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cart_view"
             android:layout_width="match_parent"
@@ -42,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/bottom_nav"
-            android:background="@color/colorAccent"
+            android:background="@color/colorWhite"
             android:padding="10dp">
 
 
