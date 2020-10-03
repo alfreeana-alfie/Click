@@ -161,7 +161,8 @@
                         android:layout_marginStart="7dp"
                         android:layout_marginEnd="7dp"
                         android:background="@drawable/button_slide"
-                        app:srcCompat="@drawable/ic_left_black_foreground" />
+                        app:srcCompat="@drawable/ic_left_black_foreground"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <ImageButton
                         android:id="@+id/btn_next"
@@ -173,7 +174,8 @@
                         android:layout_marginStart="7dp"
                         android:layout_marginEnd="7dp"
                         android:background="@drawable/button_slide"
-                        app:srcCompat="@drawable/ic_right_black_foreground" />
+                        app:srcCompat="@drawable/ic_right_black_foreground"
+                        tools:ignore="VectorDrawableCompat" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -392,7 +394,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="0dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/hot_selling"
                         android:textAllCaps="true"
@@ -408,7 +410,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="0dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/see_all"
                         android:textAllCaps="false"
@@ -419,11 +421,11 @@
                         android:layout_below="@id/hard_text"
                         android:id="@+id/gridView_HardSelling"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="237dp"
                         android:layout_margin="15dp"
-                        android:background="@color/colorWhite"
+                        android:background="@color/colorAccent"
                         app:cacheColorHint="@color/colorWhite"
-                        app:columnWidth="80dp"
+                        app:columnWidth="140dp"
                         app:gravity="center"
                         app:horizontalSpacing="5dp"
                         app:numColumns="auto_fit"
@@ -448,7 +450,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="0dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/shocking_sale"
                         android:textAllCaps="true"
@@ -464,7 +466,7 @@
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="0dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/see_all"
                         android:textAllCaps="false"
@@ -475,7 +477,7 @@
                         android:layout_below="@id/top_text"
                         android:id="@+id/gridView_TopSelling"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="237dp"
                         android:layout_margin="15dp"
                         android:background="@color/colorWhite"
                         app:cacheColorHint="@color/colorWhite"

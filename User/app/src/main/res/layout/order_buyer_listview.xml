@@ -119,6 +119,7 @@
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:fontFamily="@font/open_sans_semibold"
+            android:textSize="18sp"
             android:text="@string/view" />
 
         <Button
@@ -129,6 +130,7 @@
             android:layout_margin="5dp"
             android:background="@drawable/login_part_border_orange"
             android:textColor="@color/colorWhite"
+            android:textSize="18sp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/cancel" />
 

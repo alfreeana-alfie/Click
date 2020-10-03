@@ -602,6 +602,7 @@
                     android:background="@drawable/login_part_border_orange"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="18sp"
                     android:text="@string/submit" />
 
                 <Button
@@ -616,6 +617,7 @@
                     android:background="@drawable/login_part_border_orange"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="18sp"
                     android:text="@string/cancel" />
 
                 <ProgressBar

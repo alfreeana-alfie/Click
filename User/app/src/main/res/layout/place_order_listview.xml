@@ -23,7 +23,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_below="@id/text_order_id"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/ad_detail_display"

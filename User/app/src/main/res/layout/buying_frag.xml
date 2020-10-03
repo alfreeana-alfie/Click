@@ -50,6 +50,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/BuyingImage"
                             android:textAlignment="center"
+                            android:textSize="16sp"
                             android:text="@string/buying" />
                     </RelativeLayout>
 
@@ -78,6 +79,7 @@
                             android:layout_toEndOf="@id/myLikeImage"
                             android:textAlignment="center"
                             android:layout_marginStart="10dp"
+                            android:textSize="16sp"
                             android:text="@string/my_likes" />
                     </RelativeLayout>
 
@@ -105,6 +107,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/MyRatingImage"
                             android:textAlignment="center"
+                            android:textSize="16sp"
                             android:text="@string/my_rating" />
                     </RelativeLayout>
 
@@ -143,6 +146,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/AccountSettingImage"
                             android:textAlignment="center"
+                            android:textSize="16sp"
                             android:text="@string/account_settings" />
                     </RelativeLayout>
 
@@ -171,6 +175,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/HelpCentreImage"
                             android:textAlignment="center"
+                            android:textSize="16sp"
                             android:text="@string/help_centre" />
                     </RelativeLayout>
 
@@ -199,6 +204,7 @@
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@id/ChatImage"
                             android:textAlignment="center"
+                            android:textSize="16sp"
                             android:text="@string/my_chat_inbox" />
                     </RelativeLayout>
 

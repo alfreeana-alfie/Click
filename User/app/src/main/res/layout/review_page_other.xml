@@ -537,7 +537,8 @@
                     android:background="@drawable/login_part_border_orange"
                     android:text="@string/received"
                     android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:textSize="18sp" />
             </RelativeLayout>
         </ScrollView>
 

@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@color/colorPrimary"
-                android:padding="10dp">
+                android:padding="15dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
@@ -62,10 +62,10 @@
                     android:layout_toEndOf="@id/username"
                     android:layout_alignBottom="@id/profile_image"
                     android:background="@drawable/background_pink_full_curve"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
                     android:layout_marginStart="10dp"
                     android:text="@string/verification"
                     android:textAllCaps="true"

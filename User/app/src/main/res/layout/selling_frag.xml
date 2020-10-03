@@ -52,6 +52,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/SellingImage"
                             android:text="@string/selling"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
 
@@ -80,6 +81,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/myLikeImage"
                             android:text="@string/add_product"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
 
@@ -108,6 +110,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/RecentlyViewedImage"
                             android:text="@string/my_products"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
 
@@ -136,6 +139,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/IncomeImage"
                             android:text="@string/my_income_"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
 
@@ -164,12 +168,14 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/MyRatingImage"
                             android:text="@string/shop_rating"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:textSize="16sp"
                         android:background="@color/colorLightGrey" />
 
                     <RelativeLayout
@@ -192,6 +198,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@id/BuyingImage"
                             android:text="@string/boost_ad"
+                            android:textSize="16sp"
                             android:textAlignment="center" />
                     </RelativeLayout>
                 </LinearLayout>
@@ -209,6 +216,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -220,6 +228,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -232,6 +241,7 @@
             android:textSize="14sp" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

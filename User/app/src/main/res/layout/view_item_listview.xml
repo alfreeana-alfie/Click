@@ -32,23 +32,25 @@
                     android:layout_alignParentStart="true"
                     android:background="@mipmap/ic_expand_01_foreground"
                     android:contentDescription="@string/item_image"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
 
                 <ImageView
                     android:id="@+id/img_item"
-                    android:layout_width="150dp"
+                    android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_toStartOf="@id/fav_item"
-                    android:layout_toEndOf="@id/bookmark_item"
+                    android:layout_alignParentStart="true"
                     android:contentDescription="@string/item_image"
+                    android:layout_marginStart="5dp"
                     android:paddingTop="5dp"
+                    android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/avatars[1]" />
 
                 <ImageButton
                     android:id="@+id/fav_item"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:background="@mipmap/ic_love_foreground"
                     android:contentDescription="@string/item_image" />
@@ -70,7 +72,7 @@
                 android:maxLines="1"
                 android:text="@string/ad_details"
                 android:textAlignment="center"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -108,7 +110,7 @@
                 android:paddingStart="10dp"
                 android:paddingTop="0dp"
                 android:paddingEnd="10dp"
-                android:paddingBottom="0dp"
+                android:paddingBottom="10dp"
                 android:text="@string/division"
                 android:textAlignment="center"
                 android:textSize="12sp" />
@@ -128,23 +130,24 @@
                     <Button
                         android:id="@+id/view_item"
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="end"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginBottom="0dp"
-                        android:background="@drawable/button_border"
-                        android:fontFamily="@font/montserrat"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/view_border_orange"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textColor="@color/colorWhite"
                         android:text="@string/view"
-                        android:textSize="12sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
 
                 <ImageButton
                     android:id="@+id/add_to_cart_item"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/ic_add_to_cart_foreground"
                     android:contentDescription="@string/item_image" />

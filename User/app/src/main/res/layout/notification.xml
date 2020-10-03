@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent">
@@ -39,20 +40,30 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/background_white_full_about"
+                android:elevation="2dp"
                 android:padding="15dp"
                 android:id="@+id/promotion_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@drawable/ic_promo_foreground"
+                    android:contentDescription="TODO" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_promo_foreground"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:layout_gravity="center"
                     android:textSize="20sp"
                     android:text="@string/promotion" />
 
@@ -63,25 +74,37 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
                     android:textSize="14sp"
+                    android:layout_gravity="center"
                     android:textAlignment="textEnd"
-                    android:text="@string/view" />
+                    android:text="@string/view"
+                    tools:ignore="RtlCompat" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/background_white_full_about"
+                android:elevation="2dp"
                 android:padding="15dp"
                 android:id="@+id/social_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@drawable/ic_social_foreground"
+                    android:contentDescription="TODO" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_social_foreground"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:layout_gravity="center"
                     android:textSize="20sp"
                     android:text="@string/social_updates" />
 
@@ -91,27 +114,40 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
+                    android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textAlignment="textEnd"
-                    android:text="@string/view" />
+                    android:text="@string/view"
+                    tools:ignore="RtlCompat" />
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/background_white_full_about"
+                android:elevation="2dp"
                 android:padding="15dp"
                 android:id="@+id/updates_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:srcCompat="@drawable/ic_order_foreground"
+                    android:contentDescription="TODO" />
+
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:drawableStart="@drawable/ic_order_foreground"
                     android:textSize="20sp"
                     android:text="@string/order_updates" />
 
@@ -121,9 +157,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans"
+                    android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textAlignment="textEnd"
-                    android:text="@string/view" />
+                    android:text="@string/view"
+                    tools:ignore="RtlCompat" />
             </LinearLayout>
         </LinearLayout>
 

@@ -90,34 +90,36 @@
                 <Button
                     android:id="@+id/edit_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="end"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="0dp"
                     android:layout_weight="1"
                     android:elevation="3dp"
-                    android:background="@drawable/button_noradius"
-                    android:fontFamily="@font/montserrat"
+                    android:background="@drawable/view_border_orange"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/edit"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorWhite"
                     tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/delete_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_height="45dp"
                     android:layout_gravity="end"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:elevation="3dp"
-                    android:background="@drawable/button_noradius"
-                    android:fontFamily="@font/montserrat"
+                    android:background="@drawable/view_border_orange"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/delete"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorWhite"
                     tools:ignore="ButtonStyle" />
             </LinearLayout>
 
@@ -131,10 +133,11 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:elevation="3dp"
-                android:background="@drawable/button_noradius"
-                android:fontFamily="@font/montserrat"
+                android:background="@drawable/view_border_orange"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/boost_ad"
-                android:textSize="12sp"
+                android:textSize="16sp"
+                android:textColor="@color/colorWhite"
                 tools:ignore="ButtonStyle" />
 
             <TextView
@@ -142,17 +145,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
-                android:layout_marginStart="10dp"
-                android:paddingTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:paddingTop="15dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
-                android:paddingBottom="10dp"
-                android:background="@color/colorLightRed"
+                android:paddingBottom="15dp"
+                android:background="@drawable/button_sell_border"
                 android:text="@string/no_delivery"
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -76,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/background_orange_full_curve"
                 android:drawableEnd="@drawable/ic_right_arrow_foreground"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/checkout"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"/>

@@ -159,8 +159,8 @@
             android:layout_margin="10dp"
             android:layout_below="@id/layout_phone"
             android:background="@drawable/background_button_pink_right_curves"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="18sp"
             android:textColor="@color/colorWhite"
             android:text="@string/accept" />
 
@@ -172,8 +172,8 @@
             android:layout_marginEnd="10dp"
             android:layout_below="@id/btn_accept"
             android:background="@drawable/background_button_pink_left_curves"
-            android:fontFamily="@font/open_sans_bold"
-            android:textSize="20sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textSize="18sp"
             android:textColor="@color/colorWhite"
             android:text="Cancel" />
 

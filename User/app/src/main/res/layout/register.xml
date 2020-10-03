@@ -265,10 +265,10 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_part_border_orange"
                 android:elevation="0dp"
-                android:fontFamily="@font/montserrat"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/register"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

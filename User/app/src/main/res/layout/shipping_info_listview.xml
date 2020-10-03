@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans"
+            android:layout_marginEnd="10dp"
             android:layout_gravity="center"
             android:text="@string/delivered_in"
             android:textColor="@color/colorGrey"

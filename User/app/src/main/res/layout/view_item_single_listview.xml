@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image_item"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_gravity="center"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -22,7 +23,7 @@
         android:maxLines="1"
         android:textAlignment="center"
         android:text="@string/item_name"
-
+        android:textSize="16sp"
         android:textColor="@color/colorPrimaryDark" />
 
     <TextView
@@ -32,6 +33,7 @@
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans"
         android:text="@string/myr0_00"
+        android:textSize="16sp"
         android:textColor="@color/colorPrimaryDark" />
 
     <RatingBar
@@ -47,14 +49,15 @@
     <Button
         android:id="@+id/btn_view"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="35dp"
         android:layout_gravity="end"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/button_border"
-        android:fontFamily="@font/montserrat"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/view_border_orange"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textColor="@color/colorWhite"
         android:text="@string/view"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 </LinearLayout>
