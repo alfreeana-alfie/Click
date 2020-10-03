@@ -3,7 +3,7 @@
     style="?attr/actionButtonStyle"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@null"
     android:clipToPadding="false"
     android:focusable="true">
 

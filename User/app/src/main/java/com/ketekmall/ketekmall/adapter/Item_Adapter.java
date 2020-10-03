@@ -100,7 +100,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
-                    mListerner.onViewClick(position);
+                    mListerner.onAddtoCartClick(position);
                 }
             }
         });

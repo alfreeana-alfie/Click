@@ -926,6 +926,31 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
+                                        startActivity(detailIntent);
+
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
                                         final String strItem_Id = item.getId();
@@ -1124,6 +1149,30 @@ public class Homepage extends AppCompatActivity {
                                 adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Homepage.this, View_Product.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("item_id", item.getItem_id());
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
 
                                         final String strItem_Id = item.getId();

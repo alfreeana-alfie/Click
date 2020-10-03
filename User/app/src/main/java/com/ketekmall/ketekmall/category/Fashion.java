@@ -396,95 +396,27 @@ public class Fashion extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Fashion.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
 
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Fashion.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                                                }
+                                        startActivity(detailIntent);
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Fashion.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError ) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            } }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Fashion.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
                                     }
 
                                     @Override
@@ -779,95 +711,27 @@ public class Fashion extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Fashion.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
 
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Fashion.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                                                }
+                                        startActivity(detailIntent);
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Fashion.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError ) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            } }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Fashion.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
                                     }
 
                                     @Override
@@ -1163,95 +1027,27 @@ public class Fashion extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Fashion.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
 
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Fashion.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                                                }
+                                        startActivity(detailIntent);
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Fashion.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError ) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            } }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Fashion.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
                                     }
 
                                     @Override
@@ -1548,95 +1344,27 @@ public class Fashion extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Fashion.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
 
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Fashion.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                                                }
+                                        startActivity(detailIntent);
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Fashion.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError ) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            } }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Fashion.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
                                     }
 
                                     @Override
@@ -1956,95 +1684,27 @@ public class Fashion extends AppCompatActivity {
                                 adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
+                                        Intent detailIntent = new Intent(Fashion.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        final String strItem_Id = item.getId();
-                                        final String strSeller_id = item.getSeller_id();
-                                        final String strMain_category = item.getMain_category();
-                                        final String strSub_category = item.getSub_category();
-                                        final String strAd_Detail = item.getAd_detail();
-                                        final Double strPrice = Double.valueOf(item.getPrice());
-                                        final String strDivision = item.getDivision();
-                                        final String strDistrict = item.getDistrict();
-                                        final String strPhoto = item.getPhoto();
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("user_id", item.getSeller_id());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
 
-                                        if (getId.equals(strSeller_id)) {
-                                            Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                    new Response.Listener<String>() {
-                                                        @Override
-                                                        public void onResponse(String response) {
-                                                            try {
-                                                                JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
 
-                                                                if (success.equals("1")) {
-                                                                    Toast.makeText(Fashion.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
 
-                                                                }
+                                        startActivity(detailIntent);
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                                Toast.makeText(Fashion.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
-
-                                                                if (error instanceof TimeoutError ) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
-                                                            } }
-                                                    }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> params = new HashMap<>();
-                                                    params.put("customer_id", getId);
-                                                    params.put("main_category", strMain_category);
-                                                    params.put("sub_category", strSub_category);
-                                                    params.put("ad_detail", strAd_Detail);
-                                                    params.put("price", String.format("%.2f", strPrice));
-                                                    params.put("division", strDivision);
-                                                    params.put("district", strDistrict);
-                                                    params.put("photo", strPhoto);
-                                                    params.put("seller_id", strSeller_id);
-                                                    params.put("item_id", strItem_Id);
-                                                    return params;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Fashion.this);
-                                            stringRequest2.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                                            requestQueue.add(stringRequest2);
-                                        }
                                     }
 
                                     @Override

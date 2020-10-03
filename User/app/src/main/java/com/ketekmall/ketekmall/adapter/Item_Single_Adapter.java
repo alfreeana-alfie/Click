@@ -92,14 +92,26 @@ public class Item_Single_Adapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
+                    mListerner.onAddtoCartClick(position);
+                }
+            }
+        });
+
+        img_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListerner != null) {
                     mListerner.onViewClick(position);
                 }
             }
         });
+
         return convertView;
     }
 
     public interface OnItemClickListener {
         void onViewClick(int position);
+
+        void onAddtoCartClick(int position);
     }
 }
