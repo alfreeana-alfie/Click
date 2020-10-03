@@ -3,8 +3,10 @@ package com.ketekmall.ketekmall.user;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -31,10 +34,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.pages.MainActivity;
 import com.firebase.client.Firebase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.pages.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,12 +45,14 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressWarnings("deprecation")
 public class Register extends Fragment {
 
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
@@ -57,7 +62,6 @@ public class Register extends Fragment {
     private EditText name, email, phone_no, password, confirm_password;
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
-    private Uri filePath;
 
     @Nullable
     @Override
@@ -90,8 +94,8 @@ public class Register extends Fragment {
                     @Override
                     public void run() {
                         Intent intent = new Intent(getContext(), MainActivity.class);
-                        getActivity().startActivity(intent);
-                        getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                        requireActivity().startActivity(intent);
+                        requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
                     }
                 }, 100);
 
@@ -120,7 +124,7 @@ public class Register extends Fragment {
         final String strConfirm_Password = this.confirm_password.getText().toString().trim();
         final String strBirthday = "";
         final String strGender = "Female";
-        final String strVerification ="0";
+        final String strVerification = "0";
 
         final String strPhoto_URL = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
@@ -183,32 +187,35 @@ public class Register extends Fragment {
             StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
-                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
-
-                    if (s.equals("null")) {
-                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                        reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                    if (s == null) {
+                        Log.e("onResponse", "Return NULL");
                     } else {
-                        try {
-                            JSONObject obj = new JSONObject(s);
+                        Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                            if (!obj.has(name_firebase)) {
-                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                            } else {
-                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                        if (s.equals("null")) {
+                            reference.child(name_firebase).child("email").setValue(email_firebase);
+                            reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
+                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                        } else {
+                            try {
+                                JSONObject obj = new JSONObject(s);
+
+                                if (!obj.has(name_firebase)) {
+                                    reference.child(name_firebase).child("email").setValue(email_firebase);
+                                    reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
+                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                } else {
+                                    reference.child(name_firebase).child("email").setValue(email_firebase);
+                                    reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
+                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
-
                 }
 
             }, new Response.ErrorListener() {
@@ -225,39 +232,44 @@ public class Register extends Fragment {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        String success = jsonObject.getString("success");
+                    if (response == null) {
+                        Log.e("onResponse", "Return NULL");
+                    } else {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
 
-                        if (success.equals("1")) {
-                            Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                            if (success.equals("1")) {
+                                Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
 
-                            loading.setVisibility(View.GONE);
-                            button_register.setVisibility(View.VISIBLE);
+                                loading.setVisibility(View.GONE);
+                                button_register.setVisibility(View.VISIBLE);
 
-                            Timer timer = new Timer();
-                            timer.schedule(new TimerTask() {
-                                @Override
-                                public void run() {
-                                    Intent intent = new Intent(getContext(), MainActivity.class);
-                                    getActivity().startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                }
-                            }, 100);
-                        } else {
-                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                Timer timer = new Timer();
+                                timer.schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        requireActivity().startActivity(intent);
+                                        requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                    }
+                                }, 100);
+                            } else {
+                                Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+
+                                loading.setVisibility(View.GONE);
+                                button_register.setVisibility(View.VISIBLE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getContext(), "Email is already existed", Toast.LENGTH_SHORT).show();
 
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(), "Email is already existed", Toast.LENGTH_SHORT).show();
-
-                        loading.setVisibility(View.GONE);
-                        button_register.setVisibility(View.VISIBLE);
                     }
+
 
                 }
             }, new Response.ErrorListener() {
@@ -268,7 +280,7 @@ public class Register extends Fragment {
                         if (error instanceof TimeoutError) {
                             //Time out error
                             System.out.println("" + error);
-                        }else if(error instanceof NoConnectionError){
+                        } else if (error instanceof NoConnectionError) {
                             //net work error
                             System.out.println("" + error);
                         } else if (error instanceof AuthFailureError) {
@@ -283,22 +295,18 @@ public class Register extends Fragment {
                         } else if (error instanceof ParseError) {
                             //Error
                             System.out.println("" + error);
-                        }else{
+                        } else {
                             //Error
                             System.out.println("" + error);
                         }
-                        //End
-
-
                     } catch (Exception e) {
-
-
+                        e.printStackTrace();
                     }
 
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("name", strName);
                     params.put("email", strEmail);
@@ -317,19 +325,20 @@ public class Register extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST
                 && resultCode == RESULT_OK
-                && data.getData() != null) {
+                && Objects.requireNonNull(data).getData() != null) {
 
             // Get the Uri of data
-            filePath = data.getData();
+            Uri filePath = data.getData();
             try {
 
                 // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 // Log the exception

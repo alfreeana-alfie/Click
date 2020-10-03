@@ -48,7 +48,7 @@ public class Forgot_Password extends Fragment {
     private EditText email, new_password, confirm_new_password;
     private Button button_enter_email, button_enter_new_password, button_back_pressed, button_back_password;
     private ProgressBar loading, loading_password;
-    private LinearLayout password_linear_layout, email_linear_layout;
+    private LinearLayout password_linear_layout;
 
     @Nullable
     @Override
@@ -67,7 +67,6 @@ public class Forgot_Password extends Fragment {
         loading = v.findViewById(R.id.loading);
         loading_password = v.findViewById(R.id.loading_new_password);
         password_linear_layout = v.findViewById(R.id.password_linear_layout);
-        email_linear_layout = v.findViewById(R.id.email_linear_layout);
         new_password = v.findViewById(R.id.edittext_new_password);
         confirm_new_password = v.findViewById(R.id.edittext_confirm_new_password);
         button_enter_new_password = v.findViewById(R.id.button_enter_new_password);
@@ -112,8 +111,8 @@ public class Forgot_Password extends Fragment {
             @Override
             public void run() {
                 Intent intent = new Intent(getContext(), MainActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                requireActivity().startActivity(intent);
+                requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
             }
         }, 100);
     }
@@ -146,7 +145,7 @@ public class Forgot_Password extends Fragment {
 
                                         sendEmail(mEmail);
                                         Intent intent1 = new Intent(getContext(), MainActivity.class);
-                                        getActivity().startActivity(intent1);
+                                        requireActivity().startActivity(intent1);
                                         Toast.makeText(getContext(), "Please check your email inbox", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
@@ -194,18 +193,14 @@ public class Forgot_Password extends Fragment {
                             //Error
                             System.out.println("" + error);
                         }
-                        //End
-
-
                     } catch (Exception e) {
-
-
+                        e.printStackTrace();
                     }
 
                 }
             }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
                     return params;
@@ -228,7 +223,7 @@ public class Forgot_Password extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            jsonObject.getString("success");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -265,19 +260,18 @@ public class Forgot_Password extends Fragment {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
     }
 
@@ -289,7 +283,7 @@ public class Forgot_Password extends Fragment {
         final String mNew_Password = this.new_password.getText().toString().trim();
         final String mConfirm_new_password = this.confirm_new_password.getText().toString().trim();
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        final ProgressDialog progressDialog = new ProgressDialog(requireContext());
         progressDialog.setMessage("Saving...");
         progressDialog.show();
 
@@ -318,8 +312,8 @@ public class Forgot_Password extends Fragment {
                                         @Override
                                         public void run() {
                                             Intent intent = new Intent(getContext(), MainActivity.class);
-                                            getActivity().startActivity(intent);
-                                            getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                            requireActivity().startActivity(intent);
+                                            requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                         }
                                     }, 100);
                                 }
@@ -369,13 +363,12 @@ public class Forgot_Password extends Fragment {
 
 
                             } catch (Exception e) {
-
-
+                                e.printStackTrace();
                             }
                         }
                     }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("email", mEmail);
                     params.put("password", mNew_Password);

@@ -1,14 +1,17 @@
 package com.ketekmall.ketekmall.user;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -39,14 +43,14 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.Me_Page;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.pages.Checkout;
 import com.ketekmall.ketekmall.pages.Homepage;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ketekmall.ketekmall.pages.Me_Page;
+import com.ketekmall.ketekmall.pages.Notification_Page;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -58,6 +62,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,9 +73,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
     private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/profile_image/upload.php";
     private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
 
-    SessionManager sessionManager;
-    String getId;
-    Uri filePath;
+    public SessionManager sessionManager;
+    public String getId;
+    public Uri filePath;
+    public BottomNavigationView bottomNav;
     private ArrayAdapter<CharSequence> adapter_gender;
     private DatePickerDialog datePickerDialog;
     private LinearLayout layout_gender_display, layout_gender, layout_income, layout_icno, layout_bankName, layout_BankAcc;
@@ -80,10 +86,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
     private ImageButton button_edit_photo;
     private Spinner gender;
     private Bitmap bitmap;
-    private ImageView gender_img, gender_img_spinner;
+    private ImageView gender_img_spinner;
     private CircleImageView profile_image;
-    BottomNavigationView bottomNav;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +112,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         getId = user.get(SessionManager.ID);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
         name = findViewById(R.id.name_edit);
         email = findViewById(R.id.email_edit);
@@ -116,7 +123,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         gender = findViewById(R.id.gender_spinner);
 
-        icno= findViewById(R.id.icno_edit);
+        icno = findViewById(R.id.icno_edit);
         bank_name = findViewById(R.id.bank_name_edit);
         bank_acc = findViewById(R.id.bank_acc_edit);
         income = findViewById(R.id.income_text);
@@ -133,7 +140,6 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
         birthday = findViewById(R.id.birthday_edit);
         gender_display = findViewById(R.id.textview_gender_display);
-        gender_img = findViewById(R.id.gender_display_img);
         gender_img_spinner = findViewById(R.id.gender_display_img_spinner);
         layout_gender_display = findViewById(R.id.layout_gender_display);
         layout_gender = findViewById(R.id.layout_gender);
@@ -209,7 +215,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Edit Profile");
 
@@ -348,72 +354,77 @@ public class Edit_Profile_Address extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-
-                                    String strName = object.getString("name").trim();
-                                    String strEmail = object.getString("email").trim();
-                                    String strPhone_no = object.getString("phone_no").trim();
-                                    String strAddress01 = object.getString("address_01").trim();
-                                    String strAddress02 = object.getString("address_02").trim();
-                                    String strCity = object.getString("division").trim();
-                                    String strPostCode = object.getString("postcode").trim();
-                                    String strBirthday = object.getString("birthday").trim();
-                                    String strGender = object.getString("gender");
-                                    String strPhoto = object.getString("photo");
-                                    String strICNO = object.getString("ic_no").trim();
-                                    String strBankName = object.getString("bank_name");
-                                    String strBankAcc = object.getString("bank_acc");
-                                    int strVerify = Integer.valueOf(object.getString("verification"));
-
-                                    name.setText(strName);
-                                    email.setText(strEmail);
-                                    phone_no.setText(strPhone_no);
-                                    address_01.setText(strAddress01);
-                                    address_02.setText(strAddress02);
-                                    city.setText(strCity);
-                                    postcode.setText(strPostCode);
-                                    birthday.setText(strBirthday);
-                                    gender.setSelection(adapter_gender.getPosition(strGender));
-                                    gender_display.setText(strGender);
-
-                                    icno.setText(strICNO);
-                                    bank_name.setText(strBankName);
-                                    bank_acc.setText(strBankAcc);
-
-                                    if(strVerify == 0){
-                                        layout_icno.setVisibility(View.GONE);
-                                        layout_bankName.setVisibility(View.GONE);
-                                        layout_BankAcc.setVisibility(View.GONE);
-                                        layout_income.setVisibility(View.GONE);
-                                    }else{
-                                        layout_icno.setVisibility(View.VISIBLE);
-                                        layout_bankName.setVisibility(View.VISIBLE);
-                                        layout_BankAcc.setVisibility(View.VISIBLE);
-                                        layout_income.setVisibility(View.VISIBLE);
-                                    }
-
-                                    gender.setVisibility(View.GONE);
-                                    gender_img_spinner.setVisibility(View.GONE);
-                                    Picasso.get().load(strPhoto).into(profile_image);
-                                }
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile_Address.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
                             progressDialog.dismiss();
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        String strName = object.getString("name").trim();
+                                        String strEmail = object.getString("email").trim();
+                                        String strPhone_no = object.getString("phone_no").trim();
+                                        String strAddress01 = object.getString("address_01").trim();
+                                        String strAddress02 = object.getString("address_02").trim();
+                                        String strCity = object.getString("division").trim();
+                                        String strPostCode = object.getString("postcode").trim();
+                                        String strBirthday = object.getString("birthday").trim();
+                                        String strGender = object.getString("gender");
+                                        String strPhoto = object.getString("photo");
+                                        String strICNO = object.getString("ic_no").trim();
+                                        String strBankName = object.getString("bank_name");
+                                        String strBankAcc = object.getString("bank_acc");
+                                        int strVerify = Integer.parseInt(object.getString("verification"));
+
+                                        name.setText(strName);
+                                        email.setText(strEmail);
+                                        phone_no.setText(strPhone_no);
+                                        address_01.setText(strAddress01);
+                                        address_02.setText(strAddress02);
+                                        city.setText(strCity);
+                                        postcode.setText(strPostCode);
+                                        birthday.setText(strBirthday);
+                                        gender.setSelection(adapter_gender.getPosition(strGender));
+                                        gender_display.setText(strGender);
+
+                                        icno.setText(strICNO);
+                                        bank_name.setText(strBankName);
+                                        bank_acc.setText(strBankAcc);
+
+                                        if (strVerify == 0) {
+                                            layout_icno.setVisibility(View.GONE);
+                                            layout_bankName.setVisibility(View.GONE);
+                                            layout_BankAcc.setVisibility(View.GONE);
+                                            layout_income.setVisibility(View.GONE);
+                                        } else {
+                                            layout_icno.setVisibility(View.VISIBLE);
+                                            layout_bankName.setVisibility(View.VISIBLE);
+                                            layout_BankAcc.setVisibility(View.VISIBLE);
+                                            layout_income.setVisibility(View.VISIBLE);
+                                        }
+
+                                        gender.setVisibility(View.GONE);
+                                        gender_img_spinner.setVisibility(View.GONE);
+                                        Picasso.get().load(strPhoto).into(profile_image);
+                                    }
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Edit_Profile_Address.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                progressDialog.dismiss();
 //                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -425,7 +436,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
                             if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -440,22 +451,17 @@ public class Edit_Profile_Address extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-//                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", getId);
                 return params;
@@ -489,22 +495,26 @@ public class Edit_Profile_Address extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-                                sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress01, strAddress02, strCity, strPostCode, strBirthday, strGender, id);
-                                Toast.makeText(Edit_Profile_Address.this, "Profile Saved", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
                             progressDialog.dismiss();
-//                            Toast.makeText(getContext(), "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+
+                                if (success.equals("1")) {
+                                    sessionManager.createSession(strName, strEmail, str_Phone_no, strAddress01, strAddress02, strCity, strPostCode, strBirthday, strGender, id);
+                                    Toast.makeText(Edit_Profile_Address.this, "Profile Saved", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                progressDialog.dismiss();
+                            }
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -513,10 +523,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
                         progressDialog.dismiss();
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -531,22 +541,17 @@ public class Edit_Profile_Address extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-//                        Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", strName);
                 params.put("email", strEmail);
@@ -578,9 +583,8 @@ public class Edit_Profile_Address extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
 
         byte[] imageByteArray = byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString(imageByteArray, Base64.DEFAULT);
 
-        return encodedImage;
+        return Base64.encodeToString(imageByteArray, Base64.DEFAULT);
     }
 
     private void UploadPicture(final String id, final String photo) {
@@ -592,23 +596,28 @@ public class Edit_Profile_Address extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-                                progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile_Address.this, "Success!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
                             progressDialog.dismiss();
-                            Toast.makeText(Edit_Profile_Address.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+
+                                if (success.equals("1")) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Edit_Profile_Address.this, "Success!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Edit_Profile_Address.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                progressDialog.dismiss();
+                                Toast.makeText(Edit_Profile_Address.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -617,10 +626,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
                         progressDialog.dismiss();
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -635,22 +644,17 @@ public class Edit_Profile_Address extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-//                        Toast.makeText(getContext(), "Connection Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("photo", photo);
                 params.put("id", id);
@@ -681,53 +685,57 @@ public class Edit_Profile_Address extends AppCompatActivity {
     private void Buying_List() {
         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
+                    @SuppressLint({"SetTextI18n", "DefaultLocale"})
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            Double grandtotal = 0.00;
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
+                                double grandtotal = 0.00;
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String id = object.getString("id").trim();
-                                    final String customer_id = object.getString("customer_id").trim();
-                                    final String main_category = object.getString("main_category").trim();
-                                    final String sub_category = object.getString("sub_category").trim();
-                                    final String ad_detail = object.getString("ad_detail").trim();
-                                    final Double price = Double.valueOf(object.getString("price").trim());
-                                    final String division = object.getString("division");
-                                    final String district = object.getString("district");
-                                    final String image_item = object.getString("photo");
-                                    final String seller_id = object.getString("seller_id");
-                                    final String item_id = object.getString("item_id");
-                                    final String quantity = object.getString("quantity");
+                                        final String id = object.getString("id").trim();
+                                        final String main_category = object.getString("main_category").trim();
+                                        final String sub_category = object.getString("sub_category").trim();
+                                        final String ad_detail = object.getString("ad_detail").trim();
+                                        final double price = Double.parseDouble(object.getString("price").trim());
+                                        final String division = object.getString("division");
+                                        final String district = object.getString("district");
+                                        final String image_item = object.getString("photo");
+                                        final String seller_id = object.getString("seller_id");
+                                        final String quantity = object.getString("quantity");
 
-                                    grandtotal += (price * Integer.parseInt(quantity));
-                                    income.setText("MYR" + String.format("%.2f", grandtotal));
+                                        grandtotal += (price * Integer.parseInt(quantity));
+                                        income.setText("MYR" + String.format("%.2f", grandtotal));
 
-                                    final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
-                                    item.setQuantity(quantity);
+                                        final Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, String.format("%.2f", price), division, district, image_item);
+                                        item.setQuantity(quantity);
+                                    }
+
                                 }
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
 //                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
                         }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 try {
 
-                    if (error instanceof TimeoutError ) {
+                    if (error instanceof TimeoutError) {
                         //Time out error
                         System.out.println("" + error);
-                    }else if(error instanceof NoConnectionError){
+                    } else if (error instanceof NoConnectionError) {
                         //net work error
                         System.out.println("" + error);
                     } else if (error instanceof AuthFailureError) {
@@ -742,7 +750,7 @@ public class Edit_Profile_Address extends AppCompatActivity {
                     } else if (error instanceof ParseError) {
                         //Error
                         System.out.println("" + error);
-                    }else{
+                    } else {
                         //Error
                         System.out.println("" + error);
                     }
@@ -750,13 +758,12 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
 
                 } catch (Exception e) {
-
-
+                    e.printStackTrace();
                 }
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", getId);
                 return params;

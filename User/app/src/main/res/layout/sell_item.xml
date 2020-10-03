@@ -49,6 +49,7 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
 
+<<<<<<< Updated upstream:User/app/src/main/res/layout/sell_item.xml
                     <ImageView
                         android:id="@+id/upload_photo"
                         android:layout_width="110dp"
@@ -57,6 +58,131 @@
                         android:background="@drawable/background_orange_full_curve"
                         android:contentDescription="@string/todo"
                         app:srcCompat="@drawable/ic_photo_black_foreground" />
+=======
+                    <androidx.gridlayout.widget.GridLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:rowCount="2"
+                        app:columnCount="3">
+
+                        <ImageView
+                            android:id="@+id/upload_photo1"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/image_border"
+                            android:contentDescription="@string/todo"
+                            app:srcCompat="@drawable/ic_add_photo_foreground"
+                            tools:ignore="VectorDrawableCompat" />
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/upload_photo2"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/image_border"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_add_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+
+                            <ImageView
+                                android:id="@+id/delete_2"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignEnd="@id/upload_photo2"
+                                android:background="@drawable/background_white_full_curves_photo"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_delete_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+                        </RelativeLayout>
+
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/upload_photo3"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/image_border"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_add_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+
+                            <ImageView
+                                android:id="@+id/delete_3"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignEnd="@id/upload_photo3"
+                                android:background="@drawable/background_white_full_curves_photo"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_delete_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/upload_photo4"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/image_border"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_add_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+
+                            <ImageView
+                                android:id="@+id/delete_4"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignEnd="@id/upload_photo4"
+                                android:background="@drawable/background_white_full_curves_photo"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_delete_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/upload_photo5"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/image_border"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_add_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+
+                            <ImageView
+                                android:id="@+id/delete_5"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignEnd="@id/upload_photo5"
+                                android:background="@drawable/background_white_full_curves_photo"
+                                android:contentDescription="@string/todo"
+                                app:srcCompat="@drawable/ic_delete_photo_foreground"
+                                tools:ignore="VectorDrawableCompat" />
+                        </RelativeLayout>
+
+                    </androidx.gridlayout.widget.GridLayout>
+>>>>>>> Stashed changes:User/app/src/main/res/layout/add_product.xml
 
                 </LinearLayout>
 

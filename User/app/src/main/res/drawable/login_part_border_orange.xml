@@ -2,7 +2,17 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
+<<<<<<< Updated upstream
     <solid android:color="@color/colorPrimary" />
     <corners android:radius="20dp" />
+=======
+<!--    <solid android:color="@color/colorPrimary" />-->
+    <corners android:radius="10dp" />
+>>>>>>> Stashed changes
 
+    <gradient
+        android:angle="135"
+        android:endColor="#fc4a1a"
+        android:startColor="#f7b733"
+        android:type="linear" />
 </shape>

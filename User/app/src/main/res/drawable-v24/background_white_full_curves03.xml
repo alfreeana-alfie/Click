@@ -9,10 +9,4 @@
         android:width="1dp"
         android:color="@color/colorWhite" />
 
-    <corners
-        android:bottomLeftRadius="0dp"
-        android:bottomRightRadius="0dp"
-        android:radius="0dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp" />
 </shape>
