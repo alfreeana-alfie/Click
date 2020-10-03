@@ -127,14 +127,13 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:gravity="center"
                         android:id="@+id/view_item"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_gravity="end"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
                         android:background="@drawable/view_border_orange"
                         android:fontFamily="@font/open_sans_semibold"
                         android:textColor="@color/colorWhite"
@@ -145,8 +144,8 @@
 
                 <ImageButton
                     android:id="@+id/fav_item"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:background="@mipmap/ic_love_foreground"
                     android:contentDescription="@string/item_image" />

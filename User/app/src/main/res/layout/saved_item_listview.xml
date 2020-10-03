@@ -88,7 +88,7 @@
                 <Button
                     android:id="@+id/view_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="end"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
@@ -104,7 +104,7 @@
                 <Button
                     android:id="@+id/delete_fav_item"
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="end"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"

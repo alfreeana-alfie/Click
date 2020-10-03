@@ -113,7 +113,7 @@
         <Button
             android:id="@+id/btn_review"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:background="@drawable/login_part_border_orange"
@@ -125,7 +125,7 @@
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:background="@drawable/login_part_border_orange"
