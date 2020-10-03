@@ -172,6 +172,15 @@
                         </RelativeLayout>
 
                     </androidx.gridlayout.widget.GridLayout>
+                    <ImageView
+                        android:id="@+id/upload_photo"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/background_orange_full_curve"
+                        android:contentDescription="@string/todo"
+                        app:srcCompat="@drawable/ic_photo_black_foreground" />
+
                 </LinearLayout>
 
             </LinearLayout>

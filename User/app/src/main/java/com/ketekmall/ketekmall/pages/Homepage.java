@@ -143,7 +143,6 @@ public class Homepage extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
 
         getSession();
-
         Declare();
 
         viewPager = findViewById(R.id.view_pager);
