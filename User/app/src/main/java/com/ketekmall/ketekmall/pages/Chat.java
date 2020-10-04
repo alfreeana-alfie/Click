@@ -22,9 +22,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -56,6 +62,11 @@ public class Chat extends AppCompatActivity {
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
     final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
     final private String contentType = "application/json";
+
+    private static String URL_ADD_CHAT = "https://ketekmall.com/ketekmall/add_chat.php";
+    private static String URL_EDIT_CHAT = "https://ketekmall.com/ketekmall/edit_chat.php";
+
+
     LinearLayout layout;
     ImageView sendButton;
     EditText messageArea;
@@ -148,8 +159,13 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+        final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
         Firebase.setAndroidContext(this);
+
+        final String ref1 = newemail + "_" + UserDetails.chatWith;
+        final String ref2 = UserDetails.chatWith + "_" + newemail;
+
+        UpdateChatData(ref1);
 
         reference1 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + newemail + "_" + UserDetails.chatWith);
         reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_" + newemail);
@@ -167,6 +183,8 @@ public class Chat extends AppCompatActivity {
                     map.put("user", UserDetails.username);
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
+
+
 
                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -209,6 +227,8 @@ public class Chat extends AppCompatActivity {
                     RequestQueue rQueue = Volley.newRequestQueue(Chat.this);
                     rQueue.add(request);
 
+                    ChatData(ref1, messageText);
+                    ChatData(ref2, messageText);
                 }
             }
         });
@@ -279,6 +299,136 @@ public class Chat extends AppCompatActivity {
         };
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
+
+    private void ChatData(final String user_chatWith, final String chat_key){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_CHAT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.d("Message", "Return SUCCESS");
+                            } else {
+                                Log.e("Message", "Return FAILED");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_chatwith", user_chatWith);
+                params.put("chat_key", chat_key);
+                params.put("is_read", "false");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Chat.this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+    }
+
+    private void UpdateChatData(final String user_chatWith){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_CHAT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.d("Message", "Return SUCCESS");
+                            } else {
+                                Log.e("Message", "Return FAILED");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_chatwith", user_chatWith);
+                params.put("is_read", "true");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Chat.this);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(stringRequest);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void addMessageBox(String message, int type) {

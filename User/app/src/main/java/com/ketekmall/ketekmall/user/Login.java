@@ -451,7 +451,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                             return getParams();
                                                                         }
                                                                     };
-
                                                                     RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                                                     rQueue.add(request);
                                                                 } else {
@@ -509,7 +508,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             timer.schedule(new TimerTask() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(getContext(), Homepage.class);
+                                                    Intent intent = new Intent(requireContext(), Homepage.class);
                                                     intent.putExtra("name", name);
                                                     intent.putExtra("email", email);
                                                     intent.putExtra("phone_no", phone_no);
@@ -523,7 +522,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     requireActivity().startActivity(intent);
                                                     requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                                 }
-                                            }, 100);
+                                            }, 3000);
                                             Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
                                             loading.setVisibility(View.GONE);
                                             button_login.setVisibility(View.VISIBLE);
