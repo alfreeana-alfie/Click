@@ -217,6 +217,11 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     postcode, birthday,
                                                     gender, id);
 
+                                            String newemail = email.substring(0, email.lastIndexOf("@"));
+
+                                            Log.d("TAG: ", newemail);
+                                            UserDetails.email = newemail;
+
                                             //Firebase
                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
                                             final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
@@ -344,7 +349,8 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                 } else if (obj.getJSONObject(name).getString("email").equals(email)) {
                                                                     UserDetails.username = name;
-                                                                    UserDetails.email = email;
+                                                                    String newemail = email.substring(0, email.lastIndexOf("@"));
+                                                                    UserDetails.email = newemail;
 
                                                                     name_firebase = name;
                                                                     email_firebase = email;
@@ -504,6 +510,9 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                             rQueue.add(request);
 
+
+
+                                            loading_layout.setVisibility(View.VISIBLE);
                                             Timer timer = new Timer();
                                             timer.schedule(new TimerTask() {
                                                 @Override
@@ -518,7 +527,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     intent.putExtra("postcode", postcode);
                                                     intent.putExtra("birthday", birthday);
                                                     intent.putExtra("gender", gender);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                                                     requireActivity().startActivity(intent);
                                                     requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                                 }

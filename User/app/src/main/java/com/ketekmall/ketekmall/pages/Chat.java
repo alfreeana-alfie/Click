@@ -36,6 +36,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.data.Chat_Detail;
 import com.ketekmall.ketekmall.data.MySingleton;
 import com.ketekmall.ketekmall.data.UserDetails;
 import com.firebase.client.ChildEventListener;
@@ -49,8 +50,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -76,6 +81,7 @@ public class Chat extends AppCompatActivity {
     String NOTIFICATION_MESSAGE;
     String TOPIC;
     BottomNavigationView bottomNav;
+    List<Chat_Detail> chatDetailList;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -95,6 +101,8 @@ public class Chat extends AppCompatActivity {
 
         chatname.setText(UserDetails.chatWith1);
 
+        chatDetailList = new ArrayList<>();
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +117,6 @@ public class Chat extends AppCompatActivity {
             public void onResponse(String s) {
                 try {
                     JSONObject obj = new JSONObject(s);
-
                     TOPIC = obj.getJSONObject(UserDetails.chatWith).get("token").toString();
                     Picasso.get().load(obj.getJSONObject(UserDetails.chatWith).get("photo").toString()).into(circleImageView);
                 } catch (JSONException e) {
@@ -159,9 +166,16 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+        String newemail = UserDetails.email;
+        if(newemail.contains("@")){
+            newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+        }else {
+            newemail = UserDetails.email;
+        }
+        
         Firebase.setAndroidContext(this);
 
+        Log.d("message", newemail);
         final String ref1 = newemail + "_" + UserDetails.chatWith;
         final String ref2 = UserDetails.chatWith + "_" + newemail;
 
@@ -181,10 +195,9 @@ public class Chat extends AppCompatActivity {
                     map.put("time", currentTime);
                     map.put("message", messageText);
                     map.put("user", UserDetails.username);
+
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
-
-
 
                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -233,7 +246,8 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        reference1.addChildEventListener(new ChildEventListener() {
+
+        reference1.orderByChild("time").addChildEventListener(new ChildEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -242,14 +256,18 @@ public class Chat extends AppCompatActivity {
                 String userName = map.get("user").toString();
                 String time = map.get("time").toString();
 
-                if (userName.equals(UserDetails.username)) {
-                    addMessageBox(message, 1);
-                    addTimeBox(time, 1);
+                Chat_Detail chat_detail = new Chat_Detail(message, userName, time);
+                chatDetailList.add(chat_detail);
+
+                if (chat_detail.getUsera().equals(UserDetails.username)) {
+                    addMessageBox(chat_detail.getMessages(), 1);
+                    addTimeBox(chat_detail.getTimea(), 1);
                     messageArea.setText("");
                 } else {
-                    addMessageBox(message, 2);
-                    addTimeBox(time, 2);
+                    addMessageBox(chat_detail.getMessages(), 2);
+                    addTimeBox(chat_detail.getTimea(), 2);
                 }
+
             }
 
             @Override
@@ -416,7 +434,7 @@ public class Chat extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_chatwith", user_chatWith);
                 params.put("is_read", "true");

@@ -222,8 +222,15 @@ public class Chat_Inbox extends AppCompatActivity {
                             while (i.hasNext()){
                                 final String chat = i.next().toString();
 
-                                final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+
+                                String newemail = UserDetails.email;
+                                if(newemail.contains("@")){
+                                    newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+                                }else {
+                                    newemail = UserDetails.email;
+                                }
                                 if(chat.contains(newemail + "_" )){
+                                    final String finalNewemail = newemail;
                                     StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                                             new Response.Listener<String>() {
                                                 @Override
@@ -236,10 +243,10 @@ public class Chat_Inbox extends AppCompatActivity {
                                                             final String key = i.next().toString();
                                                             String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
 
-                                                            final String ref1 = newemail + "_" + newemail1;
+                                                            final String ref1 = finalNewemail + "_" + newemail1;
 
                                                             if(!key.equals(UserDetails.username)){
-                                                                if (chat.contains(newemail1)){
+                                                                if (chat.equals(ref1)){
                                                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
                                                                             new Response.Listener<String>() {
                                                                                 @Override
@@ -250,9 +257,6 @@ public class Chat_Inbox extends AppCompatActivity {
                                                                                         final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                                                                                         if (success.equals("1")) {
-                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                JSONObject object = jsonArray.getJSONObject(i);
-                                                                                            }
                                                                                             user = new User(key, object.getJSONObject(key).get("photo").toString());
                                                                                             String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
                                                                                             user.setChatwith(newemail2);

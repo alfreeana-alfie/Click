@@ -187,6 +187,16 @@ public class Homepage extends AppCompatActivity {
 
         SellerCheck_Main(getId);
 
+        new Timer().schedule(
+                new TimerTask(){
+
+                    @Override
+                    public void run(){
+                        MessageCount();
+                    }
+
+                }, 1000);
+
     }
 
     private void getSession() {
@@ -769,6 +779,7 @@ public class Homepage extends AppCompatActivity {
         textChatItemCount = actionView1.findViewById(R.id.chat_badge);
 
         setupBadge();
+
         MessageCount();
 
         actionView.setOnClickListener(new View.OnClickListener() {
