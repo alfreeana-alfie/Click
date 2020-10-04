@@ -508,33 +508,30 @@ public class View_Product extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
                                 //Erroor
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -1030,14 +1027,9 @@ public class View_Product extends AppCompatActivity {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -1084,7 +1076,6 @@ public class View_Product extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(Homepage.this, "JSON Parsing Eror: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -1115,14 +1106,9 @@ public class View_Product extends AppCompatActivity {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -1429,7 +1415,6 @@ public class View_Product extends AppCompatActivity {
                                             intent1.putExtra("division", division);
                                             intent1.putExtra("district", district);
 
-                                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent1);
                                         }
                                     });
@@ -1605,12 +1590,9 @@ public class View_Product extends AppCompatActivity {
                                 //Error
                                 System.out.println("" + error);
                             }
-                            //End
-
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {

@@ -264,6 +264,8 @@
         android:id="@+id/no_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="60dp"
+        android:background="@color/colorAccent"
         android:fontFamily="@font/open_sans_semibold"
         android:text="@string/no_result_found"
         android:textColor="@color/colorPrimaryDark"
