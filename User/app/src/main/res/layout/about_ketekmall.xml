@@ -25,6 +25,7 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/background_color"
                 android:theme="@style/AppTheme.AppBarOverlay"
                 app:elevation="0dp">
 
@@ -32,8 +33,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    android:background="@drawable/background_color"
                     app:elevation="0dp"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
