@@ -284,10 +284,11 @@
 
                     <TextView
                         android:id="@+id/seller_name"
-                        android:layout_width="150dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:ellipsize="end"
+                        android:layout_toStartOf="@id/btn_chat_wsp"
                         android:layout_toEndOf="@id/image"
                         android:padding="5dp"
                         android:text="@string/seller_name" />
@@ -297,6 +298,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seller_name"
+                        android:layout_toStartOf="@id/btn_chat_wsp"
                         android:layout_toEndOf="@id/image"
                         android:padding="5dp"
                         android:text="@string/seller_location" />
@@ -321,9 +323,10 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="5dp"
                         style="@style/Widget.AppCompat.Button.Borderless"
-                        app:srcCompat="@drawable/ic_chat_orange_foreground"
+                         app:srcCompat="@drawable/ic_chat_orange_foreground"
                         android:text="@string/chat"
-                        android:textColor="@color/colorWhite" />
+                        android:textColor="@color/colorWhite"
+                        tools:ignore="VectorDrawableCompat" />
 
                     <Button
                         android:id="@+id/btn_view_seller"
