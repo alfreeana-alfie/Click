@@ -80,16 +80,14 @@ public class Fragment_Selling extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Product_Add.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }});
 
         MyProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyProducts.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
 
@@ -97,8 +95,7 @@ public class Fragment_Selling extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MySelling.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
 
@@ -106,8 +103,7 @@ public class Fragment_Selling extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ProductRating.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
 
@@ -115,8 +111,7 @@ public class Fragment_Selling extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyIncome.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
 
@@ -124,8 +119,7 @@ public class Fragment_Selling extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), com.ketekmall.ketekmall.pages.BoostAd.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
+                requireActivity().startActivity(intent);
             }
         });
     }
@@ -144,7 +138,7 @@ public class Fragment_Selling extends Fragment {
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    int strVerify = Integer.parseInt(object.getString("verification"));
                                     if(strVerify == 0){
                                         SellerUnchecked.setVisibility(View.VISIBLE);
                                         SellerChecked.setVisibility(View.GONE);
@@ -152,7 +146,6 @@ public class Fragment_Selling extends Fragment {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(getContext(), TermsAndConditions.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                 startActivity(intent);
                                             }
                                         });
@@ -211,7 +204,7 @@ public class Fragment_Selling extends Fragment {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
     }
 }

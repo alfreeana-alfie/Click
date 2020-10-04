@@ -209,7 +209,6 @@ public class MyProducts extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("max_order", item.getMax_order());
 
-                                        detailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(detailIntent);
                                     }
 

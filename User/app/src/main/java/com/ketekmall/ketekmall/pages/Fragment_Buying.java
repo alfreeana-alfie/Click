@@ -45,7 +45,6 @@ public class Fragment_Buying extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent likes = new Intent(getContext(), MyLikes.class);
-                likes.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(likes);
             }
         });
@@ -54,7 +53,6 @@ public class Fragment_Buying extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent buy = new Intent(getContext(), MyBuying.class);
-                buy.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(buy);
             }
         });
@@ -64,7 +62,6 @@ public class Fragment_Buying extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent likes = new Intent(getContext(), com.ketekmall.ketekmall.pages.MyRating.class);
-                likes.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(likes);
             }
         });
@@ -73,7 +70,6 @@ public class Fragment_Buying extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent account = new Intent(getContext(), Edit_Profile.class);
-                account.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(account);
             }
         });
@@ -91,7 +87,6 @@ public class Fragment_Buying extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent account = new Intent(getContext(), Chat_Inbox.class);
-                account.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(account);
             }
         });

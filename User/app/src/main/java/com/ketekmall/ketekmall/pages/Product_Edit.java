@@ -666,7 +666,7 @@ public class Product_Edit extends AppCompatActivity {
     }
 
     private void saveEdit() {
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         id = intent.getStringExtra("id");
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
@@ -686,6 +686,7 @@ public class Product_Edit extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         Button_SavedEdit.setVisibility(View.GONE);
 
+        Button_BackEdit.setVisibility(View.GONE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
                 new Response.Listener<String>() {
                     @Override
@@ -699,11 +700,11 @@ public class Product_Edit extends AppCompatActivity {
                                 if (success.equals("1")) {
                                     loading.setVisibility(View.GONE);
                                     Button_SavedEdit.setVisibility(View.VISIBLE);
+                                    Button_BackEdit.setVisibility(VISIBLE);
                                     Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
                                     Intent intent1 = new Intent(Product_Edit.this, MyProducts.class);
-                                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent1);
-
+                                    finish();
                                 } else {
                                     loading.setVisibility(View.GONE);
                                     Button_SavedEdit.setVisibility(View.VISIBLE);
