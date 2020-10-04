@@ -26,5 +26,17 @@
         android:text="@string/username"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/chat_badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right|end|top"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/background_pink_full_curve"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
 
 </LinearLayout>

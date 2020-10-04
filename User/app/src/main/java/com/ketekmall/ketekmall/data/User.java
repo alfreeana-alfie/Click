@@ -3,7 +3,16 @@ package com.ketekmall.ketekmall.data;
 public class User {
     public String username;
     public String photo;
+    public String count;
     String chatwith;
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public String getChatwith() {
         return chatwith;

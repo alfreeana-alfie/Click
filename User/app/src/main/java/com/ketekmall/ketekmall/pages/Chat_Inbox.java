@@ -3,6 +3,7 @@ package com.ketekmall.ketekmall.pages;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -35,18 +36,23 @@ import com.ketekmall.ketekmall.data.User;
 import com.ketekmall.ketekmall.data.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Chat_Inbox extends AppCompatActivity {
 
     public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
     public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
+    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
+
     User user;
     RecyclerView recyclerView;
     TextView noUsersText;
@@ -134,6 +140,76 @@ public class Chat_Inbox extends AppCompatActivity {
         });
     }
 
+    private void MessageCount(final String NewEmail, final User user){
+        final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
+        final String ref1 = newemail + "_" + NewEmail;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                }
+                                user.setCount(String.valueOf(jsonArray.length()));
+                                Log.d("Message", user.getCount());
+                            } else {
+                                Log.e("Message", "Return FAILED");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_chatwith", ref1);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox.this);
+        requestQueue.add(stringRequest);
+    }
+
     private void doON(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
                 new Response.Listener<String>() {
@@ -165,6 +241,73 @@ public class Chat_Inbox extends AppCompatActivity {
                                                                     user = new User(key, object.getJSONObject(key).get("photo").toString());
                                                                     String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
                                                                     user.setChatwith(newemail2);
+
+                                                                    final String ref1 = newemail + "_" + newemail1;
+
+                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
+                                                                            new Response.Listener<String>() {
+                                                                                @Override
+                                                                                public void onResponse(String response) {
+                                                                                    try {
+                                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                                        String success = jsonObject.getString("success");
+                                                                                        final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                                                        if (success.equals("1")) {
+                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                JSONObject object = jsonArray.getJSONObject(i);
+                                                                                            }
+                                                                                            user.setCount(String.valueOf(jsonArray.length()));
+                                                                                            Log.d("Message", user.getCount());
+                                                                                        } else {
+                                                                                            Log.e("Message", "Return FAILED");
+                                                                                        }
+                                                                                    } catch (JSONException e) {
+                                                                                        e.printStackTrace();
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            new Response.ErrorListener() {
+                                                                                @Override
+                                                                                public void onErrorResponse(VolleyError error) {
+                                                                                    try {
+
+                                                                                        if (error instanceof TimeoutError) {
+                                                                                            //Time out error
+                                                                                            System.out.println("" + error);
+                                                                                        }else if(error instanceof NoConnectionError){
+                                                                                            //net work error
+                                                                                            System.out.println("" + error);
+                                                                                        } else if (error instanceof AuthFailureError) {
+                                                                                            //error
+                                                                                            System.out.println("" + error);
+                                                                                        } else if (error instanceof ServerError) {
+                                                                                            //Erroor
+                                                                                            System.out.println("" + error);
+                                                                                        } else if (error instanceof NetworkError) {
+                                                                                            //Error
+                                                                                            System.out.println("" + error);
+                                                                                        } else if (error instanceof ParseError) {
+                                                                                            //Error
+                                                                                            System.out.println("" + error);
+                                                                                        }else{
+                                                                                            //Error
+                                                                                            System.out.println("" + error);
+                                                                                        }
+                                                                                    } catch (Exception e) {
+                                                                                        e.printStackTrace();
+                                                                                    }
+                                                                                }
+                                                                            }) {
+                                                                        @Override
+                                                                        protected Map<String, String> getParams() {
+                                                                            Map<String, String> params = new HashMap<>();
+                                                                            params.put("user_chatwith", ref1);
+                                                                            return params;
+                                                                        }
+                                                                    };
+                                                                    RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox.this);
+                                                                    requestQueue.add(stringRequest);
                                                                     usersArrayList.add(user);
                                                                     user_adapter = new UserAdapter(Chat_Inbox.this, usersArrayList);
                                                                 }

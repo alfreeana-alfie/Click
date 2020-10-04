@@ -121,8 +121,8 @@ public class Homepage extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
 
-    TextView textCartItemCount;
-    int mCartItemCount;
+    TextView textCartItemCount, textChatItemCount;
+    int mCartItemCount,mChatItemCount;
     private TwoWayGridView gridView_HardSelling, gridView_TopSelling;
 
     private ScrollView scrollView;
@@ -187,7 +187,6 @@ public class Homepage extends AppCompatActivity {
 
         SellerCheck_Main(getId);
 
-        MessageCount();
     }
 
     private void getSession() {
@@ -761,15 +760,28 @@ public class Homepage extends AppCompatActivity {
         inflater.inflate(R.menu.setting, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.menu_cart);
+        final MenuItem menuItem1 = menu.findItem(R.id.menu_chat);
+
         View actionView = menuItem.getActionView();
+        View actionView1 = menuItem1.getActionView();
+
         textCartItemCount = actionView.findViewById(R.id.cart_badge);
+        textChatItemCount = actionView1.findViewById(R.id.chat_badge);
 
         setupBadge();
+        MessageCount();
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onOptionsItemSelected(menuItem);
+            }
+        });
+
+        actionView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem1);
             }
         });
         return true;
@@ -1377,7 +1389,6 @@ public class Homepage extends AppCompatActivity {
     private void MessageCount(){
         final String ref1 = UserDetails.email + "_";
 
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
                 new Response.Listener<String>() {
                     @Override
@@ -1392,6 +1403,8 @@ public class Homepage extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                 }
                                 Log.d("Message", String.valueOf(jsonArray.length()));
+                                mChatItemCount = jsonArray.length();
+                                setupBadgeChat(jsonArray.length());
                             } else {
                                 Log.e("Message", "Return FAILED");
                             }
@@ -1441,6 +1454,22 @@ public class Homepage extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
         requestQueue.add(stringRequest);
+    }
+
+    private void setupBadgeChat(final int count) {
+
+            if (count == 0) {
+                if (textChatItemCount.getVisibility() != View.GONE) {
+                    textChatItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textChatItemCount.setText(String.valueOf(count));
+                if (textChatItemCount.getVisibility() != View.VISIBLE) {
+                    textChatItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+
+
     }
 
 

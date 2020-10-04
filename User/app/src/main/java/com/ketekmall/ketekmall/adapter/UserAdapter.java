@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         String username = user.getUsername();
         String photo = user.getPhoto();
+        String chat_count = user.getCount();
+
+
 
         holder.username.setText(username);
+        holder.chat_badge.setText(chat_count);
         Picasso.get().load(photo).into(holder.circleImageView);
     }
 
@@ -62,13 +67,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView circleImageView;
-        TextView username;
+        TextView username, chat_badge;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             circleImageView = itemView.findViewById(R.id.profile_image);
             username = itemView.findViewById(R.id.user_chatname);
+            chat_badge = itemView.findViewById(R.id.chat_badge);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
