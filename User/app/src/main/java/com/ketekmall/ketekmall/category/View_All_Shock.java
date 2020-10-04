@@ -1767,6 +1767,7 @@ public class View_All_Shock extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        
         Intent intent = new Intent(View_All_Shock.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
