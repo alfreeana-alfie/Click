@@ -182,7 +182,6 @@ public class About_Seller extends AppCompatActivity {
         });
     }
 
-
     private boolean appInstalledOrNot() {
         PackageManager packageManager = getPackageManager();
         boolean app_installed;
@@ -203,8 +202,8 @@ public class About_Seller extends AppCompatActivity {
         getId = user.get(SessionManager.ID);
     }
 
-    private boolean View_Cart2(final Item_All_Details item) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
+    private void View_Cart2(final Item_All_Details item) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART2,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -371,9 +370,7 @@ public class About_Seller extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
-        return true;
     }
-
 
     private void View_Item(final String seller_id) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
@@ -431,101 +428,26 @@ public class About_Seller extends AppCompatActivity {
                                     adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
                                         @Override
                                         public void onViewClick(int position) {
+                                            Intent detailIntent = new Intent(About_Seller.this, View_Product.class);
                                             Item_All_Details item = itemList.get(position);
 
-                                            final String strItem_Id = item.getId();
-                                            final String strSeller_id = item.getSeller_id();
-                                            final String strMain_category = item.getMain_category();
-                                            final String strSub_category = item.getSub_category();
-                                            final String strAd_Detail = item.getAd_detail();
-                                            final Double strPrice = Double.valueOf(item.getPrice());
-                                            final String strDivision = item.getDivision();
-                                            final String strDistrict = item.getDistrict();
-                                            final String strPhoto = item.getPhoto();
+                                            detailIntent.putExtra("item_id", item.getItem_id());
+                                            detailIntent.putExtra("id", item.getId());
+                                            detailIntent.putExtra("user_id", item.getSeller_id());
+                                            detailIntent.putExtra("main_category", item.getMain_category());
+                                            detailIntent.putExtra("sub_category", item.getSub_category());
+                                            detailIntent.putExtra("ad_detail", item.getAd_detail());
+                                            detailIntent.putExtra("price", item.getPrice());
+                                            detailIntent.putExtra("division", item.getDivision());
+                                            detailIntent.putExtra("district", item.getDistrict());
+                                            detailIntent.putExtra("photo", item.getPhoto());
 
-                                            if (getId.equals(strSeller_id)) {
-                                                Toast.makeText(About_Seller.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
-                                                        new Response.Listener<String>() {
-                                                            @Override
-                                                            public void onResponse(String response) {
-                                                                if (response == null) {
-                                                                    Log.e("onResponse", "Return NULL");
-                                                                } else {
-                                                                    try {
-                                                                        JSONObject jsonObject1 = new JSONObject(response);
-                                                                        String success = jsonObject1.getString("success");
+                                            detailIntent.putExtra("brand_material", item.getBrand());
+                                            detailIntent.putExtra("inner_material", item.getInner());
+                                            detailIntent.putExtra("stock", item.getStock());
+                                            detailIntent.putExtra("description", item.getDescription());
 
-                                                                        if (success.equals("1")) {
-                                                                            Toast.makeText(About_Seller.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-                                                                        } else {
-                                                                            Toast.makeText(About_Seller.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
-                                                                        }
-                                                                    } catch (JSONException e) {
-                                                                        e.printStackTrace();
-                                                                        Toast.makeText(About_Seller.this, e.toString(), Toast.LENGTH_SHORT).show();
-                                                                    }
-                                                                }
-
-                                                            }
-                                                        },
-                                                        new Response.ErrorListener() {
-                                                            @Override
-                                                            public void onErrorResponse(VolleyError error) {
-                                                                try {
-
-                                                                    if (error instanceof TimeoutError) {
-                                                                        //Time out error
-                                                                        System.out.println("" + error);
-                                                                    } else if (error instanceof NoConnectionError) {
-                                                                        //net work error
-                                                                        System.out.println("" + error);
-                                                                    } else if (error instanceof AuthFailureError) {
-                                                                        //error
-                                                                        System.out.println("" + error);
-                                                                    } else if (error instanceof ServerError) {
-                                                                        //Erroor
-                                                                        System.out.println("" + error);
-                                                                    } else if (error instanceof NetworkError) {
-                                                                        //Error
-                                                                        System.out.println("" + error);
-                                                                    } else if (error instanceof ParseError) {
-                                                                        //Error
-                                                                        System.out.println("" + error);
-                                                                    } else {
-                                                                        //Error
-                                                                        System.out.println("" + error);
-                                                                    }
-                                                                    //End
-
-
-                                                                } catch (Exception e) {
-                                                                    e.printStackTrace();
-                                                                }
-
-                                                            }
-                                                        }) {
-                                                    @SuppressLint("DefaultLocale")
-                                                    @Override
-                                                    protected Map<String, String> getParams() {
-                                                        Map<String, String> params = new HashMap<>();
-                                                        params.put("customer_id", getId);
-                                                        params.put("main_category", strMain_category);
-                                                        params.put("sub_category", strSub_category);
-                                                        params.put("ad_detail", strAd_Detail);
-                                                        params.put("price", String.format("%.2f", strPrice));
-                                                        params.put("division", strDivision);
-                                                        params.put("district", strDistrict);
-                                                        params.put("photo", strPhoto);
-                                                        params.put("seller_id", strSeller_id);
-                                                        params.put("item_id", strItem_Id);
-                                                        return params;
-                                                    }
-                                                };
-                                                RequestQueue requestQueue = Volley.newRequestQueue(About_Seller.this);
-                                                requestQueue.add(stringRequest2);
-                                            }
+                                            startActivity(detailIntent);
                                         }
 
                                         @Override

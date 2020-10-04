@@ -354,7 +354,7 @@ public class Processed extends AppCompatActivity {
         });
     }
 
-    private boolean View_Cart2(final Item_All_Details item) {
+    private void View_Cart2(final Item_All_Details item) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
                 new Response.Listener<String>() {
@@ -522,9 +522,7 @@ public class Processed extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-        return true;
-    }
+     }
 
     private void Filter_Division(final String division) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_FILTER_DIVISION,
