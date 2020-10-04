@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                         String newemail = email.substring(0, email.lastIndexOf("@"));
 
                                         Log.d("TAG: ", newemail);
+                                        UserDetails.email = newemail;
 
                                         String url = "https://click-1595830894120.firebaseio.com/users.json";
 

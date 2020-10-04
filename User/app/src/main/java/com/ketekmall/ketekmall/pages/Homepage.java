@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -51,6 +52,7 @@ import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
+import com.ketekmall.ketekmall.adapter.RatingAdapter;
 import com.ketekmall.ketekmall.adapter.UserAdapter;
 import com.ketekmall.ketekmall.category.Agriculture;
 import com.ketekmall.ketekmall.category.Cake;
@@ -66,6 +68,7 @@ import com.ketekmall.ketekmall.category.View_All;
 import com.ketekmall.ketekmall.category.View_All_Hot;
 import com.ketekmall.ketekmall.category.View_All_Shock;
 import com.ketekmall.ketekmall.data.Item_All_Details;
+import com.ketekmall.ketekmall.data.Rating;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.User;
 import com.ketekmall.ketekmall.data.UserDetails;
@@ -107,8 +110,7 @@ public class Homepage extends AppCompatActivity {
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
 
-    public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
-    public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
+    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
 
     List<Item_All_Details> itemList, itemList2;
 
@@ -147,7 +149,6 @@ public class Homepage extends AppCompatActivity {
     String[] image = new String[3];
     PageAdapter adapter;
     RequestQueue queue;
-    Firebase reference2;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -1373,40 +1374,73 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    int i = 0;
-
     private void MessageCount(){
-        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_");
+        final String ref1 = UserDetails.email + "_";
 
-        reference2.addChildEventListener(new ChildEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                }
+                                Log.d("Message", String.valueOf(jsonArray.length()));
+                            } else {
+                                Log.e("Message", "Return FAILED");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_chatwith", ref1);
+                return params;
             }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                String key = String.valueOf(dataSnapshot.getKey());
-                Log.d("MESSAGE", key);
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
+        requestQueue.add(stringRequest);
     }
 
 
