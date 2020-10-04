@@ -41,10 +41,17 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
+import com.ketekmall.ketekmall.adapter.UserAdapter;
 import com.ketekmall.ketekmall.category.Agriculture;
 import com.ketekmall.ketekmall.category.Cake;
 import com.ketekmall.ketekmall.category.Fashion;
@@ -60,6 +67,8 @@ import com.ketekmall.ketekmall.category.View_All_Hot;
 import com.ketekmall.ketekmall.category.View_All_Shock;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
+import com.ketekmall.ketekmall.data.User;
+import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -76,6 +85,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -96,6 +106,9 @@ public class Homepage extends AppCompatActivity {
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+
+    public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
+    public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
 
     List<Item_All_Details> itemList, itemList2;
 
@@ -134,7 +147,7 @@ public class Homepage extends AppCompatActivity {
     String[] image = new String[3];
     PageAdapter adapter;
     RequestQueue queue;
-
+    Firebase reference2;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -172,6 +185,8 @@ public class Homepage extends AppCompatActivity {
         View_Photo();
 
         SellerCheck_Main(getId);
+
+        MessageCount();
     }
 
     private void getSession() {
@@ -1357,6 +1372,43 @@ public class Homepage extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Homepage.this);
         requestQueue.add(stringRequest);
     }
+
+    int i = 0;
+
+    private void MessageCount(){
+        reference2 = new Firebase("https://click-1595830894120.firebaseio.com/messages/" + UserDetails.chatWith + "_");
+
+        reference2.addChildEventListener(new ChildEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+
+                Log.d("MESSAGE", dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onBackPressed() {

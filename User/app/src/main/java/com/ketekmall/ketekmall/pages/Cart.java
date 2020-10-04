@@ -218,6 +218,7 @@ public class Cart extends AppCompatActivity {
                                                                 }
                                                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);
                                                                 recyclerView.setAdapter(_cart_adapter);
+                                                                _cart_adapter.sortArrayHighest();
                                                                 _cart_adapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
                                                                     @Override
                                                                     public void onDeleteClick(int position) {

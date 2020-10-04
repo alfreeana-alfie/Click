@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.Item_All_Details;
+import com.ketekmall.ketekmall.data.Order;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
@@ -32,6 +35,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListerner = listener;
+    }
+
+    public void sortArrayHighest() {
+        Collections.sort(item_all_details, new Comparator<Item_All_Details>() {
+            @Override
+            public int compare(Item_All_Details o1, Item_All_Details o2) {
+                return Double.compare(Double.parseDouble(o2.getId()), Double.parseDouble(o1.getId()));
+            }
+        });
+        notifyDataSetChanged();
+
     }
 
     @NonNull
