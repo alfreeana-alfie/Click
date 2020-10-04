@@ -233,17 +233,13 @@ public class Chat_Inbox extends AppCompatActivity {
                                                         Iterator i = object.keys();
 
                                                         while (i.hasNext()){
-                                                            String key = i.next().toString();
+                                                            final String key = i.next().toString();
                                                             String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
+
+                                                            final String ref1 = newemail + "_" + newemail1;
 
                                                             if(!key.equals(UserDetails.username)){
                                                                 if (chat.contains(newemail1)){
-                                                                    user = new User(key, object.getJSONObject(key).get("photo").toString());
-                                                                    String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
-                                                                    user.setChatwith(newemail2);
-
-                                                                    final String ref1 = newemail + "_" + newemail1;
-
                                                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
                                                                             new Response.Listener<String>() {
                                                                                 @Override
@@ -257,7 +253,24 @@ public class Chat_Inbox extends AppCompatActivity {
                                                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                                                 JSONObject object = jsonArray.getJSONObject(i);
                                                                                             }
+                                                                                            user = new User(key, object.getJSONObject(key).get("photo").toString());
+                                                                                            String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
+                                                                                            user.setChatwith(newemail2);
                                                                                             user.setCount(String.valueOf(jsonArray.length()));
+
+                                                                                            usersArrayList.add(user);
+                                                                                            user_adapter = new UserAdapter(Chat_Inbox.this, usersArrayList);
+
+                                                                                            recyclerView.setAdapter(user_adapter);
+                                                                                            user_adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+                                                                                                @Override
+                                                                                                public void onItemClick(int position) {
+                                                                                                    User user = usersArrayList.get(position);
+                                                                                                    UserDetails.chatWith = user.getChatwith();
+                                                                                                    UserDetails.chatWith1 = user.getUsername();
+                                                                                                    startActivity(new Intent(Chat_Inbox.this, Chat.class));
+                                                                                                }
+                                                                                            });
                                                                                             Log.d("Message", user.getCount());
                                                                                         } else {
                                                                                             Log.e("Message", "Return FAILED");
@@ -308,22 +321,12 @@ public class Chat_Inbox extends AppCompatActivity {
                                                                     };
                                                                     RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox.this);
                                                                     requestQueue.add(stringRequest);
-                                                                    usersArrayList.add(user);
-                                                                    user_adapter = new UserAdapter(Chat_Inbox.this, usersArrayList);
+
                                                                 }
                                                             }
                                                             totalUsers++;
                                                         }
-                                                        recyclerView.setAdapter(user_adapter);
-                                                        user_adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
-                                                            @Override
-                                                            public void onItemClick(int position) {
-                                                                User user = usersArrayList.get(position);
-                                                                UserDetails.chatWith = user.getChatwith();
-                                                                UserDetails.chatWith1 = user.getUsername();
-                                                                startActivity(new Intent(Chat_Inbox.this, Chat.class));
-                                                            }
-                                                        });
+
                                                     }catch (JSONException e){
                                                         e.printStackTrace();
                                                     }

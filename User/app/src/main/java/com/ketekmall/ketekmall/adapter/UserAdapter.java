@@ -48,9 +48,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         String photo = user.getPhoto();
         String chat_count = user.getCount();
 
-
-
         holder.username.setText(username);
+        if(chat_count.equals("0")){
+            holder.chat_badge.setVisibility(View.GONE);
+        }
         holder.chat_badge.setText(chat_count);
         Picasso.get().load(photo).into(holder.circleImageView);
     }
