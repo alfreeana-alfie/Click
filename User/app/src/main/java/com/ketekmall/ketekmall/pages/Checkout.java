@@ -526,9 +526,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
                 DeleteOrder_Single2();
-                Intent intent = new Intent(Checkout.this, Cart.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -1156,9 +1154,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
     public void onBackPressed() {
         super.onBackPressed();
         DeleteOrder_Single2();
-        Intent intent = new Intent(Checkout.this, Cart.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 
     private void DeleteOrder_Single() {

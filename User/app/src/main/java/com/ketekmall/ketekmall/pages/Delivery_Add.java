@@ -373,7 +373,7 @@ public class Delivery_Add extends AppCompatActivity implements View.OnClickListe
         final String ad_detail = intent.getStringExtra("ad_detail");
 
         Intent intent1 = new Intent(Delivery_Add.this, Delivery_MainPage.class);
-        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
         intent1.putExtra("item_id", item_id);
         intent1.putExtra("ad_detail", ad_detail);
         startActivity(intent1);

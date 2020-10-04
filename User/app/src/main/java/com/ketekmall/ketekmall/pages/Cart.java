@@ -148,8 +148,7 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DeleteOrder_Single();
-                Intent intent = new Intent(Cart.this, Homepage.class);
-                startActivity(intent);
+                finish();
             }
         });
         itemAllDetailsArrayList = new ArrayList<>();
@@ -1304,8 +1303,6 @@ public class Cart extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         DeleteOrder_Single();
-        Intent intent = new Intent(Cart.this, Homepage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 }
