@@ -207,7 +207,6 @@ public class View_Product extends AppCompatActivity {
 
         //Review
         Read_Review(id);
-//        Toast.makeText(View_Item_Single.this, id, Toast.LENGTH_SHORT).show();
 
         Picasso.get().load(image_default).into(image20);
         Picasso.get().load(image_default).into(image21);
@@ -260,7 +259,6 @@ public class View_Product extends AppCompatActivity {
                 intent1.putExtra("division", division);
                 intent1.putExtra("district", district);
 
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }
         });
@@ -304,8 +302,6 @@ public class View_Product extends AppCompatActivity {
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject object = jsonArray.getJSONObject(i);
 
-                                            final String delivery_id = object.getString("id").trim();
-                                            final String user_id = object.getString("user_id").trim();
                                             final String division = object.getString("division").trim();
                                             final Double price = Double.valueOf(object.getString("price").trim());
                                             final String days = object.getString("days");
@@ -353,7 +349,6 @@ public class View_Product extends AppCompatActivity {
                                             intent1.putExtra("division", division);
                                             intent1.putExtra("district", district);
 
-                                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                             startActivity(intent1);
 
                                         }
@@ -398,14 +393,12 @@ public class View_Product extends AppCompatActivity {
 
 
                                 } catch (Exception e) {
-
-
+                                    e.printStackTrace();
                                 }
-//                                Toast.makeText(View_Product.this, error.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }) {
                     @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
+                    protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
                         params.put("item_id", id);
                         return params;
@@ -441,9 +434,7 @@ public class View_Product extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(View_Product.this, Homepage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -656,7 +647,7 @@ public class View_Product extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private boolean View_Cart2(final Item_All_Details item) {
+    private void View_Cart2(final Item_All_Details item) {
         final Intent intent = getIntent();
         id = intent.getStringExtra("id");
         userid = intent.getStringExtra("user_id");
@@ -842,8 +833,6 @@ public class View_Product extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-        return true;
     }
 
     private void Add_Cart(final String Main_category, final String Sub_category,
@@ -1640,8 +1629,6 @@ public class View_Product extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(View_Product.this, Homepage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 }

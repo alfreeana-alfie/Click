@@ -3,6 +3,7 @@ package com.ketekmall.ketekmall.category;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -56,6 +58,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Agriculture extends AppCompatActivity {
 
@@ -83,6 +86,7 @@ public class Agriculture extends AppCompatActivity {
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
 
     BottomNavigationView bottomNav;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,10 +98,11 @@ public class Agriculture extends AppCompatActivity {
         getSession();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.category_actionbar);
 
         View view = getSupportActionBar().getCustomView();
@@ -155,9 +160,7 @@ public class Agriculture extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Agriculture.this, Homepage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -1598,7 +1601,6 @@ public class Agriculture extends AppCompatActivity {
                                         detailIntent.putExtra("photo", item.getPhoto());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -1668,9 +1670,9 @@ public class Agriculture extends AppCompatActivity {
 
 
                                                             } catch (Exception e) {
-
-
-                                                            }}
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1740,8 +1742,7 @@ public class Agriculture extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -1757,8 +1758,6 @@ public class Agriculture extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Agriculture.this, Homepage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 }

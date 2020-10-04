@@ -101,12 +101,12 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/open_sans"
+
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/ad_details"
                     android:textAlignment="textStart"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp" />
+                    android:textColor="@color/colorWhite"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/price_item"
@@ -118,7 +118,7 @@
                     android:text="@string/price_rm"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorWhite"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

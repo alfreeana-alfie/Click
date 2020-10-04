@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -60,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class View_All extends AppCompatActivity {
 
@@ -96,38 +99,7 @@ public class View_All extends AppCompatActivity {
         LocaleHelper.onAttach(newBase, lang);
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        mCurrentLocale = getResources().getConfiguration().locale;
-//    }
-//
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        Locale locale = getLocale(this);
-//
-//        if (!locale.equals(mCurrentLocale)) {
-//
-//            mCurrentLocale = locale;
-//            recreate();
-//        }
-//    }
-//
-//    public static Locale getLocale(Context context){
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-//        String lang = sharedPreferences.getString("language", "en");
-//        switch (lang) {
-//            case "English":
-//                lang = "en";
-//                break;
-//            case "Malay":
-//                lang = "ms";
-//                break;
-//        }
-//        return new Locale(lang);
-//    }
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,33 +107,6 @@ public class View_All extends AppCompatActivity {
         setContentView(R.layout.category_car);
         Declare();
 
-//        if (lang.equals("ms")) {
-//            Log.d("TAG", "SUCCESS");
-//            Locale locale = new Locale(lang);
-//            Locale.setDefault(locale);
-//            Configuration config = new Configuration();
-//            config.locale = locale;
-//            getBaseContext().getResources().updateConfiguration(config,
-//                    getBaseContext().getResources().getDisplayMetrics());
-//            Intent intent = new Intent(this, View_All.class);
-//            startActivity(intent);
-//            finish();
-//        }else{
-//            Intent intent = new Intent(this, View_All.class);
-//            startActivity(intent);
-//            finish();
-//        }
-//        if(lang.contains("ms")){
-//
-//            String languageToLoad  = "ms"; // your language
-//            Locale locale = new Locale(languageToLoad);
-//            Locale.setDefault(locale);
-//            Configuration config = new Configuration();
-//            config.locale = locale;
-//            getBaseContext().getResources().updateConfiguration(config,
-//                    getBaseContext().getResources().getDisplayMetrics());
-//            this.recreate();
-//        }
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -173,12 +118,6 @@ public class View_All extends AppCompatActivity {
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
-
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(View_All.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(View_All.this, Notification_Page.class);
@@ -202,10 +141,11 @@ public class View_All extends AppCompatActivity {
         getSession();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.category_actionbar);
 
         View view = getSupportActionBar().getCustomView();
@@ -263,9 +203,7 @@ public class View_All extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(View_All.this, Homepage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -1840,8 +1778,6 @@ public class View_All extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(View_All.this, Homepage.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        finish();
     }
 }

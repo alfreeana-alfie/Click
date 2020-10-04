@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -77,6 +79,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -84,16 +87,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Homepage extends AppCompatActivity {
 
-    public static final String MyPREFERENCES = "myPref";
     public static final String ID = "id";
-    public static final String USERID = "userid";
-    public static final String MAIN_CATE = "main_category";
-    public static final String SUB_CATE = "sub_category";
-    public static final String AD_DETAIL = "ad_detail";
-    public static final String PRICE = "price";
-    public static final String DISTRICT = "district";
-    public static final String DIVISION = "division";
-    public static final String PHOTO = "photo";
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
@@ -123,8 +117,7 @@ public class Homepage extends AppCompatActivity {
 
     private CircleImageView profile_display, profile_image;
     private TextView name_display, email_display, button_view_all, username, verify, verify1, button_view_hard, button_view_top;
-    private DrawerLayout drawer;
-    private View view;
+
     Item_Single_Adapter adapter_item, adapter_item2;
     ViewPager viewPager;
     Timer timer;
@@ -143,10 +136,11 @@ public class Homepage extends AppCompatActivity {
     RequestQueue queue;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.app_bar_main);
+        setContentView(R.layout.homepage);
         queue = Volley.newRequestQueue(this);
 
         getSession();
@@ -189,6 +183,7 @@ public class Homepage extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
@@ -204,7 +199,7 @@ public class Homepage extends AppCompatActivity {
         gridView_HardSelling = findViewById(R.id.gridView_HardSelling);
         gridView_TopSelling = findViewById(R.id.gridView_TopSelling);
         _cart_adapter = new CartAdapter(this, itemList);
-        view = findViewById(R.id.support_layout);
+
         scrollView = findViewById(R.id.grid_category);
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
@@ -281,12 +276,6 @@ public class Homepage extends AppCompatActivity {
                         startActivity(intent4);
                         break;
 
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Homepage.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
-
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Homepage.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -306,7 +295,7 @@ public class Homepage extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name);
     }
 
     private void Cart_Item() {
@@ -354,35 +343,31 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
                                 //Erroor
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-
                     }
 
                 }) {
@@ -402,7 +387,7 @@ public class Homepage extends AppCompatActivity {
         Button_SellItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
+
                 SellerCheck(getId);
             }
         });
@@ -411,7 +396,7 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
+
                 Intent intent = new Intent(Homepage.this, View_All.class);
                 startActivity(intent);
             }
@@ -420,9 +405,7 @@ public class Homepage extends AppCompatActivity {
         button_cake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Cake.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -430,9 +413,7 @@ public class Homepage extends AppCompatActivity {
         button_processed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Processed.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -440,9 +421,7 @@ public class Homepage extends AppCompatActivity {
         button_handcraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Handicraft.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -450,9 +429,7 @@ public class Homepage extends AppCompatActivity {
         button_retail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Retail.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -460,9 +437,7 @@ public class Homepage extends AppCompatActivity {
         button_agriculture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Agriculture.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -470,9 +445,7 @@ public class Homepage extends AppCompatActivity {
         button_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Service.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -480,9 +453,7 @@ public class Homepage extends AppCompatActivity {
         button_health.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Health.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -490,9 +461,7 @@ public class Homepage extends AppCompatActivity {
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Home.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -500,9 +469,7 @@ public class Homepage extends AppCompatActivity {
         button_fashion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Fashion.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -510,9 +477,7 @@ public class Homepage extends AppCompatActivity {
         button_pepper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, Pepper.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -520,9 +485,7 @@ public class Homepage extends AppCompatActivity {
         button_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.setVisibility(View.GONE);
                 Intent intent = new Intent(Homepage.this, View_All.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -815,7 +778,6 @@ public class Homepage extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.user_profile:
-                view.setVisibility(View.GONE);
                 Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
                 startActivity(intent1);
                 break;
@@ -1398,7 +1360,6 @@ public class Homepage extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             backToast.cancel();
             super.onBackPressed();
