@@ -188,6 +188,9 @@ public class Pepper extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Pepper.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
             }
         });
@@ -466,7 +469,7 @@ public class Pepper extends AppCompatActivity {
 
                                         final String item_id = object.getString("item_id");
 
-                                        Toast.makeText(Pepper.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Pepper.this, "Add To Cart", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -1761,6 +1764,10 @@ public class Pepper extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(Pepper.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
+
     }
 }

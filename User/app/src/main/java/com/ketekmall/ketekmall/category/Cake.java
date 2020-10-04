@@ -160,7 +160,9 @@ public class Cake extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(Cake.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
@@ -351,7 +353,6 @@ public class Cake extends AppCompatActivity {
     }
 
     private void View_Cart2(final Item_All_Details item) {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -463,11 +464,8 @@ public class Cake extends AppCompatActivity {
                                 if (success.equals("1")) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
-
                                         final String item_id = object.getString("item_id");
-
-                                        Toast.makeText(Cake.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
-
+                                        Toast.makeText(Cake.this, "Add To Cart", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } catch (JSONException e) {
@@ -1221,7 +1219,6 @@ public class Cake extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -1752,6 +1749,8 @@ public class Cake extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(Cake.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

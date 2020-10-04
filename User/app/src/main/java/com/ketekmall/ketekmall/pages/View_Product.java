@@ -39,6 +39,7 @@ import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
+import com.ketekmall.ketekmall.category.Cake;
 import com.ketekmall.ketekmall.data.Delivery;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -778,7 +779,7 @@ public class View_Product extends AppCompatActivity {
                                         final String item_id = object.getString("item_id");
 
                                         if(!item_id.isEmpty() && item_id.equals(id)){
-                                            Toast.makeText(View_Product.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Product.this, "Add To Cart", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }

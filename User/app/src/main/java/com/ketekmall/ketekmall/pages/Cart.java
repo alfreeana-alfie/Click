@@ -52,7 +52,7 @@ import java.util.Objects;
 public class Cart extends AppCompatActivity {
 
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_cart.php";
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_CART_TEMP = "https://ketekmall.com/ketekmall/readcart_temp.php";
     private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_two.php";
     private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp.php";
