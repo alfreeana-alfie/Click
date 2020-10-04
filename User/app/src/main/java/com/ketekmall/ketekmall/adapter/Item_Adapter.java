@@ -84,7 +84,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
         convertView = inflater.inflate(R.layout.view_item_listview, null);
         Item_All_Details item = itemListFull.get(position);
 
-        ImageButton fav_item, add_to_cart;
+        ImageButton fav_item, fav_item_filled, add_to_cart;
         ImageView img_item;
         TextView TV_addetail, TV_price, TV_item_location;
         Button view_item;
@@ -96,6 +96,11 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
         TV_price = convertView.findViewById(R.id.price_item);
         TV_item_location = convertView.findViewById(R.id.item_location_item);
         view_item = convertView.findViewById(R.id.view_item);
+        fav_item_filled = convertView.findViewById(R.id.fav_item_filled);
+        fav_item = convertView.findViewById(R.id.fav_item);
+        add_to_cart = convertView.findViewById(R.id.add_to_cart_item);
+
+
         view_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +109,16 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        fav_item = convertView.findViewById(R.id.fav_item);
+
+//        fav_item_filled.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mListerner != null) {
+//                    mListerner.onAddtoFavClick(position);
+//                }
+//            }
+//        });
+
         fav_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +127,6 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
                 }
             }
         });
-        add_to_cart = convertView.findViewById(R.id.add_to_cart_item);
         add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
