@@ -1387,9 +1387,9 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                String key = String.valueOf(dataSnapshot.getKey());
 
-
-                Log.d("MESSAGE", dataSnapshot.getKey());
+                Log.d("MESSAGE", key);
             }
 
             @Override

@@ -217,29 +217,6 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     postcode, birthday,
                                                     gender, id);
 
-                                            Timer timer = new Timer();
-                                            timer.schedule(new TimerTask() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(getContext(), Homepage.class);
-                                                    intent.putExtra("name", name);
-                                                    intent.putExtra("email", email);
-                                                    intent.putExtra("phone_no", phone_no);
-                                                    intent.putExtra("address_01", address_01);
-                                                    intent.putExtra("address_02", address_02);
-                                                    intent.putExtra("division", city);
-                                                    intent.putExtra("postcode", postcode);
-                                                    intent.putExtra("birthday", birthday);
-                                                    intent.putExtra("gender", gender);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    requireActivity().startActivity(intent);
-                                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                                }
-                                            }, 100);
-                                            Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
-                                            loading.setVisibility(View.GONE);
-                                            button_login.setVisibility(View.VISIBLE);
-
                                             //Firebase
                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
                                             final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
@@ -364,6 +341,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
                                                                     RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                                                     rQueue.add(request);
+
                                                                 } else if (obj.getJSONObject(name).getString("email").equals(email)) {
                                                                     UserDetails.username = name;
                                                                     UserDetails.email = email;
@@ -526,6 +504,29 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             };
                                             RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                             rQueue.add(request);
+
+                                            Timer timer = new Timer();
+                                            timer.schedule(new TimerTask() {
+                                                @Override
+                                                public void run() {
+                                                    Intent intent = new Intent(getContext(), Homepage.class);
+                                                    intent.putExtra("name", name);
+                                                    intent.putExtra("email", email);
+                                                    intent.putExtra("phone_no", phone_no);
+                                                    intent.putExtra("address_01", address_01);
+                                                    intent.putExtra("address_02", address_02);
+                                                    intent.putExtra("division", city);
+                                                    intent.putExtra("postcode", postcode);
+                                                    intent.putExtra("birthday", birthday);
+                                                    intent.putExtra("gender", gender);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    requireActivity().startActivity(intent);
+                                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                                }
+                                            }, 100);
+                                            Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
+                                            loading.setVisibility(View.GONE);
+                                            button_login.setVisibility(View.VISIBLE);
                                         }
                                     } else {
                                         loading.setVisibility(View.GONE);
