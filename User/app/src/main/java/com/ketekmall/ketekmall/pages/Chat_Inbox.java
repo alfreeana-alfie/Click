@@ -135,80 +135,14 @@ public class Chat_Inbox extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Chat_Inbox.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
             }
         });
     }
 
-    private void MessageCount(final String NewEmail, final User user){
-        final String newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
-        final String ref1 = newemail + "_" + NewEmail;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                }
-                                user.setCount(String.valueOf(jsonArray.length()));
-                                Log.d("Message", user.getCount());
-                            } else {
-                                Log.e("Message", "Return FAILED");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("user_chatwith", ref1);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox.this);
-        requestQueue.add(stringRequest);
-    }
 
     private void doON(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
@@ -423,6 +357,9 @@ public class Chat_Inbox extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(Chat_Inbox.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 }
