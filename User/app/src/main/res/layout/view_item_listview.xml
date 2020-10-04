@@ -147,7 +147,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
-                    android:background="@mipmap/ic_love_foreground"
+                    android:background="@mipmap/ic_love_black_foreground"
                     android:contentDescription="@string/item_image" />
             </RelativeLayout>
 
