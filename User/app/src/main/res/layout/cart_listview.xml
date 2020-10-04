@@ -24,7 +24,8 @@
             android:buttonTint="@color/colorPrimary"
             android:layout_below="@id/delete_cart_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop" />
 
         <ImageView
             android:id="@+id/delete_cart_item"

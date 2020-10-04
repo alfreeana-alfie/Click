@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@null">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -17,5 +18,6 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:fontFamily="@font/open_sans_semibold"
         android:text="@string/custom_action_bar"
+        android:textColor="@color/colorWhite"
         android:textSize="16sp" />
 </LinearLayout>

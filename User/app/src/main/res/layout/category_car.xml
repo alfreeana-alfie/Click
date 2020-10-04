@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/background_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_color"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
@@ -16,8 +17,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:elevation="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -34,7 +33,7 @@
             android:id="@+id/table_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_orange"
+            android:background="@drawable/background_color"
             android:stretchColumns="1,2">
 
             <TableRow
@@ -71,7 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_down_foreground"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/open_sans_semibold"
                         android:text="@string/price"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp" />
@@ -82,7 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_up_foreground"
-                        android:fontFamily="@font/open_sans_bold"
+                        android:fontFamily="@font/open_sans_semibold"
                         android:text="@string/price"
                         android:textColor="@color/colorAccent"
                         android:textSize="18sp" />
@@ -94,7 +93,7 @@
                     android:layout_height="40dp"
                     android:layout_column="2"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:fontFamily="@font/open_sans_bold"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/colorWhite"
                     android:drawableEnd="@drawable/ic_filter_foreground"
                     android:textSize="18sp"

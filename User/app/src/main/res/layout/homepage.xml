@@ -177,7 +177,7 @@
                         android:layout_marginStart="7dp"
                         android:layout_marginEnd="7dp"
                         android:background="@drawable/button_slide"
-                        app:srcCompat="@drawable/ic_left_black_foreground"
+                        app:srcCompat="@drawable/ic_left_white_foreground"
                         tools:ignore="VectorDrawableCompat" />
 
                     <ImageButton
@@ -190,7 +190,7 @@
                         android:layout_marginStart="7dp"
                         android:layout_marginEnd="7dp"
                         android:background="@drawable/button_slide"
-                        app:srcCompat="@drawable/ic_right_black_foreground"
+                        app:srcCompat="@drawable/ic_right_white_foreground"
                         tools:ignore="VectorDrawableCompat" />
                 </RelativeLayout>
 
