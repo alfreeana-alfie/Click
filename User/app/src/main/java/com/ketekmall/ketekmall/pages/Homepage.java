@@ -125,13 +125,18 @@ public class Homepage extends AppCompatActivity {
     int mCartItemCount,mChatItemCount;
     private TwoWayGridView gridView_HardSelling, gridView_TopSelling;
 
-    private ScrollView scrollView;
     private Button Button_SellItem, Button_FindItem, button_retail, button_processed,
             button_handcraft, button_cake, button_agriculture, button_service, button_health,
             button_home, button_pepper, button_fashion;
 
     private CircleImageView profile_display, profile_image;
-    private TextView name_display, email_display, button_view_all, username, verify, verify1, button_view_hard, button_view_top;
+    private TextView name_display;
+    private TextView email_display;
+    private TextView button_view_all;
+    private TextView username;
+    private TextView verify;
+    private TextView verify1;
+    private TextView button_view_top;
 
     Item_Single_Adapter adapter_item, adapter_item2;
     ViewPager viewPager;
@@ -186,17 +191,6 @@ public class Homepage extends AppCompatActivity {
         View_Photo();
 
         SellerCheck_Main(getId);
-
-//        new Timer().schedule(
-//                new TimerTask(){
-//
-//                    @Override
-//                    public void run(){
-//                        MessageCount();
-//                    }
-//
-//                }, 1000);
-
     }
 
     private void getSession() {
@@ -225,7 +219,6 @@ public class Homepage extends AppCompatActivity {
         gridView_TopSelling = findViewById(R.id.gridView_TopSelling);
         _cart_adapter = new CartAdapter(this, itemList);
 
-        scrollView = findViewById(R.id.grid_category);
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
 
@@ -240,7 +233,7 @@ public class Homepage extends AppCompatActivity {
         button_fashion = findViewById(R.id.button_fashion);
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
-        button_view_hard = findViewById(R.id.button_view_hard);
+        TextView button_view_hard = findViewById(R.id.button_view_hard);
         button_view_top = findViewById(R.id.button_view_top);
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
@@ -397,7 +390,7 @@ public class Homepage extends AppCompatActivity {
 
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
                 return params;
@@ -533,7 +526,6 @@ public class Homepage extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String strName = object.getString("name").trim();
-                                    String strEmail = object.getString("email").trim();
                                     String strPhoto = object.getString("photo");
 
                                     username.setText(strName);
@@ -550,39 +542,36 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", getId);
                 return params;
@@ -607,7 +596,7 @@ public class Homepage extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    int strVerify = Integer.parseInt(object.getString("verification"));
                                     if(strVerify == 0){
                                         Intent intent1 = new Intent(Homepage.this, Register_Seller_MainPage.class);
                                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -630,39 +619,36 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         try {
-
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id);
                 return params;
@@ -686,7 +672,7 @@ public class Homepage extends AppCompatActivity {
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
-                                    int strVerify = Integer.valueOf(object.getString("verification"));
+                                    int strVerify = Integer.parseInt(object.getString("verification"));
                                     if(strVerify == 0){
                                         verify.setText(getResources().getString(R.string.buyer));
                                     }else{
@@ -705,40 +691,35 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                         try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", user_id);
                 return params;
@@ -1063,35 +1044,30 @@ public class Homepage extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                         try {
-
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-
                     }
                 }) {
             @Override
@@ -1284,33 +1260,29 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -1337,7 +1309,6 @@ public class Homepage extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
                                     String image_item = object.getString("photo");
 
                                     image[i] = image_item;
@@ -1358,33 +1329,29 @@ public class Homepage extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
-
+                                System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
                                 //error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
+                                System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
-
+                                System.out.println("" + error);
                             } else if (error instanceof ParseError) {
                                 //Error
-
-                            }else{
+                                System.out.println("" + error);
+                            } else {
                                 //Error
+                                System.out.println("" + error);
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -1410,9 +1377,6 @@ public class Homepage extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-                                }
                                 Log.d("Message", String.valueOf(jsonArray.length()));
                                 mChatItemCount = jsonArray.length();
                                 setupBadgeChat(jsonArray.length());
