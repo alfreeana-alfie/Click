@@ -187,15 +187,15 @@ public class Homepage extends AppCompatActivity {
 
         SellerCheck_Main(getId);
 
-        new Timer().schedule(
-                new TimerTask(){
-
-                    @Override
-                    public void run(){
-                        MessageCount();
-                    }
-
-                }, 1000);
+//        new Timer().schedule(
+//                new TimerTask(){
+//
+//                    @Override
+//                    public void run(){
+//                        MessageCount();
+//                    }
+//
+//                }, 1000);
 
     }
 
@@ -868,7 +868,7 @@ public class Homepage extends AppCompatActivity {
                 break;
 
             case R.id.menu_chat:
-                Intent intent3 = new Intent(Homepage.this, Chat_Inbox.class);
+                Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Homepage.class);
                 startActivity(intent3);
                 break;
 
@@ -1482,7 +1482,6 @@ public class Homepage extends AppCompatActivity {
 
 
     }
-
 
     @Override
     public void onBackPressed() {

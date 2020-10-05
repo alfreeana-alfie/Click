@@ -118,6 +118,7 @@
         <activity android:name="com.ketekmall.ketekmall.pages.DeliveryPolicy" />
         <activity android:name="com.ketekmall.ketekmall.pages.TermsAndConditions" />
         <activity android:name="com.ketekmall.ketekmall.pages.TermsAndConditionsOnly" />
+        <activity android:name=".pages.Chat_Inbox_Homepage" />
 
 
         <meta-data
