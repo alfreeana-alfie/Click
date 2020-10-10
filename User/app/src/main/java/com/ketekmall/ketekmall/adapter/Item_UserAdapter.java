@@ -55,7 +55,7 @@ public class Item_UserAdapter extends BaseAdapter{
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;
-        TextView TV_addetail, TV_price, TV_item_location, Delivery_Status;
+        TextView TV_addetail, TV_price, TV_item_location, Pending_approved, Is_approved;
         Button edit_item, delete_item, boost_ad;
         RatingBar ratingBar;
 
@@ -64,15 +64,18 @@ public class Item_UserAdapter extends BaseAdapter{
         TV_addetail = convertView.findViewById(R.id.ad_details_item);
         TV_price = convertView.findViewById(R.id.price_item);
         TV_item_location = convertView.findViewById(R.id.item_location_item);
-        Delivery_Status = convertView.findViewById(R.id.delivery_status);
+        Pending_approved = convertView.findViewById(R.id.pending_approved);
+        Is_approved = convertView.findViewById(R.id.is_approved);
         boost_ad = convertView.findViewById(R.id.btn_BoostAds);
 
 
         if (item.getDelivery_status().equals("0")) {
-            Delivery_Status.setVisibility(View.VISIBLE);
+            Pending_approved.setVisibility(View.VISIBLE);
+            Is_approved.setVisibility(View.GONE);
             boost_ad.setVisibility(View.GONE);
         } else {
-            Delivery_Status.setVisibility(View.GONE);
+            Pending_approved.setVisibility(View.GONE);
+            Is_approved.setVisibility(View.VISIBLE);
             boost_ad.setVisibility(View.VISIBLE);
         }
 

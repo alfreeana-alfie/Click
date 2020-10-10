@@ -141,7 +141,7 @@
                 tools:ignore="ButtonStyle" />
 
             <TextView
-                android:id="@+id/delivery_status"
+                android:id="@+id/pending_approved"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:fontFamily="@font/open_sans_semibold"
@@ -150,7 +150,23 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_sell_border"
-                android:text="@string/no_delivery"
+                android:text="PENDING"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/is_approved"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginStart="5dp"
+                android:paddingTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_sell_border_appreoved"
+                android:text="APPROVED"
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textAlignment="center"

@@ -171,7 +171,7 @@ public class MyProducts extends AppCompatActivity {
                                     String image_item = object.getString("photo");
                                     String max_order = object.getString("max_order");
                                     String rating = object.getString("rating");
-                                    String delivery_status = object.getString("delivery_status");
+                                    String delivery_status = object.getString("is_approved");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setMax_order(max_order);
