@@ -406,7 +406,9 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SellerCheck(getId);
+//                SellerCheck(getId);
+                Intent intent = new Intent(Homepage.this, newPage.class);
+                startActivity(intent);
             }
         });
 
