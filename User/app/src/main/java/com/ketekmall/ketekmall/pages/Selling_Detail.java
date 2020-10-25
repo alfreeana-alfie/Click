@@ -214,7 +214,9 @@ public class Selling_Detail extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewList(strCustomer_ID, strID, strOrder_Date);
+                Intent intent = new Intent(Selling_Detail.this, newPage.class);
+                startActivity(intent);
+//                ViewList(strCustomer_ID, strID, strOrder_Date);
             }
         });
 
