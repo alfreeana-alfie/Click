@@ -1,210 +1,416 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.adapter.BoostAdapter;
-import com.ketekmall.ketekmall.data.Item_All_Details;
-import com.ketekmall.ketekmall.data.MySingleton;
+import com.ketekmall.ketekmall.R;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.*;
-
-import static java.lang.Boolean.FALSE;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class newPage extends AppCompatActivity {
 
-    String API = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/preacceptancessingle/v1";
-    String serverKey = "M1djdzdrbTZod0pXOTZQdnFWVU5jWVpGNU9nUDVzb0M=";
+    private LinearLayout Home, Packing, Seller, Item_Details;
+    private ScrollView Receiver, Pickup;
+    private EditText AccountNo, SubscriptionCode, RequireToPickupText, RequireWebHookText, PickupLocationID, PickupLocationName,
+            CallerName, CallerPhoneNo, ContactPerson, PhoneNo, PickupEmail, PickupAddress, PickupPostCode,
+            PickupDistrict, PickupProvince, PickupCountry, PickupLocation, TotalQuantitytoPickup,
+            ReadyAt, CloseAt, ReceiverID, ReceiverName, ReceiverFirstName,
+            ReceiverLastName, ReceiverAddress, ReceiverAddress2, ReceiverDistrict, ReceiverProvince,
+            ReceiverCity, ReceiverCountry, ReceiverPostCode, ReceiverEmailAddress, ReceiverPhone1,
+            ReceiverPhone2, SellerOrderNo, SellerReferenceNo, OrderDate, ShipmentName,
+            PostalCode, Currency, CountryCode, Comment, ConsignmentNoteNo,
+            TotalWeight, Amount, ItemDescription, PackDescription, PackVol,
+            PackLeng, PackWidth, PackHeight, TotalItem, PackDeliveryType;
+    private CheckBox RequiretoPickup, RequireWebhook;
+    private Spinner ItemType, PaymentType;
+    private Button next_home, next_packing, next_item_details, next_receiver, next_seller, next_pickup,
+    back_home, back_packing, back_item_details, back_receiver, back_seller, back_pickup;
+
+    private ArrayAdapter<CharSequence> adapter_itemType, adapter_PaymentType;
+
+    String HTTP_PreAcceptanceSingle = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/preacceptancessingle/v1";
+    String serverKey_PreAcceptanceSingle = "M1djdzdrbTZod0pXOTZQdnFWVU5jWVpGNU9nUDVzb0M=";
+
+    String HTTP_RoutingCode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/routingcode/v1";
+    String serverKey_RoutingCode = "UVREb1NFZkJqZEd6YXFRWUg2c3BPMTlRbDdTS1I4eEM=";
+
+    String HTTP_GenerateConnote = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/generateconnote/v1";
+    String serverKey_GenerateConnote = "S2cwNDRCbkl5OEt4OXF6WlFpQ0dHd1NSN1R2eVV5WDk=";
+
+    String HTTP_GeneratePL9WConnote = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/generatepl9wconnote/v1";
+    String serverKey_GeneratePL9WConnote = "U2V1U05OcXdDVThCUnBqalNhdnhxZllQdjE5NDg1YUQ=";
     String contentType ="application/x-www-form-urlencoded";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        JSONArray array = new JSONArray();
-        JSONObject notification = new JSONObject();
-        JSONObject notifcationBody = new JSONObject();
-        try {
-            notification.put("subscriptionCode", "admin@ketekmall.com");
-            notifcationBody.put("requireToPickup", "FALSE");
-//            notifcationBody.put("requireWebHook", "TRUE");
-//            notifcationBody.put("accountNo", "8800001234");
-//            notifcationBody.put("callerName", "Seller A");
-//            notifcationBody.put("callerPhone", "0388889999");
-//            notifcationBody.put("pickupLocationID", "M00012");
-//            notifcationBody.put("pickupLocationName", "Baby Boo Sdn Bhd");
-//            notifcationBody.put("contactPerson", "En Halim");
-//            notifcationBody.put("phoneNo", "0123699717");
-//            notifcationBody.put("pickupAddress", "11A, 3N/USJ9,SUBANG JAYA,SELANGOR");
-//            notifcationBody.put("ItemType", "0");
-//            notifcationBody.put("totalQuantityToPickup", "1");
-//            notifcationBody.put("totalWeight", "2.01");
-//            notifcationBody.put("consignmentNoteNumber", "EM744780967MY");
-//            notifcationBody.put("PaymentType", "2");
-//            notifcationBody.put("Amount", "20.50");
-//            notifcationBody.put("readyToCollectAt", "12:00 PM");
-//            notifcationBody.put("closeAt", "06:00 PM");
-//            notifcationBody.put("receiverName", "Ahmad Suhaili");
-//            notifcationBody.put("receiverID", "");
-//            notifcationBody.put("receiverAddress", "AT-1-8 Taman Tun Sardon");
-//            notifcationBody.put("receiverPostCode", "11700");
-//            notifcationBody.put("receiverEmail", "");
-//            notifcationBody.put("receiverPhone01", "0123966717");
-//            notifcationBody.put("receiverPhone02", "0388886666");
-//            notifcationBody.put("sellerReferenceNo", "");
-//            notifcationBody.put("itemDescription", "");
-//            notifcationBody.put("sellerOrderNo", "");
-//            notifcationBody.put("comments", "Perlu van, barang besar");
-//            notifcationBody.put("pickupDistrict", "SUBANG JAYA");
-//            notifcationBody.put("pickupProvince", "Selangor");
-//            notifcationBody.put("pickupEmail", "abc@gmail.com.my");
-//            notifcationBody.put("pickupCountry", "MY");
-//            notifcationBody.put("pickupLocation", "");
-//            notifcationBody.put("receiverFname", "Ahmad Suhaili");
-//            notifcationBody.put("receiverLname", "Mohamad");
-//            notifcationBody.put("receiverAddress2", "");
-//            notifcationBody.put("receiverDistrict", "Gelugor-11700");
-//            notifcationBody.put("receiverProvince", "Penang");
-//            notifcationBody.put("receiverCity", "Gelugor");
-//            notifcationBody.put("receiverCountry", "MY");
-//            notifcationBody.put("packDesc", "Book|Bag");
-//            notifcationBody.put("packVol", "");
-//            notifcationBody.put("packLeng", "");
-//            notifcationBody.put("postCode", "56000");
-//            notifcationBody.put("ConsignmentNoteNumber", "EM744780967MY");
-//            notifcationBody.put("packWidth", "");
-//            notifcationBody.put("packHeight", "");
-//            notifcationBody.put("packTotalitem", "");
-//            notifcationBody.put("orderDate", "");
-//            notifcationBody.put("packDeliveryType", "");
-//            notifcationBody.put("ShipmentName", "PosLaju");
-//            notifcationBody.put("pickupProv", "");
-//            notifcationBody.put("deliveryProv", "");
-//
-//            notifcationBody.put("postalCode", "");
-//            notifcationBody.put("currency", "MYR");
-//            notifcationBody.put("countryCode", "MY");
-//            notifcationBody.put("pickupDate", "2019-07-11");
-
-        } catch (JSONException e) {
-            Log.e("TAG", "onCreate: " + e.getMessage());
-        }
-
-//        array.put(notifcationBody);
-//        Testing4(array);
-//        sendData(notifcationBody);
-        Testing3();
+        setContentView(R.layout.poslaju_home);
+        Declare();
+        LayoutVisibility();
+        PreAcceptanceSingle();
     }
 
-    private void sendData(JSONObject jsonObject){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(API, jsonObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("TAG", "onResponse: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
+    private void LayoutVisibility(){
+        Home.setVisibility(View.VISIBLE);
+        Pickup.setVisibility(View.GONE);
+        Receiver.setVisibility(View.GONE);
+        Seller.setVisibility(View.GONE);
+        Item_Details.setVisibility(View.GONE);
+        Packing.setVisibility(View.GONE);
 
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-                    }
-                }) {
+        next_home.setOnClickListener(new View.OnClickListener() {
             @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey);
-//                params.put("Content-Type", contentType);
-                return params;
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.VISIBLE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
             }
+        });
 
+        next_pickup.setOnClickListener(new View.OnClickListener() {
             @Override
-            public String getBodyContentType() {
-                return "application/json; charset=UTF-8";
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.VISIBLE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
             }
+        });
 
+        next_receiver.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("requireToPickup", "FALSE");
-//                params.put("Content-Type", contentType);
-                return params;
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.VISIBLE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
             }
-        };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(jsonObjectRequest);
+        });
+
+        next_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.VISIBLE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        next_item_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.VISIBLE);
+            }
+        });
+
+        next_packing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreAcceptanceSingle();
+            }
+        });
+
+        back_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(newPage.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+
+        back_pickup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.VISIBLE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        back_receiver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.VISIBLE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        back_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.VISIBLE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        back_item_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.VISIBLE);
+                Item_Details.setVisibility(View.GONE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        back_packing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Home.setVisibility(View.GONE);
+                Pickup.setVisibility(View.GONE);
+                Receiver.setVisibility(View.GONE);
+                Seller.setVisibility(View.GONE);
+                Item_Details.setVisibility(View.VISIBLE);
+                Packing.setVisibility(View.GONE);
+            }
+        });
+
+        adapter_itemType = ArrayAdapter.createFromResource(newPage.this, R.array.itemType, android.R.layout.simple_spinner_item);
+        adapter_itemType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ItemType.setAdapter(adapter_itemType);
+
+        adapter_PaymentType = ArrayAdapter.createFromResource(newPage.this, R.array.paymentType, android.R.layout.simple_spinner_item);
+        adapter_PaymentType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        PaymentType.setAdapter(adapter_PaymentType);
+
+        RequiretoPickup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    RequireToPickupText.setText("TRUE");
+                }else {
+                    RequireToPickupText.setText("FALSE");
+                }
+            }
+        });
+
+        RequireWebhook.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    RequireWebHookText.setText("TRUE");
+                }else{
+                    RequireWebHookText.setText("FALSE");
+                }
+            }
+        });
     }
 
-    private void Testing2(){
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(API);
-        post.addHeader(contentType,serverKey);
-        try {
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-            nameValuePairs.add(new BasicNameValuePair("requireToPickup", "FALSE"));
+    private void Declare(){
+        Home = findViewById(R.id.poslaju_home);
+        Packing = findViewById(R.id.poslaju_packing);
+        Seller = findViewById(R.id.polaju_seller);
+        Item_Details = findViewById(R.id.poslaju_item_details);
+        Receiver = findViewById(R.id.poslaju_receiver);
+        Pickup = findViewById(R.id.poslaju_pickup);
 
-            post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        //Home
+        SubscriptionCode = findViewById(R.id.subscriptionCode);
+        RequiretoPickup = findViewById(R.id.requireToPickup); //CheckBox
+        RequireToPickupText = findViewById(R.id.requireToPickupText);
+        RequireWebhook = findViewById(R.id.requireWebhook); //CheckBox
+        RequireWebHookText = findViewById(R.id.requireWebhookText);
+        AccountNo = findViewById(R.id.accountNo);
 
-            HttpResponse response = client.execute(post);
-            BufferedReader rd = new BufferedReader(new InputStreamReader(
-                    response.getEntity().getContent()));
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                System.out.println(line);
-            }
+        //Pickup
+        PickupLocationID = findViewById(R.id.pickupLocationID);
+        PickupLocationName = findViewById(R.id.pickupLocationName);
+        CallerName = findViewById(R.id.callerName);
+        CallerPhoneNo = findViewById(R.id.callerPhone);
+        ContactPerson = findViewById(R.id.contactPerson);
+        PhoneNo = findViewById(R.id.phoneNo);
+        PickupEmail = findViewById(R.id.pickupEmail);
+        PickupAddress = findViewById(R.id.pickupAddress);
+        PickupPostCode = findViewById(R.id.pickupPostCode);
+        PickupDistrict = findViewById(R.id.pickupDistrict);
+        PickupProvince = findViewById(R.id.pickupProvince);
+        PickupCountry = findViewById(R.id.pickupCountry);
+        PickupLocation = findViewById(R.id.pickupLocation);
+        TotalQuantitytoPickup = findViewById(R.id.totalQuantityToPickup);
+        ReadyAt = findViewById(R.id.readyAt);
+        CloseAt = findViewById(R.id.closeAt);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //Receiver
+        ReceiverID = findViewById(R.id.receiverID);
+        ReceiverName = findViewById(R.id.receiverName);
+        ReceiverFirstName = findViewById(R.id.receiverFirstName);
+        ReceiverLastName = findViewById(R.id.receiverLastName);
+        ReceiverAddress = findViewById(R.id.receiverAddress);
+        ReceiverAddress2 = findViewById(R.id.receiverAddress2);
+        ReceiverDistrict = findViewById(R.id.receiverDistrict);
+        ReceiverProvince = findViewById(R.id.receiverProvince);
+        ReceiverCity = findViewById(R.id.receiverCity);
+        ReceiverCountry = findViewById(R.id.receiverCountry);
+        ReceiverPostCode = findViewById(R.id.receiverPostCode);
+        ReceiverEmailAddress = findViewById(R.id.receiverEmailAddress);
+        ReceiverPhone1 = findViewById(R.id.receiverPhone1);
+        ReceiverPhone2 = findViewById(R.id.receiverPhone2);
+
+        //Seller
+        SellerOrderNo = findViewById(R.id.sellerOrderNo);
+        SellerReferenceNo = findViewById(R.id.sellerReferenceNo);
+        OrderDate = findViewById(R.id.orderDate);
+        ShipmentName = findViewById(R.id.shipmentName);
+        PostalCode = findViewById(R.id.postalCode);
+        Currency = findViewById(R.id.currency);
+        CountryCode = findViewById(R.id.countryCode);
+        Comment = findViewById(R.id.comment);
+
+        //Item Details
+        ConsignmentNoteNo = findViewById(R.id.consignmentNoteNumber);
+        ItemType = findViewById(R.id.itemType); //Dropdown
+        TotalWeight = findViewById(R.id.totalWeight);
+        PaymentType = findViewById(R.id.paymentType); // DropDown
+        Amount = findViewById(R.id.amount);
+        ItemDescription = findViewById(R.id.itemDescription);
+
+        //Packing
+        PackDescription = findViewById(R.id.packDescription);
+        PackVol = findViewById(R.id.packVol);
+        PackLeng = findViewById(R.id.packLeng);
+        PackWidth = findViewById(R.id.packWidth);
+        PackHeight = findViewById(R.id.packHeight);
+        TotalItem = findViewById(R.id.totalItem);
+        PackDeliveryType = findViewById(R.id.packDeliveryType);
+
+        next_home = findViewById(R.id.next_page_home);
+        next_pickup = findViewById(R.id.next_page_pickup);
+        next_receiver = findViewById(R.id.next_page_receiver);
+        next_seller = findViewById(R.id.next_page_seller);
+        next_packing = findViewById(R.id.next_page_packing);
+        next_item_details = findViewById(R.id.next_page_item_details);
+
+        back_home = findViewById(R.id.back_home);
+        back_pickup = findViewById(R.id.back_pickup);
+        back_receiver = findViewById(R.id.back_receiver);
+        back_seller = findViewById(R.id.back_seller);
+        back_packing = findViewById(R.id.back_packing);
+        back_item_details = findViewById(R.id.back_item_details);
+
     }
 
-    private void Testing3(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, API,
+    private void PreAcceptanceSingle(){
+        //Home
+        final String subscriptionCode = this.SubscriptionCode.getText().toString();
+        final String requireToPickup = this.RequireToPickupText.getText().toString();
+        final String requireWebhook = this.RequireWebHookText.getText().toString();
+        final String accountNo = this.AccountNo.getText().toString();
+
+        //Pickup
+        final String pickupLocationID = this.PickupLocationID.getText().toString();
+        final String pickupLocationName = this.PickupLocationName.getText().toString();
+        final String callerName = this.CallerName.getText().toString();
+        final String callerPhone = this.CallerPhoneNo.getText().toString();
+        final String contactPerson = this.ContactPerson.getText().toString();
+        final String phoneNo = this.PhoneNo.getText().toString();
+        final String pickupEmail = this.PickupEmail.getText().toString();
+        final String pickupAddress = this.PickupAddress.getText().toString();
+        String pickupPostCode = this.PickupPostCode.getText().toString();
+        final String pickupDistrict = this.PickupDistrict.getText().toString();
+        final String pickupProvince = this.PickupProvince.getText().toString();
+        final String pickupCountry = this.PickupCountry.getText().toString();
+        final String pickupLocation = this.PickupLocation.getText().toString();
+        final String totalQuantity = this.TotalQuantitytoPickup.getText().toString();
+        final String readyAt = this.ReadyAt.getText().toString();
+        final String closeAt = this.CloseAt.getText().toString();
+
+        //Receiver
+        final String receiverID = this.ReceiverID.getText().toString();
+        final String receiverName = this.ReceiverName.getText().toString();
+        final String receiverFirstName = this.ReceiverFirstName.getText().toString();
+        final String receiverLastName = this.ReceiverLastName.getText().toString();
+        final String receiverAddress = this.ReceiverAddress.getText().toString();
+        final String receiverAddress2 = this.ReceiverAddress2.getText().toString();
+        final String receiverDistrict = this.ReceiverDistrict.getText().toString();
+        final String receiverProvince = this.ReceiverProvince.getText().toString();
+        final String receiverCity = this.ReceiverCity.getText().toString();
+        final String receiverCountry = this.ReceiverCountry.getText().toString();
+        final String receiverPostCode = this.ReceiverPostCode.getText().toString();
+        final String receiverEmailAddress = this.ReceiverEmailAddress.getText().toString();
+        final String receiverPhone1 = this.ReceiverPhone1.getText().toString();
+        final String receiverPhone2 = this.ReceiverPhone2.getText().toString();
+
+        //Seller
+        final String sellerOrderNo = this.SellerOrderNo.getText().toString();
+        final String sellerReferenceNo = this.SellerReferenceNo.getText().toString();
+        final String orderDate = this.OrderDate.getText().toString();
+        final String shipmentName = this.ShipmentName.getText().toString();
+        final String postalCode = this.PostalCode.getText().toString();
+        final String currency = this.Currency.getText().toString();
+        final String countryCode = this.CountryCode.getText().toString();
+        final String comment = this.Comment.getText().toString();
+
+        //Item Details
+        final String consigmentNoteNo = this.ConsignmentNoteNo.getText().toString();
+        final String itemType = this.ItemType.getSelectedItem().toString();
+        final String totalWeight = this.TotalWeight.getText().toString();
+        final String paymentType = this.PaymentType.getSelectedItem().toString();
+        final String amount = this.Amount.getText().toString();
+        final String itemDescription = this.ItemDescription.getText().toString();
+
+        //Packing
+        final String packDescription = this.PackDescription.getText().toString();
+        final String packVol = this.PackVol.getText().toString();
+        final String packLeng = this.PackLeng.getText().toString();
+        final String packWidth = this.PackWidth.getText().toString();
+        final String packHeight = this.PackHeight.getText().toString();
+        final String totalItem = this.TotalItem.getText().toString();
+        final String packDeliveryType = this.PackDeliveryType.getText().toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_PreAcceptanceSingle,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -232,7 +438,7 @@ public class newPage extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey);
+                params.put("X-User-Key", serverKey_PreAcceptanceSingle);
                 params.put("Content-Type", contentType);
                 return params;
             }
@@ -244,73 +450,70 @@ public class newPage extends AppCompatActivity {
 
             @Override
             protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                // take the statusCode here.
                 return super.parseNetworkResponse(response);
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("subscriptionCode", "admin@ketekmall.com");
-                params.put("requireToPickup", "FALSE");
-            params.put("requireWebHook", "TRUE");
-            params.put("accountNo", "8800001234");
-            params.put("callerName", "Seller A");
-            params.put("callerPhone", "0388889999");
-            params.put("pickupLocationID", "M00012");
-            params.put("pickupLocationName", "Baby Boo Sdn Bhd");
-            params.put("contactPerson", "En Halim");
-            params.put("phoneNo", "0123699717");
-            params.put("pickupAddress", "11A, 3N/USJ9,SUBANG JAYA,SELANGOR");
-            params.put("ItemType", "0");
-            params.put("totalQuantityToPickup", "1");
-            params.put("totalWeight", "2.01");
-            params.put("consignmentNoteNumber", "EM744780967MY");
-            params.put("PaymentType", "2");
-            params.put("Amount", "20.50");
-            params.put("readyToCollectAt", "12:00 PM");
-            params.put("closeAt", "06:00 PM");
-            params.put("receiverName", "Ahmad Suhaili");
-            params.put("receiverID", "");
-            params.put("receiverAddress", "AT-1-8 Taman Tun Sardon");
-            params.put("receiverPostCode", "11700");
-            params.put("receiverEmail", "");
-            params.put("receiverPhone01", "0123966717");
-            params.put("receiverPhone02", "0388886666");
-            params.put("sellerReferenceNo", "");
-            params.put("itemDescription", "");
-            params.put("sellerOrderNo", "");
-            params.put("comments", "Perlu van, barang besar");
-            params.put("pickupDistrict", "SUBANG JAYA");
-            params.put("pickupProvince", "Selangor");
-            params.put("pickupEmail", "abc@gmail.com.my");
-            params.put("pickupCountry", "MY");
-            params.put("pickupLocation", "");
-            params.put("receiverFname", "Ahmad Suhaili");
-            params.put("receiverLname", "Mohamad");
-            params.put("receiverAddress2", "");
-            params.put("receiverDistrict", "Gelugor-11700");
-            params.put("receiverProvince", "Penang");
-            params.put("receiverCity", "Gelugor");
-            params.put("receiverCountry", "MY");
-            params.put("packDesc", "Book|Bag");
-            params.put("packVol", "");
-            params.put("packLeng", "");
-            params.put("postCode", "56000");
-            params.put("ConsignmentNoteNumber", "EM744780967MY");
-            params.put("packWidth", "");
-            params.put("packHeight", "");
-            params.put("packTotalitem", "");
-            params.put("orderDate", "");
-            params.put("packDeliveryType", "");
-            params.put("ShipmentName", "PosLaju");
-            params.put("pickupProv", "");
-            params.put("deliveryProv", "");
-
-            params.put("postalCode", "");
-            params.put("currency", "MYR");
-            params.put("countryCode", "MY");
-            params.put("pickupDate", "2019-07-11");
+                params.put("subscriptionCode", subscriptionCode);
+                params.put("requireToPickup", requireToPickup);
+                params.put("requireWebHook", requireWebhook);
+                params.put("accountNo", accountNo);
+                params.put("callerName", callerName);
+                params.put("callerPhone", callerPhone);
+                params.put("pickupLocationID", pickupLocationID);
+                params.put("pickupLocationName", pickupLocationName);
+                params.put("contactPerson", contactPerson);
+                params.put("phoneNo", phoneNo);
+                params.put("pickupAddress", pickupAddress);
+                params.put("ItemType", itemType);
+                params.put("totalQuantityToPickup", totalQuantity);
+                params.put("totalWeight", totalWeight);
+                params.put("consignmentNoteNumber", consigmentNoteNo);
+                params.put("PaymentType", paymentType);
+                params.put("Amount", amount);
+                params.put("readyToCollectAt", readyAt);
+                params.put("closeAt", closeAt);
+                params.put("receiverName", receiverName);
+                params.put("receiverID", receiverID);
+                params.put("receiverAddress", receiverAddress);
+                params.put("receiverPostCode", receiverPostCode);
+                params.put("receiverEmail", receiverEmailAddress);
+                params.put("receiverPhone01", receiverPhone1);
+                params.put("receiverPhone02", receiverPhone2);
+                params.put("sellerReferenceNo", sellerReferenceNo);
+                params.put("itemDescription", itemDescription);
+                params.put("sellerOrderNo", sellerOrderNo);
+                params.put("comments", comment);
+                params.put("pickupDistrict", pickupDistrict);
+                params.put("pickupProvince", pickupProvince);
+                params.put("pickupEmail", pickupEmail);
+                params.put("pickupCountry", pickupCountry);
+                params.put("pickupLocation", pickupLocation);
+                params.put("receiverFname", receiverFirstName);
+                params.put("receiverLname", receiverLastName);
+                params.put("receiverAddress2", receiverAddress2);
+                params.put("receiverDistrict", receiverDistrict);
+                params.put("receiverProvince", receiverProvince);
+                params.put("receiverCity", receiverCity);
+                params.put("receiverCountry", receiverCountry);
+                params.put("packDesc", packDescription);
+                params.put("packVol", packVol);
+                params.put("packLeng", packLeng);
+                params.put("postCode", postalCode);
+                params.put("ConsignmentNoteNumber", consigmentNoteNo);
+                params.put("packWidth", packWidth);
+                params.put("packHeight", packHeight);
+                params.put("packTotalitem", totalItem);
+                params.put("orderDate", orderDate);
+                params.put("packDeliveryType", packDeliveryType);
+                params.put("ShipmentName", shipmentName);
+                params.put("pickupProv", pickupProvince);
+                params.put("deliveryProv", "");
+                params.put("postalCode", postalCode);
+                params.put("currency", currency);
+                params.put("countryCode", countryCode);
                 return params;
             }
         };
@@ -318,54 +521,181 @@ public class newPage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Testing4(JSONArray jsonArray){
-        JsonArrayRequest request_json = new JsonArrayRequest(Request.Method.POST, API, jsonArray,
-                new Response.Listener<JSONArray>() {
+    private void RoutingCode(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_RoutingCode,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        //Get Final response
-                        Log.i("jsonObjectRequest","success");
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                    }
+                }) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                Log.i("jsonObjectRequest", error.toString());
-
-                Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey);
+                params.put("X-User-Key", serverKey_RoutingCode);
                 params.put("Content-Type", contentType);
                 return params;
             }
-            //Important part to convert response to JSON Array Again
+
             @Override
-            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
-                String responseString;
-                JSONArray array = new JSONArray();
-                if (response != null) {
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
 
-                    try {
-                        responseString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-                        JSONObject obj = new JSONObject(responseString);
-                        (array).put(obj);
-                    } catch (Exception ex) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return super.parseNetworkResponse(response);
+            }
 
-                    }
-                }
-                //return array;
-                return Response.success(array, HttpHeaderParser.parseCacheHeaders(response));
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Origin", "96000");
+                params.put("Destination", "93050");
+                return params;
             }
         };
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        queue.add(request_json);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
+
+    private void GenerateConnote(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_GenerateConnote,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_GenerateConnote);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("numberOfItem", "");
+                params.put("Prefix", "");
+
+                params.put("ApplicationCode", "");
+                params.put("Secretid", "");
+
+                params.put("Orderid", "");
+                params.put("username", "");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GeneratePL9WConnote(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_GeneratePL9WConnote,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_GeneratePL9WConnote);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("AccountNo", "");
+                params.put("Secretid", "");
+                params.put("Orderid", "");
+                params.put("Username", "");
+                params.put("ConnoteList", "");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 }

@@ -118,6 +118,18 @@
     <string name="district">District</string>
     <string name="select_location">Choose a Location</string>
 
+    <string-array name="itemType">
+        <item>Document</item>
+        <item>Merchandise</item>
+        <item>Parcel</item>
+    </string-array>
+
+    <string-array name="paymentType">
+        <item>Cash on Delivery</item>
+        <item>Credit Card on Delivery</item>
+        <item>Paid</item>
+    </string-array>
+
     <string-array name="gender">
         <item>Female</item>
         <item>Male</item>
