@@ -117,6 +117,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
     BottomNavigationView bottomNav;
     ProgressBar loading;
 
+    String HTTP_PoslajuDomesticbyPostcode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/poslajudomesticbypostcode/v1";
+    String serverKey_PoslajuDomesticbyPostcode = "a1g2cmM2VmowNm00N1lZekFmTGR0MldpRHhKaFRHSks=";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,13 +148,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String id = object.getString("id").trim();
-                                    final String customer_id = object.getString("customer_id").trim();
-                                    final String main_category = object.getString("main_category").trim();
-                                    final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String division = object.getString("division");
-                                    final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
@@ -182,6 +181,92 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 AddressUser.setText(Address);
 
+                                                                PoslajuDomesticbyPostcode(division, strPostCode, quantity);
+
+                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + division + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
+                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
+                                                                        new Response.Listener<String>() {
+                                                                            @Override
+                                                                            public void onResponse(String response) {
+                                                                                Log.i("jsonObjectRequest", response);
+                                                                                try{
+                                                                                    JSONArray jsonarray = new JSONArray(response);
+                                                                                    for(int i=0; i < jsonarray.length(); i++) {
+                                                                                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+                                                                                        String totalAmount       = jsonobject.getString("totalAmount");
+                                                                                        Log.i("jsonObjectRequest", totalAmount);
+
+                                                                                        delivery_combine = new Delivery_Combine();
+                                                                                        delivery_combine.setId(id);
+                                                                                        delivery_combine.setDelivery_item_id(item_id);
+                                                                                        delivery_combine.setSeller_id(seller_id);
+                                                                                        delivery_combine.setAd_detail(ad_detail);
+                                                                                        delivery_combine.setPhoto(image_item);
+                                                                                        delivery_combine.setPrice(String.valueOf(price));
+                                                                                        delivery_combine.setDivision(division);
+                                                                                        delivery_combine.setQuantity(quantity);
+                                                                                        delivery_combine.setDelivery_price(Price);
+                                                                                        delivery_combine.setDelivery_division(totalAmount);
+
+                                                                                        item_all_detailsList.add(delivery_combine);
+
+                                                                                    }
+                                                                                    userOrderAdapter = new UserOrderAdapter_Other(Checkout.this, item_all_detailsList, item_all_detailsList);
+                                                                                    recyclerView.setAdapter(userOrderAdapter);
+                                                                                    userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
+                                                                                        @Override
+                                                                                        public void onSelfClick(int position) {
+                                                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                            delivery_combine = new Delivery_Combine();
+                                                                                            delivery_combine.setId(id);
+                                                                                            delivery_combine.setDelivery_item_id(item_id);
+                                                                                            delivery_combine.setSeller_id(seller_id);
+                                                                                            delivery_combine.setAd_detail(ad_detail);
+                                                                                            delivery_combine.setPhoto(image_item);
+                                                                                            delivery_combine.setPrice(String.valueOf(price));
+                                                                                            delivery_combine.setDivision(division);
+                                                                                            delivery_combine.setQuantity(quantity);
+                                                                                            delivery_combine.setDelivery_price("0.00");
+                                                                                            delivery_combine.setDelivery_division(division);
+
+                                                                                            String delivery_text;
+                                                                                            delivery_text = "<font color='#999999'>MYR0.00</font>";
+                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                            delivery_combine.setDelivery_division1(division + " to " + division);
+
+                                                                                            grandtotal -= Double.parseDouble(Price);
+                                                                                            Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                                        }
+                                                                                    });
+                                                                                }catch(JSONException e){
+                                                                                    e.printStackTrace();
+                                                                                    Log.i("jsonObjectRequest", e.toString());
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        new Response.ErrorListener() {
+                                                                            @Override
+                                                                            public void onErrorResponse(VolleyError error) {
+                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                                                                                Log.i("STAGINGERROR", error.toString());
+                                                                                Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                                                                                Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                                                                                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                                                                            }
+                                                                        }) {
+                                                                    @Override
+                                                                    public Map<String, String> getHeaders() {
+                                                                        Map<String, String> params = new HashMap<>();
+                                                                        params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+                                                                        return params;
+                                                                    }
+
+                                                                };
+                                                                RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+                                                                requestQueue.add(stringRequest);
+
+                                                                /*
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
                                                                         new Response.Listener<String>() {
                                                                             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -197,28 +282,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                                                                                         if (success.equals("1")) {
-                                                                                            if(jsonArray.length() == 0){
 
-                                                                                                delivery_combine = new Delivery_Combine();
-                                                                                                delivery_combine.setId(id);
-                                                                                                delivery_combine.setDelivery_item_id(item_id);
-                                                                                                delivery_combine.setSeller_id(seller_id);
-                                                                                                delivery_combine.setAd_detail(ad_detail);
-                                                                                                delivery_combine.setPhoto(image_item);
-                                                                                                delivery_combine.setPrice(String.valueOf(price));
-                                                                                                delivery_combine.setDivision(division);
-                                                                                                delivery_combine.setQuantity(quantity);
-
-                                                                                                String delivery_text;
-                                                                                                delivery_text = "<font color='#FF3333'>MYR0.00</font>";
-                                                                                                delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                                delivery_combine.setDelivery_division1("No Delivery");
-
-                                                                                                item_all_detailsList.add(delivery_combine);
-                                                                                                Button_Checkout.setVisibility(View.GONE);
-                                                                                                linear2.setVisibility(View.GONE);
-                                                                                                No_Address.setVisibility(View.VISIBLE);
-                                                                                           }
                                                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                                                 JSONObject object = jsonArray.getJSONObject(i);
                                                                                                 String strDelivery_ID = object.getString("id").trim();
@@ -352,7 +416,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 };
                                                                 RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
                                                                 requestQueue.add(stringRequest);
-
+*/
                                                             }
                                                         } else {
                                                             Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -369,32 +433,32 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                         if (error instanceof TimeoutError) {
                                                             //Time out error
-
-                                                        }else if(error instanceof NoConnectionError){
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof NoConnectionError) {
                                                             //net work error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof AuthFailureError) {
                                                             //error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof ServerError) {
                                                             //Erroor
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof NetworkError) {
                                                             //Error
-
+                                                            System.out.println("" + error);
                                                         } else if (error instanceof ParseError) {
                                                             //Error
-
-                                                        }else{
+                                                            System.out.println("" + error);
+                                                        } else {
                                                             //Error
+                                                            System.out.println("" + error);
                                                         }
                                                         //End
 
 
                                                     } catch (Exception e) {
-
-
+                                                        e.printStackTrace();
                                                     }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                                                 }
                                             }) {
                                         @Override
@@ -418,32 +482,33 @@ public class Checkout extends AppCompatActivity implements Serializable{
             public void onErrorResponse(VolleyError error) {
                 try {
 
-                    if (error instanceof TimeoutError ) {
+                    if (error instanceof TimeoutError) {
                         //Time out error
-
-                    }else if(error instanceof NoConnectionError){
+                        System.out.println("" + error);
+                    } else if (error instanceof NoConnectionError) {
                         //net work error
-
+                        System.out.println("" + error);
                     } else if (error instanceof AuthFailureError) {
                         //error
-
+                        System.out.println("" + error);
                     } else if (error instanceof ServerError) {
                         //Erroor
+                        System.out.println("" + error);
                     } else if (error instanceof NetworkError) {
                         //Error
-
+                        System.out.println("" + error);
                     } else if (error instanceof ParseError) {
                         //Error
-
-                    }else{
+                        System.out.println("" + error);
+                    } else {
                         //Error
+                        System.out.println("" + error);
                     }
                     //End
 
 
                 } catch (Exception e) {
-
-
+                    e.printStackTrace();
                 }
             }
         }) {
@@ -1148,6 +1213,50 @@ public class Checkout extends AppCompatActivity implements Serializable{
             }
         };
         MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void PoslajuDomesticbyPostcode(String postcodeFrom, String postcodeTo, String Weight){
+
+        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
+                        try{
+                            JSONArray jsonarray = new JSONArray(response);
+                            for(int i=0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+                                String totalAmount       = jsonobject.getString("totalAmount");
+                                Log.i("jsonObjectRequest", totalAmount);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                            Log.i("jsonObjectRequest", e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("STAGINGERROR", error.toString());
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override

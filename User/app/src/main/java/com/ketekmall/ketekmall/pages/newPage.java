@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,14 +20,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.category.Agriculture;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,23 +67,19 @@ public class newPage extends AppCompatActivity {
     String HTTP_PreAcceptanceSingle = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/preacceptancessingle/v1";
     String serverKey_PreAcceptanceSingle = "M1djdzdrbTZod0pXOTZQdnFWVU5jWVpGNU9nUDVzb0M=";
 
-    String HTTP_RoutingCode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/routingcode/v1";
-    String serverKey_RoutingCode = "UVREb1NFZkJqZEd6YXFRWUg2c3BPMTlRbDdTS1I4eEM=";
+    String HTTP_PoslajuDomesticbyPostcode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/poslajudomesticbypostcode/v1";
+    String serverKey_PoslajuDomesticbyPostcode = "a1g2cmM2VmowNm00N1lZekFmTGR0MldpRHhKaFRHSks=";
 
-    String HTTP_GenerateConnote = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/generateconnote/v1";
-    String serverKey_GenerateConnote = "S2cwNDRCbkl5OEt4OXF6WlFpQ0dHd1NSN1R2eVV5WDk=";
-
-    String HTTP_GeneratePL9WConnote = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/generatepl9wconnote/v1";
-    String serverKey_GeneratePL9WConnote = "U2V1U05OcXdDVThCUnBqalNhdnhxZllQdjE5NDg1YUQ=";
     String contentType ="application/x-www-form-urlencoded";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.poslaju_home);
-        Declare();
-        LayoutVisibility();
-        PreAcceptanceSingle();
+        PoslajuDomesticbyPostcode();
+//        setContentView(R.layout.poslaju_home);
+//        Declare();
+//        LayoutVisibility();
+//        PreAcceptanceSingle();
     }
 
     private void LayoutVisibility(){
@@ -521,12 +528,29 @@ public class newPage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void RoutingCode(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_RoutingCode,
+    private void PoslajuDomesticbyPostcode(){
+        String postcodeFrom = "96000";
+        String postcodeTo = "93400";
+        String Weight = "0.5";
+
+        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.i("jsonObjectRequest", response);
+                        try{
+                            JSONArray jsonarray = new JSONArray(response);
+                            for(int i=0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+                                String totalAmount       = jsonobject.getString("totalAmount");
+                                Log.i("jsonObjectRequest", totalAmount);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                            Log.i("jsonObjectRequest", e.toString());
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -550,149 +574,10 @@ public class newPage extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey_RoutingCode);
-                params.put("Content-Type", contentType);
+                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
                 return params;
             }
 
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=UTF-8";
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                return super.parseNetworkResponse(response);
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Origin", "96000");
-                params.put("Destination", "93050");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void GenerateConnote(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_GenerateConnote,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("jsonObjectRequest", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey_GenerateConnote);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=UTF-8";
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                return super.parseNetworkResponse(response);
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("numberOfItem", "");
-                params.put("Prefix", "");
-
-                params.put("ApplicationCode", "");
-                params.put("Secretid", "");
-
-                params.put("Orderid", "");
-                params.put("username", "");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void GeneratePL9WConnote(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, HTTP_GeneratePL9WConnote,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("jsonObjectRequest", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(newPage.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey_GeneratePL9WConnote);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=UTF-8";
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                return super.parseNetworkResponse(response);
-            }
-
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("AccountNo", "");
-                params.put("Secretid", "");
-                params.put("Orderid", "");
-                params.put("Username", "");
-                params.put("ConnoteList", "");
-                return params;
-            }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
