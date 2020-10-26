@@ -376,6 +376,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     final String strAd_Detail = item.getAd_detail();
                                     final Double strPrice = Double.valueOf(item.getPrice());
                                     final String strDivision = item.getDivision();
+                                    final String strPostcode = item.getPostcode();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
 
@@ -452,6 +453,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
                                                 params.put("division", strDivision);
+                                                params.put("postcode", strPostcode);
                                                 params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
@@ -554,6 +556,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -564,6 +567,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -593,6 +597,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -611,6 +616,7 @@ public class View_All_Shock extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -681,6 +687,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -785,6 +792,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -795,6 +803,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -824,6 +833,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -842,6 +852,7 @@ public class View_All_Shock extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -912,6 +923,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1017,6 +1029,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1027,6 +1040,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1056,6 +1070,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1074,6 +1089,7 @@ public class View_All_Shock extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1144,6 +1160,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1249,6 +1266,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1259,6 +1277,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1288,6 +1307,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1306,6 +1326,7 @@ public class View_All_Shock extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1376,6 +1397,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1563,6 +1585,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1573,6 +1596,7 @@ public class View_All_Shock extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1602,6 +1626,7 @@ public class View_All_Shock extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1620,6 +1645,7 @@ public class View_All_Shock extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1690,6 +1716,7 @@ public class View_All_Shock extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);

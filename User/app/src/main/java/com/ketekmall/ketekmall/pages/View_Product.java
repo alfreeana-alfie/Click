@@ -77,7 +77,7 @@ public class View_Product extends AppCompatActivity {
     String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
 
-    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId, brand, inner, stock, desc;
+    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId, brand, inner, stock, desc, postcode;
     Item_Single_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
@@ -197,6 +197,7 @@ public class View_Product extends AppCompatActivity {
 
         strPrice = intent.getStringExtra("price");
         division = intent.getStringExtra("division");
+        postcode = intent.getStringExtra("postcode");
         district = intent.getStringExtra("district");
         photo = intent.getStringExtra("photo");
 
@@ -239,6 +240,7 @@ public class View_Product extends AppCompatActivity {
                 String district1 = intent4.getStringExtra("district");
                 String photo1 = intent4.getStringExtra("photo");
                 String item_id = intent4.getStringExtra("item_id");
+                String postcode = intent4.getStringExtra("postcode");
 
                 intent1.putExtra("item_id", item_id);
                 intent1.putExtra("id", id1);
@@ -248,7 +250,8 @@ public class View_Product extends AppCompatActivity {
                 intent1.putExtra("ad_detail", ad_detail1);
                 intent1.putExtra("price", strPrice1);
                 intent1.putExtra("division", division1);
-                intent1.putExtra("district", district1);
+                intent1.putExtra("photo", photo1);
+                intent1.putExtra("postcode", postcode);
                 intent1.putExtra("photo", photo1);
 
 
@@ -320,6 +323,7 @@ public class View_Product extends AppCompatActivity {
                                             String desc = intent4.getStringExtra("description");
                                             String division2 = intent4.getStringExtra("division");
                                             String district = intent4.getStringExtra("district");
+                                            String postcode = intent4.getStringExtra("postcode");
 
                                             String userid1 = intent4.getStringExtra("user_id");
                                             String strMain_category1 = intent4.getStringExtra("main_category");
@@ -329,6 +333,7 @@ public class View_Product extends AppCompatActivity {
                                             String division1 = intent4.getStringExtra("division");
                                             String district1 = intent4.getStringExtra("district");
                                             String photo1 = intent4.getStringExtra("photo");
+
 
                                             intent1.putExtra("item_id", item_id);
                                             intent1.putExtra("id", id1);
@@ -340,6 +345,7 @@ public class View_Product extends AppCompatActivity {
                                             intent1.putExtra("division", division1);
                                             intent1.putExtra("district", district1);
                                             intent1.putExtra("photo", photo1);
+                                            intent1.putExtra("postcode", postcode);
 
 
                                             intent1.putExtra("id", id1);
@@ -554,6 +560,7 @@ public class View_Product extends AppCompatActivity {
         strMain_category = intent.getStringExtra("main_category");
         strSub_category = intent.getStringExtra("sub_category");
         ad_detail = intent.getStringExtra("ad_detail");
+        postcode = intent.getStringExtra("postcode");
 
         brand = intent.getStringExtra("brand_material");
         inner = intent.getStringExtra("inner_material");
@@ -579,7 +586,7 @@ public class View_Product extends AppCompatActivity {
 
                                 if(jsonArray.length() == 0){
                                     Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
-                                            division, district, photo, userid, id);
+                                            division,postcode, district, photo, userid, id);
                                 }
                                 if (success.equals("1")) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -591,7 +598,7 @@ public class View_Product extends AppCompatActivity {
                                             Toast.makeText(View_Product.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
                                         }else {
                                             Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
-                                                    division, district, photo, userid, id);
+                                                    division,postcode, district, photo, userid, id);
                                         }
                                     }
                                 }
@@ -652,6 +659,7 @@ public class View_Product extends AppCompatActivity {
         strMain_category = intent.getStringExtra("main_category");
         strSub_category = intent.getStringExtra("sub_category");
         ad_detail = intent.getStringExtra("ad_detail");
+        postcode = intent.getStringExtra("postcode");
 
         brand = intent.getStringExtra("brand_material");
         inner = intent.getStringExtra("inner_material");
@@ -684,6 +692,7 @@ public class View_Product extends AppCompatActivity {
                                     final String strAd_Detail = item.getAd_detail();
                                     final Double strPrice = Double.valueOf(item.getPrice());
                                     final String strDivision = item.getDivision();
+                                    final String strPostcode = item.getPostcode();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
 
@@ -760,6 +769,7 @@ public class View_Product extends AppCompatActivity {
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
                                                 params.put("division", strDivision);
+                                                params.put("postcode", strPostcode);
                                                 params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
@@ -834,7 +844,7 @@ public class View_Product extends AppCompatActivity {
     }
 
     private void Add_Cart(final String Main_category, final String Sub_category,
-                          final String Ad_detail, final String Price, final String Division,
+                          final String Ad_detail, final String Price, final String Division, final String strPostcode,
                           final String District, final String Photo,
                           final String Userid, final String Id){
         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
@@ -901,6 +911,7 @@ public class View_Product extends AppCompatActivity {
                 params.put("ad_detail", Ad_detail);
                 params.put("price", Price);
                 params.put("division", Division);
+                params.put("postcode", strPostcode);
                 params.put("district", District);
                 params.put("photo", Photo);
                 params.put("seller_id", Userid);
@@ -1144,6 +1155,7 @@ public class View_Product extends AppCompatActivity {
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1158,6 +1170,7 @@ public class View_Product extends AppCompatActivity {
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Single_Adapter(itemList, View_Product.this);
@@ -1177,6 +1190,7 @@ public class View_Product extends AppCompatActivity {
                                         detailIntent.putExtra("ad_detail", item.getAd_detail());
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1272,10 +1286,12 @@ public class View_Product extends AppCompatActivity {
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setPostcode(postcode);
                                     itemList2.add(item);
                                 }
                                 EditSold(id, String.valueOf(itemList2.size()));
@@ -1385,6 +1401,7 @@ public class View_Product extends AppCompatActivity {
                                             String inner = intent4.getStringExtra("inner_material");
                                             String desc = intent4.getStringExtra("description");
                                             String division = intent4.getStringExtra("division");
+                                            String postcode = intent4.getStringExtra("postcode");
                                             String district = intent4.getStringExtra("district");
 
                                             String userid1 = intent4.getStringExtra("user_id");
@@ -1404,6 +1421,7 @@ public class View_Product extends AppCompatActivity {
                                             intent1.putExtra("ad_detail", ad_detail1);
                                             intent1.putExtra("price", strPrice1);
                                             intent1.putExtra("division", division1);
+                                            intent1.putExtra("postcode", postcode);
                                             intent1.putExtra("district", district1);
                                             intent1.putExtra("photo", photo1);
 

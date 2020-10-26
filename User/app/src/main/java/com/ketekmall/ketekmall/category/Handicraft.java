@@ -382,6 +382,7 @@ public class Handicraft extends AppCompatActivity {
                                     final String strAd_Detail = item.getAd_detail();
                                     final Double strPrice = Double.valueOf(item.getPrice());
                                     final String strDivision = item.getDivision();
+                                    final String strPostcode = item.getPostcode();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
 
@@ -458,6 +459,7 @@ public class Handicraft extends AppCompatActivity {
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
                                                 params.put("division", strDivision);
+                                                params.put("postcode", strPostcode);
                                                 params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
@@ -559,6 +561,7 @@ public class Handicraft extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -569,6 +572,7 @@ public class Handicraft extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -598,6 +602,7 @@ public class Handicraft extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -616,6 +621,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -685,6 +691,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -788,6 +795,7 @@ public class Handicraft extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -798,6 +806,7 @@ public class Handicraft extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -829,6 +838,7 @@ public class Handicraft extends AppCompatActivity {
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
 
                                         startActivity(detailIntent);
 
@@ -847,6 +857,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strDivision = item.getDivision();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strPostcode = item.getPostcode();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(Handicraft.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -914,6 +925,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1015,6 +1027,7 @@ public class Handicraft extends AppCompatActivity {
                                     String inner = object.getString("inner_material").trim();
                                     String stock = object.getString("stock").trim();
                                     String desc = object.getString("description").trim();
+                                    String postcode = object.getString("postcode");
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
@@ -1028,6 +1041,7 @@ public class Handicraft extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1057,6 +1071,7 @@ public class Handicraft extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1075,6 +1090,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1115,6 +1131,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1219,6 +1236,7 @@ public class Handicraft extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1229,6 +1247,7 @@ public class Handicraft extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1258,6 +1277,7 @@ public class Handicraft extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1276,6 +1296,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1316,6 +1337,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1502,6 +1524,7 @@ public class Handicraft extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1512,6 +1535,7 @@ public class Handicraft extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1541,6 +1565,7 @@ public class Handicraft extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -1559,6 +1584,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1628,6 +1654,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1652,6 +1679,7 @@ public class Handicraft extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1721,6 +1749,7 @@ public class Handicraft extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);

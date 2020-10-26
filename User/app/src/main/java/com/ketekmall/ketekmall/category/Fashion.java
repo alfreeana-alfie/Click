@@ -379,6 +379,7 @@ public class Fashion extends AppCompatActivity {
                                     final String strDivision = item.getDivision();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
+                                    final String strPostcode = item.getPostcode();
 
                                     if (getId.equals(strSeller_id)) {
                                         Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -453,6 +454,7 @@ public class Fashion extends AppCompatActivity {
                                                 params.put("ad_detail", strAd_Detail);
                                                 params.put("price", String.format("%.2f", strPrice));
                                                 params.put("division", strDivision);
+                                                params.put("postcode", strPostcode);
                                                 params.put("district", strDistrict);
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
@@ -549,6 +551,7 @@ public class Fashion extends AppCompatActivity {
 
                                     String brand = object.getString("brand_material").trim();
                                     String inner = object.getString("inner_material").trim();
+                                    String postcode = object.getString("postcode");
                                     String stock = object.getString("stock").trim();
                                     String desc = object.getString("description").trim();
 
@@ -564,6 +567,7 @@ public class Fashion extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -587,6 +591,7 @@ public class Fashion extends AppCompatActivity {
                                         detailIntent.putExtra("ad_detail", item.getAd_detail());
 
                                         detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("inner_material", item.getInner());
                                         detailIntent.putExtra("stock", item.getStock());
                                         detailIntent.putExtra("description", item.getDescription());
@@ -610,6 +615,7 @@ public class Fashion extends AppCompatActivity {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strPostcode = item.getPostcode();
                                         final String strDivision = item.getDivision();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
@@ -679,6 +685,7 @@ public class Fashion extends AppCompatActivity {
                                                     params.put("sub_category", strSub_category);
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
+                                                    params.put("postcode", strPostcode);
                                                     params.put("division", strDivision);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
@@ -786,6 +793,7 @@ public class Fashion extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String postcode = object.getString("postcode");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -793,6 +801,7 @@ public class Fashion extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -822,6 +831,7 @@ public class Fashion extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -840,6 +850,7 @@ public class Fashion extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -909,6 +920,7 @@ public class Fashion extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1016,6 +1028,7 @@ public class Fashion extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String postcode = object.getString("postcode");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -1023,6 +1036,7 @@ public class Fashion extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1049,6 +1063,7 @@ public class Fashion extends AppCompatActivity {
                                         detailIntent.putExtra("inner_material", item.getInner());
                                         detailIntent.putExtra("stock", item.getStock());
                                         detailIntent.putExtra("description", item.getDescription());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
@@ -1070,6 +1085,7 @@ public class Fashion extends AppCompatActivity {
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
+                                        final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
 
@@ -1139,6 +1155,7 @@ public class Fashion extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1243,6 +1260,7 @@ public class Fashion extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1253,6 +1271,7 @@ public class Fashion extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1277,6 +1296,7 @@ public class Fashion extends AppCompatActivity {
 
                                         detailIntent.putExtra("brand_material", item.getBrand());
                                         detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("stock", item.getStock());
                                         detailIntent.putExtra("description", item.getDescription());
 
@@ -1299,6 +1319,7 @@ public class Fashion extends AppCompatActivity {
                                         final String strSub_category = item.getSub_category();
                                         final String strAd_Detail = item.getAd_detail();
                                         final Double strPrice = Double.valueOf(item.getPrice());
+                                        final String strPostcode = item.getPostcode();
                                         final String strDivision = item.getDivision();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
@@ -1340,6 +1361,7 @@ public class Fashion extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
@@ -1526,6 +1548,7 @@ public class Fashion extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
@@ -1536,6 +1559,8 @@ public class Fashion extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1567,6 +1592,7 @@ public class Fashion extends AppCompatActivity {
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
 
                                         startActivity(detailIntent);
 
@@ -1585,6 +1611,7 @@ public class Fashion extends AppCompatActivity {
                                         final String strDivision = item.getDivision();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strPostcode = item.getPostcode();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(Fashion.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -1652,6 +1679,7 @@ public class Fashion extends AppCompatActivity {
                                                     params.put("ad_detail", strAd_Detail);
                                                     params.put("price", String.format("%.2f", strPrice));
                                                     params.put("division", strDivision);
+                                                    params.put("postcode", strPostcode);
                                                     params.put("district", strDistrict);
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
