@@ -179,6 +179,7 @@ public class Cart extends AppCompatActivity {
                                         final String ad_detail = object.getString("ad_detail").trim();
                                         final Double price = Double.valueOf(object.getString("price").trim());
                                         final String division = object.getString("division");
+                                        final String postcode = object.getString("postcode");
                                         final String district = object.getString("district");
                                         final String image_item = object.getString("photo");
                                         final String quantity = object.getString("quantity");
@@ -213,6 +214,7 @@ public class Cart extends AppCompatActivity {
                                                                     item.setQuantity(quantity);
                                                                     item.setItem_id(item_id);
                                                                     item.setMax_order(max_order);
+                                                                    item.setPostcode(postcode);
                                                                     number = Integer.parseInt(item.getQuantity());
                                                                     itemAllDetailsArrayList.add(item);
                                                                 }
@@ -462,6 +464,7 @@ public class Cart extends AppCompatActivity {
                 params.put("ad_detail", item.getAd_detail());
                 params.put("price", String.format("%.2f", price));
                 params.put("division", item.getDivision());
+                params.put("postcode", item.getPostcode());
                 params.put("district", item.getDistrict());
                 params.put("photo", item.getPhoto());
                 params.put("seller_id", item.getSeller_id());
@@ -652,156 +655,7 @@ public class Cart extends AppCompatActivity {
                                             Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
                                         } else {
                                             EditCheckout(max_order, item.getId());
-/*                                                                                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
-                                                                                                                    new Response.Listener<String>() {
-                                                                                                                        @Override
-                                                                                                                        public void onResponse(String response) {
-                                                                                                                            try {
-                                                                                                                                final JSONObject Object = new JSONObject(response);
-                                                                                                                                String success = Object.getString("success");
-
-                                                                                                                                if (success.equals("1")) {
-                                                                                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART_TEMP,
-                                                                                                                                            new Response.Listener<String>() {
-                                                                                                                                                @Override
-                                                                                                                                                public void onResponse(String response) {
-                                                                                                                                                    try {
-                                                                                                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                                                                                                        String success = jsonObject.getString("success");
-                                                                                                                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                                                                                                                                                        Double grandtotal = 0.00;
-                                                                                                                                                        if (success.equals("1")) {
-                                                                                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                                                                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                                                                                                                                                final String id = object.getString("id").trim();
-                                                                                                                                                                final String customer_id = object.getString("customer_id").trim();
-                                                                                                                                                                final String main_category = object.getString("main_category").trim();
-                                                                                                                                                                final String sub_category = object.getString("sub_category").trim();
-                                                                                                                                                                final String ad_detail = object.getString("ad_detail").trim();
-                                                                                                                                                                final Double price = Double.valueOf(object.getString("price").trim());
-                                                                                                                                                                final String division = object.getString("division");
-                                                                                                                                                                final String district = object.getString("district");
-                                                                                                                                                                final String image_item = object.getString("photo");
-                                                                                                                                                                final String seller_id = object.getString("seller_id");
-                                                                                                                                                                final String item_id = object.getString("item_id");
-                                                                                                                                                                final String quantity = object.getString("quantity");
-
-//                                                                                                                                                        grandtotal += (price * Integer.parseInt(quantity));
-//                                                                                                                                                        Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
-
-                                                                                                                                                                final Item_All_Details item = new Item_All_Details(id,seller_id, main_category, sub_category,ad_detail, String.format("%.2f", price), division, district, image_item);
-                                                                                                                                                                item.setQuantity(quantity);
-                                                                                                                                                                item.setMax_order(max_order);
-                                                                                                                                                            }
-                                                                                                                                                        }
-                                                                                                                                                    } catch (JSONException e) {
-                                                                                                                                                        e.printStackTrace();
-//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                                                                                                                    }
-                                                                                                                                                }
-                                                                                                                                            }, new Response.ErrorListener() {
-                                                                                                                                        @Override
-                                                                                                                                        public void onErrorResponse(VolleyError error) {
-                                                                                                                                            try {
-
-                                                                                                                                                if (error instanceof TimeoutError ) {
-                                                                                                                                                    //Time out error
-
-                                                                                                                                                }else if(error instanceof NoConnectionError){
-                                                                                                                                                    //net work error
-
-                                                                                                                                                } else if (error instanceof AuthFailureError) {
-                                                                                                                                                    //error
-
-                                                                                                                                                } else if (error instanceof ServerError) {
-                                                                                                                                                    //Erroor
-                                                                                                                                                } else if (error instanceof NetworkError) {
-                                                                                                                                                    //Error
-
-                                                                                                                                                } else if (error instanceof ParseError) {
-                                                                                                                                                    //Error
-
-                                                                                                                                                }else{
-                                                                                                                                                    //Error
-                                                                                                                                                }
-                                                                                                                                                //End
-
-
-                                                                                                                                            } catch (Exception e) {
-
-
-                                                                                                                                            }
-                                                                                                                                        }
-                                                                                                                                    }) {
-                                                                                                                                        @Override
-                                                                                                                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                                                                                                                            Map<String, String> params = new HashMap<>();
-                                                                                                                                            params.put("customer_id", getId);
-                                                                                                                                            return params;
-                                                                                                                                        }
-                                                                                                                                    };
-                                                                                                                                    RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-                                                                                                                                    requestQueue.add(stringRequest);
-                                                                                                                                } else {
-                                                                                                                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                                                                                                                                }
-
-                                                                                                                            } catch (JSONException e) {
-                                                                                                                                e.printStackTrace();
-                                                                                                                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    new Response.ErrorListener() {
-                                                                                                                        @Override
-                                                                                                                        public void onErrorResponse(VolleyError error) {
-                                                                                                                            try {
-
-                                                                                                                                if (error instanceof TimeoutError ) {
-                                                                                                                                    //Time out error
-
-                                                                                                                                }else if(error instanceof NoConnectionError){
-                                                                                                                                    //net work error
-
-                                                                                                                                } else if (error instanceof AuthFailureError) {
-                                                                                                                                    //error
-
-                                                                                                                                } else if (error instanceof ServerError) {
-                                                                                                                                    //Erroor
-                                                                                                                                } else if (error instanceof NetworkError) {
-                                                                                                                                    //Error
-
-                                                                                                                                } else if (error instanceof ParseError) {
-                                                                                                                                    //Error
-
-                                                                                                                                }else{
-                                                                                                                                    //Error
-                                                                                                                                }
-                                                                                                                                //End
-
-
-                                                                                                                            } catch (Exception e) {
-
-
-                                                                                                                            }
-                                                                                                                            Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                                                                                        }
-                                                                                                                    }) {
-                                                                                                                @Override
-                                                                                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                                                                                    Map<String, String> params = new HashMap<>();
-                                                                                                                    params.put("id", item.getId());
-                                                                                                                    params.put("cart_id", item.getId());
-                                                                                                                    params.put("quantity", String.valueOf(number));
-                                                                                                                    return params;
-                                                                                                                }
-                                                                                                            };
-                                                                                                            RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-                                                                                                            requestQueue.add(stringRequest);
-                                                                                                            */
-                                        }
+                                     }
                                     }
 //                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -1018,6 +872,7 @@ public class Cart extends AppCompatActivity {
                                     final String ad_detail = object.getString("ad_detail").trim();
                                     final Double price = Double.valueOf(object.getString("price").trim());
                                     final String division = object.getString("division");
+                                    final String postcode = object.getString("postcode");
                                     final String district = object.getString("district");
                                     final String image_item = object.getString("photo");
                                     final String seller_id = object.getString("seller_id");
@@ -1036,6 +891,7 @@ public class Cart extends AppCompatActivity {
                                             image_item);
                                     item.setQuantity(quantity);
                                     item.setMax_order(MaxOrder);
+                                    item.setPostcode(postcode);
                                 }
                             }
                         } catch (JSONException e) {
@@ -1172,6 +1028,7 @@ public class Cart extends AppCompatActivity {
                                         final String ad_detail = object.getString("ad_detail").trim();
                                         final Double price = Double.valueOf(object.getString("price").trim());
                                         final String division = object.getString("division");
+                                        final String postcode = object.getString("postcode");
                                         final String district = object.getString("district");
                                         final String image_item = object.getString("photo");
                                         final String seller_id = object.getString("seller_id");
@@ -1188,6 +1045,7 @@ public class Cart extends AppCompatActivity {
                                                 district,
                                                 image_item);
                                         item.setQuantity(quantity);
+                                        item.setPostcode(postcode);
                                     }
                                 }
                             } catch (JSONException e) {
