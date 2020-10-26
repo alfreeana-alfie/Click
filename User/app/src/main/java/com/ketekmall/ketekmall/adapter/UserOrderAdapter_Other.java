@@ -64,7 +64,7 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
             holder.btn_self.setVisibility(View.VISIBLE);
         }
 
-        holder.shippin_price.setText(itemAllDetails.getDelivery_price2());
+        holder.shippin_price.setText(itemAllDetails.getDelivery_price());
 
         holder.btn_self.setOnClickListener(new View.OnClickListener() {
             @Override

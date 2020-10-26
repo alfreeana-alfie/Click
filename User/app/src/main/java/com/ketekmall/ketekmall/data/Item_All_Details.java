@@ -10,7 +10,16 @@ public class Item_All_Details {
     private String main_category;
     private String sub_category;
     private String quantity;
+    private String postcode;
     private String max_order, shocking, delivery_status;
+
+    public String getPostcode() {
+        return postcode;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
 
     public String getDelivery_status() {
         return delivery_status;

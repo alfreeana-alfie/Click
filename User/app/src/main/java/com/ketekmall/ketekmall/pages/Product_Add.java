@@ -71,7 +71,7 @@ public class Product_Add extends AppCompatActivity {
             adapter_jobs, adapter_travel, adapter_other;
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
-    private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order;
+    private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order, edittext_postcode;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, location_page_layout;
@@ -306,6 +306,7 @@ public class Product_Add extends AppCompatActivity {
         enter_location = findViewById(R.id.enter_location);
         enter_price = findViewById(R.id.enter_price);
         enter_setup = findViewById(R.id.enter_delivery_location);
+        edittext_postcode = findViewById(R.id.enter_postcode);
         edittext_order = findViewById(R.id.enter_max_order);
         about_detail = findViewById(R.id.about_product);
 
@@ -610,6 +611,7 @@ public class Product_Add extends AppCompatActivity {
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
         final String strOrder = this.edittext_order.getText().toString();
         final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
+        final String strPostcode = this.edittext_postcode.getText().toString();
         final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
 
         if (strAd_Detail.isEmpty()) {
@@ -734,6 +736,7 @@ public class Product_Add extends AppCompatActivity {
                     params.put("price", String.format("%.2f", strPrice));
                     params.put("max_order", strOrder);
                     params.put("division", strDivision);
+                    params.put("postcode", strPostcode);
                     params.put("district", strDistrict);
                     params.put("photo", photo);
                     params.put("filename", strAd_Detail + "1");

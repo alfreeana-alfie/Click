@@ -150,7 +150,6 @@ public class MyProducts extends AppCompatActivity {
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-//                                Toast.makeText(getContext(), "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -167,6 +166,7 @@ public class MyProducts extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String max_order = object.getString("max_order");
@@ -181,6 +181,7 @@ public class MyProducts extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setDelivery_status(delivery_status);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_UserAdapter(itemList, MyProducts.this);
@@ -205,6 +206,7 @@ public class MyProducts extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("max_order", item.getMax_order());
@@ -222,7 +224,6 @@ public class MyProducts extends AppCompatActivity {
                                                         try {
                                                             JSONObject jsonObject = new JSONObject(response);
                                                             String success = jsonObject.getString("success");
-
                                                             if (success.equals("1")) {
                                                                 Toast.makeText(MyProducts.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
                                                             } else {

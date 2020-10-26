@@ -532,7 +532,7 @@
     <string name="address_1">Address 1</string>
     <string name="address_2">Address 2</string>
     <string name="city">City</string>
-    <string name="postcode">Postcode</string>
+
     <string name="my_products">My Products</string>
     <string name="username">username</string>
     <string name="browse_categories">Browse Categories</string>
@@ -666,5 +666,6 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="click_to_edit_details">Click to Edit Details</string>
     <string name="product_details">Product Details</string>
+    <string name="postcode">Postcode</string>
 </resources>
 

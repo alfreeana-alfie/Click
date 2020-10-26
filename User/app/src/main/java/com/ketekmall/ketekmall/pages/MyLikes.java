@@ -224,10 +224,12 @@ public class MyLikes extends AppCompatActivity {
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 adapter_item = new FavouriteAdapter(itemList, MyLikes.this);
@@ -252,6 +254,7 @@ public class MyLikes extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 
@@ -282,9 +285,6 @@ public class MyLikes extends AppCompatActivity {
                                                                         itemList.remove(position);
                                                                         adapter_item.notifyDataSetChanged();
                                                                         gridView.setAdapter(adapter_item);
-//                                                                        Toast.makeText(Saved_Searches_Other.this, "Login! ", Toast.LENGTH_SHORT).show();
-//                                                                final String id = jsonObject.getString("id").trim();
-
                                                                     } else {
                                                                         Toast.makeText(MyLikes.this, "Failed to read", Toast.LENGTH_SHORT).show();
                                                                     }
@@ -426,10 +426,12 @@ public class MyLikes extends AppCompatActivity {
                                     String ad_detail = object.getString("ad_detail").trim();
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -459,6 +461,7 @@ public class MyLikes extends AppCompatActivity {
 
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
 

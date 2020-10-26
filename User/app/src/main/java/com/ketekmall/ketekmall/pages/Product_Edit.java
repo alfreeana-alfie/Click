@@ -73,7 +73,7 @@ public class Product_Edit extends AppCompatActivity {
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
             Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
-    private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order;
+    private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order, Edittext_Postcode;
     private Button Button_AcceptCategory, Button_BackCategory,
             Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
             Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
@@ -100,6 +100,7 @@ public class Product_Edit extends AppCompatActivity {
         final String ad_detail = intent.getStringExtra("ad_detail");
         final String price = intent.getStringExtra("price");
         final String division = intent.getStringExtra("division");
+        final String postcode = intent.getStringExtra("postcode");
         district = intent.getStringExtra("district");
         final String photo = intent.getStringExtra("photo");
         String Location_Text = division + ", " + district;
@@ -150,6 +151,7 @@ public class Product_Edit extends AppCompatActivity {
             spinner_division.setSelection(division_position);
         }
 
+        Edittext_Postcode.setText(postcode);
         Main_Category_TextView.setText(main_category);
         Sub_Category_TextView.setText(sub_category);
         Ad_Detail_TextView.setText(ad_detail);
@@ -182,6 +184,7 @@ public class Product_Edit extends AppCompatActivity {
         about_detail = findViewById(R.id.about_product);
 
         Edittext_Order = findViewById(R.id.enter_max_order);
+        Edittext_Postcode = findViewById(R.id.enter_postcode);
 
         edittext_brand = findViewById(R.id.edittext_brand);
         edittext_inner = findViewById(R.id.edittext_inner);
@@ -680,6 +683,7 @@ public class Product_Edit extends AppCompatActivity {
         final String strPrice_Text = String.format("%.2f", strPrice);
         final String strOrder = this.Edittext_Order.getText().toString();
         final String strDivision = this.Division_TextView.getText().toString().trim();
+        final String strPostcode = this.Edittext_Postcode.getText().toString().trim();
         final String strDistrict = this.District_TextView.getText().toString().trim();
 
 
@@ -768,6 +772,7 @@ public class Product_Edit extends AppCompatActivity {
                 params.put("price", strPrice_Text);
                 params.put("max_order", strOrder);
                 params.put("division", strDivision);
+                params.put("postcode", strPostcode);
                 params.put("district", strDistrict);
                 params.put("id", id);
                 params.put("item_id", id);

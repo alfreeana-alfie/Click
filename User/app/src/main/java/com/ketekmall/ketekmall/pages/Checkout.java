@@ -155,6 +155,26 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
+                                    final String postCode = object.getString("postcode");
+
+                                    if(postCode.contains("")){
+                                        delivery_combine = new Delivery_Combine();
+                                        delivery_combine.setId(id);
+                                        delivery_combine.setDelivery_item_id(item_id);
+                                        delivery_combine.setSeller_id(seller_id);
+                                        delivery_combine.setAd_detail(ad_detail);
+                                        delivery_combine.setPhoto(image_item);
+                                        delivery_combine.setPrice(String.valueOf(price));
+                                        delivery_combine.setDivision(division);
+                                        delivery_combine.setQuantity(quantity);
+                                        delivery_combine.setDelivery_price("MYR0.00");
+                                        delivery_combine.setDelivery_division(division);
+
+//                                      delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                        delivery_combine.setDelivery_division1("Not Available");
+
+                                        item_all_detailsList.add(delivery_combine);
+                                    }
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                             new Response.Listener<String>() {
@@ -181,9 +201,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 AddressUser.setText(Address);
 
-                                                                PoslajuDomesticbyPostcode(division, strPostCode, quantity);
+//                                                                PoslajuDomesticbyPostcode(division, strPostCode, quantity);
 
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + division + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
+                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                                                                         new Response.Listener<String>() {
                                                                             @Override
@@ -193,7 +213,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                     JSONArray jsonarray = new JSONArray(response);
                                                                                     for(int i=0; i < jsonarray.length(); i++) {
                                                                                         JSONObject jsonobject = jsonarray.getJSONObject(i);
-
                                                                                         String totalAmount       = jsonobject.getString("totalAmount");
                                                                                         Log.i("jsonObjectRequest", totalAmount);
 
@@ -206,8 +225,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         delivery_combine.setPrice(String.valueOf(price));
                                                                                         delivery_combine.setDivision(division);
                                                                                         delivery_combine.setQuantity(quantity);
-                                                                                        delivery_combine.setDelivery_price(Price);
-                                                                                        delivery_combine.setDelivery_division(totalAmount);
+                                                                                        delivery_combine.setDelivery_price(totalAmount);
+                                                                                        delivery_combine.setDelivery_division(division);
+
+//                                                                                      delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                        delivery_combine.setDelivery_division1(division + " to " + strCity);
 
                                                                                         item_all_detailsList.add(delivery_combine);
 
@@ -217,7 +239,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                     userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
                                                                                         @Override
                                                                                         public void onSelfClick(int position) {
-                                                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
                                                                                             delivery_combine = new Delivery_Combine();
                                                                                             delivery_combine.setId(id);
                                                                                             delivery_combine.setDelivery_item_id(item_id);
