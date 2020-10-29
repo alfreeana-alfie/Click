@@ -11,7 +11,16 @@ public class Item_All_Details {
     private String sub_category;
     private String quantity;
     private String postcode;
+    private String weight;
     private String max_order, shocking, delivery_status;
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
 
     public String getPostcode() {
         return postcode;

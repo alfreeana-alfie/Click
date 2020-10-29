@@ -156,6 +156,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
                                     final String postCode = object.getString("postcode");
+                                    final String weight = object.getString("weight");
+
 
 //                                    if(postCode.contains("")) {
 //                                        delivery_combine = new Delivery_Combine();
@@ -203,8 +205,16 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
 //                                                                PoslajuDomesticbyPostcode(division, strPostCode, quantity);
 
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
-                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
+
+
+                                                                if(postCode.contains("") & weight.contains("0.0")){
+                                                                    String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.0";
+
+                                                                }else{
+                                                                    String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
+
+                                                                }
+                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, HTTP_PoslajuDomesticbyPostcode,
                                                                         new Response.Listener<String>() {
                                                                             @Override
                                                                             public void onResponse(String response) {

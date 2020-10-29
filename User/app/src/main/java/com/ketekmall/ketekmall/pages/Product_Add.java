@@ -71,7 +71,7 @@ public class Product_Add extends AppCompatActivity {
             adapter_jobs, adapter_travel, adapter_other;
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
-    private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order, edittext_postcode;
+    private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order, edittext_postcode, edittext_weight;
     private Button accept_item, accept_category, back_category, accept_ad_detail, back_ad_detail, accept_location, back_location, back_item;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
     private RelativeLayout category_page_layout, location_page_layout;
@@ -309,6 +309,7 @@ public class Product_Add extends AppCompatActivity {
         edittext_postcode = findViewById(R.id.enter_postcode);
         edittext_order = findViewById(R.id.enter_max_order);
         about_detail = findViewById(R.id.about_product);
+        edittext_weight = findViewById(R.id.enter_weight);
 
         edittext_brand = findViewById(R.id.edittext_brand);
         edittext_inner = findViewById(R.id.edittext_inner);
@@ -608,11 +609,13 @@ public class Product_Add extends AppCompatActivity {
         final String strStock = this.edittext_stock.getText().toString();
         final String strDesc = this.edittext_desc.getText().toString();
 
+
         final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
         final String strOrder = this.edittext_order.getText().toString();
         final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
         final String strPostcode = this.edittext_postcode.getText().toString();
         final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
+        final String strWeight = this.edittext_weight.getText().toString();
 
         if (strAd_Detail.isEmpty()) {
             Toast.makeText(Product_Add.this, "Incomplete info", Toast.LENGTH_SHORT).show();
@@ -714,11 +717,8 @@ public class Product_Add extends AppCompatActivity {
                                     System.out.println("" + error);
                                 }
                                 //End
-
-
                             } catch (Exception e) {
-
-
+                                e.printStackTrace();
                             }
                         }
                     }) {
@@ -741,6 +741,7 @@ public class Product_Add extends AppCompatActivity {
                     params.put("photo", photo);
                     params.put("filename", strAd_Detail + "1");
                     params.put("filepath", photo);
+                    params.put("weight", strWeight);
                     return params;
                 }
             };
@@ -805,6 +806,7 @@ public class Product_Add extends AppCompatActivity {
 
 
                         } catch (Exception e) {
+                            e.printStackTrace();
 
 
                         }
@@ -913,7 +915,7 @@ public class Product_Add extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
+                            e.printStackTrace();
 
                         }
                     }

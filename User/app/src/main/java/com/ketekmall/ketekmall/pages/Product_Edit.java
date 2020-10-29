@@ -73,7 +73,7 @@ public class Product_Edit extends AppCompatActivity {
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
             Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
-    private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order, Edittext_Postcode;
+    private EditText EditText_Price, EditText_Ad_Detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, Edittext_Order, Edittext_Postcode, editText_weight;
     private Button Button_AcceptCategory, Button_BackCategory,
             Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
             Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
@@ -180,6 +180,7 @@ public class Product_Edit extends AppCompatActivity {
         Division_TextView = findViewById(R.id.division_TextView);
         District_TextView = findViewById(R.id.district_TextView);
         Delivery_Location = findViewById(R.id.enter_delivery_location);
+        editText_weight = findViewById(R.id.enter_weight);
 
         about_detail = findViewById(R.id.about_product);
 
@@ -677,6 +678,7 @@ public class Product_Edit extends AppCompatActivity {
         final String strInner = this.edittext_inner.getText().toString();
         final String strStock = this.edittext_stock.getText().toString();
         final String strDesc = this.edittext_desc.getText().toString();
+        final String strWeight = this.editText_weight.getText().toString();
 
         final Double strPrice = Double.valueOf(this.EditText_Price.getText().toString().trim());
         @SuppressLint("DefaultLocale")
@@ -776,6 +778,7 @@ public class Product_Edit extends AppCompatActivity {
                 params.put("district", strDistrict);
                 params.put("id", id);
                 params.put("item_id", id);
+                params.put("weight", strWeight);
                 return params;
             }
         };

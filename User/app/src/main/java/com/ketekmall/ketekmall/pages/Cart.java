@@ -184,6 +184,7 @@ public class Cart extends AppCompatActivity {
                                         final String image_item = object.getString("photo");
                                         final String quantity = object.getString("quantity");
                                         final String item_id = object.getString("item_id");
+                                        final String weight = object.getString("weight");
 
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
                                                 new Response.Listener<String>() {
@@ -215,6 +216,7 @@ public class Cart extends AppCompatActivity {
                                                                     item.setItem_id(item_id);
                                                                     item.setMax_order(max_order);
                                                                     item.setPostcode(postcode);
+                                                                    item.setWeight(weight);
                                                                     number = Integer.parseInt(item.getQuantity());
                                                                     itemAllDetailsArrayList.add(item);
                                                                 }
@@ -471,6 +473,7 @@ public class Cart extends AppCompatActivity {
                 params.put("item_id", item.getItem_id());
                 params.put("quantity", String.valueOf(number));
                 params.put("cart_id", item.getId());
+                params.put("weight", item.getWeight());
                 return params;
             }
         };
@@ -877,6 +880,7 @@ public class Cart extends AppCompatActivity {
                                     final String image_item = object.getString("photo");
                                     final String seller_id = object.getString("seller_id");
                                     final String quantity = object.getString("quantity");
+                                    final String weight = object.getString("weight");
 
                                     @SuppressLint("DefaultLocale")
                                     final Item_All_Details item = new Item_All_Details(
@@ -892,6 +896,7 @@ public class Cart extends AppCompatActivity {
                                     item.setQuantity(quantity);
                                     item.setMax_order(MaxOrder);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                 }
                             }
                         } catch (JSONException e) {
@@ -1033,6 +1038,7 @@ public class Cart extends AppCompatActivity {
                                         final String image_item = object.getString("photo");
                                         final String seller_id = object.getString("seller_id");
                                         final String quantity = object.getString("quantity");
+                                        final String weight = object.getString("weight");
 
                                         @SuppressLint("DefaultLocale") final Item_All_Details item = new Item_All_Details(
                                                 id,
@@ -1046,6 +1052,7 @@ public class Cart extends AppCompatActivity {
                                                 image_item);
                                         item.setQuantity(quantity);
                                         item.setPostcode(postcode);
+                                        item.setWeight(weight);
                                     }
                                 }
                             } catch (JSONException e) {

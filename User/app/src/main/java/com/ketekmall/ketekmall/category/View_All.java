@@ -394,6 +394,7 @@ public class View_All extends AppCompatActivity {
                                     final String strPostcode = item.getPostcode();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
+                                    final String strWeight = item.getWeight();
 
                                     if (getId.equals(strSeller_id)) {
                                         Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -473,6 +474,7 @@ public class View_All extends AppCompatActivity {
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 params.put("item_id", strItem_Id);
+                                                params.put("weight", strWeight);
                                                 return params;
                                             }
                                         };
@@ -574,6 +576,7 @@ public class View_All extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -582,6 +585,7 @@ public class View_All extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -614,6 +618,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
 
@@ -633,6 +638,7 @@ public class View_All extends AppCompatActivity {
                                         final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -706,6 +712,7 @@ public class View_All extends AppCompatActivity {
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
                                                     params.put("item_id", strItem_Id);
+                                                    params.put("weight", strWeight);
                                                     return params;
                                                 }
                                             };
@@ -810,6 +817,7 @@ public class View_All extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -818,6 +826,7 @@ public class View_All extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -850,6 +859,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
 
@@ -869,6 +879,7 @@ public class View_All extends AppCompatActivity {
                                         final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -942,6 +953,7 @@ public class View_All extends AppCompatActivity {
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
                                                     params.put("item_id", strItem_Id);
+                                                    params.put("weight", strWeight);
                                                     return params;
                                                 }
                                             };
@@ -1047,6 +1059,7 @@ public class View_All extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -1055,6 +1068,7 @@ public class View_All extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1087,6 +1101,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
 
@@ -1106,6 +1121,7 @@ public class View_All extends AppCompatActivity {
                                         final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -1179,6 +1195,7 @@ public class View_All extends AppCompatActivity {
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
                                                     params.put("item_id", strItem_Id);
+                                                    params.put("weight", strWeight);
                                                     return params;
                                                 }
                                             };
@@ -1284,6 +1301,7 @@ public class View_All extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -1292,6 +1310,7 @@ public class View_All extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1324,6 +1343,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
 
@@ -1343,6 +1363,7 @@ public class View_All extends AppCompatActivity {
                                         final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -1416,6 +1437,7 @@ public class View_All extends AppCompatActivity {
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
                                                     params.put("item_id", strItem_Id);
+                                                    params.put("weight", strWeight);
                                                     return params;
                                                 }
                                             };
@@ -1603,6 +1625,7 @@ public class View_All extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -1611,6 +1634,7 @@ public class View_All extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1643,6 +1667,7 @@ public class View_All extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
 
@@ -1662,6 +1687,7 @@ public class View_All extends AppCompatActivity {
                                         final String strPostcode = item.getPostcode();
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
+                                        final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
                                             Toast.makeText(View_All.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
@@ -1735,6 +1761,7 @@ public class View_All extends AppCompatActivity {
                                                     params.put("photo", strPhoto);
                                                     params.put("seller_id", strSeller_id);
                                                     params.put("item_id", strItem_Id);
+                                                    params.put("weight", strWeight);
                                                     return params;
                                                 }
                                             };
