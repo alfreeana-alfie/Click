@@ -58,7 +58,7 @@ import java.util.Map;
 public class Product_Add extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/uploadimg_new.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg_new.php";
     private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
     private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
 
@@ -638,7 +638,7 @@ public class Product_Add extends AppCompatActivity {
                                     itemList.add(item);
 
                                     if (upload_photo_img2.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
                                         Log.d("PHOTO", "NO");
                                     }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
@@ -646,7 +646,7 @@ public class Product_Add extends AppCompatActivity {
                                     }
 
                                     if (upload_photo_img3.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
                                         Log.d("PHOTO", "NO");
                                     }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
@@ -654,7 +654,7 @@ public class Product_Add extends AppCompatActivity {
                                     }
 
                                     if (upload_photo_img4.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
                                         Log.d("PHOTO", "NO");
                                     }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
@@ -662,7 +662,7 @@ public class Product_Add extends AppCompatActivity {
                                     }
 
                                     if (upload_photo_img5.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_photo_black_foreground).getConstantState())){
+                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
                                         Log.d("PHOTO", "NO");
                                     }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
@@ -671,6 +671,7 @@ public class Product_Add extends AppCompatActivity {
 
                                     Intent intent = new Intent(Product_Add.this, MyProducts.class);
                                     startActivity(intent);
+
                                 } else {
                                     Toast.makeText(Product_Add.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
 

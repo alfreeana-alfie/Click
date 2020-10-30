@@ -69,7 +69,7 @@ public class Product_Edit extends AppCompatActivity {
             adapter_leisure, adapter_business, adapter_jobs,
             adapter_travel, adapter_other;
     Uri filePath1,filePath2,filePath3,filePath4,filePath5;
-    String id, sub_category, district;
+    String strID, sub_category, district;
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView Main_Category_TextView, Sub_Category_TextView, Ad_Detail_TextView,
             Category_TextView, Location_TextView, Division_TextView, District_TextView, Delivery_Location;
@@ -94,7 +94,8 @@ public class Product_Edit extends AppCompatActivity {
         Declare();
 
         final Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+
+        strID = intent.getStringExtra("id");
         final String main_category = intent.getStringExtra("main_category");
         sub_category = intent.getStringExtra("sub_category");
         final String ad_detail = intent.getStringExtra("ad_detail");
@@ -105,6 +106,7 @@ public class Product_Edit extends AppCompatActivity {
         final String photo = intent.getStringExtra("photo");
         String Location_Text = division + ", " + district;
         final String strMax_Order = intent.getStringExtra("max_order");
+        final String strWeight = intent.getStringExtra("weight");
 
         final String brand = intent.getStringExtra("brand_material");
         final String inner = intent.getStringExtra("inner_material");
@@ -122,7 +124,7 @@ public class Product_Edit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Product_Edit.this, Delivery_MainPage.class);
-                intent1.putExtra("item_id", id);
+                intent1.putExtra("item_id", strID);
                 intent1.putExtra("ad_detail", ad_detail);
                 intent1.putExtra("main_category", main_category);
                 intent1.putExtra("sub_category", sub_category);
@@ -160,6 +162,7 @@ public class Product_Edit extends AppCompatActivity {
         District_TextView.setText(district);
         EditText_Ad_Detail.setText(ad_detail);
         EditText_Price.setText(price);
+        editText_weight.setText(strWeight);
         Picasso.get().load(photo).into(upload_photo_img1);
 
         edittext_brand.setText(brand);
@@ -168,7 +171,6 @@ public class Product_Edit extends AppCompatActivity {
         edittext_desc.setText(desc);
 
         Button_Func();
-
     }
 
     private void Declare() {
@@ -671,7 +673,7 @@ public class Product_Edit extends AppCompatActivity {
 
     private void saveEdit() {
         final Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        strID = intent.getStringExtra("id");
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final String strBrand = this.edittext_brand.getText().toString();
@@ -776,8 +778,8 @@ public class Product_Edit extends AppCompatActivity {
                 params.put("division", strDivision);
                 params.put("postcode", strPostcode);
                 params.put("district", strDistrict);
-                params.put("id", id);
-                params.put("item_id", id);
+                params.put("id", strID);
+                params.put("item_id", strID);
                 params.put("weight", strWeight);
                 return params;
             }
@@ -789,7 +791,7 @@ public class Product_Edit extends AppCompatActivity {
 
     private void saveItemID() {
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        strID = intent.getStringExtra("id");
         final String ad_detail = intent.getStringExtra("ad_detail");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_PROD,
@@ -856,7 +858,7 @@ public class Product_Edit extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("ad_detail", ad_detail);
-                params.put("item_id", id);
+                params.put("item_id", strID);
                 return params;
             }
         };
@@ -1073,7 +1075,7 @@ public class Product_Edit extends AppCompatActivity {
 
     private void saveImage2(final String photo) {
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        strID = intent.getStringExtra("id");
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_IMG,
                 new Response.Listener<String>() {
@@ -1139,7 +1141,7 @@ public class Product_Edit extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("ad_detail", strAd_Detail);
                 params.put("photo", photo);
-                params.put("id", id);
+                params.put("id", strID);
                 return params;
             }
         };
@@ -1149,7 +1151,7 @@ public class Product_Edit extends AppCompatActivity {
 
     private void saveImage(final String number, final String photo) {
         Intent intent = getIntent();
-        id = intent.getStringExtra("id");
+        strID = intent.getStringExtra("id");
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
 
         final String Filename = strAd_Detail + number;
@@ -1215,7 +1217,7 @@ public class Product_Edit extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("item_id", id);
+                params.put("item_id", strID);
                 params.put("ad_detail", strAd_Detail);
                 params.put("filename", Filename);
                 params.put("filepath", photo);

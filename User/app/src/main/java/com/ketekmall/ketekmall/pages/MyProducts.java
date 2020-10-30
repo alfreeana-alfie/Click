@@ -172,6 +172,7 @@ public class MyProducts extends AppCompatActivity {
                                     String max_order = object.getString("max_order");
                                     String rating = object.getString("rating");
                                     String delivery_status = object.getString("is_approved");
+                                    String weight = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setMax_order(max_order);
@@ -182,6 +183,7 @@ public class MyProducts extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setDelivery_status(delivery_status);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 adapter_item = new MyProducts_Adapter(itemList, MyProducts.this);
@@ -210,6 +212,7 @@ public class MyProducts extends AppCompatActivity {
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("max_order", item.getMax_order());
+                                        detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
                                     }
