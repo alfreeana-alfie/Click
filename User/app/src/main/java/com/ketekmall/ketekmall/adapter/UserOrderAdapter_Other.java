@@ -60,7 +60,7 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
         holder.location_to.setText(itemAllDetails.getDelivery_division1());
         holder.btn_self.setVisibility(View.GONE);
 
-        if (itemAllDetails.getDivision().equals(itemAllDetails.getDelivery_division())) {
+        if (itemAllDetails.getDivision().equalsIgnoreCase(itemAllDetails.getDelivery_division())) {
             holder.btn_self.setVisibility(View.VISIBLE);
         }
 

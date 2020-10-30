@@ -70,7 +70,7 @@ public class Item_UserAdapter extends BaseAdapter{
 
         Is_approved.setVisibility(View.VISIBLE);
         boost_ad.setVisibility(View.VISIBLE);
-
+        Pending_approved.setVisibility(View.GONE);
 //        if (item.getDelivery_status().equals("0")) {
 //            Pending_approved.setVisibility(View.VISIBLE);
 //            Is_approved.setVisibility(View.GONE);

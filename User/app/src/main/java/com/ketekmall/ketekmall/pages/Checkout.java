@@ -202,7 +202,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                                                 AddressUser.setText(Address);
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
+                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
 
                                                                 if(!postCode.contains("") && !weight.contains("0.00")){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
@@ -230,8 +230,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         delivery_combine.setDivision(division);
                                                                                         delivery_combine.setQuantity(quantity);
                                                                                         delivery_combine.setDelivery_price(totalAmount);
-                                                                                        delivery_combine.setDelivery_division(division);
+                                                                                        delivery_combine.setDelivery_division(strCity);
                                                                                         delivery_combine.setDelivery_division1(division + " to " + strCity);
+
+                                                                                        grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(totalAmount));
+                                                                                        Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                                        Grand_Total2.setText(String.format("%.2f", grandtotal));
 
                                                                                         item_all_detailsList.add(delivery_combine);
 
