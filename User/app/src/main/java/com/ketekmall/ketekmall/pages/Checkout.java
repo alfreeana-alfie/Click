@@ -202,15 +202,13 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                                                 AddressUser.setText(Address);
+                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + quantity;
 
-                                                                if(postCode.contains("") & weight.contains("0.00")){
-                                                                    String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.0";
-
-                                                                }else{
-                                                                    String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
-
+                                                                if(!postCode.contains("") && !weight.contains("0.00")){
+                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
                                                                 }
-                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, HTTP_PoslajuDomesticbyPostcode,
+
+                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                                                                         new Response.Listener<String>() {
                                                                             @Override
                                                                             public void onResponse(String response) {

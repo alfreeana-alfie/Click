@@ -58,7 +58,7 @@ import java.util.Map;
 public class Product_Add extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg.php";
+    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/uploadimg_new.php.php";
     private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
     private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
 
