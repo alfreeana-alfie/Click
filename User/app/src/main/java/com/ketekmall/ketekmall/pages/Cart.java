@@ -152,6 +152,7 @@ public class Cart extends AppCompatActivity {
             }
         });
         itemAllDetailsArrayList = new ArrayList<>();
+        number = 1;
     }
 
     private void View_Item() {
@@ -217,7 +218,7 @@ public class Cart extends AppCompatActivity {
                                                                     item.setMax_order(max_order);
                                                                     item.setPostcode(postcode);
                                                                     item.setWeight(weight);
-                                                                    number = Integer.parseInt(item.getQuantity());
+                                                                    number = Integer.parseInt(quantity);
                                                                     itemAllDetailsArrayList.add(item);
                                                                 }
                                                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);
@@ -267,14 +268,90 @@ public class Cart extends AppCompatActivity {
                                                                     @Override
                                                                     public void onAddClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
+                                                                        number = Integer.parseInt(item.getQuantity()) + 1;
+                                                                        item.setQuantity(String.valueOf(number));
+                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
+                                                                                new Response.Listener<String>() {
+                                                                                    @Override
+                                                                                    public void onResponse(String response) {
+                                                                                        if (response == null) {
+                                                                                            Log.e("onResponse", "Return NULL");
+                                                                                        } else {
+                                                                                            try {
+                                                                                                final JSONObject Object = new JSONObject(response);
+                                                                                                String success = Object.getString("success");
+                                                                                                JSONArray jsonArray = Object.getJSONArray("read");
 
-                                                                        ++number;
-                                                                        AddQuantity(item);
+                                                                                                if (success.equals("1")) {
+                                                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                        JSONObject object = jsonArray.getJSONObject(i);
+                                                                                                        final String max_order = object.getString("max_order");
+
+                                                                                                        if (number >= Integer.parseInt(max_order)) {
+                                                                                                            Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
+                                                                                                        } else {
+                                                                                                            EditCheckout(item.getQuantity(), max_order, item.getId());
+                                                                                                        }
+                                                                                                    }
+                                                                                                } else {
+                                                                                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                                                }
+
+                                                                                            } catch (JSONException e) {
+                                                                                                e.printStackTrace();
+                                                                                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                                            }
+                                                                                        }
+
+                                                                                    }
+                                                                                },
+                                                                                new Response.ErrorListener() {
+                                                                                    @Override
+                                                                                    public void onErrorResponse(VolleyError error) {
+                                                                                        try {
+                                                                                            if (error instanceof TimeoutError) {
+                                                                                                //Time out error
+                                                                                                System.out.println("" + error);
+                                                                                            } else if (error instanceof NoConnectionError) {
+                                                                                                //net work error
+                                                                                                System.out.println("" + error);
+                                                                                            } else if (error instanceof AuthFailureError) {
+                                                                                                //error
+                                                                                                System.out.println("" + error);
+                                                                                            } else if (error instanceof ServerError) {
+                                                                                                //Erroor
+                                                                                                System.out.println("" + error);
+                                                                                            } else if (error instanceof NetworkError) {
+                                                                                                //Error
+                                                                                                System.out.println("" + error);
+                                                                                            } else if (error instanceof ParseError) {
+                                                                                                //Error
+                                                                                                System.out.println("" + error);
+                                                                                            } else {
+                                                                                                //Error
+                                                                                                System.out.println("" + error);
+                                                                                            }
+                                                                                        } catch (Exception e) {
+                                                                                            e.printStackTrace();
+                                                                                        }
+                                                                                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                                                                                    }
+                                                                                }) {
+                                                                            @Override
+                                                                            protected Map<String, String> getParams() {
+                                                                                Map<String, String> params = new HashMap<>();
+                                                                                params.put("ad_detail", item.getAd_detail());
+                                                                                return params;
+                                                                            }
+                                                                        };
+                                                                        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                                                        requestQueue.add(stringRequest);
                                                                     }
 
                                                                     @Override
                                                                     public void onMinusClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
+                                                                        number = Integer.parseInt(item.getQuantity());
                                                                         --number;
                                                                         if (number == 0) {
                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
@@ -637,6 +714,7 @@ public class Cart extends AppCompatActivity {
     }
 
     private void AddQuantity(final Item_All_Details item) {
+        ++number;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override
@@ -657,7 +735,7 @@ public class Cart extends AppCompatActivity {
                                         if (number >= Integer.parseInt(max_order)) {
                                             Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
                                         } else {
-                                            EditCheckout(max_order, item.getId());
+                                            EditCheckout(item.getQuantity(), max_order, item.getId());
                                      }
                                     }
 //                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
@@ -785,7 +863,7 @@ public class Cart extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void EditCheckout(final String MaxOrder, final String ItemID) {
+    private void EditCheckout(final String number, final String MaxOrder, final String ItemID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                 new Response.Listener<String>() {
                     @Override
@@ -798,6 +876,7 @@ public class Cart extends AppCompatActivity {
                                 String success = Object.getString("success");
 
                                 if (success.equals("1")) {
+                                    Log.d("Message EDIT", number);
                                     ReadCartTemp(MaxOrder);
                                 } else {
                                     Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -847,7 +926,7 @@ public class Cart extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", ItemID);
                 params.put("cart_id", ItemID);
-                params.put("quantity", String.valueOf(number));
+                params.put("quantity",number);
                 return params;
             }
         };
