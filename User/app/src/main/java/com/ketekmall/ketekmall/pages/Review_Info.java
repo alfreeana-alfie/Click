@@ -26,7 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.ReviewAdapter;
+import com.ketekmall.ketekmall.adapter.Review_Adapter;
 import com.ketekmall.ketekmall.data.Review;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -44,7 +44,7 @@ public class Review_Info extends AppCompatActivity {
     private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
 
     RecyclerView recyclerView;
-    ReviewAdapter reviewAdapter;
+    Review_Adapter reviewAdapter;
     List<Review> reviewList;
     BottomNavigationView bottomNav;
 
@@ -178,7 +178,7 @@ public class Review_Info extends AppCompatActivity {
                                     Review review1 = new Review(customer_name, review, rating);
                                     reviewList.add(review1);
                                 }
-                                reviewAdapter = new ReviewAdapter(Review_Info.this, reviewList);
+                                reviewAdapter = new Review_Adapter(Review_Info.this, reviewList);
                                 recyclerView.setAdapter(reviewAdapter);
 
                             } else {

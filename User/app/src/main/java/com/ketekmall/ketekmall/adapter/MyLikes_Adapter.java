@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteAdapter extends BaseAdapter {
+public class MyLikes_Adapter extends BaseAdapter {
 
     private Context context;
     private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public FavouriteAdapter(List<Item_All_Details> itemList, Context context) {
+    public MyLikes_Adapter(List<Item_All_Details> itemList, Context context) {
         this.context = context;
         this.itemList = itemList;
         itemListFull = new ArrayList<>(itemList);
@@ -52,7 +52,7 @@ public class FavouriteAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.saved_item_listview, null);
+        convertView = inflater.inflate(R.layout.cardview_mylikes, null);
         Item_All_Details item = itemList.get(position);
 
         ImageView img_item;

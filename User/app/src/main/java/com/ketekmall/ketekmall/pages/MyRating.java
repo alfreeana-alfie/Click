@@ -26,7 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.RatingAdapter;
+import com.ketekmall.ketekmall.adapter.Rating_Adapter;
 import com.ketekmall.ketekmall.data.Rating;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,7 +45,7 @@ public class MyRating extends AppCompatActivity {
     private static String URL_READ_PRODUCT = "https://ketekmall.com/ketekmall/read_products_review.php";
     private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review_user.php";
 
-    RatingAdapter ratingAdapter;
+    Rating_Adapter ratingAdapter;
     List<Rating> ratingList;
 
     RecyclerView recyclerView;
@@ -111,7 +111,7 @@ public class MyRating extends AppCompatActivity {
                                                                 rating1.setRating(Float.parseFloat(rating));
                                                                 ratingList.add(rating1);
                                                             }
-                                                            ratingAdapter = new RatingAdapter(MyRating.this, ratingList);
+                                                            ratingAdapter = new Rating_Adapter(MyRating.this, ratingList);
                                                             recyclerView.setAdapter(ratingAdapter);
                                                         } else {
                                                             Toast.makeText(MyRating.this, "Failed! ", Toast.LENGTH_SHORT).show();

@@ -17,12 +17,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder> {
+public class Rating_Adapter extends RecyclerView.Adapter<Rating_Adapter.ViewHolder> {
 
     Context context;
     private List<Rating> item_all_details;
 
-    public RatingAdapter(Context context, List<Rating> item_all_detailsList) {
+    public Rating_Adapter(Context context, List<Rating> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
     }
@@ -30,7 +30,7 @@ public class RatingAdapter extends RecyclerView.Adapter<RatingAdapter.ViewHolder
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.myrating_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_myrating, parent, false);
         return new ViewHolder(view);
     }
 

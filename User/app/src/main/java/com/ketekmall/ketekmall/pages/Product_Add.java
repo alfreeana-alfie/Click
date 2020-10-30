@@ -40,7 +40,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.data.Item_All_Details_Other;
+import com.ketekmall.ketekmall.data.Product_Add_Data;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -80,13 +80,13 @@ public class Product_Add extends AppCompatActivity {
     private ImageView delete_2,delete_3,delete_4,delete_5;
     private ProgressBar loading;
     private ScrollView about_detail;
-    List<Item_All_Details_Other> itemList;
+    List<Product_Add_Data> itemList;
     BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sell_item);
+        setContentView(R.layout.product_add);
         Declare();
 
         bottomNav = findViewById(R.id.bottom_nav);
@@ -634,7 +634,7 @@ public class Product_Add extends AppCompatActivity {
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
 
-                                    Item_All_Details_Other item = new Item_All_Details_Other(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
+                                    Product_Add_Data item = new Product_Add_Data(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
                                     itemList.add(item);
 
                                     if (upload_photo_img2.getDrawable().getConstantState().equals

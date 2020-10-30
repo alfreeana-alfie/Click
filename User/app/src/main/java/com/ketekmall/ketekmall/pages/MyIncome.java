@@ -27,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.OrderAdapter;
+import com.ketekmall.ketekmall.adapter.MyIncome_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.OrderDone;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -52,14 +52,14 @@ public class MyIncome extends AppCompatActivity {
     BottomNavigationView bottomNav;
     RecyclerView recyclerView;
 
-    OrderAdapter orderAdapter;
+    MyIncome_Adapter orderAdapter;
     List<OrderDone> orderList;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.income);
+        setContentView(R.layout.myincome);
         Declare();
         getSession();
         ToolbarSettings();
@@ -262,7 +262,7 @@ public class MyIncome extends AppCompatActivity {
                                     orderDone.setQuantity(quantity);
                                     orderList.add(orderDone);
                                 }
-                                orderAdapter = new OrderAdapter(MyIncome.this, orderList);
+                                orderAdapter = new MyIncome_Adapter(MyIncome.this, orderList);
                                 orderAdapter.sortArrayHighest();
                                 recyclerView.setAdapter(orderAdapter);
                             }

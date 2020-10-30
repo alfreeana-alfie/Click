@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +23,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -42,18 +39,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
-import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
+import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
-import com.ketekmall.ketekmall.adapter.RatingAdapter;
-import com.ketekmall.ketekmall.adapter.UserAdapter;
 import com.ketekmall.ketekmall.category.Agriculture;
 import com.ketekmall.ketekmall.category.Cake;
 import com.ketekmall.ketekmall.category.Fashion;
@@ -68,9 +57,7 @@ import com.ketekmall.ketekmall.category.View_All;
 import com.ketekmall.ketekmall.category.View_All_Hot;
 import com.ketekmall.ketekmall.category.View_All_Shock;
 import com.ketekmall.ketekmall.data.Item_All_Details;
-import com.ketekmall.ketekmall.data.Rating;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.data.User;
 import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
@@ -88,7 +75,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -138,7 +124,7 @@ public class Homepage extends AppCompatActivity {
     private TextView verify1;
     private TextView button_view_top;
 
-    Item_Single_Adapter adapter_item, adapter_item2;
+    Item_Adapter_Main adapter_item, adapter_item2;
     ViewPager viewPager;
     Timer timer;
     RelativeLayout hot_layout, top_layout;
@@ -903,11 +889,11 @@ public class Homepage extends AppCompatActivity {
                                     item.setRating(rating);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Single_Adapter(itemList, Homepage.this);
+                                adapter_item = new Item_Adapter_Main(itemList, Homepage.this);
                                 adapter_item.sortArrayHighest();
                                 adapter_item.notifyDataSetChanged();
                                 gridView_HardSelling.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(Homepage.this, View_Product.class);
@@ -1122,10 +1108,10 @@ public class Homepage extends AppCompatActivity {
                                     item.setRating(rating);
                                     itemList2.add(item);
                                 }
-                                adapter_item2 = new Item_Single_Adapter(itemList2, Homepage.this);
+                                adapter_item2 = new Item_Adapter_Main(itemList2, Homepage.this);
                                 adapter_item2.notifyDataSetChanged();
                                 gridView_TopSelling.setAdapter(adapter_item2);
-                                adapter_item2.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                adapter_item2.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(Homepage.this, View_Product.class);

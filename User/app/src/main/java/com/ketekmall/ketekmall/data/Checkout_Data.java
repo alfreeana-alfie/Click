@@ -2,7 +2,7 @@ package com.ketekmall.ketekmall.data;
 
 import android.text.Spanned;
 
-public class Delivery_Combine {
+public class Checkout_Data {
     String delivery_id;
     String delivery_user_id;
     String delivery_division;
@@ -173,6 +173,6 @@ public class Delivery_Combine {
         this.quantity = quantity;
     }
 
-    public Delivery_Combine() {
+    public Checkout_Data() {
     }
 }

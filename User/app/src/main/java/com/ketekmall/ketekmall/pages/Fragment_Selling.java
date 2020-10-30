@@ -49,7 +49,7 @@ public class Fragment_Selling extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.selling_frag, container, false);
+        View view = inflater.inflate(R.layout.frag_my_selling, container, false);
         Declare(view);
         GotoPage();
         sessionManager = new SessionManager(view.getContext());

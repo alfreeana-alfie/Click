@@ -78,7 +78,7 @@ public class MyBuying extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_orders_other_buyer);
+        setContentView(R.layout.mybuying);
         Declare();
         ToolbarSettings();
 

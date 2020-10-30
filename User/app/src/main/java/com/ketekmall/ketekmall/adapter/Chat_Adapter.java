@@ -1,7 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,13 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class Chat_Adapter extends RecyclerView.Adapter<Chat_Adapter.ViewHolder> {
 
     Context context;
     private List<User> userList;
     private OnItemClickListener mListener;
 
-    public UserAdapter(Context context, List<User> userList) {
+    public Chat_Adapter(Context context, List<User> userList) {
         this.context = context;
         this.userList = userList;
     }
@@ -36,7 +35,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_chat_inbox, parent, false);
         return new ViewHolder(view);
     }
 

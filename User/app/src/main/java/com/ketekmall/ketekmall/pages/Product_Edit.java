@@ -90,7 +90,7 @@ public class Product_Edit extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_item);
+        setContentView(R.layout.product_edit);
         Declare();
 
         final Intent intent = getIntent();

@@ -11,19 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ketekmall.ketekmall.data.Delivery_Combine;
+import com.ketekmall.ketekmall.data.Checkout_Data;
 import com.ketekmall.ketekmall.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapter_Other.ViewHolder> {
+public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.ViewHolder> {
 
     Context context;
-    private List<Delivery_Combine> item_all_details, item_all_details2;
+    private List<Checkout_Data> item_all_details, item_all_details2;
     private OnItemClickListener mListerner;
 
-    public UserOrderAdapter_Other(Context context, List<Delivery_Combine> item_all_detailsList, List<Delivery_Combine> item_all_detailsList2) {
+    public Checkout_Adapter(Context context, List<Checkout_Data> item_all_detailsList, List<Checkout_Data> item_all_detailsList2) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
         this.item_all_details2 = item_all_detailsList2;
@@ -36,14 +36,14 @@ public class UserOrderAdapter_Other extends RecyclerView.Adapter<UserOrderAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_order_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_checkout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        final Delivery_Combine itemAllDetails = item_all_details.get(position);
-        final Delivery_Combine itemAllDetails2 = item_all_details2.get(position);
+        final Checkout_Data itemAllDetails = item_all_details.get(position);
+        final Checkout_Data itemAllDetails2 = item_all_details2.get(position);
 
 
         String order_id = itemAllDetails.getId();

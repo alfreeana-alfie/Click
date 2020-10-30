@@ -1,8 +1,6 @@
 package com.ketekmall.ketekmall.pages;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Base64;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,9 +36,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.ResultDelegate;
-import com.ketekmall.ketekmall.data.Delivery_Combine;
+import com.ketekmall.ketekmall.data.Checkout_Data;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.UserOrderAdapter_Other;
+import com.ketekmall.ketekmall.adapter.Checkout_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.MySingleton;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -62,12 +59,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 import com.ipay.IPayIH;
 import com.ipay.IPayIHPayment;
-import com.ipay.IPayIHR;
 
 public class Checkout extends AppCompatActivity implements Serializable{
     String RefID = UUID.randomUUID().toString();
@@ -104,11 +99,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
     LinearLayout linear2;
 
     RecyclerView recyclerView;
-    UserOrderAdapter_Other userOrderAdapter;
-    ArrayList<Delivery_Combine> item_all_detailsList;
+    Checkout_Adapter userOrderAdapter;
+    ArrayList<Checkout_Data> item_all_detailsList;
     RelativeLayout address_layout;
     Item_All_Details item;
-    Delivery_Combine delivery_combine;
+    Checkout_Data checkoutData;
 
     String getId, Price, Delivery_Date;
     SessionManager sessionManager;
@@ -158,26 +153,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String postCode = object.getString("postcode");
                                     final String weight = object.getString("weight");
 
-
-//                                    if(postCode.contains("")) {
-//                                        delivery_combine = new Delivery_Combine();
-//                                        delivery_combine.setId(id);
-//                                        delivery_combine.setDelivery_item_id(item_id);
-//                                        delivery_combine.setSeller_id(seller_id);
-//                                        delivery_combine.setAd_detail(ad_detail);
-//                                        delivery_combine.setPhoto(image_item);
-//                                        delivery_combine.setPrice(String.valueOf(price));
-//                                        delivery_combine.setDivision(division);
-//                                        delivery_combine.setQuantity(quantity);
-//                                        delivery_combine.setDelivery_price("MYR0.00");
-//                                        delivery_combine.setDelivery_division(division);
-//
-////                                      delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-//                                        delivery_combine.setDelivery_division1("Not Available");
-//
-//                                        item_all_detailsList.add(delivery_combine);
-//                                    }
-
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                             new Response.Listener<String>() {
                                                 @Override
@@ -220,47 +195,47 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         String totalAmount       = jsonobject.getString("totalAmount");
                                                                                         Log.i("jsonObjectRequest", totalAmount);
 
-                                                                                        delivery_combine = new Delivery_Combine();
-                                                                                        delivery_combine.setId(id);
-                                                                                        delivery_combine.setDelivery_item_id(item_id);
-                                                                                        delivery_combine.setSeller_id(seller_id);
-                                                                                        delivery_combine.setAd_detail(ad_detail);
-                                                                                        delivery_combine.setPhoto(image_item);
-                                                                                        delivery_combine.setPrice(String.valueOf(price));
-                                                                                        delivery_combine.setDivision(division);
-                                                                                        delivery_combine.setQuantity(quantity);
-                                                                                        delivery_combine.setDelivery_price(totalAmount);
-                                                                                        delivery_combine.setDelivery_division(strCity);
-                                                                                        delivery_combine.setDelivery_division1(division + " to " + strCity);
+                                                                                        checkoutData = new Checkout_Data();
+                                                                                        checkoutData.setId(id);
+                                                                                        checkoutData.setDelivery_item_id(item_id);
+                                                                                        checkoutData.setSeller_id(seller_id);
+                                                                                        checkoutData.setAd_detail(ad_detail);
+                                                                                        checkoutData.setPhoto(image_item);
+                                                                                        checkoutData.setPrice(String.valueOf(price));
+                                                                                        checkoutData.setDivision(division);
+                                                                                        checkoutData.setQuantity(quantity);
+                                                                                        checkoutData.setDelivery_price(totalAmount);
+                                                                                        checkoutData.setDelivery_division(strCity);
+                                                                                        checkoutData.setDelivery_division1(division + " to " + strCity);
 
                                                                                         grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(totalAmount));
                                                                                         Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
                                                                                         Grand_Total2.setText(String.format("%.2f", grandtotal));
 
-                                                                                        item_all_detailsList.add(delivery_combine);
+                                                                                        item_all_detailsList.add(checkoutData);
 
                                                                                     }
-                                                                                    userOrderAdapter = new UserOrderAdapter_Other(Checkout.this, item_all_detailsList, item_all_detailsList);
+                                                                                    userOrderAdapter = new Checkout_Adapter(Checkout.this, item_all_detailsList, item_all_detailsList);
                                                                                     recyclerView.setAdapter(userOrderAdapter);
-                                                                                    userOrderAdapter.setOnItemClickListener(new UserOrderAdapter_Other.OnItemClickListener() {
+                                                                                    userOrderAdapter.setOnItemClickListener(new Checkout_Adapter.OnItemClickListener() {
                                                                                         @Override
                                                                                         public void onSelfClick(int position) {
-                                                                                            delivery_combine = new Delivery_Combine();
-                                                                                            delivery_combine.setId(id);
-                                                                                            delivery_combine.setDelivery_item_id(item_id);
-                                                                                            delivery_combine.setSeller_id(seller_id);
-                                                                                            delivery_combine.setAd_detail(ad_detail);
-                                                                                            delivery_combine.setPhoto(image_item);
-                                                                                            delivery_combine.setPrice(String.valueOf(price));
-                                                                                            delivery_combine.setDivision(division);
-                                                                                            delivery_combine.setQuantity(quantity);
-                                                                                            delivery_combine.setDelivery_price("0.00");
-                                                                                            delivery_combine.setDelivery_division(division);
+                                                                                            checkoutData = new Checkout_Data();
+                                                                                            checkoutData.setId(id);
+                                                                                            checkoutData.setDelivery_item_id(item_id);
+                                                                                            checkoutData.setSeller_id(seller_id);
+                                                                                            checkoutData.setAd_detail(ad_detail);
+                                                                                            checkoutData.setPhoto(image_item);
+                                                                                            checkoutData.setPrice(String.valueOf(price));
+                                                                                            checkoutData.setDivision(division);
+                                                                                            checkoutData.setQuantity(quantity);
+                                                                                            checkoutData.setDelivery_price("0.00");
+                                                                                            checkoutData.setDelivery_division(division);
 
                                                                                             String delivery_text;
                                                                                             delivery_text = "<font color='#999999'>MYR0.00</font>";
-                                                                                            delivery_combine.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            delivery_combine.setDelivery_division1(division + " to " + division);
+                                                                                            checkoutData.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                                            checkoutData.setDelivery_division1(division + " to " + division);
 
                                                                                             grandtotal -= Double.parseDouble(Price);
                                                                                             Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
@@ -275,8 +250,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                         new Response.ErrorListener() {
                                                                             @Override
                                                                             public void onErrorResponse(VolleyError error) {
-                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                                                                                Log.i("STAGINGERROR", error.toString());
+//                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                                                                                Log.i("STAGINGERROR", error.toString());
                                                                                 Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
                                                                                 Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
                                                                                 Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();

@@ -22,13 +22,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Item_Adapter extends BaseAdapter implements Filterable {
+public class Item_ByCategory_Adapter extends BaseAdapter implements Filterable {
 
     List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
     private OnItemClickListener mListerner;
 
-    public Item_Adapter(List<Item_All_Details> itemList, Context context) {
+    public Item_ByCategory_Adapter(List<Item_All_Details> itemList, Context context) {
         this.itemListFull = itemList;
         this.context = context;
         itemListFull02 = new ArrayList<>();
@@ -81,7 +81,7 @@ public class Item_Adapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        convertView = inflater.inflate(R.layout.view_item_listview, null);
+        convertView = inflater.inflate(R.layout.cardview_category, null);
         Item_All_Details item = itemListFull.get(position);
 
         ImageButton fav_item, fav_item_filled, add_to_cart;

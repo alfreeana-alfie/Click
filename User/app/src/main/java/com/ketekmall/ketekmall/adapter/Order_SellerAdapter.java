@@ -39,7 +39,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
     @NonNull
     @Override
     public Order_SellerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_seller_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_myselling, parent, false);
         return new ViewHolder(view);
     }
 

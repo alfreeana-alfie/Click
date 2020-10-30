@@ -24,7 +24,7 @@ public class DeliveryAdapter_Single extends RecyclerView.Adapter<DeliveryAdapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shipping_info_listview,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_shipping_info,parent,false);
 
         return new ViewHolder(view);
     }

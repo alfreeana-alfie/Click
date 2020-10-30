@@ -50,7 +50,7 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
     @NonNull
     @Override
     public Order_BuyerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_buyer_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_mybuying, parent, false);
         return new ViewHolder(view);
     }
 

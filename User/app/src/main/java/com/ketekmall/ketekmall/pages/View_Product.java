@@ -37,9 +37,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.Item_Single_Adapter;
+import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
-import com.ketekmall.ketekmall.category.Cake;
 import com.ketekmall.ketekmall.data.Delivery;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -78,7 +77,7 @@ public class View_Product extends AppCompatActivity {
 
 
     String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId, brand, inner, stock, desc, postcode;
-    Item_Single_Adapter adapter_item;
+    Item_Adapter_Main adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
     RelativeLayout review11;
@@ -100,7 +99,7 @@ public class View_Product extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_item_other);
+        setContentView(R.layout.view_product);
 
         ratingfull = 0.0F;
         ratingfull2 = 0.0F;
@@ -433,7 +432,7 @@ public class View_Product extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.view_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_view);
 
         View view = getSupportActionBar().getCustomView();
         ImageButton back_button = view.findViewById(R.id.back_button);
@@ -1173,10 +1172,10 @@ public class View_Product extends AppCompatActivity {
                                     item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Single_Adapter(itemList, View_Product.this);
+                                adapter_item = new Item_Adapter_Main(itemList, View_Product.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView_item.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Single_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_Product.this, View_Product.class);

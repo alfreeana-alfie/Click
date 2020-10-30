@@ -18,26 +18,26 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
+public class Review_Adapter extends RecyclerView.Adapter<Review_Adapter.ViewHolder> {
 
     Context context;
     int mQuantity = 1;
     private List<Review> item_all_details;
 
-    public ReviewAdapter(Context context, List<Review> item_all_details) {
+    public Review_Adapter(Context context, List<Review> item_all_details) {
         this.context = context;
         this.item_all_details = item_all_details;
     }
 
     @NonNull
     @Override
-    public ReviewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_listview, parent, false);
+    public Review_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_review, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Review_Adapter.ViewHolder holder, int position) {
         Review order = item_all_details.get(position);
 
         holder.customer_name.setText(order.getCustomer_Name());

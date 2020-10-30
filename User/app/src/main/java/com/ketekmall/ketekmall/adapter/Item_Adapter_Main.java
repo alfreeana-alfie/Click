@@ -19,13 +19,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Item_Single_Adapter extends BaseAdapter {
+public class Item_Adapter_Main extends BaseAdapter {
 
     List<Item_All_Details> itemListFull, itemListFull02;
     private Context context;
     private OnItemClickListener mListerner;
 
-    public Item_Single_Adapter(List<Item_All_Details> itemList, Context context) {
+    public Item_Adapter_Main(List<Item_All_Details> itemList, Context context) {
         this.itemListFull = itemList;
         this.context = context;
         itemListFull02 = new ArrayList<>();
@@ -67,7 +67,7 @@ public class Item_Single_Adapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        convertView = inflater.inflate(R.layout.view_item_single_listview, null);
+        convertView = inflater.inflate(R.layout.cardview_hot_shocking_sameshop, null);
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;

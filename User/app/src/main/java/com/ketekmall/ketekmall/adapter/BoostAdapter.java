@@ -36,7 +36,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.boostad_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_boostad, parent, false);
         return new ViewHolder(view);
     }
 

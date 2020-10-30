@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Item_UserAdapter extends BaseAdapter{
+public class MyProducts_Adapter extends BaseAdapter{
 
     private Context context;
     private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
-    public Item_UserAdapter(List<Item_All_Details> itemList, Context context) {
+    public MyProducts_Adapter(List<Item_All_Details> itemList, Context context) {
         this.itemList = itemList;
         this.itemListFull = itemList;
         this.context = context;
@@ -51,7 +51,7 @@ public class Item_UserAdapter extends BaseAdapter{
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        convertView = inflater.inflate(R.layout.edit_item_listview, null);
+        convertView = inflater.inflate(R.layout.cardview_myproducts, null);
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;

@@ -31,7 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.UserAdapter;
+import com.ketekmall.ketekmall.adapter.Chat_Adapter;
 import com.ketekmall.ketekmall.data.User;
 import com.ketekmall.ketekmall.data.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,14 +57,14 @@ public class Chat_Inbox extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView noUsersText;
     List<User> usersArrayList;
-    UserAdapter user_adapter;
+    Chat_Adapter user_adapter;
     int totalUsers = 0;
     BottomNavigationView bottomNav;
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_list);
+        setContentView(R.layout.chat_inbox);
         ToolbarSetting();
 
         bottomNav = findViewById(R.id.bottom_nav);
@@ -127,7 +127,7 @@ public class Chat_Inbox extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.userlist_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_chat_inbox);
 
         View view = getSupportActionBar().getCustomView();
         ImageButton back_button = view.findViewById(R.id.back_button);
@@ -197,10 +197,10 @@ public class Chat_Inbox extends AppCompatActivity {
                                                                                             user.setCount(String.valueOf(jsonArray.length()));
 
                                                                                             usersArrayList.add(user);
-                                                                                            user_adapter = new UserAdapter(Chat_Inbox.this, usersArrayList);
+                                                                                            user_adapter = new Chat_Adapter(Chat_Inbox.this, usersArrayList);
 
                                                                                             recyclerView.setAdapter(user_adapter);
-                                                                                            user_adapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+                                                                                            user_adapter.setOnItemClickListener(new Chat_Adapter.OnItemClickListener() {
                                                                                                 @Override
                                                                                                 public void onItemClick(int position) {
                                                                                                     User user = usersArrayList.get(position);

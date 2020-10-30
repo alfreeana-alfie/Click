@@ -58,7 +58,7 @@ public class Me_Page extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_page_other);
+        setContentView(R.layout.me_page);
 
         ToolbarSetting();
         getSession();
@@ -106,7 +106,7 @@ public class Me_Page extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.me_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_me);
 
         View view = getSupportActionBar().getCustomView();
         ImageButton back_button = view.findViewById(R.id.back_button);

@@ -51,8 +51,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +91,7 @@ public class Chat extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.user_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_chat);
 
         View view = getSupportActionBar().getCustomView();
         TextView chatname = view.findViewById(R.id.user_chatname);

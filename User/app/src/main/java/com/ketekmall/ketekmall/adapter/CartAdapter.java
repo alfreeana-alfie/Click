@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.Item_All_Details;
-import com.ketekmall.ketekmall.data.Order;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
@@ -51,7 +50,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_cart, parent, false);
         return new ViewHolder(view);
     }
 

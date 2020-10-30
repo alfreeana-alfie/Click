@@ -231,7 +231,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 public void onResponse(String s) {
                                                     if(s != null){
                                                         if (s.equals("null")) {
-                                                            Toast.makeText(getContext(), "user_actionbar not found", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(getContext(), "actionbar_chat not found", Toast.LENGTH_LONG).show();
                                                         } else {
                                                             try {
                                                                 JSONObject obj = new JSONObject(s);

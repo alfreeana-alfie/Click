@@ -36,7 +36,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.Item_Adapter;
+import com.ketekmall.ketekmall.adapter.Item_ByCategory_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.UserDetails;
@@ -65,7 +65,7 @@ public class About_Seller extends AppCompatActivity {
     ImageView sellerPhoto;
     TextView sellerName, sellerLocation, item_text, sold_text;
 
-    Item_Adapter adapter_item;
+    Item_ByCategory_Adapter adapter_item;
     List<Item_All_Details> itemList, itemList2;
     BottomNavigationView bottomNav;
     ImageButton btn_chat_wsp, btn_chat;
@@ -75,7 +75,7 @@ public class About_Seller extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.category_seller);
+        setContentView(R.layout.about_seller);
 
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
@@ -169,7 +169,7 @@ public class About_Seller extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.seller_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_seller);
 
         View view = getSupportActionBar().getCustomView();
         ImageButton back_button = view.findViewById(R.id.back_button);
@@ -427,9 +427,9 @@ public class About_Seller extends AppCompatActivity {
                                     }
                                     String product = String.valueOf(itemList.size());
                                     item_text.setText(product);
-                                    adapter_item = new Item_Adapter(itemList, About_Seller.this);
+                                    adapter_item = new Item_ByCategory_Adapter(itemList, About_Seller.this);
                                     gridView_item.setAdapter(adapter_item);
-                                    adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                    adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                         @Override
                                         public void onViewClick(int position) {
                                             Intent detailIntent = new Intent(About_Seller.this, View_Product.class);

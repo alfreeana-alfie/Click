@@ -47,7 +47,7 @@ import com.ketekmall.ketekmall.pages.Notification_Page;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.pages.View_Product;
-import com.ketekmall.ketekmall.adapter.Item_Adapter;
+import com.ketekmall.ketekmall.adapter.Item_ByCategory_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.pages.Homepage;
@@ -81,7 +81,7 @@ public class View_All extends AppCompatActivity {
     SessionManager sessionManager;
     String getId;
     GridView gridView;
-    Item_Adapter adapter_item;
+    Item_ByCategory_Adapter adapter_item;
     List<Item_All_Details> itemList;
     BottomNavigationView bottomNav;
 
@@ -104,7 +104,7 @@ public class View_All extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.category_car);
+        setContentView(R.layout.category_listpage);
         Declare();
 
         bottomNav = findViewById(R.id.bottom_nav);
@@ -146,7 +146,7 @@ public class View_All extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.category_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_category);
 
         View view = getSupportActionBar().getCustomView();
         final EditText search_find = view.findViewById(R.id.search_find);
@@ -193,7 +193,7 @@ public class View_All extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, View_All.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_List();
@@ -220,7 +220,7 @@ public class View_All extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, View_All.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -228,14 +228,14 @@ public class View_All extends AppCompatActivity {
 
                 if (!strAd_Detail.isEmpty() && !strDivision.equals("All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, View_All.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
                 if(!strAd_Detail.isEmpty() && strDivision.equals("All")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, View_All.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -291,7 +291,7 @@ public class View_All extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_Adapter(itemList, View_All.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -303,7 +303,7 @@ public class View_All extends AppCompatActivity {
 
                 if (strDistrict.equals("All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, View_All.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -311,7 +311,7 @@ public class View_All extends AppCompatActivity {
                 }
                 if (strDivision.equals("All")) {
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, View_All.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -319,7 +319,7 @@ public class View_All extends AppCompatActivity {
                 }
                 if(!strDivision.equals("All") && !strDistrict.equals("All")){
                     itemList.clear();
-                    adapter_item = new Item_Adapter(itemList, View_All.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -593,10 +593,10 @@ public class View_All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, View_All.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_All.this, View_Product.class);
@@ -834,10 +834,10 @@ public class View_All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, View_All.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_All.this, View_Product.class);
@@ -1076,10 +1076,10 @@ public class View_All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, View_All.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_All.this, View_Product.class);
@@ -1318,10 +1318,10 @@ public class View_All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, View_All.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_All.this, View_Product.class);
@@ -1642,10 +1642,10 @@ public class View_All extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_Adapter(itemList, View_All.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_All.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_Adapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(View_All.this, View_Product.class);

@@ -34,7 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.FavouriteAdapter;
+import com.ketekmall.ketekmall.adapter.MyLikes_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.user.Edit_Profile;
@@ -66,7 +66,7 @@ public class MyLikes extends AppCompatActivity {
     private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/search_fav.php";
 
     GridView gridView;
-    FavouriteAdapter adapter_item;
+    MyLikes_Adapter adapter_item;
     List<Item_All_Details> itemList;
     String getId;
     SessionManager sessionManager;
@@ -77,7 +77,7 @@ public class MyLikes extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.saved_searches);
+        setContentView(R.layout.mylikes);
         Declare();
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -116,7 +116,7 @@ public class MyLikes extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.saved_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_mylikes);
 
         View view = getSupportActionBar().getCustomView();
         final EditText search_find = view.findViewById(R.id.search_find);
@@ -152,7 +152,7 @@ public class MyLikes extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new FavouriteAdapter(itemList, MyLikes.this);
+                adapter_item = new MyLikes_Adapter(itemList, MyLikes.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_List();
@@ -176,7 +176,7 @@ public class MyLikes extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new FavouriteAdapter(itemList, MyLikes.this);
+                adapter_item = new MyLikes_Adapter(itemList, MyLikes.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -232,10 +232,10 @@ public class MyLikes extends AppCompatActivity {
                                     item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
-                                adapter_item = new FavouriteAdapter(itemList, MyLikes.this);
+                                adapter_item = new MyLikes_Adapter(itemList, MyLikes.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new MyLikes_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(MyLikes.this, View_Product.class);
@@ -439,10 +439,10 @@ public class MyLikes extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new FavouriteAdapter(itemList, MyLikes.this);
+                                adapter_item = new MyLikes_Adapter(itemList, MyLikes.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new FavouriteAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new MyLikes_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(MyLikes.this, View_Product.class);

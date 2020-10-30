@@ -18,14 +18,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class MyIncome_Adapter extends RecyclerView.Adapter<MyIncome_Adapter.ViewHolder> {
 
     Context context;
     int mQuantity;
     private List<OrderDone> item_all_details;
     private OnItemClickListener mListerner;
 
-    public OrderAdapter(Context context, List<OrderDone> item_all_detailsList) {
+    public MyIncome_Adapter(Context context, List<OrderDone> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
     }
@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_listview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_myincome, parent, false);
         return new ViewHolder(view);
     }
 

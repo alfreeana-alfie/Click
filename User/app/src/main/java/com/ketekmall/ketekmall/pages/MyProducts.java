@@ -30,7 +30,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.Item_UserAdapter;
+import com.ketekmall.ketekmall.adapter.MyProducts_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -65,14 +65,14 @@ public class MyProducts extends AppCompatActivity {
     TextView no_result;
     private String getId;
     private GridView gridView;
-    private Item_UserAdapter adapter_item;
+    private MyProducts_Adapter adapter_item;
     private List<Item_All_Details> itemList;
     BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.find_my_items_other);
+        setContentView(R.layout.myproducts);
         Declare();
         getSession();
         ToolbarSetting();
@@ -83,7 +83,7 @@ public class MyProducts extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.find_actionbar);
+        getSupportActionBar().setCustomView(R.layout.actionbar_myproducts);
 
         View view = getSupportActionBar().getCustomView();
         ImageButton back_button = view.findViewById(R.id.back_button);
@@ -184,10 +184,10 @@ public class MyProducts extends AppCompatActivity {
                                     item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_UserAdapter(itemList, MyProducts.this);
+                                adapter_item = new MyProducts_Adapter(itemList, MyProducts.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
-                                adapter_item.setOnItemClickListener(new Item_UserAdapter.OnItemClickListener() {
+                                adapter_item.setOnItemClickListener(new MyProducts_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onEditClick(int position) {
                                         Intent detailIntent = new Intent(MyProducts.this, Product_Edit.class);
