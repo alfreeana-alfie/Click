@@ -55,7 +55,9 @@ public class Cart extends AppCompatActivity {
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_CART_TEMP = "https://ketekmall.com/ketekmall/readcart_temp.php";
     private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_two.php";
-    private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp.php";
+    private static String URL_READ_PRODUCTS_TWO = "https://ketekmall.com/ketekmall/readcart_single_two.php";
+    private static String URL_READ_PRODUCTS_TWO_MINUS = "https://ketekmall.com/ketekmall/readcart_single_two_minus.php";
+    private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp_two.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
     private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
     private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
@@ -71,6 +73,7 @@ public class Cart extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
     int number;
+
     BottomNavigationView bottomNav;
 
     ProgressBar loading;
@@ -152,7 +155,6 @@ public class Cart extends AppCompatActivity {
             }
         });
         itemAllDetailsArrayList = new ArrayList<>();
-        number = 1;
     }
 
     private void View_Item() {
@@ -218,7 +220,6 @@ public class Cart extends AppCompatActivity {
                                                                     item.setMax_order(max_order);
                                                                     item.setPostcode(postcode);
                                                                     item.setWeight(weight);
-                                                                    number = Integer.parseInt(quantity);
                                                                     itemAllDetailsArrayList.add(item);
                                                                 }
                                                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);
@@ -237,7 +238,7 @@ public class Cart extends AppCompatActivity {
 
                                                                         DeleteCartTemp(item.getId());
 
-                                                                        doubles.remove(Double.parseDouble(item.getPrice()) * number);
+                                                                        doubles.remove(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
@@ -257,7 +258,7 @@ public class Cart extends AppCompatActivity {
                                                                         //Add to cart_temp
                                                                         AddCartTemp(item, price);
 
-                                                                        doubles.add(Double.parseDouble(item.getPrice()) * number);
+                                                                        doubles.add(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
@@ -268,91 +269,14 @@ public class Cart extends AppCompatActivity {
                                                                     @Override
                                                                     public void onAddClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
-                                                                        number = Integer.parseInt(item.getQuantity()) + 1;
-                                                                        item.setQuantity(String.valueOf(number));
-                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
-                                                                                new Response.Listener<String>() {
-                                                                                    @Override
-                                                                                    public void onResponse(String response) {
-                                                                                        if (response == null) {
-                                                                                            Log.e("onResponse", "Return NULL");
-                                                                                        } else {
-                                                                                            try {
-                                                                                                final JSONObject Object = new JSONObject(response);
-                                                                                                String success = Object.getString("success");
-                                                                                                JSONArray jsonArray = Object.getJSONArray("read");
-
-                                                                                                if (success.equals("1")) {
-                                                                                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                        JSONObject object = jsonArray.getJSONObject(i);
-                                                                                                        final String max_order = object.getString("max_order");
-
-                                                                                                        if (number >= Integer.parseInt(max_order)) {
-                                                                                                            Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
-                                                                                                        } else {
-                                                                                                            EditCheckout(item.getQuantity(), max_order, item.getId());
-                                                                                                        }
-                                                                                                    }
-                                                                                                } else {
-                                                                                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                                                                                                }
-
-                                                                                            } catch (JSONException e) {
-                                                                                                e.printStackTrace();
-                                                                                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                                                                                            }
-                                                                                        }
-
-                                                                                    }
-                                                                                },
-                                                                                new Response.ErrorListener() {
-                                                                                    @Override
-                                                                                    public void onErrorResponse(VolleyError error) {
-                                                                                        try {
-                                                                                            if (error instanceof TimeoutError) {
-                                                                                                //Time out error
-                                                                                                System.out.println("" + error);
-                                                                                            } else if (error instanceof NoConnectionError) {
-                                                                                                //net work error
-                                                                                                System.out.println("" + error);
-                                                                                            } else if (error instanceof AuthFailureError) {
-                                                                                                //error
-                                                                                                System.out.println("" + error);
-                                                                                            } else if (error instanceof ServerError) {
-                                                                                                //Erroor
-                                                                                                System.out.println("" + error);
-                                                                                            } else if (error instanceof NetworkError) {
-                                                                                                //Error
-                                                                                                System.out.println("" + error);
-                                                                                            } else if (error instanceof ParseError) {
-                                                                                                //Error
-                                                                                                System.out.println("" + error);
-                                                                                            } else {
-                                                                                                //Error
-                                                                                                System.out.println("" + error);
-                                                                                            }
-                                                                                        } catch (Exception e) {
-                                                                                            e.printStackTrace();
-                                                                                        }
-                                                                                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
-                                                                                    }
-                                                                                }) {
-                                                                            @Override
-                                                                            protected Map<String, String> getParams() {
-                                                                                Map<String, String> params = new HashMap<>();
-                                                                                params.put("ad_detail", item.getAd_detail());
-                                                                                return params;
-                                                                            }
-                                                                        };
-                                                                        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-                                                                        requestQueue.add(stringRequest);
+//                                                                        ++number;
+                                                                        AddQuantity(item);
                                                                     }
 
                                                                     @Override
                                                                     public void onMinusClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
-                                                                        number = Integer.parseInt(item.getQuantity());
-                                                                        --number;
+//                                                                        --number;
                                                                         if (number == 0) {
                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
                                                                             builder.setTitle("Are you sure?");
@@ -374,7 +298,7 @@ public class Cart extends AppCompatActivity {
                                                                             AlertDialog alertDialog = builder.create();
                                                                             alertDialog.show();
                                                                         } else {
-                                                                            EditCheckout2(item.getId());
+                                                                            MinusQuantity(item);
                                                                         }
                                                                     }
                                                                 });
@@ -537,20 +461,7 @@ public class Cart extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                params.put("main_category", item.getMain_category());
-                params.put("sub_category", item.getSub_category());
-                params.put("ad_detail", item.getAd_detail());
-                params.put("price", String.format("%.2f", price));
-                params.put("division", item.getDivision());
-                params.put("postcode", item.getPostcode());
-                params.put("district", item.getDistrict());
-                params.put("photo", item.getPhoto());
-                params.put("seller_id", item.getSeller_id());
-                params.put("item_id", item.getItem_id());
-                params.put("quantity", String.valueOf(number));
-                params.put("cart_id", item.getId());
-                params.put("weight", item.getWeight());
+                params.put("id", item.getId());
                 return params;
             }
         };
@@ -714,8 +625,8 @@ public class Cart extends AppCompatActivity {
     }
 
     private void AddQuantity(final Item_All_Details item) {
-        ++number;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
+        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -728,15 +639,16 @@ public class Cart extends AppCompatActivity {
                                 JSONArray jsonArray = Object.getJSONArray("read");
 
                                 if (success.equals("1")) {
+                                    ReadCartTemp(item.getMax_order());
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
-                                        final String max_order = object.getString("max_order");
+//                                        final String max_order = object.getString("max_order");
 
-                                        if (number >= Integer.parseInt(max_order)) {
-                                            Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            EditCheckout(item.getQuantity(), max_order, item.getId());
-                                     }
+//                                        if (number >= Integer.parseInt(max_order)) {
+//                                            Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
+//                                        } else {
+//                                            Toast.makeText(Cart.this, item.getItem_id(), Toast.LENGTH_SHORT).show();
+//                                        }
                                     }
 //                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -786,7 +698,9 @@ public class Cart extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("ad_detail", item.getAd_detail());
+//                params.put("customer_id", getId);
+                params.put("id", item.getId());
+//                params.put("ad_detail", item.getAd_detail());
                 return params;
             }
         };
@@ -863,7 +777,7 @@ public class Cart extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void EditCheckout(final String number, final String MaxOrder, final String ItemID) {
+    private void EditCheckout(final String Quantity, final String MaxOrder, final String ItemID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                 new Response.Listener<String>() {
                     @Override
@@ -876,7 +790,6 @@ public class Cart extends AppCompatActivity {
                                 String success = Object.getString("success");
 
                                 if (success.equals("1")) {
-                                    Log.d("Message EDIT", number);
                                     ReadCartTemp(MaxOrder);
                                 } else {
                                     Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
@@ -926,7 +839,7 @@ public class Cart extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", ItemID);
                 params.put("cart_id", ItemID);
-                params.put("quantity",number);
+                params.put("quantity", Quantity);
                 return params;
             }
         };
@@ -1017,6 +930,90 @@ public class Cart extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void MinusQuantity(final Item_All_Details item){
+        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO_MINUS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
+                            try {
+                                final JSONObject Object = new JSONObject(response);
+                                String success = Object.getString("success");
+                                JSONArray jsonArray = Object.getJSONArray("read");
+
+                                if (success.equals("1")) {
+                                    ReadCartTemp2();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+//                                        final String max_order = object.getString("max_order");
+
+//                                        if (number >= Integer.parseInt(max_order)) {
+//                                            Toast.makeText(Cart.this, "Reached Maximum Order for " + item.getAd_detail() + ": " + max_order, Toast.LENGTH_SHORT).show();
+//                                        } else {
+//                                            Toast.makeText(Cart.this, item.getItem_id(), Toast.LENGTH_SHORT).show();
+//                                        }
+                                    }
+//                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+//                params.put("customer_id", getId);
+                params.put("id", item.getId());
+//                params.put("ad_detail", item.getAd_detail());
                 return params;
             }
         };

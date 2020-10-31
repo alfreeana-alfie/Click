@@ -478,7 +478,6 @@ public class Agriculture extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
-
                                         Toast.makeText(Agriculture.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
 
                                     }

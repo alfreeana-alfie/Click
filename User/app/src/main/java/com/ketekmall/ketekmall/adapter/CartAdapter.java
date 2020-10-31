@@ -68,7 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.Quantity.setText(itemAllDetails.getQuantity());
 
         mQuantity = Integer.parseInt(itemAllDetails.getQuantity());
-        Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+        Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * Integer.parseInt(itemAllDetails.getQuantity());
         holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
 
         holder.increase.setOnClickListener(new View.OnClickListener() {
@@ -76,12 +76,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 if (mListerner != null) {
                     mListerner.onAddClick(position);
-                    ++mQuantity;
+                    int mQuantity2 = Integer.parseInt(holder.Quantity.getText().toString());
+                    mQuantity2++;
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                    holder.Quantity.setText(String.valueOf(mQuantity));
+                    holder.Quantity.setText(String.valueOf(mQuantity2));
 
-                    if (mQuantity == Integer.parseInt(itemAllDetails.getMax_order())) {
+                    if (mQuantity2 == Integer.parseInt(itemAllDetails.getMax_order())) {
                         holder.increase.setVisibility(View.INVISIBLE);
                     }
                 }
@@ -92,14 +93,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
+                    int mQuantity2 = Integer.parseInt(holder.Quantity.getText().toString());
                     mListerner.onMinusClick(position);
-                    --mQuantity;
-                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    mQuantity2--;
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                    holder.Quantity.setText(String.valueOf(mQuantity));
+                    holder.Quantity.setText(String.valueOf(mQuantity2));
 
-                    if (mQuantity != Integer.parseInt(itemAllDetails.getMax_order())) {
+                    if (mQuantity2 != Integer.parseInt(itemAllDetails.getMax_order())) {
                         holder.increase.setVisibility(View.VISIBLE);
+                    }
+
+                    if(mQuantity2 == 0 ){
+                        if (mListerner != null) {
+                            mListerner.onDeleteClick(position);
+                        }
+                        holder.Quantity.setText("1");
                     }
                 }
                 if (Integer.parseInt(itemAllDetails.getQuantity()) == 0) {
