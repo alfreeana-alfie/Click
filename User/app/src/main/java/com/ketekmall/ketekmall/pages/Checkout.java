@@ -177,7 +177,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                                                 AddressUser.setText(Address);
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
+                                                                double neWeight = Double.parseDouble(weight) * Integer.parseInt(quantity);
+
+                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
 
                                                                 if(postCode.contains("") && weight.contains("0.00")){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
@@ -802,10 +804,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
                                                                                         rQueue.add(request);
 
-                                                                                        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
+                                                                                        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + strPostCode + "&Weight=" + "9.00";
 
-                                                                                        if(postcode.contains("") && weight.contains("0.00")){
-                                                                                            API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
+                                                                                        if(weight.contains("0.00")){
+                                                                                            API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "9.00";
                                                                                         }
 
                                                                                         StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
@@ -1036,7 +1038,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 }
                                             }) {
                                         @Override
-                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                        protected Map<String, String> getParams() {
+                                            double newprice = Double.parseDouble(weight);
+                                            int quan = Integer.parseInt(quantity);
+                                            double Delivery_Price = newprice * quan;
+                                            String DeliveryPrice = String.valueOf(Delivery_Price);
+
                                             Map<String, String> params = new HashMap<>();
                                             params.put("seller_id", seller_id);
                                             params.put("customer_id", getId);
