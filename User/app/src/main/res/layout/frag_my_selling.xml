@@ -253,6 +253,31 @@
             android:padding="5dp"
             android:text="@string/become_a_seller_today"
             android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="Your Account has been blocked!"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView14"
+            android:layout_centerInParent="true"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/open_sans"
+            android:text="Please Contact Administrator for more details."
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 

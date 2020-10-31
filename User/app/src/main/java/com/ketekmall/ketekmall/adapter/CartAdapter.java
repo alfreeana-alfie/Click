@@ -67,6 +67,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.SubTotal.setText("MYR" + price);
         holder.Quantity.setText(itemAllDetails.getQuantity());
 
+        holder.checkBox.setChecked(false);
+
         mQuantity = Integer.parseInt(itemAllDetails.getQuantity());
         Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * Integer.parseInt(itemAllDetails.getQuantity());
         holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));

@@ -393,18 +393,21 @@ public class Checkout extends AppCompatActivity implements Serializable{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
+                        DeleteOrder_Single3();
                         Intent intent4 = new Intent(Checkout.this, Homepage.class);
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
 
                     case R.id.nav_noti:
+                        DeleteOrder_Single3();
                         Intent intent6 = new Intent(Checkout.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
+                        DeleteOrder_Single3();
                         Intent intent1 = new Intent(Checkout.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
@@ -441,7 +444,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             public void onClick(View v) {
                 DeleteOrder_Single2();
-                finish();
+                Intent intent = new Intent(Checkout.this, Cart.class);
+                startActivity(intent);
+//                finish();
             }
         });
 
@@ -1113,7 +1118,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
     public void onBackPressed() {
         super.onBackPressed();
         DeleteOrder_Single2();
-        finish();
+        Intent intent = new Intent(Checkout.this, Cart.class);
+        startActivity(intent);
+//        finish();
     }
 
     private void DeleteOrder_Single() {
@@ -1155,6 +1162,44 @@ public class Checkout extends AppCompatActivity implements Serializable{
     }
 
     private void DeleteOrder_Single2() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+
+                            } else {
+                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void DeleteOrder_Single3() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
                 new Response.Listener<String>() {
                     @Override

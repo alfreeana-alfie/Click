@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,8 @@ public class Fragment_Selling extends Fragment {
     SessionManager sessionManager;
     Button btn_register;
 
+    TextView textView12, textView13, textView14, textView15;
+
     RelativeLayout AddNewProduct, MyProduct, Selling, MyRating, MyIncome,
              BoostAd, SellerChecked, SellerUnchecked;
 
@@ -73,6 +76,11 @@ public class Fragment_Selling extends Fragment {
         SellerChecked = view.findViewById(R.id.sellerchecked);
         SellerUnchecked = view.findViewById(R.id.sellerunchecked);
         btn_register = view.findViewById(R.id.btn_register);
+
+        textView12 = view.findViewById(R.id.textView12);
+        textView13 = view.findViewById(R.id.textView13);
+        textView14 = view.findViewById(R.id.textView14);
+        textView15 = view.findViewById(R.id.textView15);
     }
 
     private void GotoPage(){
@@ -140,8 +148,13 @@ public class Fragment_Selling extends Fragment {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     int strVerify = Integer.parseInt(object.getString("verification"));
                                     if(strVerify == 0){
+
                                         SellerUnchecked.setVisibility(View.VISIBLE);
                                         SellerChecked.setVisibility(View.GONE);
+                                        textView12.setVisibility(View.VISIBLE);
+                                        textView13.setVisibility(View.VISIBLE);
+                                        textView14.setVisibility(View.GONE);
+                                        textView15.setVisibility(View.GONE);
                                         btn_register.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -149,6 +162,14 @@ public class Fragment_Selling extends Fragment {
                                                 startActivity(intent);
                                             }
                                         });
+                                    }else if(strVerify == 2){
+                                        SellerUnchecked.setVisibility(View.VISIBLE);
+                                        SellerChecked.setVisibility(View.GONE);
+                                        textView12.setVisibility(View.GONE);
+                                        textView13.setVisibility(View.GONE);
+                                        textView14.setVisibility(View.VISIBLE);
+                                        textView15.setVisibility(View.VISIBLE);
+                                        btn_register.setVisibility(View.GONE);
                                     }else{
                                         SellerUnchecked.setVisibility(View.GONE);
                                         SellerChecked.setVisibility(View.VISIBLE);

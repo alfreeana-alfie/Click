@@ -586,13 +586,13 @@ public class Homepage extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     int strVerify = Integer.parseInt(object.getString("verification"));
-                                    if(strVerify == 0){
+                                    if(strVerify == 0 || strVerify == 2){
                                         Intent intent1 = new Intent(Homepage.this, Register_Seller_MainPage.class);
-                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
                                     }else{
                                         Intent intent1 = new Intent(Homepage.this, Product_Add.class);
-                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent1);
                                     }
 

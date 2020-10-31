@@ -68,18 +68,15 @@ public class MyProducts_Adapter extends BaseAdapter{
         Is_approved = convertView.findViewById(R.id.is_approved);
         boost_ad = convertView.findViewById(R.id.btn_BoostAds);
 
-        Is_approved.setVisibility(View.VISIBLE);
-        boost_ad.setVisibility(View.VISIBLE);
-        Pending_approved.setVisibility(View.GONE);
-//        if (item.getDelivery_status().equals("0")) {
-//            Pending_approved.setVisibility(View.VISIBLE);
-//            Is_approved.setVisibility(View.GONE);
-//            boost_ad.setVisibility(View.GONE);
-//        } else {
-//            Pending_approved.setVisibility(View.GONE);
-//            Is_approved.setVisibility(View.VISIBLE);
-//            boost_ad.setVisibility(View.VISIBLE);
-//        }
+        if (item.getDelivery_status().equals("0")) {
+            Pending_approved.setVisibility(View.VISIBLE);
+            Is_approved.setVisibility(View.GONE);
+            boost_ad.setVisibility(View.GONE);
+        } else {
+            Pending_approved.setVisibility(View.GONE);
+            Is_approved.setVisibility(View.VISIBLE);
+            boost_ad.setVisibility(View.VISIBLE);
+        }
 
         edit_item = convertView.findViewById(R.id.edit_item);
         edit_item.setOnClickListener(new View.OnClickListener() {

@@ -151,6 +151,7 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DeleteOrder_Single();
+                startActivity(new Intent(Cart.this, Homepage.class));
                 finish();
             }
         });
@@ -1110,6 +1111,7 @@ public class Cart extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         DeleteOrder_Single();
+        startActivity(new Intent(Cart.this, Homepage.class));
         finish();
     }
 }

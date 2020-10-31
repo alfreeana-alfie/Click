@@ -159,6 +159,7 @@ public class MySelling extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MySelling.this, Me_Page.class));
                 finish();
             }
         });
@@ -1017,6 +1018,8 @@ public class MySelling extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(MySelling.this, Me_Page.class));
+
         finish();
     }
 }
