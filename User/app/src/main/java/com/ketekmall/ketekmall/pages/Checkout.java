@@ -193,6 +193,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                     for(int i=0; i < jsonarray.length(); i++) {
                                                                                         JSONObject jsonobject = jsonarray.getJSONObject(i);
                                                                                         String totalAmount       = jsonobject.getString("totalAmount");
+                                                                                        Price = totalAmount;
                                                                                         Log.i("jsonObjectRequest", totalAmount);
 
                                                                                         checkoutData = new Checkout_Data();
@@ -506,6 +507,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             }catch (Exception e){
                                                 Log.d("ERROR", e.toString());
                                             }
+//                                            getUserDetail2();
                                         }
                                     });
                                 }
@@ -685,6 +687,26 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
+                                    final String postcode = object.getString("postcode");
+                                    final String weight = object.getString("weight");
+
+                                    Date date = Calendar.getInstance().getTime();
+
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    String oneDate = simpleDateFormat.format(date);
+
+                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                    Calendar c = Calendar.getInstance();
+                                    try {
+                                        c.setTime(simpleDateFormat1.parse(oneDate));
+                                    }catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    c.add(Calendar.DATE, 10);
+                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    Delivery_Date = simpleDateFormat2.format(c.getTime());
+
+                                    Log.d("DATE", Delivery_Date);
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
                                             new Response.Listener<String>() {
@@ -711,6 +733,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         final String strName = object.getString("name").trim();
                                                                                         final String strEmail = object.getString("email").trim();
                                                                                         final String strPhone_no = object.getString("phone_no").trim();
+                                                                                        final String strPostCode = object.getString("postcode").trim();
 
                                                                                         String url = "https://click-1595830894120.firebaseio.com/users.json";
 
@@ -779,95 +802,139 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         RequestQueue rQueue = Volley.newRequestQueue(Checkout.this);
                                                                                         rQueue.add(request);
 
-                                                                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+                                                                                        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + strPostCode + "&Weight=" + weight;
+
+                                                                                        if(postcode.contains("") && weight.contains("0.00")){
+                                                                                            API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
+                                                                                        }
+
+                                                                                        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                                                                                                 new Response.Listener<String>() {
                                                                                                     @Override
                                                                                                     public void onResponse(String response) {
-                                                                                                        try {
-                                                                                                            JSONObject jsonObject = new JSONObject(response);
-                                                                                                            String success = jsonObject.getString("success");
-                                                                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                                                                                                            if (success.equals("1")) {
-
-                                                                                                                for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                                    JSONObject object = jsonArray.getJSONObject(i);
-                                                                                                                    String strDelivery_ID = object.getString("id").trim();
-                                                                                                                    String strUser_ID = object.getString("user_id").trim();
-                                                                                                                    String strDivision = object.getString("division");
-                                                                                                                    Price = object.getString("price");
-                                                                                                                    String strDays = object.getString("days");
-
-                                                                                                                    Date date = Calendar.getInstance().getTime();
-
-                                                                                                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                                                                                                    String oneDate = simpleDateFormat.format(date);
-
-                                                                                                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-                                                                                                                    Calendar c = Calendar.getInstance();
-                                                                                                                    try {
-                                                                                                                        c.setTime(simpleDateFormat1.parse(oneDate));
-                                                                                                                    }catch (ParseException e){
-                                                                                                                        e.printStackTrace();
-                                                                                                                    }
-                                                                                                                    c.add(Calendar.DATE, Integer.parseInt(strDays));
-                                                                                                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-                                                                                                                    Delivery_Date = simpleDateFormat2.format(c.getTime());
-                                                                                                                }
-                                                                                                            } else {
-                                                                                                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                                        Log.i("jsonObjectRequest", response);
+                                                                                                        try{
+                                                                                                            JSONArray jsonarray = new JSONArray(response);
+                                                                                                            for(int i=0; i < jsonarray.length(); i++) {
+                                                                                                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                                                                                                final String totalAmount       = jsonobject.getString("totalAmount");
+                                                                                                                Price = totalAmount;
+                                                                                                                Log.i("jsonObjectRequest", totalAmount);
                                                                                                             }
-                                                                                                        } catch (JSONException e) {
+                                                                                                        }catch(JSONException e){
                                                                                                             e.printStackTrace();
-                                                                                                            Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
-
+                                                                                                            Log.i("jsonObjectRequest", e.toString());
                                                                                                         }
                                                                                                     }
                                                                                                 },
                                                                                                 new Response.ErrorListener() {
                                                                                                     @Override
                                                                                                     public void onErrorResponse(VolleyError error) {
-                                                                                                        try {
-
-                                                                                                            if (error instanceof TimeoutError ) {
-                                                                                                                //Time out error
-
-                                                                                                            }else if(error instanceof NoConnectionError){
-                                                                                                                //net work error
-
-                                                                                                            } else if (error instanceof AuthFailureError) {
-                                                                                                                //error
-
-                                                                                                            } else if (error instanceof ServerError) {
-                                                                                                                //Erroor
-                                                                                                            } else if (error instanceof NetworkError) {
-                                                                                                                //Error
-
-                                                                                                            } else if (error instanceof ParseError) {
-                                                                                                                //Error
-
-                                                                                                            }else{
-                                                                                                                //Error
-                                                                                                            }
-                                                                                                            //End
-
-
-                                                                                                        } catch (Exception e) {
-
-
-                                                                                                        }
+                                                                                                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                                                                                                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                                                                                                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                                                                                                     }
                                                                                                 }) {
                                                                                             @Override
-                                                                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                                                            public Map<String, String> getHeaders() {
                                                                                                 Map<String, String> params = new HashMap<>();
-                                                                                                params.put("item_id", item_id);
-                                                                                                params.put("division", User_Division);
+                                                                                                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
                                                                                                 return params;
                                                                                             }
+
                                                                                         };
                                                                                         RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
                                                                                         requestQueue.add(stringRequest);
+
+//                                                                                        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_READ_DELIVERY,
+//                                                                                                new Response.Listener<String>() {
+//                                                                                                    @Override
+//                                                                                                    public void onResponse(String response) {
+//                                                                                                        try {
+//                                                                                                            JSONObject jsonObject = new JSONObject(response);
+//                                                                                                            String success = jsonObject.getString("success");
+//                                                                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+//
+//                                                                                                            if (success.equals("1")) {
+//
+//                                                                                                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                                                                                                    JSONObject object = jsonArray.getJSONObject(i);
+//                                                                                                                    String strDelivery_ID = object.getString("id").trim();
+//                                                                                                                    String strUser_ID = object.getString("user_id").trim();
+//                                                                                                                    String strDivision = object.getString("division");
+//                                                                                                                    Price = object.getString("price");
+//                                                                                                                    String strDays = object.getString("days");
+//
+//                                                                                                                    Date date = Calendar.getInstance().getTime();
+//
+//                                                                                                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//                                                                                                                    String oneDate = simpleDateFormat.format(date);
+//
+//                                                                                                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+//                                                                                                                    Calendar c = Calendar.getInstance();
+//                                                                                                                    try {
+//                                                                                                                        c.setTime(simpleDateFormat1.parse(oneDate));
+//                                                                                                                    }catch (ParseException e){
+//                                                                                                                        e.printStackTrace();
+//                                                                                                                    }
+//                                                                                                                    c.add(Calendar.DATE, Integer.parseInt(strDays));
+//                                                                                                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+//                                                                                                                    Delivery_Date = simpleDateFormat2.format(c.getTime());
+//                                                                                                                }
+//                                                                                                            } else {
+//                                                                                                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+//                                                                                                            }
+//                                                                                                        } catch (JSONException e) {
+//                                                                                                            e.printStackTrace();
+//                                                                                                            Toast.makeText(Checkout.this, e.toString(), Toast.LENGTH_SHORT).show();
+//
+//                                                                                                        }
+//                                                                                                    }
+//                                                                                                },
+//                                                                                                new Response.ErrorListener() {
+//                                                                                                    @Override
+//                                                                                                    public void onErrorResponse(VolleyError error) {
+//                                                                                                        try {
+//
+//                                                                                                            if (error instanceof TimeoutError ) {
+//                                                                                                                //Time out error
+//
+//                                                                                                            }else if(error instanceof NoConnectionError){
+//                                                                                                                //net work error
+//
+//                                                                                                            } else if (error instanceof AuthFailureError) {
+//                                                                                                                //error
+//
+//                                                                                                            } else if (error instanceof ServerError) {
+//                                                                                                                //Erroor
+//                                                                                                            } else if (error instanceof NetworkError) {
+//                                                                                                                //Error
+//
+//                                                                                                            } else if (error instanceof ParseError) {
+//                                                                                                                //Error
+//
+//                                                                                                            }else{
+//                                                                                                                //Error
+//                                                                                                            }
+//                                                                                                            //End
+//
+//
+//                                                                                                        } catch (Exception e) {
+//
+//
+//                                                                                                        }
+//                                                                                                    }
+//                                                                                                }) {
+//                                                                                            @Override
+//                                                                                            protected Map<String, String> getParams() throws AuthFailureError {
+//                                                                                                Map<String, String> params = new HashMap<>();
+//                                                                                                params.put("item_id", item_id);
+//                                                                                                params.put("division", User_Division);
+//                                                                                                return params;
+//                                                                                            }
+//                                                                                        };
+//                                                                                        RequestQueue requestQueue2 = Volley.newRequestQueue(Checkout.this);
+//                                                                                        requestQueue2.add(stringRequest2);
                                                                                     }
                                                                                 } else {
                                                                                     Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
