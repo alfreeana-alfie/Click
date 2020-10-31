@@ -625,7 +625,7 @@ public class Cart extends AppCompatActivity {
     }
 
     private void AddQuantity(final Item_All_Details item) {
-        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO,
                 new Response.Listener<String>() {
                     @Override
@@ -777,76 +777,6 @@ public class Cart extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void EditCheckout(final String Quantity, final String MaxOrder, final String ItemID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if(response == null){
-                            Log.e("onResponse", "Return NULL");
-                        }else{
-                            try {
-                                final JSONObject Object = new JSONObject(response);
-                                String success = Object.getString("success");
-
-                                if (success.equals("1")) {
-                                    ReadCartTemp(MaxOrder);
-                                } else {
-                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", ItemID);
-                params.put("cart_id", ItemID);
-                params.put("quantity", Quantity);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-        requestQueue.add(stringRequest);
-    }
-
     private void ReadCartTemp(final String MaxOrder){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART_TEMP,
                 new Response.Listener<String>() {
@@ -938,7 +868,7 @@ public class Cart extends AppCompatActivity {
     }
 
     private void MinusQuantity(final Item_All_Details item){
-        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO_MINUS,
                 new Response.Listener<String>() {
                     @Override
@@ -1014,71 +944,6 @@ public class Cart extends AppCompatActivity {
 //                params.put("customer_id", getId);
                 params.put("id", item.getId());
 //                params.put("ad_detail", item.getAd_detail());
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void EditCheckout2(final String ItemID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            final JSONObject Object = new JSONObject(response);
-                            String success = Object.getString("success");
-
-                            if (success.equals("1")) {
-                                ReadCartTemp2();
-                            } else {
-                                Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", ItemID);
-                params.put("cart_id", ItemID);
-                params.put("quantity", String.valueOf(number));
                 return params;
             }
         };

@@ -134,7 +134,7 @@
                 android:horizontalSpacing="5dp"
                 android:numColumns="2"
                 android:paddingStart="5dp"
-                android:paddingTop="40dp"
+                android:paddingTop="5dp"
                 android:paddingEnd="5dp"
                 android:paddingBottom="7dp"
                 android:stretchMode="columnWidth"
