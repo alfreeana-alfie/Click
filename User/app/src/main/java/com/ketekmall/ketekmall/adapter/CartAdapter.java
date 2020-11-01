@@ -80,7 +80,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     mListerner.onAddClick(position);
                     int mQuantity2 = Integer.parseInt(holder.Quantity.getText().toString());
                     mQuantity2++;
-                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity;
+                    itemAllDetails.setQuantity(String.valueOf(mQuantity2));
+                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity2));
 
@@ -98,6 +99,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     int mQuantity2 = Integer.parseInt(holder.Quantity.getText().toString());
                     mListerner.onMinusClick(position);
                     mQuantity2--;
+                    itemAllDetails.setQuantity(String.valueOf(mQuantity2));
                     Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
                     holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
                     holder.Quantity.setText(String.valueOf(mQuantity2));

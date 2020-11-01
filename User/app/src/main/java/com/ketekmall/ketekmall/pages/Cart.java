@@ -240,6 +240,7 @@ public class Cart extends AppCompatActivity {
                                                                         DeleteCartTemp(item.getId());
 
                                                                         doubles.remove(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
+
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
@@ -260,6 +261,7 @@ public class Cart extends AppCompatActivity {
                                                                         AddCartTemp(item, price);
 
                                                                         doubles.add(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
+                                                                        Log.d("QUAN", item.getQuantity());
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
@@ -270,15 +272,13 @@ public class Cart extends AppCompatActivity {
                                                                     @Override
                                                                     public void onAddClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
-//                                                                        ++number;
                                                                         AddQuantity(item);
                                                                     }
 
                                                                     @Override
                                                                     public void onMinusClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
-//                                                                        --number;
-                                                                        if (number == 0) {
+                                                                        if (item.getQuantity().equals("0")) {
                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
                                                                             builder.setTitle("Are you sure?");
                                                                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -869,7 +869,6 @@ public class Cart extends AppCompatActivity {
     }
 
     private void MinusQuantity(final Item_All_Details item){
-//        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO_MINUS,
                 new Response.Listener<String>() {
                     @Override
@@ -942,9 +941,7 @@ public class Cart extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-//                params.put("customer_id", getId);
                 params.put("id", item.getId());
-//                params.put("ad_detail", item.getAd_detail());
                 return params;
             }
         };

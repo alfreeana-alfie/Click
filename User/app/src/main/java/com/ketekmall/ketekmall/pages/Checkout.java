@@ -181,7 +181,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
 
-                                                                if(postCode.contains("") && weight.contains("0.00")){
+                                                                if(weight.contains("0.00")){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
                                                                 }
 

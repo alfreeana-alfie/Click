@@ -461,6 +461,10 @@ public class View_Product extends AppCompatActivity {
                                 viewPager.setVisibility(GONE);
                                 Page_Text.setVisibility(GONE);
                                 img_item.setVisibility(VISIBLE);
+                            }else{
+                                viewPager.setVisibility(VISIBLE);
+                                Page_Text.setVisibility(VISIBLE);
+                                img_item.setVisibility(GONE);
                             }
                             if (success.equals("1")) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
