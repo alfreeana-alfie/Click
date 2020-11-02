@@ -11,15 +11,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_centerInParent="true"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -209,7 +207,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="0dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="0dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -237,12 +235,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="40dp">
+                android:layout_marginBottom="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentBottom="false"
                     android:layout_centerHorizontal="true"
                     android:orientation="vertical"
                     tools:ignore="UselessParent">

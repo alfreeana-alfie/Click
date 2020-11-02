@@ -53,12 +53,12 @@
 
             <TextView
                 android:id="@+id/username"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profile_image"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
-                android:paddingStart="10dp"
+                android:paddingStart="5dp"
                 android:paddingEnd="10dp"
                 android:text="@string/username"
                 android:textColor="@color/colorAccent" />
@@ -86,7 +86,7 @@
                 android:layout_below="@id/username"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/open_sans_semibold"
-                android:paddingStart="15dp"
+                android:paddingStart="5dp"
                 android:paddingEnd="15dp"
                 android:text="@string/greeting"
                 android:textAllCaps="true"
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/welcome_text"
                 android:fontFamily="@font/open_sans_semibold"
-                android:paddingStart="15dp"
+                android:paddingStart="5dp"
                 android:paddingEnd="15dp"
                 android:text="@string/buy_sell_find_almost_everything"
                 android:textAllCaps="true"
