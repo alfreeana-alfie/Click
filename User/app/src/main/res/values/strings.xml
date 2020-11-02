@@ -42,7 +42,7 @@
     <string name="sell_my_item">Add New Product</string>
     <string name="home">Home</string>
     <string name="category">Category</string>
-    <string name="ad_details">Ad Details</string>
+    <string name="ad_details">Product Name</string>
     <string name="price_rm">Price (RM)</string>
     <string name="uploaded_photo">Uploaded Photo</string>
     <string name="good_tips">Good Tips</string>
@@ -57,7 +57,7 @@
     <string name="enter_new_password">Enter New Password</string>
     <string name="birthday">Birthday</string>
     <string name="gender">Gender</string>
-    <string name="please_enter_an_ad_detail">Please enter an ad detail…</string>
+    <string name="please_enter_an_ad_detail">Please enter a product name</string>
     <string name="item_image">Item Image</string>
     <string name="or">Quick Login with</string>
     <string name="login">Login</string>
@@ -497,7 +497,7 @@
     <!-- [END fcm_default_icon_string] -->
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>
-    <string name="brand_material">Brand Material</string>
+    <string name="brand_material">Brand</string>
     <string name="stock">Stock</string>
     <string name="inner_material">Inner Material</string>
     <string name="description">Description</string>

@@ -92,7 +92,7 @@
                     android:fontFamily="@font/open_sans"
                     android:hint="@string/name"
                     android:importantForAutofill="no"
-                    android:inputType="textPersonName"
+                    android:inputType="text"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:textColor="@android:color/black"

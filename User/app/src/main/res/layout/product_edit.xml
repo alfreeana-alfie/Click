@@ -1004,7 +1004,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="Brand Material"
+                android:text="@string/brand_material"
                 android:textColor="@color/colorGrey"
                 android:textSize="14sp"
                 android:textStyle="bold|italic" />
@@ -1032,6 +1032,7 @@
             </RelativeLayout>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/inner_mate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -1046,6 +1047,7 @@
                 android:textStyle="bold|italic" />
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/inner_relative_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

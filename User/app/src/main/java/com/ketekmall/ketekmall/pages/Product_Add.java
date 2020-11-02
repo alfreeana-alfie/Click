@@ -732,7 +732,7 @@ public class Product_Add extends AppCompatActivity {
                     params.put("sub_category", strSub_category);
                     params.put("ad_detail", strAd_Detail);
                     params.put("brand_material", strBrand);
-                    params.put("inner_material", strInner);
+                    params.put("inner_material", strBrand);
                     params.put("stock", strStock);
                     params.put("description", strDesc);
                     params.put("price", String.format("%.2f", strPrice));
