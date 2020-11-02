@@ -11,6 +11,7 @@ android {
         multiDexEnabled true
         versionCode 8
         versionName "1.0.0"
+        useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

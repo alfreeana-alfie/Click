@@ -86,16 +86,11 @@
                     android:id="@+id/name_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@null"
-                    android:cursorVisible="true"
-                    android:fontFamily="@font/open_sans"
                     android:hint="@string/name"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:textColor="@android:color/black"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textAlignment="textStart"
                     android:textCursorDrawable="@drawable/color_cursor" />
 
             </LinearLayout>

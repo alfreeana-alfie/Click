@@ -116,11 +116,12 @@ public class Register extends Fragment {
     }
 
     private void SignUp(View view) {
-        final String strName = this.name.getText().toString().trim();
-        final String strEmail = this.email.getText().toString().trim();
-        final String strPhone_No = this.phone_no.getText().toString().trim();
-        final String strPassword = this.password.getText().toString().trim();
-        final String strConfirm_Password = this.confirm_password.getText().toString().trim();
+        final String newName = this.name.getText().toString();
+        final String strName = this.name.getText().toString();
+        final String strEmail = this.email.getText().toString();
+        final String strPhone_No = this.phone_no.getText().toString();
+        final String strPassword = this.password.getText().toString();
+        final String strConfirm_Password = this.confirm_password.getText().toString();
         final String strBirthday = "";
         final String strGender = "Female";
         final String strVerification ="0";
@@ -133,9 +134,6 @@ public class Register extends Fragment {
         if (strName.isEmpty()) {
             name.requestFocus();
             name.setError("Fields cannot be empty!");
-        } else if (!strName.matches("[a-zA-Z ]+")) {
-            name.requestFocus();
-            name.setError("Enter only Alphabetical Letter");
         }
 
         //Email
@@ -171,8 +169,7 @@ public class Register extends Fragment {
             confirm_password.setError("Confirm Password is different than Password");
         }
 
-        if (strName.matches("[a-zA-Z]+")
-                && Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()
+        if (Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()
                 && Patterns.PHONE.matcher(strPhone_No).matches()
                 && PASSWORD_PATTERN.matcher(strPassword).matches()
                 && strConfirm_Password.equals(strPassword)) {
