@@ -241,6 +241,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                             checkoutData.setDelivery_division1(division + " to " + division);
 
                                                                                             grandtotal -= Double.parseDouble(Price);
+                                                                                            Grand_Total2.setText(String.format("%.2f", grandtotal));
                                                                                             Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
                                                                                         }
                                                                                     });
@@ -486,7 +487,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     Button_Checkout.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Log.d("TAG", Grand_Total2.getText().toString());
+                                            Log.d("NANA", RefID);
                                             String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
                                             try{
                                                 IPayIHPayment payment = new IPayIHPayment();
