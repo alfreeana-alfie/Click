@@ -54,6 +54,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ketekmall.ketekmall.pages.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -510,14 +511,12 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             RequestQueue rQueue = Volley.newRequestQueue(requireContext());
                                             rQueue.add(request);
 
-
-
                                             loading_layout.setVisibility(View.VISIBLE);
                                             Timer timer = new Timer();
                                             timer.schedule(new TimerTask() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(requireContext(), Homepage.class);
+                                                    Intent intent = new Intent(getActivity(), Homepage.class);
                                                     intent.putExtra("name", name);
                                                     intent.putExtra("email", email);
                                                     intent.putExtra("phone_no", phone_no);

@@ -55,7 +55,7 @@ public class MyProducts_Adapter extends BaseAdapter{
         Item_All_Details item = itemListFull.get(position);
 
         ImageView img_item;
-        TextView TV_addetail, TV_price, TV_item_location, Pending_approved, Is_approved;
+        TextView TV_addetail, TV_price, TV_item_location, Pending_approved, Is_approved, Is_Reject;
         Button edit_item, delete_item, boost_ad;
         RatingBar ratingBar;
 
@@ -66,19 +66,31 @@ public class MyProducts_Adapter extends BaseAdapter{
         TV_item_location = convertView.findViewById(R.id.item_location_item);
         Pending_approved = convertView.findViewById(R.id.pending_approved);
         Is_approved = convertView.findViewById(R.id.is_approved);
+        Is_Reject = convertView.findViewById(R.id.is_reject);
         boost_ad = convertView.findViewById(R.id.btn_BoostAds);
+
+        delete_item = convertView.findViewById(R.id.delete_item);
+        edit_item = convertView.findViewById(R.id.edit_item);
 
         if (item.getDelivery_status().equals("0")) {
             Pending_approved.setVisibility(View.VISIBLE);
             Is_approved.setVisibility(View.GONE);
             boost_ad.setVisibility(View.GONE);
+            Is_Reject.setVisibility(View.GONE);
+        } else if(item.getDelivery_status().equals("3")){
+            delete_item.setVisibility(View.GONE);
+            edit_item.setVisibility(View.GONE);
+            Pending_approved.setVisibility(View.GONE);
+            Is_approved.setVisibility(View.GONE);
+            boost_ad.setVisibility(View.GONE);
+            Is_Reject.setVisibility(View.VISIBLE);
         } else {
             Pending_approved.setVisibility(View.GONE);
             Is_approved.setVisibility(View.VISIBLE);
             boost_ad.setVisibility(View.VISIBLE);
+            Is_Reject.setVisibility(View.GONE);
         }
 
-        edit_item = convertView.findViewById(R.id.edit_item);
         edit_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +99,6 @@ public class MyProducts_Adapter extends BaseAdapter{
                 }
             }
         });
-        delete_item = convertView.findViewById(R.id.delete_item);
         delete_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

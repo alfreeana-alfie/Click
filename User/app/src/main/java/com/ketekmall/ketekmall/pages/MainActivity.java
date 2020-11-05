@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.pages;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private long backPressedTime;
     private Toast backToast;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +70,7 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        if(!sessionManager.isLoggin()){
-            frameLayout.setVisibility(View.VISIBLE);
-            loading_layout.setVisibility(View.GONE);
-        }else{
+        if(sessionManager.isLoggin()){
             frameLayout.setVisibility(View.GONE);
             loading_layout.setVisibility(View.VISIBLE);
         }
@@ -322,8 +321,7 @@ public class MainActivity extends AppCompatActivity {
                                         intent.putExtra("gender", gender);
                                         startActivity(intent);
                                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                     }
                                 } else {

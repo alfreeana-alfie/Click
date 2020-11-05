@@ -55,6 +55,9 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
         if (itemAllDetails.getShocking().equals("1")) {
             String newString = "<font color='#3DDC84'>" + "Approved" + "</font>";
             holder.Shocking.setText(Html.fromHtml(newString));
+        }else if (itemAllDetails.getShocking().equals("2")){
+            String newString = "<font color='#FF3333'>" + "Rejected" + "</font>";
+            holder.Shocking.setText(Html.fromHtml(newString));
         } else {
             String newString = "<font color='#FF3333'>" + "Pending Request" + "</font>";
             holder.Shocking.setText(Html.fromHtml(newString));
