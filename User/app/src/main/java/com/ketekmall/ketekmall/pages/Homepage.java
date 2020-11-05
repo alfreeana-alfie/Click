@@ -99,7 +99,7 @@ public class Homepage extends AppCompatActivity {
 
     private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
 
-    List<Item_All_Details> itemList, itemList2;
+    List<Item_All_Details> itemList, itemList2, itemList3;
 
     CartAdapter _cart_adapter;
     RecyclerView recyclerView;
@@ -252,7 +252,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Homepage.this, View_All_Hot.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -261,7 +261,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Homepage.this, View_All_Shock.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -880,6 +880,8 @@ public class Homepage extends AppCompatActivity {
                                     String stock = object.getString("stock").trim();
                                     String desc = object.getString("description").trim();
                                     String rating = object.getString("rating");
+                                    String weight = object.getString("weight");
+                                    String postcode = object.getString("postcode");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setSold(sold);
@@ -888,6 +890,8 @@ public class Homepage extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_Main(itemList, Homepage.this);
@@ -915,6 +919,8 @@ public class Homepage extends AppCompatActivity {
                                         detailIntent.putExtra("inner_material", item.getInner());
                                         detailIntent.putExtra("stock", item.getStock());
                                         detailIntent.putExtra("description", item.getDescription());
+                                        detailIntent.putExtra("weight", item.getWeight());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
 
                                         startActivity(detailIntent);
 
@@ -923,7 +929,6 @@ public class Homepage extends AppCompatActivity {
                                     @Override
                                     public void onAddtoCartClick(int position) {
                                         Item_All_Details item = itemList.get(position);
-
 //                                        final String strItem_Id = item.getId();
 //                                        final String strSeller_id = item.getSeller_id();
 //                                        final String strMain_category = item.getMain_category();
@@ -1102,12 +1107,17 @@ public class Homepage extends AppCompatActivity {
                                     String inner = object.getString("inner_material").trim();
                                     String stock = object.getString("stock").trim();
                                     String desc = object.getString("description").trim();
+                                    String weight = object.getString("weight");
+                                    String postcode = object.getString("postcode");
+
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
                                     item.setInner(inner);
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setRating(rating);
+                                    item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList2.add(item);
                                 }
                                 adapter_item2 = new Item_Adapter_Main(itemList2, Homepage.this);
@@ -1117,7 +1127,7 @@ public class Homepage extends AppCompatActivity {
                                     @Override
                                     public void onViewClick(int position) {
                                         Intent detailIntent = new Intent(Homepage.this, View_Product.class);
-                                        Item_All_Details item = itemList.get(position);
+                                        Item_All_Details item = itemList2.get(position);
 
                                         detailIntent.putExtra("item_id", item.getItem_id());
                                         detailIntent.putExtra("id", item.getId());
@@ -1134,13 +1144,14 @@ public class Homepage extends AppCompatActivity {
                                         detailIntent.putExtra("inner_material", item.getInner());
                                         detailIntent.putExtra("stock", item.getStock());
                                         detailIntent.putExtra("description", item.getDescription());
-
+                                        detailIntent.putExtra("weight", item.getWeight());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         startActivity(detailIntent);
                                     }
 
                                     @Override
                                     public void onAddtoCartClick(int position) {
-                                        Item_All_Details item = itemList.get(position);
+                                        Item_All_Details item = itemList2.get(position);
                                         View_Cart2(item);
                                     }
                                 });
@@ -1387,7 +1398,7 @@ public class Homepage extends AppCompatActivity {
                                                                 if (success.equals("1")) {
                                                                     Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(Homepage.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Homepage.this, "Failed Adding To Cart", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -1462,8 +1473,8 @@ public class Homepage extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
-                                        Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
-//                                        Toast.makeText(Homepage.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Homepage.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+
                                     }
                                 }
                             } catch (JSONException e) {

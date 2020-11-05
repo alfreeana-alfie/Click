@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -90,6 +91,7 @@ public class View_All extends AppCompatActivity {
     private Spinner spinner_division, spinner_district;
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
+    private ProgressBar loading;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -256,6 +258,7 @@ public class View_All extends AppCompatActivity {
     }
 
     private void Declare() {
+        loading = findViewById(R.id.loading);
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
         filter_layout = findViewById(R.id.filter_layout);
@@ -550,6 +553,7 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
@@ -791,6 +795,8 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
@@ -1033,6 +1039,8 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
@@ -1275,6 +1283,8 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
@@ -1599,6 +1609,8 @@ public class View_All extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");

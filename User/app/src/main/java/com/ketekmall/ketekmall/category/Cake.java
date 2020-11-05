@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -85,6 +86,7 @@ public class Cake extends AppCompatActivity {
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
     BottomNavigationView bottomNav;
+    private ProgressBar loading;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -551,12 +553,12 @@ public class Cake extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
-                                    String postcode = object.getString("postcode");
+
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
-
+                                    String postcode = object.getString("postcode");
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
                                     item.setInner(inner);
@@ -598,7 +600,7 @@ public class Cake extends AppCompatActivity {
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("weight", item.getWeight());
-
+                                        detailIntent.putExtra("postcode", item.getPostcode());
                                         startActivity(detailIntent);
 
                                     }

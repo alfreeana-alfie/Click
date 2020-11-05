@@ -22,7 +22,7 @@ import java.util.Objects;
 
 public class About_KetekMall extends AppCompatActivity {
 
-    LinearLayout ReturnRefundPolicy_Layout, DeliveryPolicy_Layout, ContactUs_Layout, TermsConditions_Layout;
+    LinearLayout ReturnRefundPolicy_Layout, DeliveryPolicy_Layout, ContactUs_Layout, TermsConditions_Layout, AppVersion_Layout;
 
     String getId;
     SessionManager sessionManager;
@@ -40,7 +40,7 @@ public class About_KetekMall extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(About_KetekMall.this, ReturnRefundPolicy.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -49,7 +49,7 @@ public class About_KetekMall extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(About_KetekMall.this, DeliveryPolicy.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -58,7 +58,7 @@ public class About_KetekMall extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(About_KetekMall.this, Contact_Us.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -67,7 +67,16 @@ public class About_KetekMall extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(About_KetekMall.this, TermsAndConditionsOnly.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        AppVersion_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(About_KetekMall.this, AppVersion.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -113,6 +122,7 @@ public class About_KetekMall extends AppCompatActivity {
         DeliveryPolicy_Layout = findViewById(R.id.delivery_policy_layout);
         ContactUs_Layout = findViewById(R.id.contact_us_layout);
         TermsConditions_Layout = findViewById(R.id.terms_and_conditions_layout);
+        AppVersion_Layout = findViewById(R.id.version_layout);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

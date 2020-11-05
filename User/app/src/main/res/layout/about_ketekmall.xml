@@ -168,6 +168,39 @@
                     android:textAlignment="textEnd"
                     android:text="@string/view" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_white_full_about"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="2dp"
+                android:padding="15dp"
+                android:id="@+id/version_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:targetApi="lollipop">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="App Version"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/version_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="14sp"
+                    android:textAlignment="textEnd"
+                    android:text="@string/view" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
