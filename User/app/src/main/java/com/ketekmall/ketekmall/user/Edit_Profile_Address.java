@@ -198,6 +198,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
         birthday.setFocusable(false);
         gender_display.setFocusable(false);
 
+        icno.setFocusable(false);
+        bank_name.setFocusable(false);
+        bank_acc.setFocusable(false);
+
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
         phone_no.setFocusableInTouchMode(false);
@@ -209,6 +213,10 @@ public class Edit_Profile_Address extends AppCompatActivity {
 
         birthday.setFocusableInTouchMode(false);
         gender_display.setFocusableInTouchMode(false);
+
+        icno.setFocusableInTouchMode(false);
+        bank_name.setFocusableInTouchMode(false);
+        bank_acc.setFocusableInTouchMode(false);
 
         layout_gender.setVisibility(View.GONE);
         button_accept.setVisibility(View.GONE);

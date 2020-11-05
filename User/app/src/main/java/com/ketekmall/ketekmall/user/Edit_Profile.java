@@ -197,6 +197,10 @@ public class Edit_Profile extends AppCompatActivity {
         birthday.setFocusable(false);
         gender_display.setFocusable(false);
 
+        icno.setFocusable(false);
+        bank_name.setFocusable(false);
+        bank_acc.setFocusable(false);
+
         name.setFocusableInTouchMode(false);
         email.setFocusableInTouchMode(false);
         phone_no.setFocusableInTouchMode(false);
@@ -794,7 +798,6 @@ public class Edit_Profile extends AppCompatActivity {
         RequestQueue requestQueue1 = Volley.newRequestQueue(Edit_Profile.this);
         requestQueue1.add(stringRequest1);
     }
-
 
     @Override
     public void onBackPressed() {
