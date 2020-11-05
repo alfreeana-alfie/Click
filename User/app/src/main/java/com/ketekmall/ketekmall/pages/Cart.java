@@ -100,6 +100,7 @@ public class Cart extends AppCompatActivity {
 
         loading = findViewById(R.id.loading);
 
+
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -124,12 +125,12 @@ public class Cart extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                 }
-
                 return true;
             }
         });
 
         Button_Checkout = findViewById(R.id.btn_checkout);
+        Button_Checkout.setVisibility(View.GONE);
         Button_Checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -248,6 +249,7 @@ public class Cart extends AppCompatActivity {
                                                                         }
                                                                         if (doubles.size() == 0) {
                                                                             Grand_Total.setText("MYR0.00");
+                                                                            Button_Checkout.setVisibility(View.GONE);
                                                                         }
                                                                     }
 
@@ -259,6 +261,8 @@ public class Cart extends AppCompatActivity {
 
                                                                         //Add to cart_temp
                                                                         AddCartTemp(item, price);
+
+                                                                        Button_Checkout.setVisibility(View.VISIBLE);
 
                                                                         doubles.add(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
                                                                         Log.d("QUAN", item.getQuantity());

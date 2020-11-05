@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Firebase.setAndroidContext(MainActivity.this);
 
         frameLayout = findViewById(R.id.framelayout);
         loading_layout = findViewById(R.id.loading_layout);
@@ -75,13 +76,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             getUserDetail();
         }
-//        final Fragment fragment_login = new Login();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.framelayout, fragment_login);
-//        fragmentTransaction.commit();
-
-
     }
 
     @Override

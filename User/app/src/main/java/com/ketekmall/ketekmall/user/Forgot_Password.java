@@ -29,6 +29,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.firebase.client.Firebase;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.pages.MainActivity;
 
@@ -55,7 +56,7 @@ public class Forgot_Password extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgot_password);
-
+        Firebase.setAndroidContext(Forgot_Password.this);
         Declare();
 
         Button_Func();
