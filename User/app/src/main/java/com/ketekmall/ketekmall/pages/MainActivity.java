@@ -70,17 +70,18 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        if(sessionManager.isLoggin()){
-            frameLayout.setVisibility(View.GONE);
-            loading_layout.setVisibility(View.VISIBLE);
+        if(!sessionManager.isLoggin()){
+            startActivity(new Intent(MainActivity.this, Login.class));
+        }else{
+            getUserDetail();
         }
-        final Fragment fragment_login = new Login();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout, fragment_login);
-        fragmentTransaction.commit();
+//        final Fragment fragment_login = new Login();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.framelayout, fragment_login);
+//        fragmentTransaction.commit();
 
-        getUserDetail();
+
     }
 
     @Override

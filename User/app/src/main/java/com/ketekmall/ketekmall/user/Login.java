@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -69,7 +70,7 @@ import java.util.regex.Pattern;
 
 
 @SuppressWarnings("deprecation")
-public class Login extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
     private static String URL_LOGIN = "https://ketekmall.com/ketekmall/login.php";
@@ -87,20 +88,22 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
     private String getId;
     private RelativeLayout loading_layout;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login, container, false);
-        Declare(view);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+        Declare();
 
-        Firebase.setAndroidContext(view.getContext());
-        sessionManager = new SessionManager(requireContext());
+        Firebase.setAndroidContext(Login.this);
+        sessionManager = new SessionManager(Login.this);
 
-        loading_layout = view.findViewById(R.id.loading_layout);
+        loading_layout = findViewById(R.id.loading_layout);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient = new GoogleApiClient.Builder(view.getContext()).enableAutoManage(requireActivity(), this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
+        googleApiClient=new GoogleApiClient.Builder(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,43 +123,44 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
         button_goto_register_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Fragment fragment_register = new Register();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
-                fragmentTransaction.replace(R.id.framelayout, fragment_register);
-                fragmentTransaction.commit();
+                startActivity(new Intent(Login.this, Register.class));
+//                final Fragment fragment_register = new Register();
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
+//                fragmentTransaction.replace(R.id.framelayout, fragment_register);
+//                fragmentTransaction.commit();
             }
         });
 
         button_goto_forgot_page.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Fragment fragment_forgot_password = new Forgot_Password();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
-                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
-                fragmentTransaction.replace(R.id.framelayout, fragment_forgot_password);
-                fragmentTransaction.commit();
+                startActivity(new Intent(Login.this, Forgot_Password.class));
+//                final Fragment fragment_forgot_password = new Forgot_Password();
+//                FragmentManager fragmentManager = getFragmentManager();
+//                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
+//                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
+//                fragmentTransaction.replace(R.id.framelayout, fragment_forgot_password);
+//                fragmentTransaction.commit();
             }
         });
-        return view;
     }
 
-    private void Declare(View v) {
-        email = v.findViewById(R.id.email_edit);
-        password = v.findViewById(R.id.password_login);
-        loading = v.findViewById(R.id.loading);
-        button_login = v.findViewById(R.id.button_login);
-        button_goto_register_page = v.findViewById(R.id.button_goto_register_page);
-        button_goto_forgot_page = v.findViewById(R.id.button_goto_forgot_page);
-        signInButton = v.findViewById(R.id.sign_in_button);
+    private void Declare() {
+        email = findViewById(R.id.email_edit);
+        password = findViewById(R.id.password_login);
+        loading = findViewById(R.id.loading);
+        button_login = findViewById(R.id.button_login);
+        button_goto_register_page = findViewById(R.id.button_goto_register_page);
+        button_goto_forgot_page = findViewById(R.id.button_goto_forgot_page);
+        signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
 
         callbackManager = CallbackManager.Factory.create();
-        LoginButton loginButton = v.findViewById(R.id.login_button);
+        LoginButton loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
-        loginButton.setFragment(this);
+//        loginButton.setFragment(Login.this);
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -171,7 +175,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(Login.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -232,7 +236,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 public void onResponse(String s) {
                                                     if(s != null){
                                                         if (s.equals("null")) {
-                                                            Toast.makeText(getContext(), "actionbar_chat not found", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(Login.this, "actionbar_chat not found", Toast.LENGTH_LONG).show();
                                                         } else {
                                                             try {
                                                                 JSONObject obj = new JSONObject(s);
@@ -345,7 +349,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                         }
                                                                     });
 
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                                                    RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                                                     rQueue.add(request);
 
                                                                 } else if (obj.getJSONObject(name).getString("email").equals(email)) {
@@ -458,10 +462,10 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                                             return getParams();
                                                                         }
                                                                     };
-                                                                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                                                    RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                                                     rQueue.add(request);
                                                                 } else {
-                                                                    Toast.makeText(getContext(), "incorrect email", Toast.LENGTH_LONG).show();
+                                                                    Toast.makeText(Login.this, "incorrect email", Toast.LENGTH_LONG).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -508,7 +512,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     return getParams();
                                                 }
                                             };
-                                            RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                            RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                             rQueue.add(request);
 
                                             loading_layout.setVisibility(View.VISIBLE);
@@ -516,7 +520,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                             timer.schedule(new TimerTask() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(getActivity(), Homepage.class);
+                                                    Intent intent = new Intent(Login.this, Homepage.class);
                                                     intent.putExtra("name", name);
                                                     intent.putExtra("email", email);
                                                     intent.putExtra("phone_no", phone_no);
@@ -527,22 +531,22 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                     intent.putExtra("birthday", birthday);
                                                     intent.putExtra("gender", gender);
 
-                                                    requireActivity().startActivity(intent);
-                                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                                    startActivity(intent);
+                                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                                 }
                                             }, 3000);
-                                            Toast.makeText(getContext(), "SignIn Success", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Login.this, "SignIn Success", Toast.LENGTH_SHORT).show();
                                             loading.setVisibility(View.GONE);
                                             button_login.setVisibility(View.VISIBLE);
                                         }
                                     } else {
                                         loading.setVisibility(View.GONE);
                                         button_login.setVisibility(View.VISIBLE);
-                                        Toast.makeText(requireContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Login.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(requireContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     button_login.setVisibility(View.VISIBLE);
@@ -591,7 +595,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                     return params;
                 }
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
             requestQueue.add(stringRequest);
         } else {
             email.setError("Fields cannot be empty!");
@@ -604,7 +608,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 if (response.getError() != null) {
-                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, "Failed", Toast.LENGTH_SHORT).show();
                 } else {
                     final String fbUserId = object.optString("id");
                     final String fbUserName = object.optString("name");
@@ -664,7 +668,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                         }
                     });
 
-                    RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                    RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                     rQueue.add(request);
 
 
@@ -737,7 +741,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                                 }
                                             });
 
-                                            RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                            RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                             rQueue.add(request);
                                         }
                                     } catch (JSONException e) {
@@ -791,7 +795,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                             return params;
                         }
                     };
-                    RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+                    RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
                     requestQueue.add(stringRequest);
 
                     email.setText(fbEmail);
@@ -870,7 +874,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             }
         });
 
-        RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+        RequestQueue rQueue = Volley.newRequestQueue(Login.this);
         rQueue.add(request);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
@@ -948,7 +952,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                                     }
                                 });
 
-                                RequestQueue rQueue = Volley.newRequestQueue(requireContext());
+                                RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                 rQueue.add(request);
                             }
                         } catch (JSONException e) {
@@ -1001,7 +1005,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1021,7 +1025,7 @@ public class Login extends Fragment implements GoogleApiClient.OnConnectionFaile
             }, 100);
 
         } else {
-            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "Failed", Toast.LENGTH_SHORT).show();
         }
     }
 

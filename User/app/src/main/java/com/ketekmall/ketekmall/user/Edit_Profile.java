@@ -497,6 +497,9 @@ public class Edit_Profile extends AppCompatActivity {
 
         final String strBirthday = this.birthday.getText().toString().trim();
         final String strGender = this.gender.getSelectedItem().toString().trim();
+        final String strAccNo = this.bank_acc.getText().toString();
+        final String strBankName = this.bank_name.getText().toString();
+
         final String id = getId;
 
         final ProgressDialog progressDialog = new ProgressDialog(Edit_Profile.this);
@@ -577,6 +580,8 @@ public class Edit_Profile extends AppCompatActivity {
                 params.put("postcode", strPostCode);
                 params.put("birthday", strBirthday);
                 params.put("gender", strGender);
+                params.put("bank_acc", strAccNo);
+                params.put("bank_name", strBankName);
                 params.put("id", id);
                 return params;
             }

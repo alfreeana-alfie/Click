@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -40,7 +41,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Forgot_Password extends Fragment {
+public class Forgot_Password extends AppCompatActivity {
 
     private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
     private static String URL_SEND_EMAIL = "https://ketekmall.com/ketekmall/sendEmail_getPassword.php";
@@ -50,28 +51,27 @@ public class Forgot_Password extends Fragment {
     private ProgressBar loading, loading_password;
     private LinearLayout password_linear_layout;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.forgot_password, container, false);
-        Declare(view);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.forgot_password);
+
+        Declare();
 
         Button_Func();
-
-        return view;
     }
 
-    private void Declare(View v) {
-        email = v.findViewById(R.id.email_verify);
-        button_enter_email = v.findViewById(R.id.button_enter_email);
-        loading = v.findViewById(R.id.loading);
-        loading_password = v.findViewById(R.id.loading_new_password);
-        password_linear_layout = v.findViewById(R.id.password_linear_layout);
-        new_password = v.findViewById(R.id.edittext_new_password);
-        confirm_new_password = v.findViewById(R.id.edittext_confirm_new_password);
-        button_enter_new_password = v.findViewById(R.id.button_enter_new_password);
-        button_back_pressed = v.findViewById(R.id.button_back);
-        button_back_password = v.findViewById(R.id.button_back_password);
+    private void Declare() {
+        email = findViewById(R.id.email_verify);
+        button_enter_email = findViewById(R.id.button_enter_email);
+        loading = findViewById(R.id.loading);
+        loading_password = findViewById(R.id.loading_new_password);
+        password_linear_layout = findViewById(R.id.password_linear_layout);
+        new_password = findViewById(R.id.edittext_new_password);
+        confirm_new_password = findViewById(R.id.edittext_confirm_new_password);
+        button_enter_new_password = findViewById(R.id.button_enter_new_password);
+        button_back_pressed = findViewById(R.id.button_back);
+        button_back_password = findViewById(R.id.button_back_password);
     }
 
     private void Button_Func() {
@@ -110,9 +110,9 @@ public class Forgot_Password extends Fragment {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                requireActivity().startActivity(intent);
-                requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                Intent intent = new Intent(Forgot_Password.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
             }
         }, 100);
     }
@@ -136,7 +136,7 @@ public class Forgot_Password extends Fragment {
                                 if (success.equals("1")) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
 
-                                        Toast.makeText(getContext(), "Email is Verified", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Forgot_Password.this, "Email is Verified", Toast.LENGTH_SHORT).show();
 
                                         loading.setVisibility(View.GONE);
                                         button_enter_email.setVisibility(View.VISIBLE);
@@ -144,12 +144,12 @@ public class Forgot_Password extends Fragment {
                                         password_linear_layout.setVisibility(View.GONE);
 
                                         sendEmail(mEmail);
-                                        Intent intent1 = new Intent(getContext(), MainActivity.class);
-                                        requireActivity().startActivity(intent1);
-                                        Toast.makeText(getContext(), "Please check your email inbox", Toast.LENGTH_SHORT).show();
+                                        Intent intent1 = new Intent(Forgot_Password.this, MainActivity.class);
+                                        startActivity(intent1);
+                                        Toast.makeText(Forgot_Password.this, "Please check your email inbox", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(getContext(), "Incorrect Email", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Forgot_Password.this, "Incorrect Email", Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     button_enter_email.setVisibility(View.VISIBLE);
@@ -157,7 +157,7 @@ public class Forgot_Password extends Fragment {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(), "Failed to Retrieve the Email", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Forgot_Password.this, "Failed to Retrieve the Email", Toast.LENGTH_SHORT).show();
                                 loading.setVisibility(View.GONE);
                                 button_enter_email.setVisibility(View.VISIBLE);
 
@@ -205,7 +205,7 @@ public class Forgot_Password extends Fragment {
                 }
             };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(Forgot_Password.this);
             requestQueue.add(stringRequest);
 
 
@@ -265,7 +265,7 @@ public class Forgot_Password extends Fragment {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Forgot_Password.this);
         requestQueue.add(stringRequest);
     }
 
@@ -277,7 +277,7 @@ public class Forgot_Password extends Fragment {
         final String mNew_Password = this.new_password.getText().toString().trim();
         final String mConfirm_new_password = this.confirm_new_password.getText().toString().trim();
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        final ProgressDialog progressDialog = new ProgressDialog(Forgot_Password.this);
         progressDialog.setMessage("Saving...");
         progressDialog.show();
 
@@ -296,7 +296,7 @@ public class Forgot_Password extends Fragment {
                                 String success = jsonObject.getString("success");
 
                                 if (success.equals("1")) {
-                                    Toast.makeText(getContext(), "Success!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Forgot_Password.this, "Success!", Toast.LENGTH_SHORT).show();
 
                                     loading_password.setVisibility(View.GONE);
                                     button_enter_new_password.setVisibility(View.VISIBLE);
@@ -305,16 +305,16 @@ public class Forgot_Password extends Fragment {
                                     timer.schedule(new TimerTask() {
                                         @Override
                                         public void run() {
-                                            Intent intent = new Intent(getContext(), MainActivity.class);
-                                            requireActivity().startActivity(intent);
-                                            requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                            Intent intent = new Intent(Forgot_Password.this, MainActivity.class);
+                                            startActivity(intent);
+                                            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                         }
                                     }, 100);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 progressDialog.dismiss();
-                                Toast.makeText(getContext(), "JSON Parsing Error : " + e.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Forgot_Password.this, "JSON Parsing Error : " + e.toString(), Toast.LENGTH_SHORT).show();
 
                                 loading_password.setVisibility(View.GONE);
                                 button_enter_new_password.setVisibility(View.VISIBLE);

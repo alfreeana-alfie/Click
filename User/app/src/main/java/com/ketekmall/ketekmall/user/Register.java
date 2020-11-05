@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
@@ -52,7 +53,7 @@ import java.util.regex.Pattern;
 import static android.app.Activity.RESULT_OK;
 
 @SuppressWarnings("deprecation")
-public class Register extends Fragment {
+public class Register extends AppCompatActivity {
 
     private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
     private final int PICK_IMAGE_REQUEST = 22;
@@ -62,13 +63,13 @@ public class Register extends Fragment {
     private ProgressBar loading;
     private Button button_goto_login_page, button_register;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.register, container, false);
-        Declare(view);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.register);
+        Declare();
 
-        Firebase.setAndroidContext(view.getContext());
+        Firebase.setAndroidContext(Register.this);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,27 +93,26 @@ public class Register extends Fragment {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        requireActivity().startActivity(intent);
-                        requireActivity().overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                        Intent intent = new Intent(Register.this, MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
                     }
                 }, 100);
 
             }
         });
-        return view;
     }
 
-    private void Declare(View v) {
-        name = v.findViewById(R.id.name_register);
-        email = v.findViewById(R.id.email_register);
-        phone_no = v.findViewById(R.id.phone_no_register);
-        password = v.findViewById(R.id.password_register);
-        confirm_password = v.findViewById(R.id.confirm_password_register);
-        loading = v.findViewById(R.id.loading);
-        button_register = v.findViewById(R.id.button_register);
-        button_goto_login_page = v.findViewById(R.id.button_goto_login_page);
-        imageView = v.findViewById(R.id.imageView);
+    private void Declare() {
+        name = findViewById(R.id.name_register);
+        email = findViewById(R.id.email_register);
+        phone_no = findViewById(R.id.phone_no_register);
+        password = findViewById(R.id.password_register);
+        confirm_password = findViewById(R.id.confirm_password_register);
+        loading = findViewById(R.id.loading);
+        button_register = findViewById(R.id.button_register);
+        button_goto_login_page = findViewById(R.id.button_goto_login_page);
+        imageView = findViewById(R.id.imageView);
     }
 
     private void SignUp(View view) {
@@ -189,7 +189,7 @@ public class Register extends Fragment {
                         reference.child(name_firebase).child("email").setValue(email_firebase);
                         reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
                         reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
-                        Toast.makeText(getContext(), "registration successful", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Register.this, "registration successful", Toast.LENGTH_LONG).show();
                     } else {
                         try {
                             JSONObject obj = new JSONObject(s);
@@ -230,7 +230,7 @@ public class Register extends Fragment {
                         String success = jsonObject.getString("success");
 
                         if (success.equals("1")) {
-                            Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Success", Toast.LENGTH_SHORT).show();
 
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
@@ -239,13 +239,13 @@ public class Register extends Fragment {
                             timer.schedule(new TimerTask() {
                                 @Override
                                 public void run() {
-                                    Intent intent = new Intent(getContext(), MainActivity.class);
-                                    requireActivity().startActivity(intent);
-                                    requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                    Intent intent = new Intent(Register.this, MainActivity.class);
+                                    startActivity(intent);
+                                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                 }
                             }, 100);
                         } else {
-                            Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
 
                             loading.setVisibility(View.GONE);
                             button_register.setVisibility(View.VISIBLE);
@@ -253,7 +253,7 @@ public class Register extends Fragment {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Email is already existed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "Email is already existed", Toast.LENGTH_SHORT).show();
 
                         loading.setVisibility(View.GONE);
                         button_register.setVisibility(View.VISIBLE);
@@ -325,7 +325,7 @@ public class Register extends Fragment {
             try {
 
                 // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 // Log the exception

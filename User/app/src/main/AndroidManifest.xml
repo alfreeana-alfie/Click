@@ -121,6 +121,9 @@
         <activity android:name=".pages.Chat_Inbox_Homepage" />
         <activity android:name=".pages.newPage" />
         <activity android:name=".pages.AppVersion" />
+        <activity android:name=".user.Login" />
+        <activity android:name=".user.Forgot_Password" />
+        <activity android:name=".user.Register" />
 
 
         <meta-data
