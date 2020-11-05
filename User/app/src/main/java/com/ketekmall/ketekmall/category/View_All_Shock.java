@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -85,6 +86,7 @@ public class View_All_Shock extends AppCompatActivity {
     private Spinner spinner_division, spinner_district;
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
+    private ProgressBar loading;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -241,6 +243,7 @@ public class View_All_Shock extends AppCompatActivity {
     }
 
     private void Declare() {
+        loading = findViewById(R.id.loading);
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
         filter_layout = findViewById(R.id.filter_layout);
@@ -355,7 +358,6 @@ public class View_All_Shock extends AppCompatActivity {
     }
 
     private void View_Cart2(final Item_All_Details item) {
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -536,11 +538,13 @@ public class View_All_Shock extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -782,6 +786,7 @@ public class View_All_Shock extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -1024,6 +1029,7 @@ public class View_All_Shock extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -1266,6 +1272,7 @@ public class View_All_Shock extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -1590,6 +1597,7 @@ public class View_All_Shock extends AppCompatActivity {
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
+                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
