@@ -176,6 +176,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
+                                                                if(strAddress01.contains("") && strAddress02.contains("") && strCity.contains("") && strPostCode.contains("")){
+                                                                    Address = "Incomplete Information";
+                                                                    Button_Checkout.setVisibility(View.GONE);
+                                                                }
+
                                                                 AddressUser.setText(Address);
                                                                 double neWeight = Double.parseDouble(weight) * Integer.parseInt(quantity);
 
@@ -183,6 +188,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 if(weight.contains("0.00")){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
+                                                                }else if(strPostCode.contains("")){
+                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
                                                                 }
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
@@ -254,11 +261,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                         new Response.ErrorListener() {
                                                                             @Override
                                                                             public void onErrorResponse(VolleyError error) {
-//                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                                                                                Toast.makeText(Checkout.this, "Please Complete Your Information Before Placing Order", Toast.LENGTH_LONG).show();
 //                                                                                Log.i("STAGINGERROR", error.toString());
                                                                                 Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
                                                                                 Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                                                                                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                                                                                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+//                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                                                                             }
                                                                         }) {
                                                                     @Override
@@ -479,8 +487,13 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String strCity = object.getString("division");
                                     String strPostCode = object.getString("postcode");
 
-                                    final String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
-                                    final String Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                    String Address, Address2;
+                                    if(strAddress01.contains("") && strAddress02.contains("") && strCity.contains("") && strPostCode.contains("")){
+                                        Address = "Incomplete Information";
+                                        Button_Checkout.setVisibility(View.GONE);
+                                    }
+                                    Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                    Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
                                     AddressUser.setText(Address);
 
@@ -808,7 +821,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + strPostCode + "&Weight=" + "9.00";
 
                                                                                         if(weight.contains("0.00")){
-                                                                                            API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "9.00";
+                                                                                            API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "9.00";
                                                                                         }
 
                                                                                         StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
@@ -835,7 +848,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                                     public void onErrorResponse(VolleyError error) {
                                                                                                         Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
                                                                                                         Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                                                                                                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                                                                                                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+//                                                                                                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                                                                                                     }
                                                                                                 }) {
                                                                                             @Override
@@ -1130,7 +1144,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                         Log.i(TAG, "onErrorResponse: Didn't work");
                     }
                 }) {
@@ -1170,11 +1184,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                         Log.i("STAGINGERROR", error.toString());
                         Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
                         Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
