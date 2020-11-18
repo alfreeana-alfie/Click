@@ -176,9 +176,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
-                                                                if(strAddress01.contains("") && strAddress02.contains("") && strCity.contains("") && strPostCode.contains("")){
+                                                                if(strPostCode.isEmpty()){
                                                                     Address = "Incomplete Information";
                                                                     Button_Checkout.setVisibility(View.GONE);
+                                                                }else{
+                                                                    Button_Checkout.setVisibility(View.VISIBLE);
                                                                 }
 
                                                                 AddressUser.setText(Address);
@@ -188,7 +190,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 if(weight.contains("0.00")){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
-                                                                }else if(strPostCode.contains("")){
+                                                                }else if(strPostCode.isEmpty()){
                                                                     API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
                                                                 }
 

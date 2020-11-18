@@ -145,9 +145,9 @@ public class Forgot_Password extends AppCompatActivity {
                                         password_linear_layout.setVisibility(View.GONE);
 
                                         sendEmail(mEmail);
-                                        Intent intent1 = new Intent(Forgot_Password.this, MainActivity.class);
-                                        startActivity(intent1);
-                                        Toast.makeText(Forgot_Password.this, "Please check your email inbox", Toast.LENGTH_SHORT).show();
+//                                        Intent intent1 = new Intent(Forgot_Password.this, MainActivity.class);
+//                                        startActivity(intent1);
+//                                        Toast.makeText(Forgot_Password.this, "Please check your email inbox", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Toast.makeText(Forgot_Password.this, "Incorrect Email", Toast.LENGTH_SHORT).show();
@@ -222,9 +222,15 @@ public class Forgot_Password extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            jsonObject.getString("success");
+                            String success = jsonObject.getString("success");
+                            if(success.equals("1")){
+                                Toast.makeText(Forgot_Password.this, "Please check your email inbox", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(Forgot_Password.this, "FAILED", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(Forgot_Password.this, e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -232,6 +238,7 @@ public class Forgot_Password extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
+                            Toast.makeText(Forgot_Password.this, error.toString(), Toast.LENGTH_SHORT).show();
                             if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);

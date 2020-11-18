@@ -897,6 +897,8 @@ public class Product_Edit extends AppCompatActivity {
                                             JSONObject object = jsonArray.getJSONObject(i);
                                             String image_item = object.getString("filepath");
                                             image[i] = image_item;
+
+                                            Log.d("PHOTO", image_item);
                                         }
                                         delete_2.setVisibility(View.GONE);
                                         delete_3.setVisibility(View.GONE);
