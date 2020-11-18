@@ -282,7 +282,7 @@ public class Cart extends AppCompatActivity {
                                                                     @Override
                                                                     public void onMinusClick(final int position) {
                                                                         final Item_All_Details item = itemAllDetailsArrayList.get(position);
-                                                                        if (item.getQuantity().equals("0")) {
+                                                                        if (item.getQuantity().equals("1")) {
                                                                             AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.MyDialogTheme);
                                                                             builder.setTitle("Are you sure?");
                                                                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -555,7 +555,7 @@ public class Cart extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                number = 1;
+//                number = 1;
                 dialog.cancel();
             }
         });

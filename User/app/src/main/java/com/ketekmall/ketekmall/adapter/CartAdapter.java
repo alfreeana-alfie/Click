@@ -98,11 +98,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 if (mListerner != null) {
                     int mQuantity2 = Integer.parseInt(holder.Quantity.getText().toString());
                     mListerner.onMinusClick(position);
-                    mQuantity2--;
-                    itemAllDetails.setQuantity(String.valueOf(mQuantity2));
-                    Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
-                    holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
-                    holder.Quantity.setText(String.valueOf(mQuantity2));
+
+                    if(mQuantity2 == 1){
+                        itemAllDetails.setQuantity(String.valueOf(mQuantity2));
+                        Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
+                        holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                        holder.Quantity.setText(String.valueOf(mQuantity2));
+                    }else{
+                        mQuantity2--;
+                        itemAllDetails.setQuantity(String.valueOf(mQuantity2));
+                        Double priceint = Double.parseDouble(itemAllDetails.getPrice()) * mQuantity2;
+                        holder.SubTotal.setText("MYR" + String.format("%.2f", priceint));
+                        holder.Quantity.setText(String.valueOf(mQuantity2));
+                    }
+
 
                     if (mQuantity2 != Integer.parseInt(itemAllDetails.getMax_order())) {
                         holder.increase.setVisibility(View.VISIBLE);

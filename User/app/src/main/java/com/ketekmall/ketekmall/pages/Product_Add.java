@@ -54,6 +54,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Product_Add extends AppCompatActivity {
 
@@ -646,29 +648,55 @@ public class Product_Add extends AppCompatActivity {
                                         saveImage("2", getStringImage(bitmap2));
                                     }
 
-                                    if (upload_photo_img3.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                        Log.d("PHOTO", "NO");
-                                    }else{
-//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                        saveImage("3", getStringImage(bitmap2));
-                                    }
+                                    new Timer().schedule(
+                                            new TimerTask(){
 
-                                    if (upload_photo_img4.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                        Log.d("PHOTO", "NO");
-                                    }else{
+                                                @Override
+                                                public void run(){
+                                                    if (upload_photo_img3.getDrawable().getConstantState().equals
+                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
+                                                        Log.d("PHOTO", "NO");
+                                                    }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                        saveImage("4", getStringImage(bitmap2));
-                                    }
+                                                        saveImage("3", getStringImage(bitmap3));
+                                                    }
+                                                }
 
-                                    if (upload_photo_img5.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                        Log.d("PHOTO", "NO");
-                                    }else{
+                                            }, 2000);
+
+
+                                    new Timer().schedule(
+                                            new TimerTask(){
+
+                                                @Override
+                                                public void run(){
+                                                    if (upload_photo_img4.getDrawable().getConstantState().equals
+                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
+                                                        Log.d("PHOTO", "NO");
+                                                    }else{
 //                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                        saveImage("5", getStringImage(bitmap2));
-                                    }
+                                                        saveImage("4", getStringImage(bitmap4));
+                                                    }
+                                                }
+
+                                            }, 4000);
+
+                                    new Timer().schedule(
+                                            new TimerTask(){
+
+                                                @Override
+                                                public void run(){
+                                                    if (upload_photo_img5.getDrawable().getConstantState().equals
+                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
+                                                        Log.d("PHOTO", "NO");
+                                                    }else{
+//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
+                                                        saveImage("5", getStringImage(bitmap5));
+                                                    }
+                                                }
+
+                                            }, 6000);
+
 
                                     Intent intent = new Intent(Product_Add.this, MyProducts.class);
                                     startActivity(intent);

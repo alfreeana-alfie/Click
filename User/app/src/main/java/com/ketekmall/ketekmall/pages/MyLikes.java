@@ -420,7 +420,7 @@ public class MyLikes extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String id = object.getString("id").trim();
-                                    String seller_id = object.getString("user_id").trim();
+                                    String seller_id = object.getString("customer_id").trim();
                                     String main_category = object.getString("main_category").trim();
                                     String sub_category = object.getString("sub_category").trim();
                                     String ad_detail = object.getString("ad_detail").trim();
@@ -603,6 +603,7 @@ public class MyLikes extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("customer_id", getId);
                 params.put("ad_detail", strAd_detail);
                 return params;
             }
