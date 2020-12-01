@@ -22,7 +22,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:replace="android:theme">
+        tools:replace="android:theme"
+        tools:targetApi="n">
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -74,7 +75,6 @@
         <activity android:name="com.ketekmall.ketekmall.pages.Place_Order" />
         <activity android:name="com.ketekmall.ketekmall.pages.Delivery_Add" />
         <activity android:name="com.ketekmall.ketekmall.pages.Delivery_MainPage" />
-
         <activity android:name="com.ketekmall.ketekmall.category.View_All" />
         <activity android:name="com.ketekmall.ketekmall.pages.MyLikes" />
         <activity android:name="com.ketekmall.ketekmall.pages.MyProducts" />
@@ -128,7 +128,7 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+            android:value="@array/preloaded_fonts" />
 
         <service android:name="com.ketekmall.ketekmall.service.MyFirebaseInstanceIDService">
             <intent-filter>

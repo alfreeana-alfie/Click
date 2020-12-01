@@ -112,8 +112,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
     BottomNavigationView bottomNav;
     ProgressBar loading;
 
-    String HTTP_PoslajuDomesticbyPostcode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/poslajudomesticbypostcode/v1";
-    String serverKey_PoslajuDomesticbyPostcode = "a1g2cmM2VmowNm00N1lZekFmTGR0MldpRHhKaFRHSks=";
+    String HTTP_PoslajuDomesticbyPostcode = "https://apis.pos.com.my/apigateway/as2corporate/api/poslajubypostcodedomestic/v1";
+    String serverKey_PoslajuDomesticbyPostcode = "N1hHVHJFRW95cjRkQ0NyR3dialdrZUF4NGxaNm9Na1U=";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

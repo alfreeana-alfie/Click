@@ -667,6 +667,7 @@
     <string name="click_to_edit_details">Click to Edit Details</string>
     <string name="product_details">Product Details</string>
     <string name="postcode">Postcode</string>
-    <string name="weight">Weight</string>
+    <string name="weight">Weight (Kg)</string>
+    <string name="kg">Kg</string>
 </resources>
 

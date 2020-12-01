@@ -159,7 +159,8 @@
                 android:id="@+id/grid_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0dp">
+                android:layout_marginTop="0dp"
+                tools:ignore="UselessParent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -185,7 +186,8 @@
                             android:layout_centerHorizontal="true"
                             android:indeterminate="true"
                             android:indeterminateTint="@color/colorPrimary"
-                            android:indeterminateTintMode="src_atop"/>
+                            android:indeterminateTintMode="src_atop"
+                            tools:targetApi="lollipop" />
 
                         <androidx.viewpager.widget.ViewPager
                             android:id="@+id/view_pager"
@@ -203,7 +205,8 @@
                             android:layout_marginEnd="7dp"
                             android:background="@drawable/button_slide"
                             app:srcCompat="@drawable/ic_left_white_foreground"
-                            tools:ignore="VectorDrawableCompat" />
+                            tools:ignore="VectorDrawableCompat"
+                            android:contentDescription="TODO" />
 
                         <ImageButton
                             android:id="@+id/btn_next"
@@ -216,7 +219,8 @@
                             android:layout_marginEnd="7dp"
                             android:background="@drawable/button_slide"
                             app:srcCompat="@drawable/ic_right_white_foreground"
-                            tools:ignore="VectorDrawableCompat" />
+                            tools:ignore="VectorDrawableCompat"
+                            android:contentDescription="TODO" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -250,7 +254,8 @@
                             android:text="@string/see_all"
                             android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            tools:ignore="RelativeOverlap" />
 
                     </RelativeLayout>
 
@@ -492,7 +497,8 @@
                             android:layout_centerHorizontal="true"
                             android:indeterminate="true"
                             android:indeterminateTint="@color/colorPrimary"
-                            android:indeterminateTintMode="src_atop"/>
+                            android:indeterminateTintMode="src_atop"
+                            tools:targetApi="lollipop" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -564,7 +570,8 @@
                             android:layout_centerHorizontal="true"
                             android:indeterminate="true"
                             android:indeterminateTint="@color/colorPrimary"
-                            android:indeterminateTintMode="src_atop"/>
+                            android:indeterminateTintMode="src_atop"
+                            tools:targetApi="lollipop" />
                     </RelativeLayout>
 
                 </LinearLayout>

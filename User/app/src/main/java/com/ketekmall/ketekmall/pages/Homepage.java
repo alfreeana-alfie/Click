@@ -89,7 +89,6 @@ public class Homepage extends AppCompatActivity {
     public static final String ID = "id";
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READALL = "https://ketekmall.com/ketekmall/category/readall.php";
     private static String URL_READALL_SHOCK = "https://ketekmall.com/ketekmall/category/readall_shocking.php";
     private static String URL_READALL_HOT = "https://ketekmall.com/ketekmall/category/readall_sold.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
@@ -99,7 +98,8 @@ public class Homepage extends AppCompatActivity {
 
     private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
 
-    List<Item_All_Details> itemList, itemList2, itemList3;
+    List<Item_All_Details> itemList;
+    List<Item_All_Details> itemList2;
 
     CartAdapter _cart_adapter;
     RecyclerView recyclerView;
@@ -116,22 +116,16 @@ public class Homepage extends AppCompatActivity {
             button_handcraft, button_cake, button_agriculture, button_service, button_health,
             button_home, button_pepper, button_fashion;
 
-    private CircleImageView profile_display, profile_image;
-    private TextView name_display;
-    private TextView email_display;
+    private CircleImageView profile_image;
     private TextView button_view_all;
     private TextView username;
     private TextView verify;
-    private TextView verify1;
-    private TextView button_view_top;
 
     Item_Adapter_Main adapter_item, adapter_item2;
     ViewPager viewPager;
-    Timer timer;
     RelativeLayout hot_layout, top_layout;
 
     ImageButton btn_next, btn_back;
-    String lang;
 
     ProgressBar loading_hot, loading_shock;
 
@@ -221,7 +215,7 @@ public class Homepage extends AppCompatActivity {
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
         TextView button_view_hard = findViewById(R.id.button_view_hard);
-        button_view_top = findViewById(R.id.button_view_top);
+        TextView button_view_top = findViewById(R.id.button_view_top);
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
 

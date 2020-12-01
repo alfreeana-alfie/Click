@@ -409,7 +409,7 @@
                     android:layout_gravity="center_vertical|end"
                     android:background="@null"
                     android:cursorVisible="true"
-                    android:hint="@string/weight"
+                    android:hint="@string/kg"
                     android:importantForAutofill="no"
                     android:inputType="numberDecimal"
                     android:paddingLeft="15dp"
@@ -511,7 +511,8 @@
                 android:indeterminate="true"
                 android:indeterminateTint="@color/colorPrimary"
                 android:indeterminateTintMode="src_atop"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:targetApi="lollipop" />
 
 
             <RelativeLayout
