@@ -46,6 +46,10 @@ import com.ketekmall.ketekmall.adapter.PageAdapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.UserDetails;
+import com.ketekmall.ketekmall.pages.navigation_items.About_KetekMall;
+import com.ketekmall.ketekmall.pages.navigation_items.transaction.Cart;
+import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
+import com.ketekmall.ketekmall.pages.product_details.View_Product;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -402,7 +406,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                SellerCheck(getId);
-                Intent intent = new Intent(Homepage.this, newPage.class);
+                Intent intent = new Intent(Homepage.this, PosLajuTestArea.class);
                 startActivity(intent);
             }
         });

@@ -13,6 +13,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ketekmall.ketekmall.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ketekmall.ketekmall.pages.buyer.Chat_Inbox;
+import com.ketekmall.ketekmall.pages.buyer.MyBuying;
 
 public class Notification_Page extends AppCompatActivity {
 

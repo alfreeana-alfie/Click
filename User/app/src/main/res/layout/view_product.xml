@@ -187,47 +187,8 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
-
-                <RelativeLayout
-                    android:visibility="gone"
-                    android:id="@+id/linear_stock"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:paddingStart="20dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="5dp"
-                        android:id="@+id/avail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:fontFamily="@font/open_sans"
-                        android:text="@string/shipping_information"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:paddingStart="20dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="5dp"
-                        android:id="@+id/shipping_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="end"
-                        android:drawableEnd="@drawable/ic_right_foreground"
-                        android:fontFamily="@font/open_sans"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp" />
-
-                </RelativeLayout>
-
                 <RelativeLayout
                     android:id="@+id/linear_detail"
-                    android:layout_below="@id/linear_stock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

@@ -47,7 +47,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.pages.Checkout;
+import com.ketekmall.ketekmall.pages.navigation_items.transaction.Checkout;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;

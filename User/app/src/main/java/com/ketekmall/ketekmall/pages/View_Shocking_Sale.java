@@ -46,6 +46,7 @@ import com.ketekmall.ketekmall.adapter.Item_ByCategory_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ketekmall.ketekmall.pages.product_details.View_Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;

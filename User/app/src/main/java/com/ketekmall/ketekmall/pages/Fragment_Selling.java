@@ -28,6 +28,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.SessionManager;
+import com.ketekmall.ketekmall.pages.register_seller.TermsAndConditions;
+import com.ketekmall.ketekmall.pages.seller.MyProducts;
+import com.ketekmall.ketekmall.pages.seller.MySelling;
+import com.ketekmall.ketekmall.pages.seller.ProductRating;
+import com.ketekmall.ketekmall.pages.seller.Product_Add;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,7 +123,7 @@ public class Fragment_Selling extends Fragment {
         MyIncome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyIncome.class);
+                Intent intent = new Intent(getContext(), com.ketekmall.ketekmall.pages.seller.MyIncome.class);
                 requireActivity().startActivity(intent);
             }
         });
@@ -126,7 +131,7 @@ public class Fragment_Selling extends Fragment {
         BoostAd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), com.ketekmall.ketekmall.pages.BoostAd.class);
+                Intent intent = new Intent(getContext(), com.ketekmall.ketekmall.pages.seller.BoostAd.class);
                 requireActivity().startActivity(intent);
             }
         });

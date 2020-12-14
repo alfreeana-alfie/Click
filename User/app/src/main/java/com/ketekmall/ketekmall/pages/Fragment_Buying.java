@@ -14,6 +14,9 @@ import androidx.fragment.app.Fragment;
 
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.SessionManager;
+import com.ketekmall.ketekmall.pages.buyer.Chat_Inbox;
+import com.ketekmall.ketekmall.pages.buyer.MyBuying;
+import com.ketekmall.ketekmall.pages.buyer.MyLikes;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 
 import java.util.HashMap;
@@ -61,7 +64,7 @@ public class Fragment_Buying extends Fragment {
         MyRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent likes = new Intent(getContext(), com.ketekmall.ketekmall.pages.MyRating.class);
+                Intent likes = new Intent(getContext(), com.ketekmall.ketekmall.pages.buyer.MyRating.class);
                 startActivity(likes);
             }
         });
