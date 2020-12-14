@@ -13,15 +13,6 @@ public class Item_All_Details {
     private String postcode;
     private String weight;
 
-    public String getNewQuantity() {
-        return NewQuantity;
-    }
-
-    public void setNewQuantity(String newQuantity) {
-        NewQuantity = newQuantity;
-    }
-
-    private String NewQuantity;
     private String max_order, shocking, delivery_status;
 
     public String getWeight() {

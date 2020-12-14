@@ -1,6 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +22,10 @@ import java.util.List;
 public class Item_Adapter_Main extends BaseAdapter {
 
     List<Item_All_Details> itemListFull, itemListFull02;
-    private Context context;
     private OnItemClickListener mListerner;
 
-    public Item_Adapter_Main(List<Item_All_Details> itemList, Context context) {
+    public Item_Adapter_Main(List<Item_All_Details> itemList) {
         this.itemListFull = itemList;
-        this.context = context;
         itemListFull02 = new ArrayList<>();
         if (itemListFull != null) {
             this.itemListFull02.addAll(itemListFull);
@@ -64,6 +62,7 @@ public class Item_Adapter_Main extends BaseAdapter {
         return itemListFull.indexOf(getItem(position));
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

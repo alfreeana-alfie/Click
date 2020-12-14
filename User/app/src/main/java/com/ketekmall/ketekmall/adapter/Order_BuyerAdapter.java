@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,6 @@ import java.util.List;
 public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.ViewHolder> {
 
     Context context;
-    int mQuantity = 1;
     private List<Order> item_all_details;
     private OnItemClickListener mListener;
 
@@ -54,6 +54,7 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Order_BuyerAdapter.ViewHolder holder, int position) {
         Order order = item_all_details.get(position);

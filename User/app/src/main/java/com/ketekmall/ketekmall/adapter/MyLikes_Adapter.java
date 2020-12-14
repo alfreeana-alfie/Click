@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,11 @@ public class MyLikes_Adapter extends BaseAdapter {
 
     private Context context;
     private List<Item_All_Details> itemList;
-    private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
     public MyLikes_Adapter(List<Item_All_Details> itemList, Context context) {
         this.context = context;
         this.itemList = itemList;
-        itemListFull = new ArrayList<>(itemList);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -49,6 +48,7 @@ public class MyLikes_Adapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams", "SetTextI18n"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);

@@ -3,14 +3,10 @@ package com.ketekmall.ketekmall.data;
 import android.text.Spanned;
 
 public class Checkout_Data {
-    String delivery_id;
-    String delivery_user_id;
     String delivery_division;
     String delivery_price;
     String delivery_division1;
-    String delivery_price1;
     Spanned delivery_price2;
-    String delivery_days;
     String delivery_item_id;
     private String id, seller_id;
     private String ad_detail, price, division, district;
@@ -18,10 +14,6 @@ public class Checkout_Data {
     private String main_category;
     private String sub_category;
     private String quantity;
-
-    public Spanned getDelivery_price2() {
-        return delivery_price2;
-    }
 
     public void setDelivery_price2(Spanned delivery_price2) {
         this.delivery_price2 = delivery_price2;
@@ -33,32 +25,6 @@ public class Checkout_Data {
 
     public void setDelivery_division1(String delivery_division1) {
         this.delivery_division1 = delivery_division1;
-    }
-
-    public String getDelivery_price1() {
-        return delivery_price1;
-    }
-
-    public void setDelivery_price1(String delivery_price1) {
-        this.delivery_price1 = delivery_price1;
-    }
-
-
-
-    public String getDelivery_id() {
-        return delivery_id;
-    }
-
-    public void setDelivery_id(String delivery_id) {
-        this.delivery_id = delivery_id;
-    }
-
-    public String getDelivery_user_id() {
-        return delivery_user_id;
-    }
-
-    public void setDelivery_user_id(String delivery_user_id) {
-        this.delivery_user_id = delivery_user_id;
     }
 
     public String getDelivery_division() {
@@ -75,18 +41,6 @@ public class Checkout_Data {
 
     public void setDelivery_price(String delivery_price) {
         this.delivery_price = delivery_price;
-    }
-
-    public String getDelivery_days() {
-        return delivery_days;
-    }
-
-    public void setDelivery_days(String delivery_days) {
-        this.delivery_days = delivery_days;
-    }
-
-    public String getDelivery_item_id() {
-        return delivery_item_id;
     }
 
     public void setDelivery_item_id(String delivery_item_id) {

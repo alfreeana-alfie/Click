@@ -21,7 +21,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Review_Adapter extends RecyclerView.Adapter<Review_Adapter.ViewHolder> {
 
     Context context;
-    int mQuantity = 1;
     private List<Review> item_all_details;
 
     public Review_Adapter(Context context, List<Review> item_all_details) {
@@ -54,7 +53,7 @@ public class Review_Adapter extends RecyclerView.Adapter<Review_Adapter.ViewHold
         return item_all_details.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView customer_name, review;
         RatingBar ratingBar;

@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,10 @@ import java.util.List;
 public class MyProducts_Adapter extends BaseAdapter{
 
     private Context context;
-    private List<Item_All_Details> itemList;
     private List<Item_All_Details> itemListFull;
     private OnItemClickListener mListerner;
 
     public MyProducts_Adapter(List<Item_All_Details> itemList, Context context) {
-        this.itemList = itemList;
         this.itemListFull = itemList;
         this.context = context;
     }
@@ -48,6 +47,7 @@ public class MyProducts_Adapter extends BaseAdapter{
         return position;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams", "SetTextI18n"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -116,7 +116,7 @@ public class MyProducts_Adapter extends BaseAdapter{
                 }
             }
         });
-        Float flo = 0.0F;
+        float flo;
         flo = Float.parseFloat(item.getRating());
         ratingBar.setRating(flo);
 
@@ -128,44 +128,6 @@ public class MyProducts_Adapter extends BaseAdapter{
 
         return convertView;
     }
-/*
-
-    @Override
-    public Filter getFilter() {
-        Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-
-                FilterResults filterResults = new FilterResults();
-
-                if (constraint == null || constraint.length() == 0) {
-                    filterResults.count = itemList.size();
-                    filterResults.values = itemList;
-                } else {
-                    String strSearch = constraint.toString().toLowerCase();
-                    String strSEARCH = constraint.toString().toUpperCase();
-                    String str = constraint.toString();
-                    List<Item_All_Details> resultData = new ArrayList<>();
-                    for (Item_All_Details item : itemList) {
-                        if (item.getAd_detail().toLowerCase().contains(strSearch)) {
-                            resultData.add(item);
-                        }
-                        filterResults.count = resultData.size();
-                        filterResults.values = resultData;
-                    }
-                }
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                itemListFull = (List<Item_All_Details>) results.values;
-                notifyDataSetChanged();
-            }
-        };
-        return filter;
-    }
-*/
 
     public interface OnItemClickListener {
         void onEditClick(int position);

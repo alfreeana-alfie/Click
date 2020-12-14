@@ -71,10 +71,6 @@ public class Order {
         return order_date;
     }
 
-    public void setOrder_date(String order_date) {
-        this.order_date = order_date;
-    }
-
     private String order_date;
 
     public String getDate() {

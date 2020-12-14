@@ -60,7 +60,7 @@ public class Rating_Adapter extends RecyclerView.Adapter<Rating_Adapter.ViewHold
         return item_all_details.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView, CustomerImage;
         TextView AdDetail, CustomerName, Review;

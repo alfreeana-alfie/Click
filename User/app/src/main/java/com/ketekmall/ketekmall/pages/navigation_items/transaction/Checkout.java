@@ -233,7 +233,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         item_all_detailsList.add(checkoutData);
 
                                                                                     }
-                                                                                    userOrderAdapter = new Checkout_Adapter(Checkout.this, item_all_detailsList, item_all_detailsList);
+                                                                                    userOrderAdapter = new Checkout_Adapter(Checkout.this, item_all_detailsList);
                                                                                     recyclerView.setAdapter(userOrderAdapter);
                                                                                     userOrderAdapter.setOnItemClickListener(new Checkout_Adapter.OnItemClickListener() {
                                                                                         @Override

@@ -15,23 +15,12 @@ public class Chat_Detail {
         return messages;
     }
 
-    public void setMessages(String messages) {
-        this.messages = messages;
-    }
-
     public String getUsera() {
         return usera;
-    }
-
-    public void setUsera(String usera) {
-        this.usera = usera;
     }
 
     public String getTimea() {
         return timea;
     }
 
-    public void setTimea(String timea) {
-        this.timea = timea;
-    }
 }

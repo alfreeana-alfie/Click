@@ -39,7 +39,6 @@ import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
-import com.ketekmall.ketekmall.data.Delivery;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.UserDetails;
@@ -1053,7 +1052,7 @@ public class View_Product extends AppCompatActivity {
                                     item.setPostcode(postcode);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Adapter_Main(itemList, View_Product.this);
+                                adapter_item = new Item_Adapter_Main(itemList);
                                 adapter_item.notifyDataSetChanged();
                                 gridView_item.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {

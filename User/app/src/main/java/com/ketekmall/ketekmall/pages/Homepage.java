@@ -830,7 +830,7 @@ public class Homepage extends AppCompatActivity {
                                     item.setWeight(weight);
                                     itemList.add(item);
                                 }
-                                adapter_item = new Item_Adapter_Main(itemList, Homepage.this);
+                                adapter_item = new Item_Adapter_Main(itemList);
                                 adapter_item.sortArrayHighest();
                                 adapter_item.notifyDataSetChanged();
                                 gridView_HardSelling.setAdapter(adapter_item);
@@ -963,7 +963,7 @@ public class Homepage extends AppCompatActivity {
                                     item.setWeight(weight);
                                     itemList2.add(item);
                                 }
-                                adapter_item2 = new Item_Adapter_Main(itemList2, Homepage.this);
+                                adapter_item2 = new Item_Adapter_Main(itemList2);
                                 adapter_item2.notifyDataSetChanged();
                                 gridView_TopSelling.setAdapter(adapter_item2);
                                 adapter_item2.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {

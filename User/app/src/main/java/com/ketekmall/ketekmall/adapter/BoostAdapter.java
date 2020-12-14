@@ -83,7 +83,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
         void onCancelClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView;
         TextView AdDetail, Price, Shocking;

@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Item_All_Details itemAllDetails = item_all_details.get(position);
@@ -182,7 +184,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         void onMinusClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView;
         TextView AdDetail, UnitPrice, SubTotal, Quantity;

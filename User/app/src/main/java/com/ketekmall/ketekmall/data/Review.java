@@ -15,10 +15,6 @@ public class Review {
         return Customer_Name;
     }
 
-    public void setCustomer_Name(String customer_Name) {
-        Customer_Name = customer_Name;
-    }
-
     public String getReview() {
         return review;
     }

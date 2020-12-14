@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,17 +22,11 @@ import java.util.List;
 public class MyIncome_Adapter extends RecyclerView.Adapter<MyIncome_Adapter.ViewHolder> {
 
     Context context;
-    int mQuantity;
     private List<OrderDone> item_all_details;
-    private OnItemClickListener mListerner;
 
     public MyIncome_Adapter(Context context, List<OrderDone> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListerner = listener;
     }
 
     @NonNull
@@ -52,6 +47,7 @@ public class MyIncome_Adapter extends RecyclerView.Adapter<MyIncome_Adapter.View
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final OrderDone itemAllDetails = item_all_details.get(position);
@@ -79,11 +75,7 @@ public class MyIncome_Adapter extends RecyclerView.Adapter<MyIncome_Adapter.View
         return item_all_details.size();
     }
 
-    public interface OnItemClickListener {
-        void onCancelClick(int position);
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ItemImageView;
         TextView AdDetail, Price, Delivery_Address, Delivery_Time, Delivery_Price, GrandTotal, Status, Quantity;

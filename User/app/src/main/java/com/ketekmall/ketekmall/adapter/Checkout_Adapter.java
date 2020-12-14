@@ -1,5 +1,6 @@
 package com.ketekmall.ketekmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,12 @@ import java.util.List;
 public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.ViewHolder> {
 
     Context context;
-    private List<Checkout_Data> item_all_details, item_all_details2;
+    private List<Checkout_Data> item_all_details;
     private OnItemClickListener mListerner;
 
-    public Checkout_Adapter(Context context, List<Checkout_Data> item_all_detailsList, List<Checkout_Data> item_all_detailsList2) {
+    public Checkout_Adapter(Context context, List<Checkout_Data> item_all_detailsList) {
         this.context = context;
         this.item_all_details = item_all_detailsList;
-        this.item_all_details2 = item_all_detailsList2;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -40,10 +40,10 @@ public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.View
         return new ViewHolder(view);
     }
 
+    @SuppressLint({"DefaultLocale", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Checkout_Data itemAllDetails = item_all_details.get(position);
-        final Checkout_Data itemAllDetails2 = item_all_details2.get(position);
 
 
         String order_id = itemAllDetails.getId();
@@ -88,7 +88,7 @@ public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.View
         void onSelfClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView photo;
         TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price, location_to;
