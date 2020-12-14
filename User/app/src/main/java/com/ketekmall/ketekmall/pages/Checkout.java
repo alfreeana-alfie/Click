@@ -51,6 +51,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -204,8 +205,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                     for(int i=0; i < jsonarray.length(); i++) {
                                                                                         JSONObject jsonobject = jsonarray.getJSONObject(i);
                                                                                         String totalAmount       = jsonobject.getString("totalAmount");
-                                                                                        Price = totalAmount;
-                                                                                        Log.i("jsonObjectRequest", totalAmount);
+                                                                                        double NewTotalAmount = Double.parseDouble(totalAmount);
+                                                                                        double RoundedTotalAmount = Math.ceil(NewTotalAmount);
+
+                                                                                        Price = String.format("%.2f", RoundedTotalAmount);
+                                                                                        Log.i("jsonObjectRequest", Price);
 
                                                                                         checkoutData = new Checkout_Data();
                                                                                         checkoutData.setId(id);
@@ -216,11 +220,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         checkoutData.setPrice(String.valueOf(price));
                                                                                         checkoutData.setDivision(division);
                                                                                         checkoutData.setQuantity(quantity);
-                                                                                        checkoutData.setDelivery_price(totalAmount);
+                                                                                        checkoutData.setDelivery_price(String.format("%.2f", RoundedTotalAmount));
                                                                                         checkoutData.setDelivery_division(strCity);
                                                                                         checkoutData.setDelivery_division1(division + " to " + strCity);
 
-                                                                                        grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(totalAmount));
+                                                                                        grandtotal += (price * Integer.parseInt(quantity) + Math.ceil(NewTotalAmount));
                                                                                         Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
                                                                                         Grand_Total2.setText(String.format("%.2f", grandtotal));
 

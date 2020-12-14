@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color">
+    android:background="@mipmap/background_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_color"
+        android:background="@mipmap/background_color"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
@@ -33,7 +33,7 @@
             android:id="@+id/table_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:stretchColumns="1,2">
 
             <TableRow
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/table_filter"
-            android:background="@drawable/background_white_curve">
+            android:background="@mipmap/background_white_curve">
 
             <ProgressBar
                 android:id="@+id/loading"
@@ -155,7 +155,7 @@
             android:id="@+id/appbar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/division_display"
-                android:background="@drawable/bg_spinner"
+                android:background="@mipmap/bg_spinner"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:spinnerMode="dropdown" />
@@ -222,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@id/district_display"
-                android:background="@drawable/bg_spinner"
+                android:background="@mipmap/bg_spinner"
                 android:paddingStart="10dp"
 
                 android:paddingEnd="10dp" />
@@ -236,7 +236,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/back"
                     android:textColor="@color/colorWhite"
@@ -251,7 +251,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:fontFamily="@font/montserrat"
                     android:text="@string/apply"
                     android:textColor="@color/colorWhite"

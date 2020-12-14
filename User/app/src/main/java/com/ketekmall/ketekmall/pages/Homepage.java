@@ -43,19 +43,6 @@ import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
-import com.ketekmall.ketekmall.category.Agriculture;
-import com.ketekmall.ketekmall.category.Cake;
-import com.ketekmall.ketekmall.category.Fashion;
-import com.ketekmall.ketekmall.category.Handicraft;
-import com.ketekmall.ketekmall.category.Health;
-import com.ketekmall.ketekmall.category.Home;
-import com.ketekmall.ketekmall.category.Pepper;
-import com.ketekmall.ketekmall.category.Processed;
-import com.ketekmall.ketekmall.category.Retail;
-import com.ketekmall.ketekmall.category.Service;
-import com.ketekmall.ketekmall.category.View_All;
-import com.ketekmall.ketekmall.category.View_All_Hot;
-import com.ketekmall.ketekmall.category.View_All_Shock;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.UserDetails;
@@ -88,15 +75,37 @@ public class Homepage extends AppCompatActivity {
 
     public static final String ID = "id";
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READALL_SHOCK = "https://ketekmall.com/ketekmall/category/readall_shocking.php";
-    private static String URL_READALL_HOT = "https://ketekmall.com/ketekmall/category/readall_sold.php";
+    private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
+
+    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
+
+    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
 
-    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
+    String URL_READ_CATEGORY_MAIN = "https://ketekmall.com/ketekmall/category/";
+    String URL_READ_CATEGORY_SEARCH_MAIN = "https://ketekmall.com/ketekmall/search/";
+    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "https://ketekmall.com/ketekmall/filter_district/";
+    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "https://ketekmall.com/ketekmall/filter_division/";
+    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "https://ketekmall.com/ketekmall/filter_search_division/";
+
+    String[] CATEGORY_LIST = {
+            "read_cake.php",
+            "read_process.php",
+            "read_handicraft.php",
+            "read_retail.php",
+            "read_agri.php",
+            "read_service.php",
+            "read_health.php",
+            "read_home.php",
+            "read_fashion.php",
+            "read_pepper.php",
+            "readall.php",
+            "readall_sold.php",
+            "readall_shocking.php",
+            "readall.php"};
 
     List<Item_All_Details> itemList;
     List<Item_All_Details> itemList2;
@@ -214,8 +223,7 @@ public class Homepage extends AppCompatActivity {
         button_fashion = findViewById(R.id.button_fashion);
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
-        TextView button_view_hard = findViewById(R.id.button_view_hard);
-        TextView button_view_top = findViewById(R.id.button_view_top);
+
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
 
@@ -242,23 +250,7 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
-        button_view_hard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, View_All_Hot.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
 
-        button_view_top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, View_All_Shock.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
 
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
@@ -278,6 +270,14 @@ public class Homepage extends AppCompatActivity {
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(Homepage.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent6.putExtra("URL_READ", URL_READ_CATEGORY_MAIN + CATEGORY_LIST[12]);
+                        intent6.putExtra("URL_ADD_FAV", URL_ADD_FAV);
+                        intent6.putExtra("URL_ADD_CART", URL_ADD_CART);
+                        intent6.putExtra("URL_SEARCH", URL_READ_CATEGORY_SEARCH_MAIN + CATEGORY_LIST[12]);
+                        intent6.putExtra("URL_FILTER_DISTRICT", URL_READ_CATEGORY_FILTER_DISTRICT_MAIN + CATEGORY_LIST[12]);
+                        intent6.putExtra("URL_FILTER_DIVISION", URL_READ_CATEGORY_FILTER_DIVISION_MAIN + CATEGORY_LIST[12]);
+                        intent6.putExtra("URL_FILTER_SEARCH", URL_READ_CATEGORY_FILTER_SEARCH_MAIN + CATEGORY_LIST[12]);
+                        intent6.putExtra("URL_READ_CART", URL_READ_CART);
                         startActivity(intent6);
                         break;
 
@@ -381,15 +381,29 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void GotoCategory(int number){
+        Intent intent = new Intent(Homepage.this, View_Category.class);
+        intent.putExtra("URL_READ", URL_READ_CATEGORY_MAIN + CATEGORY_LIST[number]);
+        intent.putExtra("URL_ADD_FAV", URL_ADD_FAV);
+        intent.putExtra("URL_ADD_CART", URL_ADD_CART);
+        intent.putExtra("URL_SEARCH", URL_READ_CATEGORY_SEARCH_MAIN + CATEGORY_LIST[number]);
+        intent.putExtra("URL_FILTER_DISTRICT", URL_READ_CATEGORY_FILTER_DISTRICT_MAIN + CATEGORY_LIST[number]);
+        intent.putExtra("URL_FILTER_DIVISION", URL_READ_CATEGORY_FILTER_DIVISION_MAIN + CATEGORY_LIST[number]);
+        intent.putExtra("URL_FILTER_SEARCH", URL_READ_CATEGORY_FILTER_SEARCH_MAIN + CATEGORY_LIST[number]);
+        intent.putExtra("URL_READ_CART", URL_READ_CART);
+        startActivity(intent);
+    }
+
     private void Category_Func() {
+        TextView button_view_hard = findViewById(R.id.button_view_hard);
+        TextView button_view_top = findViewById(R.id.button_view_top);
 
         Button_SellItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                SellerCheck(getId);
-//                Intent intent = new Intent(Homepage.this, newPage.class);
-//                startActivity(intent);
+//                SellerCheck(getId);
+                Intent intent = new Intent(Homepage.this, newPage.class);
+                startActivity(intent);
             }
         });
 
@@ -397,104 +411,105 @@ public class Homepage extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(Homepage.this, View_All.class);
-                startActivity(intent);
+                GotoCategory(13);
             }
         });
 
         button_cake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Cake.class);
-                startActivity(intent);
+                GotoCategory(0);
             }
         });
 
         button_processed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Processed.class);
-                startActivity(intent);
+                GotoCategory(1);
             }
         });
 
         button_handcraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Handicraft.class);
-                startActivity(intent);
+                GotoCategory(2);
             }
         });
 
         button_retail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Retail.class);
-                startActivity(intent);
+                GotoCategory(3);
             }
         });
 
         button_agriculture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Agriculture.class);
-                startActivity(intent);
+                GotoCategory(4);
             }
         });
 
         button_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Service.class);
-                startActivity(intent);
+                GotoCategory(5);
             }
         });
 
         button_health.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Health.class);
-                startActivity(intent);
+                GotoCategory(6);
             }
         });
 
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Home.class);
-                startActivity(intent);
+                GotoCategory(7);
             }
         });
 
         button_fashion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Fashion.class);
-                startActivity(intent);
+                GotoCategory(8);
             }
         });
 
         button_pepper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, Pepper.class);
-                startActivity(intent);
+                GotoCategory(9);
             }
         });
 
         button_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Homepage.this, View_All.class);
-                startActivity(intent);
+                GotoCategory(10);
+            }
+        });
+
+        button_view_hard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(11);
+            }
+        });
+
+        button_view_top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(12);
             }
         });
 
     }
 
     private void getUserDetail() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_USER_DETAIL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -564,85 +579,8 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void SellerCheck(final String user_id){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-
-                                    int strVerify = Integer.parseInt(object.getString("verification"));
-                                    if(strVerify == 0 || strVerify == 2){
-                                        Intent intent1 = new Intent(Homepage.this, Register_Seller_MainPage.class);
-//                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent1);
-                                    }else{
-                                        Intent intent1 = new Intent(Homepage.this, Product_Add.class);
-//                                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(intent1);
-                                    }
-
-                                }
-                            } else {
-                                Toast.makeText(Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", user_id);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
     private void SellerCheck_Main(final String user_id){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_USER_DETAIL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -841,7 +779,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void View_HardSelling() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL_HOT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CATEGORY_MAIN + CATEGORY_LIST[11],
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -976,7 +914,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void View_TopSelling() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READALL_SHOCK,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CATEGORY_MAIN + CATEGORY_LIST[12],
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -46,7 +46,7 @@
                 android:layout_height="5dp"
                 android:layout_gravity="center_vertical|center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border_orange02" />
+                android:background="@mipmap/login_part_border_orange02" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:elevation="0dp"
                 android:orientation="horizontal">
 
@@ -73,7 +73,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/login_part_border_dark"
+                    android:background="@mipmap/login_part_border_dark"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/ic_person_orange_foreground" />
 
@@ -91,7 +91,7 @@
                     android:paddingRight="20dp"
                     android:textColor="@android:color/black"
                     android:cursorVisible="true"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:elevation="0dp"
                 android:orientation="horizontal">
 
@@ -109,7 +109,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/login_part_border_grey"
+                    android:background="@mipmap/login_part_border_grey"
                     android:contentDescription="@string/todo"
                     android:src="@drawable/ic_password_grey_foreground" />
 
@@ -133,7 +133,7 @@
                         android:importantForAutofill="no"
                         android:inputType="textPassword"
                         android:textColor="@android:color/black"
-                        android:textCursorDrawable="@drawable/color_cursor"
+                        android:textCursorDrawable="@mipmap/color_cursor"
                         android:textSize="16sp"
                         app:passwordToggleEnabled="true" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -190,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/login_part_border_orange"
+                android:background="@mipmap/login_part_border_orange"
                 android:fontFamily="@font/open_sans_semibold"
                 android:padding="13dp"
                 android:text="@string/submit"

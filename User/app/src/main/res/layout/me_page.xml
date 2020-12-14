@@ -17,7 +17,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/username"
                     android:layout_alignBottom="@id/profile_image"
-                    android:background="@drawable/background_pink_full_curve"
+                    android:background="@mipmap/background_pink_full_curve"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:paddingStart="15dp"

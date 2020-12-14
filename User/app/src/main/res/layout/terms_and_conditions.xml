@@ -18,7 +18,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -507,7 +507,7 @@
             android:layout_above="@id/bottom_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/open_sans_semibold"
             android:textColor="@android:color/white"
             android:textSize="18sp"

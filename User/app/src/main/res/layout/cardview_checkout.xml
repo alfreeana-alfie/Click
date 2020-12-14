@@ -152,7 +152,7 @@
                 android:fontFamily="@font/open_sans_bold"
                 android:textColor="@color/colorPrimary"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:background="@drawable/button_border_orange"
+                android:background="@mipmap/button_border_orange"
                 android:text="@string/self_pick_up" />
 
 

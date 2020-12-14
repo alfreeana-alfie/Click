@@ -5,7 +5,7 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="2dp"
     android:layout_marginBottom="1dp"
-    android:background="@drawable/background_white_full_curves"
+    android:background="@mipmap/background_white_full_curves"
     android:elevation="4dp"
     android:padding="5dp">
 
@@ -32,7 +32,7 @@
         android:layout_height="20dp"
         android:layout_gravity="right|end|top"
         android:layout_marginTop="3dp"
-        android:background="@drawable/background_pink_full_curve"
+        android:background="@mipmap/background_pink_full_curve"
         android:gravity="center"
         android:padding="3dp"
         android:text="0"

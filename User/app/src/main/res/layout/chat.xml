@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color"
+    android:background="@mipmap/background_color"
     android:orientation="vertical"
     tools:context=".pages.Chat">
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/send_message"
         android:layout_below="@id/appbar"
-        android:background="@drawable/background_light_orange_curve"
+        android:background="@mipmap/background_light_orange_curve"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"

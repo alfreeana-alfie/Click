@@ -10,7 +10,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_color"
+        android:background="@mipmap/background_color"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:elevation="0dp">
 
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appbar"
-        android:background="@drawable/background_white_curve"
+        android:background="@mipmap/background_white_curve"
         android:padding="5dp">
 
         <LinearLayout
@@ -39,7 +39,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/background_white_full_curves"
+            android:background="@mipmap/background_white_full_curves"
             android:orientation="horizontal">
 
             <TextView
@@ -60,7 +60,7 @@
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@id/close_layout"
             android:layout_toEndOf="@id/division_layout"
-            android:background="@drawable/background_white_full_curves"
+            android:background="@mipmap/background_white_full_curves"
             android:orientation="horizontal">
 
             <TextView
@@ -81,7 +81,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@id/btn_close"
-            android:background="@drawable/background_white_full_curves"
+            android:background="@mipmap/background_white_full_curves"
             android:orientation="horizontal">
 
             <TextView
@@ -126,7 +126,7 @@
                 android:id="@+id/layout_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_white_full_curves"
+                android:background="@mipmap/background_white_full_curves"
                 android:orientation="vertical"/>
 
             <Button
@@ -135,7 +135,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/background_button_pink_right_curves"
+                android:background="@mipmap/background_button_pink_right_curves"
                 android:drawableEnd="@drawable/ic_add_foreground"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -160,7 +160,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/background_button_pink_right_curves"
+                android:background="@mipmap/background_button_pink_right_curves"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/submit"
                 android:textColor="@color/colorWhite"

@@ -19,7 +19,7 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/background_color"
+                android:background="@mipmap/background_color"
                 android:theme="@style/AppTheme.AppBarOverlay"
                 app:elevation="0dp">
 
@@ -505,7 +505,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
-                        android:background="@drawable/login_part_border_orange"
+                        android:background="@mipmap/login_part_border_orange"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="@string/accept" />
@@ -516,7 +516,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
-                        android:background="@drawable/login_part_border_orange"
+                        android:background="@mipmap/login_part_border_orange"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="@string/view" />
@@ -527,7 +527,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_margin="5dp"
-                        android:background="@drawable/login_part_border_orange"
+                        android:background="@mipmap/login_part_border_orange"
                         android:textColor="@color/colorWhite"
                         android:fontFamily="@font/open_sans_semibold"
                         android:text="@string/reject" />
@@ -574,7 +574,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/pl"
-                        android:background="@drawable/background_white_full_curves">
+                        android:background="@mipmap/background_white_full_curves">
 
                         <EditText
                             android:id="@+id/editText_review"
@@ -583,7 +583,7 @@
                             android:padding="10dp"
                             android:background="@null"
                             android:cursorVisible="true"
-                            android:textCursorDrawable="@drawable/color_cursor"
+                            android:textCursorDrawable="@mipmap/color_cursor"
                             android:layout_centerVertical="true"
                             android:inputType="text"
                             android:hint="@string/pos_laju_tracking_no" />
@@ -599,7 +599,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/relative3"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="18sp"
@@ -614,7 +614,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_submit"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="18sp"

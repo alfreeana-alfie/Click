@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/background_color">
+    android:background="@mipmap/background_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -28,7 +28,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:layout_below="@id/appbar">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -88,7 +88,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:layout_below="@id/relativeLayout">
 
         <LinearLayout
@@ -166,7 +166,7 @@
             android:id="@+id/table_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_orange"
+            android:background="@mipmap/background_orange"
             android:stretchColumns="1">
 
             <TableRow
@@ -229,7 +229,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/table_filter"
-            android:background="@drawable/background_white_curve">
+            android:background="@mipmap/background_white_curve">
 
             <TextView
                 android:id="@+id/textView35"

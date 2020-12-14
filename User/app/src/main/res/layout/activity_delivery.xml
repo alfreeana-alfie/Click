@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             app:elevation="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -39,7 +39,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_white_curve">
+                android:background="@mipmap/background_white_curve">
 
                 <TextView
                     android:id="@+id/textView5"
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/recycler_cricketers"
                     android:layout_margin="5dp"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/add"
                     android:textColor="@color/colorWhite" />
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textView4"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/login_part_border_orange"
+        android:background="@mipmap/login_part_border_orange"
         android:fontFamily="@font/open_sans_semibold"
         android:text="@string/add_delivery"
         android:textColor="@color/colorWhite" />
@@ -113,7 +113,7 @@
             android:layout_marginBottom="7dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/background_button_pink_left_curves"
+            android:background="@mipmap/background_button_pink_left_curves"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
@@ -128,7 +128,7 @@
             android:layout_marginBottom="7dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/background_button_pink_right_curves"
+            android:background="@mipmap/background_button_pink_right_curves"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/accept"
             android:textColor="@android:color/white"

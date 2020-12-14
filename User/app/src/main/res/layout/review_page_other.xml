@@ -18,7 +18,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:background="@drawable/background_white_full_curves"
+                    android:background="@mipmap/background_white_full_curves"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -397,7 +397,7 @@
                     android:layout_below="@id/linear1"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
-                    android:background="@drawable/background_white_full_curves"
+                    android:background="@mipmap/background_white_full_curves"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -534,7 +534,7 @@
                     android:layout_below="@id/linear2"
                     android:layout_margin="15dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/login_part_border_orange"
+                    android:background="@mipmap/login_part_border_orange"
                     android:text="@string/received"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
@@ -569,7 +569,7 @@
                 android:layout_below="@id/review_layout1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border_orange" />
+                android:background="@mipmap/login_part_border_orange" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -590,7 +590,7 @@
                 android:id="@+id/text_layout"
                 android:layout_below="@id/ratingBar"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/button_border"
+                android:background="@mipmap/button_border"
                 android:layout_width="match_parent"
                 android:layout_height="170dp">
 
@@ -604,7 +604,7 @@
                     android:padding="15dp"
                     android:inputType="textMultiLine"
                     android:hint="@string/write_a_review"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:cursorVisible="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -627,7 +627,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_layout"
-                android:background="@drawable/login_part_border_orange"
+                android:background="@mipmap/login_part_border_orange"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="5dp"
@@ -640,7 +640,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btn_submit"
-                android:background="@drawable/login_part_border_orange"
+                android:background="@mipmap/login_part_border_orange"
                 android:textColor="@color/colorWhite"
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"

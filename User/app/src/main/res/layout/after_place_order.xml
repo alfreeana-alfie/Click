@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/text01"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/login_part_border_orange"
+        android:background="@mipmap/login_part_border_orange"
         android:textColor="@color/colorWhite"
         android:padding="5dp"
         android:text="@string/continue_shopping" />

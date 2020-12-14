@@ -19,7 +19,7 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_color"
+            android:background="@mipmap/background_color"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:elevation="0dp">
 
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:text="@string/become_a_seller_today"
             android:layout_below="@id/textView9"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:padding="5dp"
             android:layout_margin="5dp"

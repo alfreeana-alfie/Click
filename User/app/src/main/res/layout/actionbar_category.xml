@@ -27,7 +27,7 @@
     <RelativeLayout
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:layout_toEndOf="@id/back_button"
         android:layout_toStartOf="@id/relativeLayout"
         android:layout_marginEnd="5dp"
@@ -47,7 +47,7 @@
             android:paddingEnd="10dp"
             android:focusableInTouchMode="true"
             android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/color_cursor"
+            android:textCursorDrawable="@mipmap/color_cursor"
             android:textColor="@color/colorPrimaryDark"
             android:hint="@string/search"
             android:importantForAutofill="no" />
@@ -78,7 +78,7 @@
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:background="@drawable/background_white_full_curves"
+            android:background="@mipmap/background_white_full_curves"
             android:fontFamily="@font/open_sans"
             android:textColor="@color/colorPrimaryDark"
             android:text="@string/search" />

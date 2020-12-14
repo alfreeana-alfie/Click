@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background_color"
+    android:background="@mipmap/background_color"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
     android:paddingStart="10dp"
@@ -17,7 +18,9 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         style="@style/Widget.AppCompat.Button.Borderless"
-        app:srcCompat="@drawable/ic_back_foreground" />
+        app:srcCompat="@drawable/ic_back_foreground"
+        tools:ignore="VectorDrawableCompat"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,5 +32,5 @@
         android:textSize="19sp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:text="My Order"/>
+        android:text="@string/my_order"/>
 </RelativeLayout>

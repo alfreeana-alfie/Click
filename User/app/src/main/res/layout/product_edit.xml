@@ -70,7 +70,7 @@
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:layout_margin="10dp"
-                                android:background="@drawable/image_border"
+                                android:background="@mipmap/image_border"
                                 android:contentDescription="@string/todo"
                                 app:srcCompat="@drawable/ic_add_photo_foreground"
                                 tools:ignore="VectorDrawableCompat" />
@@ -85,7 +85,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_margin="10dp"
-                                    android:background="@drawable/image_border"
+                                    android:background="@mipmap/image_border"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_add_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -95,7 +95,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_alignEnd="@id/upload_photo2"
-                                    android:background="@drawable/background_white_full_curves_photo"
+                                    android:background="@mipmap/background_white_full_curves_photo"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_delete_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -112,7 +112,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_margin="10dp"
-                                    android:background="@drawable/image_border"
+                                    android:background="@mipmap/image_border"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_add_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -122,7 +122,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_alignEnd="@id/upload_photo3"
-                                    android:background="@drawable/background_white_full_curves_photo"
+                                    android:background="@mipmap/background_white_full_curves_photo"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_delete_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -138,7 +138,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_margin="10dp"
-                                    android:background="@drawable/image_border"
+                                    android:background="@mipmap/image_border"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_add_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -148,7 +148,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_alignEnd="@id/upload_photo4"
-                                    android:background="@drawable/background_white_full_curves_photo"
+                                    android:background="@mipmap/background_white_full_curves_photo"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_delete_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -164,7 +164,7 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:layout_margin="10dp"
-                                    android:background="@drawable/image_border"
+                                    android:background="@mipmap/image_border"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_add_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -174,7 +174,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_alignEnd="@id/upload_photo5"
-                                    android:background="@drawable/background_white_full_curves_photo"
+                                    android:background="@mipmap/background_white_full_curves_photo"
                                     android:contentDescription="@string/todo"
                                     app:srcCompat="@drawable/ic_delete_photo_foreground"
                                     tools:ignore="VectorDrawableCompat" />
@@ -194,7 +194,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -267,7 +267,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -306,7 +306,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -336,7 +336,7 @@
                     android:paddingRight="15dp"
                     android:paddingBottom="10dp"
                     android:textAlignment="textEnd"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -346,7 +346,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -436,7 +436,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -467,7 +467,7 @@
                     android:paddingRight="15dp"
                     android:paddingBottom="10dp"
                     android:textAlignment="textEnd"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -477,7 +477,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -508,7 +508,7 @@
                     android:paddingRight="15dp"
                     android:paddingBottom="10dp"
                     android:textAlignment="textEnd"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -518,7 +518,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -549,7 +549,7 @@
                     android:paddingRight="15dp"
                     android:paddingBottom="10dp"
                     android:textAlignment="textEnd"
-                    android:textCursorDrawable="@drawable/color_cursor"
+                    android:textCursorDrawable="@mipmap/color_cursor"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -560,7 +560,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/login_part_border"
+                android:background="@mipmap/login_part_border"
                 android:orientation="horizontal">
 
                 <TextView
@@ -621,7 +621,7 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_button_pink_left_curves"
+                        android:background="@mipmap/background_button_pink_left_curves"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/cancel"
                         android:layout_marginEnd="2.5dp"
@@ -633,7 +633,7 @@
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
-                        android:background="@drawable/background_button_pink_right_curves"
+                        android:background="@mipmap/background_button_pink_right_curves"
                         android:fontFamily="@font/open_sans_bold"
                         android:text="@string/accept"
                         android:layout_marginStart="2.5dp"
@@ -654,7 +654,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/login_part_border"
+        android:background="@mipmap/login_part_border"
         android:elevation="5dp"
         android:padding="20dp"
         android:visibility="gone"
@@ -686,7 +686,7 @@
                 android:layout_height="5dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border_orange" />
+                android:background="@mipmap/login_part_border_orange" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -719,7 +719,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/main_cat"
-            android:background="@drawable/bg_spinner"
+            android:background="@mipmap/bg_spinner"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:spinnerMode="dropdown" />
@@ -746,7 +746,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/sub_cat"
-            android:background="@drawable/bg_spinner"
+            android:background="@mipmap/bg_spinner"
             android:paddingStart="10dp"
 
             android:paddingEnd="10dp" />
@@ -757,7 +757,7 @@
             android:layout_height="45dp"
             android:layout_below="@+id/spinner_sub_category"
             android:layout_marginTop="30dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/montserrat"
             android:text="@string/accept"
             android:textSize="14sp" />
@@ -768,7 +768,7 @@
             android:layout_height="45dp"
             android:layout_below="@id/accept_category"
             android:layout_marginTop="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/montserrat"
             android:text="@string/back"
             android:textSize="14sp" />
@@ -781,7 +781,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/login_part_border"
+        android:background="@mipmap/login_part_border"
         android:elevation="5dp"
         android:padding="20dp"
         android:visibility="gone"
@@ -813,7 +813,7 @@
                 android:layout_height="5dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/login_part_border_orange" />
+                android:background="@mipmap/login_part_border_orange" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -846,7 +846,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/division_display"
-            android:background="@drawable/bg_spinner"
+            android:background="@mipmap/bg_spinner"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:spinnerMode="dropdown" />
@@ -871,7 +871,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/district_display"
-            android:background="@drawable/bg_spinner"
+            android:background="@mipmap/bg_spinner"
             android:paddingStart="10dp"
 
             android:paddingEnd="10dp" />
@@ -882,7 +882,7 @@
             android:layout_height="45dp"
             android:layout_below="@+id/spinner_district"
             android:layout_marginTop="30dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/montserrat"
             android:text="@string/accept"
             android:textSize="14sp" />
@@ -893,7 +893,7 @@
             android:layout_height="45dp"
             android:layout_below="@id/accept_location"
             android:layout_marginTop="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/montserrat"
             android:text="@string/back"
             android:textSize="14sp" />
@@ -914,7 +914,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/login_part_border"
+            android:background="@mipmap/login_part_border"
             android:elevation="5dp"
             android:orientation="vertical"
             android:padding="20dp"
@@ -946,7 +946,7 @@
                     android:layout_height="5dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/login_part_border_orange" />
+                    android:background="@mipmap/login_part_border_orange" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -979,7 +979,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/addetail"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border">
+                android:background="@mipmap/border">
 
                 <EditText
                     android:id="@+id/edittext_ad_detail"
@@ -991,7 +991,7 @@
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:textCursorDrawable="@mipmap/color_cursor" />
 
             </RelativeLayout>
 
@@ -1015,7 +1015,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/brand_mate"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border">
+                android:background="@mipmap/border">
 
                 <EditText
                     android:id="@+id/edittext_brand"
@@ -1027,7 +1027,7 @@
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:textCursorDrawable="@mipmap/color_cursor" />
 
             </RelativeLayout>
 
@@ -1053,7 +1053,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/inner_mate"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border">
+                android:background="@mipmap/border">
 
                 <EditText
                     android:id="@+id/edittext_inner"
@@ -1065,7 +1065,7 @@
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:textCursorDrawable="@mipmap/color_cursor" />
 
             </RelativeLayout>
 
@@ -1089,7 +1089,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/stock"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border">
+                android:background="@mipmap/border">
 
                 <EditText
                     android:id="@+id/edittext_stock"
@@ -1101,7 +1101,7 @@
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:textCursorDrawable="@mipmap/color_cursor" />
 
             </RelativeLayout>
 
@@ -1125,7 +1125,7 @@
                 android:layout_height="300dp"
                 android:layout_below="@id/desc"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/border">
+                android:background="@mipmap/border">
 
                 <EditText
                     android:id="@+id/edittext_desc"
@@ -1137,7 +1137,7 @@
                     android:inputType="textMultiLine"
                     android:padding="15dp"
                     android:textAlignment="textStart"
-                    android:textCursorDrawable="@drawable/color_cursor" />
+                    android:textCursorDrawable="@mipmap/color_cursor" />
 
             </RelativeLayout>
 
@@ -1148,7 +1148,7 @@
                 android:layout_below="@id/desc_relative_layout"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/login_part_border_orange"
+                android:background="@mipmap/login_part_border_orange"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/accept"
                 android:textSize="14sp" />
@@ -1161,7 +1161,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/login_part_border_orange"
+                android:background="@mipmap/login_part_border_orange"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/back"
                 android:textSize="14sp" />

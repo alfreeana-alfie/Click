@@ -248,7 +248,7 @@
             android:layout_below="@id/textView13"
             android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:fontFamily="@font/open_sans_semibold"
             android:padding="5dp"
             android:text="@string/become_a_seller_today"

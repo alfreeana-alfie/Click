@@ -23,6 +23,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         android:networkSecurityConfig="@xml/network_security_config"
         tools:replace="android:theme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="n">
 
         <meta-data
@@ -75,7 +76,6 @@
         <activity android:name="com.ketekmall.ketekmall.pages.Place_Order" />
         <activity android:name="com.ketekmall.ketekmall.pages.Delivery_Add" />
         <activity android:name="com.ketekmall.ketekmall.pages.Delivery_MainPage" />
-        <activity android:name="com.ketekmall.ketekmall.category.View_All" />
         <activity android:name="com.ketekmall.ketekmall.pages.MyLikes" />
         <activity android:name="com.ketekmall.ketekmall.pages.MyProducts" />
         <activity android:name="com.ketekmall.ketekmall.pages.Product_Add" />
@@ -92,19 +92,7 @@
         <activity android:name="com.ketekmall.ketekmall.pages.Review_Info" />
         <activity android:name="com.ketekmall.ketekmall.pages.Notification_Page" />
         <activity android:name="com.ketekmall.ketekmall.pages.Review_Page" />
-        <activity android:name="com.ketekmall.ketekmall.category.Agriculture" />
-        <activity android:name="com.ketekmall.ketekmall.category.Cake" />
-        <activity android:name="com.ketekmall.ketekmall.category.Fashion" />
-        <activity android:name="com.ketekmall.ketekmall.category.Handicraft" />
-        <activity android:name="com.ketekmall.ketekmall.category.Health" />
-        <activity android:name="com.ketekmall.ketekmall.category.Home" />
-        <activity android:name="com.ketekmall.ketekmall.category.Pepper" />
-        <activity android:name="com.ketekmall.ketekmall.category.Personal" />
-        <activity android:name="com.ketekmall.ketekmall.category.Processed" />
-        <activity android:name="com.ketekmall.ketekmall.category.Retail" />
-        <activity android:name="com.ketekmall.ketekmall.category.Service" />
-        <activity android:name="com.ketekmall.ketekmall.category.View_All_Hot" />
-        <activity android:name="com.ketekmall.ketekmall.category.View_All_Shock" />
+
         <activity android:name="com.ketekmall.ketekmall.pages.MyBuying" />
         <activity android:name="com.ketekmall.ketekmall.pages.MySelling" />
         <activity android:name="com.ketekmall.ketekmall.pages.Me_Page" />
@@ -124,6 +112,7 @@
         <activity android:name=".user.Login" />
         <activity android:name=".user.Forgot_Password" />
         <activity android:name=".user.Register" />
+        <activity android:name=".pages.View_Category" />
 
 
         <meta-data

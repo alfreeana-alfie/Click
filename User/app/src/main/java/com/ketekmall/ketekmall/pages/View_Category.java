@@ -1,4 +1,4 @@
-package com.ketekmall.ketekmall.category;
+package com.ketekmall.ketekmall.pages;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -41,15 +41,11 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.Me_Page;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.pages.View_Product;
 import com.ketekmall.ketekmall.adapter.Item_ByCategory_Adapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.pages.Homepage;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,25 +57,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Service extends AppCompatActivity {
+public class View_Category extends AppCompatActivity {
+    private static String URL_READ = "";
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/category/read_service.php";
+    private static String URL_ADD_FAV = "";
+    private static String URL_ADD_CART = "";
 
-    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/read_service.php";
-    private static String URL_FILTER_DISTRICT = "https://ketekmall.com/ketekmall/filter_district/read_service.php";
-    private static String URL_FILTER_DIVISION = "https://ketekmall.com/ketekmall/filter_division/read_service.php";
-    private static String URL_FILTER_SEARCH = "https://ketekmall.com/ketekmall/filter_search_division/read_service.php";
-    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_SEARCH = "";
+    private static String URL_FILTER_DISTRICT = "";
+    private static String URL_FILTER_DIVISION = "";
+    private static String URL_FILTER_SEARCH = "";
+    private static String URL_READ_CART = "";
 
     SessionManager sessionManager;
     String getId;
     GridView gridView;
     Item_ByCategory_Adapter adapter_item;
     List<Item_All_Details> itemList;
-    BottomNavigationView bottomNav;
 
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
@@ -87,40 +81,25 @@ public class Service extends AppCompatActivity {
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
     private ProgressBar loading;
+
+    BottomNavigationView bottomNav;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_listpage);
+        final Intent intent = getIntent();
+        URL_READ = intent.getStringExtra("URL_READ");
+        URL_ADD_FAV = intent.getStringExtra("URL_ADD_FAV");
+        URL_ADD_CART = intent.getStringExtra("URL_ADD_CART");
+        URL_SEARCH = intent.getStringExtra("URL_SEARCH");
+        URL_FILTER_DISTRICT = intent.getStringExtra("URL_FILTER_DISTRICT");
+        URL_FILTER_DIVISION = intent.getStringExtra("URL_FILTER_DIVISION");
+        URL_FILTER_SEARCH = intent.getStringExtra("URL_FILTER_SEARCH");
+        URL_READ_CART = intent.getStringExtra("URL_READ_CART");
+
         Declare();
-        bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.getMenu().getItem(0).setCheckable(false);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        Intent intent4 = new Intent(Service.this, Homepage.class);
-                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent4);
-                        break;
-
-                    case R.id.nav_noti:
-                        Intent intent6 = new Intent(Service.this, Notification_Page.class);
-                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent6);
-                        break;
-
-                    case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Service.this, Me_Page.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent1);
-                        break;
-                }
-
-                return true;
-            }
-        });
         View_List();
 
         ToolbarSetting();
@@ -179,7 +158,7 @@ public class Service extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 View_List();
@@ -189,10 +168,9 @@ public class Service extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Service.this, Homepage.class);
+                Intent intent = new Intent(View_Category.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -206,7 +184,7 @@ public class Service extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
                 itemList.clear();
-                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
                 final String strAd_Detail = search_find.getText().toString();
@@ -214,14 +192,14 @@ public class Service extends AppCompatActivity {
 
                 if (!strAd_Detail.isEmpty() && !strDivision.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
-                    adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
                     Filter_Search(strAd_Detail, strDivision);
                 }
                 if(!strAd_Detail.isEmpty() && strDivision.equals(getResources().getString(R.string.All))){
                     itemList.clear();
-                    adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -243,6 +221,7 @@ public class Service extends AppCompatActivity {
 
     private void Declare() {
         loading = findViewById(R.id.loading);
+
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_CarItem);
         filter_layout = findViewById(R.id.filter_layout);
@@ -263,6 +242,35 @@ public class Service extends AppCompatActivity {
             }
         });
 
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(View_Category.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(View_Category.this, Notification_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(View_Category.this, Me_Page.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
+
         no_result = findViewById(R.id.no_result);
         no_result.setVisibility(View.GONE);
 
@@ -278,7 +286,7 @@ public class Service extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemList.clear();
-                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                 adapter_item.notifyDataSetChanged();
                 gridView.setAdapter(adapter_item);
 
@@ -290,7 +298,7 @@ public class Service extends AppCompatActivity {
 
                 if (strDistrict.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
-                    adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -298,7 +306,7 @@ public class Service extends AppCompatActivity {
                 }
                 if (strDivision.equals(getResources().getString(R.string.All))) {
                     itemList.clear();
-                    adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -306,7 +314,7 @@ public class Service extends AppCompatActivity {
                 }
                 if(!strDivision.equals(getResources().getString(R.string.All)) && !strDistrict.equals(getResources().getString(R.string.All))){
                     itemList.clear();
-                    adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                    adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                     adapter_item.notifyDataSetChanged();
                     gridView.setAdapter(adapter_item);
 
@@ -321,7 +329,7 @@ public class Service extends AppCompatActivity {
         price_sorthighest = findViewById(R.id.price_sorthighest);
         price_sorthighest.setVisibility(View.GONE);
 
-        adapter_division = ArrayAdapter.createFromResource(Service.this, R.array.division, android.R.layout.simple_spinner_item);
+        adapter_division = ArrayAdapter.createFromResource(View_Category.this, R.array.division, android.R.layout.simple_spinner_item);
         adapter_division.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_division.setAdapter(adapter_division);
 
@@ -383,7 +391,7 @@ public class Service extends AppCompatActivity {
                                     final String strWeight = item.getWeight();
 
                                     if (getId.equals(strSeller_id)) {
-                                        Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                     } else {
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                 new Response.Listener<String>() {
@@ -397,13 +405,13 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Cart", Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(Service.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
 
@@ -464,7 +472,7 @@ public class Service extends AppCompatActivity {
                                                 return params;
                                             }
                                         };
-                                        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                         requestQueue.add(stringRequest2);
                                     }
                                 }
@@ -474,8 +482,7 @@ public class Service extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
-
-                                        Toast.makeText(Service.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(View_Category.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -536,12 +543,13 @@ public class Service extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -580,13 +588,13 @@ public class Service extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Service.this, View_Product.class);
+                                        Intent detailIntent = new Intent(View_Category.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -605,6 +613,7 @@ public class Service extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+
                                         detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
@@ -628,7 +637,7 @@ public class Service extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -639,50 +648,49 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
                                                     new Response.ErrorListener() {
                                                         @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            try {
+                                                        public void onErrorResponse(VolleyError error) {try {
 
-                                                                if (error instanceof TimeoutError) {
-                                                                    //Time out error
-                                                                    System.out.println("" + error);
-                                                                }else if(error instanceof NoConnectionError){
-                                                                    //net work error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof AuthFailureError) {
-                                                                    //error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ServerError) {
-                                                                    //Erroor
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof NetworkError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                } else if (error instanceof ParseError) {
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }else{
-                                                                    //Error
-                                                                    System.out.println("" + error);
-                                                                }
-                                                                //End
-
-
-                                                            } catch (Exception e) {
-
-
+                                                            if (error instanceof TimeoutError) {
+                                                                //Time out error
+                                                                System.out.println("" + error);
+                                                            }else if(error instanceof NoConnectionError){
+                                                                //net work error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            }else{
+                                                                //Error
+                                                                System.out.println("" + error);
                                                             }
+                                                            //End
+
+
+                                                        } catch (Exception e) {
+
+
+                                                        }
                                                         }
                                                     }) {
                                                 @Override
@@ -703,7 +711,7 @@ public class Service extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                             stringRequest1.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             requestQueue.add(stringRequest1);
                                         }
@@ -717,7 +725,7 @@ public class Service extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(Service.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -729,7 +737,7 @@ public class Service extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError) {
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
                                 System.out.println("" + error);
                             }else if(error instanceof NoConnectionError){
@@ -758,7 +766,6 @@ public class Service extends AppCompatActivity {
 
 
                         }
-
                     }
                 }) {
             @Override
@@ -768,7 +775,7 @@ public class Service extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
         requestQueue.add(stringRequest);
     }
 
@@ -778,12 +785,13 @@ public class Service extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -815,6 +823,7 @@ public class Service extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -822,13 +831,13 @@ public class Service extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Service.this, View_Product.class);
+                                        Intent detailIntent = new Intent(View_Category.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -845,6 +854,7 @@ public class Service extends AppCompatActivity {
                                         detailIntent.putExtra("price", item.getPrice());
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("postcode", item.getPostcode());
+
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
                                         detailIntent.putExtra("weight", item.getWeight());
@@ -865,12 +875,13 @@ public class Service extends AppCompatActivity {
                                         final Double strPrice = Double.valueOf(item.getPrice());
                                         final String strDivision = item.getDivision();
                                         final String strPostcode = item.getPostcode();
+
                                         final String strDistrict = item.getDistrict();
                                         final String strPhoto = item.getPhoto();
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -881,13 +892,13 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
@@ -896,7 +907,7 @@ public class Service extends AppCompatActivity {
                                                         public void onErrorResponse(VolleyError error) {
                                                             try {
 
-                                                                if (error instanceof TimeoutError) {
+                                                                if (error instanceof TimeoutError ) {
                                                                     //Time out error
                                                                     System.out.println("" + error);
                                                                 }else if(error instanceof NoConnectionError){
@@ -924,8 +935,7 @@ public class Service extends AppCompatActivity {
                                                             } catch (Exception e) {
 
 
-                                                            }
-                                                        }
+                                                            } }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -945,7 +955,7 @@ public class Service extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                             stringRequest1.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             requestQueue.add(stringRequest1);
                                         }
@@ -959,7 +969,7 @@ public class Service extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(Service.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -971,7 +981,7 @@ public class Service extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError) {
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
                                 System.out.println("" + error);
                             }else if(error instanceof NoConnectionError){
@@ -1000,7 +1010,6 @@ public class Service extends AppCompatActivity {
 
 
                         }
-
                     }
                 }) {
             @Override
@@ -1011,7 +1020,7 @@ public class Service extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1021,12 +1030,13 @@ public class Service extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -1065,13 +1075,13 @@ public class Service extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Service.this, View_Product.class);
+                                        Intent detailIntent = new Intent(View_Category.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1113,7 +1123,7 @@ public class Service extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1124,13 +1134,13 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
@@ -1139,7 +1149,7 @@ public class Service extends AppCompatActivity {
                                                         public void onErrorResponse(VolleyError error) {
                                                             try {
 
-                                                                if (error instanceof TimeoutError) {
+                                                                if (error instanceof TimeoutError ) {
                                                                     //Time out error
                                                                     System.out.println("" + error);
                                                                 }else if(error instanceof NoConnectionError){
@@ -1167,8 +1177,7 @@ public class Service extends AppCompatActivity {
                                                             } catch (Exception e) {
 
 
-                                                            }
-                                                        }
+                                                            }   }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1188,7 +1197,7 @@ public class Service extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                             stringRequest1.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             requestQueue.add(stringRequest1);
                                         }
@@ -1202,7 +1211,7 @@ public class Service extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(Service.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1214,7 +1223,7 @@ public class Service extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError) {
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
                                 System.out.println("" + error);
                             }else if(error instanceof NoConnectionError){
@@ -1243,7 +1252,6 @@ public class Service extends AppCompatActivity {
 
 
                         }
-
                     }
                 }){
             @Override
@@ -1253,7 +1261,7 @@ public class Service extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
         requestQueue.add(stringRequest);
 
     }
@@ -1264,12 +1272,13 @@ public class Service extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            loading.setVisibility(View.GONE);
+
                             final JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
                             final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
                             if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
 //                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
@@ -1308,13 +1317,13 @@ public class Service extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Service.this, View_Product.class);
+                                        Intent detailIntent = new Intent(View_Category.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1356,7 +1365,7 @@ public class Service extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1367,13 +1376,13 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
@@ -1382,7 +1391,7 @@ public class Service extends AppCompatActivity {
                                                         public void onErrorResponse(VolleyError error) {
                                                             try {
 
-                                                                if (error instanceof TimeoutError) {
+                                                                if (error instanceof TimeoutError ) {
                                                                     //Time out error
                                                                     System.out.println("" + error);
                                                                 }else if(error instanceof NoConnectionError){
@@ -1410,8 +1419,7 @@ public class Service extends AppCompatActivity {
                                                             } catch (Exception e) {
 
 
-                                                            }
-                                                        }
+                                                            } }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1431,7 +1439,7 @@ public class Service extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                             stringRequest1.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             requestQueue.add(stringRequest1);
                                         }
@@ -1445,7 +1453,7 @@ public class Service extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(Service.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1457,7 +1465,7 @@ public class Service extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError) {
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
                                 System.out.println("" + error);
                             }else if(error instanceof NoConnectionError){
@@ -1486,7 +1494,6 @@ public class Service extends AppCompatActivity {
 
 
                         }
-
                     }
                 }) {
             @Override
@@ -1497,7 +1504,7 @@ public class Service extends AppCompatActivity {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
         requestQueue.add(stringRequest);
     }
 
@@ -1595,7 +1602,6 @@ public class Service extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 loading.setVisibility(View.GONE);
-//                                Toast.makeText(Homepage.this, "Login! ", Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
@@ -1612,8 +1618,8 @@ public class Service extends AppCompatActivity {
 
                                     String price = object.getString("price").trim();
                                     String division = object.getString("division");
-                                    String postcode = object.getString("postcode");
                                     String district = object.getString("district");
+                                    String postcode = object.getString("postcode");
                                     String image_item = object.getString("photo");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
@@ -1633,13 +1639,13 @@ public class Service extends AppCompatActivity {
                                 } else {
                                     no_result.setVisibility(View.GONE);
                                 }
-                                adapter_item = new Item_ByCategory_Adapter(itemList, Service.this);
+                                adapter_item = new Item_ByCategory_Adapter(itemList, View_Category.this);
                                 adapter_item.notifyDataSetChanged();
                                 gridView.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_ByCategory_Adapter.OnItemClickListener() {
                                     @Override
                                     public void onViewClick(int position) {
-                                        Intent detailIntent = new Intent(Service.this, View_Product.class);
+                                        Intent detailIntent = new Intent(View_Category.this, View_Product.class);
                                         Item_All_Details item = itemList.get(position);
 
                                         detailIntent.putExtra("id", item.getId());
@@ -1661,7 +1667,6 @@ public class Service extends AppCompatActivity {
                                         detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
-
                                     }
 
                                     @Override
@@ -1681,7 +1686,7 @@ public class Service extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(Service.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1692,13 +1697,13 @@ public class Service extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Service.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
 
                                                                 }
 
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
-                                                                Toast.makeText(Service.this, e.toString(), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(View_Category.this, e.toString(), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     },
@@ -1707,7 +1712,7 @@ public class Service extends AppCompatActivity {
                                                         public void onErrorResponse(VolleyError error) {
                                                             try {
 
-                                                                if (error instanceof TimeoutError) {
+                                                                if (error instanceof TimeoutError ) {
                                                                     //Time out error
                                                                     System.out.println("" + error);
                                                                 }else if(error instanceof NoConnectionError){
@@ -1733,8 +1738,7 @@ public class Service extends AppCompatActivity {
 
 
                                                             } catch (Exception e) {
-
-
+                                                                e.printStackTrace();
                                                             }
                                                         }
                                                     }) {
@@ -1756,7 +1760,7 @@ public class Service extends AppCompatActivity {
                                                     return params;
                                                 }
                                             };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+                                            RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
                                             stringRequest1.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                                             requestQueue.add(stringRequest1);
                                         }
@@ -1770,7 +1774,7 @@ public class Service extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(Service.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1782,7 +1786,7 @@ public class Service extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError) {
+                            if (error instanceof TimeoutError ) {
                                 //Time out error
                                 System.out.println("" + error);
                             }else if(error instanceof NoConnectionError){
@@ -1808,10 +1812,8 @@ public class Service extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
-
                     }
                 }) {
             @Override
@@ -1819,14 +1821,14 @@ public class Service extends AppCompatActivity {
                 return super.getParams();
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(Service.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(View_Category.this);
         requestQueue.add(stringRequest);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Service.this, Homepage.class);
+        Intent intent = new Intent(View_Category.this, Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

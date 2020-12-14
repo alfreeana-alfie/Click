@@ -464,7 +464,7 @@ public class Chat extends AppCompatActivity {
             lp1.gravity = Gravity.END;
             textView.setLayoutParams(lp1);
 
-            textView.setBackgroundResource(R.drawable.rounded_corner1);
+            textView.setBackgroundResource(R.mipmap.rounded_corner1);
             textView.setElevation(3);
             textView.setPadding(45, 25, 45, 25);
             textView.setTextSize(18);
@@ -477,7 +477,7 @@ public class Chat extends AppCompatActivity {
             lp2.gravity = Gravity.START;
 
             textView.setLayoutParams(lp2);
-            textView.setBackgroundResource(R.drawable.rounded_corner2);
+            textView.setBackgroundResource(R.mipmap.rounded_corner2);
             textView.setElevation(3);
             textView.setPadding(45, 25, 45, 25);
             textView.setTextSize(18);

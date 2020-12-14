@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color">
+    android:background="@mipmap/background_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -72,7 +72,7 @@
                     android:text="1"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/background_white"
+                    android:background="@mipmap/background_white"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp" />
 
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="410dp"
                     android:scaleType="centerCrop"
-                    android:background="@drawable/background_white"
+                    android:background="@mipmap/background_white"
                     android:contentDescription="@string/item_image"
                     tools:srcCompat="@tools:sample/avatars[1]" />
             </RelativeLayout>
@@ -182,7 +182,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background_white_curve"
+                android:background="@mipmap/background_white_curve"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -335,7 +335,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/button_border_orange"
+                        android:background="@mipmap/button_border_orange"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:text="@string/view"
                         android:textSize="16sp"
@@ -434,7 +434,7 @@
                             android:id="@+id/image21"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:background="@drawable/login_part_border_orange"
+                            android:background="@mipmap/login_part_border_orange"
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
@@ -533,7 +533,7 @@
                     android:layout_marginBottom="10dp"
                     android:id="@+id/add_to_cart_btn"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:background="@drawable/background_button_pink_curves"
+                    android:background="@mipmap/background_button_pink_curves"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_bold"

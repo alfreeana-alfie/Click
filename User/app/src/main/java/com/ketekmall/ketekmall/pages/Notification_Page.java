@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.category.View_All_Shock;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Notification_Page extends AppCompatActivity {
@@ -63,7 +62,7 @@ public class Notification_Page extends AppCompatActivity {
         promotion_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Notification_Page.this, View_All_Shock.class);
+                Intent intent1 = new Intent(Notification_Page.this, View_Shocking_Sale.class);
 //                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }

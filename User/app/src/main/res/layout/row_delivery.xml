@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:padding="10dp">
 
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:text="@string/edit" />
 
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_semibold"
-            android:background="@drawable/login_part_border_orange"
+            android:background="@mipmap/login_part_border_orange"
             android:textColor="@color/colorWhite"
             android:text="@string/delete" />
 

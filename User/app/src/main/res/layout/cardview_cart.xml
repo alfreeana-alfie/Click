@@ -8,7 +8,7 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="5dp"
     android:layout_marginBottom="1dp"
-    android:background="@drawable/background_white_full_curves"
+    android:background="@mipmap/background_white_full_curves"
     android:padding="5dp">
 
     <RelativeLayout
@@ -151,7 +151,7 @@
                         android:id="@+id/decrease"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:background="@drawable/login_part_border_orange"
+                        android:background="@mipmap/login_part_border_orange"
                         android:elevation="2dp"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/minus"
@@ -172,7 +172,7 @@
                         android:id="@+id/increase"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:background="@drawable/login_part_border_orange"
+                        android:background="@mipmap/login_part_border_orange"
                         android:elevation="2dp"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/plus"

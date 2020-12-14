@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:orientation="horizontal">
 
         <Spinner
@@ -31,7 +31,7 @@
         android:id="@+id/price_layout"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:layout_toEndOf="@id/division_layout"
         android:layout_toStartOf="@id/close_layout"
         android:orientation="horizontal">
@@ -43,7 +43,7 @@
             android:hint="@string/myr0_00"
             android:background="@null"
             android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/color_cursor"
+            android:textCursorDrawable="@mipmap/color_cursor"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"
             android:layout_margin="5dp"/>
@@ -55,7 +55,7 @@
         android:id="@+id/close_layout"
         android:layout_width="80dp"
         android:layout_height="40dp"
-        android:background="@drawable/background_white_full_curves"
+        android:background="@mipmap/background_white_full_curves"
         android:layout_alignParentEnd="true"
         android:orientation="horizontal">
 
@@ -75,7 +75,7 @@
             android:hint="@string/_0_days"
             android:background="@null"
             android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/color_cursor"
+            android:textCursorDrawable="@mipmap/color_cursor"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"
             android:inputType="number"
@@ -107,7 +107,7 @@
         android:textColor="@color/colorWhite"
         android:fontFamily="@font/open_sans_semibold"
         android:textSize="18sp"
-        android:background="@drawable/login_part_border_orange"
+        android:background="@mipmap/login_part_border_orange"
         android:text="@string/accept" />
 
     <Button
@@ -122,7 +122,7 @@
         android:fontFamily="@font/open_sans_semibold"
         android:textSize="18sp"
         android:textColor="@color/colorWhite"
-        android:background="@drawable/login_part_border_orange"
+        android:background="@mipmap/login_part_border_orange"
         android:text="@string/cancel" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
