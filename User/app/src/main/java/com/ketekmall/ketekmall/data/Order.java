@@ -13,6 +13,15 @@ public class Order {
     private String quantity;
     private String status;
     private String tracking_no;
+    private String weight;
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
 
     public Spanned getStatus1() {
         return status1;

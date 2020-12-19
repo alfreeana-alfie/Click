@@ -40,7 +40,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@mipmap/background_send_pink_left_curves"
+        android:background="@mipmap/background_color_curve"
         android:padding="8dp"
         android:src="@drawable/ic_send_foreground" />
 </LinearLayout>

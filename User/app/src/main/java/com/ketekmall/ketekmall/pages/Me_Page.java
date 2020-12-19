@@ -176,12 +176,8 @@ public class Me_Page extends AppCompatActivity {
                             }else{
                                 //Error
                             }
-                            //End
-
-
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {

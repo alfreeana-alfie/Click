@@ -19,7 +19,7 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/background_color"
+                android:background="@color/colorPrimary"
                 android:theme="@style/AppTheme.AppBarOverlay"
                 app:elevation="0dp">
 
@@ -545,7 +545,7 @@
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:layout_below="@id/liner3"
-                    android:text="@string/pos_laju_tracking_no" />
+                    android:text="Generate Consignment Note" />
 
                 <RelativeLayout
                     android:layout_marginStart="15dp"
@@ -577,6 +577,7 @@
                         android:background="@mipmap/background_white_full_curves">
 
                         <EditText
+                            android:visibility="gone"
                             android:id="@+id/editText_review"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -603,7 +604,7 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="18sp"
-                    android:text="@string/submit" />
+                    android:text="Generate PDF" />
 
                 <Button
                     android:layout_marginStart="15dp"

@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages.seller;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -201,11 +202,12 @@ public class MySelling extends AppCompatActivity {
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
                                     String status = object.getString("status").trim();
+                                    String delivery_price = object.getString("delivery_price");
+                                    String weight = object.getString("weight");
 
                                     final String tracking_no = object.getString("tracking_no").trim();
 
                                     Spanned status1;
-
 
                                     Order item = new Order(id,
                                             seller_id,
@@ -222,6 +224,9 @@ public class MySelling extends AppCompatActivity {
                                             date,
                                             quantity,
                                             status);
+                                    item.setDelivery_price(delivery_price);
+                                    item.setWeight(weight);
+
                                     if(status.equals("Reject")){
                                         String delivery_text;
 
@@ -328,6 +333,12 @@ public class MySelling extends AppCompatActivity {
                                         final String strQuantity = order.getQuantity();
                                         final String strStatus = order.getStatus();
                                         final String strTracking_NO = order.getTracking_no();
+                                        final Double strDeliveryPrice = Double.valueOf(order.getDelivery_price());
+                                        final String Weight = order.getWeight();
+
+
+                                        double TotalAmountPartOne = strPrice + strDeliveryPrice;
+                                        double TotalAmount = Integer.parseInt(strQuantity) * TotalAmountPartOne;
 
                                         Intent intent1 = new Intent(MySelling.this, Selling_Detail.class);
                                         intent1.putExtra("id", strOrder_Id);
@@ -340,6 +351,8 @@ public class MySelling extends AppCompatActivity {
                                         intent1.putExtra("status", strStatus);
                                         intent1.putExtra("tracking_no", strTracking_NO);
                                         intent1.putExtra("customer_id", strCustomer_id);
+                                        intent1.putExtra("TotalAmount", String.format("%.2f", TotalAmount));
+                                        intent1.putExtra("Weight", Weight);
                                         startActivity(intent1);
                                     }
                                 });
