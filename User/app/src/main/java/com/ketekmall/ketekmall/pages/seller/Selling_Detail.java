@@ -722,13 +722,13 @@ public class Selling_Detail extends AppCompatActivity {
                                                                 RoutingCode(
                                                                         SellerPostCode,
                                                                         ReceiverPostCode,
-                                                                        OrderID,
+                                                                        "KM00" + OrderID,
                                                                         subscriptionCode,
                                                                         AccountNo,
                                                                         SellerName,
                                                                         SellerPhoneNo,
                                                                         SellerAddress01 + "," + SellerAddress02 + "," + SellerPostCode + " " + SellerDivision,
-                                                                        "M0000012",
+                                                                        SellerPostCode + OrderID,
                                                                         SellerPhoneNo,
                                                                         SellerAddress01 + "," + SellerAddress02 + "," + SellerPostCode + " " + SellerDivision,
                                                                         SellerPostCode,
@@ -1417,6 +1417,7 @@ public class Selling_Detail extends AppCompatActivity {
     int pageHeight = 595;
 
     Bitmap PosLajuBitMap, ScaledPosLajuBitMap;
+    Bitmap KetekMallBitmap, ScaledKetekMallBitMap;
     private void GeneratePDF(String ShipDate,
                              String Weight,
                              String OrderID,
@@ -1442,6 +1443,9 @@ public class Selling_Detail extends AppCompatActivity {
         PosLajuBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.poslaju_black);
         ScaledPosLajuBitMap = Bitmap.createScaledBitmap(PosLajuBitMap, 100, 45, false);
 
+        KetekMallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ketekmallx52_black);
+        ScaledKetekMallBitMap = Bitmap.createScaledBitmap(KetekMallBitmap, 50, 50, false);
+
         final String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
         PdfDocument document = new PdfDocument();
@@ -1459,6 +1463,8 @@ public class Selling_Detail extends AppCompatActivity {
         canvas.drawRect(5, 5, pageWidth-5, pageHeight-5, paint);
 
         canvas.drawBitmap(ScaledPosLajuBitMap, 13, 20, paint);
+
+        canvas.drawBitmap(ScaledKetekMallBitMap, 113, 20, paint);
 
         // Logo & Barcode
         paint.setStyle(Paint.Style.STROKE);
@@ -1855,7 +1861,7 @@ public class Selling_Detail extends AppCompatActivity {
                     bitmap.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
                 }
             }
-            canvas.drawBitmap(bitmap,310, 430, paint);
+            canvas.drawBitmap(bitmap,320, 430, paint);
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
