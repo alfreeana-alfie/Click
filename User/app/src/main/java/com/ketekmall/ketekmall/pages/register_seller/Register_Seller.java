@@ -116,14 +116,14 @@ public class Register_Seller extends AppCompatActivity {
                             if (success.equals("1")) {
                                 loading.setVisibility(View.GONE);
                                 btn_accept.setVisibility(View.VISIBLE);
-                                Toast.makeText(Register_Seller.this, "Profile Saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register_Seller.this, R.string.success_saved, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(Register_Seller.this, Product_Add.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             } else {
                                 loading.setVisibility(View.GONE);
                                 btn_accept.setVisibility(View.VISIBLE);
-                                Toast.makeText(Register_Seller.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register_Seller.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             loading.setVisibility(View.GONE);

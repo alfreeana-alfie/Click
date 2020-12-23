@@ -272,7 +272,7 @@ public class View_Product extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (getId.equals(userid)) {
-                    Toast.makeText(View_Product.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(View_Product.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                 } else {
                     View_Cart();
                 }
@@ -383,7 +383,7 @@ public class View_Product extends AppCompatActivity {
                                 });
 
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -474,7 +474,7 @@ public class View_Product extends AppCompatActivity {
                                         final String item_id = object.getString("item_id");
 
                                         if(!item_id.isEmpty() && item_id.equals(id)){
-                                            Toast.makeText(View_Product.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Product.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                         }else {
                                             Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
                                                     division,postcode, district, photo, userid, id);
@@ -576,7 +576,7 @@ public class View_Product extends AppCompatActivity {
                                     final String strPhoto = item.getPhoto();
 
                                     if (getId.equals(strSeller_id)) {
-                                        Toast.makeText(View_Product.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(View_Product.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                     } else {
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                 new Response.Listener<String>() {
@@ -590,9 +590,9 @@ public class View_Product extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Product.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Product.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(View_Product.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Product.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -668,7 +668,7 @@ public class View_Product extends AppCompatActivity {
                                         final String item_id = object.getString("item_id");
 
                                         if(!item_id.isEmpty() && item_id.equals(id)){
-                                            Toast.makeText(View_Product.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
@@ -735,7 +735,7 @@ public class View_Product extends AppCompatActivity {
                             String success = jsonObject1.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(View_Product.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -883,7 +883,7 @@ public class View_Product extends AppCompatActivity {
 
                                 }
                             } else {
-                                Toast.makeText(View_Product.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -963,7 +963,7 @@ public class View_Product extends AppCompatActivity {
                                 }
                             } else {
                                 review1.setVisibility(GONE);
-                                Toast.makeText(View_Product.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1090,7 +1090,7 @@ public class View_Product extends AppCompatActivity {
                                 });
 
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1178,7 +1178,7 @@ public class View_Product extends AppCompatActivity {
                                 sold_text.setText(sold);
 
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1321,7 +1321,7 @@ public class View_Product extends AppCompatActivity {
 
                                 EditRating(id, String.valueOf(ratingfull2));
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1387,7 +1387,7 @@ public class View_Product extends AppCompatActivity {
                             if (success.equals("1")) {
 //                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1454,7 +1454,7 @@ public class View_Product extends AppCompatActivity {
                             if (success.equals("1")) {
 //                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(View_Product.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

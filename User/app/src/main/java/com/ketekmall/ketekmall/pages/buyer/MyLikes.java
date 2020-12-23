@@ -289,11 +289,11 @@ public class MyLikes extends AppCompatActivity {
                                                                         adapter_item.notifyDataSetChanged();
                                                                         gridView.setAdapter(adapter_item);
                                                                     } else {
-                                                                        Toast.makeText(MyLikes.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(MyLikes.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
-                                                                    Toast.makeText(MyLikes.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                                    Toast.makeText(MyLikes.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         },
@@ -355,7 +355,7 @@ public class MyLikes extends AppCompatActivity {
                                 });
                                 adapter_item.notifyDataSetChanged();
                             } else {
-                                Toast.makeText(MyLikes.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyLikes.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -496,11 +496,11 @@ public class MyLikes extends AppCompatActivity {
                                                                         gridView.setAdapter(adapter_item);
 
                                                                     } else {
-                                                                        Toast.makeText(MyLikes.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(MyLikes.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
-                                                                    Toast.makeText(MyLikes.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                                    Toast.makeText(MyLikes.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         },
@@ -562,7 +562,7 @@ public class MyLikes extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(MyLikes.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyLikes.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

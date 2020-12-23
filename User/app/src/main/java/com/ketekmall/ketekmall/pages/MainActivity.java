@@ -205,8 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                                                                     } catch (Exception e) {
-
-
+                                                                        e.printStackTrace();
                                                                     }
                                                                 }
                                                             });
@@ -285,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                                                             RequestQueue rQueue = Volley.newRequestQueue(MainActivity.this);
                                                             rQueue.add(request);
                                                         } else {
-                                                            Toast.makeText(MainActivity.this, "incorrect email", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(MainActivity.this, R.string.failed, Toast.LENGTH_LONG).show();
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();

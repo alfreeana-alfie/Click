@@ -185,7 +185,7 @@ public class Review_Info extends AppCompatActivity {
                                 recyclerView.setAdapter(reviewAdapter);
 
                             } else {
-                                Toast.makeText(Review_Info.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Review_Info.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

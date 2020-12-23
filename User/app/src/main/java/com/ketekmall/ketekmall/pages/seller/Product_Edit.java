@@ -690,14 +690,14 @@ public class Product_Edit extends AppCompatActivity {
                                     loading.setVisibility(View.GONE);
                                     Button_SavedEdit.setVisibility(View.VISIBLE);
                                     Button_BackEdit.setVisibility(VISIBLE);
-                                    Toast.makeText(Product_Edit.this, "Item Updated", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Product_Edit.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                                     Intent intent1 = new Intent(Product_Edit.this, MyProducts.class);
                                     startActivity(intent1);
                                     finish();
                                 } else {
                                     loading.setVisibility(View.GONE);
                                     Button_SavedEdit.setVisibility(View.VISIBLE);
-                                    Toast.makeText(Product_Edit.this, "Failed to Update", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Product_Edit.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 loading.setVisibility(View.GONE);
@@ -929,7 +929,7 @@ public class Product_Edit extends AppCompatActivity {
 
 
                                     } else {
-                                        Toast.makeText(Product_Edit.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Product_Edit.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -1004,7 +1004,7 @@ public class Product_Edit extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                             }
                         }else{
@@ -1077,7 +1077,7 @@ public class Product_Edit extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -1155,7 +1155,7 @@ public class Product_Edit extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                             }
                         }

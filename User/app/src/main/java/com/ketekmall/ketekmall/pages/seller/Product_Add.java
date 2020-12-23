@@ -550,7 +550,7 @@ public class Product_Add extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                 }
                             } else {
-                                Toast.makeText(Product_Add.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -705,7 +705,7 @@ public class Product_Add extends AppCompatActivity {
                                     startActivity(intent);
 
                                 } else {
-                                    Toast.makeText(Product_Add.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
 
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
@@ -716,7 +716,7 @@ public class Product_Add extends AppCompatActivity {
                                 accept_item.setVisibility(View.VISIBLE);
                                 Intent intent1 = new Intent(Product_Add.this, Product_Add.class);
                                 startActivity(intent1);
-                                Toast.makeText(Product_Add.this, "Please re-enter the item details again", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Product_Add.this, R.string.please_re_enter_the_item_again, Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -799,11 +799,11 @@ public class Product_Add extends AppCompatActivity {
                             if (success.equals("1")) {
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Product_Add.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -908,11 +908,11 @@ public class Product_Add extends AppCompatActivity {
                             if (success.equals("1")) {
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Product_Add.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
 
                         }
                     }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="facebook_app_id">1695626630575322</string>
     <string name="fb_login_protocol_scheme">fb1695626630575322</string>
     <string name="fcm_token">FCM Token: %s</string>
@@ -117,6 +117,20 @@
     <string name="choose_a_location">Choose a Location</string>
     <string name="district">District</string>
     <string name="select_location">Choose a Location</string>
+    <string name="added_to_cart">Added to Cart</string>
+
+    <string name="failed_to_add">Failed to Cart</string>
+    <string name="cannot_add_your_own_item">Sorry, Cannot Add Your Own Item</string>
+    <string name="added_to_like">Added to My Likes</string>
+    <string name="failed">Failed</string>
+    <string name="press_back_again_to_exit">"Press back again to exit"</string>
+    <string name="success_add">Added Successfully</string>
+    <string name="success_update">Updated Successfully</string>
+    <string name="success_saved">Saved Successfully</string>
+    <string name="please_re_enter_the_item_again">Please re-enter the item details again</string>
+    <string name="incomplete_information">Please Complete Your Information Before Placing Order</string>
+    <string name="order_canceled">Your order has been canceled</string>
+    <string name="pending">Pending</string>
 
     <string-array name="itemType">
         <item>Document</item>
@@ -148,7 +162,7 @@
         <item>10</item>
     </string-array>
 
-    <string-array name="main_category">
+    <string-array name="main_category" tools:ignore="InconsistentArrays">
         <item>All Categories</item>
         <item>Cake and pastries</item>
         <item>Process food</item>
@@ -160,6 +174,7 @@
         <item>Home and living</item>
         <item>Fashion Accessories</item>
         <item>Sarawak - Based Product</item>
+        <item>Self Pick-up</item>
     </string-array>
 
     <string-array name="vehicle_category">
@@ -669,5 +684,6 @@
     <string name="postcode">Postcode</string>
     <string name="weight">Weight (Kg)</string>
     <string name="kg">Kg</string>
+    <string name="self_pickup">Self Pickup</string>
 </resources>
 

@@ -39,6 +39,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.ketekmall.ketekmall.PosLajuTestArea;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
@@ -109,7 +110,8 @@ public class Homepage extends AppCompatActivity {
             "readall.php",
             "readall_sold.php",
             "readall_shocking.php",
-            "readall.php"};
+            "readall.php",
+            "read_pickup.php"};
 
     List<Item_All_Details> itemList;
     List<Item_All_Details> itemList2;
@@ -127,7 +129,7 @@ public class Homepage extends AppCompatActivity {
 
     private Button Button_SellItem, Button_FindItem, button_retail, button_processed,
             button_handcraft, button_cake, button_agriculture, button_service, button_health,
-            button_home, button_pepper, button_fashion;
+            button_home, button_pepper, button_fashion, button_pickup;
 
     private CircleImageView profile_image;
     private TextView button_view_all;
@@ -227,6 +229,7 @@ public class Homepage extends AppCompatActivity {
         button_fashion = findViewById(R.id.button_fashion);
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
+        button_pickup = findViewById(R.id.button_pickup);
 
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
@@ -457,7 +460,8 @@ public class Homepage extends AppCompatActivity {
         button_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GotoCategory(5);
+                Toast.makeText(Homepage.this, R.string.pending, Toast.LENGTH_LONG).show();
+//                GotoCategory(5);
             }
         });
 
@@ -486,6 +490,13 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GotoCategory(9);
+            }
+        });
+
+        button_pickup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(13);
             }
         });
 
@@ -870,7 +881,7 @@ public class Homepage extends AppCompatActivity {
                                 });
 
                             } else {
-                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -880,7 +891,7 @@ public class Homepage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                         try {
                             if (error instanceof TimeoutError) {//Time out error
                                 System.out.println("" + error);
@@ -1000,7 +1011,7 @@ public class Homepage extends AppCompatActivity {
                                 });
 
                             } else {
-                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1069,7 +1080,7 @@ public class Homepage extends AppCompatActivity {
                                 viewPager.setAdapter(adapter);
 
                             } else {
-                                Toast.makeText(Homepage.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1225,7 +1236,7 @@ public class Homepage extends AppCompatActivity {
                                     final String strWeight = item.getWeight();
 
                                     if (getId.equals(strSeller_id)) {
-                                        Toast.makeText(Homepage.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Homepage.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                     } else {
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                 new Response.Listener<String>() {
@@ -1239,9 +1250,9 @@ public class Homepage extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(Homepage.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Homepage.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(Homepage.this, "Failed Adding To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(Homepage.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -1316,7 +1327,7 @@ public class Homepage extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
-                                        Toast.makeText(Homepage.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Homepage.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -1378,7 +1389,7 @@ public class Homepage extends AppCompatActivity {
             super.onBackPressed();
             finish();
         } else {
-            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast = Toast.makeText(getBaseContext(), R.string.press_back_again_to_exit, Toast.LENGTH_SHORT);
             backToast.show();
         }
         backPressedTime = System.currentTimeMillis();

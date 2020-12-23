@@ -117,7 +117,7 @@ public class ProductRating extends AppCompatActivity {
                                                             ratingAdapter = new Rating_Adapter(ProductRating.this, ratingList);
                                                             recyclerView.setAdapter(ratingAdapter);
                                                         } else {
-                                                            Toast.makeText(ProductRating.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(ProductRating.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
@@ -151,12 +151,8 @@ public class ProductRating extends AppCompatActivity {
                                                             //Error
                                                             System.out.println("" + error);
                                                         }
-                                                        //End
-
-
                                                     } catch (Exception e) {
-
-
+                                                        e.printStackTrace();
                                                     }
                                                 }
                                             }) {
@@ -171,7 +167,7 @@ public class ProductRating extends AppCompatActivity {
                                     requestQueue.add(stringRequest);
                                 }
                             } else {
-                                Toast.makeText(ProductRating.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ProductRating.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

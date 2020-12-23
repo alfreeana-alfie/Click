@@ -111,11 +111,11 @@ public class Place_Order extends AppCompatActivity {
                                         Intent intent = new Intent(Place_Order.this, Homepage.class);
                                         startActivity(intent);
                                     } else {
-                                        Toast.makeText(Place_Order.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Place_Order.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(Place_Order.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Place_Order.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         },
@@ -188,7 +188,7 @@ public class Place_Order extends AppCompatActivity {
                                     sendEmail(strEmail);
                                 }
                             } else {
-                                Toast.makeText(Place_Order.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Place_Order.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -322,7 +322,7 @@ public class Place_Order extends AppCompatActivity {
                                     sendEmailSeller(strEmail);
                                 }
                             } else {
-                                Toast.makeText(Place_Order.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Place_Order.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

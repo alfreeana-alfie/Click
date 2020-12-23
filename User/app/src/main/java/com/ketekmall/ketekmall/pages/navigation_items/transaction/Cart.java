@@ -428,7 +428,7 @@ public class Cart extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -501,11 +501,11 @@ public class Cart extends AppCompatActivity {
                                             _cart_adapter.notifyDataSetChanged();
                                             itemAllDetailsArrayList.remove(position);
                                         } else {
-                                            Toast.makeText(Cart.this, "Failed", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -660,12 +660,12 @@ public class Cart extends AppCompatActivity {
                                     }
 //                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -700,7 +700,7 @@ public class Cart extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -736,7 +736,7 @@ public class Cart extends AppCompatActivity {
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -902,12 +902,12 @@ public class Cart extends AppCompatActivity {
                                     }
 //                                                                Toast.makeText(Cart.this, "Success", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(Cart.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -942,7 +942,7 @@ public class Cart extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Cart.this, "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -1065,7 +1065,7 @@ public class Cart extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

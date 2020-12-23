@@ -358,20 +358,20 @@ public class Review_Page extends AppCompatActivity {
                                                             if (success.equals("1")) {
                                                                 loading.setVisibility(View.GONE);
                                                                 btn_submit.setVisibility(View.VISIBLE);
-                                                                Toast.makeText(Review_Page.this, "Saved", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Review_Page.this, R.string.success_update, Toast.LENGTH_SHORT).show();
 
                                                                 Intent intent = new Intent(Review_Page.this, Me_Page.class);
                                                                 startActivity(intent);
                                                             } else {
                                                                 loading.setVisibility(View.GONE);
                                                                 btn_submit.setVisibility(View.VISIBLE);
-                                                                Toast.makeText(Review_Page.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (JSONException e) {
                                                             loading.setVisibility(View.GONE);
                                                             btn_submit.setVisibility(View.VISIBLE);
                                                             e.printStackTrace();
-                                                            Toast.makeText(Review_Page.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                            Toast.makeText(Review_Page.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 },
@@ -431,7 +431,7 @@ public class Review_Page extends AppCompatActivity {
                                         requestQueue.add(stringRequest);
                                     }
                                 } else {
-                                    Toast.makeText(Review_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -508,9 +508,9 @@ public class Review_Page extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(Review_Page.this, "Saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Review_Page.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(Review_Page.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -589,7 +589,7 @@ public class Review_Page extends AppCompatActivity {
                                     AddressUser.setText(strCity);
                                 }
                             } else {
-                                Toast.makeText(Review_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

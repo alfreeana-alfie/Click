@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="InconsistentArrays">
     <string name="app_name">KetekMall</string>
     <string name="register">Daftar</string>
     <string name="email">E-mel</string>
@@ -139,10 +139,23 @@
     <string name="date_order">TARIKH TEMPAHAN</string>
     <string name="date_received">TARIKH PENERIMAAN</string>
     <string name="ordered">Tempahan Diterima</string>
-    <string name="pending">Masih Tertangguh</string>
     <string name="shipped">Dalam Perjalanan</string>
     <string name="rejected">DITOLAK</string>
     <string name="shop_rating">Rating Produk</string>
+    <string name="added_to_cart">Masuk ke Troli</string>
+
+    <string name="failed_to_add">Gagal Masukkan ke Troli</string>
+    <string name="cannot_add_your_own_item">Maaf, Tidak Dibenarkan untuk membeli barang sendiri</string>
+    <string name="added_to_like">Masuk ke Kesukaan Saya</string>
+    <string name="failed">Gagal</string>
+    <string name="press_back_again_to_exit">Tekan Balit Lagi Sekali untuk Keluar</string>
+    <string name="success_add">Berjaya Ditambah</string>
+    <string name="success_update">Berjaya Kemas Kini</string>
+    <string name="success_saved">Berjaya Disimpan</string>
+    <string name="please_re_enter_the_item_again">Sila isikan maklumat sekali lagi</string>
+    <string name="incomplete_information">Sila Pastikan Maklumat anda Betul sebelum meletakkan pesanan</string>
+    <string name="order_canceled">Pesanan anda telah terbatal</string>
+    <string name="pending">Masih dalam pemprosesan</string>
 
     <string-array name="gender">
         <item>Perempuan</item>
@@ -174,6 +187,7 @@
         <item>Kediaman dan Tempat Tinggal</item>
         <item>Perhiasan Fesyen</item>
         <item>Produk Berasaskan - Sarawak</item>
+        <item>Produk Ambil Sendiri</item>
     </string-array>
 
     <string-array name="vehicle_category">
@@ -506,6 +520,7 @@
     <string name="already_boosted_up">Sudah Dinaikkan oleh Admin</string>
     <string name="pending_request">Masih Menunggu</string>
     <string name="no_delivery">No Delivery</string>
-    <string name="click_to_edit_details">Click to Edit Details</string>
-    <string name="product_details">Product Details</string>
+    <string name="click_to_edit_details">Tekan untuk Ubah Maklumat</string>
+    <string name="product_details">Maklumat Product</string>
+    <string name="self_pickup">Ambil Sendiri</string>
 </resources>

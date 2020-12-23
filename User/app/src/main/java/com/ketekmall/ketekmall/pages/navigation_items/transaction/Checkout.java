@@ -269,7 +269,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                         new Response.ErrorListener() {
                                                                             @Override
                                                                             public void onErrorResponse(VolleyError error) {
-                                                                                Toast.makeText(Checkout.this, "Please Complete Your Information Before Placing Order", Toast.LENGTH_LONG).show();
+                                                                                Toast.makeText(Checkout.this, R.string.incomplete_information, Toast.LENGTH_LONG).show();
 //                                                                                Log.i("STAGINGERROR", error.toString());
                                                                                 Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
                                                                                 Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
@@ -289,7 +289,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 requestQueue.add(stringRequest);
                                                             }
                                                         } else {
-                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
@@ -536,7 +536,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     });
                                 }
                             } else {
-                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -572,8 +572,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
@@ -620,7 +619,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     AddOrder(strCity, Address2);
                                 }
                             } else {
-                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -656,8 +655,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
@@ -962,7 +960,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 //                                                                                        requestQueue2.add(stringRequest2);
                                                                                     }
                                                                                 } else {
-                                                                                    Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                    Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                                 }
                                                                             } catch (JSONException e) {
                                                                                 e.printStackTrace();
@@ -1017,7 +1015,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                             intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);
                                                         } else {
-                                                            Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
@@ -1233,11 +1231,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                             if (success.equals("1")) {
 
                             } else {
-                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -1271,11 +1269,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                             if (success.equals("1")) {
 
                             } else {
-                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -1309,11 +1307,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                             if (success.equals("1")) {
 
                             } else {
-                                Toast.makeText(Checkout.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }

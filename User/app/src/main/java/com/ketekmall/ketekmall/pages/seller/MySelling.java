@@ -359,7 +359,7 @@ public class MySelling extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -395,7 +395,7 @@ public class MySelling extends AppCompatActivity {
 
 
                         }
-                        Toast.makeText(MySelling.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MySelling.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -419,7 +419,7 @@ public class MySelling extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(MySelling.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                         new Response.Listener<String>() {
                                             @Override
@@ -504,7 +504,7 @@ public class MySelling extends AppCompatActivity {
 
                                                         }
                                                     } else {
-                                                        Toast.makeText(MySelling.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                     }
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -555,11 +555,11 @@ public class MySelling extends AppCompatActivity {
                                 RequestQueue requestQueue = Volley.newRequestQueue(MySelling.this);
                                 requestQueue.add(stringRequest);
                             } else {
-                                Toast.makeText(MySelling.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -592,8 +592,7 @@ public class MySelling extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }){
@@ -619,7 +618,7 @@ public class MySelling extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(MySelling.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                         new Response.Listener<String>() {
                                             @Override
@@ -707,7 +706,7 @@ public class MySelling extends AppCompatActivity {
 
                                                         }
                                                     } else {
-                                                        Toast.makeText(MySelling.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                     }
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -745,8 +744,7 @@ public class MySelling extends AppCompatActivity {
 
 
                                                 } catch (Exception e) {
-
-
+                                                    e.printStackTrace();
                                                 }
                                             }
                                         }) {
@@ -760,11 +758,11 @@ public class MySelling extends AppCompatActivity {
                                 RequestQueue requestQueue = Volley.newRequestQueue(MySelling.this);
                                 requestQueue.add(stringRequest);
                             } else {
-                                Toast.makeText(MySelling.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -841,7 +839,7 @@ public class MySelling extends AppCompatActivity {
 
                                 }
                             } else {
-                                Toast.makeText(MySelling.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -879,8 +877,7 @@ public class MySelling extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
@@ -915,7 +912,7 @@ public class MySelling extends AppCompatActivity {
                                     sendEmail(strEmail, OrderID);
                                 }
                             } else {
-                                Toast.makeText(MySelling.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -953,8 +950,7 @@ public class MySelling extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }

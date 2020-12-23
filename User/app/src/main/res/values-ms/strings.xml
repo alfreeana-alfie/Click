@@ -10,4 +10,5 @@
     <string name="no_delivery">No Delivery</string>
     <string name="click_to_edit_details">Click to Edit Details</string>
     <string name="product_details">Product Details</string>
+    <string name="self_pickup">Self Pick-up</string>
 </resources>

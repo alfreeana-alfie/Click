@@ -392,7 +392,7 @@ public class View_Category extends AppCompatActivity {
                                     final String strWeight = item.getWeight();
 
                                     if (getId.equals(strSeller_id)) {
-                                        Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                     } else {
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                 new Response.Listener<String>() {
@@ -406,9 +406,9 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(View_Category.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -483,7 +483,7 @@ public class View_Category extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
-                                        Toast.makeText(View_Category.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(View_Category.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -638,7 +638,7 @@ public class View_Category extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -649,7 +649,7 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -689,8 +689,7 @@ public class View_Category extends AppCompatActivity {
 
 
                                                         } catch (Exception e) {
-
-
+                                                            e.printStackTrace();
                                                         }
                                                         }
                                                     }) {
@@ -726,7 +725,7 @@ public class View_Category extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -764,8 +763,7 @@ public class View_Category extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -882,7 +880,7 @@ public class View_Category extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -893,7 +891,7 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -970,7 +968,7 @@ public class View_Category extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1124,7 +1122,7 @@ public class View_Category extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1135,7 +1133,7 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -1212,7 +1210,7 @@ public class View_Category extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1366,7 +1364,7 @@ public class View_Category extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1377,7 +1375,7 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -1414,13 +1412,10 @@ public class View_Category extends AppCompatActivity {
                                                                     //Error
                                                                     System.out.println("" + error);
                                                                 }
-                                                                //End
-
-
                                                             } catch (Exception e) {
-
-
-                                                            } }
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
                                                     }) {
                                                 @Override
                                                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -1454,7 +1449,7 @@ public class View_Category extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -1492,8 +1487,7 @@ public class View_Category extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
                     }
                 }) {
@@ -1687,7 +1681,7 @@ public class View_Category extends AppCompatActivity {
                                         final String strWeight = item.getWeight();
 
                                         if (getId.equals(item.getSeller_id())) {
-                                            Toast.makeText(View_Category.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(View_Category.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                         } else {
                                             StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                     new Response.Listener<String>() {
@@ -1698,7 +1692,7 @@ public class View_Category extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Category.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Category.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
 
                                                                 }
 
@@ -1775,7 +1769,7 @@ public class View_Category extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(View_Category.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(View_Category.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

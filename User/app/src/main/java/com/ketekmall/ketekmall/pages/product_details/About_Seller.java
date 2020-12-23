@@ -232,7 +232,7 @@ public class About_Seller extends AppCompatActivity {
                                     final String strPhoto = item.getPhoto();
 
                                     if (getId.equals(strSeller_id)) {
-                                        Toast.makeText(About_Seller.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(About_Seller.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                     } else {
                                         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                                                 new Response.Listener<String>() {
@@ -246,9 +246,9 @@ public class About_Seller extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(About_Seller.this, "Add To Cart", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(About_Seller.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                                                 } else {
-                                                                    Toast.makeText(About_Seller.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(About_Seller.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
@@ -323,7 +323,7 @@ public class About_Seller extends AppCompatActivity {
 
                                         final String item_id = object.getString("item_id");
 
-                                        Toast.makeText(About_Seller.this, "Sorry, Already in the cart", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(About_Seller.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -475,7 +475,7 @@ public class About_Seller extends AppCompatActivity {
                                             final String strPhoto = item.getPhoto();
 
                                             if (getId.equals(item.getSeller_id())) {
-                                                Toast.makeText(About_Seller.this, "Sorry, Cannot add your own item", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(About_Seller.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
                                             } else {
                                                 StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_ADD_FAV,
                                                         new Response.Listener<String>() {
@@ -489,9 +489,9 @@ public class About_Seller extends AppCompatActivity {
                                                                         String success = jsonObject1.getString("success");
 
                                                                         if (success.equals("1")) {
-                                                                            Toast.makeText(About_Seller.this, "Add To Favourite", Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(About_Seller.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
                                                                         } else {
-                                                                            Toast.makeText(About_Seller.this, "Failed Adding To Favourite", Toast.LENGTH_SHORT).show();
+                                                                            Toast.makeText(About_Seller.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                         }
 
                                                                     } catch (JSONException e) {
@@ -566,7 +566,7 @@ public class About_Seller extends AppCompatActivity {
                                     });
 
                                 } else {
-                                    Toast.makeText(About_Seller.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(About_Seller.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -656,7 +656,7 @@ public class About_Seller extends AppCompatActivity {
                                     sold_text.setText(sold);
 
                                 } else {
-                                    Toast.makeText(About_Seller.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(About_Seller.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

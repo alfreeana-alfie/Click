@@ -62,7 +62,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.PosLajuTestArea;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -1924,7 +1923,7 @@ public class Selling_Detail extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                String filename = "PosLajuConsignmentNote-"+ dateFull +".pdf";
+                String filename = "PosLajuConsignmentNote.pdf";
                 File file1 = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
                 File file2 = new File(file1, filename);
 

@@ -155,7 +155,7 @@ public class Register_Seller_MainPage extends AppCompatActivity {
 
                                 }
                             } else {
-                                Toast.makeText(Register_Seller_MainPage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register_Seller_MainPage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -231,7 +231,7 @@ public class MyBuying extends AppCompatActivity {
                                                             String success = jsonObject1.getString("success");
 
                                                             if (success.equals("1")) {
-                                                                Toast.makeText(MyBuying.this, "Your order has been canceled", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(MyBuying.this, R.string.order_canceled, Toast.LENGTH_SHORT).show();
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                                                         new Response.Listener<String>() {
@@ -319,7 +319,7 @@ public class MyBuying extends AppCompatActivity {
 
                                                                                         }
                                                                                     } else {
-                                                                                        Toast.makeText(MyBuying.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                        Toast.makeText(MyBuying.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                                     }
                                                                                 } catch (JSONException e) {
                                                                                     e.printStackTrace();
@@ -474,7 +474,7 @@ public class MyBuying extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -549,13 +549,13 @@ public class MyBuying extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(MyBuying.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyBuying.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(MyBuying.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyBuying.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -588,7 +588,7 @@ public class MyBuying extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MyBuying.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MyBuying.this, "Request error", Toast.LENGTH_LONG).show();
                         Log.i(TAG, "onErrorResponse: Didn't work");
                     }
                 }) {

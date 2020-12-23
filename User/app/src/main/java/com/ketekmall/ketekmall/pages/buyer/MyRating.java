@@ -117,7 +117,7 @@ public class MyRating extends AppCompatActivity {
                                                             ratingAdapter = new Rating_Adapter(MyRating.this, ratingList);
                                                             recyclerView.setAdapter(ratingAdapter);
                                                         } else {
-                                                            Toast.makeText(MyRating.this, "Failed! ", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(MyRating.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                         }
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();
@@ -169,7 +169,7 @@ public class MyRating extends AppCompatActivity {
                                     requestQueue.add(stringRequest);
                                 }
                             } else {
-                                Toast.makeText(MyRating.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyRating.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

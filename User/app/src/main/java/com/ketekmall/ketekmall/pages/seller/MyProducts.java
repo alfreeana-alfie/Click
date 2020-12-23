@@ -231,13 +231,13 @@ public class MyProducts extends AppCompatActivity {
                                                             JSONObject jsonObject = new JSONObject(response);
                                                             String success = jsonObject.getString("success");
                                                             if (success.equals("1")) {
-                                                                Toast.makeText(MyProducts.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(MyProducts.this, R.string.success_add, Toast.LENGTH_SHORT).show();
                                                             } else {
-                                                                Toast.makeText(MyProducts.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(MyProducts.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
-                                                            Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                            Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
                                                 },
@@ -310,11 +310,11 @@ public class MyProducts extends AppCompatActivity {
                                                                         gridView.setAdapter(adapter_item);
 
                                                                     } else {
-                                                                        Toast.makeText(MyProducts.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(MyProducts.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
-                                                                    Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                                    Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
                                                         },
@@ -376,7 +376,7 @@ public class MyProducts extends AppCompatActivity {
                                 });
                                 adapter_item.notifyDataSetChanged();
                             } else {
-                                Toast.makeText(MyProducts.this, "Failed to read", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MyProducts.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -144,7 +144,7 @@ public class Me_Page extends AppCompatActivity {
 
                                 }
                             } else {
-                                Toast.makeText(Me_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Me_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -225,7 +225,7 @@ public class Me_Page extends AppCompatActivity {
                                     Picasso.get().load(strPhoto).into(profile_image);
                                 }
                             } else {
-                                Toast.makeText(Me_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Me_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -132,13 +132,13 @@ public class BoostAd extends AppCompatActivity {
                                                                     String success = jsonObject.getString("success");
 
                                                                     if (success.equals("1")) {
-                                                                        Toast.makeText(BoostAd.this, "Successfully Boost the ad", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(BoostAd.this, R.string.success_add, Toast.LENGTH_SHORT).show();
                                                                     } else {
-                                                                        Toast.makeText(BoostAd.this, "Failed to Boost the ad", Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(BoostAd.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } catch (JSONException e) {
                                                                     e.printStackTrace();
-                                                                    Toast.makeText(BoostAd.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                                                                    Toast.makeText(BoostAd.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             }
 
@@ -187,7 +187,7 @@ public class BoostAd extends AppCompatActivity {
                                         }
                                     });
                                 } else {
-                                    Toast.makeText(BoostAd.this, "Login Failed! ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BoostAd.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
