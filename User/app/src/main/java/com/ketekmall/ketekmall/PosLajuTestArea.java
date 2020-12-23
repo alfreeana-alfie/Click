@@ -141,6 +141,12 @@ public class PosLajuTestArea extends AppCompatActivity {
 //
     }
 
+    private void OneSignalNoti(){
+
+    }
+
+
+
 //    private void GenerateBarCode(){
 //        try {
 //            String productId = "ER000249760MY";
