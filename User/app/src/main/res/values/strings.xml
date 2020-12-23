@@ -595,7 +595,6 @@
     <string name="date_order">DATE ORDER</string>
     <string name="date_received">DATE RECEIVED</string>
     <string name="ordered">Ordered</string>
-    <string name="pending">Pending</string>
     <string name="shipped">Shipped</string>
     <string name="rejected">REJECTED</string>
     <string name="finished">FINISHED</string>
