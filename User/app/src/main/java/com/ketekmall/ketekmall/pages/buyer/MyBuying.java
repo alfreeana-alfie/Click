@@ -59,6 +59,8 @@ public class MyBuying extends AppCompatActivity {
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_order.php";
+    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
 
 
     final String TAG = "NOTIFICATION TAG";
@@ -205,19 +207,7 @@ public class MyBuying extends AppCompatActivity {
 
                                         final String strOrder_Id = order.getId();
                                         final String strSeller_id = order.getSeller_id();
-                                        final String strCustomer_id = order.getCustomer_id();
-                                        final String strItem_id = order.getItem_id();
-                                        final String strMain_category = order.getMain_category();
-                                        final String strSub_category = order.getSub_category();
-                                        final String strAd_Detail = order.getAd_detail();
-                                        final Double strPrice = Double.valueOf(order.getPrice());
-                                        final String strDivision = order.getDivision();
-                                        final String strDistrict = order.getDistrict();
-                                        final String strPhoto = order.getPhoto();
                                         final String strOrder_Date = order.getOrder_date();
-                                        final String strDate = order.getDate();
-                                        final String strQuantity = order.getQuantity();
-                                        final String strStatus = order.getStatus();
 
                                         final String remarks = "Cancel";
                                         Update_Order(strOrder_Date, remarks);
@@ -232,144 +222,7 @@ public class MyBuying extends AppCompatActivity {
 
                                                             if (success.equals("1")) {
                                                                 Toast.makeText(MyBuying.this, R.string.order_canceled, Toast.LENGTH_SHORT).show();
-
-                                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                                                                        new Response.Listener<String>() {
-                                                                            @Override
-                                                                            public void onResponse(String response) {
-                                                                                try {
-                                                                                    JSONObject jsonObject = new JSONObject(response);
-                                                                                    String success = jsonObject.getString("success");
-                                                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-
-                                                                                    if (success.equals("1")) {
-                                                                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                            JSONObject object = jsonArray.getJSONObject(i);
-
-                                                                                            final String strName = object.getString("name").trim();
-
-                                                                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                                                                                                @Override
-                                                                                                public void onResponse(String s) {
-                                                                                                    try {
-                                                                                                        JSONObject obj = new JSONObject(s);
-
-                                                                                                        TOPIC = obj.getJSONObject(strName).get("token").toString();
-                                                                                                        NOTIFICATION_TITLE = "KetekMall";
-                                                                                                        NOTIFICATION_MESSAGE = " Canceled order";
-
-                                                                                                        JSONObject notification = new JSONObject();
-                                                                                                        JSONObject notifcationBody = new JSONObject();
-                                                                                                        try {
-                                                                                                            notifcationBody.put("title", NOTIFICATION_TITLE);
-                                                                                                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
-
-                                                                                                            notification.put("to", TOPIC);
-                                                                                                            notification.put("data", notifcationBody);
-                                                                                                            sendNotification(notification);
-
-                                                                                                            Log.d(TAG, "onCreate: " + NOTIFICATION_MESSAGE + NOTIFICATION_TITLE);
-                                                                                                        } catch (JSONException e) {
-                                                                                                            Log.e(TAG, "onCreate: " + e.getMessage());
-                                                                                                        }
-                                                                                                    } catch (JSONException e) {
-                                                                                                        e.printStackTrace();
-                                                                                                    }
-                                                                                                }
-                                                                                            }, new Response.ErrorListener() {
-                                                                                                @Override
-                                                                                                public void onErrorResponse(VolleyError error) {
-                                                                                                    try {
-
-                                                                                                        if (error instanceof TimeoutError) {
-                                                                                                            //Time out error
-
-                                                                                                        }else if(error instanceof NoConnectionError){
-                                                                                                            //net work error
-
-                                                                                                        } else if (error instanceof AuthFailureError) {
-                                                                                                            //error
-
-                                                                                                        } else if (error instanceof ServerError) {
-                                                                                                            //Erroor
-                                                                                                        } else if (error instanceof NetworkError) {
-                                                                                                            //Error
-
-                                                                                                        } else if (error instanceof ParseError) {
-                                                                                                            //Error
-
-                                                                                                        }else{
-                                                                                                            //Error
-                                                                                                        }
-                                                                                                        //End
-
-
-                                                                                                    } catch (Exception e) {
-
-
-                                                                                                    }
-                                                                                                }
-                                                                                            });
-                                                                                            RequestQueue rQueue = Volley.newRequestQueue(MyBuying.this);
-                                                                                            rQueue.add(request);
-
-
-                                                                                        }
-                                                                                    } else {
-                                                                                        Toast.makeText(MyBuying.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                                                                                    }
-                                                                                } catch (JSONException e) {
-                                                                                    e.printStackTrace();
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        new Response.ErrorListener() {
-                                                                            @Override
-                                                                            public void onErrorResponse(VolleyError error) {
-                                                                                try {
-
-                                                                                    if (error instanceof TimeoutError ) {
-                                                                                        //Time out error
-
-                                                                                    }else if(error instanceof NoConnectionError){
-                                                                                        //net work error
-
-                                                                                    } else if (error instanceof AuthFailureError) {
-                                                                                        //error
-
-                                                                                    } else if (error instanceof ServerError) {
-                                                                                        //Erroor
-                                                                                    } else if (error instanceof NetworkError) {
-                                                                                        //Error
-
-                                                                                    } else if (error instanceof ParseError) {
-                                                                                        //Error
-
-                                                                                    }else{
-                                                                                        //Error
-                                                                                    }
-                                                                                    //End
-
-
-                                                                                } catch (Exception e) {
-
-
-                                                                                }
-                                                                            }
-                                                                        }) {
-                                                                    @Override
-                                                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                                                        Map<String, String> params = new HashMap<>();
-                                                                        params.put("id", strSeller_id);
-                                                                        return params;
-                                                                    }
-                                                                };
-                                                                RequestQueue requestQueue = Volley.newRequestQueue(MyBuying.this);
-                                                                requestQueue.add(stringRequest);
-
+                                                                GetPlayerData(strSeller_id, "KM" + strOrder_Id);
                                                             }
 
                                                         } catch (JSONException e) {
@@ -403,12 +256,8 @@ public class MyBuying extends AppCompatActivity {
                                                             }else{
                                                                 //Error
                                                             }
-                                                            //End
-
-
                                                         } catch (Exception e) {
-
-
+                                                            e.printStackTrace();
                                                         }
                                                     }
                                                 }) {
@@ -524,6 +373,132 @@ public class MyBuying extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void GetPlayerData(final String CustomerUserID, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String PlayerID = object.getString("PlayerID");
+                                    String Name = object.getString("Name");
+                                    String UserID = object.getString("UserID");
+
+                                    OneSignalNoti(PlayerID, Name, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(MyBuying.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", CustomerUserID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void OneSignalNoti(final String PlayerUserID, final String Name, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("POST", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("PlayerID", PlayerUserID);
+                params.put("Name", Name);
+                params.put("Words", "Order " + OrderID + " have been canceled!");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void ToolbarSettings(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -575,32 +550,6 @@ public class MyBuying extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(MyBuying.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,12 +34,14 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.Chat_Adapter;
+import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.User;
 import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
 import com.ketekmall.ketekmall.pages.buyer.Chat;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +59,7 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
     public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
     public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
     private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
+    private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail_name.php";
 
     User user;
     RecyclerView recyclerView;
@@ -63,14 +67,17 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
     List<User> usersArrayList;
     Chat_Adapter user_adapter;
     int totalUsers = 0;
+    String getId;
+    SessionManager sessionManager;
     BottomNavigationView bottomNav;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_inbox);
         ToolbarSetting();
-
+        getSession();
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -147,6 +154,13 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
         });
     }
 
+    private void getSession() {
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(SessionManager.ID);
+    }
 
     private void doON(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
@@ -206,11 +220,86 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
                                                                                             recyclerView.setAdapter(user_adapter);
                                                                                             user_adapter.setOnItemClickListener(new Chat_Adapter.OnItemClickListener() {
                                                                                                 @Override
-                                                                                                public void onItemClick(int position) {
-                                                                                                    User user = usersArrayList.get(position);
+                                                                                                public void onItemClick(final int position) {
+                                                                                                    final User user = usersArrayList.get(position);
                                                                                                     UserDetails.chatWith = user.getChatwith();
                                                                                                     UserDetails.chatWith1 = user.getUsername();
-                                                                                                    startActivity(new Intent(Chat_Inbox_Homepage.this, Chat.class));
+                                                                                                    final String KeyID = user.getUsername();
+
+                                                                                                    Log.i("KeyID", KeyID);
+
+                                                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_USER_DETAIL,
+                                                                                                            new Response.Listener<String>() {
+                                                                                                                @Override
+                                                                                                                public void onResponse(String response) {
+                                                                                                                    try {
+                                                                                                                        JSONObject jsonObject = new JSONObject(response);
+                                                                                                                        String success = jsonObject.getString("success");
+                                                                                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                                                                                                                        if (success.equals("1")) {
+                                                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                                                                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                                                                                                                String ID = object.getString("id").trim();
+
+                                                                                                                                Intent intent= new Intent(Chat_Inbox_Homepage.this, Chat.class);
+                                                                                                                                intent.putExtra("CustomerID", getId);
+                                                                                                                                intent.putExtra("SellerID", ID);
+
+
+                                                                                                                                startActivity(intent);
+                                                                                                                            }
+                                                                                                                        } else {
+                                                                                                                            Toast.makeText(Chat_Inbox_Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                                                                                        }
+                                                                                                                    } catch (JSONException e) {
+                                                                                                                        e.printStackTrace();
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            },
+                                                                                                            new Response.ErrorListener() {
+                                                                                                                @Override
+                                                                                                                public void onErrorResponse(VolleyError error) {
+                                                                                                                    try {
+                                                                                                                        if (error instanceof TimeoutError) {
+                                                                                                                            //Time out error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else if (error instanceof NoConnectionError) {
+                                                                                                                            //net work error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else if (error instanceof AuthFailureError) {
+                                                                                                                            //error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else if (error instanceof ServerError) {
+                                                                                                                            //Error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else if (error instanceof NetworkError) {
+                                                                                                                            //Error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else if (error instanceof ParseError) {
+                                                                                                                            //Error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        } else {
+                                                                                                                            //Error
+                                                                                                                            System.out.println("" + error);
+                                                                                                                        }
+                                                                                                                    } catch (Exception e) {
+                                                                                                                        e.printStackTrace();
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            }) {
+                                                                                                        @Override
+                                                                                                        protected Map<String, String> getParams() {
+                                                                                                            Map<String, String> params = new HashMap<>();
+                                                                                                            params.put("name", KeyID);
+                                                                                                            return params;
+                                                                                                        }
+                                                                                                    };
+                                                                                                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                                                                                    requestQueue.add(stringRequest);
+
                                                                                                 }
                                                                                             });
                                                                                             Log.d("Message", user.getCount());

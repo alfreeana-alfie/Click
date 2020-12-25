@@ -59,6 +59,7 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mhmtk.twowaygrid.TwoWayGridView;
+import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -79,10 +80,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Homepage extends AppCompatActivity {
 
     public static final String ID = "id";
+    private static final String ONESIGNAL_APP_ID = "6236bfc3-df4d-4f44-82d6-754332044779";
 
     private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
+
+    private static String URL_ADD_PLAYERID = "https://ketekmall.com/ketekmall/add_playerID.php";
 
     private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
 
@@ -127,9 +131,15 @@ public class Homepage extends AppCompatActivity {
     int mCartItemCount,mChatItemCount;
     private TwoWayGridView gridView_HardSelling, gridView_TopSelling;
 
-    private Button Button_SellItem, Button_FindItem, button_retail, button_processed,
-            button_handcraft, button_cake, button_agriculture, button_service, button_health,
-            button_home, button_pepper, button_fashion, button_pickup;
+    private Button Button_SellItem,
+            Button_FindItem,
+            button_processed,
+            button_handcraft,
+            button_health,
+            button_home,
+            button_pepper,
+            button_fashion,
+            button_pickup;
 
     private CircleImageView profile_image;
     private TextView button_view_all;
@@ -156,6 +166,13 @@ public class Homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+        // Enable verbose OneSignal logging to debug issues if needed.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
+
         queue = Volley.newRequestQueue(this);
 
         getSession();
@@ -169,6 +186,7 @@ public class Homepage extends AppCompatActivity {
         getUserDetail();
 
         Category_Func();
+
 
         new Timer().schedule(
                 new TimerTask(){
@@ -218,12 +236,15 @@ public class Homepage extends AppCompatActivity {
         Button_SellItem = findViewById(R.id.button_sellItem);
         Button_FindItem = findViewById(R.id.button_FindItem);
 
-        button_cake = findViewById(R.id.button_cake);
+
         button_processed = findViewById(R.id.button_process_food);
         button_handcraft = findViewById(R.id.button_handcraft);
+        /*
+        button_cake = findViewById(R.id.button_cake);
         button_retail = findViewById(R.id.button_retail);
         button_agriculture = findViewById(R.id.button_agri);
         button_service = findViewById(R.id.button_service);
+        */
         button_health = findViewById(R.id.button_health);
         button_home = findViewById(R.id.button_homes);
         button_fashion = findViewById(R.id.button_fashion);
@@ -422,24 +443,11 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
+/*
         button_cake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(0);
-            }
-        });
-
-        button_processed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(1);
-            }
-        });
-
-        button_handcraft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(2);
             }
         });
 
@@ -460,10 +468,26 @@ public class Homepage extends AppCompatActivity {
         button_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Homepage.this, R.string.pending, Toast.LENGTH_LONG).show();
 //                GotoCategory(5);
             }
         });
+*/
+
+        button_processed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(1);
+            }
+        });
+
+        button_handcraft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(2);
+            }
+        });
+
+
 
         button_health.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -543,6 +567,9 @@ public class Homepage extends AppCompatActivity {
 
                                     username.setText(strName);
                                     Picasso.get().load(strPhoto).into(profile_image);
+
+
+                                    InsertNotificationData(strName);
                                 }
                             } else {
                                 Toast.makeText(Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -587,6 +614,59 @@ public class Homepage extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void InsertNotificationData(final String Name){
+        final String PlayerID = OneSignal.getDeviceState().getUserId();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_PLAYERID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("POST", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("PlayerID", PlayerID);
+                params.put("Name", Name);
+                params.put("UserID", getId);
                 return params;
             }
         };

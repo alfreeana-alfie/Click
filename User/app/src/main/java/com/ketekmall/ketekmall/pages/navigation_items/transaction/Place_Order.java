@@ -2,6 +2,7 @@ package com.ketekmall.ketekmall.pages.navigation_items.transaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,8 @@ public class Place_Order extends AppCompatActivity {
     private static String URL_SEND_SELLER = "https://ketekmall.com/ketekmall/sendEmail_seller.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
 
     Button Continue_Shopping;
 
@@ -58,7 +61,7 @@ public class Place_Order extends AppCompatActivity {
         Intent intent1 = getIntent();
         String sellerID = intent1.getStringExtra("seller_id");
         getSellerDetail(sellerID);
-
+        GetPlayerData(sellerID);
 
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
@@ -296,6 +299,132 @@ public class Place_Order extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetPlayerData(final String CustomerUserID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String PlayerID = object.getString("PlayerID");
+                                    String Name = object.getString("Name");
+                                    String UserID = object.getString("UserID");
+
+                                    OneSignalNoti(PlayerID, Name);
+                                }
+                            } else {
+                                Toast.makeText(Place_Order.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", CustomerUserID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void OneSignalNoti(final String PlayerUserID, final String Name){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("POST", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("PlayerID", PlayerUserID);
+                params.put("Name", Name);
+                params.put("Words", "New Order has been placed! Check My Selling for more information.");
                 return params;
             }
         };

@@ -268,22 +268,23 @@
                         <androidx.gridlayout.widget.GridLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:columnCount="6"
+                            app:columnCount="4"
                             app:rowCount="2">
 
-                            <Button
-                                android:id="@+id/button_cake"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:layout_margin="10dp"
-                                android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/cake"
-                                android:fontFamily="@font/open_sans_bold"
-                                android:padding="5dp"
-                                android:text="@string/cake_and_pastries"
-                                android:textAllCaps="false"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+<!--                            <Button-->
+<!--                                android:visibility="gone"-->
+<!--                                android:id="@+id/button_cake"-->
+<!--                                android:layout_width="110dp"-->
+<!--                                android:layout_height="110dp"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:background="@mipmap/layout_border_white"-->
+<!--                                android:drawableTop="@drawable/cake"-->
+<!--                                android:fontFamily="@font/open_sans_bold"-->
+<!--                                android:padding="5dp"-->
+<!--                                android:text="@string/cake_and_pastries"-->
+<!--                                android:textAllCaps="false"-->
+<!--                                android:textSize="9sp"-->
+<!--                                tools:ignore="SmallSp" />-->
 
                             <Button
                                 android:id="@+id/button_process_food"
@@ -313,47 +314,50 @@
                                 android:textSize="9sp"
                                 tools:ignore="SmallSp" />
 
-                            <Button
-                                android:id="@+id/button_retail"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:layout_margin="10dp"
-                                android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/retail"
-                                android:fontFamily="@font/open_sans_bold"
-                                android:padding="5dp"
-                                android:text="@string/retail_and_wholesale"
-                                android:textAllCaps="false"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+<!--                            <Button-->
+<!--                                android:visibility="gone"-->
+<!--                                android:id="@+id/button_retail"-->
+<!--                                android:layout_width="110dp"-->
+<!--                                android:layout_height="110dp"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:background="@mipmap/layout_border_white"-->
+<!--                                android:drawableTop="@drawable/retail"-->
+<!--                                android:fontFamily="@font/open_sans_bold"-->
+<!--                                android:padding="5dp"-->
+<!--                                android:text="@string/retail_and_wholesale"-->
+<!--                                android:textAllCaps="false"-->
+<!--                                android:textSize="9sp"-->
+<!--                                tools:ignore="SmallSp" />-->
 
-                            <Button
-                                android:id="@+id/button_agri"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:layout_margin="10dp"
-                                android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/agri"
-                                android:fontFamily="@font/open_sans_bold"
-                                android:padding="5dp"
-                                android:text="@string/agriculture"
-                                android:textAllCaps="false"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+<!--                            <Button-->
+<!--                                android:visibility="gone"-->
+<!--                                android:id="@+id/button_agri"-->
+<!--                                android:layout_width="110dp"-->
+<!--                                android:layout_height="110dp"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:background="@mipmap/layout_border_white"-->
+<!--                                android:drawableTop="@drawable/agri"-->
+<!--                                android:fontFamily="@font/open_sans_bold"-->
+<!--                                android:padding="5dp"-->
+<!--                                android:text="@string/agriculture"-->
+<!--                                android:textAllCaps="false"-->
+<!--                                android:textSize="9sp"-->
+<!--                                tools:ignore="SmallSp" />-->
 
-                            <Button
-                                android:id="@+id/button_service"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
-                                android:layout_margin="10dp"
-                                android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/services"
-                                android:fontFamily="@font/open_sans_bold"
-                                android:padding="5dp"
-                                android:text="@string/service"
-                                android:textAllCaps="false"
-                                android:textSize="9sp"
-                                tools:ignore="SmallSp" />
+<!--                            <Button-->
+<!--                                android:visibility="gone"-->
+<!--                                android:id="@+id/button_service"-->
+<!--                                android:layout_width="110dp"-->
+<!--                                android:layout_height="110dp"-->
+<!--                                android:layout_margin="10dp"-->
+<!--                                android:background="@mipmap/layout_border_white"-->
+<!--                                android:drawableTop="@drawable/services"-->
+<!--                                android:fontFamily="@font/open_sans_bold"-->
+<!--                                android:padding="5dp"-->
+<!--                                android:text="@string/service"-->
+<!--                                android:textAllCaps="false"-->
+<!--                                android:textSize="9sp"-->
+<!--                                tools:ignore="SmallSp" />-->
 
                             <Button
                                 android:id="@+id/button_health"

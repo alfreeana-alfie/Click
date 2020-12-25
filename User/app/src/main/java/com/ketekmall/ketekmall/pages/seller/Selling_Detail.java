@@ -62,6 +62,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.onesignal.OSNotificationAction;
+import com.onesignal.OSNotificationOpenedResult;
+import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -78,7 +81,7 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 
-public class Selling_Detail extends AppCompatActivity {
+public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNotificationOpenedHandler{
     // Header
     private static final String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -88,6 +91,9 @@ public class Selling_Detail extends AppCompatActivity {
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_tracking_no.php";
     private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+
 
     EditText edit_review;
     Button btn_submit, btn_cancel;
@@ -122,6 +128,13 @@ public class Selling_Detail extends AppCompatActivity {
         setContentView(R.layout.selling_detail);
         getSession();
         ToolbarSetting();
+        // Enable verbose OneSignal logging to debug issues if needed.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this);
+        OneSignal.setAppId("6236bfc3-df4d-4f44-82d6-754332044779");
+
         Rejected = findViewById(R.id.rejected);
         Finished = findViewById(R.id.finished);
         Cancel = findViewById(R.id.cancel);
@@ -276,6 +289,7 @@ public class Selling_Detail extends AppCompatActivity {
 
                 }else{
                     PosLajuGetData(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234");
+                    GetPlayerData(strCustomer_ID, "KM" + strID);
                 }
 
 //                ViewList(strCustomer_ID, strID, strOrder_Date);
@@ -290,6 +304,7 @@ public class Selling_Detail extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
 
     }
 
@@ -496,6 +511,7 @@ public class Selling_Detail extends AppCompatActivity {
                                     customer_phone.setText(strPhone_NO);
 
                                     sendEmail(strEmail, OrderID);
+
                                 }
                             } else {
                                 Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -536,8 +552,7 @@ public class Selling_Detail extends AppCompatActivity {
 
 
                         } catch (Exception e) {
-
-
+                            e.printStackTrace();
                         }
 //                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
@@ -1542,7 +1557,7 @@ public class Selling_Detail extends AppCompatActivity {
         Details.setColor(Color.BLACK);
         Details.setTextSize(10f);
         Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText(OrderID, 84, 130, Details);
+        canvas.drawText("KM" + OrderID, 84, 130, Details);
 
         // Order Details - 02
         paint.setStyle(Paint.Style.STROKE);
@@ -1953,10 +1968,165 @@ public class Selling_Detail extends AppCompatActivity {
         }, 6000);
     }
 
+    private void GetPlayerData(final String CustomerUserID, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String PlayerID = object.getString("PlayerID");
+                                    String Name = object.getString("Name");
+                                    String UserID = object.getString("UserID");
+
+                                    OneSignalNoti(PlayerID, Name, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", CustomerUserID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void OneSignalNoti(final String PlayerUserID, final String Name, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("POST", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("PlayerID", PlayerUserID);
+                params.put("Name", Name);
+                params.put("Words", "Your order " + OrderID + " have been shipped");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void notificationOpened(OSNotificationOpenedResult result) {
+        OSNotificationAction.ActionType actionType = result.getAction().getType();
+        JSONObject data = result.getNotification().getAdditionalData();
+        String customKey;
+
+        if (data != null) {
+            customKey = data.optString("customkey", null);
+            if (customKey != null)
+                Log.i("OneSignalExample", "customkey set with value: " + customKey);
+        }
+
+        if (actionType == OSNotificationAction.ActionType.ActionTaken)
+            Log.i("OneSignalExample", "Button pressed with id: " + result.getAction().getActionId());
+
+        // The following can be used to open an Activity of your choice.
+        // Replace - getApplicationContext() - with any Android Context.
+        // Intent intent = new Intent(getApplicationContext(), YourActivity.class);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        // startActivity(intent);
+
+        // Add the following to your AndroidManifest.xml to prevent the launching of your main Activity
+        //   if you are calling startActivity above.
+     /*
+        <application ...>
+          <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+        </application>
+     */
     }
 }

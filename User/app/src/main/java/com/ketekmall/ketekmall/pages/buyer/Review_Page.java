@@ -3,6 +3,7 @@ package com.ketekmall.ketekmall.pages.buyer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.pages.seller.Selling_Detail;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -52,6 +54,8 @@ public class Review_Page extends AppCompatActivity {
     private static String URL_REVIEW = "https://ketekmall.com/ketekmall/add_review.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_remarks_done.php";
+    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
 
     TextView OrderID, Rejected, Finished, Cancel, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
     ImageView Photo, OrderedBlack, OrderedGreen,
@@ -274,7 +278,7 @@ public class Review_Page extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewList2(strSeller_ID, getId, strItem_ID);
+                ViewList2(strSeller_ID, getId, strItem_ID, order_id);
             }
         });
 
@@ -318,7 +322,7 @@ public class Review_Page extends AppCompatActivity {
         });
     }
 
-    private void ViewList2(final String strSeller_ID, final String strCustomer_ID, final String strItem_ID) {
+    private void ViewList2(final String strSeller_ID, final String strCustomer_ID, final String strItem_ID, final String OrderID) {
         final String reviewtext = edit_review.getText().toString();
         numofStar = ratingBar.getNumStars();
         getRating = ratingBar.getRating();
@@ -346,6 +350,8 @@ public class Review_Page extends AppCompatActivity {
                                         final String strName = object.getString("name").trim();
                                         String strEmail = object.getString("email").trim();
                                         String strPhoto = object.getString("photo");
+
+                                        GetPlayerData(strSeller_ID, "KM" + OrderID);
 
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REVIEW,
                                                 new Response.Listener<String>() {
@@ -488,6 +494,132 @@ public class Review_Page extends AppCompatActivity {
             requestQueue.add(stringRequest);
         }
 
+    }
+
+    private void GetPlayerData(final String CustomerUserID, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String PlayerID = object.getString("PlayerID");
+                                    String Name = object.getString("Name");
+                                    String UserID = object.getString("UserID");
+
+                                    OneSignalNoti(PlayerID, Name, OrderID);
+                                }
+                            } else {
+                                Toast.makeText(Review_Page.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", CustomerUserID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void OneSignalNoti(final String PlayerUserID, final String Name, final String OrderID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("POST", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("PlayerID", PlayerUserID);
+                params.put("Name", Name);
+                params.put("Words", "Order " + OrderID + " have been received and reviewed!");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void getSession() {
