@@ -243,11 +243,11 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
                                                                                                                                 JSONObject object = jsonArray.getJSONObject(i);
 
                                                                                                                                 String ID = object.getString("id").trim();
+                                                                                                                                String SellerName = object.getString("name");
 
                                                                                                                                 Intent intent= new Intent(Chat_Inbox_Homepage.this, Chat.class);
                                                                                                                                 intent.putExtra("CustomerID", getId);
                                                                                                                                 intent.putExtra("SellerID", ID);
-
 
                                                                                                                                 startActivity(intent);
                                                                                                                             }

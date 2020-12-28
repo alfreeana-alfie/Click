@@ -2,6 +2,8 @@ package com.ketekmall.ketekmall.pages;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +46,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +59,43 @@ public class MainActivity extends AppCompatActivity {
 
     private long backPressedTime;
     private Toast backToast;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String s1 = sh.getString("lang", "");
+
+        if(s1.equals("en")){
+            String languageToLoad1 = "en"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.commit();
+        }else{
+            String languageToLoad1 = "ms"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.commit();
+
+
+        }
+    }
 
 
     @Override

@@ -18,6 +18,33 @@ import com.ketekmall.ketekmall.pages.buyer.MyBuying;
 
 public class Notification_Page extends AppCompatActivity {
 
+    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+
+    String URL_READ_CATEGORY_MAIN = "https://ketekmall.com/ketekmall/category/";
+    String URL_READ_CATEGORY_SEARCH_MAIN = "https://ketekmall.com/ketekmall/search/";
+    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "https://ketekmall.com/ketekmall/filter_district/";
+    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "https://ketekmall.com/ketekmall/filter_division/";
+    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "https://ketekmall.com/ketekmall/filter_search_division/";
+
+    String[] CATEGORY_LIST = {
+            "read_cake.php",
+            "read_process.php",
+            "read_handicraft.php",
+            "read_retail.php",
+            "read_agri.php",
+            "read_service.php",
+            "read_health.php",
+            "read_home.php",
+            "read_fashion.php",
+            "read_pepper.php",
+            "readall.php",
+            "readall_sold.php",
+            "readall_shocking.php",
+            "readall.php",
+            "read_pickup.php"};
+
     LinearLayout promotion_layout, social_layout, update_layout;
     BottomNavigationView bottomNav;
 
@@ -64,7 +91,15 @@ public class Notification_Page extends AppCompatActivity {
         promotion_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Notification_Page.this, View_Shocking_Sale.class);
+                Intent intent1 = new Intent(Notification_Page.this, View_Category.class);
+                intent1.putExtra("URL_READ", URL_READ_CATEGORY_MAIN + CATEGORY_LIST[12]);
+                intent1.putExtra("URL_ADD_FAV", URL_ADD_FAV);
+                intent1.putExtra("URL_ADD_CART", URL_ADD_CART);
+                intent1.putExtra("URL_SEARCH", URL_READ_CATEGORY_SEARCH_MAIN + CATEGORY_LIST[12]);
+                intent1.putExtra("URL_FILTER_DISTRICT", URL_READ_CATEGORY_FILTER_DISTRICT_MAIN + CATEGORY_LIST[12]);
+                intent1.putExtra("URL_FILTER_DIVISION", URL_READ_CATEGORY_FILTER_DIVISION_MAIN + CATEGORY_LIST[12]);
+                intent1.putExtra("URL_FILTER_SEARCH", URL_READ_CATEGORY_FILTER_SEARCH_MAIN + CATEGORY_LIST[12]);
+                intent1.putExtra("URL_READ_CART", URL_READ_CART);
 //                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }

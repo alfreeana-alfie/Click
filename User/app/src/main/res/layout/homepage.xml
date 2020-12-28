@@ -102,7 +102,7 @@
                 android:fontFamily="@font/open_sans_semibold"
                 android:paddingStart="5dp"
                 android:paddingEnd="15dp"
-                android:text="Great Store, Great Choice"
+                android:text="@string/great_store_great_choice"
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="12sp" />
@@ -288,8 +288,8 @@
 
                             <Button
                                 android:id="@+id/button_process_food"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
                                 android:drawableTop="@drawable/process"
@@ -302,11 +302,11 @@
 
                             <Button
                                 android:id="@+id/button_handcraft"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/hand"
+                                android:drawableTop="@drawable/handicraft"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/handicraft"
@@ -361,8 +361,8 @@
 
                             <Button
                                 android:id="@+id/button_health"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
                                 android:drawableTop="@drawable/health"
@@ -375,8 +375,8 @@
 
                             <Button
                                 android:id="@+id/button_homes"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
                                 android:drawableTop="@drawable/home"
@@ -389,8 +389,8 @@
 
                             <Button
                                 android:id="@+id/button_fashion"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
                                 android:drawableTop="@drawable/fashion"
@@ -403,22 +403,22 @@
 
                             <Button
                                 android:id="@+id/button_pepper"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/sarawak"
+                                android:drawableTop="@drawable/sarawk"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
-                                android:text="@string/agriculture"
+                                android:text="@string/sarawak_based_product"
                                 android:textAllCaps="false"
                                 android:textSize="9sp"
                                 tools:ignore="SmallSp" />
 
                             <Button
                                 android:id="@+id/button_pickup"
-                                android:layout_width="110dp"
-                                android:layout_height="110dp"
+                                android:layout_width="130dp"
+                                android:layout_height="130dp"
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/layout_border_white"
                                 android:drawableTop="@drawable/retail"

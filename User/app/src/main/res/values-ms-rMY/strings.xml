@@ -102,15 +102,15 @@
     <string name="username">username</string>
     <string name="browse_categories">Pilih Kategori</string>
     <string name="cake_and_pastries">Pastri dan Kek</string>
-    <string name="processed_food">Makanan yang Diproses</string>
+    <string name="processed_food">Makanan Proses</string>
     <string name="handicraft">KrafTangan</string>
     <string name="retail_and_wholesale">Barang Borong dan Runcit</string>
     <string name="agriculture">Pertanian</string>
     <string name="service">Perkhidmatan</string>
     <string name="health_and_beauty">Kecantikan dan Kesihatan</string>
-    <string name="home_and_living">Kediaman dan Tempat Tinggal</string>
+    <string name="home_and_living">Perhiasan Rumah</string>
     <string name="fashion_accessories">Perhiasan Fesyen</string>
-    <string name="sarawak_based_product">Produk Berasaskan - Sarawak</string>
+    <string name="sarawak_based_product">Produk Sarawak</string>
     <string name="hot_selling">Perjualan Panas</string>
     <string name="shocking_sale">Jualan Runtuh</string>
     <string name="no_selling_products">Tiada Penjualan Produk</string>
@@ -470,8 +470,8 @@
     <string name="placed_on_yyyy_mm_dd">Diletakkan pada YYYY-MM-DD</string>
     <string name="status">Status</string>
     <string name="shipped_out_to_sarawak">Dihantar ke Sarawak</string>
-    <string name="accept">Accept</string>
-    <string name="reject">Reject</string>
+    <string name="accept">Terima</string>
+    <string name="reject">Tolak</string>
     <string name="pos_laju_tracking_no">Nombor Penjejakan PosLaju</string>
     <string name="submit">Hantar</string>
     <string name="cancel">Batal</string>
@@ -506,6 +506,9 @@
     <string name="boost_ad">Ad Galakan</string>
     <string name="customer_address">Alamat Pembeli</string>
     <string name="customer_phone">No. Telefon Pembeli</string>
+    <string name="customer_name1">Nama: </string>
+    <string name="customer_phone1">No. Telefon: </string>
+    <string name="customer_address1">Alamat: </string>
     <string name="delivery_price">Harga Penghantaran</string>
     <string name="delivery_time">Tempoh Penghantaran: </string>
     <string name="shipping_total_">Jumlah Penghantaran: </string>
@@ -523,4 +526,8 @@
     <string name="click_to_edit_details">Tekan untuk Ubah Maklumat</string>
     <string name="product_details">Maklumat Product</string>
     <string name="self_pickup">Ambil Sendiri</string>
+    <string name="generate_pdf">Muat Turun PDF</string>
+    <string name="customer_details">Maklumat Pembeli:-</string>
+    <string name="generate_consignment_note">Muat Turun Pos Laju PDF</string>
+    <string name="great_store_great_choice">Kedai Hebat, Pilihan Hebat</string>
 </resources>

@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Customer Details:-" />
+                    android:text="@string/customer_details" />
 
                 <LinearLayout
                     android:layout_below="@id/textView1"
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp"
-                        android:text="Name: " />
+                        android:text="@string/customer_name1" />
 
                     <TextView
                         android:layout_marginStart="0dp"
@@ -220,7 +220,7 @@
 
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp"
-                        android:text="Address: " />
+                        android:text="@string/customer_address1" />
 
                     <TextView
                         android:layout_marginStart="0dp"
@@ -252,7 +252,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp"
-                        android:text="Phone Number: " />
+                        android:text="@string/customer_phone1" />
 
                     <TextView
                         android:layout_marginStart="0dp"
@@ -545,7 +545,7 @@
                     android:textColor="@color/colorGrey"
                     android:textSize="14sp"
                     android:layout_below="@id/liner3"
-                    android:text="Generate Consignment Note" />
+                    android:text="@string/generate_consignment_note" />
 
                 <RelativeLayout
                     android:layout_marginStart="15dp"
@@ -604,7 +604,7 @@
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
                     android:textSize="18sp"
-                    android:text="Generate PDF" />
+                    android:text="@string/generate_pdf" />
 
                 <Button
                     android:layout_marginStart="15dp"

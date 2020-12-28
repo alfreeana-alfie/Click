@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -51,6 +52,7 @@ import com.ketekmall.ketekmall.pages.navigation_items.About_KetekMall;
 import com.ketekmall.ketekmall.pages.navigation_items.transaction.Cart;
 import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
 import com.ketekmall.ketekmall.pages.product_details.View_Product;
+import com.ketekmall.ketekmall.pages.seller.Product_Add;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -84,7 +86,7 @@ public class Homepage extends AppCompatActivity {
 
     private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
-    private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promotion.php";
+    private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promo.php";
 
     private static String URL_ADD_PLAYERID = "https://ketekmall.com/ketekmall/add_playerID.php";
 
@@ -161,6 +163,44 @@ public class Homepage extends AppCompatActivity {
     PageAdapter adapter;
     RequestQueue queue;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String s1 = sh.getString("lang", "");
+
+        if(s1.equals("en")){
+            String languageToLoad1 = "en"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.commit();
+
+//            Toast.makeText(Homepage.this, "en", Toast.LENGTH_SHORT).show();
+        }else{
+            String languageToLoad1 = "ms"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.commit();
+
+//            Toast.makeText(Homepage.this, "ms", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +214,8 @@ public class Homepage extends AppCompatActivity {
         OneSignal.setAppId(ONESIGNAL_APP_ID);
 
         queue = Volley.newRequestQueue(this);
+
+        checkLang();
 
         getSession();
 
@@ -205,6 +247,42 @@ public class Homepage extends AppCompatActivity {
         View_Photo();
 
         SellerCheck_Main(getId);
+    }
+
+    private void checkLang(){
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String s1 = sh.getString("lang", "");
+
+        if(s1.equals("en")){
+            String languageToLoad1 = "en"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.apply();
+        }else{
+            String languageToLoad1 = "ms"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.apply();
+
+
+        }
+//        this.recreate();
     }
 
     private void getSession() {
@@ -430,7 +508,7 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                SellerCheck(getId);
-                Intent intent = new Intent(Homepage.this, PosLajuTestArea.class);
+                Intent intent = new Intent(Homepage.this, Product_Add.class);
                 startActivity(intent);
             }
         });
@@ -520,7 +598,7 @@ public class Homepage extends AppCompatActivity {
         button_pickup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GotoCategory(13);
+                GotoCategory(14);
             }
         });
 
@@ -835,10 +913,11 @@ public class Homepage extends AppCompatActivity {
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config,
                         getBaseContext().getResources().getDisplayMetrics());
-                SharedPreferences lang = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences lang = getSharedPreferences("MySharedPref",
+                        MODE_PRIVATE);
                 SharedPreferences.Editor editor = lang.edit();
                 editor.putString("lang", languageToLoad);
-                editor.apply();
+                editor.commit();
 
                 this.recreate();
                 break;
@@ -851,10 +930,11 @@ public class Homepage extends AppCompatActivity {
                 config1.locale = locale1;
                 getBaseContext().getResources().updateConfiguration(config1,
                         getBaseContext().getResources().getDisplayMetrics());
-                SharedPreferences lang1 = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                        MODE_PRIVATE);
                 SharedPreferences.Editor editor1 = lang1.edit();
                 editor1.putString("lang", languageToLoad1);
-                editor1.apply();
+                editor1.commit();
 
                 this.recreate();
                 break;

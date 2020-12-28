@@ -3,6 +3,8 @@ package com.ketekmall.ketekmall.pages;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -90,6 +93,9 @@ public class View_Category extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_listpage);
+
+        checkLang();
+
         final Intent intent = getIntent();
         URL_READ = intent.getStringExtra("URL_READ");
         URL_ADD_FAV = intent.getStringExtra("URL_ADD_FAV");
@@ -100,6 +106,7 @@ public class View_Category extends AppCompatActivity {
         URL_FILTER_SEARCH = intent.getStringExtra("URL_FILTER_SEARCH");
         URL_READ_CART = intent.getStringExtra("URL_READ_CART");
 
+
         Declare();
         View_List();
 
@@ -109,6 +116,7 @@ public class View_Category extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void ToolbarSetting() {
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -210,6 +218,42 @@ public class View_Category extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkLang(){
+        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
+        String s1 = sh.getString("lang", "");
+
+        if(s1.equals("en")){
+            String languageToLoad1 = "en"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.apply();
+        }else{
+            String languageToLoad1 = "ms"; // your language
+            Locale locale1 = new Locale(languageToLoad1);
+            Locale.setDefault(locale1);
+            Configuration config1 = new Configuration();
+            config1.locale = locale1;
+            getBaseContext().getResources().updateConfiguration(config1,
+                    getBaseContext().getResources().getDisplayMetrics());
+            SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                    MODE_PRIVATE);
+            SharedPreferences.Editor editor1 = lang1.edit();
+            editor1.putString("lang", languageToLoad1);
+            editor1.apply();
+
+
+        }
+//        this.recreate();
     }
 
     private void getSession() {

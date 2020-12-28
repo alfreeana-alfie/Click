@@ -684,5 +684,13 @@
     <string name="weight">Weight (Kg)</string>
     <string name="kg">Kg</string>
     <string name="self_pickup">Self Pick-up</string>
+    <string name="generate_pdf">Generate PDF</string>
+    <string name="customer_name1">Name: </string>
+    <string name="customer_phone1">Phone No.: </string>
+    <string name="customer_address1">Address: </string>
+    <string name="customer_details">Customer Details:-</string>
+    <string name="generate_consignment_note">Generate Consignment Note</string>
+    <string name="great_store_great_choice">Great Store, Great Choice</string>
+    <string name="language">lang</string>
 </resources>
 

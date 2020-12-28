@@ -104,8 +104,9 @@ public class Chat extends AppCompatActivity {
         final CircleImageView circleImageView = view.findViewById(R.id.profile_image);
 
         Intent intent = getIntent();
-        String CustomerID = intent.getStringExtra("CustomerID");
+        final String CustomerID = intent.getStringExtra("CustomerID");
         final String SellerID = intent.getStringExtra("SellerID");
+        final String SellerName = intent.getStringExtra("Name");
 
         chatname.setText(UserDetails.chatWith1);
 
@@ -210,7 +211,7 @@ public class Chat extends AppCompatActivity {
                     reference1.push().setValue(map);
                     reference2.push().setValue(map);
 
-                    GetPlayerData(SellerID, messageText);
+                    GetPlayerData(SellerID, messageText, CustomerID);
 
                     ChatData(ref1, messageText);
                     ChatData(ref2, messageText);
@@ -329,7 +330,7 @@ public class Chat extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void GetPlayerData(final String CustomerUserID, final String MessageText){
+    private void GetPlayerData(final String SellerID, final String MessageText, final String CustomerID){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
                 new Response.Listener<String>() {
                     @Override
@@ -343,11 +344,80 @@ public class Chat extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String PlayerID = object.getString("PlayerID");
-                                    String Name = object.getString("Name");
-                                    String UserID = object.getString("UserID");
+                                    final String PlayerID = object.getString("PlayerID");
 
-                                    OneSignalNoti(PlayerID, Name, MessageText);
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        String success = jsonObject.getString("success");
+                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                        if (success.equals("1")) {
+                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                                                String sPlayerID = object.getString("PlayerID");
+                                                                String SName = object.getString("Name");
+                                                                String UserID = object.getString("UserID");
+
+                                                                OneSignalNoti(PlayerID, SName, MessageText);
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(Chat.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    try {
+
+                                                        if (error instanceof TimeoutError ) {
+                                                            //Time out error
+                                                            System.out.println("" + error);
+                                                        }else if(error instanceof NoConnectionError){
+                                                            //net work error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof AuthFailureError) {
+                                                            //error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof ServerError) {
+                                                            //Erroor
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof NetworkError) {
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof ParseError) {
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        }else{
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        }
+                                                        //End
+
+
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("UserID", CustomerID);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    requestQueue.add(stringRequest);
                                 }
                             } else {
                                 Toast.makeText(Chat.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
@@ -396,7 +466,7 @@ public class Chat extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("UserID", CustomerUserID);
+                params.put("UserID", SellerID);
                 return params;
             }
         };

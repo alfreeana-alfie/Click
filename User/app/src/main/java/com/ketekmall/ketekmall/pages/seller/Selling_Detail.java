@@ -11,11 +11,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.renderscript.Element;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -71,9 +74,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -288,7 +293,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     Log.v("TAG", "download() Method DON'T HAVE PERMISSIONS ");
 
                 }else{
-                    PosLajuGetData(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234");
+                    PosLajuGetData(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234", strOrder_Date, strID);
                     GetPlayerData(strCustomer_ID, "KM" + strID);
                 }
 
@@ -321,6 +326,78 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                 finish();
             }
         });
+    }
+
+    private void TrackingNo(final String ConnoteNo, final String strOrder_Date, final String strID){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+//                                Toast.makeText(Selling_Detail.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                            } else {
+//                                Toast.makeText(Selling_Detail.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                                    Toast.makeText(Sell_Items_Other.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.setVisibility(View.GONE);
+                        btn_submit.setVisibility(View.VISIBLE);
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("order_date", strOrder_Date);
+                params.put("tracking_no", ConnoteNo);
+                params.put("id", strID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Selling_Detail.this);
+        requestQueue.add(stringRequest);
     }
 
     private void ViewList(final String CustomerID, final String strOrder_ID, final String strOrder_Date) {
@@ -684,7 +761,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     private void PosLajuGetData(final String customerID,
                                 final String OrderID,
                                 final String subscriptionCode,
-                                final String AccountNo){
+                                final String AccountNo,
+                                final String strOrder_Date,
+                                final String strID){
         Intent intent = getIntent();
 
         final String Quantity = intent.getStringExtra("quantity");
@@ -763,7 +842,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                                                                         ReceiverDivision,
                                                                         ReceiverAddress01,
                                                                         ReceiverAddress02,
-                                                                        ReceiverEmail);
+                                                                        ReceiverEmail,
+                                                                        strOrder_Date,
+                                                                        strID);
 
                                                             }
                                                         } else {
@@ -876,8 +957,8 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     }
 
 
-    String HTTP_RoutingCode = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/routingcode/v1";
-    String serverKey_RoutingCode = "UVREb1NFZkJqZEd6YXFRWUg2c3BPMTlRbDdTS1I4eEM=";
+    String HTTP_RoutingCode = "https://apis.pos.com.my/apigateway/as01/api/routingcode/v1";
+    String serverKey_RoutingCode = "aWFGekJBMXUyRFFmTmNxUEpmcXhwR0hXYnY5cWdCTmE=";
     private void RoutingCode(String Origin,
                              String Destination,
                              final String OrderID,
@@ -907,38 +988,40 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                              final String ReceiverCity,
                              final String ReceiverAddress01,
                              final String ReceiverAddress02,
-                             final String ReceiverEmail) {
-        GenConnote(TotalQuantityToPickup,
-                OrderID,
-                subcriptionCode,
-                AccountNo,
-                SellerName,
-                SellerPhone,
-                SellerAddress,
-                PickupLocationID,
-                ContactPerson,
-                PickupAddress,
-                Postcode,
-                "1",
-                TotalQuantityToPickup,
-                Weight,
-                Amount,
-                ReceiverName,
-                ReceiverAddress,
-                ReceiverPostcode,
-                ReceiverPhone,
-                PickupDistrict,
-                PickupProvince,
-                PickupEmail,
-                ReceiverFirstName,
-                ReceiverLastName,
-                ReceiverDistrict,
-                ReceiverProvince,
-                ReceiverCity,
-                ReceiverAddress01,
-                ReceiverAddress02,
-                ReceiverEmail,
-                "KCU-SB-SBW");
+                             final String ReceiverEmail,
+                             final String strOrder_Date,
+                             final String strID) {
+//        GenConnote(TotalQuantityToPickup,
+//                OrderID,
+//                subcriptionCode,
+//                AccountNo,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                PickupLocationID,
+//                ContactPerson,
+//                PickupAddress,
+//                Postcode,
+//                "1",
+//                TotalQuantityToPickup,
+//                Weight,
+//                Amount,
+//                ReceiverName,
+//                ReceiverAddress,
+//                ReceiverPostcode,
+//                ReceiverPhone,
+//                PickupDistrict,
+//                PickupProvince,
+//                PickupEmail,
+//                ReceiverFirstName,
+//                ReceiverLastName,
+//                ReceiverDistrict,
+//                ReceiverProvince,
+//                ReceiverCity,
+//                ReceiverAddress01,
+//                ReceiverAddress02,
+//                ReceiverEmail,
+//                "KCU-SB-SBW");
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, HTTP_RoutingCode +
                 "?Origin=" + Origin +
@@ -982,7 +1065,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                                         ReceiverAddress01,
                                         ReceiverAddress02,
                                         ReceiverEmail,
-                                        Routingcode);
+                                        Routingcode,
+                                    strOrder_Date,
+                                    strID);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -1029,8 +1114,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-    String HTTP_GenerateConnote = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/generateconnote/v1";
-    String serverKey_GenerateConnote = "S2cwNDRCbkl5OEt4OXF6WlFpQ0dHd1NSN1R2eVV5WDk=";
+    String HTTP_GenerateConnote = "https://apis.pos.com.my/apigateway/as01/api/genconnote/v1";
+    String serverKey_GenerateConnote = "MmpkbDI0MFpuTVpuZDRXb3J0VUk4M25ZTkY1a2NqSFU=";
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void GenConnote(String numberOfItem,
                            final String OrderID,
                            final String subcriptionCode,
@@ -1061,7 +1147,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                            final String ReceiverAddress01,
                            final String ReceiverAddress02,
                            final String ReceiverEmail,
-                           final String RoutingCode) {
+                           final String RoutingCode,
+                           final String strOrderDate,
+                           final String strID) {
 
 
 
@@ -1072,57 +1160,57 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         String Secretid = "HM@$343";
         String username = "HMNNadhir";
 
-        PreAcceptanceSingle(
-                subcriptionCode,
-                AccountNo,
-                SellerName,
-                SellerPhone,
-                SellerAddress,
-                PickupLocationID,
-                ContactPerson,
-                PickupAddress,
-                Postcode,
-                ItemType,
-                TotalQuantityToPickup,
-                Weight,
-                "ER000249760MY",
-                Amount,
-                ReceiverName,
-                ReceiverAddress,
-                ReceiverPostcode,
-                ReceiverPhone,
-                PickupDistrict,
-                PickupProvince,
-                PickupEmail,
-                ReceiverFirstName,
-                ReceiverLastName,
-                ReceiverDistrict,
-                ReceiverProvince,
-                ReceiverCity);
-
-        GeneratePDF(
-                date,
-                Weight,
-                OrderID,
-                SellerName,
-                SellerPhone,
-                SellerAddress,
-                Postcode,
-                ReceiverName,
-                ReceiverPhone,
-                ReceiverPostcode,
-                AccountNo,
-                ReceiverAddress,
-                ReceiverAddress01,
-                ReceiverAddress02,
-                ReceiverCity,
-                ReceiverProvince,
-                ReceiverEmail,
-                OrderID,
-                "Document",
-                RoutingCode,
-                "ER000249760MY",
-                date);
+//        PreAcceptanceSingle(
+//                subcriptionCode,
+//                AccountNo,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                PickupLocationID,
+//                ContactPerson,
+//                PickupAddress,
+//                Postcode,
+//                ItemType,
+//                TotalQuantityToPickup,
+//                Weight,
+//                "ER000249760MY",
+//                Amount,
+//                ReceiverName,
+//                ReceiverAddress,
+//                ReceiverPostcode,
+//                ReceiverPhone,
+//                PickupDistrict,
+//                PickupProvince,
+//                PickupEmail,
+//                ReceiverFirstName,
+//                ReceiverLastName,
+//                ReceiverDistrict,
+//                ReceiverProvince,
+//                ReceiverCity);
+//
+//        GeneratePDF(
+//                date,
+//                Weight,
+//                OrderID,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                Postcode,
+//                ReceiverName,
+//                ReceiverPhone,
+//                ReceiverPostcode,
+//                AccountNo,
+//                ReceiverAddress,
+//                ReceiverAddress01,
+//                ReceiverAddress02,
+//                ReceiverCity,
+//                ReceiverProvince,
+//                ReceiverEmail,
+//                OrderID,
+//                "Document",
+//                RoutingCode,
+//                "ER000249760MY",
+//                date);
 
         String API = HTTP_GenerateConnote +
                 "?numberOfItem=" + numberOfItem +
@@ -1132,6 +1220,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                 "&Orderid=" + OrderID +
                 "&username=" + username;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, API, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(String response) {
                 Log.i("jsonObjectRequest", response);
@@ -1144,6 +1233,8 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     Log.i("ObjectRequest", StatusCode);
                     Log.i("ObjectRequest", ConnoteNo);
                     Log.i("ObjectRequest", Message);
+
+                    TrackingNo(ConnoteNo, strOrderDate, strID);
 
                     PreAcceptanceSingle(
                             subcriptionCode,
@@ -1223,8 +1314,8 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-    String HTTP_PreAcceptanceSingle = "http://stagingsds.pos.com.my/apigateway/as2corporate/api/preacceptancessingle/v1";
-    String serverKey_PreAcceptanceSingle = "M1djdzdrbTZod0pXOTZQdnFWVU5jWVpGNU9nUDVzb0M=";
+    String HTTP_PreAcceptanceSingle = "https://apis.pos.com.my/apigateway/as2corporate/api/preacceptancessingle/v1";
+    String serverKey_PreAcceptanceSingle = "S0FFRHRLRXhQOVlFWVRzWjhyN0FzZnNCdmRxTElvTkI=";
     private void PreAcceptanceSingle(String subcriptionCode,
                                      String AccountNo,
                                      String SellerName,
@@ -1432,6 +1523,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
     Bitmap PosLajuBitMap, ScaledPosLajuBitMap;
     Bitmap KetekMallBitmap, ScaledKetekMallBitMap;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void GeneratePDF(String ShipDate,
                              String Weight,
                              String OrderID,
@@ -1454,10 +1546,17 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                              String RoutingCode,
                              String ConnoteNo,
                              String ConnoteDate){
-        PosLajuBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.poslaju_black);
-        ScaledPosLajuBitMap = Bitmap.createScaledBitmap(PosLajuBitMap, 100, 45, false);
 
-        KetekMallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ketekmallx52_black);
+
+
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        PosLajuBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.poslaju_black, options);
+        KetekMallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ketekmallx52_black, options);
+
+        ScaledPosLajuBitMap = Bitmap.createScaledBitmap(PosLajuBitMap, 100, 45, false);
         ScaledKetekMallBitMap = Bitmap.createScaledBitmap(KetekMallBitmap, 50, 50, false);
 
         final String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
@@ -1557,7 +1656,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         Details.setColor(Color.BLACK);
         Details.setTextSize(10f);
         Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        canvas.drawText("KM" + OrderID, 84, 130, Details);
+        canvas.drawText(OrderID, 84, 130, Details);
 
         // Order Details - 02
         paint.setStyle(Paint.Style.STROKE);
@@ -1916,12 +2015,12 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
         try {
             file.mkdirs();
-            File filePath = new File(file,"PosLajuConsignmentNote-"+ dateFull +".pdf");
+            File filePath = new File(file,"PosLajuConsignmentNote.pdf");
             filePath.createNewFile();
             document.writeTo(new FileOutputStream(filePath));
 
             Log.i("Pathfile", filePath.toString());
-            Toast.makeText(this, "Done", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please check your Download Folder in File Manager", Toast.LENGTH_LONG).show();
 
             // close the document
             document.close();

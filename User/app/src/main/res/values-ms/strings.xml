@@ -1,14 +1,534 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-<!--    <string name="notifications">Notifikasi</string>-->
-<!--    <string name="me">Saya</string>-->
-<!--    <string name="All">Semua</string>-->
-<!--    <string name="shopping_cart">Troli Pembelian</string>-->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="InconsistentArrays">
+    <string name="app_name">KetekMall</string>
+    <string name="register">Daftar</string>
+    <string name="email">E-mel</string>
+    <string name="phone_no">No. Telefon</string>
+    <string name="password">Kata Laluan</string>
+    <string name="confirm_password">Sahkan Kata Laluan</string>
+    <string name="welcome">Selamat Datang</string>
+    <string name="please_log_in_to_continue">Sila log masuk untuk teruskan</string>
+    <string name="Registration">Pendaftaran</string>
+    <string name="create_an_account">Buka Akaun Baru</string>
+    <string name="don_t_have_an_account">Tiada Akaun</string>
+    <string name="already_registered">Sudah Mendaftar?</string>
+    <string name="edit_photo">Tukar Gambar</string>
+    <string name="logout">Log Keluar</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="action_settings">Seting</string>
+    <string name="menu_home">Rumah</string>
+    <string name="menu_gallery">Galeri</string>
+    <string name="about_the_app">Tentang App</string>
+    <string name="my_saved_searches">Carian Yang Disimpan</string>
+    <string name="my_favourite_ads">Ads Kegemaran</string>
+    <string name="my_chat_inbox">Peti Masuk Sembang</string>
+    <string name="my_order">Pesanan</string>
+    <string name="find_items">Produk</string>
+    <string name="sell_my_item">Tambah Produk Baru</string>
+    <string name="home">Rumah</string>
+    <string name="category">Kategori</string>
+    <string name="ad_details">Tentang Ad</string>
+    <string name="price_rm">Harga (MYR)</string>
+    <string name="uploaded_photo">Muat Naik Gambar</string>
+    <string name="cover_photo">Gambar Hadapan</string>
+    <string name="forgot_your_password">Lupa Kata Laluan?</string>
+    <string name="reset_here">Tukar sini</string>
+    <string name="reset_password">Tukar Kata Laluan</string>
+    <string name="enter">Masuk</string>
+    <string name="enter_email_address">Masukkan e-mel</string>
+    <string name="birthday">Hari Lahir</string>
+    <string name="gender">Jantina</string>
+    <string name="please_enter_an_ad_detail">Tolong isikan tentang ad</string>
+    <string name="or">Cepat Log Masuk Dengan</string>
+    <string name="login">Log Masuk</string>
+    <string name="settings">Seting</string>
+    <string name="main_category">Kategori Utama</string>
+    <string name="sub_category">Kategori Kedua</string>
+    <string name="what_are_you_selling">Apakah yang and jual?</string>
+    <string name="available">Available</string>
+    <string name="write_your_review">Sila tulis Pendapat anda</string>
+    <string name="add_to_cart">Beli</string>
+    <string name="buy_now">Beli Sekarang</string>
+    <string name="edit_profile">Mengedit Profile</string>
+    <string name="back">Balik</string>
+    <string name="select_category">Pillih Kategori</string>
+    <string name="enter_ad_details">Letakkan Tentang Ad</string>
+    <string name="add_product">Tambah Produk</string>
+    <string name="select_a_category">Pilih Kategori</string>
+    <string name="to_click">ke KetekMall</string>
+    <string name="unit_price">Harga Unit</string>
+    <string name="subtotal">Sub Jumlah</string>
+    <string name="rm">RM</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="greeting">Selamat Datang!</string>
+    <string name="buy_sell_find_almost_everything">Beli. Jual. Cari. Hampir Kesemuanya!</string>
+    <string name="sell">Jual</string>
+    <string name="find">Cari</string>
+    <string name="remove">Buang</string>
+    <string name="choose_a_location">Pilih Lokasi</string>
+    <string name="district">Daerah</string>
+    <string name="select_location">Pilih Lokasi</string>
+    <string name="ships_from">Dihantar dari</string>
+    <string name="list_of_delivery">Senarai Penghantaran</string>
+    <string name="no_delivery_added">Tiada Penghantaran DiLetakkan</string>
+    <string name="add_delivery">Tambah Penghantaran</string>
+    <string name="continue_shopping">Sambung Membeli-Belah!</string>
+    <string name="checkout">Daftar Keluar</string>
+    <string name="quantity">Jumlah</string>
+    <string name="filter">Tapis</string>
+    <string name="apply">Aplikasikan</string>
+    <string name="products">Produk</string>
+    <string name="list_of_product_s">Senarai Produk</string>
+    <string name="type_your_message_here">Sila tulis mesej disini</string>
+    <string name="delivery_address">Alamat Penghantaran</string>
+    <string name="address">Alamat</string>
+    <string name="shipping_option">Pilihan Penghantaran</string>
+    <string name="standard_delivery">Penghantaran Standard</string>
+    <string name="payment_option">Pilihan Pembayaran</string>
+    <string name="coming_soon">Akan Datang</string>
+    <string name="please_change_the_delivery_address">Sila tukar alamat penghantaran</string>
+    <string name="total">Jumlah</string>
+    <string name="place_order">Letak Tempahan</string>
+    <string name="my_income">Pendapatan Bersih</string>
+    <string name="ic_no">Nombor IC</string>
+    <string name="bank_name">Nama Bank</string>
+    <string name="bank_account">Bank Akaun</string>
+    <string name="address_1">Alamat 1</string>
+    <string name="address_2">Alamat 2</string>
+    <string name="city">Bahagian</string>
+    <string name="postcode">Poskod</string>
+    <string name="my_products">Produk Saya</string>
+    <string name="username">username</string>
+    <string name="browse_categories">Pilih Kategori</string>
+    <string name="cake_and_pastries">Pastri dan Kek</string>
+    <string name="processed_food">Makanan Proses</string>
+    <string name="handicraft">KrafTangan</string>
+    <string name="retail_and_wholesale">Barang Borong dan Runcit</string>
+    <string name="agriculture">Pertanian</string>
+    <string name="service">Perkhidmatan</string>
+    <string name="health_and_beauty">Kecantikan dan Kesihatan</string>
+    <string name="home_and_living">Perhiasan Rumah</string>
+    <string name="fashion_accessories">Perhiasan Fesyen</string>
+    <string name="sarawak_based_product">Produk Sarawak</string>
+    <string name="hot_selling">Perjualan Panas</string>
+    <string name="shocking_sale">Jualan Runtuh</string>
+    <string name="no_selling_products">Tiada Penjualan Produk</string>
+    <string name="no_buying_products">Tiada Pembelian Produk</string>
+    <string name="verification">Verifikasi</string>
+    <string name="promotion">Promosi</string>
+    <string name="social_updates">Kemaskini Sosial</string>
+    <string name="order_updates">Kemaskini Tempahan</string>
+    <string name="self_pick_up">Mengambil Sendiri</string>
+    <string name="my_likes">Kegemaran Saya</string>
+    <string name="recently_viewed">Baru Dilihat</string>
+    <string name="buying">Pembelian Saya</string>
+    <string name="selling">Penjualan Saya</string>
+    <string name="my_rating">Rating Saya</string>
+    <string name="account_settings">Seting Akaun</string>
+    <string name="help_centre">Pusat Bantuan</string>
+    <string name="chat_with_ketekmall">Sembang dengan KetekMall</string>
+    <string name="before_you_can_start_selling_your_products">Sebelum anda mula menjual produk anda</string>
+    <string name="you_need_to_register_as_ketekmall_seller">Anda diminta untuk mendaftar sebagai Penjual KetekMall</string>
+    <string name="become_a_seller_today">Jadilah Penjual Sekarang</string>
+    <string name="order_id">ID Tempahan</string>
+    <string name="tracking_no">No. Penjejakan</string>
+    <string name="click_tracking_number_to_view">(Sila tekan nombor penjejakan to melihat keputusan)</string>
+    <string name="shipped_to">DIHANTAR KE</string>
+    <string name="address_user_send">ALAMAT PEMBELI</string>
+    <string name="date_order">TARIKH TEMPAHAN</string>
+    <string name="date_received">TARIKH PENERIMAAN</string>
+    <string name="ordered">Tempahan Diterima</string>
+    <string name="shipped">Dalam Perjalanan</string>
+    <string name="rejected">DITOLAK</string>
+    <string name="shop_rating">Rating Produk</string>
+    <string name="added_to_cart">Masuk ke Troli</string>
+
+    <string name="failed_to_add">Gagal Masukkan ke Troli</string>
+    <string name="cannot_add_your_own_item">Maaf, Tidak Dibenarkan untuk membeli barang sendiri</string>
+    <string name="added_to_like">Masuk ke Kesukaan Saya</string>
+    <string name="failed">Gagal</string>
+    <string name="press_back_again_to_exit">Tekan Balit Lagi Sekali untuk Keluar</string>
+    <string name="success_add">Berjaya Ditambah</string>
+    <string name="success_update">Berjaya Kemas Kini</string>
+    <string name="success_saved">Berjaya Disimpan</string>
+    <string name="please_re_enter_the_item_again">Sila isikan maklumat sekali lagi</string>
+    <string name="incomplete_information">Sila Pastikan Maklumat anda Betul sebelum meletakkan pesanan</string>
+    <string name="order_canceled">Pesanan anda telah terbatal</string>
+    <string name="pending">Masih dalam pemprosesan</string>
+
+    <string-array name="gender">
+        <item>Perempuan</item>
+        <item>Lelaki</item>
+    </string-array>
+
+    <string-array name="days">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="main_category">
+        <item>Semua Kategori</item>
+        <item>Pastri dan Kek</item>
+        <item>Makanan yang Diproses</item>
+        <item>Kraftangan</item>
+        <item>Barang Borong dan Runcit</item>
+        <item>Pertanian</item>
+        <item>Perkhidmatan</item>
+        <item>Kecantikan dan Kesihatan</item>
+        <item>Kediaman dan Tempat Tinggal</item>
+        <item>Perhiasan Fesyen</item>
+        <item>Produk Berasaskan - Sarawak</item>
+        <item>Produk Ambil Sendiri</item>
+    </string-array>
+
+    <string-array name="vehicle_category">
+        <item>Car</item>
+        <item>Motorcycles</item>
+        <item>Car Accessories and Parts</item>
+    </string-array>
+
+    <string-array name="properties_category">
+        <item>Properties for Sale</item>
+        <item>Properties for Rent</item>
+        <item>Properties for Auction</item>
+        <item>New Properties</item>
+    </string-array>
+
+    <string-array name="electronic_category">
+        <item>Mobile Phones and Gadgets</item>
+        <item>Accessories for Phones and Gadgets</item>
+        <item>Camera and Photography</item>
+        <item>Computer and Accessories</item>
+    </string-array>
+
+    <string-array name="home_category">
+        <item>Women Collection</item>
+        <item>Men Collection</item>
+        <item>Home Appliances and Kitchen</item>
+        <item>Mom and Kids</item>
+        <item>Furniture and Decoration</item>
+    </string-array>
+
+    <string-array name="leisure_category">
+        <item>Music Instruments</item>
+        <item>Pets</item>
+        <item>Sports and Outdoor</item>
+        <item>Hobby and Collectibles</item>
+    </string-array>
+
+    <string-array name="business_category">
+        <item>Professional/Business Equipment</item>
+        <item>Business for Sale</item>
+    </string-array>
+
+    <string-array name="jobs_category">
+        <item>Services</item>
+    </string-array>
+
+    <string-array name="travel_category">
+        <item>Tours and Holidays</item>
+        <item>Accommodation and Homestays</item>
+    </string-array>
+
+    <string-array name="other_category">
+        <item>Others</item>
+        <item>Food</item>
+        <item>Grocery</item>
+    </string-array>
+
+    <string-array name="location">
+        <item>Item Location</item>
+        <item>All Region</item>
+        <item>Asajaya</item>
+        <item>Balingian</item>
+        <item>Baram</item>
+        <item>Bau</item>
+        <item>Bekenu</item>
+        <item>Belaga</item>
+        <item>Belawai</item>
+        <item>Betong</item>
+        <item>Bintangor</item>
+        <item>Bintulu</item>
+        <item>Dalat</item>
+        <item>Daro</item>
+        <item>Debak</item>
+        <item>Engkilili</item>
+        <item>Julau</item>
+        <item>Kabong</item>
+        <item>Kanowit</item>
+        <item>Kapit</item>
+        <item>Kota Samarahan</item>
+        <item>Kuching</item>
+        <item>Lawas</item>
+        <item>Limbang</item>
+        <item>Lingga</item>
+        <item>Long Lama</item>
+        <item>Lubok Antu</item>
+        <item>Lundu</item>
+        <item>Lutong</item>
+        <item>Maradong</item>
+        <item>Marudi</item>
+        <item>Matu</item>
+        <item>Miri</item>
+        <item>Mukah</item>
+        <item>Nanga Medamit</item>
+        <item>Niah</item>
+        <item>Pusa</item>
+        <item>Roban</item>
+        <item>Saratok</item>
+        <item>Sarikei</item>
+        <item>Sebauh</item>
+        <item>Sebuyau</item>
+        <item>Serian</item>
+        <item>Sibu</item>
+        <item>Simunjan</item>
+        <item>Song</item>
+        <item>Spaoh</item>
+        <item>Sri Aman</item>
+        <item>Sundar</item>
+        <item>Tanjung Kidurong</item>
+        <item>Tatau</item>
+    </string-array>
+
+    <string-array name="item_location2">
+        <item>All Region</item>
+        <item>Kota Samarahan</item>
+        <item>Kuching</item>
+        <item>Sibu</item>
+    </string-array>
+
+    <string-array name="division">
+        <item>Semua</item>
+        <item>Kuching</item>
+        <item>Kota Samarahan</item>
+        <item>Serian</item>
+        <item>Sri Aman</item>
+        <item>Betong</item>
+        <item>Sarikei</item>
+        <item>Sibu</item>
+        <item>Mukah</item>
+        <item>Bintulu</item>
+        <item>Kapit</item>
+        <item>Miri</item>
+        <item>Limbang</item>
+    </string-array>
+
+    <string-array name="kuching">
+        <item>Semua</item>
+        <item>Kuching</item>
+        <item>Bau</item>
+        <item>Lundu</item>
+    </string-array>
+
+    <string-array name="all">
+        <item>Semua</item>
+    </string-array>
+
+    <string-array name="samarahan">
+        <item>Semua</item>
+        <item>Kota Samarahan</item>
+        <item>Asajaya</item>
+        <item>Simunjan</item>
+    </string-array>
+
+    <string-array name="serian">
+        <item>Semua</item>
+        <item>Serian</item>
+        <item>Tebedu</item>
+    </string-array>
+
+    <string-array name="sri_aman">
+        <item>Semua</item>
+        <item>Sri Aman</item>
+        <item>Lubok Antu</item>
+    </string-array>
+
+    <string-array name="betong">
+        <item>Semua</item>
+        <item>Betong</item>
+        <item>Saratok</item>
+        <item>Pusa</item>
+        <item>Kabong</item>
+    </string-array>
+
+    <string-array name="sarikei">
+        <item>Semua</item>
+        <item>Sarikei</item>
+        <item>Meradong</item>
+        <item>Julau</item>
+        <item>Pakan</item>
+    </string-array>
+
+    <string-array name="sibu">
+        <item>Semua</item>
+        <item>Sibu</item>
+        <item>Kanowit</item>
+        <item>Selangau</item>
+    </string-array>
+
+    <string-array name="mukah">
+        <item>Semua</item>
+        <item>Mukah</item>
+        <item>Dalat</item>
+        <item>Matu</item>
+        <item>Daro</item>
+        <item>Tanjung Manis</item>
+    </string-array>
+
+    <string-array name="bintulu">
+        <item>Semua</item>
+        <item>Bintulu</item>
+        <item>Sebauh</item>
+        <item>Tatau</item>
+    </string-array>
+
+    <string-array name="kapit">
+        <item>Semua</item>
+        <item>Kapit</item>
+        <item>Song</item>
+        <item>Belaga</item>
+        <item>Bukit Mabong</item>
+    </string-array>
+
+    <string-array name="miri">
+        <item>Semua</item>
+        <item>Miri</item>
+        <item>Marudi</item>
+        <item>Subis</item>
+        <item>Beluru</item>
+        <item>Telang Usan</item>
+    </string-array>
+
+    <string-array name="limbang">
+        <item>Semua</item>
+        <item>Limbang</item>
+        <item>Lawas</item>
+    </string-array>
+
+    <string name="quickstart_message">Click the SUBSCRIBE TO WEATHER button below to subscribe to the
+        weather topic. Messages sent to the weather topic will be received. The LOG TOKEN button logs the
+        InstanceID token to logcat.</string>
+    <string name="subscribe_to_weather">Subscribe To Weather</string>
+    <string name="log_token">Log Token</string>
+
+    <string name="msg_subscribed">Subscribed to weather topic</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <!--
+        This is the name that users will see when interacting with this channel.
+        It should describe the category_listpage of notifications that will be sent through this channel
+     -->
+    <!-- [START fcm_default_icon_string] -->
+    <string name="default_notification_channel_name" translatable="true">Weather</string>
+    <!-- [END fcm_default_icon_string] -->
+    <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
+    <string name="fcm_message">FCM Message</string>
+    <string name="brand_material">Bahan Brand</string>
+    <string name="stock">Stok</string>
+    <string name="inner_material">Bahan Dalaman</string>
+    <string name="description">Keterangan</string>
+    <string name="minus">-</string>
+    <string name="_1">1</string>
+    <string name="plus">+</string>
+    <string name="myr">MYR</string>
+    <string name="_0_00">0.00</string>
+
+    <string name="my_income_">Pendapatan Bersih</string>
+    <string name="finished">SELESAI</string>
+    <string name="received">Sudah DiTerima</string>
+    <string name="write_a_review">Tulis Ulasan Anda</string>
+    <string name="rm0_00">RM0.00</string>
+    <string name="edit">Ubah</string>
+    <string name="delete">Buang</string>
+    <string name="division">Bahagian</string>
+    <string name="price_">Harga :</string>
+    <string name="myr_0_00">MYR 0.00</string>
+    <string name="duration">Tempoh Masa :</string>
+    <string name="location">Lokasi</string>
+    <string name="price">Harga</string>
+    <string name="add">Tambah</string>
+    <string name="name">Nama</string>
+    <string name="search">Cari</string>
+    <string name="no_result_found">Tidak dijumpai !</string>
+    <string name="maximum_order">Tempahan Maksima</string>
+    <string name="max_order">Tempahan Maksima</string>
+    <string name="delivery_location">Lokasi Penghantaran</string>
+    <string name="setup_delivery">Mengatur Penghantaran</string>
+    <string name="next">Seterusnya</string>
+    <string name="ad_detail">Tentang Ad</string>
+    <string name="x1">x1</string>
+    <string name="placed_on_yyyy_mm_dd">Diletakkan pada YYYY-MM-DD</string>
+    <string name="status">Status</string>
+    <string name="shipped_out_to_sarawak">Dihantar ke Sarawak</string>
+    <string name="accept">Terima</string>
+    <string name="reject">Tolak</string>
+    <string name="pos_laju_tracking_no">Nombor Penjejakan PosLaju</string>
+    <string name="submit">Hantar</string>
+    <string name="cancel">Batal</string>
+    <string name="shipping_to">Dihantar ke :</string>
+    <string name="delivered_in">Dihantar dalam tempoh</string>
+    <string name="_0_days">0 Days</string>
+    <string name="custom_action_bar">Custom Action Bar</string>
+    <string name="contact_s">Kenalan :</string>
+    <string name="no_user">Tiada Kenalan</string>
+    <string name="chat_inbox">Peti Sembang</string>
+    <string name="rating">Rating</string>
+    <string name="_0">0</string>
+    <string name="sold">Dijual</string>
+    <string name="shipping_information">Maklumat Penghantaran</string>
+    <string name="more_details">Lebih Lanjut</string>
+    <string name="seller_name">Name Penjual</string>
+    <string name="seller_location">Lokasi Penjual</string>
+    <string name="chat">Sembang</string>
+    <string name="view">Lihat</string>
+    <string name="review">Ulasan</string>
+    <string name="no_review">Tiada Ulasa</string>
+    <string name="customer_name">Nama Pembeli</string>
+    <string name="textview">TextView</string>
+    <string name="from_the_same_shop">Dari kedai yang sama</string>
+    <string name="view_all">Lihat Semua</string>
+    <string name="item_name">Nama Barang</string>
+    <string name="myr0_00">MYR0.00</string>
+    <string name="sub_total">Jumlah Sub</string>
+    <string name="shipping_total">Jumlah Penghantaran</string>
+    <string name="grand_total">Jumlah Keluruhan: </string>
+    <string name="about_seller">Tentang Penjual</string>
+    <string name="boost_ad">Ad Galakan</string>
+    <string name="customer_address">Alamat Pembeli</string>
+    <string name="customer_phone">No. Telefon Pembeli</string>
+    <string name="delivery_price">Harga Penghantaran</string>
+    <string name="delivery_time">Tempoh Penghantaran: </string>
+    <string name="shipping_total_">Jumlah Penghantaran: </string>
+    <string name="posting">Pengeposan</string>
+    <string name="seller">Penjual</string>
+    <string name="buyer">Pembeli</string>
+    <string name="notifications">Notifikasi</string>
+    <string name="me">Saya</string>
+    <string name="All">Semua</string>
+    <string name="shopping_cart">Troli Pembelian</string>
     <string name="register_seller">Daftar Penjual</string>
     <string name="already_boosted_up">Sudah Dinaikkan oleh Admin</string>
     <string name="pending_request">Masih Menunggu</string>
     <string name="no_delivery">No Delivery</string>
-    <string name="click_to_edit_details">Click to Edit Details</string>
-    <string name="product_details">Product Details</string>
-    <string name="self_pickup">Self Pick-up</string>
+    <string name="click_to_edit_details">Tekan untuk Ubah Maklumat</string>
+    <string name="product_details">Maklumat Product</string>
+    <string name="self_pickup">Ambil Sendiri</string>
+    <string name="generate_pdf">Muat Turun PDF</string>
+
+    <string name="customer_name1">Nama: </string>
+    <string name="customer_phone1">No. Telefon: </string>
+    <string name="customer_address1">Alamat: </string>
+    <string name="customer_details">Maklumat Pembeli:-</string>
+    <string name="generate_consignment_note">Muat Turun Pos Laju PDF</string>
+    <string name="great_store_great_choice">Kedai Hebat, Pilihan Hebat</string>
 </resources>
