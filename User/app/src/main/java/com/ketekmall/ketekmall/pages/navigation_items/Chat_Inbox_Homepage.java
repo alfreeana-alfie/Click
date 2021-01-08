@@ -33,15 +33,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.adapter.Chat_Adapter;
+import com.ketekmall.ketekmall.adapter.ChatSession_Adapter;
+import com.ketekmall.ketekmall.data.ChatSession;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.data.User;
-import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.buyer.Chat;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,27 +46,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class Chat_Inbox_Homepage extends AppCompatActivity {
 
-    public static String URL = "https://click-1595830894120.firebaseio.com/users.json";
-    public static String URL_MESSAGE = "https://click-1595830894120.firebaseio.com/messages.json";
-    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
-    private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail_name.php";
+    public static String URL_CREATECHAT = "https://ketekmall.com/ketekmall/createChat.php";
+    public static String URL_GETCHAT = "https://ketekmall.com/ketekmall/getChat.php";
+    public static String URL_GETCHATISREAD = "https://ketekmall.com/ketekmall/getChatIsRead.php";
 
-    User user;
     RecyclerView recyclerView;
     TextView noUsersText;
-    List<User> usersArrayList;
-    Chat_Adapter user_adapter;
-    int totalUsers = 0;
+    List<ChatSession> usersArrayList;
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+
+    ChatSession_Adapter chat_adapter;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -78,338 +72,150 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
         setContentView(R.layout.chat_inbox);
         ToolbarSetting();
         getSession();
-        bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.getMenu().getItem(0).setCheckable(false);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home:
-                        Intent intent4 = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
-                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent4);
-                        break;
-
-                    case R.id.nav_noti:
-                        Intent intent6 = new Intent(Chat_Inbox_Homepage.this, Notification_Page.class);
-                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent6);
-                        break;
-
-                    case R.id.nav_edit_profile:
-                        Intent intent1 = new Intent(Chat_Inbox_Homepage.this, Me_Page.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent1);
-                        break;
-                }
-
-                return true;
-            }
-        });
+        BottomNavigationSettings();
 
         recyclerView = findViewById(R.id.usersList);
-        usersArrayList = new ArrayList<>();
+        usersArrayList = new ArrayList<ChatSession>();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(Chat_Inbox_Homepage.this));
         noUsersText = findViewById(R.id.noUsersText);
 
+        getChat();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+    }
+
+    public void getChat (){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GETCHAT,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        doOnSuccess(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                        if(response == null){
+                            Log.e("onResponse", "Return NULL");
+                        }else{
+                            try {
+                                final JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                final JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                    }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Homepage.this);
-        requestQueue.add(stringRequest);
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
 
-        doON();
-    }
+//                                        String id = object.getString("id").trim();
+                                        final String Name = object.getString("Name").trim();
+                                        final String UserPhoto = object.getString("UserPhoto").trim();
+                                        final String ChatWith = object.getString("ChatWith").trim();
+                                        final String ChatWithID = object.getString("ChatWithID").trim();
+                                        final String ChatWithPhoto = object.getString("ChatWithPhoto");
+//                                        String Content = object.getString("Content").trim();
+//                                        String CreatedDateTime = object.getString("CreatedDateTime");
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void ToolbarSetting() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_chat_inbox);
+                                        noUsersText.setVisibility(View.GONE);
+                                        final ChatSession session = new ChatSession();
+                                        session.setName(Name);
+                                        session.setUserPhoto(UserPhoto);
+                                        session.setUserID(getId);
+                                        session.setChatWith(ChatWith);
+                                        session.setChatWithID(ChatWithID);
+                                        session.setChatWithPhoto(ChatWithPhoto);
+//                                        session.setContent(Content);
+//                                        session.setCreatedDateTime(CreatedDateTime);
 
-        View view = getSupportActionBar().getCustomView();
-        ImageButton back_button = view.findViewById(R.id.back_button);
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GETCHATISREAD,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        if(response == null){
+                                                            Log.e("onResponse", "Return NULL");
+                                                        }else{
+                                                            try {
+                                                                final JSONObject jsonObject = new JSONObject(response);
+                                                                String success = jsonObject.getString("success");
+                                                                final JSONArray jsonArray1 = jsonObject.getJSONArray("read");
 
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
-////                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                startActivity(intent);
-                finish();
-            }
-        });
-    }
+                                                                if (success.equals("1")) {
+                                                                    session.setChatCount(String.valueOf(jsonArray1.length()));
+                                                                    usersArrayList.add(session);
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
-
-    private void doON(){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_MESSAGE,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject object =new JSONObject(response);
-                            Iterator i = object.keys();
-
-                            while (i.hasNext()){
-                                final String chat = i.next().toString();
-
-
-                                String newemail = UserDetails.email;
-                                if(newemail.contains("@")){
-                                    newemail = UserDetails.email.substring(0, UserDetails.email.lastIndexOf("@"));
-                                }else {
-                                    newemail = UserDetails.email;
-                                }
-                                if(chat.contains(newemail + "_" )){
-                                    final String finalNewemail = newemail;
-                                    StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-                                            new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    try {
-                                                        final JSONObject object =new JSONObject(response);
-                                                        Iterator i = object.keys();
-
-                                                        while (i.hasNext()){
-                                                            final String key = i.next().toString();
-                                                            String newemail1 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
-
-                                                            final String ref1 = finalNewemail + "_" + newemail1;
-
-                                                            if(!key.equals(UserDetails.username)){
-                                                                if (chat.equals(ref1)){
-                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
-                                                                            new Response.Listener<String>() {
-                                                                                @Override
-                                                                                public void onResponse(String response) {
-                                                                                    try {
-                                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                                        String success = jsonObject.getString("success");
-                                                                                        final JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                                                                                        if (success.equals("1")) {
-                                                                                            user = new User(key, object.getJSONObject(key).get("photo").toString());
-                                                                                            String newemail2 = object.getJSONObject(key).get("email").toString().substring(0, object.getJSONObject(key).get("email").toString().lastIndexOf("@"));
-                                                                                            user.setChatwith(newemail2);
-                                                                                            user.setCount(String.valueOf(jsonArray.length()));
-
-                                                                                            usersArrayList.add(user);
-                                                                                            user_adapter = new Chat_Adapter(Chat_Inbox_Homepage.this, usersArrayList);
-
-                                                                                            recyclerView.setAdapter(user_adapter);
-                                                                                            user_adapter.setOnItemClickListener(new Chat_Adapter.OnItemClickListener() {
-                                                                                                @Override
-                                                                                                public void onItemClick(final int position) {
-                                                                                                    final User user = usersArrayList.get(position);
-                                                                                                    UserDetails.chatWith = user.getChatwith();
-                                                                                                    UserDetails.chatWith1 = user.getUsername();
-                                                                                                    final String KeyID = user.getUsername();
-
-                                                                                                    Log.i("KeyID", KeyID);
-
-                                                                                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_USER_DETAIL,
-                                                                                                            new Response.Listener<String>() {
-                                                                                                                @Override
-                                                                                                                public void onResponse(String response) {
-                                                                                                                    try {
-                                                                                                                        JSONObject jsonObject = new JSONObject(response);
-                                                                                                                        String success = jsonObject.getString("success");
-                                                                                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-
-                                                                                                                        if (success.equals("1")) {
-                                                                                                                            for (int i = 0; i < jsonArray.length(); i++) {
-                                                                                                                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                                                                                                                String ID = object.getString("id").trim();
-                                                                                                                                String SellerName = object.getString("name");
-
-                                                                                                                                Intent intent= new Intent(Chat_Inbox_Homepage.this, Chat.class);
-                                                                                                                                intent.putExtra("CustomerID", getId);
-                                                                                                                                intent.putExtra("SellerID", ID);
-
-                                                                                                                                startActivity(intent);
-                                                                                                                            }
-                                                                                                                        } else {
-                                                                                                                            Toast.makeText(Chat_Inbox_Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                                                                                                                        }
-                                                                                                                    } catch (JSONException e) {
-                                                                                                                        e.printStackTrace();
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            },
-                                                                                                            new Response.ErrorListener() {
-                                                                                                                @Override
-                                                                                                                public void onErrorResponse(VolleyError error) {
-                                                                                                                    try {
-                                                                                                                        if (error instanceof TimeoutError) {
-                                                                                                                            //Time out error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else if (error instanceof NoConnectionError) {
-                                                                                                                            //net work error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else if (error instanceof AuthFailureError) {
-                                                                                                                            //error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else if (error instanceof ServerError) {
-                                                                                                                            //Error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else if (error instanceof NetworkError) {
-                                                                                                                            //Error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else if (error instanceof ParseError) {
-                                                                                                                            //Error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        } else {
-                                                                                                                            //Error
-                                                                                                                            System.out.println("" + error);
-                                                                                                                        }
-                                                                                                                    } catch (Exception e) {
-                                                                                                                        e.printStackTrace();
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }) {
-                                                                                                        @Override
-                                                                                                        protected Map<String, String> getParams() {
-                                                                                                            Map<String, String> params = new HashMap<>();
-                                                                                                            params.put("name", KeyID);
-                                                                                                            return params;
-                                                                                                        }
-                                                                                                    };
-                                                                                                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                                                                                                    requestQueue.add(stringRequest);
-
-                                                                                                }
-                                                                                            });
-                                                                                            Log.d("Message", user.getCount());
-                                                                                        } else {
-                                                                                            Log.e("Message", "Return FAILED");
-                                                                                        }
-                                                                                    } catch (JSONException e) {
-                                                                                        e.printStackTrace();
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            new Response.ErrorListener() {
-                                                                                @Override
-                                                                                public void onErrorResponse(VolleyError error) {
-                                                                                    try {
-
-                                                                                        if (error instanceof TimeoutError) {
-                                                                                            //Time out error
-                                                                                            System.out.println("" + error);
-                                                                                        }else if(error instanceof NoConnectionError){
-                                                                                            //net work error
-                                                                                            System.out.println("" + error);
-                                                                                        } else if (error instanceof AuthFailureError) {
-                                                                                            //error
-                                                                                            System.out.println("" + error);
-                                                                                        } else if (error instanceof ServerError) {
-                                                                                            //Erroor
-                                                                                            System.out.println("" + error);
-                                                                                        } else if (error instanceof NetworkError) {
-                                                                                            //Error
-                                                                                            System.out.println("" + error);
-                                                                                        } else if (error instanceof ParseError) {
-                                                                                            //Error
-                                                                                            System.out.println("" + error);
-                                                                                        }else{
-                                                                                            //Error
-                                                                                            System.out.println("" + error);
-                                                                                        }
-                                                                                    } catch (Exception e) {
-                                                                                        e.printStackTrace();
-                                                                                    }
-                                                                                }
-                                                                            }) {
+                                                                    chat_adapter = new ChatSession_Adapter(Chat_Inbox_Homepage.this, usersArrayList);
+                                                                    recyclerView.setAdapter(chat_adapter);
+                                                                    chat_adapter.setOnItemClickListener(new ChatSession_Adapter.OnItemClickListener() {
                                                                         @Override
-                                                                        protected Map<String, String> getParams() {
-                                                                            Map<String, String> params = new HashMap<>();
-                                                                            params.put("user_chatwith", ref1);
-                                                                            return params;
+                                                                        public void onItemClick(int position) {
+                                                                            ChatSession chatSession = usersArrayList.get(position);
+
+                                                                            Intent chatIntent = new Intent(Chat_Inbox_Homepage.this, Chat.class);
+                                                                            chatIntent.putExtra("Name", chatSession.getName());
+                                                                            chatIntent.putExtra("UserPhoto", chatSession.getUserPhoto());
+                                                                            chatIntent.putExtra("ChatWith", chatSession.getChatWith());
+                                                                            chatIntent.putExtra("ChatWithID", chatSession.getChatWithID());
+                                                                            chatIntent.putExtra("ChatWithPhoto", chatSession.getChatWithPhoto());
+
+                                                                            startActivity(chatIntent);
                                                                         }
-                                                                    };
-                                                                    RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Homepage.this);
-                                                                    requestQueue.add(stringRequest);
-
+                                                                    });
+                                                                } else {
+                                                                    Toast.makeText(Chat_Inbox_Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                                 }
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
                                                             }
-                                                            totalUsers++;
                                                         }
 
-                                                    }catch (JSONException e){
-                                                        e.printStackTrace();
                                                     }
-
-                                                    if (totalUsers <= 1) {
-                                                        noUsersText.setVisibility(View.VISIBLE);
-                                                        recyclerView.setVisibility(View.GONE);
-                                                    } else {
-                                                        noUsersText.setVisibility(View.GONE);
-                                                        recyclerView.setVisibility(View.VISIBLE);
-                                                        recyclerView.setAdapter(user_adapter);
-                                                    }
-                                                }
-                                            },
-                                            new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    try {
-                                                        if (error instanceof TimeoutError) {
-                                                            //Time out error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof NoConnectionError) {
-                                                            //net work error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof AuthFailureError) {
-                                                            //error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof ServerError) {
-                                                            //Erroor
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof NetworkError) {
-                                                            //Error
-                                                            System.out.println("" + error);
-                                                        } else if (error instanceof ParseError) {
-                                                            //Error
-                                                            System.out.println("" + error);
-                                                        } else {
-                                                            //Error
-                                                            System.out.println("" + error);
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        try {
+                                                            if (error instanceof TimeoutError) {
+                                                                //Time out error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof NoConnectionError) {
+                                                                //net work error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            } else {
+                                                                //Error
+                                                                System.out.println("" + error);
+                                                            }
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
                                                         }
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
                                                     }
-                                                }
-                                            });
-                                    RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Homepage.this);
-                                    requestQueue.add(stringRequest);
+                                                }) {
+                                            @Override
+                                            protected Map<String, String> getParams() {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("UserID", getId);
+                                                params.put("ChatWithID", ChatWithID);
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                        requestQueue.add(stringRequest);
+
+                                    }
+
+                                } else {
+                                    Toast.makeText(Chat_Inbox_Homepage.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                 }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        }catch (JSONException e){
-                            e.printStackTrace();
                         }
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -442,17 +248,83 @@ public class Chat_Inbox_Homepage extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                });
-        RequestQueue requestQueue = Volley.newRequestQueue(Chat_Inbox_Homepage.this);
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserID", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void ToolbarSetting() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_chat_inbox);
+
+        View view = getSupportActionBar().getCustomView();
+        ImageButton back_button = view.findViewById(R.id.back_button);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void getSession() {
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(SessionManager.ID);
+    }
+
+    public void BottomNavigationSettings(){
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(Chat_Inbox_Homepage.this, Notification_Page.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(Chat_Inbox_Homepage.this, Me_Page.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        Intent intent = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-        finish();
+        Intent intent = new Intent(Chat_Inbox_Homepage.this, Homepage.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+//        finish();
     }
 }

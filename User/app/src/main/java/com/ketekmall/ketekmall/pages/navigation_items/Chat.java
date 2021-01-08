@@ -1,4 +1,4 @@
-package com.ketekmall.ketekmall.pages.buyer;
+package com.ketekmall.ketekmall.pages.navigation_items;
 
 import android.content.Intent;
 import android.os.Build;
@@ -34,16 +34,16 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.ChatSession_Adapter;
 import com.ketekmall.ketekmall.data.ChatSession;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.data.UserDetails;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
+import com.ketekmall.ketekmall.pages.buyer.Chat_Inbox;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +61,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Chat extends AppCompatActivity {
+
     private static String URL_ADD_CHAT = "https://ketekmall.com/ketekmall/add_chat.php";
     private static String URL_EDIT_CHAT = "https://ketekmall.com/ketekmall/edit_chat.php";
     private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
@@ -136,7 +137,7 @@ public class Chat extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Chat.this, Chat_Inbox.class);
+                Intent intent = new Intent(Chat.this, Chat_Inbox_Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
@@ -922,7 +923,7 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(Chat.this, Chat_Inbox.class);
+        Intent intent = new Intent(Chat.this, Chat_Inbox_Homepage.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

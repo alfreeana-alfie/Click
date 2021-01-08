@@ -1918,6 +1918,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         canvas.drawText(RecipientPostcode, 342, 292, Details);
 
         try {
+            // String to produce information of the QR CODE
             String productId = "A2^"+
                     ConnoteNo +
                     "^" +
@@ -1974,6 +1975,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     bitmap.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
                 }
             }
+            // Put QR CODE inside the PDF
             canvas.drawBitmap(bitmap,320, 430, paint);
 
         } catch (Exception e) {

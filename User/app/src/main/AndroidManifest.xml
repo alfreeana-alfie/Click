@@ -120,6 +120,7 @@
         <activity android:name=".pages.View_Category" />
         <activity android:name=".PosLajuTestAreaStage" />
         <activity android:name=".pages.View_Shocking_Sale" />
+        <activity android:name=".pages.navigation_items.Chat" />
 
 
         <meta-data

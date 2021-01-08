@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,14 +39,12 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.PosLajuTestArea;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.pages.navigation_items.About_KetekMall;
 import com.ketekmall.ketekmall.pages.navigation_items.transaction.Cart;
 import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
@@ -96,11 +93,14 @@ public class Homepage extends AppCompatActivity {
     private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
     private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
 
+    private static String URL_GETCHATISREADALL = "https://ketekmall.com/ketekmall/getChatIsReadAll.php";
+
     String URL_READ_CATEGORY_MAIN = "https://ketekmall.com/ketekmall/category/";
     String URL_READ_CATEGORY_SEARCH_MAIN = "https://ketekmall.com/ketekmall/search/";
     String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "https://ketekmall.com/ketekmall/filter_district/";
     String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "https://ketekmall.com/ketekmall/filter_division/";
     String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "https://ketekmall.com/ketekmall/filter_search_division/";
+
 
     String[] CATEGORY_LIST = {
             "read_cake.php",
@@ -1287,9 +1287,7 @@ public class Homepage extends AppCompatActivity {
     }
 
     private void MessageCount(){
-        final String ref1 = UserDetails.email + "_";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CHAT,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GETCHATISREADALL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -1345,7 +1343,8 @@ public class Homepage extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_chatwith", ref1);
+                params.put("UserID", getId);
+                params.put("IsRead", "false");
                 return params;
             }
         };

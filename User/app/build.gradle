@@ -10,8 +10,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 21
-        versionName "1.8.0"
+        versionCode 22
+        versionName "1.9.0"
         useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

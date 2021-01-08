@@ -41,12 +41,11 @@ import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.ketekmall.ketekmall.data.UserDetails;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.buyer.Chat;
+import com.ketekmall.ketekmall.pages.navigation_items.Chat;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
 
@@ -803,6 +802,98 @@ public class View_Product extends AppCompatActivity {
         requestQueue.add(stringRequest2);
     }
 
+    public void getUserDetailsCustomer(final String SellerName, final String SellerID, final String SellerPhoto){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String strID = object.getString("id");
+                                    final String strName = object.getString("name").trim();
+                                    final String strEmail = object.getString("email");
+                                    final String strPhoto = object.getString("photo");
+                                    final String mobile_num = object.getString("phone_no");
+                                    final String strDivision = object.getString("division").trim();
+
+                                    btn_chat.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent chatIntent = new Intent(View_Product.this, Chat.class);
+                                            chatIntent.putExtra("Name", strName);
+                                            chatIntent.putExtra("UserPhoto", strPhoto);
+                                            chatIntent.putExtra("ChatWith", SellerName);
+                                            chatIntent.putExtra("ChatWithID", SellerID);
+                                            chatIntent.putExtra("ChatWithPhoto", SellerPhoto);
+//                                            String newemail1 = strEmail.substring(0, strEmail.lastIndexOf("@"));
+//                                            UserDetails.chatWith = newemail1;
+//                                            UserDetails.chatWith1 = strName;
+//                                            Intent intent = new Intent(View_Product.this, Chat.class);
+                                            startActivity(chatIntent);
+                                        }
+                                    });
+
+                                }
+                            } else {
+                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Homepage.this, "JSON Parsing Eror: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     private void getUserDetail() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                 new Response.Listener<String>() {
@@ -818,6 +909,7 @@ public class View_Product extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
+                                    final String strID = object.getString("id");
                                     final String strName = object.getString("name").trim();
                                     final String strEmail = object.getString("email");
                                     final String strPhoto = object.getString("photo");
@@ -870,16 +962,7 @@ public class View_Product extends AppCompatActivity {
                                         }
                                     });
 
-                                    btn_chat.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            String newemail1 = strEmail.substring(0, strEmail.lastIndexOf("@"));
-                                            UserDetails.chatWith = newemail1;
-                                            UserDetails.chatWith1 = strName;
-                                            Intent intent = new Intent(View_Product.this, Chat.class);
-                                            startActivity(intent);
-                                        }
-                                    });
+                                   getUserDetailsCustomer(strName, strID, strPhoto);
 
                                 }
                             } else {
