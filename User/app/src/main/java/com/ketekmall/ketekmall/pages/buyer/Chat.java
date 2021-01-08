@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages.buyer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,7 @@ import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
 import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -122,6 +124,14 @@ public class Chat extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void ToolbarSettings(){
+
+        final Intent chatIntent = getIntent();
+        final String Name = chatIntent.getStringExtra("Name");
+        final String UserPhoto = chatIntent.getStringExtra("UserPhoto");
+        final String ChatWith = chatIntent.getStringExtra("ChatWith");
+        final String ChatWithID = chatIntent.getStringExtra("ChatWithID");
+        final String ChatWithPhoto = chatIntent.getStringExtra("ChatWithPhoto");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -132,7 +142,9 @@ public class Chat extends AppCompatActivity {
         TextView chatname = view.findViewById(R.id.user_chatname);
         final CircleImageView circleImageView = view.findViewById(R.id.profile_image);
 
-        chatname.setText(UserDetails.chatWith1);
+        chatname.setText(ChatWith);
+        Picasso.get().load(ChatWithPhoto).into(circleImageView);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,9 +378,9 @@ public class Chat extends AppCompatActivity {
         final String ChatWithPhoto = chatIntent.getStringExtra("ChatWithPhoto");
         final String MessageText = messageArea.getText().toString();
 
-        DateFormat df = new SimpleDateFormat("HH:mm");
-        String CreatedDateTime = df.format(Calendar.getInstance().getTime());
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm");
 
+        String CreatedDateTime = df.format(Calendar.getInstance().getTime());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CREATECHAT,
                 new Response.Listener<String>() {
                     @Override
