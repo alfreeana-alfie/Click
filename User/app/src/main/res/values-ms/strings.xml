@@ -460,7 +460,7 @@
     <string name="delivery_location">Lokasi Penghantaran</string>
     <string name="setup_delivery">Mengatur Penghantaran</string>
     <string name="next">Seterusnya</string>
-    <string name="ad_detail">Tentang Ad</string>
+    <string name="ad_detail">Nama Produk</string>
     <string name="x1">x1</string>
     <string name="placed_on_yyyy_mm_dd">Diletakkan pada YYYY-MM-DD</string>
     <string name="status">Status</string>

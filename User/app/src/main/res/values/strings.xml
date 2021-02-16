@@ -613,7 +613,7 @@
     <string name="delivery_location">Delivery Location</string>
     <string name="setup_delivery">Setup Delivery</string>
     <string name="next">Next</string>
-    <string name="ad_detail">Ad Detail</string>
+    <string name="ad_detail">Product Name</string>
     <string name="x1">x1</string>
     <string name="placed_on_yyyy_mm_dd">Placed on YYYY-MM-DD</string>
     <string name="status">Status</string>
