@@ -176,13 +176,8 @@
     </string-array>
 
     <string-array name="main_category">
-        <item>Semua Kategori</item>
-        <item>Pastri dan Kek</item>
         <item>Makanan yang Diproses</item>
         <item>Kraftangan</item>
-        <item>Barang Borong dan Runcit</item>
-        <item>Pertanian</item>
-        <item>Perkhidmatan</item>
         <item>Kecantikan dan Kesihatan</item>
         <item>Kediaman dan Tempat Tinggal</item>
         <item>Perhiasan Fesyen</item>

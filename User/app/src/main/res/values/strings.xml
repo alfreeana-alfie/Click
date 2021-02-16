@@ -163,13 +163,8 @@
     </string-array>
 
     <string-array name="main_category" tools:ignore="InconsistentArrays">
-        <item>All Categories</item>
-        <item>Cake and pastries</item>
         <item>Process food</item>
         <item>Handicraft</item>
-        <item>Retail and Wholesale</item>
-        <item>Agriculture</item>
-        <item>Service</item>
         <item>Health and Beauty</item>
         <item>Home and living</item>
         <item>Fashion Accessories</item>

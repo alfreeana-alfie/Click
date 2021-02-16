@@ -1228,7 +1228,7 @@ public class Product_Edit extends AppCompatActivity {
             filePath1 = data.getData();
             try {
                 bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
-                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 300, 300, false);
+                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 1200, 1200, false);
                 upload_photo_img1.setImageBitmap(bitmap1);
 
             } catch (IOException e) {
@@ -1240,7 +1240,7 @@ public class Product_Edit extends AppCompatActivity {
             filePath2 = data.getData();
             try {
                 bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
-                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 300, 300, false);
+                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 1200, 1200, false);
                 upload_photo_img2.setImageBitmap(bitmap2);
 
 
@@ -1256,7 +1256,7 @@ public class Product_Edit extends AppCompatActivity {
             try {
 
                 bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
-                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 300, 300, false);
+                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 1200, 1200, false);
                 upload_photo_img3.setImageBitmap(bitmap3);
 
 
@@ -1272,7 +1272,7 @@ public class Product_Edit extends AppCompatActivity {
             try {
 
                 bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
-                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 300, 300, false);
+                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 1200, 1200, false);
                 upload_photo_img4.setImageBitmap(bitmap4);
 
                 delete_4.setVisibility(View.VISIBLE);
@@ -1287,7 +1287,7 @@ public class Product_Edit extends AppCompatActivity {
             try {
 
                 bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
-                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 300, 300, false);
+                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 1200, 1200, false);
                 upload_photo_img5.setImageBitmap(bitmap5);
 
                 delete_5.setVisibility(View.VISIBLE);
