@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:id="@+id/parent"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -75,7 +76,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="@mipmap/background_white"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
 
                 <ImageView
 
@@ -137,6 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start|center"
                         android:numStars="5"
+                        android:layout_marginEnd="10dp"
                         android:rating="0"
                         android:theme="@style/MyRatingBar2" />
 
@@ -163,7 +165,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans"
                         android:text="@string/_0"
-                        android:layout_marginStart="0dp"
                         android:layout_marginEnd="5dp"
                         android:textColor="@color/colorWhite"
                         android:textSize="14sp" />
@@ -191,13 +192,13 @@
                 <RelativeLayout
                     android:id="@+id/linear_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginEnd="20dp">
 
                     <TextView
-                        android:paddingStart="20dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="5dp"
                         android:id="@+id/avail1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -205,13 +206,10 @@
                         android:fontFamily="@font/open_sans"
                         android:text="@string/more_details"
                         android:textColor="@color/colorPrimaryDark"
-                        android:textSize="14sp" />
+                        android:layout_centerHorizontal="true"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:paddingStart="20dp"
-                        android:paddingTop="15dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="5dp"
                         android:id="@+id/detail_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -220,8 +218,8 @@
                         android:drawableEnd="@drawable/ic_right_foreground"
                         android:fontFamily="@font/open_sans"
                         android:textColor="@color/colorPrimaryDark"
+                        android:layout_centerHorizontal="true"
                         android:textSize="16sp" />
-
                 </RelativeLayout>
 
                 <View
@@ -229,14 +227,16 @@
                     android:layout_below="@id/linear_detail"
                     android:id="@+id/view1"
                     android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:background="@color/colorLightGrey" />
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:layout_below="@id/view1">
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -324,7 +324,7 @@
                         android:id="@+id/text_review"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
+                        android:layout_margin="5dp"
                         android:text="@string/review" />
 
                     <RelativeLayout
@@ -432,7 +432,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:drawableEnd="@drawable/ic_right_black_foreground"
-                        android:padding="5dp"
+                        android:layout_margin="5dp"
                         android:text="@string/view_all"
                         android:textColor="@color/colorPrimaryDark" />
                 </RelativeLayout>
@@ -447,7 +447,7 @@
                         android:id="@+id/text_shop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
+                        android:layout_margin="5dp"
                         android:text="@string/from_the_same_shop" />
 
                     <TextView
@@ -456,7 +456,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:drawableEnd="@drawable/ic_right_black_foreground"
-                        android:padding="5dp"
+                        android:layout_margin="5dp"
                         android:text="@string/view_all"
                         android:textColor="@color/colorPrimaryDark" />
 

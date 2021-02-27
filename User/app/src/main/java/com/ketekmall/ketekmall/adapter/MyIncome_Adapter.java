@@ -61,11 +61,11 @@ public class MyIncome_Adapter extends RecyclerView.Adapter<MyIncome_Adapter.View
 
         Picasso.get().load(ItemImage).into(holder.ItemImageView);
         holder.AdDetail.setText(addetail);
-        holder.Price.setText("MYR" + ItemPrice);
-        holder.Delivery_Price.setText("MYR" + delivery_price);
+        holder.Price.setText("RM" + ItemPrice);
+        holder.Delivery_Price.setText("RM" + delivery_price);
         holder.Delivery_Time.setText(delivery_date);
         holder.Delivery_Address.setText(delivery_Addr);
-        holder.GrandTotal.setText("MYR" + itemAllDetails.getGrandtotal());
+        holder.GrandTotal.setText("RM" + itemAllDetails.getGrandtotal());
         holder.Status.setText(itemAllDetails.getStatus());
         holder.Quantity.setText("x" + itemAllDetails.getQuantity());
     }

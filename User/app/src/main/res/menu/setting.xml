@@ -24,21 +24,21 @@
             android:id="@+id/user_profile"
             android:title="@string/edit_profile" />
 
-        <item
-            android:id="@+id/malaylang"
-            android:title="Change to BM" />
+<!--        <item-->
+<!--            android:id="@+id/malaylang"-->
+<!--            android:title="Change to BM" />-->
 
         <item
             android:id="@+id/englang"
-            android:title="Change to ENG" />
+            android:title="@string/change_to_en" />
 
         <item
             android:id="@+id/contact_us"
-            android:title="About KetekMall" />
+            android:title="@string/about_ketekmall" />
 
         <item
             android:id="@+id/setting"
-            android:title="Logout" />
+            android:title="@string/logout" />
 
     </group>
 </menu>

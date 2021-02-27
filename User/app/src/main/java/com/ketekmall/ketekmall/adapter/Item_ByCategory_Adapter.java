@@ -135,12 +135,12 @@ public class Item_ByCategory_Adapter extends BaseAdapter {
             }
         });
 
-        float flo = 0.0F;
+        float flo;
         flo = Float.parseFloat(item.getRating());
         ratingBar.setRating(flo);
 
         TV_addetail.setText(item.getAd_detail());
-        TV_price.setText("MYR" + item.getPrice());
+        TV_price.setText("RM" + item.getPrice());
         TV_item_location.setText(item.getDistrict());
 
         Picasso.get().load(item.getPhoto()).into(img_item);

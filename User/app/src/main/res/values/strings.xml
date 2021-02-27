@@ -102,7 +102,7 @@
     <string name="computer_and_accessories">Computer and Accessories</string>
     <string name="business_for_sale">Business for Sale</string>
     <string name="handcraft">Handcraft</string>
-    <string name="see_all">View All</string>
+    <string name="see_all">View</string>
     <string name="greeting">Welcome!</string>
     <string name="buy_sell_find_almost_everything">Buy. Sell. Find. Almost Everything!</string>
     <string name="items_available_now"> items Available now</string>
@@ -166,10 +166,9 @@
         <item>Process food</item>
         <item>Handicraft</item>
         <item>Health and Beauty</item>
-        <item>Home and living</item>
+        <item>Home and Living</item>
         <item>Fashion Accessories</item>
-        <item>Sarawak - Based Product</item>
-        <item>Self Pick-up</item>
+        <item>Sarawak Product</item>
     </string-array>
 
     <string-array name="vehicle_category">
@@ -555,10 +554,10 @@
     <string name="health_and_beauty">Health and Beauty</string>
     <string name="home_and_living">Home and living</string>
     <string name="fashion_accessories">Fashion Accessories</string>
-    <string name="sarawak_based_product">Sarawak - Based Product</string>
+    <string name="sarawak_based_product">Sarawak Product</string>
     <string name="hot_selling">Hot Selling</string>
     <string name="shocking_sale">Shocking Sale</string>
-    <string name="myr">MYR</string>
+    <string name="myr">RM</string>
     <string name="_0_00">0.00</string>
     <string name="my_income_">My Income</string>
     <string name="no_selling_products">No Selling Products</string>
@@ -600,7 +599,7 @@
     <string name="delete">Delete</string>
     <string name="division">Division</string>
     <string name="price_">Price :</string>
-    <string name="myr_0_00">MYR 0.00</string>
+    <string name="myr_0_00">RM 0.00</string>
     <string name="duration">Duration :</string>
     <string name="location">Location</string>
     <string name="price">PRICE</string>
@@ -646,10 +645,10 @@
     <string name="from_the_same_shop">From the same shop</string>
     <string name="view_all">View All</string>
     <string name="item_name">Item Name</string>
-    <string name="myr0_00">MYR0.00</string>
+    <string name="myr0_00">RM0.00</string>
     <string name="sub_total">Sub Total</string>
     <string name="shipping_total">Shipping Total</string>
-    <string name="grand_total">Grand Total: </string>
+    <string name="grand_total">Grand Total </string>
     <string name="about_seller">About Seller</string>
     <string name="boost_ad">Boost Ad</string>
     <string name="shop_rating">Product Rating</string>
@@ -681,11 +680,18 @@
     <string name="self_pickup">Self Pick-up</string>
     <string name="generate_pdf">Generate PDF</string>
     <string name="customer_name1">Name: </string>
-    <string name="customer_phone1">Phone No.: </string>
+    <string name="customer_phone1">Phone No: </string>
     <string name="customer_address1">Address: </string>
     <string name="customer_details">Customer Details:-</string>
-    <string name="generate_consignment_note">Generate Consignment Note</string>
+    <string name="generate_consignment_note">Delivery Settings</string>
     <string name="great_store_great_choice">Great Store, Great Choice</string>
     <string name="language">lang</string>
+    <string name="preview">Share</string>
+    <string name="download">Download</string>
+    <string name="poslaju">PosLaju</string>
+    <string name="change_to_bm">Change to BM</string>
+    <string name="change_to_en">Change to ENG</string>
+    <string name="about_ketekmall">About KetekMall</string>
+
 </resources>
 

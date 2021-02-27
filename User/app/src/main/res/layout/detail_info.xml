@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="@string/stock" />
             </TableRow>
 
@@ -78,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="@string/brand_material" />
             </TableRow>
 
@@ -94,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:textAllCaps="true"
                         android:text="@string/inner_material" />
 
@@ -104,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="@string/inner_material" />
             </TableRow>
 
@@ -119,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans_bold"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:textAllCaps="true"
                         android:text="@string/ships_from" />
 
@@ -129,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:text="@string/ships_from" />
             </TableRow>
         </TableLayout>
@@ -148,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/open_sans_bold"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textAllCaps="true"
                 android:text="@string/description" />
 
@@ -159,7 +160,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:text="@string/description" />
         </LinearLayout>
 

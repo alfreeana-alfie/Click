@@ -1,15 +1,25 @@
 package com.ketekmall.ketekmall.pages.seller;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,6 +36,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -45,6 +56,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.service.ExifUtil;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -52,7 +64,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +95,7 @@ public class Product_Edit extends AppCompatActivity {
             Button_AcceptAdDetail, Button_BackAdDetail, Button_BackEdit,
             Button_SavedEdit, Button_AcceptLocation, Button_BackLocation;
     private Spinner spinner_main_category, spinner_sub_category, spinner_division, spinner_district;
-    private RelativeLayout category_page_layout, location_page_layout;
+    private RelativeLayout category_page_layout, location_page_layout, parent;
     private LinearLayout item_page_layout;
     private ImageView upload_photo_img1,upload_photo_img2,upload_photo_img3,upload_photo_img4,upload_photo_img5;
     private ImageView delete_2,delete_3,delete_4,delete_5;
@@ -155,6 +169,7 @@ public class Product_Edit extends AppCompatActivity {
     }
 
     private void Declare() {
+        parent = findViewById(R.id.parent);
         Main_Category_TextView = findViewById(R.id.enter_main_category);
         Sub_Category_TextView = findViewById(R.id.enter_sub_category);
         Category_TextView = findViewById(R.id.enter_category);
@@ -262,17 +277,39 @@ public class Product_Edit extends AppCompatActivity {
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_main_category.setAdapter(adapter_category);
 
-        spinner_main_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                showResult(position);
-            }
+//        setupUI(parent);
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    public void setupUI(View view) {
 
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(Product_Edit.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
             }
-        });
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
+
     }
 
     private void Button_Func() {
@@ -395,10 +432,9 @@ public class Product_Edit extends AppCompatActivity {
         Button_BackEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(Product_Edit.this, MyProducts.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-                finish();
+                Intent intent = new Intent(Product_Edit.this, MyProducts.class);
+                startActivity(intent);
+//                finish();
             }
         });
 
@@ -459,121 +495,6 @@ public class Product_Edit extends AppCompatActivity {
     private void gotoCategory() {
         category_page_layout.setVisibility(View.VISIBLE);
         item_page_layout.setVisibility(View.GONE);
-    }
-
-    private void showResult(int position) {
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                adapter_car = ArrayAdapter.createFromResource(this, R.array.vehicle_category, android.R.layout.simple_spinner_item);
-                adapter_car.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_car);
-                if (sub_category != null) {
-                    int main_catposition = adapter_car.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-                break;
-            case 2:
-                adapter_properties = ArrayAdapter.createFromResource(this, R.array.properties_category, android.R.layout.simple_spinner_item);
-                adapter_properties.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_properties);
-                if (sub_category != null) {
-                    int main_catposition = adapter_properties.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 3:
-                adapter_electronic = ArrayAdapter.createFromResource(this, R.array.electronic_category, android.R.layout.simple_spinner_item);
-                adapter_electronic.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_electronic);
-                if (sub_category != null) {
-                    int main_catposition = adapter_electronic.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 4:
-                adapter_home = ArrayAdapter.createFromResource(this, R.array.home_category, android.R.layout.simple_spinner_item);
-                adapter_home.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_home);
-                if (sub_category != null) {
-                    int main_catposition = adapter_home.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 5:
-                adapter_leisure = ArrayAdapter.createFromResource(this, R.array.leisure_category, android.R.layout.simple_spinner_item);
-                adapter_leisure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_leisure);
-                if (sub_category != null) {
-                    int main_catposition = adapter_leisure.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 6:
-                adapter_business = ArrayAdapter.createFromResource(this, R.array.business_category, android.R.layout.simple_spinner_item);
-                adapter_business.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_business);
-                if (sub_category != null) {
-                    int main_catposition = adapter_business.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 7:
-                adapter_jobs = ArrayAdapter.createFromResource(this, R.array.jobs_category, android.R.layout.simple_spinner_item);
-                adapter_jobs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_jobs);
-                if (sub_category != null) {
-                    int main_catposition = adapter_jobs.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 8:
-                adapter_travel = ArrayAdapter.createFromResource(this, R.array.travel_category, android.R.layout.simple_spinner_item);
-                adapter_travel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_travel);
-                if (sub_category != null) {
-                    int main_catposition = adapter_travel.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-
-                break;
-            case 9:
-                adapter_other = ArrayAdapter.createFromResource(this, R.array.other_category, android.R.layout.simple_spinner_item);
-                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_other);
-                if (sub_category != null) {
-                    int main_catposition = adapter_other.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-                break;
-
-            case 10:
-                adapter_other = ArrayAdapter.createFromResource(this, R.array.other_category, android.R.layout.simple_spinner_item);
-                adapter_other.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner_sub_category.setAdapter(adapter_other);
-                if (sub_category != null) {
-                    int main_catposition = adapter_other.getPosition(sub_category);
-                    spinner_sub_category.setSelection(main_catposition);
-
-                }
-                break;
-        }
     }
 
     private void showLocationResult(int position) {
@@ -1227,78 +1148,156 @@ public class Product_Edit extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath1 = data.getData();
             try {
+
+
                 bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
-                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 1200, 1200, false);
-                upload_photo_img1.setImageBitmap(bitmap1);
+                bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                Matrix matrix = new Matrix();
+
+                if(bitmap1.getWidth() > bitmap1.getHeight()) {
+                    matrix.postRotate(90);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
+                    Bitmap ScaledRotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    upload_photo_img1.setImageBitmap(ScaledRotatedBitmap);
+                    saveImage2(getStringImage(ScaledRotatedBitmap));
+                }else{
+                    upload_photo_img1.setImageBitmap(bitmap1);
+                    saveImage2(getStringImage(bitmap1));
+                }
+
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage2(getStringImage(bitmap1));
+
         }
         if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath2 = data.getData();
             try {
+
                 bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
-                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 1200, 1200, false);
-                upload_photo_img2.setImageBitmap(bitmap2);
+                bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
+                Matrix matrix = new Matrix();
 
-
+                if(bitmap2.getWidth() > bitmap2.getHeight()) {
+                    matrix.postRotate(90);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
+                    Bitmap ScaledRotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    upload_photo_img2.setImageBitmap(ScaledRotatedBitmap);
+                    saveImage("2", getStringImage(ScaledRotatedBitmap));
+                }else{
+                    upload_photo_img2.setImageBitmap(bitmap2);
+                    saveImage("2", getStringImage(bitmap2));
+                }
                 delete_2.setVisibility(View.VISIBLE);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage("2", getStringImage(bitmap2));
+
         }
         if (requestCode == 3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath3 = data.getData();
+
             try {
 
                 bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
-                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 1200, 1200, false);
+                bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
+                Matrix matrix = new Matrix();
+
+                if(bitmap3.getWidth() > bitmap3.getHeight()) {
+                    matrix.postRotate(90);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
+                    Bitmap ScaledRotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    upload_photo_img3.setImageBitmap(ScaledRotatedBitmap);
+                    saveImage("3", getStringImage(ScaledRotatedBitmap));
+                }else{
+                    upload_photo_img3.setImageBitmap(bitmap3);
+                    saveImage("3", getStringImage(bitmap3));
+                }
+                delete_3.setVisibility(View.VISIBLE);
+/*
+                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 1000, 750, false);
                 upload_photo_img3.setImageBitmap(bitmap3);
 
 
                 delete_3.setVisibility(View.VISIBLE);
+*/
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage("3", getStringImage(bitmap3));
+
         }
         if (requestCode == 4 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath4 = data.getData();
+
             try {
 
                 bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
-                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 1200, 1200, false);
+                bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
+                Matrix matrix = new Matrix();
+
+                if(bitmap4.getWidth() > bitmap4.getHeight()) {
+                    matrix.postRotate(90);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
+                    Bitmap ScaledRotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    upload_photo_img4.setImageBitmap(ScaledRotatedBitmap);
+                    saveImage("4", getStringImage(ScaledRotatedBitmap));
+                }else{
+                    upload_photo_img4.setImageBitmap(bitmap4);
+                    saveImage("4", getStringImage(bitmap4));
+                }
+                delete_4.setVisibility(View.VISIBLE);
+
+/*
+                bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 1000, 750, false);
                 upload_photo_img4.setImageBitmap(bitmap4);
 
                 delete_4.setVisibility(View.VISIBLE);
+*/
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage("4", getStringImage(bitmap4));
+
         }
         if (requestCode == 5 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath5 = data.getData();
+
             try {
 
                 bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
-                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 1200, 1200, false);
+                bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
+                Matrix matrix = new Matrix();
+
+                if(bitmap5.getWidth() > bitmap5.getHeight()) {
+                    matrix.postRotate(90);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
+                    Bitmap ScaledRotatedBitmap = Bitmap.createScaledBitmap(rotatedBitmap, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    upload_photo_img5.setImageBitmap(ScaledRotatedBitmap);
+                    saveImage("5", getStringImage(ScaledRotatedBitmap));
+                }else{
+                    upload_photo_img5.setImageBitmap(bitmap5);
+                    saveImage("5", getStringImage(bitmap5));
+                }
+                delete_5.setVisibility(View.VISIBLE);
+/*
+                bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 1000, 750, false);
                 upload_photo_img5.setImageBitmap(bitmap5);
 
                 delete_5.setVisibility(View.VISIBLE);
-
+*/
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            saveImage("5", getStringImage(bitmap5));
+
         }
     }
-
     private void chooseFile1() {
         Intent intent = new Intent();
         intent.setType("image/*");

@@ -1,10 +1,16 @@
 package com.ketekmall.ketekmall.pages.buyer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +85,6 @@ public class MyBuying extends AppCompatActivity {
     BottomNavigationView bottomNav;
     TextView textView10;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,8 +135,40 @@ public class MyBuying extends AppCompatActivity {
                 return true;
             }
         });
+        setupUI(findViewById(R.id.parent));
     }
 
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(MyBuying.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
+
+    }
     private void Buying_List() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_ORDER,
                 new Response.Listener<String>() {
@@ -306,7 +343,7 @@ public class MyBuying extends AppCompatActivity {
                                         intent1.putExtra("customer_id", strCustomer_id);
                                         intent1.putExtra("item_id", strItem_id);
                                         intent1.putExtra("remarks", strStatus);
-                                        intent1.putExtra("order_date", strOrder_Date);
+                                        intent1.putExtra("order_date", strDate);
                                         intent1.putExtra("order_id", strOrder_Id);
                                         intent1.putExtra("tracking_no", strTracking);
                                         intent1.putExtra("delivery_date", strDelivery_Date);

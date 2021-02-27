@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="7dp">
+    android:layout_marginBottom="7dp"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:background="@color/colorWhite"
@@ -18,20 +19,21 @@
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/layout_button"
             android:layout_toEndOf="@id/item_image"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="0dp"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:textSize="16sp"
-            android:text="Item Name" />
+            android:textSize="14sp"
+            android:text="@string/item_name" />
 
         <TextView
             android:id="@+id/item_price"
@@ -39,33 +41,41 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/item_name"
             android:layout_toEndOf="@id/item_image"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="@font/open_sans"
             android:layout_marginTop="2dp"
             android:layout_marginStart="5dp"
             android:textSize="12sp"
-            android:text="Item Price" />
+            android:text="@string/myr_0_00" />
 
         <TextView
             android:id="@+id/item_shocking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_price"
             android:layout_toEndOf="@id/item_image"
-
+            android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/open_sans_semibold"
             android:textSize="12sp"
-            android:text="Shocking Sale" />
+            android:layout_alignBottom="@id/item_image"
+            android:text="@string/shocking_sale" />
 
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout_button"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
-            android:background="@mipmap/login_part_border_orange"
-            android:textColor="@color/colorWhite"
-            android:text="Cancel" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:elevation="0dp"
+                android:background="@mipmap/login_part_border_orange"
+                android:textColor="@color/colorWhite"
+                android:text="Cancel" />
+        </RelativeLayout>
+
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

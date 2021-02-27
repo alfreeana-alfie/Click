@@ -1,11 +1,16 @@
 package com.ketekmall.ketekmall.pages.buyer;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,13 +38,12 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.data.SessionManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.seller.Selling_Detail;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -49,6 +53,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressLint("DefaultLocale")
 public class Review_Page extends AppCompatActivity {
 
     private static String URL_REVIEW = "https://ketekmall.com/ketekmall/add_review.php";
@@ -76,6 +81,7 @@ public class Review_Page extends AppCompatActivity {
     float getRating;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +89,7 @@ public class Review_Page extends AppCompatActivity {
 
         getSession();
         ToolbarSetting();
+        setupUI(findViewById(R.id.parent));
 
         Intent intent = getIntent();
         final String strSeller_ID = intent.getStringExtra("seller_id");
@@ -182,7 +189,7 @@ public class Review_Page extends AppCompatActivity {
         DateReceived.setText(strDelivery_Date);
 
         AdDetail.setText(strAd_Detail);
-        Price.setText("MYR" + strPrice);
+        Price.setText("RM" + strPrice);
         Quantity.setText("x" + strQuantity);
         Picasso.get().load(strPhoto).into(Photo);
 
@@ -190,31 +197,35 @@ public class Review_Page extends AppCompatActivity {
 
         assert strDivision != null;
 
-        if(strDivision.equals(strSeller_Division)){
-            Price.setText("MYR" + strPrice);
+        if (strDivision.equals(strSeller_Division)) {
+            Price.setText("RM" + strPrice);
             Double sub_total = 0.00;
             sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
 
-            SubTotal.setText("MYR" + String.format("%.2f", sub_total));
-            ShipTotal.setText("MYR0.00");
+            SubTotal.setText("RM" + String.format("%.2f", sub_total));
+            ShipTotal.setText("RM0.00");
 
 
             Double grandtotal = 0.00;
             grandtotal = sub_total;
 
-            GrandTotal.setText("MYR" + String.format("%.2f", sub_total));
-        }else {
-            Double sub_total = 0.00;
+            GrandTotal.setText("RM" + String.format("%.2f", sub_total));
+        } else {
+            double sub_total;
             sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);
 
-            SubTotal.setText("MYR" + String.format("%.2f", sub_total));
-            ShipTotal.setText("MYR" + strShipping);
+            double NewTotalAmount = Double.parseDouble(strShipping);
+            double RoundedTotalAmount = Math.ceil(NewTotalAmount);
+            String ShippingCost = String.format("%.2f", RoundedTotalAmount);
+
+            SubTotal.setText("RM" + String.format("%.2f", sub_total));
+            ShipTotal.setText("RM" + ShippingCost);
 
 
-            Double grandtotal = 0.00;
-            grandtotal = sub_total + Double.parseDouble(strShipping);
+            double grandtotal;
+            grandtotal = sub_total + RoundedTotalAmount;
 
-            GrandTotal.setText("MYR" + String.format("%.2f", grandtotal));
+            GrandTotal.setText("RM" + String.format("%.2f", grandtotal));
 
         }
         TrackingNo.setOnClickListener(new View.OnClickListener() {
@@ -285,18 +296,20 @@ public class Review_Page extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Review_Page.this, Me_Page.class);
-                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent1);
+                order_layout.setVisibility(View.VISIBLE);
+                review_layout.setVisibility(View.GONE);
+//                Intent intent1 = new Intent(Review_Page.this, Me_Page.class);
+//                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent1);
             }
         });
 
         btn_received.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(strDivision.equals(strSeller_Division)){
+                if (strDivision.equals(strSeller_Division)) {
                     Received(order_date, "0.00");
-                }else {
+                } else {
                     Received(order_date, strShipping);
                 }
 
@@ -305,6 +318,38 @@ public class Review_Page extends AppCompatActivity {
                 review_layout.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(Review_Page.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
+
     }
 
     private void ToolbarSetting() {
@@ -371,7 +416,7 @@ public class Review_Page extends AppCompatActivity {
                                                             } else {
                                                                 loading.setVisibility(View.GONE);
                                                                 btn_submit.setVisibility(View.VISIBLE);
-                                                                Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
+//                                                                Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                                                             }
                                                         } catch (JSONException e) {
                                                             loading.setVisibility(View.GONE);
@@ -391,7 +436,7 @@ public class Review_Page extends AppCompatActivity {
                                                             if (error instanceof TimeoutError) {
                                                                 //Time out error
                                                                 System.out.println("" + error);
-                                                            }else if(error instanceof NoConnectionError){
+                                                            } else if (error instanceof NoConnectionError) {
                                                                 //net work error
                                                                 System.out.println("" + error);
                                                             } else if (error instanceof AuthFailureError) {
@@ -406,7 +451,7 @@ public class Review_Page extends AppCompatActivity {
                                                             } else if (error instanceof ParseError) {
                                                                 //Error
                                                                 System.out.println("" + error);
-                                                            }else{
+                                                            } else {
                                                                 //Error
                                                                 System.out.println("" + error);
                                                             }
@@ -451,10 +496,10 @@ public class Review_Page extends AppCompatActivity {
                             btn_submit.setVisibility(View.VISIBLE);
                             try {
 
-                                if (error instanceof TimeoutError ) {
+                                if (error instanceof TimeoutError) {
                                     //Time out error
                                     System.out.println("" + error);
-                                }else if(error instanceof NoConnectionError){
+                                } else if (error instanceof NoConnectionError) {
                                     //net work error
                                     System.out.println("" + error);
                                 } else if (error instanceof AuthFailureError) {
@@ -469,7 +514,7 @@ public class Review_Page extends AppCompatActivity {
                                 } else if (error instanceof ParseError) {
                                     //Error
                                     System.out.println("" + error);
-                                }else{
+                                } else {
                                     //Error
                                     System.out.println("" + error);
                                 }
@@ -496,7 +541,7 @@ public class Review_Page extends AppCompatActivity {
 
     }
 
-    private void GetPlayerData(final String CustomerUserID, final String OrderID){
+    private void GetPlayerData(final String CustomerUserID, final String OrderID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
                 new Response.Listener<String>() {
                     @Override
@@ -529,10 +574,10 @@ public class Review_Page extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -547,7 +592,7 @@ public class Review_Page extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
@@ -571,7 +616,7 @@ public class Review_Page extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void OneSignalNoti(final String PlayerUserID, final String Name, final String OrderID){
+    private void OneSignalNoti(final String PlayerUserID, final String Name, final String OrderID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
                 new Response.Listener<String>() {
                     @Override
@@ -640,7 +685,7 @@ public class Review_Page extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                Toast.makeText(Review_Page.this, R.string.success_update, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Review_Page.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(Review_Page.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
@@ -655,10 +700,10 @@ public class Review_Page extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -673,7 +718,7 @@ public class Review_Page extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }
@@ -733,10 +778,10 @@ public class Review_Page extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
                                 System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
                                 System.out.println("" + error);
                             } else if (error instanceof AuthFailureError) {
@@ -751,7 +796,7 @@ public class Review_Page extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
                                 System.out.println("" + error);
-                            }else{
+                            } else {
                                 //Error
                                 System.out.println("" + error);
                             }

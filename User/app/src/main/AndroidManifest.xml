@@ -121,6 +121,9 @@
         <activity android:name=".PosLajuTestAreaStage" />
         <activity android:name=".pages.View_Shocking_Sale" />
         <activity android:name=".pages.navigation_items.Chat" />
+        <activity android:name=".pages.Chat_Inbox_Noti" />
+        <activity android:name=".pages.View_Category_Noti" />
+        <activity android:name=".pages.seller.Product_Add_Homepage" />
 
 
         <meta-data

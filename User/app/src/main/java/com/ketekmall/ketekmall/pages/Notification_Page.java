@@ -91,7 +91,7 @@ public class Notification_Page extends AppCompatActivity {
         promotion_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Notification_Page.this, View_Category.class);
+                Intent intent1 = new Intent(Notification_Page.this, View_Category_Noti.class);
                 intent1.putExtra("URL_READ", URL_READ_CATEGORY_MAIN + CATEGORY_LIST[12]);
                 intent1.putExtra("URL_ADD_FAV", URL_ADD_FAV);
                 intent1.putExtra("URL_ADD_CART", URL_ADD_CART);
@@ -108,7 +108,7 @@ public class Notification_Page extends AppCompatActivity {
         social_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(Notification_Page.this, Chat_Inbox.class);
+                Intent intent1 = new Intent(Notification_Page.this, Chat_Inbox_Noti.class);
 //                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent1);
             }

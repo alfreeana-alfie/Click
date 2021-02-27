@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorAccent">
+    android:background="@color/colorAccent"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -114,9 +115,6 @@
                         android:fontFamily="@font/open_sans"
                         android:textSize="12sp"
                         android:text="@string/click_tracking_number_to_view" />
-
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -407,8 +405,8 @@
 
                         <ImageView
                             android:id="@+id/photo"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
                             tools:srcCompat="@tools:sample/avatars" />
 
                         <TextView
@@ -417,44 +415,45 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/photo"
                             android:fontFamily="@font/open_sans_semibold"
-                            android:padding="10dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="0dp"
                             android:text="@string/ad_detail"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/text_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_above="@id/text_quantity"
-                            android:layout_toEndOf="@id/photo"
-                            android:fontFamily="@font/open_sans"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
-                            android:text="@string/myr0_00"
-                            android:textColor="@color/colorGrey"
-                            android:textSize="12sp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/text_quantity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/photo"
                             android:layout_alignParentEnd="true"
+                            android:layout_above="@id/text_price"
                             android:fontFamily="@font/open_sans"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"
+                            android:layout_marginBottom="5dp"
                             android:text="@string/x1"
                             android:textColor="@color/colorGrey"
                             android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/text_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignBottom="@id/photo"
+                            android:fontFamily="@font/open_sans"
+                            android:text="@string/myr0_00"
+                            android:textColor="@color/colorGrey"
+                            android:textSize="12sp" />
+
                     </RelativeLayout>
 
                     <View
                         android:id="@+id/view2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@color/colorLightGrey" />
 
                     <LinearLayout
@@ -482,7 +481,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
                         <TextView

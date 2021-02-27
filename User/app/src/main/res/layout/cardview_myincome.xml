@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:layout_marginBottom="7dp">
+    android:layout_marginBottom="7dp"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:padding="10dp"
@@ -16,48 +17,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/text_order_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:layout_marginTop="2.5dp"
+            android:text="Order ID"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
         <ImageView
             android:layout_marginBottom="3dp"
             android:id="@+id/item_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@id/text_order_id"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/text_order_id"
             android:layout_toEndOf="@id/item_image"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="10dp"
             android:fontFamily="@font/open_sans_semibold"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="Item Name" />
 
         <TextView
             android:id="@+id/item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_name"
-            android:layout_toEndOf="@id/item_image"
-            android:fontFamily="@font/open_sans_semibold"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="5dp"
-            android:textSize="12sp"
-            android:text="Item Price" />
+            android:layout_below="@id/item_quantity"
+            android:layout_alignParentEnd="true"
+            android:fontFamily="@font/open_sans"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/myr0_00"
+            android:textColor="@color/colorGrey"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/item_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/item_name"
             android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/item_image"
-            android:fontFamily="@font/open_sans_semibold"
-            android:layout_marginTop="2dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:textSize="12sp"
-            android:text="Quantity" />
+            android:fontFamily="@font/open_sans"
+            android:layout_marginStart="10dp"
+            android:text="@string/x1"
+            android:textColor="@color/colorGrey"
+            android:textSize="12sp" />
 
         <View
             android:id="@+id/view1"
@@ -73,60 +87,85 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_marginBottom="5dp"
+
                 android:id="@+id/addr_view"
                 android:fontFamily="@font/open_sans_bold"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
                 android:text="@string/delivery_address" />
 
             <TextView
-                android:layout_marginBottom="5dp"
                 android:id="@+id/delivery_addr"
-                android:layout_below="@id/addr_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/addr_view"
+                android:layout_marginTop="-1dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
                 android:text="@string/delivery_address" />
 
-            <TextView
-                android:id="@+id/timeview"
+            <RelativeLayout
+                android:id="@+id/layout_time"
                 android:layout_below="@id/delivery_addr"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/delivery_time" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/timeview"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/delivery_time" />
 
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
-                android:id="@+id/delivery_time"
-                android:layout_below="@id/delivery_addr"
-                android:layout_toEndOf="@id/timeview"
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/delivery_time"
+                    android:layout_toEndOf="@id/timeview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/myr_0_00" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/layout_delivery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/delivery_time" />
+                android:layout_below="@id/layout_time">
+                <TextView
+                    android:id="@+id/shipview"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/shipping_total_" />
 
-            <TextView
-                android:id="@+id/shipview"
-                android:layout_below="@id/delivery_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/shipping_total_" />
-
-            <TextView
-                android:layout_marginBottom="5dp"
-                android:layout_marginStart="5dp"
-                android:id="@+id/delivery_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/shipview"
-                android:layout_below="@id/delivery_time"
-                android:text="@string/delivery_price" />
+                <TextView
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/delivery_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/shipview"
+                    android:layout_centerVertical="true"
+                    android:text="@string/myr_0_00" />
+            </RelativeLayout>
 
             <TextView
                 android:layout_marginTop="15dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="0dp"
                 android:id="@+id/status"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -134,24 +173,37 @@
                 android:layout_height="wrap_content"
                 android:text="@string/status" />
 
-            <TextView
-                android:layout_marginTop="15dp"
-                android:id="@+id/grandview"
-                android:layout_below="@id/delivery_price"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:text="@string/grand_total" />
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/layout_delivery">
+                <TextView
 
-            <TextView
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="5dp"
-                android:id="@+id/grandtotal"
-                android:layout_below="@id/delivery_price"
-                android:layout_toEndOf="@id/grandview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/myr_0_00" />
+                    android:id="@+id/grandview"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/grand_total" />
+
+                <TextView
+                    android:id="@+id/grandtotal"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/grandview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/myr_0_00" />
+            </RelativeLayout>
         </RelativeLayout>
 
     </RelativeLayout>

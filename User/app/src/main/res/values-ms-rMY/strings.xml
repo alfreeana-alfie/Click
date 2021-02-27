@@ -29,7 +29,7 @@
     <string name="home">Rumah</string>
     <string name="category">Kategori</string>
     <string name="ad_details">Tentang Ad</string>
-    <string name="price_rm">Harga (MYR)</string>
+    <string name="price_rm">Harga (RM)</string>
     <string name="uploaded_photo">Muat Naik Gambar</string>
     <string name="cover_photo">Gambar Hadapan</string>
     <string name="forgot_your_password">Lupa Kata Laluan?</string>
@@ -60,7 +60,7 @@
     <string name="unit_price">Harga Unit</string>
     <string name="subtotal">Sub Jumlah</string>
     <string name="rm">RM</string>
-    <string name="see_all">Lihat Semua</string>
+    <string name="see_all">Lihat</string>
     <string name="greeting">Selamat Datang!</string>
     <string name="buy_sell_find_almost_everything">Beli. Jual. Cari. Hampir Kesemuanya!</string>
     <string name="sell">Jual</string>
@@ -181,8 +181,7 @@
         <item>Kecantikan dan Kesihatan</item>
         <item>Kediaman dan Tempat Tinggal</item>
         <item>Perhiasan Fesyen</item>
-        <item>Produk Berasaskan - Sarawak</item>
-        <item>Produk Ambil Sendiri</item>
+        <item>Produk Sarawak</item>
     </string-array>
 
     <string-array name="vehicle_category">
@@ -435,7 +434,7 @@
     <string name="minus">-</string>
     <string name="_1">1</string>
     <string name="plus">+</string>
-    <string name="myr">MYR</string>
+    <string name="myr">RM</string>
     <string name="_0_00">0.00</string>
 
     <string name="my_income_">Pendapatan Bersih</string>
@@ -447,7 +446,7 @@
     <string name="delete">Buang</string>
     <string name="division">Bahagian</string>
     <string name="price_">Harga :</string>
-    <string name="myr_0_00">MYR 0.00</string>
+    <string name="myr_0_00">RM 0.00</string>
     <string name="duration">Tempoh Masa :</string>
     <string name="location">Lokasi</string>
     <string name="price">Harga</string>
@@ -493,10 +492,10 @@
     <string name="from_the_same_shop">Dari kedai yang sama</string>
     <string name="view_all">Lihat Semua</string>
     <string name="item_name">Nama Barang</string>
-    <string name="myr0_00">MYR0.00</string>
+    <string name="myr0_00">RM0.00</string>
     <string name="sub_total">Jumlah Sub</string>
     <string name="shipping_total">Jumlah Penghantaran</string>
-    <string name="grand_total">Jumlah Keluruhan: </string>
+    <string name="grand_total">Jumlah Keseluruhan </string>
     <string name="about_seller">Tentang Penjual</string>
     <string name="boost_ad">Ad Galakan</string>
     <string name="customer_address">Alamat Pembeli</string>
@@ -523,6 +522,12 @@
     <string name="self_pickup">Ambil Sendiri</string>
     <string name="generate_pdf">Muat Turun PDF</string>
     <string name="customer_details">Maklumat Pembeli:-</string>
-    <string name="generate_consignment_note">Muat Turun Pos Laju PDF</string>
+    <string name="generate_consignment_note">Seting Penghantaran</string>
     <string name="great_store_great_choice">Kedai Hebat, Pilihan Hebat</string>
+    <string name="preview">Kongsi</string>
+    <string name="download">Muat Turun</string>
+    <string name="poslaju">PosLaju</string>
+    <string name="change_to_bm">Tukar ke BM</string>
+    <string name="change_to_en">Tukar ke ENG</string>
+    <string name="about_ketekmall">Tentang KetekMall</string>
 </resources>

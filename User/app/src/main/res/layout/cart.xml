@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,14 +87,15 @@
             <Button
                 android:id="@+id/btn_checkout"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:background="@mipmap/background_orange_full_curve"
                 android:drawableEnd="@drawable/ic_right_arrow_foreground"
                 android:fontFamily="@font/open_sans_semibold"
                 android:text="@string/checkout"
                 android:textColor="@color/colorAccent"
-                android:textSize="18sp"/>
+                style="?android:attr/borderlessButtonStyle"
+                android:textSize="14sp"/>
         </RelativeLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

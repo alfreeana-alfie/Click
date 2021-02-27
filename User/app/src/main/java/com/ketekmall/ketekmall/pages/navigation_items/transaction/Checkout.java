@@ -230,7 +230,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         checkoutData.setDelivery_division1(division + " to " + strCity);
 
                                                                                         grandtotal += (price * Integer.parseInt(quantity) + Math.ceil(NewTotalAmount));
-                                                                                        Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                                        Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
                                                                                         Grand_Total2.setText(String.format("%.2f", grandtotal));
 
                                                                                         item_all_detailsList.add(checkoutData);
@@ -254,13 +254,13 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                             checkoutData.setDelivery_division(division);
 
                                                                                             String delivery_text;
-                                                                                            delivery_text = "<font color='#999999'>MYR0.00</font>";
+                                                                                            delivery_text = "<font color='#999999'>RM0.00</font>";
                                                                                             checkoutData.setDelivery_price2(Html.fromHtml(delivery_text));
                                                                                             checkoutData.setDelivery_division1(division + " to " + division);
 
                                                                                             grandtotal -= Double.parseDouble(Price);
                                                                                             Grand_Total2.setText(String.format("%.2f", grandtotal));
-                                                                                            Grand_Total.setText("MYR" + String.format("%.2f", grandtotal));
+                                                                                            Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
                                                                                         }
                                                                                     });
                                                                                 }catch(JSONException e){
@@ -518,7 +518,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setMerchantKey ("8bgBOjTkij");
                                                 payment.setMerchantCode ("M29640");
                                                 payment.setPaymentId ("");
-                                                payment.setCurrency ("MYR");
+                                                payment.setCurrency ("RM");
                                                 payment.setRefNo (RefID);
                                                 payment.setAmount (Grand_Total2.getText().toString());
                                                 payment.setProdDesc ("KetekMall");

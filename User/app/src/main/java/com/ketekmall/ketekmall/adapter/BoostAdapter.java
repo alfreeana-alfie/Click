@@ -49,7 +49,7 @@ public class BoostAdapter extends RecyclerView.Adapter<BoostAdapter.ViewHolder> 
 
         Picasso.get().load(ItemImage).into(holder.ItemImageView);
         holder.AdDetail.setText(addetail);
-        holder.Price.setText("MYR" + ItemPrice);
+        holder.Price.setText("RM" + ItemPrice);
 
 
         if (itemAllDetails.getShocking().equals("1")) {

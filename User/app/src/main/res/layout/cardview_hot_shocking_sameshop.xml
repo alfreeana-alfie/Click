@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/parent">
 
     <ImageView
         android:id="@+id/image_item"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_gravity="center"
+        android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -21,10 +23,13 @@
         android:fontFamily="@font/open_sans"
         android:ellipsize="end"
         android:maxLines="1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
         android:textAlignment="center"
         android:text="@string/item_name"
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textSize="14sp"
+        android:textColor="@color/colorDarkGrey" />
 
     <TextView
         android:id="@+id/item_price"
@@ -33,8 +38,9 @@
         android:layout_gravity="center"
         android:fontFamily="@font/open_sans"
         android:text="@string/myr0_00"
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_marginTop="0dp"
+        android:textSize="12sp"
+        android:textColor="@color/colorDarkGrey" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -43,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:numStars="5"
+        android:layout_marginTop="3dp"
         android:rating="0"
         android:theme="@style/MyRatingBar" />
 
@@ -52,12 +59,13 @@
         android:layout_height="30dp"
         android:layout_gravity="end"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:background="@mipmap/view_border_orange"
         android:fontFamily="@font/open_sans_semibold"
         android:textColor="@color/colorWhite"
+        style="?android:attr/borderlessButtonStyle"
         android:text="@string/add_to_cart"
         android:textSize="14sp" />
 </LinearLayout>

@@ -62,7 +62,7 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         holder.text_order_id.setText("KM" + order.getId());
         Picasso.get().load(order.getPhoto()).into(holder.photo);
         holder.text_ad_detail.setText(order.getAd_detail());
-        holder.text_price.setText("MYR"+order.getPrice());
+        holder.text_price.setText("RM"+order.getPrice());
         holder.text_quantity.setText("x" + order.getQuantity());
         holder.text_placed_date.setText("Order Placed on " + order.getDate());
 

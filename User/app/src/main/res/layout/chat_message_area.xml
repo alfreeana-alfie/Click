@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="#fcf3cf"
     android:layout_marginBottom="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/parent">
 
     <RelativeLayout
         android:layout_width="0dp"

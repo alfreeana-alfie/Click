@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/parent">
 
 
         <RelativeLayout
@@ -41,78 +42,72 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp">
 
                 <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/text_order_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans"
                     android:padding="5dp"
                     android:text="Order ID"
+                    android:background="@color/colorLightOrange"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:id="@+id/photo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:layout_below="@id/text_order_id"
+                    android:scaleType="centerCrop"
                     tools:srcCompat="@tools:sample/avatars" />
 
                 <TextView
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="10dp"
                     android:id="@+id/text_ad_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_order_id"
                     android:layout_toEndOf="@id/photo"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:padding="10dp"
                     android:text="@string/ad_detail"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
+
 
                 <TextView
-                    android:layout_marginEnd="15dp"
-                    android:id="@+id/text_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@id/text_quantity"
-                    android:layout_toEndOf="@id/photo"
-                    android:fontFamily="@font/open_sans"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="@string/myr0_00"
-                    android:textColor="@color/colorGrey"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_marginEnd="15dp"
                     android:id="@+id/text_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/linearLayout"
+                    android:layout_above="@id/text_price"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/open_sans"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
                     android:text="@string/x1"
                     android:textColor="@color/colorGrey"
                     android:textSize="12sp" />
 
+                <TextView
+                    android:id="@+id/text_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignBottom="@id/photo"
+                    android:fontFamily="@font/open_sans"
+                    android:text="@string/myr0_00"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
+
                 <LinearLayout
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/photo"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -121,7 +116,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:padding="10dp"
                         android:text="@string/placed_on_yyyy_mm_dd"
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp" />
@@ -132,7 +126,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/open_sans"
-                        android:padding="10dp"
                         android:text="@string/status"
                         android:textAlignment="textEnd"
                         android:textColor="@color/colorGrey"
@@ -140,10 +133,9 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:fontFamily="@font/open_sans"
-                    android:padding="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/text_ship_placed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,12 +154,11 @@
                 <TextView
                     android:layout_below="@id/border1"
                     android:id="@+id/textView1"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="0dp"
                     android:fontFamily="@font/open_sans_bold"
-                    android:paddingTop="10dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:textSize="14sp"
                     android:text="@string/customer_details" />
 
@@ -179,21 +170,15 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="0dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:padding="10dp"
-                        android:layout_width="130dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp"
                         android:text="@string/customer_name1" />
 
                     <TextView
-                        android:layout_marginStart="0dp"
-                        android:layout_marginEnd="15dp"
                         android:fontFamily="@font/open_sans"
-                        android:padding="10dp"
                         android:id="@+id/customer_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -211,11 +196,8 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="0dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:padding="10dp"
-                        android:layout_width="130dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
 
                         android:textColor="@color/colorGrey"
@@ -223,10 +205,7 @@
                         android:text="@string/customer_address1" />
 
                     <TextView
-                        android:layout_marginStart="0dp"
-                        android:layout_marginEnd="15dp"
                         android:fontFamily="@font/open_sans"
-                        android:padding="10dp"
                         android:id="@+id/customer_addr"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -244,21 +223,15 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="0dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:padding="10dp"
-                        android:layout_width="130dp"
+                        android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorGrey"
                         android:textSize="12sp"
                         android:text="@string/customer_phone1" />
 
                     <TextView
-                        android:layout_marginStart="0dp"
-                        android:layout_marginEnd="15dp"
                         android:fontFamily="@font/open_sans"
-                        android:padding="10dp"
                         android:id="@+id/customer_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -271,17 +244,16 @@
                 <View
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_height="1dp"
                     android:layout_below="@id/CustomerPhone_Layout"
                     android:background="@color/colorLightGrey" />
 
                 <TextView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:id="@+id/status1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:textAllCaps="true"
                     android:fontFamily="@font/open_sans_bold"
                     android:layout_below="@id/view1"
@@ -449,8 +421,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
                         android:padding="10dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:background="#FF0000"
@@ -465,8 +435,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
                         android:padding="10dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:background="#FF0000"
@@ -480,8 +448,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
                         android:padding="10dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:background="@color/colorGreen"
@@ -534,29 +500,29 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/colorPrimary"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="3dp"
+                    android:paddingEnd="3dp"
                     android:fontFamily="@font/open_sans_bold"
-                    android:padding="10dp"
                     android:id="@+id/withText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorGrey"
+                    android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:layout_below="@id/liner3"
                     android:text="@string/generate_consignment_note" />
 
                 <RelativeLayout
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
                     android:layout_below="@id/withText"
                     android:id="@+id/relative3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
+
                     <TextView
-                        android:visibility="gone"
-                        android:layout_marginTop="0dp"
                         android:fontFamily="@font/open_sans_semibold"
                         android:padding="10dp"
                         android:id="@+id/pl"
@@ -574,10 +540,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/pl"
-                        android:background="@mipmap/background_white_full_curves">
+                        android:background="@mipmap/background_white_full_curves"
+                        android:orientation="vertical">
 
                         <EditText
-                            android:visibility="gone"
                             android:id="@+id/editText_review"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -585,35 +551,70 @@
                             android:background="@null"
                             android:cursorVisible="true"
                             android:textCursorDrawable="@mipmap/color_cursor"
-                            android:layout_centerVertical="true"
                             android:inputType="text"
                             android:hint="@string/pos_laju_tracking_no" />
                     </RelativeLayout>
-
                 </RelativeLayout>
 
                 <Button
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:id="@+id/btn_submit"
+                    android:id="@+id/btn_saved_tracking_no"
+                    android:layout_below="@id/relative3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/relative3"
                     android:layout_marginTop="15dp"
                     android:background="@mipmap/login_part_border_orange"
                     android:textColor="@color/colorWhite"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="18sp"
-                    android:text="@string/generate_pdf" />
+                    android:textSize="16sp"
+                    android:text="@string/submit"
+                    style="?android:attr/borderlessButtonStyle"/>
+
+                <LinearLayout
+                    android:id="@+id/layout_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/btn_saved_tracking_no">
+
+                    <Button
+                        android:layout_marginEnd="2.5dp"
+                        android:id="@+id/btn_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/login_part_border_orange"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textSize="16sp"
+                        android:text="@string/preview"
+                        style="?android:attr/borderlessButtonStyle"/>
+
+                    <Button
+                        android:layout_marginStart="2.5dp"
+                        android:id="@+id/btn_download"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/login_part_border_orange"
+                        android:textColor="@color/colorWhite"
+                        android:fontFamily="@font/open_sans_semibold"
+                        android:textSize="16sp"
+                        android:text="@string/download"
+                        style="?android:attr/borderlessButtonStyle"/>
+                </LinearLayout>
 
                 <Button
+                    android:visibility="gone"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="10dp"
                     android:id="@+id/btn_cancel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/btn_submit"
+                    android:layout_below="@id/layout_button"
                     android:layout_marginTop="5dp"
                     android:background="@mipmap/login_part_border_orange"
                     android:textColor="@color/colorWhite"
@@ -621,21 +622,33 @@
                     android:textSize="18sp"
                     android:text="@string/cancel" />
 
+
+
+
+            </RelativeLayout>
+            </ScrollView>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/loading_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorGrey"
+                android:alpha="0.4">
+
                 <ProgressBar
-                    android:layout_below="@id/btn_cancel"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/loading"
                     android:padding="10dp"
-                    android:visibility="gone"
+                    android:layout_centerInParent="true"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:indeterminate="true"
                     android:indeterminateTint="@color/colorPrimary"
                     android:indeterminateTintMode="src_atop" />
             </RelativeLayout>
-            </ScrollView>
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 app:labelVisibilityMode="labeled"
                 android:id="@+id/bottom_nav"

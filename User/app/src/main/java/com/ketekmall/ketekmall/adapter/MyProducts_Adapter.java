@@ -2,6 +2,7 @@ package com.ketekmall.ketekmall.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class MyProducts_Adapter extends BaseAdapter{
             Is_Reject.setVisibility(View.VISIBLE);
         } else {
             Pending_approved.setVisibility(View.GONE);
-            Is_approved.setVisibility(View.VISIBLE);
+            Is_approved.setVisibility(View.GONE);
             boost_ad.setVisibility(View.VISIBLE);
             Is_Reject.setVisibility(View.GONE);
         }
@@ -121,7 +122,7 @@ public class MyProducts_Adapter extends BaseAdapter{
         ratingBar.setRating(flo);
 
         TV_addetail.setText(item.getAd_detail());
-        TV_price.setText("MYR" + item.getPrice());
+        TV_price.setText("RM" + item.getPrice());
         TV_item_location.setText(item.getDistrict());
 
         Picasso.get().load(item.getPhoto()).into(img_item);

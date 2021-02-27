@@ -82,7 +82,7 @@ public class Item_Adapter_Main extends BaseAdapter {
         btn_view = convertView.findViewById(R.id.btn_view);
 
         TV_addetail.setText(item.getAd_detail());
-        TV_Price.setText(item.getPrice());
+        TV_Price.setText("RM"+ item.getPrice());
         ratingBar.setRating(Float.parseFloat(item.getRating()));
 
         Picasso.get().load(item.getPhoto()).into(img_item);

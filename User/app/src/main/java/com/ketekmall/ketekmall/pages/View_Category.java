@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -79,6 +82,7 @@ public class View_Category extends AppCompatActivity {
     Item_ByCategory_Adapter adapter_item;
     List<Item_All_Details> itemList;
 
+    RelativeLayout parent;
     RelativeLayout filter_layout, category_layout;
     TextView no_result;
     private Spinner spinner_division, spinner_district;
@@ -178,7 +182,6 @@ public class View_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(View_Category.this, Homepage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -407,6 +410,41 @@ public class View_Category extends AppCompatActivity {
                 price_sortlowest.setVisibility(View.VISIBLE);
             }
         });
+
+        parent = findViewById(R.id.parent);
+        setupUI(parent);
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(View_Category.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
+
     }
 
     private void View_Cart2(final Item_All_Details item) {

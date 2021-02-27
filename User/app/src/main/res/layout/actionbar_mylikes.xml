@@ -9,6 +9,7 @@
     android:paddingBottom="10dp"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
+    android:id="@+id/parent"
     android:orientation="horizontal">
 
     <ImageButton

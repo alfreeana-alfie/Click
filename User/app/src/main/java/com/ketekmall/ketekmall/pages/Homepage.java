@@ -1,6 +1,7 @@
 package com.ketekmall.ketekmall.pages;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +12,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -181,8 +186,6 @@ public class Homepage extends AppCompatActivity {
             SharedPreferences.Editor editor1 = lang1.edit();
             editor1.putString("lang", languageToLoad1);
             editor1.commit();
-
-//            Toast.makeText(Homepage.this, "en", Toast.LENGTH_SHORT).show();
         }else{
             String languageToLoad1 = "ms"; // your language
             Locale locale1 = new Locale(languageToLoad1);
@@ -249,6 +252,38 @@ public class Homepage extends AppCompatActivity {
         SellerCheck_Main(getId);
     }
 
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(Homepage.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
+
+    }
+
     private void checkLang(){
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String s1 = sh.getString("lang", "");
@@ -298,6 +333,8 @@ public class Homepage extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
+
+//        setupUI(findViewById(R.id.parent));
 
         loading_hot = findViewById(R.id.loading_hot);
         loading_shock = findViewById(R.id.loading_shock);
@@ -564,8 +601,6 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(2);
             }
         });
-
-
 
         button_health.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -841,35 +876,70 @@ public class Homepage extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.setting, menu);
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String s1 = sh.getString("lang", "");
+        if(s1.equals("en")){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.setting_malay, menu);
 
-        final MenuItem menuItem = menu.findItem(R.id.menu_cart);
-        final MenuItem menuItem1 = menu.findItem(R.id.menu_chat);
+            final MenuItem menuItem = menu.findItem(R.id.menu_cart);
+            final MenuItem menuItem1 = menu.findItem(R.id.menu_chat);
 
-        View actionView = menuItem.getActionView();
-        View actionView1 = menuItem1.getActionView();
+            View actionView = menuItem.getActionView();
+            View actionView1 = menuItem1.getActionView();
 
-        textCartItemCount = actionView.findViewById(R.id.cart_badge);
-        textChatItemCount = actionView1.findViewById(R.id.chat_badge);
+            textCartItemCount = actionView.findViewById(R.id.cart_badge);
+            textChatItemCount = actionView1.findViewById(R.id.chat_badge);
 
-        setupBadge();
+            setupBadge();
 
-        MessageCount();
+            MessageCount();
 
-        actionView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onOptionsItemSelected(menuItem);
-            }
-        });
+            actionView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(menuItem);
+                }
+            });
 
-        actionView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onOptionsItemSelected(menuItem1);
-            }
-        });
+            actionView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(menuItem1);
+                }
+            });
+        }else{
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.setting, menu);
+
+            final MenuItem menuItem = menu.findItem(R.id.menu_cart);
+            final MenuItem menuItem1 = menu.findItem(R.id.menu_chat);
+
+            View actionView = menuItem.getActionView();
+            View actionView1 = menuItem1.getActionView();
+
+            textCartItemCount = actionView.findViewById(R.id.cart_badge);
+            textChatItemCount = actionView1.findViewById(R.id.chat_badge);
+
+            setupBadge();
+
+            MessageCount();
+
+            actionView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(menuItem);
+                }
+            });
+
+            actionView1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onOptionsItemSelected(menuItem1);
+                }
+            });
+        }
+
         return true;
     }
 
@@ -890,66 +960,132 @@ public class Homepage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.user_profile:
-                Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
-                startActivity(intent1);
-                break;
-            case R.id.setting:
-                disconnectFromFacebook();
-                sessionManager.logout();
-                break;
+        SharedPreferences sh = getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+        String s1 = sh.getString("lang", "");
+        if(s1.equals("en")){
+            switch (item.getItemId()) {
+                case R.id.user_profile:
+                    Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.setting:
+                    disconnectFromFacebook();
+                    sessionManager.logout();
+                    break;
 
-            case R.id.contact_us:
-                Intent intent2 = new Intent(Homepage.this, About_KetekMall.class);
-                startActivity(intent2);
-                break;
+                case R.id.contact_us:
+                    Intent intent2 = new Intent(Homepage.this, About_KetekMall.class);
+                    startActivity(intent2);
+                    break;
 
-            case R.id.malaylang:
-                String languageToLoad = "ms"; // your language
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config,
-                        getBaseContext().getResources().getDisplayMetrics());
-                SharedPreferences lang = getSharedPreferences("MySharedPref",
-                        MODE_PRIVATE);
-                SharedPreferences.Editor editor = lang.edit();
-                editor.putString("lang", languageToLoad);
-                editor.commit();
+                case R.id.malaylang:
+                    String languageToLoad = "ms"; // your language
+                    Locale locale = new Locale(languageToLoad);
+                    Locale.setDefault(locale);
+                    Configuration config = new Configuration();
+                    config.locale = locale;
+                    getBaseContext().getResources().updateConfiguration(config,
+                            getBaseContext().getResources().getDisplayMetrics());
+                    SharedPreferences lang = getSharedPreferences("MySharedPref",
+                            MODE_PRIVATE);
+                    SharedPreferences.Editor editor = lang.edit();
+                    editor.putString("lang", languageToLoad);
+                    editor.commit();
 
-                this.recreate();
-                break;
+                    this.recreate();
+                    break;
 
-            case R.id.englang:
-                String languageToLoad1 = "en"; // your language
-                Locale locale1 = new Locale(languageToLoad1);
-                Locale.setDefault(locale1);
-                Configuration config1 = new Configuration();
-                config1.locale = locale1;
-                getBaseContext().getResources().updateConfiguration(config1,
-                        getBaseContext().getResources().getDisplayMetrics());
-                SharedPreferences lang1 = getSharedPreferences("MySharedPref",
-                        MODE_PRIVATE);
-                SharedPreferences.Editor editor1 = lang1.edit();
-                editor1.putString("lang", languageToLoad1);
-                editor1.commit();
+//                case R.id.englang:
+//                    String languageToLoad1 = "en"; // your language
+//                    Locale locale1 = new Locale(languageToLoad1);
+//                    Locale.setDefault(locale1);
+//                    Configuration config1 = new Configuration();
+//                    config1.locale = locale1;
+//                    getBaseContext().getResources().updateConfiguration(config1,
+//                            getBaseContext().getResources().getDisplayMetrics());
+//                    SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+//                            MODE_PRIVATE);
+//                    SharedPreferences.Editor editor1 = lang1.edit();
+//                    editor1.putString("lang", languageToLoad1);
+//                    editor1.commit();
+//
+//                    this.recreate();
+//                    break;
 
-                this.recreate();
-                break;
+                case R.id.menu_cart:
+                    Intent intent = new Intent(Homepage.this, Cart.class);
+                    startActivity(intent);
+                    break;
 
-            case R.id.menu_cart:
-                Intent intent = new Intent(Homepage.this, Cart.class);
-                startActivity(intent);
-                break;
+                case R.id.menu_chat:
+                    Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Homepage.class);
+                    startActivity(intent3);
+                    break;
 
-            case R.id.menu_chat:
-                Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Homepage.class);
-                startActivity(intent3);
-                break;
+            }
+        }else{
+            switch (item.getItemId()) {
+                case R.id.user_profile:
+                    Intent intent1 = new Intent(Homepage.this, Edit_Profile.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.setting:
+                    disconnectFromFacebook();
+                    sessionManager.logout();
+                    break;
 
+                case R.id.contact_us:
+                    Intent intent2 = new Intent(Homepage.this, About_KetekMall.class);
+                    startActivity(intent2);
+                    break;
+
+//                case R.id.malaylang:
+//                    String languageToLoad = "ms"; // your language
+//                    Locale locale = new Locale(languageToLoad);
+//                    Locale.setDefault(locale);
+//                    Configuration config = new Configuration();
+//                    config.locale = locale;
+//                    getBaseContext().getResources().updateConfiguration(config,
+//                            getBaseContext().getResources().getDisplayMetrics());
+//                    SharedPreferences lang = getSharedPreferences("MySharedPref",
+//                            MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = lang.edit();
+//                    editor.putString("lang", languageToLoad);
+//                    editor.commit();
+//
+//                    this.recreate();
+//                    break;
+
+                case R.id.englang:
+                    String languageToLoad1 = "en"; // your language
+                    Locale locale1 = new Locale(languageToLoad1);
+                    Locale.setDefault(locale1);
+                    Configuration config1 = new Configuration();
+                    config1.locale = locale1;
+                    getBaseContext().getResources().updateConfiguration(config1,
+                            getBaseContext().getResources().getDisplayMetrics());
+                    SharedPreferences lang1 = getSharedPreferences("MySharedPref",
+                            MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = lang1.edit();
+                    editor1.putString("lang", languageToLoad1);
+                    editor1.commit();
+
+                    this.recreate();
+                    break;
+
+                case R.id.menu_cart:
+                    Intent intent = new Intent(Homepage.this, Cart.class);
+                    startActivity(intent);
+                    break;
+
+                case R.id.menu_chat:
+                    Intent intent3 = new Intent(Homepage.this, Chat_Inbox_Homepage.class);
+                    startActivity(intent3);
+                    break;
+
+            }
         }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -18,75 +18,83 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_alignParentStart="true"
-            android:buttonTint="@color/colorPrimary"
-            android:layout_below="@id/delete_cart_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:targetApi="lollipop" />
-
-        <ImageView
-            android:id="@+id/delete_cart_item"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_delete_foreground"
-            android:contentDescription="@string/todo" />
-
-        <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:contentDescription="@string/todo"
-            android:layout_toEndOf="@id/checkBox"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/layout_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/delete_cart_item"
-            android:layout_alignEnd="@id/quantity_display"
-            android:layout_toEndOf="@id/item_image"
-            android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/item_image"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/ad_detail_display"
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_alignParentStart="true"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                tools:targetApi="lollipop" />
+
+            <ImageView
+                android:id="@+id/delete_cart_item"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-2dp"
+                android:layout_marginEnd="1dp"
+                android:background="@drawable/ic_delete_foreground"
+                android:contentDescription="@string/todo" />
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:contentDescription="@string/todo"
+                android:layout_toEndOf="@id/checkBox"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="0dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/ad_details"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:layout_toStartOf="@id/delete_cart_item"
+                android:layout_toEndOf="@id/item_image"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/item_image"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/unit_price_display"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                <TextView
+                    android:id="@+id/ad_detail_display"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/ad_details"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
 
-                android:text="@string/rm"
-                android:textColor="@color/colorGrey"
-                android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/unit_price_display"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/myr_0_00"
+                    android:textColor="@color/colorGrey"
+                    android:textSize="12sp" />
 
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
 
         <TableLayout
             android:id="@id/quantity_display"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_image"
+            android:layout_below="@id/layout_item"
             android:layout_marginTop="5dp"
             android:stretchColumns="1,2">
 
@@ -95,12 +103,14 @@
                 android:layout_height="wrap_content">
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_column="1"
                     android:background="@color/colorLightGrey" />
 
                 <View
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_column="2"
@@ -111,26 +121,31 @@
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="2dp">
+                android:background="@color/colorLightOrange"
+                android:layout_marginBottom="3dp">
 
                 <TextView
                     android:id="@+id/quantity_display"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/quantity"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:fontFamily="@font/open_sans"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:text="@string/subtotal"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
             </TableRow>
 
             <TableRow
@@ -144,17 +159,17 @@
                     android:layout_column="1"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/decrease"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:background="@mipmap/login_part_border_orange"
-                        android:elevation="2dp"
+                        style="?android:attr/borderlessButtonStyle"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/minus"
+                        android:layout_margin="5dp"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
@@ -162,9 +177,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="10dp"
-                        android:paddingTop="2dp"
                         android:paddingEnd="10dp"
+                        android:paddingTop="2dp"
                         android:paddingBottom="2dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/_1"
                         android:textSize="14sp" />
 
@@ -173,9 +190,10 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:background="@mipmap/login_part_border_orange"
-                        android:elevation="2dp"
                         android:fontFamily="@font/montserrat"
+                        style="?android:attr/borderlessButtonStyle"
                         android:text="@string/plus"
+                        android:layout_margin="5dp"
                         android:textColor="@color/colorAccent" />
                 </LinearLayout>
 
@@ -186,6 +204,7 @@
                     android:layout_column="2"
                     android:fontFamily="@font/open_sans"
                     android:text="@string/myr0_00"
+                    android:layout_margin="5dp"
                     android:textAlignment="center"
                     android:textSize="14sp" />
             </TableRow>

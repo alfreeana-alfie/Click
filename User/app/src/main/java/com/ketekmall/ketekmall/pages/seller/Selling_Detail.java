@@ -1,5 +1,7 @@
 package com.ketekmall.ketekmall.pages.seller;
 
+import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -11,23 +13,25 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.pdf.PdfDocument;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.renderscript.Element;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +69,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.pages.register_seller.Register_Seller;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenedResult;
 import com.onesignal.OneSignal;
@@ -74,11 +79,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -101,7 +104,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
 
     EditText edit_review;
-    Button btn_submit, btn_cancel;
+    Button btn_submit, btn_cancel, btn_download;
     ImageView photo;
     TextView text_order_id, text_ad_detail, text_price, text_quantity;
     TextView text_placed_date, text_status, text_ship_placed,
@@ -110,6 +113,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
     ProgressBar loading;
+    RelativeLayout loading_Layout;
     ImageView Photo , OrderedBlack, OrderedGreen,
             PendingBlack, PendingGreen,
             ShippedBlack, ShippedGreen,
@@ -133,6 +137,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         setContentView(R.layout.selling_detail);
         getSession();
         ToolbarSetting();
+//        setupUI(findViewById(R.id.parent));
         // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
@@ -164,6 +169,8 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         customer_name = findViewById(R.id.customer_name);
         customer_address = findViewById(R.id.customer_addr);
         customer_phone = findViewById(R.id.customer_phone);
+        btn_download = findViewById(R.id.btn_download);
+
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -225,13 +232,13 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
         text_ship_placed = findViewById(R.id.text_ship_placed);
         loading = findViewById(R.id.loading);
+        loading_Layout = findViewById(R.id.loading_layout);
 
-//        Toast.makeText(Selling_Detail.this, strTracking_NO, Toast.LENGTH_SHORT).show();
         edit_review.setText(strTracking_NO);
-        text_order_id.setText("ID" + strID);
+        text_order_id.setText("KM" + strID);
         Picasso.get().load(strPhoto).into(photo);
         text_ad_detail.setText(strAd_Detail);
-        text_price.setText("MYR" + strPrice);
+        text_price.setText("RM" + strPrice);
         text_quantity.setText("x" + strQuantity);
         text_placed_date.setText("Order Placed on " + strOrder_Date);
         text_status.setText(strStatus);
@@ -283,6 +290,24 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             btn_submit.setVisibility(View.GONE);
         }
 
+        btn_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCompat.requestPermissions(Selling_Detail.this, PERMISSIONS, 112);
+                Log.v("TAG", "onCreate() Method invoked ");
+
+                if(!hasPermissions(Selling_Detail.this, PERMISSIONS)){
+                    Log.v("TAG", "download() Method DON'T HAVE PERMISSIONS ");
+                }else{
+                    loading_Layout.setVisibility(View.VISIBLE);
+                    PosLajuGetData2(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234", strOrder_Date, strID);
+                    GetPlayerData(strCustomer_ID, "KM" + strID);
+                }
+
+
+            }
+        });
+
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,8 +318,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     Log.v("TAG", "download() Method DON'T HAVE PERMISSIONS ");
 
                 }else{
+                    loading_Layout.setVisibility(View.VISIBLE);
                     PosLajuGetData(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234", strOrder_Date, strID);
-                    GetPlayerData(strCustomer_ID, "KM" + strID);
+//                    GetPlayerData(strCustomer_ID, "KM" + strID);
                 }
 
 //                ViewList(strCustomer_ID, strID, strOrder_Date);
@@ -310,6 +336,38 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             }
         });
 
+
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(Selling_Detail.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
+
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(activity.getCurrentFocus() != null){
+            inputMethodManager.hideSoftInputFromWindow(
+                    activity.getCurrentFocus().getWindowToken(), 0);
+        }
 
     }
 
@@ -956,6 +1014,204 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
+    private void PosLajuGetData2(final String customerID,
+                                final String OrderID,
+                                final String subscriptionCode,
+                                final String AccountNo,
+                                final String strOrder_Date,
+                                final String strID){
+        Intent intent = getIntent();
+
+        final String Quantity = intent.getStringExtra("quantity");
+        final String Amount = intent.getStringExtra("TotalAmount");
+        final String Weight = intent.getStringExtra("Weight");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    final String SellerName = object.getString("name");
+                                    final String SellerEmail = object.getString("email");
+                                    final String SellerAddress01 = object.getString("address_01");
+                                    final String SellerAddress02 = object.getString("address_02");
+                                    final String SellerDivision = object.getString("division");
+                                    final String SellerPostCode = object.getString("postcode");
+                                    final String SellerPhoneNo = object.getString("phone_no");
+
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    try {
+                                                        JSONObject jsonObject = new JSONObject(response);
+                                                        String success = jsonObject.getString("success");
+                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                                        if (success.equals("1")) {
+                                                            for (int i = 0; i < jsonArray.length(); i++) {
+                                                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                                                String ReceiverName = object.getString("name");
+                                                                String ReceiverEmail = object.getString("email");
+                                                                String ReceiverAddress01 = object.getString("address_01");
+                                                                String ReceiverAddress02 = object.getString("address_02");
+                                                                String ReceiverDivision = object.getString("division");
+                                                                String ReceiverPostCode = object.getString("postcode");
+                                                                String ReceiverPhoneNo = object.getString("phone_no");
+
+                                                                RoutingCodeDownload(
+                                                                        SellerPostCode,
+                                                                        ReceiverPostCode,
+                                                                        "KM00" + OrderID,
+                                                                        subscriptionCode,
+                                                                        AccountNo,
+                                                                        SellerName,
+                                                                        SellerPhoneNo,
+                                                                        SellerAddress01 + "," + SellerAddress02 + "," + SellerPostCode + " " + SellerDivision,
+                                                                        SellerPostCode + OrderID,
+                                                                        SellerPhoneNo,
+                                                                        SellerAddress01 + "," + SellerAddress02 + "," + SellerPostCode + " " + SellerDivision,
+                                                                        SellerPostCode,
+                                                                        Quantity,
+                                                                        Weight,
+                                                                        Amount,
+                                                                        ReceiverName,
+                                                                        ReceiverAddress01 + "," + ReceiverAddress02 + "," + ReceiverPostCode + " " + ReceiverDivision,
+                                                                        ReceiverPostCode,
+                                                                        ReceiverPhoneNo,
+                                                                        SellerAddress02,
+                                                                        SellerDivision,
+                                                                        SellerEmail,
+                                                                        ReceiverName,
+                                                                        ReceiverName,
+                                                                        ReceiverAddress02,
+                                                                        ReceiverDivision,
+                                                                        ReceiverDivision,
+                                                                        ReceiverAddress01,
+                                                                        ReceiverAddress02,
+                                                                        ReceiverEmail,
+                                                                        strOrder_Date,
+                                                                        strID);
+
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    try {
+
+                                                        if (error instanceof TimeoutError ) {
+                                                            //Time out error
+                                                            System.out.println("" + error);
+                                                        }else if(error instanceof NoConnectionError){
+                                                            //net work error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof AuthFailureError) {
+                                                            //error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof ServerError) {
+                                                            //Erroor
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof NetworkError) {
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        } else if (error instanceof ParseError) {
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        }else{
+                                                            //Error
+                                                            System.out.println("" + error);
+                                                        }
+                                                        //End
+
+
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("id", customerID);
+                                            return params;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    requestQueue.add(stringRequest);
+
+                                }
+                            } else {
+                                Toast.makeText(Selling_Detail.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
     String HTTP_RoutingCode = "https://apis.pos.com.my/apigateway/as01/api/routingcode/v1";
     String serverKey_RoutingCode = "aWFGekJBMXUyRFFmTmNxUEpmcXhwR0hXYnY5cWdCTmE=";
@@ -1066,6 +1322,161 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                                         ReceiverAddress02,
                                         ReceiverEmail,
                                         Routingcode,
+                                    strOrder_Date,
+                                    strID);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                        Log.i("STAGINGERROR", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_RoutingCode);
+                return params;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=UTF-8";
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Origin", "93050");
+                params.put("Destination", "96000");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void RoutingCodeDownload(String Origin,
+                             String Destination,
+                             final String OrderID,
+                             final String subcriptionCode,
+                             final String AccountNo,
+                             final String SellerName,
+                             final String SellerPhone,
+                             final String SellerAddress,
+                             final String PickupLocationID,
+                             final String ContactPerson,
+                             final String PickupAddress,
+                             final String Postcode,
+                             final String TotalQuantityToPickup,
+                             final String Weight,
+                             final String Amount,
+                             final String ReceiverName,
+                             final String ReceiverAddress,
+                             final String ReceiverPostcode,
+                             final String ReceiverPhone,
+                             final String PickupDistrict,
+                             final String PickupProvince,
+                             final String PickupEmail,
+                             final String ReceiverFirstName,
+                             final String ReceiverLastName,
+                             final String ReceiverDistrict,
+                             final String ReceiverProvince,
+                             final String ReceiverCity,
+                             final String ReceiverAddress01,
+                             final String ReceiverAddress02,
+                             final String ReceiverEmail,
+                             final String strOrder_Date,
+                             final String strID) {
+//        GenConnote(TotalQuantityToPickup,
+//                OrderID,
+//                subcriptionCode,
+//                AccountNo,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                PickupLocationID,
+//                ContactPerson,
+//                PickupAddress,
+//                Postcode,
+//                "1",
+//                TotalQuantityToPickup,
+//                Weight,
+//                Amount,
+//                ReceiverName,
+//                ReceiverAddress,
+//                ReceiverPostcode,
+//                ReceiverPhone,
+//                PickupDistrict,
+//                PickupProvince,
+//                PickupEmail,
+//                ReceiverFirstName,
+//                ReceiverLastName,
+//                ReceiverDistrict,
+//                ReceiverProvince,
+//                ReceiverCity,
+//                ReceiverAddress01,
+//                ReceiverAddress02,
+//                ReceiverEmail,
+//                "KCU-SB-SBW");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, HTTP_RoutingCode +
+                "?Origin=" + Origin +
+                "&Destination=" + Destination,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String Routingcode       = jsonObject.getString("RoutingCode");
+                            String StatusCode      = jsonObject.getString("StatusCode");
+                            String Message         = jsonObject.getString("Message");
+
+                            GenConnoteDownload(TotalQuantityToPickup,
+                                    OrderID,
+                                    subcriptionCode,
+                                    AccountNo,
+                                    SellerName,
+                                    SellerPhone,
+                                    SellerAddress,
+                                    PickupLocationID,
+                                    ContactPerson,
+                                    PickupAddress,
+                                    Postcode,
+                                    "1",
+                                    TotalQuantityToPickup,
+                                    Weight,
+                                    Amount,
+                                    ReceiverName,
+                                    ReceiverAddress,
+                                    ReceiverPostcode,
+                                    ReceiverPhone,
+                                    PickupDistrict,
+                                    PickupProvince,
+                                    PickupEmail,
+                                    ReceiverFirstName,
+                                    ReceiverLastName,
+                                    ReceiverDistrict,
+                                    ReceiverProvince,
+                                    ReceiverCity,
+                                    ReceiverAddress01,
+                                    ReceiverAddress02,
+                                    ReceiverEmail,
+                                    Routingcode,
                                     strOrder_Date,
                                     strID);
                         } catch (JSONException e) {
@@ -1234,6 +1645,203 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     Log.i("ObjectRequest", ConnoteNo);
                     Log.i("ObjectRequest", Message);
 
+//                    TrackingNo(ConnoteNo, strOrderDate, strID);
+//
+//                    PreAcceptanceSingle(
+//                            subcriptionCode,
+//                            AccountNo,
+//                            SellerName,
+//                            SellerPhone,
+//                            SellerAddress,
+//                            PickupLocationID,
+//                            ContactPerson,
+//                            PickupAddress,
+//                            Postcode,
+//                            ItemType,
+//                            TotalQuantityToPickup,
+//                            Weight,
+//                            ConnoteNo,
+//                            Amount,
+//                            ReceiverName,
+//                            ReceiverAddress,
+//                            ReceiverPostcode,
+//                            ReceiverPhone,
+//                            PickupDistrict,
+//                            PickupProvince,
+//                            PickupEmail,
+//                            ReceiverFirstName,
+//                            ReceiverLastName,
+//                            ReceiverDistrict,
+//                            ReceiverProvince,
+//                            ReceiverCity);
+
+                    GeneratePDF(
+                            date,
+                            Weight,
+                            OrderID,
+                            SellerName,
+                            SellerPhone,
+                            SellerAddress,
+                            Postcode,
+                            ReceiverName,
+                            ReceiverPhone,
+                            ReceiverPostcode,
+                            AccountNo,
+                            ReceiverAddress,
+                            ReceiverAddress01,
+                            ReceiverAddress02,
+                            ReceiverCity,
+                            ReceiverProvince,
+                            ReceiverEmail,
+                            OrderID,
+                            "Document",
+                            RoutingCode,
+                            ConnoteNo,
+                            date);
+
+                }catch(JSONException e){
+                    e.printStackTrace();
+                    Log.i("jsonObjectRequest", e.toString());
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("GenConnoteObjectRequest", "Status Code " + error.networkResponse.statusCode);
+                Log.i("GenConnoteObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                Log.i("GenConnoteObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                Log.i("GenConnoteObjectRequest", error.toString());
+
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("X-User-Key", serverKey_GenerateConnote);
+                return headers;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public void GenConnoteDownload(String numberOfItem,
+                           final String OrderID,
+                           final String subcriptionCode,
+                           final String AccountNo,
+                           final String SellerName,
+                           final String SellerPhone,
+                           final String SellerAddress,
+                           final String PickupLocationID,
+                           final String ContactPerson,
+                           final String PickupAddress,
+                           final String Postcode,
+                           final String ItemType,
+                           final String TotalQuantityToPickup,
+                           final String Weight,
+                           final String Amount,
+                           final String ReceiverName,
+                           final String ReceiverAddress,
+                           final String ReceiverPostcode,
+                           final String ReceiverPhone,
+                           final String PickupDistrict,
+                           final String PickupProvince,
+                           final String PickupEmail,
+                           final String ReceiverFirstName,
+                           final String ReceiverLastName,
+                           final String ReceiverDistrict,
+                           final String ReceiverProvince,
+                           final String ReceiverCity,
+                           final String ReceiverAddress01,
+                           final String ReceiverAddress02,
+                           final String ReceiverEmail,
+                           final String RoutingCode,
+                           final String strOrderDate,
+                           final String strID) {
+
+
+
+        final String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        String Prefix = "ERC";
+        String ApplicationCode = "HNM";
+        String Secretid = "HM@$343";
+        String username = "HMNNadhir";
+
+//        PreAcceptanceSingle(
+//                subcriptionCode,
+//                AccountNo,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                PickupLocationID,
+//                ContactPerson,
+//                PickupAddress,
+//                Postcode,
+//                ItemType,
+//                TotalQuantityToPickup,
+//                Weight,
+//                "ER000249760MY",
+//                Amount,
+//                ReceiverName,
+//                ReceiverAddress,
+//                ReceiverPostcode,
+//                ReceiverPhone,
+//                PickupDistrict,
+//                PickupProvince,
+//                PickupEmail,
+//                ReceiverFirstName,
+//                ReceiverLastName,
+//                ReceiverDistrict,
+//                ReceiverProvince,
+//                ReceiverCity);
+//
+//        GeneratePDF(
+//                date,
+//                Weight,
+//                OrderID,
+//                SellerName,
+//                SellerPhone,
+//                SellerAddress,
+//                Postcode,
+//                ReceiverName,
+//                ReceiverPhone,
+//                ReceiverPostcode,
+//                AccountNo,
+//                ReceiverAddress,
+//                ReceiverAddress01,
+//                ReceiverAddress02,
+//                ReceiverCity,
+//                ReceiverProvince,
+//                ReceiverEmail,
+//                OrderID,
+//                "Document",
+//                RoutingCode,
+//                "ER000249760MY",
+//                date);
+
+        String API = HTTP_GenerateConnote +
+                "?numberOfItem=" + numberOfItem +
+                "&Prefix=" + Prefix +
+                "&ApplicationCode=" + ApplicationCode +
+                "&Secretid=" + Secretid +
+                "&Orderid=" + OrderID +
+                "&username=" + username;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onResponse(String response) {
+                Log.i("jsonObjectRequest", response);
+                try{
+                    JSONObject jsonObject = new JSONObject(response);
+                    String ConnoteNo       = jsonObject.getString("ConnoteNo");
+                    String StatusCode      = jsonObject.getString("StatusCode");
+                    String Message         = jsonObject.getString("Message");
+
+                    Log.i("ObjectRequest", StatusCode);
+                    Log.i("ObjectRequest", ConnoteNo);
+                    Log.i("ObjectRequest", Message);
+
                     TrackingNo(ConnoteNo, strOrderDate, strID);
 
                     PreAcceptanceSingle(
@@ -1264,7 +1872,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                             ReceiverProvince,
                             ReceiverCity);
 
-                    GeneratePDF(
+                    DownloadPDF(
                             date,
                             Weight,
                             OrderID,
@@ -1517,7 +2125,6 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-
     int pageWidth = 420;
     int pageHeight = 595;
 
@@ -1546,10 +2153,553 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                              String RoutingCode,
                              String ConnoteNo,
                              String ConnoteDate){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        PosLajuBitMap = BitmapFactory.decodeResource(getResources(), R.drawable.poslaju_black, options);
+        KetekMallBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ketekmallx52_black, options);
+
+        ScaledPosLajuBitMap = Bitmap.createScaledBitmap(PosLajuBitMap, 100, 45, false);
+        ScaledKetekMallBitMap = Bitmap.createScaledBitmap(KetekMallBitmap, 50, 50, false);
+
+        final String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        PdfDocument document = new PdfDocument();
+        PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create();
+        PdfDocument.Page page = document.startPage(pageInfo);
+
+        Canvas canvas = page.getCanvas();
+        Paint paint = new Paint();
+        Paint TitleTag = new Paint();
+        Paint Details = new Paint();
+
+        //Design - Outer Border
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+        canvas.drawRect(5, 5, pageWidth-5, pageHeight-5, paint);
+
+        canvas.drawBitmap(ScaledPosLajuBitMap, 13, 20, paint);
+
+        canvas.drawBitmap(ScaledKetekMallBitMap, 113, 20, paint);
+
+        // Logo & Barcode
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 9, pageWidth-12, 75, paint);
+
+        try {
+            Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+            Writer codeWriter;
+            codeWriter = new Code128Writer();
+            BitMatrix byteMatrix = codeWriter.encode(ConnoteNo, BarcodeFormat.CODE_128,128, 37, hintMap);
+            int width = byteMatrix.getWidth();
+            int height = byteMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    bitmap.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            canvas.drawBitmap(bitmap,230, 14, paint);
+            Details.setTextAlign(Paint.Align.LEFT);
+            Details.setColor(Color.BLACK);
+            Details.setTextSize(12f);
+            Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            canvas.drawText(ConnoteNo, 270, 66, Details);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        // Order Details - 01
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 82, 271, 174, paint);
+        // TITLE
+        TitleTag.setTextAlign(Paint.Align.LEFT);
+        TitleTag.setColor(Color.rgb(74, 74, 74));
+        canvas.drawRect(12, 82, 271, 97, TitleTag);
+        TitleTag.setColor(Color.WHITE);
+        TitleTag.setTextSize(12f);
+        TitleTag.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Order Details", 14, 93, TitleTag);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Ship By Date:", 14, 108, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Weight (kg):", 14, 119, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Order ID:", 14, 130, Details);
+
+        // RIGHT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(ShipDate, 84, 108, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(Weight, 84, 119, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText(OrderID, 84, 130, Details);
+
+        // Order Details - 02
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(278, 82, 408, 174, paint);
+        // TITLE
+        TitleTag.setTextAlign(Paint.Align.LEFT);
+        TitleTag.setColor(Color.rgb(74, 74, 74));
+        canvas.drawRect(278, 82, 408, 97, TitleTag);
+        TitleTag.setColor(Color.WHITE);
+        TitleTag.setTextSize(12f);
+        TitleTag.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Order Details (Courier)", 279, 93, TitleTag);
+
+        // LEFT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(14f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Account Number:", 281, 111, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(14f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("8800472220", 281, 126, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Product:", 281, 140, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Domestic", 281, 150, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Type:", 281, 162, Details);
+
+        // Right
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Courier Charges", 320, 140, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(Type, 310, 162, Details);
+
+        // Sender, Receiver, POD Details
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 177, 271, pageHeight-18, paint);
+        // Sender Details
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 177, 271, 333, paint);
+        // TITLE
+        TitleTag.setTextAlign(Paint.Align.LEFT);
+        TitleTag.setColor(Color.rgb(74, 74, 74));
+        canvas.drawRect(12, 177, 271, 192, TitleTag);
+        TitleTag.setColor(Color.WHITE);
+        TitleTag.setTextSize(12f);
+        TitleTag.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Sender Details (Pengirim)", 14, 188, TitleTag);
+
+        // LEFT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Name:", 14, 203, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Phone:", 14, 238, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Address:", 14, 253, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Postcode:", 14, 330, Details);
+
+        // RIGHT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(SenderName, 64, 203, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(SenderPhone, 64, 238, Details);
+
+        TextPaint mTextPaintSender=new TextPaint();
+        mTextPaintSender.setTextSize(10f);
+        mTextPaintSender.setTextAlign(Paint.Align.LEFT);
+        StaticLayout mTextLayoutSender = new StaticLayout(SenderAddress, mTextPaintSender, 170, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+
+        canvas.save();
+
+        canvas.translate(64, 245);
+        mTextLayoutSender.draw(canvas);
+        canvas.restore();
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(SenderPostcode, 64, 330, Details);
+
+        // Recipient Details
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 333, 271, 489, paint);
+        // TITLE
+        TitleTag.setTextAlign(Paint.Align.LEFT);
+        TitleTag.setColor(Color.rgb(74, 74, 74));
+        canvas.drawRect(12, 333, 271, 348, TitleTag);
+        TitleTag.setColor(Color.WHITE);
+        TitleTag.setTextSize(12f);
+        TitleTag.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Recipient Details (Penerima)", 14, 344, TitleTag);
+
+        //LEFT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Name:", 14, 359, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Phone:", 14, 394, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Address:", 14, 409, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText("Postcode:", 14, 486, Details);
+
+        // RIGHT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(RecipientName, 64, 359, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(RecipientPhone, 64, 394, Details);
+
+        TextPaint mTextPaintRecipient=new TextPaint();
+        mTextPaintRecipient.setTextSize(10f);
+        mTextPaintRecipient.setTextAlign(Paint.Align.LEFT);
+        StaticLayout mTextLayoutRecipient = new StaticLayout(RecipientAddress, mTextPaintRecipient, 170, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+
+        canvas.save();
+
+        canvas.translate(64, 400);
+        mTextLayoutRecipient.draw(canvas);
+        canvas.restore();
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+        canvas.drawText(RecipientPostcode, 64, 486, Details);
+
+        // POD
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(1);
+        canvas.drawRect(12, 489, 271, pageHeight-18, paint);
+        // TITLE
+        TitleTag.setTextAlign(Paint.Align.LEFT);
+        TitleTag.setColor(Color.rgb(74, 74, 74));
+        canvas.drawRect(12, 489, 271, 504, TitleTag);
+        TitleTag.setColor(Color.WHITE);
+        TitleTag.setTextSize(12f);
+        TitleTag.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("POD", 14, 500, TitleTag);
+
+        //LEFT
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Name:", 14, 515, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("I.C.:", 14, 530, Details);
+
+        Details.setTextAlign(Paint.Align.LEFT);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(10f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText("Signature:", 14, 545, Details);
+
+        // QR CODE
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float) 1.5);
+        canvas.drawRect(278, 177, pageWidth-12, pageHeight-18, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float) 0.5);
+        canvas.drawRect(278, 192, pageWidth-12, pageHeight-18, paint);
+
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth((float) 0.5);
+        canvas.drawRect(278, 242, pageWidth-12, pageHeight-18, paint);
+
+        TextPaint mTextPaint=new TextPaint();
+        mTextPaint.setTextSize(22f);
+        mTextPaint.setTextAlign(Paint.Align.CENTER);
+        StaticLayout mTextLayout = new StaticLayout(RoutingCode, mTextPaint, 80, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+
+        canvas.save();
+
+        canvas.translate(342, 192);
+        mTextLayout.draw(canvas);
+        canvas.restore();
+
+        Details.setTextAlign(Paint.Align.CENTER);
+        Details.setColor(Color.BLACK);
+        Details.setTextSize(32f);
+        Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+        canvas.drawText(RecipientPostcode, 342, 292, Details);
+
+        try {
+            // String to produce information of the QR CODE
+            String productId = "A2^"+
+                    ConnoteNo +
+                    "^" +
+                    ConnoteDate +
+                    "^" +
+                    "MY^" +
+                    ProductCode +
+                    "^" +
+                    SenderName +
+                    "^" +
+                    SenderPhone +
+                    "^"+
+                    "^" +
+                    SenderPostcode +
+                    "^" +
+                    RecipientAccoutNo +
+                    "^" +
+                    RecipientName +
+                    "^" +
+                    "^" +
+                    RecipientAddress01 +
+                    "^" +
+                    RecipientAddress02 +
+                    "^" +
+                    RecipientPostcode +
+                    "^" +
+                    RecipientCity +
+                    "^" +
+                    RecipientState +
+                    "^" +
+                    RecipientPhone +
+                    "^" +
+                    RecipientEmail +
+                    "^" +
+                    Weight +
+                    "^" +
+                    "^" +
+                    "^" +
+                    "^" +
+                    "^" +
+                    "^" +
+                    Type +
+                    "^";
+            Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+            Writer codeWriter;
+            codeWriter = new QRCodeWriter();
+            BitMatrix byteMatrix = codeWriter.encode(productId, BarcodeFormat.QR_CODE,15, 15, hintMap);
+            int width = byteMatrix.getWidth();
+            int height = byteMatrix.getHeight();
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    bitmap.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            // Put QR CODE inside the PDF
+            canvas.drawBitmap(bitmap,320, 430, paint);
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        try {
+            Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
+            Writer codeWriter;
+            codeWriter = new Code128Writer();
+            BitMatrix byteMatrix = codeWriter.encode(ConnoteNo, BarcodeFormat.CODE_128,128, 37, hintMap);
+            int width = 110;
+            int height = 37;
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    bitmap.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            canvas.drawBitmap(bitmap,285, 515, paint);
+            Details.setTextAlign(Paint.Align.LEFT);
+            Details.setColor(Color.BLACK);
+            Details.setTextSize(12f);
+            Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
+            canvas.drawText(ConnoteNo, 295, 565, Details);
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
 
+        document.finishPage(page);
+
+        String directory_path = String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS));
+        final File file = new File(directory_path);
+
+        final String dateFull = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+
+        try {
+            file.mkdirs();
+            File filePath = new File(file,"PosLajuConsignmentNote"+ dateFull + ".pdf");
+            filePath.createNewFile();
+            document.writeTo(new FileOutputStream(filePath));
+
+            Log.i("Pathfile", filePath.toString());
+//            Toast.makeText(this, "Please check your Download Folder in File Manager", Toast.LENGTH_LONG).show();
+
+            // close the document
+            document.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("main", "error "+e.toString());
+            Toast.makeText(this, "Something wrong: " + e.toString(),  Toast.LENGTH_LONG).show();
+        }
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                String filename = "PosLajuConsignmentNote"+ dateFull + ".pdf";
+                File file1 = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+                File file2 = new File(file1, filename);
+
+//                Intent target = new Intent(Intent.ACTION_VIEW);
+
+                Uri PDFpath;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    PDFpath = FileProvider.getUriForFile(Selling_Detail.this, getApplicationContext().getPackageName() + ".provider", file2);
+                } else {
+                    PDFpath = Uri.fromFile(file2);
+                }
+//
+//                target.setDataAndType(PDFpath,"application/pdf");
+//                target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                Intent share = new Intent();
+                share.setAction(Intent.ACTION_SEND);
+                share.setType("application/pdf");
+                share.putExtra(Intent.EXTRA_STREAM, PDFpath);
+//                startActivity(Intent.createChooser(share, "Share"));
 
 
+                Log.i("Pathfile1", PDFpath.toString());
+
+                try {
+                    loading_Layout.setVisibility(View.GONE);
+                    startActivity(Intent.createChooser(share, "Share"));
+                } catch (ActivityNotFoundException e) {
+                    loading_Layout.setVisibility(View.GONE);
+                    // Instruct the user to install a PDF reader here, or something
+                }
+            }
+        }, 1000);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void DownloadPDF(String ShipDate,
+                             String Weight,
+                             String OrderID,
+                             String SenderName,
+                             String SenderPhone,
+                             String SenderAddress,
+                             String SenderPostcode,
+                             String RecipientName,
+                             String RecipientPhone,
+                             String RecipientPostcode,
+                             String RecipientAccoutNo,
+                             String RecipientAddress,
+                             String RecipientAddress01,
+                             String RecipientAddress02,
+                             String RecipientCity,
+                             String RecipientState,
+                             String RecipientEmail,
+                             String ProductCode,
+                             String Type,
+                             String RoutingCode,
+                             String ConnoteNo,
+                             String ConnoteDate){
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -2017,15 +3167,24 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
         try {
             file.mkdirs();
-            File filePath = new File(file,"PosLajuConsignmentNote.pdf");
+            File filePath = new File(file,"PosLajuConsignmentNote"+ dateFull + ".pdf");
             filePath.createNewFile();
             document.writeTo(new FileOutputStream(filePath));
 
             Log.i("Pathfile", filePath.toString());
-            Toast.makeText(this, "Please check your Download Folder in File Manager", Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, "Downloading...", Toast.LENGTH_LONG).show();
 
+//            startActivity(new Intent(Intent.ACTION_SEND).setDataAndType(Uri.fromFile(filePath), "application/pdf"));
             // close the document
             document.close();
+
+            try {
+                loading_Layout.setVisibility(View.GONE);
+                startActivity(new Intent(DownloadManager.ACTION_VIEW_DOWNLOADS));
+            } catch (ActivityNotFoundException e) {
+                loading_Layout.setVisibility(View.GONE);
+                // Instruct the user to install a PDF reader here, or something
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -2035,38 +3194,39 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
 
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                String filename = "PosLajuConsignmentNote.pdf";
-                File file1 = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
-                File file2 = new File(file1, filename);
-
-                Intent target = new Intent(Intent.ACTION_VIEW);
-
-                Uri PDFpath;
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    PDFpath = FileProvider.getUriForFile(Selling_Detail.this, getApplicationContext().getPackageName() + ".provider", file2);
-                } else {
-                    PDFpath = Uri.fromFile(file2);
-                }
-
-                target.setDataAndType(PDFpath,"application/pdf");
-                target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                Log.i("Pathfile1", PDFpath.toString());
-
-                try {
-                    startActivity(target);
-                } catch (ActivityNotFoundException e) {
-                    // Instruct the user to install a PDF reader here, or something
-                }
-            }
-        }, 6000);
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                String filename = "PosLajuConsignmentNote"+ dateFull + ".pdf";
+//                File file1 = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)));
+//                File file2 = new File(file1, filename);
+//
+//                Intent target = new Intent(Intent.ACTION_VIEW);
+//
+//                Uri PDFpath;
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    PDFpath = FileProvider.getUriForFile(Selling_Detail.this, getApplicationContext().getPackageName() + ".provider", file2);
+////                    file_download(String.valueOf(PDFpath));
+//                } else {
+//                    PDFpath = Uri.fromFile(file2);
+//                }
+//
+////                target.setDataAndType(PDFpath,"application/pdf");
+////                target.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                target.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+////                target.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+////
+////                Log.i("Pathfile1", PDFpath.toString());
+////
+////                try {
+////                    startActivity(target);
+////                } catch (ActivityNotFoundException e) {
+////                    // Instruct the user to install a PDF reader here, or something
+////                }
+//            }
+//        }, 6000);
     }
 
     private void GetPlayerData(final String CustomerUserID, final String OrderID){

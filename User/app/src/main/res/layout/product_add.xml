@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightOrange">
+    android:background="@color/colorLightOrange"
+    android:id="@+id/parent">
 
     <ScrollView
         android:fillViewport="true"
@@ -63,6 +64,7 @@
                             android:layout_margin="10dp"
                             android:background="@mipmap/image_border"
                             android:contentDescription="@string/todo"
+                            android:scaleType="centerCrop"
                             app:srcCompat="@drawable/ic_add_photo_foreground"
                             tools:ignore="VectorDrawableCompat" />
 
@@ -78,6 +80,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/image_border"
                                 android:contentDescription="@string/todo"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_add_photo_foreground"
                                 tools:ignore="VectorDrawableCompat" />
 
@@ -105,6 +108,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/image_border"
                                 android:contentDescription="@string/todo"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_add_photo_foreground"
                                 tools:ignore="VectorDrawableCompat" />
 
@@ -131,6 +135,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/image_border"
                                 android:contentDescription="@string/todo"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_add_photo_foreground"
                                 tools:ignore="VectorDrawableCompat" />
 
@@ -157,6 +162,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@mipmap/image_border"
                                 android:contentDescription="@string/todo"
+                                android:scaleType="centerCrop"
                                 app:srcCompat="@drawable/ic_add_photo_foreground"
                                 tools:ignore="VectorDrawableCompat" />
 

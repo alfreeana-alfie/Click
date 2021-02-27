@@ -55,23 +55,27 @@ public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.View
         Picasso.get().load(photo_URL).into(holder.photo);
 
         holder.AdDetail.setText(ad_detail);
-        holder.UnitPrice.setText(String.format("%.2f", Double.parseDouble(price)));
+        holder.UnitPrice.setText("RM" + String.format("%.2f", Double.parseDouble(price)));
         holder.Quantity.setText("x" + itemAllDetails.getQuantity());
         holder.location_to.setText(itemAllDetails.getDelivery_division1());
         holder.btn_self.setVisibility(View.GONE);
 
         if (itemAllDetails.getDivision().equalsIgnoreCase(itemAllDetails.getDelivery_division())) {
+            holder.PosLaju.setVisibility(View.GONE);
             holder.btn_self.setVisibility(View.VISIBLE);
+        }else{
+            holder.PosLaju.setVisibility(View.VISIBLE);
+            holder.btn_self.setVisibility(View.GONE);
         }
 
-        holder.shippin_price.setText(itemAllDetails.getDelivery_price());
+        holder.shippin_price.setText("RM" + itemAllDetails.getDelivery_price());
 
         holder.btn_self.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListerner != null) {
                     mListerner.onSelfClick(position);
-                    holder.shippin_price.setText("MYR0.00");
+                    holder.shippin_price.setText("RM0.00");
                 }
                 holder.btn_self.setVisibility(View.GONE);
             }
@@ -91,7 +95,7 @@ public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView photo;
-        TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price, location_to;
+        TextView Order_ID, AdDetail, UnitPrice, Quantity, shippin_price, location_to, PosLaju;
         Button btn_self;
 
         public ViewHolder(View view) {
@@ -105,6 +109,7 @@ public class Checkout_Adapter extends RecyclerView.Adapter<Checkout_Adapter.View
             shippin_price = view.findViewById(R.id.shippin_price);
             location_to = view.findViewById(R.id.location_to);
             btn_self = view.findViewById(R.id.btn_self);
+            PosLaju = view.findViewById(R.id.poslaju);
 
         }
     }

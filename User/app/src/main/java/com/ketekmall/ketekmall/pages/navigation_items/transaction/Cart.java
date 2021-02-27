@@ -160,6 +160,12 @@ public class Cart extends AppCompatActivity {
             }
         });
         itemAllDetailsArrayList = new ArrayList<>();
+
+        Log.i("GRAND TOTAL", Grand_Total.getText().toString());
+
+        if(Grand_Total.getText().toString().contains("RM0.00")){
+            Button_Checkout.setVisibility(View.GONE);
+        }
     }
 
     private void View_Item() {
@@ -248,10 +254,10 @@ public class Cart extends AppCompatActivity {
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
-                                                                            Grand_Total.setText("MYR" + String.format("%.2f", fi));
+                                                                            Grand_Total.setText("RM" + String.format("%.2f", fi));
                                                                         }
                                                                         if (doubles.size() == 0) {
-                                                                            Grand_Total.setText("MYR0.00");
+                                                                            Grand_Total.setText("RM0.00");
                                                                             Button_Checkout.setVisibility(View.GONE);
                                                                         }
                                                                     }
@@ -272,7 +278,7 @@ public class Cart extends AppCompatActivity {
                                                                         Double fi = 0.00;
                                                                         for (int i = 0; i < doubles.size(); i++) {
                                                                             fi += doubles.get(i);
-                                                                            Grand_Total.setText("MYR" + String.format("%.2f", fi));
+                                                                            Grand_Total.setText("RM" + String.format("%.2f", fi));
                                                                         }
                                                                     }
 
