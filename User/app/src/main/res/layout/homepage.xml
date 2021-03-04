@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/parent">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -283,7 +283,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/process"
+                                android:drawableTop="@drawable/layout_process"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/processed_food"
@@ -297,7 +297,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/handicraft"
+                                android:drawableTop="@drawable/layout_handicraft"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/handicraft"
@@ -311,7 +311,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/health"
+                                android:drawableTop="@drawable/layout_health"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/health_and_beauty"
@@ -325,7 +325,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/home"
+                                android:drawableTop="@drawable/layout_home"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/home_and_living"
@@ -339,7 +339,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/fashion"
+                                android:drawableTop="@drawable/layout_fashion"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/fashion_accessories"
@@ -353,7 +353,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/sarawk"
+                                android:drawableTop="@drawable/layout_sarawak"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/sarawak_based_product"
@@ -368,7 +368,7 @@
                                 android:layout_height="125dp"
                                 android:layout_margin="5dp"
                                 android:background="@mipmap/layout_border_white"
-                                android:drawableTop="@drawable/retail"
+                                android:drawableTop="@drawable/layout_retail"
                                 android:fontFamily="@font/open_sans_bold"
                                 android:padding="5dp"
                                 android:text="@string/self_pickup"
@@ -558,7 +558,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </RelativeLayout>
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:labelVisibilityMode="labeled"
