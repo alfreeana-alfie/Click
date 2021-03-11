@@ -287,6 +287,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_process"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"
@@ -317,6 +318,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_handicraft"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"
@@ -347,6 +349,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_health"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"
@@ -377,6 +380,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_home"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"
@@ -407,6 +411,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_fashion"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"
@@ -437,6 +442,7 @@
                                 app:layout_gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/image_sarawak"
                                     android:layout_width="match_parent"
                                     android:layout_height="65dp"
                                     android:layout_marginTop="10dp"

@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -160,6 +161,8 @@ public class Homepage extends AppCompatActivity {
     ImageButton btn_next, btn_back;
 
     ProgressBar loading_hot, loading_shock;
+
+    ImageView ImageProcess, ImageHandicraft, ImageHealth, ImageHome, ImageFashion, ImageSarawak;
 
     BottomNavigationView bottomNav;
     private long backPressedTime;
@@ -366,6 +369,13 @@ public class Homepage extends AppCompatActivity {
         button_pepper = findViewById(R.id.button_pepper);
         button_view_all = findViewById(R.id.button_see);
         button_pickup = findViewById(R.id.button_pickup);
+
+        ImageProcess = findViewById(R.id.image_process);
+        ImageHandicraft = findViewById(R.id.image_handicraft);
+        ImageFashion = findViewById(R.id.image_fashion);
+        ImageHealth = findViewById(R.id.image_health);
+        ImageHome = findViewById(R.id.image_home);
+        ImageSarawak = findViewById(R.id.image_sarawak);
 
         btn_back = findViewById(R.id.btn_back);
         btn_next = findViewById(R.id.btn_next);
@@ -594,8 +604,20 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(1);
             }
         });
+        ImageProcess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(1);
+            }
+        });
 
         button_handcraft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(2);
+            }
+        });
+        ImageHandicraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(2);
@@ -608,8 +630,20 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(6);
             }
         });
+        ImageHealth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(6);
+            }
+        });
 
         button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(7);
+            }
+        });
+        ImageHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(7);
@@ -622,8 +656,20 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(8);
             }
         });
+        ImageFashion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(8);
+            }
+        });
 
         button_pepper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GotoCategory(9);
+            }
+        });
+        ImageSarawak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(9);
