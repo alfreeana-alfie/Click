@@ -518,7 +518,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setMerchantKey ("8bgBOjTkij");
                                                 payment.setMerchantCode ("M29640");
                                                 payment.setPaymentId ("");
-                                                payment.setCurrency ("RM");
+                                                payment.setCurrency ("MYR");
                                                 payment.setRefNo (RefID);
                                                 payment.setAmount (Grand_Total2.getText().toString());
                                                 payment.setProdDesc ("KetekMall");
