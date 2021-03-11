@@ -604,20 +604,9 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(1);
             }
         });
-        ImageProcess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(1);
-            }
-        });
+        ImageProcess.setOnClickListener();
 
         button_handcraft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(2);
-            }
-        });
-        ImageHandicraft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(2);
@@ -630,20 +619,8 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(6);
             }
         });
-        ImageHealth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(6);
-            }
-        });
 
         button_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(7);
-            }
-        });
-        ImageHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(7);
@@ -656,20 +633,8 @@ public class Homepage extends AppCompatActivity {
                 GotoCategory(8);
             }
         });
-        ImageFashion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(8);
-            }
-        });
 
         button_pepper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GotoCategory(9);
-            }
-        });
-        ImageSarawak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GotoCategory(9);
