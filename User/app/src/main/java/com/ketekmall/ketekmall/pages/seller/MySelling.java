@@ -34,6 +34,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.adapter.Order_BuyerAdapter;
 import com.ketekmall.ketekmall.adapter.Order_SellerAdapter;
 import com.ketekmall.ketekmall.data.MySingleton;
 import com.ketekmall.ketekmall.data.Order;
@@ -43,6 +44,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.pages.buyer.MyBuying;
+import com.ketekmall.ketekmall.pages.buyer.Review_Page;
+import com.ketekmall.ketekmall.user.Edit_Profile;
+import com.onesignal.OneSignal;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +85,8 @@ public class MySelling extends AppCompatActivity {
 
     private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
     private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+    private static String URL_UPDATE_ORDER = "https://ketekmall.com/ketekmall/updateOrder.php";
+    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -204,161 +212,263 @@ public class MySelling extends AppCompatActivity {
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
-                                    String status = object.getString("status").trim();
-                                    String delivery_price = object.getString("delivery_price");
-                                    String weight = object.getString("weight");
-
+                                    final String status = object.getString("status").trim();
+                                    final String delivery_price = object.getString("delivery_price");
+                                    final String weight = object.getString("weight");
+                                    final String refno = object.getString("refno");
                                     final String tracking_no = object.getString("tracking_no").trim();
 
                                     Spanned status1;
 
-                                    Order item = new Order(id,
-                                            seller_id,
-                                            ad_detail,
-                                            main_category,
-                                            sub_category,
-                                            String.format("%.2f", price),
-                                            division,
-                                            district,
-                                            image_item,
-                                            item_id,
-                                            customer_id,
-                                            order_date,
-                                            date,
-                                            quantity,
-                                            status);
-                                    item.setDelivery_price(delivery_price);
-                                    item.setWeight(weight);
+                                    if(refno != null){
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_getPayment,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                            String success = jsonObject.getString("success");
+                                                            JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                                    if(status.equals("Reject")){
-                                        String delivery_text;
+                                                            if (success.equals("1")) {
+                                                                for (int i = 0; i < jsonArray.length(); i++) {
+                                                                    JSONObject object = jsonArray.getJSONObject(i);
 
-                                        delivery_text = "<font color='#FF3333'>Reject</font>";
-                                        item.setStatus1(Html.fromHtml(delivery_text));
+                                                                    final String PaymentID = object.getString("id").trim();
+                                                                    final String PaymentRefno = object.getString("OrderID").trim();
+                                                                    final String PaymentStatus = object.getString("Status").trim();
+                                                                    final String CreatedAt = object.getString("CreatedAt").trim();
+
+                                                                    if(PaymentStatus.contains("Unsuccessful")){
+                                                                        final Order item = new Order(id,
+                                                                                seller_id,
+                                                                                ad_detail,
+                                                                                main_category,
+                                                                                sub_category,
+                                                                                String.format("%.2f", price),
+                                                                                division,
+                                                                                district,
+                                                                                image_item,
+                                                                                item_id,
+                                                                                customer_id,
+                                                                                order_date,
+                                                                                date,
+                                                                                quantity,
+                                                                                PaymentStatus);
+                                                                        item.setDelivery_price(delivery_price);
+                                                                        item.setWeight(weight);
+                                                                        Log.i("CONNOTE", PaymentStatus);
+                                                                        String delivery_text;
+
+                                                                        delivery_text = "<font color='#FF3333'>Unsuccessful</font>";
+                                                                        item.setStatus1(Html.fromHtml(delivery_text));
+                                                                        item.setTracking_no(tracking_no);
+                                                                        itemList.add(item);
+                                                                    }else{
+                                                                        final Order item = new Order(id,
+                                                                                seller_id,
+                                                                                ad_detail,
+                                                                                main_category,
+                                                                                sub_category,
+                                                                                String.format("%.2f", price),
+                                                                                division,
+                                                                                district,
+                                                                                image_item,
+                                                                                item_id,
+                                                                                customer_id,
+                                                                                order_date,
+                                                                                date,
+                                                                                quantity,
+                                                                                status);
+                                                                        item.setDelivery_price(delivery_price);
+                                                                        item.setWeight(weight);
+                                                                        if(status.equals("Rejected")){
+                                                                            String delivery_text;
+
+                                                                            delivery_text = "<font color='#FF3333'>Rejected</font>";
+                                                                            item.setStatus1(Html.fromHtml(delivery_text));
+                                                                        }
+                                                                        item.setTracking_no(tracking_no);
+                                                                        itemList.add(item);
+                                                                    }
+                                                                }
+                                                                adapter_item = new Order_SellerAdapter(MySelling.this, itemList);
+                                                                recyclerView.setAdapter(adapter_item);
+                                                                adapter_item.notifyDataSetChanged();
+                                                                adapter_item.sortArrayHighest();
+                                                                adapter_item.setOnItemClickListener(new Order_SellerAdapter.OnItemClickListener() {
+                                                                    @Override
+                                                                    public void onAcceptClick(int position) {
+                                                                        Order order = itemList.get(position);
+
+                                                                        final String strOrder_Id = order.getId();
+                                                                        final String strSeller_id = order.getSeller_id();
+                                                                        final String strCustomer_id = order.getCustomer_id();
+                                                                        final String strItem_id = order.getItem_id();
+                                                                        final String strMain_category = order.getMain_category();
+                                                                        final String strSub_category = order.getSub_category();
+                                                                        final String strAd_Detail = order.getAd_detail();
+                                                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                                                        final String strDivision = order.getDivision();
+                                                                        final String strDistrict = order.getDistrict();
+                                                                        final String strPhoto = order.getPhoto();
+                                                                        final String strOrder_Date = order.getOrder_date();
+                                                                        final String strDate = order.getDate();
+                                                                        final String strQuantity = order.getQuantity();
+                                                                        final String strStatus = order.getStatus();
+
+                                                                        final String remarks = "ACCEPT";
+                                                                        Update_Order(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
+                                                                        itemList.remove(position);
+                                                                        adapter_item.notifyDataSetChanged();
+                                                                        recyclerView.setAdapter(adapter_item);
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onRejectClick(final int position) {
+                                                                        AlertDialog.Builder builder = new AlertDialog.Builder(MySelling.this, R.style.MyDialogTheme);
+                                                                        builder.setTitle("Are you sure?");
+                                                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                                                Order order = itemList.get(position);
+
+                                                                                final String strOrder_Id = order.getId();
+                                                                                final String strSeller_id = order.getSeller_id();
+                                                                                final String strCustomer_id = order.getCustomer_id();
+                                                                                final String strItem_id = order.getItem_id();
+                                                                                final String strMain_category = order.getMain_category();
+                                                                                final String strSub_category = order.getSub_category();
+                                                                                final String strAd_Detail = order.getAd_detail();
+                                                                                final Double strPrice = Double.valueOf(order.getPrice());
+                                                                                final String strDivision = order.getDivision();
+                                                                                final String strDistrict = order.getDistrict();
+                                                                                final String strPhoto = order.getPhoto();
+                                                                                final String strOrder_Date = order.getOrder_date();
+                                                                                final String strDate = order.getDate();
+                                                                                final String strQuantity = order.getQuantity();
+                                                                                final String strStatus = order.getStatus();
+
+                                                                                final String remarks = "Rejected";
+//                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
+                                                                                updateOrder(strCustomer_id, strOrder_Id, remarks);
+                                                                                getCustomerDetail(strCustomer_id, strOrder_Id);
+
+                                                                                adapter_item.notifyDataSetChanged();
+                                                                                recyclerView.setAdapter(adapter_item);
+
+                                                                                finish();
+                                                                                startActivity(getIntent());
+                                                                            }
+                                                                        });
+
+                                                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                                            @Override
+                                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                                dialog.cancel();
+                                                                            }
+                                                                        });
+                                                                        AlertDialog alertDialog = builder.create();
+                                                                        alertDialog.show();
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onViewClick(int position) {
+                                                                        Order order = itemList.get(position);
+
+                                                                        final String strOrder_Id = order.getId();
+                                                                        final String strSeller_id = order.getSeller_id();
+                                                                        final String strCustomer_id = order.getCustomer_id();
+                                                                        final String strItem_id = order.getItem_id();
+                                                                        final String strMain_category = order.getMain_category();
+                                                                        final String strSub_category = order.getSub_category();
+                                                                        final String strAd_Detail = order.getAd_detail();
+                                                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                                                        final String strDivision = order.getDivision();
+                                                                        final String strDistrict = order.getDistrict();
+                                                                        final String strPhoto = order.getPhoto();
+                                                                        final String strOrder_Date = order.getOrder_date();
+                                                                        final String strDate = order.getDate();
+                                                                        final String strQuantity = order.getQuantity();
+                                                                        final String strStatus = order.getStatus();
+                                                                        final String strTracking_NO = order.getTracking_no();
+                                                                        final Double strDeliveryPrice = Double.valueOf(order.getDelivery_price());
+                                                                        final String Weight = order.getWeight();
+
+
+                                                                        double TotalAmountPartOne = strPrice + strDeliveryPrice;
+                                                                        double TotalAmount = Integer.parseInt(strQuantity) * TotalAmountPartOne;
+
+                                                                        Intent intent1 = new Intent(MySelling.this, Selling_Detail.class);
+                                                                        intent1.putExtra("id", strOrder_Id);
+                                                                        intent1.putExtra("photo", strPhoto);
+                                                                        intent1.putExtra("ad_detail", strAd_Detail);
+                                                                        intent1.putExtra("price", String.format("%.2f", strPrice));
+                                                                        intent1.putExtra("quantity", strQuantity);
+                                                                        intent1.putExtra("division", strDivision);
+                                                                        intent1.putExtra("order_date", strOrder_Date);
+                                                                        intent1.putExtra("status", strStatus);
+                                                                        intent1.putExtra("tracking_no", strTracking_NO);
+                                                                        intent1.putExtra("customer_id", strCustomer_id);
+                                                                        intent1.putExtra("TotalAmount", String.format("%.2f", TotalAmount));
+                                                                        intent1.putExtra("Weight", Weight);
+                                                                        startActivity(intent1);
+                                                                    }
+                                                                });
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                            Log.i("CONNOTE", e.toString());
+                                                        }
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        try {
+
+                                                            if (error instanceof TimeoutError ) {
+                                                                //Time out error
+
+                                                            }else if(error instanceof NoConnectionError){
+                                                                //net work error
+
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+
+                                                            }else{
+                                                                //Error
+                                                            }
+                                                            //End
+
+
+                                                        } catch (Exception e) {
+
+
+                                                        }
+                                                    }
+                                                }) {
+
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("OrderID", refno);
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue1 = Volley.newRequestQueue(MySelling.this);
+                                        requestQueue1.add(stringRequest1);
                                     }
-                                    item.setTracking_no(tracking_no);
-                                    itemList.add(item);
                                 }
-                                adapter_item = new Order_SellerAdapter(MySelling.this, itemList);
-                                adapter_item.notifyDataSetChanged();
-                                recyclerView.setAdapter(adapter_item);
-                                adapter_item.sortArrayHighest();
-                                adapter_item.setOnItemClickListener(new Order_SellerAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onAcceptClick(int position) {
-                                        Order order = itemList.get(position);
-
-                                        final String strOrder_Id = order.getId();
-                                        final String strSeller_id = order.getSeller_id();
-                                        final String strCustomer_id = order.getCustomer_id();
-                                        final String strItem_id = order.getItem_id();
-                                        final String strMain_category = order.getMain_category();
-                                        final String strSub_category = order.getSub_category();
-                                        final String strAd_Detail = order.getAd_detail();
-                                        final Double strPrice = Double.valueOf(order.getPrice());
-                                        final String strDivision = order.getDivision();
-                                        final String strDistrict = order.getDistrict();
-                                        final String strPhoto = order.getPhoto();
-                                        final String strOrder_Date = order.getOrder_date();
-                                        final String strDate = order.getDate();
-                                        final String strQuantity = order.getQuantity();
-                                        final String strStatus = order.getStatus();
-
-                                        final String remarks = "ACCEPT";
-                                        Update_Order(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
-                                        itemList.remove(position);
-                                        adapter_item.notifyDataSetChanged();
-                                        recyclerView.setAdapter(adapter_item);
-                                    }
-
-                                    @Override
-                                    public void onRejectClick(final int position) {
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(MySelling.this, R.style.MyDialogTheme);
-                                        builder.setTitle("Are you sure?");
-                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                                Order order = itemList.get(position);
-
-                                                final String strOrder_Id = order.getId();
-                                                final String strSeller_id = order.getSeller_id();
-                                                final String strCustomer_id = order.getCustomer_id();
-                                                final String strItem_id = order.getItem_id();
-                                                final String strMain_category = order.getMain_category();
-                                                final String strSub_category = order.getSub_category();
-                                                final String strAd_Detail = order.getAd_detail();
-                                                final Double strPrice = Double.valueOf(order.getPrice());
-                                                final String strDivision = order.getDivision();
-                                                final String strDistrict = order.getDistrict();
-                                                final String strPhoto = order.getPhoto();
-                                                final String strOrder_Date = order.getOrder_date();
-                                                final String strDate = order.getDate();
-                                                final String strQuantity = order.getQuantity();
-                                                final String strStatus = order.getStatus();
-
-                                                final String remarks = "Reject";
-                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
-                                                getCustomerDetail(strCustomer_id, strOrder_Id);
-
-                                                adapter_item.notifyDataSetChanged();
-                                                recyclerView.setAdapter(adapter_item);
-                                            }
-                                        });
-
-                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                                        AlertDialog alertDialog = builder.create();
-                                        alertDialog.show();
-                                    }
-
-                                    @Override
-                                    public void onViewClick(int position) {
-                                        Order order = itemList.get(position);
-
-                                        final String strOrder_Id = order.getId();
-                                        final String strSeller_id = order.getSeller_id();
-                                        final String strCustomer_id = order.getCustomer_id();
-                                        final String strItem_id = order.getItem_id();
-                                        final String strMain_category = order.getMain_category();
-                                        final String strSub_category = order.getSub_category();
-                                        final String strAd_Detail = order.getAd_detail();
-                                        final Double strPrice = Double.valueOf(order.getPrice());
-                                        final String strDivision = order.getDivision();
-                                        final String strDistrict = order.getDistrict();
-                                        final String strPhoto = order.getPhoto();
-                                        final String strOrder_Date = order.getOrder_date();
-                                        final String strDate = order.getDate();
-                                        final String strQuantity = order.getQuantity();
-                                        final String strStatus = order.getStatus();
-                                        final String strTracking_NO = order.getTracking_no();
-                                        final Double strDeliveryPrice = Double.valueOf(order.getDelivery_price());
-                                        final String Weight = order.getWeight();
-
-
-                                        double TotalAmountPartOne = strPrice + strDeliveryPrice;
-                                        double TotalAmount = Integer.parseInt(strQuantity) * TotalAmountPartOne;
-
-                                        Intent intent1 = new Intent(MySelling.this, Selling_Detail.class);
-                                        intent1.putExtra("id", strOrder_Id);
-                                        intent1.putExtra("photo", strPhoto);
-                                        intent1.putExtra("ad_detail", strAd_Detail);
-                                        intent1.putExtra("price", String.format("%.2f", strPrice));
-                                        intent1.putExtra("quantity", strQuantity);
-                                        intent1.putExtra("division", strDivision);
-                                        intent1.putExtra("order_date", strOrder_Date);
-                                        intent1.putExtra("status", strStatus);
-                                        intent1.putExtra("tracking_no", strTracking_NO);
-                                        intent1.putExtra("customer_id", strCustomer_id);
-                                        intent1.putExtra("TotalAmount", String.format("%.2f", TotalAmount));
-                                        intent1.putExtra("Weight", Weight);
-                                        startActivity(intent1);
-                                    }
-                                });
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -648,6 +758,46 @@ public class MySelling extends AppCompatActivity {
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(MySelling.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void updateOrder(final String CustomerID, final String OrderID, final String remarks) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_ORDER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                                Toast.makeText(MySelling.this, R.string.success_update, Toast.LENGTH_SHORT).show();
+                                GetPlayerData(CustomerID, OrderID);
+                            } else {
+                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", OrderID);
+                params.put("remarks", remarks);
+                params.put("status", remarks);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 

@@ -57,7 +57,7 @@ public class Cart extends AppCompatActivity {
     private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_cart.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_CART_TEMP = "https://ketekmall.com/ketekmall/readcart_temp.php";
-    private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_two.php";
+    private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_three.php";
     private static String URL_READ_PRODUCTS_TWO = "https://ketekmall.com/ketekmall/readcart_single_two.php";
     private static String URL_READ_PRODUCTS_TWO_MINUS = "https://ketekmall.com/ketekmall/readcart_single_two_minus.php";
     private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp_two.php";
@@ -189,7 +189,7 @@ public class Cart extends AppCompatActivity {
                                         final String id = object.getString("id").trim();
                                         final String seller_id = object.getString("seller_id").trim();
                                         final String main_category = object.getString("main_category").trim();
-                                        final String sub_category = object.getString("sub_category").trim();
+                                        final String sub_category = object.getString("main_category").trim();
                                         final String ad_detail = object.getString("ad_detail").trim();
                                         final Double price = Double.valueOf(object.getString("price").trim());
                                         final String division = object.getString("division");
@@ -359,7 +359,7 @@ public class Cart extends AppCompatActivity {
                                             @Override
                                             protected Map<String, String> getParams() {
                                                 Map<String, String> params = new HashMap<>();
-                                                params.put("ad_detail", ad_detail);
+                                                params.put("id", item_id);
                                                 return params;
                                             }
                                         };

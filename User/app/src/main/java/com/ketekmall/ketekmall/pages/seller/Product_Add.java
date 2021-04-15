@@ -590,10 +590,10 @@ public class Product_Add extends AppCompatActivity {
 
     private void saveEdit(final String id, final String photo) {
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
+//        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
         final String strAd_Detail = this.edittext_ad_detail.getText().toString();
         final String strBrand = this.edittext_brand.getText().toString();
-        final String strInner = this.edittext_inner.getText().toString();
+//        final String strInner = this.edittext_inner.getText().toString();
         final String strStock = this.edittext_stock.getText().toString();
         final String strDesc = this.edittext_desc.getText().toString();
 
@@ -622,8 +622,8 @@ public class Product_Add extends AppCompatActivity {
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
 
-                                    Product_Add_Data item = new Product_Add_Data(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
-                                    itemList.add(item);
+//                                    Product_Add_Data item = new Product_Add_Data(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
+//                                    itemList.add(item);
 
                                     if (upload_photo_img2.getDrawable().getConstantState().equals
                                             (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
@@ -742,7 +742,7 @@ public class Product_Add extends AppCompatActivity {
                     Map<String, String> params = new HashMap<>();
                     params.put("user_id", id);
                     params.put("main_category", strMain_category);
-                    params.put("sub_category", strSub_category);
+                    params.put("sub_category", strMain_category);
                     params.put("ad_detail", strAd_Detail);
                     params.put("brand_material", strBrand);
                     params.put("inner_material", strBrand);

@@ -160,6 +160,7 @@ public class Fragment_Selling extends Fragment {
                                         textView13.setVisibility(View.VISIBLE);
                                         textView14.setVisibility(View.GONE);
                                         textView15.setVisibility(View.GONE);
+                                        btn_register.setVisibility(View.VISIBLE);
                                         btn_register.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {

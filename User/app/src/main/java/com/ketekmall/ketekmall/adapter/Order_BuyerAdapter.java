@@ -70,6 +70,9 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
 
         if(order.getStatus().equals("Received")){
             holder.btn_cancel.setVisibility(View.GONE);
+        }else if(order.getStatus().equals("Cancelled") || order.getStatus().equals("Unsuccessful")){
+            holder.btn_cancel.setVisibility(View.GONE);
+            holder.btn_review.setVisibility(View.GONE);
         }
     }
 

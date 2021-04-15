@@ -66,10 +66,19 @@ public class Order_SellerAdapter extends RecyclerView.Adapter<Order_SellerAdapte
         holder.text_quantity.setText("x" + order.getQuantity());
         holder.text_placed_date.setText("Order Placed on " + order.getDate());
 
-        if(order.getStatus().equals("Reject")){
+        if(order.getStatus().equals("Rejected")){
             holder.text_status.setText(order.getStatus1());
-        }else {
+        }else if(order.getStatus().equals("Unsuccessful")){
+            holder.text_status.setText(order.getStatus1());
+            holder.btn_reject.setVisibility(View.GONE);
+            holder.btn_view.setVisibility(View.GONE);
+        } else {
             holder.text_status.setText(order.getStatus());
+        }
+
+        if(order.getStatus().equals("Cancelled")){
+            holder.btn_reject.setVisibility(View.GONE);
+            holder.btn_view.setVisibility(View.GONE);
         }
 
         holder.text_ship_placed.setText("Shipped out to "+ order.getDistrict());

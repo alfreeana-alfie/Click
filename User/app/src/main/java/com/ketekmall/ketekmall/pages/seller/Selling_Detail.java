@@ -1,9 +1,11 @@
 package com.ketekmall.ketekmall.pages.seller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,7 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.Html;
 import android.text.Layout;
+import android.text.Spanned;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.Log;
@@ -64,12 +68,14 @@ import com.google.zxing.oned.Code128Writer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.adapter.Order_SellerAdapter;
+import com.ketekmall.ketekmall.data.Order;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
-import com.ketekmall.ketekmall.pages.register_seller.Register_Seller;
+import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.onesignal.OSNotificationAction;
 import com.onesignal.OSNotificationOpenedResult;
 import com.onesignal.OneSignal;
@@ -101,7 +107,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
     private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-
+    private static String URL_CreatePosLaju = "https://ketekmall.com/ketekmall/createConnote.php";
+    private static String URL_getConnote = "https://ketekmall.com/ketekmall/getConnote.php";
+    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";;
 
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_download;
@@ -277,13 +285,13 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             btn_submit.setVisibility(View.INVISIBLE);
             edit_review.setFocusable(false);
             edit_review.setFocusableInTouchMode(false);
-        }if(strStatus.equals("Cancel")){
+        }if(strStatus.equals("Cancelled")){
             Cancel.setVisibility(View.VISIBLE);
             WithText.setVisibility(View.GONE);
             edit_review.setVisibility(View.GONE);
             btn_submit.setVisibility(View.GONE);
         }
-        if(strStatus.equals("Reject")){
+        if(strStatus.equals("Rejected")){
             Rejected.setVisibility(View.VISIBLE);
             WithText.setVisibility(View.GONE);
             edit_review.setVisibility(View.GONE);
@@ -816,12 +824,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-    private void PosLajuGetData(final String customerID,
-                                final String OrderID,
-                                final String subscriptionCode,
-                                final String AccountNo,
-                                final String strOrder_Date,
-                                final String strID){
+    private void PosLajuGetData(final String customerID, final String OrderID, final String subscriptionCode, final String AccountNo, final String strOrder_Date, final String strID){
         Intent intent = getIntent();
 
         final String Quantity = intent.getStringExtra("quantity");
@@ -1014,12 +1017,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-    private void PosLajuGetData2(final String customerID,
-                                final String OrderID,
-                                final String subscriptionCode,
-                                final String AccountNo,
-                                final String strOrder_Date,
-                                final String strID){
+    private void PosLajuGetData2(final String customerID, final String OrderID, final String subscriptionCode, final String AccountNo, final String strOrder_Date, final String strID){
         Intent intent = getIntent();
 
         final String Quantity = intent.getStringExtra("quantity");
@@ -1215,38 +1213,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
     String HTTP_RoutingCode = "https://apis.pos.com.my/apigateway/as01/api/routingcode/v1";
     String serverKey_RoutingCode = "aWFGekJBMXUyRFFmTmNxUEpmcXhwR0hXYnY5cWdCTmE=";
-    private void RoutingCode(String Origin,
-                             String Destination,
-                             final String OrderID,
-                             final String subcriptionCode,
-                             final String AccountNo,
-                             final String SellerName,
-                             final String SellerPhone,
-                             final String SellerAddress,
-                             final String PickupLocationID,
-                             final String ContactPerson,
-                             final String PickupAddress,
-                             final String Postcode,
-                             final String TotalQuantityToPickup,
-                             final String Weight,
-                             final String Amount,
-                             final String ReceiverName,
-                             final String ReceiverAddress,
-                             final String ReceiverPostcode,
-                             final String ReceiverPhone,
-                             final String PickupDistrict,
-                             final String PickupProvince,
-                             final String PickupEmail,
-                             final String ReceiverFirstName,
-                             final String ReceiverLastName,
-                             final String ReceiverDistrict,
-                             final String ReceiverProvince,
-                             final String ReceiverCity,
-                             final String ReceiverAddress01,
-                             final String ReceiverAddress02,
-                             final String ReceiverEmail,
-                             final String strOrder_Date,
-                             final String strID) {
+    private void RoutingCode(String Origin, String Destination, final String OrderID, final String subcriptionCode, final String AccountNo, final String SellerName, final String SellerPhone, final String SellerAddress, final String PickupLocationID, final String ContactPerson, final String PickupAddress, final String Postcode, final String TotalQuantityToPickup, final String Weight,
+                             final String Amount, final String ReceiverName, final String ReceiverAddress, final String ReceiverPostcode,
+                             final String ReceiverPhone, final String PickupDistrict, final String PickupProvince, final String PickupEmail, final String ReceiverFirstName, final String ReceiverLastName, final String ReceiverDistrict, final String ReceiverProvince, final String ReceiverCity, final String ReceiverAddress01, final String ReceiverAddress02, final String ReceiverEmail, final String strOrder_Date, final String strID) {
 //        GenConnote(TotalQuantityToPickup,
 //                OrderID,
 //                subcriptionCode,
@@ -1370,38 +1339,9 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         requestQueue.add(stringRequest);
     }
 
-    private void RoutingCodeDownload(String Origin,
-                             String Destination,
-                             final String OrderID,
-                             final String subcriptionCode,
-                             final String AccountNo,
-                             final String SellerName,
-                             final String SellerPhone,
-                             final String SellerAddress,
-                             final String PickupLocationID,
-                             final String ContactPerson,
-                             final String PickupAddress,
-                             final String Postcode,
-                             final String TotalQuantityToPickup,
-                             final String Weight,
-                             final String Amount,
-                             final String ReceiverName,
-                             final String ReceiverAddress,
-                             final String ReceiverPostcode,
-                             final String ReceiverPhone,
-                             final String PickupDistrict,
-                             final String PickupProvince,
-                             final String PickupEmail,
-                             final String ReceiverFirstName,
-                             final String ReceiverLastName,
-                             final String ReceiverDistrict,
-                             final String ReceiverProvince,
-                             final String ReceiverCity,
-                             final String ReceiverAddress01,
-                             final String ReceiverAddress02,
-                             final String ReceiverEmail,
-                             final String strOrder_Date,
-                             final String strID) {
+    private void RoutingCodeDownload(String Origin, String Destination, final String OrderID, final String subcriptionCode, final String AccountNo, final String SellerName, final String SellerPhone, final String SellerAddress, final String PickupLocationID,
+                             final String ContactPerson, final String PickupAddress, final String Postcode, final String TotalQuantityToPickup, final String Weight, final String Amount,
+                             final String ReceiverName, final String ReceiverAddress, final String ReceiverPostcode, final String ReceiverPhone, final String PickupDistrict, final String PickupProvince, final String PickupEmail, final String ReceiverFirstName, final String ReceiverLastName, final String ReceiverDistrict, final String ReceiverProvince, final String ReceiverCity, final String ReceiverAddress01, final String ReceiverAddress02, final String ReceiverEmail, final String strOrder_Date, final String strID) {
 //        GenConnote(TotalQuantityToPickup,
 //                OrderID,
 //                subcriptionCode,
@@ -1635,73 +1575,63 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             @Override
             public void onResponse(String response) {
                 Log.i("jsonObjectRequest", response);
-                try{
-                    JSONObject jsonObject = new JSONObject(response);
-                    String ConnoteNo       = jsonObject.getString("ConnoteNo");
-                    String StatusCode      = jsonObject.getString("StatusCode");
-                    String Message         = jsonObject.getString("Message");
+                if(response.contains("Record already exist/Wrong Credential")){
+                    Log.i("CONNOTE", "DETECTED");
+                    GetConnoteShare(OrderID, SellerAddress, ReceiverAddress, RoutingCode, date);
+                    Toast.makeText(Selling_Detail.this, "Connote is empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    try{
+                        JSONObject jsonObject = new JSONObject(response);
+                        String ConnoteNo       = jsonObject.getString("ConnoteNo");
+                        String StatusCode      = jsonObject.getString("StatusCode");
+                        String Message         = jsonObject.getString("Message");
 
-                    Log.i("ObjectRequest", StatusCode);
-                    Log.i("ObjectRequest", ConnoteNo);
-                    Log.i("ObjectRequest", Message);
+                        Log.i("ObjectRequest", StatusCode);
+                        Log.i("ObjectRequest", ConnoteNo);
+                        Log.i("ObjectRequest", Message);
 
-//                    TrackingNo(ConnoteNo, strOrderDate, strID);
-//
-//                    PreAcceptanceSingle(
-//                            subcriptionCode,
-//                            AccountNo,
-//                            SellerName,
-//                            SellerPhone,
-//                            SellerAddress,
-//                            PickupLocationID,
-//                            ContactPerson,
-//                            PickupAddress,
-//                            Postcode,
-//                            ItemType,
-//                            TotalQuantityToPickup,
-//                            Weight,
-//                            ConnoteNo,
-//                            Amount,
-//                            ReceiverName,
-//                            ReceiverAddress,
-//                            ReceiverPostcode,
-//                            ReceiverPhone,
-//                            PickupDistrict,
-//                            PickupProvince,
-//                            PickupEmail,
-//                            ReceiverFirstName,
-//                            ReceiverLastName,
-//                            ReceiverDistrict,
-//                            ReceiverProvince,
-//                            ReceiverCity);
+                        TrackingNo(ConnoteNo, strOrderDate, strID);
 
-                    GeneratePDF(
-                            date,
-                            Weight,
-                            OrderID,
-                            SellerName,
-                            SellerPhone,
-                            SellerAddress,
-                            Postcode,
-                            ReceiverName,
-                            ReceiverPhone,
-                            ReceiverPostcode,
-                            AccountNo,
-                            ReceiverAddress,
-                            ReceiverAddress01,
-                            ReceiverAddress02,
-                            ReceiverCity,
-                            ReceiverProvince,
-                            ReceiverEmail,
-                            OrderID,
-                            "Document",
-                            RoutingCode,
-                            ConnoteNo,
-                            date);
+                        PreAcceptanceSingle(
+                                subcriptionCode,
+                                AccountNo,
+                                SellerName,
+                                SellerPhone,
+                                SellerAddress,
+                                PickupLocationID,
+                                ContactPerson,
+                                PickupAddress,
+                                Postcode,
+                                ItemType,
+                                TotalQuantityToPickup,
+                                Weight,
+                                ConnoteNo,
+                                Amount,
+                                ReceiverName,
+                                ReceiverAddress,
+                                ReceiverPostcode,
+                                ReceiverPhone,
+                                PickupDistrict,
+                                PickupProvince,
+                                PickupEmail,
+                                ReceiverFirstName,
+                                ReceiverLastName,
+                                ReceiverDistrict,
+                                ReceiverProvince,
+                                ReceiverCity);
 
-                }catch(JSONException e){
-                    e.printStackTrace();
-                    Log.i("jsonObjectRequest", e.toString());
+                        CreateConnote(ConnoteNo, date,
+                                OrderID, SellerName,
+                                SellerPhone, Postcode,
+                                AccountNo, ReceiverName,
+                                ReceiverAddress01, ReceiverAddress02,
+                                ReceiverPostcode, ReceiverCity,
+                                ReceiverProvince, ReceiverPhone,
+                                ReceiverEmail, Weight);
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                        Log.i("jsonObjectRequest", e.toString());
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -1831,75 +1761,90 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(String response) {
-                Log.i("jsonObjectRequest", response);
-                try{
-                    JSONObject jsonObject = new JSONObject(response);
-                    String ConnoteNo       = jsonObject.getString("ConnoteNo");
-                    String StatusCode      = jsonObject.getString("StatusCode");
-                    String Message         = jsonObject.getString("Message");
+                Log.i("jsonObjectRequest 01", response);
+                if(response.contains("Record already exist/Wrong Credential")){
+                    Log.i("CONNOTE", "DETECTED");
+                    GetConnoteDownload(OrderID, SellerAddress, ReceiverAddress, RoutingCode, date);
+                    Toast.makeText(Selling_Detail.this, "Connote is empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    try{
+                        JSONObject jsonObject = new JSONObject(response);
+                        String ConnoteNo       = jsonObject.getString("ConnoteNo");
+                        String StatusCode      = jsonObject.getString("StatusCode");
+                        String Message         = jsonObject.getString("Message");
 
-                    Log.i("ObjectRequest", StatusCode);
-                    Log.i("ObjectRequest", ConnoteNo);
-                    Log.i("ObjectRequest", Message);
+                        Log.i("ObjectRequest", StatusCode);
+                        Log.i("ObjectRequest", ConnoteNo);
+                        Log.i("ObjectRequest", Message);
 
-                    TrackingNo(ConnoteNo, strOrderDate, strID);
+                        TrackingNo(ConnoteNo, strOrderDate, strID);
 
-                    PreAcceptanceSingle(
-                            subcriptionCode,
-                            AccountNo,
-                            SellerName,
-                            SellerPhone,
-                            SellerAddress,
-                            PickupLocationID,
-                            ContactPerson,
-                            PickupAddress,
-                            Postcode,
-                            ItemType,
-                            TotalQuantityToPickup,
-                            Weight,
-                            ConnoteNo,
-                            Amount,
-                            ReceiverName,
-                            ReceiverAddress,
-                            ReceiverPostcode,
-                            ReceiverPhone,
-                            PickupDistrict,
-                            PickupProvince,
-                            PickupEmail,
-                            ReceiverFirstName,
-                            ReceiverLastName,
-                            ReceiverDistrict,
-                            ReceiverProvince,
-                            ReceiverCity);
+                        PreAcceptanceSingle(
+                                subcriptionCode,
+                                AccountNo,
+                                SellerName,
+                                SellerPhone,
+                                SellerAddress,
+                                PickupLocationID,
+                                ContactPerson,
+                                PickupAddress,
+                                Postcode,
+                                ItemType,
+                                TotalQuantityToPickup,
+                                Weight,
+                                ConnoteNo,
+                                Amount,
+                                ReceiverName,
+                                ReceiverAddress,
+                                ReceiverPostcode,
+                                ReceiverPhone,
+                                PickupDistrict,
+                                PickupProvince,
+                                PickupEmail,
+                                ReceiverFirstName,
+                                ReceiverLastName,
+                                ReceiverDistrict,
+                                ReceiverProvince,
+                                ReceiverCity);
 
-                    DownloadPDF(
-                            date,
-                            Weight,
-                            OrderID,
-                            SellerName,
-                            SellerPhone,
-                            SellerAddress,
-                            Postcode,
-                            ReceiverName,
-                            ReceiverPhone,
-                            ReceiverPostcode,
-                            AccountNo,
-                            ReceiverAddress,
-                            ReceiverAddress01,
-                            ReceiverAddress02,
-                            ReceiverCity,
-                            ReceiverProvince,
-                            ReceiverEmail,
-                            OrderID,
-                            "Document",
-                            RoutingCode,
-                            ConnoteNo,
-                            date);
+                        CreateConnote(ConnoteNo, date,
+                                OrderID, SellerName,
+                                SellerPhone, Postcode,
+                                AccountNo, ReceiverName,
+                                ReceiverAddress01, ReceiverAddress02,
+                                ReceiverPostcode, ReceiverCity,
+                                ReceiverProvince, ReceiverPhone,
+                                ReceiverEmail, Weight);
+//                    DownloadPDF(
+//                            date,
+//                            Weight,
+//                            OrderID,
+//                            SellerName,
+//                            SellerPhone,
+//                            SellerAddress,
+//                            Postcode,
+//                            ReceiverName,
+//                            ReceiverPhone,
+//                            ReceiverPostcode,
+//                            AccountNo,
+//                            ReceiverAddress,
+//                            ReceiverAddress01,
+//                            ReceiverAddress02,
+//                            ReceiverCity,
+//                            ReceiverProvince,
+//                            ReceiverEmail,
+//                            OrderID,
+//                            "Document",
+//                            RoutingCode,
+//                            ConnoteNo,
+//                            date);
 
-                }catch(JSONException e){
-                    e.printStackTrace();
-                    Log.i("jsonObjectRequest", e.toString());
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                        Log.i("jsonObjectRequest", e.toString());
+                    }
                 }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -2519,6 +2464,10 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         Details.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         canvas.drawText(RecipientPostcode, 342, 292, Details);
 
+
+
+//        GetConnote(ProductCode);
+
         try {
             // String to produce information of the QR CODE
             String productId = "A2^"+
@@ -3112,6 +3061,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     "^" +
                     Type +
                     "^";
+            Log.i("CONNOTE", productId);
             Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
             Writer codeWriter;
@@ -3227,6 +3177,320 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 ////                }
 //            }
 //        }, 6000);
+    }
+
+    private void CreateConnote(final String ConnoteNo, final String ConnoteDate,
+                               final String ProductCode,
+                               final String SenderName, final String SenderPhone,
+                               final String SenderPostcode, final String RecipientAccountNo,
+                               final String RecipientName, final String RecipientAddress01,
+                               final String RecipientAddress02, final String RecipientPostcode,
+                               final String RecipientCity, final String RecipientState,
+                               final String RecipientPhone, final String RecipientEmail,
+                               final String Weight){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CreatePosLaju,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            if (success.equals("1")) {
+                                Log.i("CONNOTE", "SAVED");
+                                Toast.makeText(Selling_Detail.this, R.string.success_update, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("CONNOTE", "FAILED saved");
+                                Toast.makeText(Selling_Detail.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.i("CONNOTE", e.toString());
+//                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("CONNOTE", error.toString());
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ConnoteNo", ConnoteNo);
+                params.put("ConnoteDate", ConnoteDate);
+                params.put("ProductCode", ProductCode);
+                params.put("SenderName", SenderName);
+                params.put("SenderPhone", SenderPhone);
+                params.put("SenderPostcode", SenderPostcode);
+                params.put("RecipientAccountNo", RecipientAccountNo);
+                params.put("RecipientName", RecipientName);
+                params.put("RecipientAddress01", RecipientAddress01);
+                params.put("RecipientAddress02", RecipientAddress02);
+                params.put("RecipientPostcode", RecipientPostcode);
+                params.put("RecipientCity", RecipientCity);
+                params.put("RecipientState", RecipientState);
+                params.put("RecipientPhone", RecipientPhone);
+                params.put("RecipientEmail", RecipientEmail);
+                params.put("Weight", Weight);
+                params.put("Type", "Document");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetConnoteDownload(final String getProductCode,
+                                    final String SenderAddress,
+                                    final String RecipientAddress,
+                                    final String RoutingCode,
+                                    final String date){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_getConnote,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        String id = object.getString("id").trim();
+                                        String ConnoteNo = object.getString("ConnoteNo");
+                                        String ConnoteDate = object.getString("ConnoteDate").trim();
+                                        String ProductCode = object.getString("ProductCode").trim();
+                                        String SenderName = object.getString("SenderName").trim();
+                                        String SenderPhone = object.getString("SenderPhone").trim();
+                                        String SenderPostcode = object.getString("SenderPostcode").trim();
+                                        String RecipientAccountNo = object.getString("RecipientAccountNo");
+                                        String RecipientName = object.getString("RecipientName");
+                                        String RecipientAddress01 = object.getString("RecipientAddress01");
+                                        String RecipientAddress02 = object.getString("RecipientAddress02").trim();
+                                        String RecipientPostcode = object.getString("RecipientPostcode").trim();
+                                        String RecipientCity = object.getString("RecipientCity").trim();
+                                        String RecipientState = object.getString("RecipientState").trim();
+                                        String RecipientPhone = object.getString("RecipientPhone").trim();
+                                        String RecipientEmail = object.getString("RecipientEmail");
+                                        String Weight = object.getString("Weight");
+                                        String Type = object.getString("Type").trim();
+//                                    final String CreatedAt = object.getString("CreatedAt");
+//
+                                        Log.i("CONNOTE", id);
+
+                                    DownloadPDF(
+                                            ConnoteDate,
+                                            Weight,
+                                            ProductCode,
+                                            SenderName,
+                                            SenderPhone,
+                                            SenderAddress,
+                                            SenderPostcode,
+                                            RecipientName,
+                                            RecipientPhone,
+                                            RecipientPostcode,
+                                            RecipientAccountNo,
+                                            RecipientAddress,
+                                            RecipientAddress01,
+                                            RecipientAddress02,
+                                            RecipientCity,
+                                            RecipientState,
+                                            RecipientEmail,
+                                            ProductCode,
+                                            Type,
+                                            RoutingCode,
+                                            ConnoteNo,
+                                            date);
+                                    }
+                                } else {
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.i("CONNOTE", e.toString());
+                            }
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("ProductCode", getProductCode);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetConnoteShare(final String getProductCode, final String SenderAddress, final String RecipientAddress, final String RoutingCode, final String date){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_getConnote,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response == null) {
+                            Log.e("onResponse", "Return NULL");
+                        } else {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                                if (success.equals("1")) {
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+
+                                        String id = object.getString("id").trim();
+                                        String ConnoteNo = object.getString("ConnoteNo");
+                                        String ConnoteDate = object.getString("ConnoteDate").trim();
+                                        String ProductCode = object.getString("ProductCode").trim();
+                                        String SenderName = object.getString("SenderName").trim();
+                                        String SenderPhone = object.getString("SenderPhone").trim();
+                                        String SenderPostcode = object.getString("SenderPostcode").trim();
+                                        String RecipientAccountNo = object.getString("RecipientAccountNo");
+                                        String RecipientName = object.getString("RecipientName");
+                                        String RecipientAddress01 = object.getString("RecipientAddress01");
+                                        String RecipientAddress02 = object.getString("RecipientAddress02").trim();
+                                        String RecipientPostcode = object.getString("RecipientPostcode").trim();
+                                        String RecipientCity = object.getString("RecipientCity").trim();
+                                        String RecipientState = object.getString("RecipientState").trim();
+                                        String RecipientPhone = object.getString("RecipientPhone").trim();
+                                        String RecipientEmail = object.getString("RecipientEmail");
+                                        String Weight = object.getString("Weight");
+                                        String Type = object.getString("Type").trim();
+//                                    final String CreatedAt = object.getString("CreatedAt");
+//
+                                        Log.i("CONNOTE", id);
+
+                                        GeneratePDF(
+                                                ConnoteDate,
+                                                Weight,
+                                                ProductCode,
+                                                SenderName,
+                                                SenderPhone,
+                                                SenderAddress,
+                                                SenderPostcode,
+                                                RecipientName,
+                                                RecipientPhone,
+                                                RecipientPostcode,
+                                                RecipientAccountNo,
+                                                RecipientAddress,
+                                                RecipientAddress01,
+                                                RecipientAddress02,
+                                                RecipientCity,
+                                                RecipientState,
+                                                RecipientEmail,
+                                                ProductCode,
+                                                Type,
+                                                RoutingCode,
+                                                ConnoteNo,
+                                                date);
+                                    }
+                                } else {
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.i("CONNOTE", e.toString());
+                            }
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError) {
+                                //Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(getContext(), "Connection Error!", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("ProductCode", getProductCode);
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetPayment(){
+
     }
 
     private void GetPlayerData(final String CustomerUserID, final String OrderID){

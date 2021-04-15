@@ -55,7 +55,9 @@ import com.ketekmall.ketekmall.pages.navigation_items.About_KetekMall;
 import com.ketekmall.ketekmall.pages.navigation_items.transaction.Cart;
 import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
 import com.ketekmall.ketekmall.pages.product_details.View_Product;
+import com.ketekmall.ketekmall.pages.register_seller.TermsAndConditions;
 import com.ketekmall.ketekmall.pages.seller.Product_Add;
+import com.ketekmall.ketekmall.pages.seller.Product_Add_Homepage;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -156,7 +158,7 @@ public class Homepage extends AppCompatActivity {
 
     Item_Adapter_Main adapter_item, adapter_item2;
     ViewPager viewPager;
-    RelativeLayout hot_layout, top_layout;
+    RelativeLayout hot_layout, top_layout, loading_layout;
 
     ImageButton btn_next, btn_back;
 
@@ -212,6 +214,7 @@ public class Homepage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage);
+        Declare();
         // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
@@ -225,7 +228,7 @@ public class Homepage extends AppCompatActivity {
 
         getSession();
 
-        Declare();
+
 
         viewPager = findViewById(R.id.view_pager);
 
@@ -336,6 +339,7 @@ public class Homepage extends AppCompatActivity {
     private void Declare() {
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
+        loading_layout = findViewById(R.id.loading_layout);
 
 //        setupUI(findViewById(R.id.parent));
 
@@ -554,9 +558,9 @@ public class Homepage extends AppCompatActivity {
         Button_SellItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SellerCheck(getId);
-                Intent intent = new Intent(Homepage.this, Product_Add.class);
-                startActivity(intent);
+                SellerCheck(getId);
+//                Intent intent = new Intent(Homepage.this, Product_Add.class);
+//                startActivity(intent);
             }
         });
 
@@ -904,6 +908,80 @@ public class Homepage extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void SellerCheck(final String user_id){
+        loading_layout.setVisibility(View.VISIBLE);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_USER_DETAIL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+                                    int strVerify = Integer.parseInt(object.getString("verification"));
+                                    if(strVerify == 0){
+                                        loading_layout.setVisibility(View.GONE);
+                                        startActivity(new Intent(Homepage.this, TermsAndConditions.class));
+                                    }else{
+                                        loading_layout.setVisibility(View.GONE);
+                                        startActivity(new Intent(Homepage.this, Product_Add_Homepage.class));
+                                    }
+
+                                }
+                            } else {
+                                Toast.makeText(Homepage.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+                            if (error instanceof TimeoutError) {//Time out error
+                                System.out.println("" + error);
+                            } else if (error instanceof NoConnectionError) {
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else {
+                                //Error
+                                System.out.println("" + error);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", user_id);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     public void disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return; // already logged out
@@ -1041,23 +1119,6 @@ public class Homepage extends AppCompatActivity {
                     this.recreate();
                     break;
 
-//                case R.id.englang:
-//                    String languageToLoad1 = "en"; // your language
-//                    Locale locale1 = new Locale(languageToLoad1);
-//                    Locale.setDefault(locale1);
-//                    Configuration config1 = new Configuration();
-//                    config1.locale = locale1;
-//                    getBaseContext().getResources().updateConfiguration(config1,
-//                            getBaseContext().getResources().getDisplayMetrics());
-//                    SharedPreferences lang1 = getSharedPreferences("MySharedPref",
-//                            MODE_PRIVATE);
-//                    SharedPreferences.Editor editor1 = lang1.edit();
-//                    editor1.putString("lang", languageToLoad1);
-//                    editor1.commit();
-//
-//                    this.recreate();
-//                    break;
-
                 case R.id.menu_cart:
                     Intent intent = new Intent(Homepage.this, Cart.class);
                     startActivity(intent);
@@ -1084,23 +1145,6 @@ public class Homepage extends AppCompatActivity {
                     Intent intent2 = new Intent(Homepage.this, About_KetekMall.class);
                     startActivity(intent2);
                     break;
-
-//                case R.id.malaylang:
-//                    String languageToLoad = "ms"; // your language
-//                    Locale locale = new Locale(languageToLoad);
-//                    Locale.setDefault(locale);
-//                    Configuration config = new Configuration();
-//                    config.locale = locale;
-//                    getBaseContext().getResources().updateConfiguration(config,
-//                            getBaseContext().getResources().getDisplayMetrics());
-//                    SharedPreferences lang = getSharedPreferences("MySharedPref",
-//                            MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = lang.edit();
-//                    editor.putString("lang", languageToLoad);
-//                    editor.commit();
-//
-//                    this.recreate();
-//                    break;
 
                 case R.id.englang:
                     String languageToLoad1 = "en"; // your language
@@ -1173,7 +1217,6 @@ public class Homepage extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
-                                    item.setSold(sold);
                                     item.setBrand(brand);
                                     item.setInner(inner);
                                     item.setStock(stock);
@@ -1184,7 +1227,7 @@ public class Homepage extends AppCompatActivity {
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_Main(itemList);
-                                adapter_item.sortArrayHighest();
+//                                adapter_item.sortArrayHighest();
                                 adapter_item.notifyDataSetChanged();
                                 gridView_HardSelling.setAdapter(adapter_item);
                                 adapter_item.setOnItemClickListener(new Item_Adapter_Main.OnItemClickListener() {
@@ -1315,6 +1358,7 @@ public class Homepage extends AppCompatActivity {
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
                                     itemList2.add(item);
+
                                 }
                                 adapter_item2 = new Item_Adapter_Main(itemList2);
                                 adapter_item2.notifyDataSetChanged();
