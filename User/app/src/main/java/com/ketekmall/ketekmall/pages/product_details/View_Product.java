@@ -45,6 +45,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.pages.View_Category;
 import com.ketekmall.ketekmall.pages.navigation_items.Chat;
 import com.mhmtk.twowaygrid.TwoWayGridView;
 import com.squareup.picasso.Picasso;
@@ -78,7 +79,8 @@ public class View_Product extends AppCompatActivity {
     String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
 
-    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId, brand, inner, stock, desc, postcode;
+    String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId,
+            brand, inner, stock, desc, postcode, weight;
     Item_Adapter_Main adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
@@ -204,6 +206,7 @@ public class View_Product extends AppCompatActivity {
         postcode = intent.getStringExtra("postcode");
         district = intent.getStringExtra("district");
         photo = intent.getStringExtra("photo");
+        weight = intent.getStringExtra("weight");
 
         String Price_Text = "RM" + strPrice;
 
@@ -453,6 +456,7 @@ public class View_Product extends AppCompatActivity {
         division = intent.getStringExtra("division");
         district = intent.getStringExtra("district");
         photo = intent.getStringExtra("photo");
+        weight = intent.getStringExtra("weight");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_CART,
                 new Response.Listener<String>() {
@@ -468,7 +472,7 @@ public class View_Product extends AppCompatActivity {
 
                                 if(jsonArray.length() == 0){
                                     Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
-                                            division,postcode, district, photo, userid, id);
+                                            division,postcode, district, photo, userid, id, weight);
                                 }
                                 if (success.equals("1")) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -480,7 +484,7 @@ public class View_Product extends AppCompatActivity {
                                             Toast.makeText(View_Product.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                         }else {
                                             Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
-                                                    division,postcode, district, photo, userid, id);
+                                                    division,postcode, district, photo, userid, id, weight);
                                         }
                                     }
                                 }
@@ -570,13 +574,16 @@ public class View_Product extends AppCompatActivity {
                                     final String strItem_Id = item.getId();
                                     final String strSeller_id = item.getSeller_id();
                                     final String strMain_category = item.getMain_category();
-                                    final String strSub_category = item.getSub_category();
+                                    final String strSub_category = item.getMain_category();
                                     final String strAd_Detail = item.getAd_detail();
                                     final Double strPrice = Double.valueOf(item.getPrice());
                                     final String strDivision = item.getDivision();
                                     final String strPostcode = item.getPostcode();
                                     final String strDistrict = item.getDistrict();
                                     final String strPhoto = item.getPhoto();
+                                    final String strWeight = item.getWeight();
+
+                                    Log.i("PRODUCT", strWeight);
 
                                     if (getId.equals(strSeller_id)) {
                                         Toast.makeText(View_Product.this, R.string.cannot_add_your_own_item, Toast.LENGTH_SHORT).show();
@@ -593,7 +600,7 @@ public class View_Product extends AppCompatActivity {
                                                                 String success = jsonObject1.getString("success");
 
                                                                 if (success.equals("1")) {
-                                                                    Toast.makeText(View_Product.this, R.string.added_to_like, Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(View_Product.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                                                 } else {
                                                                     Toast.makeText(View_Product.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                 }
@@ -656,6 +663,7 @@ public class View_Product extends AppCompatActivity {
                                                 params.put("photo", strPhoto);
                                                 params.put("seller_id", strSeller_id);
                                                 params.put("item_id", strItem_Id);
+                                                params.put("weight", strWeight);
                                                 return params;
                                             }
                                         };
@@ -669,10 +677,8 @@ public class View_Product extends AppCompatActivity {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
                                         final String item_id = object.getString("item_id");
+                                        Toast.makeText(View_Product.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
-                                        if(!item_id.isEmpty() && item_id.equals(id)){
-                                            Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                                        }
                                     }
                                 }
                             } catch (JSONException e) {
@@ -717,7 +723,7 @@ public class View_Product extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
-                params.put("item_id", id);
+                params.put("item_id", item.getId());
                 return params;
             }
         };
@@ -728,7 +734,7 @@ public class View_Product extends AppCompatActivity {
     private void Add_Cart(final String Main_category, final String Sub_category,
                           final String Ad_detail, final String Price, final String Division, final String strPostcode,
                           final String District, final String Photo,
-                          final String Userid, final String Id){
+                          final String Userid, final String Id, final String Weight){
         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, URL_ADD_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -798,6 +804,7 @@ public class View_Product extends AppCompatActivity {
                 params.put("photo", Photo);
                 params.put("seller_id", Userid);
                 params.put("item_id", Id);
+                params.put("weight", Weight);
                 return params;
             }
         };
@@ -1131,6 +1138,7 @@ public class View_Product extends AppCompatActivity {
                                     String inner = object.getString("inner_material").trim();
                                     String stock = object.getString("stock").trim();
                                     String desc = object.getString("description").trim();
+                                    String weight = object.getString("weight").trim();
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setRating(rating);
@@ -1139,6 +1147,7 @@ public class View_Product extends AppCompatActivity {
                                     item.setStock(stock);
                                     item.setDescription(desc);
                                     item.setPostcode(postcode);
+                                    item.setWeight(weight);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_Main(itemList);

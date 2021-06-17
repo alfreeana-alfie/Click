@@ -3,6 +3,7 @@ package com.ketekmall.ketekmall.pages.navigation_items.transaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -91,6 +93,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
     private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
     private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
 
+    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer_three.php";
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -111,12 +114,16 @@ public class Checkout extends AppCompatActivity implements Serializable{
     Item_All_Details item;
     Checkout_Data checkoutData;
 
-    String getId, Price, Delivery_Date;
+    String getId, Price, Delivery_Date, ProductDesription;
+    String email_customer, item_id, delivery_price, item_price;
     SessionManager sessionManager;
 
     Double aFloat, grandtotal;
     BottomNavigationView bottomNav;
     ProgressBar loading;
+
+    ArrayList productList = new ArrayList();
+    ArrayList itemIdList = new ArrayList();
 
     String HTTP_PoslajuDomesticbyPostcode = "https://apis.pos.com.my/apigateway/as2corporate/api/poslajubypostcodedomestic/v1";
     String serverKey_PoslajuDomesticbyPostcode = "N1hHVHJFRW95cjRkQ0NyR3dialdrZUF4NGxaNm9Na1U=";
@@ -158,6 +165,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String quantity = object.getString("quantity");
                                     final String postCode = object.getString("postcode");
                                     final String weight = object.getString("weight");
+
+                                    String description = ad_detail + " x" + quantity;
+                                    String itemCode = "KM00" + id;
+
+                                    productList.add(description);
+                                    itemIdList.add(itemCode);
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
                                             new Response.Listener<String>() {
@@ -511,7 +524,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     Button_Checkout.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Log.d("NANA", RefID);
+                                            ProductDesription = TextUtils.join(", ", productList);
+                                            item_id = TextUtils.join(", ", itemIdList);
+
+                                            Log.d("NANA", ProductDesription);
                                             String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
                                             try{
                                                 IPayIHPayment payment = new IPayIHPayment();
@@ -521,10 +537,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setCurrency ("MYR");
                                                 payment.setRefNo (RefID);
                                                 payment.setAmount (Grand_Total2.getText().toString());
-                                                payment.setProdDesc ("KetekMall");
+                                                payment.setProdDesc (ProductDesription);
                                                 payment.setUserName (strName);
                                                 payment.setUserEmail (strEmail);
-                                                payment.setRemark ("KetekMall");
+                                                payment.setRemark ("Product Purchased: " + ProductDesription);
                                                 payment.setLang ("ISO-8859-1");
                                                 payment.setCountry ("MY");
                                                 payment.setBackendPostURL (backendPostURL2);
@@ -534,7 +550,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             }catch (Exception e){
                                                 Log.d("ERROR", e.toString());
                                             }
-//                                            getUserDetail2();
                                         }
                                     });
                                 }
@@ -619,7 +634,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                     AddressUser.setText(Address);
 
-                                    AddOrder(strCity, Address2);
+                                    AddOrder(strCity, Address2, strEmail);
                                 }
                             } else {
                                 Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -686,7 +701,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
     }
 
     //DO NOT DELETE
-    private void AddOrder(final String User_Division, final String Address){
+    private void AddOrder(final String User_Division, final String Address, final String Email){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -731,7 +746,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
                                     Delivery_Date = simpleDateFormat2.format(c.getTime());
 
-                                    Log.d("DATE", Delivery_Date);
+//                                    Log.d("DATE", Delivery_Date);
+
+                                    final Double TotalPrice = Double.parseDouble(Price) + (price * Integer.parseInt(quantity));
+                                    //
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
                                             new Response.Listener<String>() {
@@ -744,6 +762,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                         if (success.equals("1")) {
 
                                                             DeleteOrder_Single();
+                                                            sendEmailBuyer(id, ad_detail, String.format("%.2f", price), Price, quantity, String.format("%.2f", TotalPrice), Email);
                                                             Intent intent = new Intent(Checkout.this, Place_Order.class);
                                                             intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);
@@ -865,6 +884,71 @@ public class Checkout extends AppCompatActivity implements Serializable{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("customer_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendEmailBuyer(final String ItemID, final String ProductName, final String Price, final String DeliveryPrice, final String Quantity, final String Total, final String Email){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SEND,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", Email);
+                params.put("id", item_id);
+                params.put("ad_detail", ProductDesription);
+                params.put("price", Price);
+                params.put("delivery_price", DeliveryPrice);
+//                params.put("quantity", Quantity);
+                params.put("total", Total);
                 return params;
             }
         };

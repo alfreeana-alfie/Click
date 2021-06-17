@@ -310,6 +310,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     loading_Layout.setVisibility(View.VISIBLE);
                     PosLajuGetData2(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234", strOrder_Date, strID);
                     GetPlayerData(strCustomer_ID, "KM" + strID);
+                    loading_Layout.setVisibility(View.INVISIBLE);
                 }
 
 
@@ -1765,7 +1766,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                 if(response.contains("Record already exist/Wrong Credential")){
                     Log.i("CONNOTE", "DETECTED");
                     GetConnoteDownload(OrderID, SellerAddress, ReceiverAddress, RoutingCode, date);
-                    Toast.makeText(Selling_Detail.this, "Connote is empty", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Selling_Detail.this, "Connote is empty", Toast.LENGTH_SHORT).show();
                 }else{
                     try{
                         JSONObject jsonObject = new JSONObject(response);
