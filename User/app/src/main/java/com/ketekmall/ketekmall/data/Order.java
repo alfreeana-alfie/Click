@@ -14,6 +14,15 @@ public class Order {
     private String status;
     private String tracking_no;
     private String weight;
+    private String ref_no;
+
+    public String getRefNo() {
+        return ref_no;
+    }
+
+    public void setRefNo(String ref_no) {
+        this.ref_no = ref_no;
+    }
 
     public String getWeight() {
         return weight;

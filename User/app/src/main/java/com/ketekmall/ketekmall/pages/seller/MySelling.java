@@ -218,6 +218,8 @@ public class MySelling extends AppCompatActivity {
                                     final String refno = object.getString("refno");
                                     final String tracking_no = object.getString("tracking_no").trim();
 
+                                    Log.i("REFNO", refno);
+
                                     Spanned status1;
 
                                     if(refno != null){
@@ -257,7 +259,7 @@ public class MySelling extends AppCompatActivity {
                                                                                 PaymentStatus);
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setWeight(weight);
-                                                                        Log.i("CONNOTE", PaymentStatus);
+                                                                        item.setRefNo(refno);
                                                                         String delivery_text;
 
                                                                         delivery_text = "<font color='#FF3333'>Unsuccessful</font>";
@@ -282,6 +284,7 @@ public class MySelling extends AppCompatActivity {
                                                                                 status);
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setWeight(weight);
+                                                                        item.setRefNo(refno);
                                                                         if(status.equals("Rejected")){
                                                                             String delivery_text;
 
@@ -316,9 +319,10 @@ public class MySelling extends AppCompatActivity {
                                                                         final String strDate = order.getDate();
                                                                         final String strQuantity = order.getQuantity();
                                                                         final String strStatus = order.getStatus();
+                                                                        final String strRefno = order.getRefNo();
 
                                                                         final String remarks = "ACCEPT";
-                                                                        Update_Order(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
+                                                                        Update_Order(strOrder_Date, remarks, strCustomer_id, strOrder_Id, strRefno);
                                                                         itemList.remove(position);
                                                                         adapter_item.notifyDataSetChanged();
                                                                         recyclerView.setAdapter(adapter_item);
@@ -349,10 +353,13 @@ public class MySelling extends AppCompatActivity {
                                                                                 final String strDate = order.getDate();
                                                                                 final String strQuantity = order.getQuantity();
                                                                                 final String strStatus = order.getStatus();
+                                                                                final String strRefNo = order.getRefNo();
 
                                                                                 final String remarks = "Rejected";
+                                                                                Log.i("REFNO", strRefNo);
+
 //                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
-                                                                                updateOrder(strCustomer_id, strOrder_Id, remarks);
+                                                                                updateOrder(strCustomer_id, strOrder_Id, remarks, strRefNo);
                                                                                 getCustomerDetail(strCustomer_id, strOrder_Id);
 
                                                                                 adapter_item.notifyDataSetChanged();
@@ -522,7 +529,7 @@ public class MySelling extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void Update_Order(final String strOrder_Date, final String remarks, final String Customer_id, final String strID) {
+    private void Update_Order(final String strOrder_Date, final String remarks, final String Customer_id, final String strID, final String refno) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -647,113 +654,8 @@ public class MySelling extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("order_date", strOrder_Date);
                 params.put("remarks", remarks);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(MySelling.this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void Update_Order_Reject(final String strOrder_Date, final String remarks, final String Customer_id, final String strID) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_ORDER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-                                Toast.makeText(MySelling.this, R.string.success_update, Toast.LENGTH_SHORT).show();
-                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                try {
-                                                    JSONObject jsonObject = new JSONObject(response);
-                                                    String success = jsonObject.getString("success");
-                                                    JSONArray jsonArray = jsonObject.getJSONArray("read");
-                                                    if (success.equals("1")) {
-                                                        for (int i = 0; i < jsonArray.length(); i++) {
-                                                            JSONObject object = jsonArray.getJSONObject(i);
-
-                                                            final String strName = object.getString("name").trim();
-
-                                                            GetPlayerData(Customer_id, strID);
-                                                        }
-                                                    } else {
-                                                        Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                                                    }
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        },
-                                        new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                try {
-
-                                                    if (error instanceof TimeoutError ) {
-                                                        //Time out error
-                                                        System.out.println("" + error);
-                                                    }else if(error instanceof NoConnectionError){
-                                                        //net work error
-                                                        System.out.println("" + error);
-                                                    } else if (error instanceof AuthFailureError) {
-                                                        //error
-                                                        System.out.println("" + error);
-                                                    } else if (error instanceof ServerError) {
-                                                        //Erroor
-                                                        System.out.println("" + error);
-                                                    } else if (error instanceof NetworkError) {
-                                                        //Error
-                                                        System.out.println("" + error);
-                                                    } else if (error instanceof ParseError) {
-                                                        //Error
-                                                        System.out.println("" + error);
-                                                    }else{
-                                                        //Error
-                                                        System.out.println("" + error);
-                                                    }
-                                                    //End
-
-
-                                                } catch (Exception e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> params = new HashMap<>();
-                                        params.put("id", Customer_id);
-                                        return params;
-                                    }
-                                };
-                                RequestQueue requestQueue = Volley.newRequestQueue(MySelling.this);
-                                requestQueue.add(stringRequest);
-                            } else {
-                                Toast.makeText(MySelling.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("order_date", strOrder_Date);
-                params.put("remarks", remarks);
                 params.put("status", remarks);
+                params.put("refno", refno);
                 return params;
             }
         };
@@ -761,7 +663,7 @@ public class MySelling extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void updateOrder(final String CustomerID, final String OrderID, final String remarks) {
+    private void updateOrder(final String CustomerID, final String OrderID, final String remarks, final String refno) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -794,6 +696,7 @@ public class MySelling extends AppCompatActivity {
                 params.put("id", OrderID);
                 params.put("remarks", remarks);
                 params.put("status", remarks);
+                params.put("refno", refno);
                 return params;
             }
         };
