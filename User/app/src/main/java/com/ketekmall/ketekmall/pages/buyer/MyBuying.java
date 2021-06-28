@@ -259,6 +259,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         item.setTracking_no(tracking_no);
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setDelivery_date(delivery_date);
+                                                                        item.setRefNo(refno);
                                                                         itemList.add(item);
                                                                     }else{
                                                                         Order item = new Order(id,
@@ -282,6 +283,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         item.setTracking_no(tracking_no);
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setDelivery_date(delivery_date);
+                                                                        item.setRefNo(refno);
                                                                         itemList.add(item);
                                                                     }
                                                                 }
@@ -296,11 +298,27 @@ public class MyBuying extends AppCompatActivity {
 
                                                                         final String strOrder_Id = order.getId();
                                                                         final String strSeller_id = order.getSeller_id();
+                                                                        final String strCustomer_id = order.getCustomer_id();
+                                                                        final String strItem_id = order.getItem_id();
+                                                                        final String strMain_category = order.getMain_category();
+                                                                        final String strSub_category = order.getSub_category();
+                                                                        final String strAd_Detail = order.getAd_detail();
+                                                                        final Double strPrice = Double.valueOf(order.getPrice());
+                                                                        final String strDivision = order.getDivision();
+                                                                        final String strDistrict = order.getDistrict();
+                                                                        final String strPhoto = order.getPhoto();
                                                                         final String strOrder_Date = order.getOrder_date();
+                                                                        final String strDate = order.getDate();
+                                                                        final String strQuantity = order.getQuantity();
+                                                                        final String strStatus = order.getStatus();
+                                                                        final String strRefNo = order.getRefNo();
 
                                                                         final String remarks = "Cancelled";
+                                                                        Log.i("REFNO", strRefNo);
 
-                                                                        updateOrder(strOrder_Id, remarks);
+//                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
+//                                                                        updateOrder(strCustomer_id, strOrder_Id, remarks, strRefNo);
+                                                                        updateOrder(strSeller_id, strOrder_Id, remarks, strRefNo);
 
                                                                         finish();
                                                                         startActivity(getIntent());
@@ -643,7 +661,7 @@ public class MyBuying extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void updateOrder(final String OrderID, final String remarks) {
+    private void updateOrder(final String CustomerID, final String OrderID, final String remarks, final String refno) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPDATE_ORDER,
                 new Response.Listener<String>() {
                     @Override
@@ -654,6 +672,7 @@ public class MyBuying extends AppCompatActivity {
 
                             if (success.equals("1")) {
                                 Toast.makeText(MyBuying.this, R.string.success_update, Toast.LENGTH_SHORT).show();
+                                GetPlayerData(CustomerID, OrderID);
                             } else {
                                 Toast.makeText(MyBuying.this, R.string.failed, Toast.LENGTH_SHORT).show();
                             }
@@ -675,6 +694,7 @@ public class MyBuying extends AppCompatActivity {
                 params.put("id", OrderID);
                 params.put("remarks", remarks);
                 params.put("status", remarks);
+                params.put("refno", refno);
                 return params;
             }
         };

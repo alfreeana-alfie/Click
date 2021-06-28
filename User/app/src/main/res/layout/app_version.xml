@@ -47,7 +47,7 @@
             android:fontFamily="@font/open_sans"
             android:textSize="14sp"
             android:padding="10dp"
-            android:text="App Version 2.4.6" />
+            android:text="App Version 2.4.7" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"

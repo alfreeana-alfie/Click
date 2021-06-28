@@ -355,7 +355,7 @@ public class MySelling extends AppCompatActivity {
                                                                                 final String strStatus = order.getStatus();
                                                                                 final String strRefNo = order.getRefNo();
 
-                                                                                final String remarks = "Cancelled";
+                                                                                final String remarks = "Rejected";
                                                                                 Log.i("REFNO", strRefNo);
 
 //                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
