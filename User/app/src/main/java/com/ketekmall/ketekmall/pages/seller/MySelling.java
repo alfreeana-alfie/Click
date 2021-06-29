@@ -217,6 +217,7 @@ public class MySelling extends AppCompatActivity {
                                     final String weight = object.getString("weight");
                                     final String refno = object.getString("refno");
                                     final String tracking_no = object.getString("tracking_no").trim();
+                                    final String pick_up = object.getString("pick_up").trim();
 
                                     Log.i("REFNO", refno);
 
@@ -265,6 +266,7 @@ public class MySelling extends AppCompatActivity {
                                                                         delivery_text = "<font color='#FF3333'>Unsuccessful</font>";
                                                                         item.setStatus1(Html.fromHtml(delivery_text));
                                                                         item.setTracking_no(tracking_no);
+                                                                        item.setPickUp(pick_up);
                                                                         itemList.add(item);
                                                                     }else{
                                                                         final Order item = new Order(id,
@@ -285,6 +287,7 @@ public class MySelling extends AppCompatActivity {
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setWeight(weight);
                                                                         item.setRefNo(refno);
+                                                                        item.setPickUp(pick_up);
                                                                         if(status.equals("Rejected")){
                                                                             String delivery_text;
 
@@ -402,6 +405,7 @@ public class MySelling extends AppCompatActivity {
                                                                         final String strTracking_NO = order.getTracking_no();
                                                                         final Double strDeliveryPrice = Double.valueOf(order.getDelivery_price());
                                                                         final String Weight = order.getWeight();
+                                                                        final String PickUp = order.getPickUp();
 
 
                                                                         double TotalAmountPartOne = strPrice + strDeliveryPrice;
@@ -420,6 +424,7 @@ public class MySelling extends AppCompatActivity {
                                                                         intent1.putExtra("customer_id", strCustomer_id);
                                                                         intent1.putExtra("TotalAmount", String.format("%.2f", TotalAmount));
                                                                         intent1.putExtra("Weight", Weight);
+                                                                        intent1.putExtra("pick_up", PickUp);
                                                                         startActivity(intent1);
                                                                     }
                                                                 });

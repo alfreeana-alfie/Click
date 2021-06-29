@@ -107,6 +107,10 @@ public class Review_Page extends AppCompatActivity {
         String strPhoto = intent.getStringExtra("photo");
         final String strSeller_Division = intent.getStringExtra("seller_division");
         final String strDivision = intent.getStringExtra("division");
+        final String strPickUp = intent.getStringExtra("pick_up");
+
+
+        Log.i("DELIVERY PRICE", strPickUp);
 
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
@@ -197,7 +201,7 @@ public class Review_Page extends AppCompatActivity {
 
         assert strDivision != null;
 
-        if (strDivision.equals(strSeller_Division)) {
+        if (strPickUp.equals("1")) {
             Price.setText("RM" + strPrice);
             Double sub_total = 0.00;
             sub_total = Double.parseDouble(strPrice) * Integer.parseInt(strQuantity);

@@ -15,6 +15,15 @@ public class Order {
     private String tracking_no;
     private String weight;
     private String ref_no;
+    private String pick_up;
+
+    public String getPickUp() {
+        return pick_up;
+    }
+
+    public void setPickUp(String pick_up) {
+        this.pick_up = pick_up;
+    }
 
     public String getRefNo() {
         return ref_no;

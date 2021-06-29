@@ -274,6 +274,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                             grandtotal -= Double.parseDouble(Price);
                                                                                             Grand_Total2.setText(String.format("%.2f", grandtotal));
                                                                                             Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
+
+                                                                                            Price = "0.00";
                                                                                         }
                                                                                     });
                                                                                 }catch(JSONException e){

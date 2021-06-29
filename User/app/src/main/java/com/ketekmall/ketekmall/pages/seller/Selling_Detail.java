@@ -221,6 +221,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         final String strOrder_Date = intent.getStringExtra("order_date");
         final String strTracking_NO = intent.getStringExtra("tracking_no");
         final String strCustomer_ID = intent.getStringExtra("customer_id");
+        final String strPickUp = intent.getStringExtra("pick_up");
 
         getCustomerDetailTwo(strCustomer_ID);
         WithText = findViewById(R.id.withText);

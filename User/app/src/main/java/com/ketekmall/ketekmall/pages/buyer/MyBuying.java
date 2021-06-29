@@ -217,6 +217,7 @@ public class MyBuying extends AppCompatActivity {
                                     final String delivery_price = object.getString("delivery_price");
                                     final String delivery_date = object.getString("delivery_date");
                                     final String refno = object.getString("refno");
+                                    final String pick_up = object.getString("pick_up");
 
                                     if(refno != null){
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_getPayment,
@@ -260,6 +261,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setDelivery_date(delivery_date);
                                                                         item.setRefNo(refno);
+                                                                        item.setPickUp(pick_up);
                                                                         itemList.add(item);
                                                                     }else{
                                                                         Order item = new Order(id,
@@ -284,6 +286,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         item.setDelivery_price(delivery_price);
                                                                         item.setDelivery_date(delivery_date);
                                                                         item.setRefNo(refno);
+                                                                        item.setPickUp(pick_up);
                                                                         itemList.add(item);
                                                                     }
                                                                 }
@@ -312,6 +315,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         final String strQuantity = order.getQuantity();
                                                                         final String strStatus = order.getStatus();
                                                                         final String strRefNo = order.getRefNo();
+                                                                        final String strPickUp = order.getPickUp();
 
                                                                         final String remarks = "Cancelled";
                                                                         Log.i("REFNO", strRefNo);
@@ -353,6 +357,9 @@ public class MyBuying extends AppCompatActivity {
                                                                         final String strTracking = order.getTracking_no();
                                                                         final String strDelivery_Price = order.getDelivery_price();
                                                                         final String strDelivery_Date = order.getDelivery_date();
+                                                                        final String strPickUp = order.getPickUp();
+
+                                                                        Log.i("DELIVERY PRICE", strDelivery_Price);
 
                                                                         Intent intent1 = new Intent(MyBuying.this, Review_Page.class);
                                                                         intent1.putExtra("seller_id", strSeller_id);
@@ -370,6 +377,7 @@ public class MyBuying extends AppCompatActivity {
                                                                         intent1.putExtra("photo", photo);
                                                                         intent1.putExtra("seller_division", strSellerDivision);
                                                                         intent1.putExtra("division", strDivision);
+                                                                        intent1.putExtra("pick_up", strPickUp);
                                                                         startActivity(intent1);
                                                                     }
                                                                 });
