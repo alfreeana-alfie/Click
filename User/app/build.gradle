@@ -11,7 +11,7 @@ android {
         targetSdkVersion 29
         multiDexEnabled true
         versionCode 41
-        versionName "2.4.8"
+        versionName "2.4.6"
         useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
