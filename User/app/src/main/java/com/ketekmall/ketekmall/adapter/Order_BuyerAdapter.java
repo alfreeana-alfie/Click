@@ -64,9 +64,9 @@ public class Order_BuyerAdapter extends RecyclerView.Adapter<Order_BuyerAdapter.
         holder.text_ad_detail.setText(order.getAd_detail());
         holder.text_price.setText("RM"+order.getPrice());
         holder.text_quantity.setText("x" + order.getQuantity());
-        holder.text_placed_date.setText("Order Placed on " + order.getDate());
+        holder.text_placed_date.setText("Date" + order.getDate());
         holder.text_status.setText(order.getStatus());
-        holder.text_ship_placed.setText("Shipped out to "+ order.getDistrict());
+        holder.text_ship_placed.setText("Ships to"+ order.getDistrict());
 
         if(order.getStatus().equals("Received")){
             holder.btn_cancel.setVisibility(View.GONE);

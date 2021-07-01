@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:text="@string/return_and_refund_policy" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:text="@string/delivery_policy" />
 
                 <TextView
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:text="@string/contact_us" />
 
                 <TextView
@@ -157,7 +157,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="@string/terms_and_conditions"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/terms_text"
@@ -190,7 +190,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/open_sans_semibold"
                     android:text="App Version"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/version_text"

@@ -226,7 +226,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         double NewTotalAmount = Double.parseDouble(totalAmount);
                                                                                         double RoundedTotalAmount = Math.ceil(NewTotalAmount);
 
-                                                                                        Price = String.format("%.2f", RoundedTotalAmount);
+                                                                                        double weightDouble = Double.parseDouble(weight);
+
+                                                                                        double deliveryCharge = weightDouble * RoundedTotalAmount;
+
+                                                                                        Price = String.format("%.2f", deliveryCharge);
+
                                                                                         Log.i("jsonObjectRequest", Price);
 
                                                                                         checkoutData = new Checkout_Data();
@@ -238,11 +243,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         checkoutData.setPrice(String.valueOf(price));
                                                                                         checkoutData.setDivision(division);
                                                                                         checkoutData.setQuantity(quantity);
-                                                                                        checkoutData.setDelivery_price(String.format("%.2f", RoundedTotalAmount));
+                                                                                        checkoutData.setDelivery_price(String.format("%.2f", deliveryCharge));
                                                                                         checkoutData.setDelivery_division(strCity);
                                                                                         checkoutData.setDelivery_division1(division + " to " + strCity);
 
-                                                                                        grandtotal += (price * Integer.parseInt(quantity) + Math.ceil(NewTotalAmount));
+                                                                                        grandtotal += (price * Integer.parseInt(quantity) + deliveryCharge);
                                                                                         Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
                                                                                         Grand_Total2.setText(String.format("%.2f", grandtotal));
 

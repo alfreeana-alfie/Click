@@ -138,8 +138,8 @@
     <string name="address_user_send">ALAMAT PEMBELI</string>
     <string name="date_order">TARIKH TEMPAHAN</string>
     <string name="date_received">TARIKH PENERIMAAN</string>
-    <string name="ordered">Tempahan Diterima</string>
-    <string name="shipped">Dalam Perjalanan</string>
+    <string name="ordered">Diterima</string>
+    <string name="shipped">Dihantar</string>
     <string name="rejected">DITOLAK</string>
     <string name="shop_rating">Rating Produk</string>
     <string name="added_to_cart">Masuk ke Troli</string>
@@ -155,7 +155,7 @@
     <string name="please_re_enter_the_item_again">Sila isikan maklumat sekali lagi</string>
     <string name="incomplete_information">Sila Pastikan Maklumat anda Betul sebelum meletakkan pesanan</string>
     <string name="order_canceled">Pesanan anda telah terbatal</string>
-    <string name="pending">Masih dalam pemprosesan</string>
+    <string name="pending">Diproses</string>
 
     <string-array name="gender">
         <item>Perempuan</item>
@@ -439,7 +439,7 @@
 
     <string name="my_income_">Pendapatan Bersih</string>
     <string name="finished">SELESAI</string>
-    <string name="received">Sudah DiTerima</string>
+    <string name="received">DiTerima</string>
     <string name="write_a_review">Tulis Ulasan Anda</string>
     <string name="rm0_00">RM0.00</string>
     <string name="edit">Ubah</string>
