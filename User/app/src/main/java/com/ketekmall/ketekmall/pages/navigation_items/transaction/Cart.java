@@ -94,6 +94,8 @@ public class Cart extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        DeleteOrder_Single();
+
         View_Item();
     }
 
@@ -639,7 +641,6 @@ public class Cart extends AppCompatActivity {
     }
 
     private void AddQuantity(final Item_All_Details item) {
-//        Toast.makeText(Cart.this, item.getId(), Toast.LENGTH_SHORT).show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS_TWO,
                 new Response.Listener<String>() {
                     @Override

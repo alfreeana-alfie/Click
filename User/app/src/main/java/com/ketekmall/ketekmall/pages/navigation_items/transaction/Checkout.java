@@ -207,11 +207,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                 String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
 
-                                                                if(weight.contains("0.00")){
-                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
-                                                                }else if(strPostCode.isEmpty()){
-                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
-                                                                }
+//                                                                if(weight.contains("0.00")){
+//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
+//                                                                }else if(strPostCode.isEmpty()){
+//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
+//                                                                }
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                                                                         new Response.Listener<String>() {
@@ -228,7 +228,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                                                         double weightDouble = Double.parseDouble(weight);
 
-                                                                                        double deliveryCharge = weightDouble * RoundedTotalAmount;
+                                                                                        double deliveryCharge = RoundedTotalAmount;
 
                                                                                         Price = String.format("%.2f", deliveryCharge);
 
