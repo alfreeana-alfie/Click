@@ -81,6 +81,7 @@ public class View_Product extends AppCompatActivity {
 
     String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId,
             brand, inner, stock, desc, postcode, weight;
+    String photo02, photo03, photo04, photo05;
     Item_Adapter_Main adapter_item;
     List<Item_All_Details> itemList, itemList2;
     SessionManager sessionManager;
@@ -98,6 +99,8 @@ public class View_Product extends AppCompatActivity {
 
     ViewPager viewPager;
     PageAdapter pageAdapter;
+
+    List<String>  photoList = new ArrayList<String>();
 
 
     @Override
@@ -206,13 +209,32 @@ public class View_Product extends AppCompatActivity {
         postcode = intent.getStringExtra("postcode");
         district = intent.getStringExtra("district");
         photo = intent.getStringExtra("photo");
+        photo02 = intent.getStringExtra("photo02");
+        photo03 = intent.getStringExtra("photo03");
+        photo04 = intent.getStringExtra("photo04");
+        photo05 = intent.getStringExtra("photo05");
         weight = intent.getStringExtra("weight");
+
+        // List of photos
+        photoList.add(photo);
+        if(!photo02.equals("null")){
+            photoList.add(photo02);
+        }
+        if(!photo03.equals("null")){
+            photoList.add(photo03);
+        }
+        if(!photo04.equals("null")){
+            photoList.add(photo04);
+        }
+        if(!photo05.equals("null")){
+            photoList.add(photo05);
+        }
 
         String Price_Text = "RM" + strPrice;
 
         ad_detail_item.setText(ad_detail);
         price_item.setText(Price_Text);
-        Picasso.get().load(photo).into(img_item);
+//        Picasso.get().load(photo).into(img_item);
 
         //Review
         Read_Review(id);
@@ -223,6 +245,8 @@ public class View_Product extends AppCompatActivity {
         getUserDetail();
         View_Item();
         getSold();
+        ViewPhoto();
+//        View_Photo();
 
         detail_info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,6 +270,10 @@ public class View_Product extends AppCompatActivity {
                 String division1 = intent4.getStringExtra("division");
                 String district1 = intent4.getStringExtra("district");
                 String photo1 = intent4.getStringExtra("photo");
+                String photo2 = intent4.getStringExtra("photo02");
+                String photo3 = intent4.getStringExtra("photo03");
+                String photo4 = intent4.getStringExtra("photo04");
+                String photo5 = intent4.getStringExtra("photo05");
                 String item_id = intent4.getStringExtra("item_id");
                 String postcode = intent4.getStringExtra("postcode");
 
@@ -258,6 +286,10 @@ public class View_Product extends AppCompatActivity {
                 intent1.putExtra("price", strPrice1);
                 intent1.putExtra("division", division1);
                 intent1.putExtra("photo", photo1);
+                intent1.putExtra("photo02", photo2);
+                intent1.putExtra("photo03", photo3);
+                intent1.putExtra("photo04", photo4);
+                intent1.putExtra("photo05", photo5);
                 intent1.putExtra("postcode", postcode);
                 intent1.putExtra("photo", photo1);
 
@@ -295,7 +327,7 @@ public class View_Product extends AppCompatActivity {
 
         ToolbarSetting();
 
-        View_Photo();
+
     }
 
     private boolean appInstalledOrNot(String url) {
@@ -327,115 +359,41 @@ public class View_Product extends AppCompatActivity {
         });
     }
 
-    private void View_Photo() {
-        final Intent intent = getIntent();
-        ad_detail = intent.getStringExtra("ad_detail");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PHOTO,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
-                            String[] image = new String[jsonArray.length()];
-                            if(jsonArray.length() == 0 || jsonArray.length() == 1){
-                                viewPager.setVisibility(GONE);
-                                Page_Text.setVisibility(GONE);
-                                img_item.setVisibility(VISIBLE);
-                            }else{
-                                viewPager.setVisibility(VISIBLE);
-                                Page_Text.setVisibility(VISIBLE);
-                                img_item.setVisibility(GONE);
-                            }
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
+    private void ViewPhoto(){
+        String[] image = new String[photoList.size()];
 
-                                    String id = object.getString("id").trim();
-                                    String image_item = object.getString("filepath");
+        for (int i = 0; i < photoList.size(); i++) {
+            image[i] = photoList.get(i);
 
-                                    image[i] = image_item;
+            pageAdapter = new PageAdapter(View_Product.this, image);
+            Log.i("PHOTO VIEW", image[i]);
+        }
+        viewPager.setAdapter(pageAdapter);
 
-                                    pageAdapter = new PageAdapter(View_Product.this, image);
+        Page_Text.setText("1/" + photoList.size());
 
-
-                                }
-                                viewPager.setAdapter(pageAdapter);
-
-                                Page_Text.setText("1/" + jsonArray.length());
-
-                                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                                    @Override
-                                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                                    }
-
-                                    @Override
-                                    public void onPageSelected(int position) {
-                                        int NEWposition = position + 1;
-                                        if(position == 0){
-                                            Page_Text.setText("1" + "/" + jsonArray.length());
-                                        }else{
-                                            Page_Text.setText(NEWposition + "/" + jsonArray.length());
-                                        }
-
-                                    }
-
-                                    @Override
-                                    public void onPageScrollStateChanged(int state) {
-
-                                    }
-                                });
-
-                            } else {
-                                Toast.makeText(View_Product.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("ad_detail", ad_detail);
-                return params;
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(View_Product.this);
-        requestQueue.add(stringRequest);
+
+            @Override
+            public void onPageSelected(int position) {
+                int NEWposition = position + 1;
+                if(position == 0){
+                    Page_Text.setText("1" + "/" + photoList.size());
+                }else{
+                    Page_Text.setText(NEWposition + "/" + photoList.size());
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void View_Cart() {
@@ -1133,6 +1091,10 @@ public class View_Product extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item2 = object.getString("photo02");
+                                    String image_item3 = object.getString("photo03");
+                                    String image_item4 = object.getString("photo04");
+                                    String image_item5 = object.getString("photo05");
                                     String rating = object.getString("rating");
                                     String brand = object.getString("brand_material").trim();
                                     String inner = object.getString("inner_material").trim();
@@ -1148,6 +1110,10 @@ public class View_Product extends AppCompatActivity {
                                     item.setDescription(desc);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item2);
+                                    item.setPhoto03(image_item3);
+                                    item.setPhoto04(image_item4);
+                                    item.setPhoto05(image_item5);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_Main(itemList);
@@ -1170,6 +1136,10 @@ public class View_Product extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
 
                                         detailIntent.putExtra("brand_material", item.getBrand());
                                         detailIntent.putExtra("inner_material", item.getInner());
@@ -1394,6 +1364,10 @@ public class View_Product extends AppCompatActivity {
                                                 String division1 = intent4.getStringExtra("division");
                                                 String district1 = intent4.getStringExtra("district");
                                                 String photo1 = intent4.getStringExtra("photo");
+                                                String photo2 = intent4.getStringExtra("photo02");
+                                                String photo3 = intent4.getStringExtra("photo03");
+                                                String photo4 = intent4.getStringExtra("photo04");
+                                                String photo5 = intent4.getStringExtra("photo05");
 
                                                 intent1.putExtra("item_id", item_id);
                                                 intent1.putExtra("id", id1);
@@ -1406,6 +1380,10 @@ public class View_Product extends AppCompatActivity {
                                                 intent1.putExtra("postcode", postcode);
                                                 intent1.putExtra("district", district1);
                                                 intent1.putExtra("photo", photo1);
+                                                intent1.putExtra("photo02", photo2);
+                                                intent1.putExtra("photo03", photo3);
+                                                intent1.putExtra("photo04", photo4);
+                                                intent1.putExtra("photo05", photo5);
 
 
                                                 intent1.putExtra("id", id1);

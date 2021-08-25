@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
@@ -63,6 +64,7 @@ public class MyProducts extends AppCompatActivity {
     private static String URL_VIEW = "https://ketekmall.com/ketekmall/readuser.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_item.php";
     private static String URL_EDIT_BOOST = "https://ketekmall.com/ketekmall/edit_boost_ad.php";
+    private static String DELETE_PRODUCT = "https://ketekmall.com/ketekmall/products/delete.php";
 
     SessionManager sessionManager;
     TextView no_result;
@@ -172,6 +174,10 @@ public class MyProducts extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
                                     String max_order = object.getString("max_order");
                                     String rating = object.getString("rating");
                                     String delivery_status = object.getString("is_approved");
@@ -187,6 +193,10 @@ public class MyProducts extends AppCompatActivity {
                                     item.setDelivery_status(delivery_status);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 adapter_item = new MyProducts_Adapter(itemList, MyProducts.this);
@@ -214,6 +224,10 @@ public class MyProducts extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
                                         detailIntent.putExtra("max_order", item.getMax_order());
                                         detailIntent.putExtra("weight", item.getWeight());
 
@@ -295,8 +309,31 @@ public class MyProducts extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 final Item_All_Details item = itemList.get(position);
+                                                final List<String> photoTempId = new ArrayList<>();
 
-                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE,
+                                                // List of photos
+                                                if(!item.getPhoto().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto02().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto02().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto03().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto03().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto04().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto04().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto05().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto05().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+
+                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, DELETE_PRODUCT,
                                                         new Response.Listener<String>() {
                                                             @Override
                                                             public void onResponse(String response) {
@@ -322,7 +359,6 @@ public class MyProducts extends AppCompatActivity {
                                                             @Override
                                                             public void onErrorResponse(VolleyError error) {
                                                                 try {
-
                                                                     if (error instanceof TimeoutError ) {
                                                                         //Time out error
 
@@ -347,8 +383,7 @@ public class MyProducts extends AppCompatActivity {
 
 
                                                                 } catch (Exception e) {
-
-
+                                                                    e.printStackTrace();
                                                                 }
                                                             }
                                                         }) {
@@ -356,6 +391,11 @@ public class MyProducts extends AppCompatActivity {
                                                     protected Map<String, String> getParams() throws AuthFailureError {
                                                         Map<String, String> params = new HashMap<>();
                                                         params.put("id", item.getId());
+                                                        params.put("photo", photoTempId.get(0));
+                                                        for(int i = 1; i< photoTempId.size(); i++){
+                                                            int num = i+1;
+                                                            params.put("photo0" + num, photoTempId.get(i));
+                                                        }
                                                         return params;
                                                     }
                                                 };

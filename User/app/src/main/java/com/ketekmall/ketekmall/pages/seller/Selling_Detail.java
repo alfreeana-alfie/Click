@@ -109,7 +109,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
     private static String URL_CreatePosLaju = "https://ketekmall.com/ketekmall/createConnote.php";
     private static String URL_getConnote = "https://ketekmall.com/ketekmall/getConnote.php";
-    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";;
+    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
 
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_download;

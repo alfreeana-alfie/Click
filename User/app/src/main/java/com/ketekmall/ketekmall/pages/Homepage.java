@@ -1206,6 +1206,11 @@ public class Homepage extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
+
                                     String sold = object.getString("sold");
 
                                     String brand = object.getString("brand_material").trim();
@@ -1224,6 +1229,10 @@ public class Homepage extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 adapter_item = new Item_Adapter_Main(itemList);
@@ -1246,6 +1255,10 @@ public class Homepage extends AppCompatActivity {
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
 
                                         detailIntent.putExtra("brand_material", item.getBrand());
                                         detailIntent.putExtra("inner_material", item.getInner());
@@ -1340,6 +1353,10 @@ public class Homepage extends AppCompatActivity {
                                     String division = object.getString("division");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
 
                                     String rating = object.getString("rating");
                                     String brand = object.getString("brand_material").trim();
@@ -1357,6 +1374,10 @@ public class Homepage extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList2.add(item);
 
                                 }
@@ -1379,6 +1400,10 @@ public class Homepage extends AppCompatActivity {
                                         detailIntent.putExtra("division", item.getDivision());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
 
                                         detailIntent.putExtra("brand_material", item.getBrand());
                                         detailIntent.putExtra("inner_material", item.getInner());

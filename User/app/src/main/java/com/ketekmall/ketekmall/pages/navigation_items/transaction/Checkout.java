@@ -57,6 +57,7 @@ import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -699,11 +700,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
     private String decodeBase64(String text) {
         String result = "";
         byte[] data = Base64.decode(text, Base64.DEFAULT);
-        try {
-            result = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        result = new String(data, StandardCharsets.UTF_8);
         return result;
     }
 

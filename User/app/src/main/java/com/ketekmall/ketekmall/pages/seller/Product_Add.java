@@ -62,23 +62,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Product_Add extends AppCompatActivity {
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/products/uploadimg_new.php";
-    private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
     private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
+
+    private static String URL_ADD_TEMP = "https://ketekmall.com/ketekmall/products/add_temp.php";
+    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/products/delete_temp.php";
+    private static String URL_DELETE_DB_TEMP = "https://ketekmall.com/ketekmall/products/delete_db_temp.php";
+    private static String URL_ADD = "https://ketekmall.com/ketekmall/products/add.php";
 
     SessionManager sessionManager;
     String getId;
     Uri filePath1,filePath2,filePath3,filePath4,filePath5;
-    private ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category,
-            adapter_car, adapter_properties, adapter_elctronic,
-            adapter_home, adapter_leisure, adapter_business,
-            adapter_jobs, adapter_travel, adapter_other;
+    private ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category;
     private Bitmap bitmap1, bitmap2, bitmap3, bitmap4, bitmap5;
     private TextView enter_category, enter_ad_detail, enter_location, enter_setup;
     private EditText enter_price, edittext_ad_detail, edittext_brand, edittext_inner, edittext_stock, edittext_desc, edittext_order, edittext_postcode, edittext_weight;
@@ -93,6 +94,8 @@ public class Product_Add extends AppCompatActivity {
     List<Product_Add_Data> itemList;
     BottomNavigationView bottomNav;
     RelativeLayout parent;
+
+    List<String> photoTempId = new ArrayList<String>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -178,6 +181,7 @@ public class Product_Add extends AppCompatActivity {
                 upload_photo_img2.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
                 delete_2.setVisibility(View.GONE);
                 deletePhoto("2");
+                deleteTemp(1);
             }
         });
 
@@ -187,6 +191,7 @@ public class Product_Add extends AppCompatActivity {
                 upload_photo_img3.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
                 delete_3.setVisibility(View.GONE);
                 deletePhoto("3");
+                deleteTemp(2);
             }
         });
 
@@ -196,6 +201,7 @@ public class Product_Add extends AppCompatActivity {
                 upload_photo_img4.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
                 delete_4.setVisibility(View.GONE);
                 deletePhoto("4");
+                deleteTemp(3);
             }
         });
 
@@ -205,6 +211,7 @@ public class Product_Add extends AppCompatActivity {
                 upload_photo_img5.setImageDrawable(getResources().getDrawable(R.drawable.ic_photo_black_foreground));
                 delete_5.setVisibility(View.GONE);
                 deletePhoto("5");
+                deleteTemp(4);
             }
         });
 
@@ -272,7 +279,25 @@ public class Product_Add extends AppCompatActivity {
                 if (filePath1 == null || edittext_ad_detail.getText().toString().isEmpty() || enter_price.getText().toString().isEmpty() || edittext_order.getText().toString().isEmpty()) {
                     Toast.makeText(Product_Add.this, "Incomplete information", Toast.LENGTH_LONG).show();
                 } else {
-                    saveEdit(getId, getStringImage(bitmap1));
+//                    saveEdit(getId, getStringImage(bitmap1));
+                    add(getId);
+
+                    for(int i = 0; i<photoTempId.size(); i++){
+                        deleteDbTemp(i);
+                    }
+
+                    new Timer().schedule(
+                            new TimerTask(){
+
+                                @Override
+                                public void run(){
+                                    Intent intent = new Intent(Product_Add.this, MyProducts.class);
+                                    startActivity(intent);
+                                }
+
+                            }, 3000);
+
+
                 }
 
             }
@@ -281,9 +306,21 @@ public class Product_Add extends AppCompatActivity {
         back_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent4 = new Intent(Product_Add.this, Me_Page.class);
-                startActivity(intent4);
-//                finish();
+                for(int i = 0; i< photoTempId.size(); i++){
+                    deleteAllTemp(i);
+                    Log.i("ARRAY", String.valueOf(i));
+                }
+                new Timer().schedule(
+                        new TimerTask(){
+
+                            @Override
+                            public void run(){
+                                Intent intent4 = new Intent(Product_Add.this, Me_Page.class);
+                                startActivity(intent4);
+                                finish();
+                            }
+
+                        }, 2000);
             }
         });
 
@@ -313,7 +350,6 @@ public class Product_Add extends AppCompatActivity {
     }
 
     public void setupUI(View view) {
-
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
@@ -588,258 +624,6 @@ public class Product_Add extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void saveEdit(final String id, final String photo) {
-        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
-//        final String strSub_category = this.spinner_sub_category.getSelectedItem().toString();
-        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-        final String strBrand = this.edittext_brand.getText().toString();
-//        final String strInner = this.edittext_inner.getText().toString();
-        final String strStock = this.edittext_stock.getText().toString();
-        final String strDesc = this.edittext_desc.getText().toString();
-
-
-        final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
-        final String strOrder = this.edittext_order.getText().toString();
-        final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
-        final String strPostcode = this.edittext_postcode.getText().toString();
-        final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
-        final String strWeight = this.edittext_weight.getText().toString();
-
-        if (strAd_Detail.isEmpty()) {
-            Toast.makeText(Product_Add.this, "Incomplete info", Toast.LENGTH_SHORT).show();
-        } else {
-            loading.setVisibility(View.VISIBLE);
-            accept_item.setVisibility(View.GONE);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-
-                                if (success.equals("1")) {
-                                    loading.setVisibility(View.GONE);
-                                    accept_item.setVisibility(View.VISIBLE);
-
-//                                    Product_Add_Data item = new Product_Add_Data(getId, strMain_category, strSub_category, strAd_Detail, String.format("%.2f", strPrice), strDivision, strDistrict, photo);
-//                                    itemList.add(item);
-
-                                    if (upload_photo_img2.getDrawable().getConstantState().equals
-                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                        Log.d("PHOTO", "NO");
-                                    }else{
-//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                        saveImage("2", getStringImage(bitmap2));
-                                    }
-
-                                    new Timer().schedule(
-                                            new TimerTask(){
-
-                                                @Override
-                                                public void run(){
-                                                    if (upload_photo_img3.getDrawable().getConstantState().equals
-                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                                        Log.d("PHOTO", "NO");
-                                                    }else{
-//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                                        saveImage("3", getStringImage(bitmap3));
-                                                    }
-                                                }
-
-                                            }, 2000);
-
-
-                                    new Timer().schedule(
-                                            new TimerTask(){
-
-                                                @Override
-                                                public void run(){
-                                                    if (upload_photo_img4.getDrawable().getConstantState().equals
-                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                                        Log.d("PHOTO", "NO");
-                                                    }else{
-//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                                        saveImage("4", getStringImage(bitmap4));
-                                                    }
-                                                }
-
-                                            }, 4000);
-
-                                    new Timer().schedule(
-                                            new TimerTask(){
-
-                                                @Override
-                                                public void run(){
-                                                    if (upload_photo_img5.getDrawable().getConstantState().equals
-                                                            (getResources().getDrawable(R.drawable.ic_add_photo_foreground).getConstantState())){
-                                                        Log.d("PHOTO", "NO");
-                                                    }else{
-//                                        Log.d("PHOTO", upload_photo_img3.getDrawable().toString());
-                                                        saveImage("5", getStringImage(bitmap5));
-                                                    }
-                                                }
-
-                                            }, 6000);
-
-
-                                    Intent intent = new Intent(Product_Add.this, MyProducts.class);
-                                    startActivity(intent);
-
-                                } else {
-                                    Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
-
-                                    loading.setVisibility(View.GONE);
-                                    accept_item.setVisibility(View.VISIBLE);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                loading.setVisibility(View.GONE);
-                                accept_item.setVisibility(View.VISIBLE);
-                                Intent intent1 = new Intent(Product_Add.this, Product_Add.class);
-                                startActivity(intent1);
-                                Toast.makeText(Product_Add.this, R.string.please_re_enter_the_item_again, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            loading.setVisibility(View.GONE);
-                            accept_item.setVisibility(View.VISIBLE);
-                            try {
-
-                                if (error instanceof TimeoutError ) {
-                                    //Time out error
-                                    System.out.println("" + error);
-                                }else if(error instanceof NoConnectionError){
-                                    //net work error
-                                    System.out.println("" + error);
-                                } else if (error instanceof AuthFailureError) {
-                                    //error
-                                    System.out.println("" + error);
-                                } else if (error instanceof ServerError) {
-                                    //Erroor
-                                    System.out.println("" + error);
-                                } else if (error instanceof NetworkError) {
-                                    //Error
-                                    System.out.println("" + error);
-                                } else if (error instanceof ParseError) {
-                                    //Error
-                                    System.out.println("" + error);
-                                }else{
-                                    //Error
-                                    System.out.println("" + error);
-                                }
-                                //End
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("user_id", id);
-                    params.put("main_category", strMain_category);
-                    params.put("sub_category", strMain_category);
-                    params.put("ad_detail", strAd_Detail);
-                    params.put("brand_material", strBrand);
-                    params.put("inner_material", strBrand);
-                    params.put("stock", strStock);
-                    params.put("description", strDesc);
-                    params.put("price", String.format("%.2f", strPrice));
-                    params.put("max_order", strOrder);
-                    params.put("division", strDivision);
-                    params.put("postcode", strPostcode);
-                    params.put("district", strDistrict);
-                    params.put("photo", photo);
-                    params.put("filename", strAd_Detail + "1");
-                    params.put("filepath", photo);
-                    params.put("weight", strWeight);
-                    return params;
-                }
-            };
-
-            RequestQueue requestQueue = Volley.newRequestQueue(Product_Add.this);
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            requestQueue.add(stringRequest);
-        }
-    }
-
-    private void saveImage(final String number, final String photo) {
-        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
-
-        final String Filename = strAd_Detail + number;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_UPLOAD_EXTRA,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
-//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-
-
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("ad_detail", strAd_Detail);
-                params.put("filename", Filename);
-                params.put("filepath", photo);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
     private void chooseFile1() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -962,132 +746,709 @@ public class Product_Add extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath1 = data.getData();
-            try {
+            if(photoTempId.isEmpty()){
+                try {
+                    bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
+                    bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
-                bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
-                Matrix matrix = new Matrix();
-
-                if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                    matrix.postRotate(90);
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
-                    upload_photo_img1.setImageBitmap(rotatedBitmap);
-                }else{
-                    upload_photo_img1.setImageBitmap(bitmap1);
+                    if(bitmap1.getWidth() > bitmap1.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
+                        upload_photo_img1.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img1.setImageBitmap(bitmap1);
+                    }
+                    addTemp(getStringImage(bitmap1),0);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }else{
+                if(deleteTemp(0)){
+                    try {
+                        bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
+                        bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
+                        Matrix matrix = new Matrix();
 
-//                bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
-//                bitmap1 = Bitmap.createScaledBitmap(bitmap1, 1024, 1024, false);
-//                upload_photo_img1.setImageBitmap(bitmap1);
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                        if(bitmap1.getWidth() > bitmap1.getHeight()) {
+                            matrix.postRotate(90);
+                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
+                            upload_photo_img1.setImageBitmap(rotatedBitmap);
+                        }else{
+                            upload_photo_img1.setImageBitmap(bitmap1);
+                        }
+                        addTemp(getStringImage(bitmap1),0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath2 = data.getData();
-            try {
-//                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
-//                bitmap2 = Bitmap.createScaledBitmap(bitmap2, 1024, 1024, false);
-//                upload_photo_img2.setImageBitmap(bitmap2);
+            if(photoTempId.isEmpty()){
+                try {
+                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+                    bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-                bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
-                bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
-                Matrix matrix = new Matrix();
-
-                if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                    matrix.postRotate(90);
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
-                    upload_photo_img2.setImageBitmap(rotatedBitmap);
-                }else{
-                    upload_photo_img2.setImageBitmap(bitmap2);
+                    if(bitmap2.getWidth() > bitmap2.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
+                        upload_photo_img2.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img2.setImageBitmap(bitmap2);
+                    }
+                    addTemp(getStringImage(bitmap2),1);
+                    delete_2.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                delete_2.setVisibility(View.VISIBLE);
+            }else if(photoTempId.size() == 1){
+                try {
+                    bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+                    bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                    if(bitmap2.getWidth() > bitmap2.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
+                        upload_photo_img2.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img2.setImageBitmap(bitmap2);
+                    }
+                    addTemp(getStringImage(bitmap2),1);
+                    delete_2.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                if(deleteTemp(1)){
+                    try {
+                        bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
+                        bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
+                        Matrix matrix = new Matrix();
+
+                        if(bitmap2.getWidth() > bitmap2.getHeight()) {
+                            matrix.postRotate(90);
+                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
+                            upload_photo_img2.setImageBitmap(rotatedBitmap);
+                        }else{
+                            upload_photo_img2.setImageBitmap(bitmap2);
+                        }
+                        addTemp(getStringImage(bitmap2),1);
+                        delete_2.setVisibility(View.VISIBLE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+
         }
         if (requestCode == 3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath3 = data.getData();
-            try {
+            if(photoTempId.isEmpty()){
+                try {
+                    bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                    bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-//                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
-//                bitmap3 = Bitmap.createScaledBitmap(bitmap3, 1024, 1024, false);
-//                upload_photo_img3.setImageBitmap(bitmap3);
-                bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
-                bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
-                Matrix matrix = new Matrix();
-
-                if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                    matrix.postRotate(90);
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
-                    upload_photo_img3.setImageBitmap(rotatedBitmap);
-                }else{
-                    upload_photo_img3.setImageBitmap(bitmap3);
+                    if(bitmap3.getWidth() > bitmap3.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
+                        upload_photo_img3.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img3.setImageBitmap(bitmap3);
+                    }
+                    addTemp(getStringImage(bitmap3),2);
+                    delete_3.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            } else if(photoTempId.size() == 2){
+                try {
+                    bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                    bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-                delete_3.setVisibility(View.VISIBLE);
+                    if(bitmap3.getWidth() > bitmap3.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
+                        upload_photo_img3.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img3.setImageBitmap(bitmap3);
+                    }
+                    addTemp(getStringImage(bitmap3),2);
+                    delete_3.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                if(deleteTemp(2)){
+                    try {
+                        bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
+                        bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
+                        Matrix matrix = new Matrix();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                        if(bitmap3.getWidth() > bitmap3.getHeight()) {
+                            matrix.postRotate(90);
+                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
+                            upload_photo_img3.setImageBitmap(rotatedBitmap);
+                        }else{
+                            upload_photo_img3.setImageBitmap(bitmap3);
+                        }
+                        addTemp(getStringImage(bitmap3),2);
+                        delete_3.setVisibility(View.VISIBLE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-
         }
         if (requestCode == 4 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath4 = data.getData();
-            try {
+            if(photoTempId.isEmpty()){
+                try {
+                    bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                    bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-//                bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
-//                bitmap4 = Bitmap.createScaledBitmap(bitmap4, 1024, 1024, false);
-//                upload_photo_img4.setImageBitmap(bitmap4);
-
-                bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
-                bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
-                Matrix matrix = new Matrix();
-
-                if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                    matrix.postRotate(90);
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
-                    upload_photo_img4.setImageBitmap(rotatedBitmap);
-                }else{
-                    upload_photo_img4.setImageBitmap(bitmap4);
+                    if(bitmap4.getWidth() > bitmap4.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
+                        upload_photo_img4.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img4.setImageBitmap(bitmap4);
+                    }
+                    addTemp(getStringImage(bitmap4),3);
+                    delete_4.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                delete_4.setVisibility(View.VISIBLE);
+            } else if (photoTempId.size() == 3){
+                try {
+                    bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                    bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                    if(bitmap4.getWidth() > bitmap4.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
+                        upload_photo_img4.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img4.setImageBitmap(bitmap4);
+                    }
+                    addTemp(getStringImage(bitmap4),3);
+                    delete_4.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                if(deleteTemp(3)){
+                    try {
+                        bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
+                        bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
+                        Matrix matrix = new Matrix();
+
+                        if(bitmap4.getWidth() > bitmap4.getHeight()) {
+                            matrix.postRotate(90);
+                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
+                            upload_photo_img4.setImageBitmap(rotatedBitmap);
+                        }else{
+                            upload_photo_img4.setImageBitmap(bitmap4);
+                        }
+                        addTemp(getStringImage(bitmap4),3);
+                        delete_4.setVisibility(View.VISIBLE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
         }
         if (requestCode == 5 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath5 = data.getData();
-            try {
+            if(photoTempId.isEmpty()){
+                try {
+                    bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                    bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
+                    Matrix matrix = new Matrix();
 
-//                bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
-//                bitmap5 = Bitmap.createScaledBitmap(bitmap5, 1024, 1024, false);
-//                upload_photo_img5.setImageBitmap(bitmap5);
-                bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
-                bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
-                Matrix matrix = new Matrix();
-
-                if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                    matrix.postRotate(90);
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
-                    upload_photo_img5.setImageBitmap(rotatedBitmap);
-                }else{
-                    upload_photo_img5.setImageBitmap(bitmap5);
+                    if(bitmap5.getWidth() > bitmap5.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
+                        upload_photo_img5.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img5.setImageBitmap(bitmap5);
+                    }
+                    addTemp(getStringImage(bitmap5),4);
+                    delete_5.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                delete_5.setVisibility(View.VISIBLE);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else if(photoTempId.size() == 4){
+                try {
+                    bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                    bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
+                    Matrix matrix = new Matrix();
+
+                    if(bitmap5.getWidth() > bitmap5.getHeight()) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
+                        upload_photo_img5.setImageBitmap(rotatedBitmap);
+                    }else{
+                        upload_photo_img5.setImageBitmap(bitmap5);
+                    }
+                    addTemp(getStringImage(bitmap5),4);
+                    delete_5.setVisibility(View.VISIBLE);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else{
+                if(deleteTemp(4)){
+                    try {
+                        bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
+                        bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
+                        Matrix matrix = new Matrix();
+
+                        if(bitmap5.getWidth() > bitmap5.getHeight()) {
+                            matrix.postRotate(90);
+                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
+                            upload_photo_img5.setImageBitmap(rotatedBitmap);
+                        }else{
+                            upload_photo_img5.setImageBitmap(bitmap5);
+                        }
+                        addTemp(getStringImage(bitmap5),4);
+                        delete_5.setVisibility(View.VISIBLE);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
 
     @Override
     public void onBackPressed() {
+        for(int i = 0; i<photoTempId.size(); i++){
+            deleteAllTemp(i);
+            Log.i("ARRAY", String.valueOf(i));
+        }
         super.onBackPressed();
         finish();
+    }
+
+    // New Function - 21st August 2021
+    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+
+    private static String random() {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(20);
+        for(int i = 0; i< 20; ++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
+    }
+
+    private void addTemp(final String filename, int count) {
+        final String filename_temp = random();
+        photoTempId.add(count, filename_temp);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_TEMP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.i("IMAGE", "SUCCESS");
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("IMAGE", "ERROR");
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("filename_temp", filename_temp);
+                params.put("photo", filename);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+        Log.i("ARRAY", photoTempId.toString());
+        Log.i("ARRAY", String.valueOf(photoTempId.size()));
+    }
+
+    private boolean deleteTemp(int count){
+        final String photoId = photoTempId.get(count);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.i("IMAGE", "SUCCESS");
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("IMAGE", "ERROR");
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", photoId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+        photoTempId.remove(count);
+        return true;
+    }
+
+    private void deleteAllTemp(int count){
+        final String photoId = photoTempId.get(count);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.i("IMAGE", "SUCCESS");
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("IMAGE", "ERROR");
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", photoId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void deleteDbTemp(int count){
+        final String photoId = photoTempId.get(count);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_DB_TEMP,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            if (success.equals("1")) {
+                                Log.i("IMAGE", "SUCCESS");
+//                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("IMAGE", "ERROR");
+                                Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+//                            Toast.makeText(Product_Add.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+                                System.out.println("" + error);
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+                                System.out.println("" + error);
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+                                System.out.println("" + error);
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                                System.out.println("" + error);
+                            } else if (error instanceof NetworkError) {
+                                //Error
+                                System.out.println("" + error);
+                            } else if (error instanceof ParseError) {
+                                //Error
+                                System.out.println("" + error);
+                            }else{
+                                //Error
+                                System.out.println("" + error);
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", photoId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void add(final String id){
+        final String strAd_Detail = this.edittext_ad_detail.getText().toString();
+        final String strMain_category = this.spinner_main_category.getSelectedItem().toString().trim();
+        final String strBrand = this.edittext_brand.getText().toString();
+        final String strStock = this.edittext_stock.getText().toString();
+        final String strDesc = this.edittext_desc.getText().toString();
+
+        final Double strPrice = Double.valueOf(this.enter_price.getText().toString().trim());
+        final String strOrder = this.edittext_order.getText().toString();
+        final String strDivision = this.spinner_division.getSelectedItem().toString().trim();
+        final String strPostcode = this.edittext_postcode.getText().toString();
+        final String strDistrict = this.spinner_district.getSelectedItem().toString().trim();
+        final String strWeight = this.edittext_weight.getText().toString();
+
+        // Photos
+        if (strAd_Detail.isEmpty()) {
+            Toast.makeText(Product_Add.this, "Incomplete info", Toast.LENGTH_SHORT).show();
+        } else {
+            loading.setVisibility(View.VISIBLE);
+            accept_item.setVisibility(View.GONE);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String success = jsonObject.getString("success");
+
+                                if (success.equals("1")) {
+                                    loading.setVisibility(View.GONE);
+                                    accept_item.setVisibility(View.VISIBLE);
+                                } else {
+                                    Toast.makeText(Product_Add.this, R.string.failed, Toast.LENGTH_SHORT).show();
+
+                                    loading.setVisibility(View.GONE);
+                                    accept_item.setVisibility(View.VISIBLE);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                loading.setVisibility(View.GONE);
+                                accept_item.setVisibility(View.VISIBLE);
+                                Intent intent1 = new Intent(Product_Add.this, Product_Add.class);
+                                startActivity(intent1);
+                                Toast.makeText(Product_Add.this, R.string.please_re_enter_the_item_again, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            loading.setVisibility(View.GONE);
+                            accept_item.setVisibility(View.VISIBLE);
+                            try {
+
+                                if (error instanceof TimeoutError ) {
+                                    //Time out error
+                                    System.out.println("" + error);
+                                }else if(error instanceof NoConnectionError){
+                                    //net work error
+                                    System.out.println("" + error);
+                                } else if (error instanceof AuthFailureError) {
+                                    //error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ServerError) {
+                                    //Erroor
+                                    System.out.println("" + error);
+                                } else if (error instanceof NetworkError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                } else if (error instanceof ParseError) {
+                                    //Error
+                                    System.out.println("" + error);
+                                }else{
+                                    //Error
+                                    System.out.println("" + error);
+                                }
+                                //End
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user_id", id);
+                    params.put("main_category", strMain_category);
+                    params.put("sub_category", strMain_category);
+                    params.put("ad_detail", strAd_Detail);
+                    params.put("brand_material", strBrand);
+                    params.put("inner_material", strBrand);
+                    params.put("stock", strStock);
+                    params.put("description", strDesc);
+                    params.put("price", String.format("%.2f", strPrice));
+                    params.put("max_order", strOrder);
+                    params.put("division", strDivision);
+                    params.put("postcode", strPostcode);
+                    params.put("district", strDistrict);
+                    params.put("photo", photoTempId.get(0));
+                    for(int i = 1; i< photoTempId.size(); i++){
+                        int num = i+1;
+
+                        params.put("photo0" + num, photoTempId.get(i));
+                    }
+                    params.put("weight", strWeight);
+                    return params;
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(Product_Add.this);
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            requestQueue.add(stringRequest);
+        }
     }
 }

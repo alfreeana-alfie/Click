@@ -653,6 +653,10 @@ public class View_Category extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
 
@@ -893,6 +897,10 @@ public class View_Category extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
 
@@ -904,7 +912,10 @@ public class View_Category extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
-
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -938,8 +949,11 @@ public class View_Category extends AppCompatActivity {
 
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
                                         detailIntent.putExtra("weight", item.getWeight());
-
                                         startActivity(detailIntent);
 
                                     }
@@ -1138,6 +1152,10 @@ public class View_Category extends AppCompatActivity {
                                     String postcode = object.getString("postcode");
                                     String district = object.getString("district");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
 
@@ -1149,6 +1167,10 @@ public class View_Category extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1181,6 +1203,10 @@ public class View_Category extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
                                         detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
@@ -1364,24 +1390,28 @@ public class View_Category extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
-                                    String seller_id = object.getString("user_id").trim();
-                                    String main_category = object.getString("main_category").trim();
-                                    String sub_category = object.getString("sub_category").trim();
-                                    String ad_detail = object.getString("ad_detail").trim();
+                                    String id               = object.getString("id").trim();
+                                    String seller_id        = object.getString("user_id").trim();
+                                    String main_category    = object.getString("main_category").trim();
+                                    String sub_category     = object.getString("sub_category").trim();
+                                    String ad_detail        = object.getString("ad_detail").trim();
 
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
+                                    String brand            = object.getString("brand_material").trim();
+                                    String inner            = object.getString("inner_material").trim();
+                                    String stock            = object.getString("stock").trim();
+                                    String desc             = object.getString("description").trim();
 
-                                    String price = object.getString("price").trim();
-                                    String division = object.getString("division");
-                                    String postcode = object.getString("postcode");
-                                    String district = object.getString("district");
-                                    String image_item = object.getString("photo");
-                                    String rating = object.getString("rating");
-                                    String weight = object.getString("weight");
+                                    String price            = object.getString("price").trim();
+                                    String division         = object.getString("division");
+                                    String postcode         = object.getString("postcode");
+                                    String district         = object.getString("district");
+                                    String image_item       = object.getString("photo");
+                                    String image_item02     = object.getString("photo02");
+                                    String image_item03     = object.getString("photo03");
+                                    String image_item04     = object.getString("photo04");
+                                    String image_item05     = object.getString("photo05");
+                                    String rating           = object.getString("rating");
+                                    String weight           = object.getString("weight");
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setBrand(brand);
@@ -1391,6 +1421,10 @@ public class View_Category extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -1423,6 +1457,10 @@ public class View_Category extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
                                         detailIntent.putExtra("weight", item.getWeight());
 
                                         startActivity(detailIntent);
@@ -1698,6 +1736,10 @@ public class View_Category extends AppCompatActivity {
                                     String district = object.getString("district");
                                     String postcode = object.getString("postcode");
                                     String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
                                     String rating = object.getString("rating");
                                     String weight = object.getString("weight");
 
@@ -1709,7 +1751,13 @@ public class View_Category extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
+
+                                    Log.i("PHOTO CATEGORY", image_item02);
                                 }
                                 if (itemList.isEmpty()) {
                                     no_result.setVisibility(View.VISIBLE);
@@ -1741,8 +1789,12 @@ public class View_Category extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
                                         detailIntent.putExtra("weight", item.getWeight());
-
+                                        Log.i("PHOTO GOTO VIEW", item.getPhoto02());
                                         startActivity(detailIntent);
                                     }
 
@@ -1910,4 +1962,5 @@ public class View_Category extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

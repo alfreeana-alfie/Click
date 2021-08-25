@@ -48,6 +48,7 @@ import com.ketekmall.ketekmall.data.UserDetails;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.pages.View_Category;
 import com.ketekmall.ketekmall.pages.buyer.Chat;
 import com.squareup.picasso.Picasso;
 
@@ -442,6 +443,10 @@ public class About_Seller extends AppCompatActivity {
                                         String postcode = object.getString("postcode");
                                         String district = object.getString("district");
                                         String image_item = object.getString("photo");
+                                        String image_item2 = object.getString("photo02");
+                                        String image_item3 = object.getString("photo03");
+                                        String image_item4 = object.getString("photo04");
+                                        String image_item5 = object.getString("photo05");
                                         String rating = object.getString("rating");
                                         String brand = object.getString("brand_material").trim();
                                         String inner = object.getString("inner_material").trim();
@@ -464,6 +469,10 @@ public class About_Seller extends AppCompatActivity {
                                         item.setStock(stock);
                                         item.setDescription(desc);
                                         item.setPostcode(postcode);
+                                        item.setPhoto02(image_item2);
+                                        item.setPhoto03(image_item3);
+                                        item.setPhoto04(image_item4);
+                                        item.setPhoto05(image_item5);
                                         itemList.add(item);
                                     }
                                     String product = String.valueOf(itemList.size());
@@ -476,22 +485,27 @@ public class About_Seller extends AppCompatActivity {
                                             Intent detailIntent = new Intent(About_Seller.this, View_Product.class);
                                             Item_All_Details item = itemList.get(position);
 
-                                            detailIntent.putExtra("item_id", item.getItem_id());
                                             detailIntent.putExtra("id", item.getId());
                                             detailIntent.putExtra("user_id", item.getSeller_id());
                                             detailIntent.putExtra("main_category", item.getMain_category());
                                             detailIntent.putExtra("sub_category", item.getSub_category());
                                             detailIntent.putExtra("ad_detail", item.getAd_detail());
-                                            detailIntent.putExtra("price", item.getPrice());
-                                            detailIntent.putExtra("division", item.getDivision());
-                                            detailIntent.putExtra("district", item.getDistrict());
-                                            detailIntent.putExtra("photo", item.getPhoto());
 
                                             detailIntent.putExtra("brand_material", item.getBrand());
                                             detailIntent.putExtra("inner_material", item.getInner());
-                                            detailIntent.putExtra("postcode", item.getPostcode());
                                             detailIntent.putExtra("stock", item.getStock());
                                             detailIntent.putExtra("description", item.getDescription());
+
+                                            detailIntent.putExtra("price", item.getPrice());
+                                            detailIntent.putExtra("division", item.getDivision());
+                                            detailIntent.putExtra("postcode", item.getPostcode());
+                                            detailIntent.putExtra("district", item.getDistrict());
+                                            detailIntent.putExtra("photo", item.getPhoto());
+                                            detailIntent.putExtra("photo02", item.getPhoto02());
+                                            detailIntent.putExtra("photo03", item.getPhoto03());
+                                            detailIntent.putExtra("photo04", item.getPhoto04());
+                                            detailIntent.putExtra("photo05", item.getPhoto05());
+                                            detailIntent.putExtra("weight", item.getWeight());
 
                                             startActivity(detailIntent);
                                         }
