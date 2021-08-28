@@ -1,0 +1,473 @@
+package com.ketekmall.ketekmall.activities.list;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.activities.products.EditProduct;
+import com.ketekmall.ketekmall.adapters.MyProductsListAdapter;
+import com.ketekmall.ketekmall.models.Item_All_Details;
+import com.ketekmall.ketekmall.models.SessionManager;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ketekmall.ketekmall.activities.main.Home;
+import com.ketekmall.ketekmall.activities.main.Me;
+import com.ketekmall.ketekmall.activities.main.Notification;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.ketekmall.ketekmall.configs.Link.*;
+
+public class MyProductsList extends AppCompatActivity {
+
+    public static final String EXTRA_USERID = "user_id";
+    public static final String EXTRA_ID = "id";
+    public static final String EXTRA_MAIN = "main_category";
+    public static final String EXTRA_SUB = "sub_category";
+    public static final String EXTRA_AD_DETAIL = "ad_detail";
+    public static final String EXTRA_PRICE = "price";
+    public static final String EXTRA_DIVISION = "division";
+    public static final String EXTRA_DISTRICT = "district";
+    public static final String EXTRA_IMG_ITEM = "photo";
+
+    SessionManager sessionManager;
+    TextView no_result;
+    BottomNavigationView bottomNav;
+    private String getId;
+    private GridView gridView;
+    private MyProductsListAdapter adapter_item;
+    private List<Item_All_Details> itemList;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.myproducts);
+        Declare();
+        getSession();
+        ToolbarSetting();
+        View_List();
+    }
+
+    private void ToolbarSetting() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.actionbar_myproducts);
+
+        View view = getSupportActionBar().getCustomView();
+        ImageButton back_button = view.findViewById(R.id.back_button);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void getSession() {
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(SessionManager.ID);
+    }
+
+    private void Declare() {
+        itemList = new ArrayList<>();
+        gridView = findViewById(R.id.gridView_item);
+        no_result = findViewById(R.id.no_result);
+
+        bottomNav = findViewById(R.id.bottom_nav);
+        bottomNav.getMenu().getItem(0).setCheckable(false);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent intent4 = new Intent(MyProductsList.this, Home.class);
+                        intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent4);
+                        break;
+
+                    case R.id.nav_noti:
+                        Intent intent6 = new Intent(MyProductsList.this, Notification.class);
+                        intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent6);
+                        break;
+
+                    case R.id.nav_edit_profile:
+                        Intent intent1 = new Intent(MyProductsList.this, Me.class);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent1);
+                        break;
+                }
+
+                return true;
+            }
+        });
+    }
+
+    private void View_List() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PRODUCT_LIST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String id = object.getString("id").trim();
+                                    String seller_id = object.getString("user_id").trim();
+                                    String main_category = object.getString("main_category").trim();
+                                    String sub_category = object.getString("sub_category").trim();
+                                    String ad_detail = object.getString("ad_detail").trim();
+
+                                    String brand = object.getString("brand_material").trim();
+                                    String inner = object.getString("inner_material").trim();
+                                    String stock = object.getString("stock").trim();
+                                    String desc = object.getString("description").trim();
+
+                                    String price = object.getString("price").trim();
+                                    String division = object.getString("division");
+                                    String postcode = object.getString("postcode");
+                                    String district = object.getString("district");
+                                    String image_item = object.getString("photo");
+                                    String image_item02 = object.getString("photo02");
+                                    String image_item03 = object.getString("photo03");
+                                    String image_item04 = object.getString("photo04");
+                                    String image_item05 = object.getString("photo05");
+                                    String max_order = object.getString("max_order");
+                                    String rating = object.getString("rating");
+                                    String delivery_status = object.getString("is_approved");
+                                    String weight = object.getString("weight");
+
+                                    Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
+                                    item.setMax_order(max_order);
+                                    item.setBrand(brand);
+                                    item.setInner(inner);
+                                    item.setStock(stock);
+                                    item.setDescription(desc);
+                                    item.setRating(rating);
+                                    item.setDelivery_status(delivery_status);
+                                    item.setPostcode(postcode);
+                                    item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
+                                    itemList.add(item);
+                                }
+                                adapter_item = new MyProductsListAdapter(itemList, MyProductsList.this);
+                                adapter_item.notifyDataSetChanged();
+                                gridView.setAdapter(adapter_item);
+                                adapter_item.setOnItemClickListener(new MyProductsListAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onEditClick(int position) {
+                                        Intent detailIntent = new Intent(MyProductsList.this, EditProduct.class);
+                                        Item_All_Details item = itemList.get(position);
+
+                                        detailIntent.putExtra("user_id", getId);
+                                        detailIntent.putExtra("id", item.getId());
+                                        detailIntent.putExtra("main_category", item.getMain_category());
+                                        detailIntent.putExtra("sub_category", item.getSub_category());
+                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
+
+                                        detailIntent.putExtra("brand_material", item.getBrand());
+                                        detailIntent.putExtra("inner_material", item.getInner());
+                                        detailIntent.putExtra("stock", item.getStock());
+                                        detailIntent.putExtra("description", item.getDescription());
+
+                                        detailIntent.putExtra("price", item.getPrice());
+                                        detailIntent.putExtra("division", item.getDivision());
+                                        detailIntent.putExtra("postcode", item.getPostcode());
+                                        detailIntent.putExtra("district", item.getDistrict());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
+                                        detailIntent.putExtra("max_order", item.getMax_order());
+                                        detailIntent.putExtra("weight", item.getWeight());
+
+                                        startActivity(detailIntent);
+                                    }
+
+                                    @Override
+                                    public void onBoostClick(int position) {
+                                        final Item_All_Details item = itemList.get(position);
+                                        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, ADD_TO_BOOST,
+                                                new Response.Listener<String>() {
+                                                    @Override
+                                                    public void onResponse(String response) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                            String success = jsonObject.getString("success");
+                                                            if (success.equals("1")) {
+                                                                Toast.makeText(MyProductsList.this, R.string.success_add, Toast.LENGTH_SHORT).show();
+                                                            } else {
+                                                                Toast.makeText(MyProductsList.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+//                                                            Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                },
+                                                new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        try {
+
+                                                            if (error instanceof TimeoutError) {
+                                                                //Time out error
+
+                                                            }else if(error instanceof NoConnectionError){
+                                                                //net work error
+
+                                                            } else if (error instanceof AuthFailureError) {
+                                                                //error
+
+                                                            } else if (error instanceof ServerError) {
+                                                                //Erroor
+                                                            } else if (error instanceof NetworkError) {
+                                                                //Error
+
+                                                            } else if (error instanceof ParseError) {
+                                                                //Error
+
+                                                            }else{
+                                                                //Error
+                                                            }
+                                                            //End
+
+
+                                                        } catch (Exception e) {
+
+
+                                                        }
+                                                    }
+                                                }){
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> params = new HashMap<>();
+                                                params.put("id", item.getId());
+                                                params.put("user_id", getId);
+                                                return params;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(MyProductsList.this);
+                                        requestQueue.add(stringRequest1);
+                                    }
+
+                                    @Override
+                                    public void onDeleteClick(final int position) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(MyProductsList.this, R.style.MyDialogTheme);
+                                        builder.setTitle("Are you sure?");
+                                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                final Item_All_Details item = itemList.get(position);
+                                                final List<String> photoTempId = new ArrayList<>();
+
+                                                // List of photos
+                                                if(!item.getPhoto().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto02().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto02().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto03().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto03().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto04().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto04().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+                                                if(!item.getPhoto05().equals("null")){
+                                                    final String[] getPhotoId = item.getPhoto05().split("https://ketekmall\\.com/ketekmall/products/");
+                                                    photoTempId.add(getPhotoId[1]);
+                                                }
+
+                                                StringRequest stringRequest = new StringRequest(Request.Method.POST, DELETE_PRODUCT,
+                                                        new Response.Listener<String>() {
+                                                            @Override
+                                                            public void onResponse(String response) {
+                                                                try {
+                                                                    JSONObject jsonObject = new JSONObject(response);
+                                                                    String success = jsonObject.getString("success");
+
+                                                                    if (success.equals("1")) {
+                                                                        itemList.remove(position);
+                                                                        adapter_item.notifyDataSetChanged();
+                                                                        gridView.setAdapter(adapter_item);
+
+                                                                    } else {
+                                                                        Toast.makeText(MyProductsList.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+//                                                                    Toast.makeText(MyProducts.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        },
+                                                        new Response.ErrorListener() {
+                                                            @Override
+                                                            public void onErrorResponse(VolleyError error) {
+                                                                try {
+                                                                    if (error instanceof TimeoutError ) {
+                                                                        //Time out error
+
+                                                                    }else if(error instanceof NoConnectionError){
+                                                                        //net work error
+
+                                                                    } else if (error instanceof AuthFailureError) {
+                                                                        //error
+
+                                                                    } else if (error instanceof ServerError) {
+                                                                        //Erroor
+                                                                    } else if (error instanceof NetworkError) {
+                                                                        //Error
+
+                                                                    } else if (error instanceof ParseError) {
+                                                                        //Error
+
+                                                                    }else{
+                                                                        //Error
+                                                                    }
+                                                                    //End
+
+
+                                                                } catch (Exception e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                        }) {
+                                                    @Override
+                                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                                        Map<String, String> params = new HashMap<>();
+                                                        params.put("id", item.getId());
+                                                        params.put("photo", photoTempId.get(0));
+                                                        for(int i = 1; i< photoTempId.size(); i++){
+                                                            int num = i+1;
+                                                            params.put("photo0" + num, photoTempId.get(i));
+                                                        }
+                                                        return params;
+                                                    }
+                                                };
+                                                RequestQueue requestQueue = Volley.newRequestQueue(MyProductsList.this);
+                                                requestQueue.add(stringRequest);
+                                            }
+                                        });
+
+                                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                        AlertDialog alertDialog = builder.create();
+                                        alertDialog.show();
+                                    }
+                                });
+                                adapter_item.notifyDataSetChanged();
+                            } else {
+                                Toast.makeText(MyProductsList.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+
+
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(MyProductsList.this);
+        requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+}

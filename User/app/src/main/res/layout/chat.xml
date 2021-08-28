@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".pages.buyer.Chat"
+    tools:context=".activities.chats.ChatList"
     android:id="@+id/parent">
 
     <com.google.android.material.appbar.AppBarLayout
