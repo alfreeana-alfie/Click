@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
@@ -27,12 +28,16 @@ public class AppVersion extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_version);
+
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
         ToolbarSettings();
 
@@ -65,11 +70,11 @@ public class AppVersion extends AppCompatActivity {
             }
         });
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

@@ -16,10 +16,13 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.ketekmall.ketekmall.configs.Constant.sENG;
+import static com.ketekmall.ketekmall.configs.Constant.sMS;
+
 public class Splashscreen extends AppCompatActivity {
 
     Animation topAnim, topAnim_02;
-    TextView welcome_text, to_click_text;
+    TextView tvWelcome, tvClickText;
     Timer timer;
 
     @Override
@@ -28,8 +31,8 @@ public class Splashscreen extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String s1 = sh.getString("lang", "");
 
-        if(s1.equals("en")){
-            String languageToLoad1 = "en"; // your language
+        if (s1.equals(sENG)) {
+            String languageToLoad1 = sENG; // your language
             Locale locale1 = new Locale(languageToLoad1);
             Locale.setDefault(locale1);
             Configuration config1 = new Configuration();
@@ -41,8 +44,8 @@ public class Splashscreen extends AppCompatActivity {
             SharedPreferences.Editor editor1 = lang1.edit();
             editor1.putString("lang", languageToLoad1);
             editor1.apply();
-        }else{
-            String languageToLoad1 = "ms"; // your language
+        } else {
+            String languageToLoad1 = sMS; // your language
             Locale locale1 = new Locale(languageToLoad1);
             Locale.setDefault(locale1);
             Configuration config1 = new Configuration();
@@ -72,7 +75,7 @@ public class Splashscreen extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent(Splashscreen.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
@@ -80,8 +83,8 @@ public class Splashscreen extends AppCompatActivity {
     }
 
     private void Declare() {
-        welcome_text = findViewById(R.id.welcome_text);
-        to_click_text = findViewById(R.id.to_click_text);
+        tvWelcome = findViewById(R.id.welcome_text);
+        tvClickText = findViewById(R.id.to_click_text);
     }
 
     private void Animate() {
@@ -89,8 +92,8 @@ public class Splashscreen extends AppCompatActivity {
         topAnim_02 = AnimationUtils.loadAnimation(this, R.anim.fadein);
         topAnim_02.setStartOffset(1000);
 
-        welcome_text.setAnimation(topAnim);
-        to_click_text.setAnimation(topAnim_02);
+        tvWelcome.setAnimation(topAnim);
+        tvClickText.setAnimation(topAnim_02);
 
     }
 }

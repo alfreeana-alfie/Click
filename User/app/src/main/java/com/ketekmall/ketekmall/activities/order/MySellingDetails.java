@@ -65,6 +65,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.list.MySellingList;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.activities.main.Home;
@@ -89,6 +90,7 @@ import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.ketekmall.ketekmall.configs.Constant.*;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class MySellingDetails extends AppCompatActivity implements OneSignal.OSNotificationOpenedHandler{
@@ -96,16 +98,6 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
     private static final String[] PERMISSIONS = {android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.INTERNET};
-
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_product_accept.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_tracking_no.php";
-    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-    private static String URL_CreatePosLaju = "https://ketekmall.com/ketekmall/createConnote.php";
-    private static String URL_getConnote = "https://ketekmall.com/ketekmall/getConnote.php";
-    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
 
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_download;
@@ -122,6 +114,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             PendingBlack, PendingGreen,
             ShippedBlack, ShippedGreen,
             ReceivedBlack, ReceivedGreen;
+    Setup setup;
 
 
     private static boolean hasPermissions(Context context, String... permissions) {
@@ -139,15 +132,18 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selling_detail);
-        getSession();
         ToolbarSetting();
+
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
 //        setupUI(findViewById(R.id.parent));
         // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
 
         // OneSignal Initialization
         OneSignal.initWithContext(this);
-        OneSignal.setAppId("6236bfc3-df4d-4f44-82d6-754332044779");
+        OneSignal.setAppId(ONESIGNAL_APP_ID);
 
         Rejected = findViewById(R.id.rejected);
         Finished = findViewById(R.id.finished);
@@ -207,17 +203,17 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
 
         Intent intent = getIntent();
 
-        final String strID = intent.getStringExtra("id");
-        final String strPhoto = intent.getStringExtra("photo");
-        final String strAd_Detail = intent.getStringExtra("ad_detail");
-        final String strPrice = intent.getStringExtra("price");
-        final String strQuantity = intent.getStringExtra("quantity");
-        final String strDivision = intent.getStringExtra("division");
-        final String strStatus = intent.getStringExtra("status");
-        final String strOrder_Date = intent.getStringExtra("order_date");
-        final String strTracking_NO = intent.getStringExtra("tracking_no");
-        final String strCustomer_ID = intent.getStringExtra("customer_id");
-        final String strPickUp = intent.getStringExtra("pick_up");
+        final String strID = intent.getStringExtra(sID);
+        final String strPhoto = intent.getStringExtra(sPHOTO);
+        final String strAd_Detail = intent.getStringExtra(sAD_DETAIL);
+        final String strPrice = intent.getStringExtra(sPRICE);
+        final String strQuantity = intent.getStringExtra(sQUANTITY);
+        final String strDivision = intent.getStringExtra(sDIVISION);
+        final String strStatus = intent.getStringExtra(sSTATUS);
+        final String strOrder_Date = intent.getStringExtra(sORDER_DATE);
+        final String strTracking_NO = intent.getStringExtra(sTRACKING_NO);
+        final String strCustomer_ID = intent.getStringExtra(sCUSTOMER_ID);
+        final String strPickUp = intent.getStringExtra(sPICK_UP);
 
         getCustomerDetailTwo(strCustomer_ID);
         WithText = findViewById(R.id.withText);
@@ -366,16 +362,16 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     private void ToolbarSetting(){
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -399,9 +395,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 //                                Toast.makeText(Selling_Detail.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
                             } else {
 //                                Toast.makeText(Selling_Detail.this, "Failed to Save Product", Toast.LENGTH_SHORT).show();
@@ -454,9 +450,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("order_date", strOrder_Date);
-                params.put("tracking_no", ConnoteNo);
-                params.put("id", strID);
+                params.put(sORDER_DATE, strOrder_Date);
+                params.put(sTRACKING_NO, ConnoteNo);
+                params.put(sID, strID);
                 return params;
             }
         };
@@ -464,13 +460,13 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void getCustomerDetail(final String customerID, final String OrderID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
@@ -479,20 +475,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String strName = object.getString("name");
-                                    String strEmail = object.getString("email");
-                                    String strAddr1 = object.getString("address_01");
-                                    String strAddr2 = object.getString("address_02");
-                                    String strDivision = object.getString("division");
-                                    String strPostCode = object.getString("postcode");
-                                    String strPhone_NO = object.getString("phone_no");
+                                    String strName = object.getString(sNAME);
+                                    String strEmail = object.getString(sEMAIL);
+                                    String strAddr1 = object.getString(sADDRESS_01);
+                                    String strAddr2 = object.getString(sADDRESS_02);
+                                    String strDivision = object.getString(sDIVISION);
+                                    String strPostCode = object.getString(sPOSTCODE);
+                                    String strPhone_NO = object.getString(sPHONE_NO);
 
 
                                     customer_name.setText(strName);
@@ -549,7 +545,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", customerID);
+                params.put(sID, customerID);
                 return params;
             }
         };
@@ -564,20 +560,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String strName = object.getString("name");
-                                    String strEmail = object.getString("email");
-                                    String strAddr1 = object.getString("address_01");
-                                    String strAddr2 = object.getString("address_02");
-                                    String strDivision = object.getString("division");
-                                    String strPostCode = object.getString("postcode");
-                                    String strPhone_NO = object.getString("phone_no");
+                                    String strName = object.getString(sNAME);
+                                    String strEmail = object.getString(sEMAIL);
+                                    String strAddr1 = object.getString(sADDRESS_01);
+                                    String strAddr2 = object.getString(sADDRESS_02);
+                                    String strDivision = object.getString(sDIVISION);
+                                    String strPostCode = object.getString(sPOSTCODE);
+                                    String strPhone_NO = object.getString(sPHONE_NO);
 
                                     customer_name.setText(strName);
                                     customer_address.setText(strAddr1 + strAddr2 + "\n" + strDivision + strPostCode);
@@ -631,7 +627,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", customerID);
+                params.put(sID, customerID);
                 return params;
             }
         };
@@ -646,7 +642,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -661,8 +657,8 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("order_id", OrderID);
+                params.put(sEMAIL, email);
+                params.put(sORDER_ID, OrderID);
                 return params;
             }
         };
@@ -673,9 +669,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
     private void PosLajuGetData(final String customerID, final String OrderID, final String subscriptionCode, final String AccountNo, final String strOrder_Date, final String strID){
         Intent intent = getIntent();
 
-        final String Quantity = intent.getStringExtra("quantity");
-        final String Amount = intent.getStringExtra("TotalAmount");
-        final String Weight = intent.getStringExtra("Weight");
+        final String Quantity = intent.getStringExtra(sQUANTITY);
+        final String Amount = intent.getStringExtra(sTOT_AMO);
+        final String Weight = intent.getStringExtra(sWEIGHT);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
                 new Response.Listener<String>() {
@@ -683,20 +679,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String SellerName = object.getString("name");
-                                    final String SellerEmail = object.getString("email");
-                                    final String SellerAddress01 = object.getString("address_01");
-                                    final String SellerAddress02 = object.getString("address_02");
-                                    final String SellerDivision = object.getString("division");
-                                    final String SellerPostCode = object.getString("postcode");
-                                    final String SellerPhoneNo = object.getString("phone_no");
+                                    final String SellerName = object.getString(sNAME);
+                                    final String SellerEmail = object.getString(sEMAIL);
+                                    final String SellerAddress01 = object.getString(sADDRESS_01);
+                                    final String SellerAddress02 = object.getString(sADDRESS_02);
+                                    final String SellerDivision = object.getString(sDIVISION);
+                                    final String SellerPostCode = object.getString(sPOSTCODE);
+                                    final String SellerPhoneNo = object.getString(sPHONE_NO);
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
                                             new Response.Listener<String>() {
@@ -704,20 +700,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                                 public void onResponse(String response) {
                                                     try {
                                                         JSONObject jsonObject = new JSONObject(response);
-                                                        String success = jsonObject.getString("success");
-                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                                        String success = jsonObject.getString(sSUCCESS);
+                                                        JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                                                        if (success.equals("1")) {
+                                                        if (success.equals(sONE)) {
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                String ReceiverName = object.getString("name");
-                                                                String ReceiverEmail = object.getString("email");
-                                                                String ReceiverAddress01 = object.getString("address_01");
-                                                                String ReceiverAddress02 = object.getString("address_02");
-                                                                String ReceiverDivision = object.getString("division");
-                                                                String ReceiverPostCode = object.getString("postcode");
-                                                                String ReceiverPhoneNo = object.getString("phone_no");
+                                                                String ReceiverName = object.getString(sNAME);
+                                                                String ReceiverEmail = object.getString(sEMAIL);
+                                                                String ReceiverAddress01 = object.getString(sADDRESS_01);
+                                                                String ReceiverAddress02 = object.getString(sADDRESS_02);
+                                                                String ReceiverDivision = object.getString(sDIVISION);
+                                                                String ReceiverPostCode = object.getString(sPOSTCODE);
+                                                                String ReceiverPhoneNo = object.getString(sPHONE_NO);
 
                                                                 RoutingCode(
                                                                         SellerPostCode,
@@ -800,7 +796,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
-                                            params.put("id", customerID);
+                                            params.put(sID, customerID);
                                             return params;
                                         }
                                     };
@@ -855,7 +851,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -866,9 +862,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
     private void PosLajuGetData2(final String customerID, final String OrderID, final String subscriptionCode, final String AccountNo, final String strOrder_Date, final String strID){
         Intent intent = getIntent();
 
-        final String Quantity = intent.getStringExtra("quantity");
-        final String Amount = intent.getStringExtra("TotalAmount");
-        final String Weight = intent.getStringExtra("Weight");
+        final String Quantity = intent.getStringExtra(sQUANTITY);
+        final String Amount = intent.getStringExtra(sTOT_AMO);
+        final String Weight = intent.getStringExtra(sWEIGHT);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
                 new Response.Listener<String>() {
@@ -876,20 +872,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String SellerName = object.getString("name");
-                                    final String SellerEmail = object.getString("email");
-                                    final String SellerAddress01 = object.getString("address_01");
-                                    final String SellerAddress02 = object.getString("address_02");
-                                    final String SellerDivision = object.getString("division");
-                                    final String SellerPostCode = object.getString("postcode");
-                                    final String SellerPhoneNo = object.getString("phone_no");
+                                    final String SellerName = object.getString(sNAME);
+                                    final String SellerEmail = object.getString(sEMAIL);
+                                    final String SellerAddress01 = object.getString(sADDRESS_01);
+                                    final String SellerAddress02 = object.getString(sADDRESS_02);
+                                    final String SellerDivision = object.getString(sDIVISION);
+                                    final String SellerPostCode = object.getString(sPOSTCODE);
+                                    final String SellerPhoneNo = object.getString(sPHONE_NO);
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
                                             new Response.Listener<String>() {
@@ -897,20 +893,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                                 public void onResponse(String response) {
                                                     try {
                                                         JSONObject jsonObject = new JSONObject(response);
-                                                        String success = jsonObject.getString("success");
-                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                                        String success = jsonObject.getString(sSUCCESS);
+                                                        JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                                                        if (success.equals("1")) {
+                                                        if (success.equals(sONE)) {
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                String ReceiverName = object.getString("name");
-                                                                String ReceiverEmail = object.getString("email");
-                                                                String ReceiverAddress01 = object.getString("address_01");
-                                                                String ReceiverAddress02 = object.getString("address_02");
-                                                                String ReceiverDivision = object.getString("division");
-                                                                String ReceiverPostCode = object.getString("postcode");
-                                                                String ReceiverPhoneNo = object.getString("phone_no");
+                                                                String ReceiverName = object.getString(sNAME);
+                                                                String ReceiverEmail = object.getString(sEMAIL);
+                                                                String ReceiverAddress01 = object.getString(sADDRESS_01);
+                                                                String ReceiverAddress02 = object.getString(sADDRESS_02);
+                                                                String ReceiverDivision = object.getString(sDIVISION);
+                                                                String ReceiverPostCode = object.getString(sPOSTCODE);
+                                                                String ReceiverPhoneNo = object.getString(sPHONE_NO);
 
                                                                 RoutingCodeDownload(
                                                                         SellerPostCode,
@@ -993,7 +989,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
-                                            params.put("id", customerID);
+                                            params.put(sID, customerID);
                                             return params;
                                         }
                                     };
@@ -1048,7 +1044,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -1073,7 +1069,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
 //                ContactPerson,
 //                PickupAddress,
 //                Postcode,
-//                "1",
+//                sONE,
 //                TotalQuantityToPickup,
 //                Weight,
 //                Amount,
@@ -1117,7 +1113,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                         ContactPerson,
                                         PickupAddress,
                                         Postcode,
-                                        "1",
+                                        sONE,
                                         TotalQuantityToPickup,
                                         Weight,
                                         Amount,
@@ -1199,7 +1195,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
 //                ContactPerson,
 //                PickupAddress,
 //                Postcode,
-//                "1",
+//                sONE,
 //                TotalQuantityToPickup,
 //                Weight,
 //                Amount,
@@ -1243,7 +1239,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                     ContactPerson,
                                     PickupAddress,
                                     Postcode,
-                                    "1",
+                                    sONE,
                                     TotalQuantityToPickup,
                                     Weight,
                                     Amount,
@@ -1428,7 +1424,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                 }else{
                     try{
                         JSONObject jsonObject = new JSONObject(response);
-                        String ConnoteNo       = jsonObject.getString("ConnoteNo");
+                        String ConnoteNo       = jsonObject.getString(sCON_NO);
                         String StatusCode      = jsonObject.getString("StatusCode");
                         String Message         = jsonObject.getString("Message");
 
@@ -1615,7 +1611,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                 }else{
                     try{
                         JSONObject jsonObject = new JSONObject(response);
-                        String ConnoteNo       = jsonObject.getString("ConnoteNo");
+                        String ConnoteNo       = jsonObject.getString(sCON_NO);
                         String StatusCode      = jsonObject.getString("StatusCode");
                         String Message         = jsonObject.getString("Message");
 
@@ -3040,9 +3036,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 Log.i("CONNOTE", "SAVED");
                                 Toast.makeText(MySellingDetails.this, R.string.success_update, Toast.LENGTH_SHORT).show();
                             } else {
@@ -3065,12 +3061,12 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("ConnoteNo", ConnoteNo);
-                params.put("ConnoteDate", ConnoteDate);
-                params.put("ProductCode", ProductCode);
-                params.put("SenderName", SenderName);
-                params.put("SenderPhone", SenderPhone);
-                params.put("SenderPostcode", SenderPostcode);
+                params.put(sCON_NO, ConnoteNo);
+                params.put(sCON_DATE, ConnoteDate);
+                params.put(sPROD_CODE, ProductCode);
+                params.put(sSEND_NAME, SenderName);
+                params.put(sSEND_PHONE, SenderPhone);
+                params.put(sSEND_POSTCODE, SenderPostcode);
                 params.put("RecipientAccountNo", RecipientAccountNo);
                 params.put("RecipientName", RecipientName);
                 params.put("RecipientAddress01", RecipientAddress01);
@@ -3080,7 +3076,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                 params.put("RecipientState", RecipientState);
                 params.put("RecipientPhone", RecipientPhone);
                 params.put("RecipientEmail", RecipientEmail);
-                params.put("Weight", Weight);
+                params.put(sWEIGHT, Weight);
                 params.put("Type", "Document");
                 return params;
             }
@@ -3103,20 +3099,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                String success = jsonObject.getString(sSUCCESS);
+                                JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                                if (success.equals("1")) {
+                                if (success.equals(sONE)) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String id = object.getString("id").trim();
-                                        String ConnoteNo = object.getString("ConnoteNo");
-                                        String ConnoteDate = object.getString("ConnoteDate").trim();
-                                        String ProductCode = object.getString("ProductCode").trim();
-                                        String SenderName = object.getString("SenderName").trim();
-                                        String SenderPhone = object.getString("SenderPhone").trim();
-                                        String SenderPostcode = object.getString("SenderPostcode").trim();
+                                        String id = object.getString(sID).trim();
+                                        String ConnoteNo = object.getString(sCON_NO);
+                                        String ConnoteDate = object.getString(sCON_DATE).trim();
+                                        String ProductCode = object.getString(sPROD_CODE).trim();
+                                        String SenderName = object.getString(sSEND_NAME).trim();
+                                        String SenderPhone = object.getString(sSEND_PHONE).trim();
+                                        String SenderPostcode = object.getString(sSEND_POSTCODE).trim();
                                         String RecipientAccountNo = object.getString("RecipientAccountNo");
                                         String RecipientName = object.getString("RecipientName");
                                         String RecipientAddress01 = object.getString("RecipientAddress01");
@@ -3126,7 +3122,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                         String RecipientState = object.getString("RecipientState").trim();
                                         String RecipientPhone = object.getString("RecipientPhone").trim();
                                         String RecipientEmail = object.getString("RecipientEmail");
-                                        String Weight = object.getString("Weight");
+                                        String Weight = object.getString(sWEIGHT);
                                         String Type = object.getString("Type").trim();
 //                                    final String CreatedAt = object.getString("CreatedAt");
 //
@@ -3205,7 +3201,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("ProductCode", getProductCode);
+                params.put(sPROD_CODE, getProductCode);
                 return params;
             }
         };
@@ -3224,20 +3220,20 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                String success = jsonObject.getString(sSUCCESS);
+                                JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                                if (success.equals("1")) {
+                                if (success.equals(sONE)) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String id = object.getString("id").trim();
-                                        String ConnoteNo = object.getString("ConnoteNo");
-                                        String ConnoteDate = object.getString("ConnoteDate").trim();
-                                        String ProductCode = object.getString("ProductCode").trim();
-                                        String SenderName = object.getString("SenderName").trim();
-                                        String SenderPhone = object.getString("SenderPhone").trim();
-                                        String SenderPostcode = object.getString("SenderPostcode").trim();
+                                        String id = object.getString(sID).trim();
+                                        String ConnoteNo = object.getString(sCON_NO);
+                                        String ConnoteDate = object.getString(sCON_DATE).trim();
+                                        String ProductCode = object.getString(sPROD_CODE).trim();
+                                        String SenderName = object.getString(sSEND_NAME).trim();
+                                        String SenderPhone = object.getString(sSEND_PHONE).trim();
+                                        String SenderPostcode = object.getString(sSEND_POSTCODE).trim();
                                         String RecipientAccountNo = object.getString("RecipientAccountNo");
                                         String RecipientName = object.getString("RecipientName");
                                         String RecipientAddress01 = object.getString("RecipientAddress01");
@@ -3247,7 +3243,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                                         String RecipientState = object.getString("RecipientState").trim();
                                         String RecipientPhone = object.getString("RecipientPhone").trim();
                                         String RecipientEmail = object.getString("RecipientEmail");
-                                        String Weight = object.getString("Weight");
+                                        String Weight = object.getString(sWEIGHT);
                                         String Type = object.getString("Type").trim();
 //                                    final String CreatedAt = object.getString("CreatedAt");
 //
@@ -3326,17 +3322,13 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("ProductCode", getProductCode);
+                params.put(sPROD_CODE, getProductCode);
                 return params;
             }
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    private void GetPayment(){
-
     }
 
     private void GetPlayerData(final String CustomerUserID, final String OrderID){
@@ -3346,16 +3338,16 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String PlayerID = object.getString("PlayerID");
-                                    String Name = object.getString("Name");
-                                    String UserID = object.getString("UserID");
+                                    String PlayerID = object.getString(sPLAYER_ID);
+                                    String Name = object.getString(sUPPER_NAME);
+                                    String UserID = object.getString(sOS_USER_ID);
 
                                     OneSignalNoti(PlayerID, Name, OrderID);
                                 }
@@ -3406,7 +3398,7 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("UserID", CustomerUserID);
+                params.put(sOS_USER_ID, CustomerUserID);
                 return params;
             }
         };
@@ -3455,9 +3447,9 @@ public class MySellingDetails extends AppCompatActivity implements OneSignal.OSN
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("PlayerID", PlayerUserID);
-                params.put("Name", Name);
-                params.put("Words", "Your order " + OrderID + " have been shipped");
+                params.put(sPLAYER_ID, PlayerUserID);
+                params.put(sUPPER_NAME, Name);
+                params.put(sWORDS, "Your order " + OrderID + " have been shipped");
                 return params;
             }
         };

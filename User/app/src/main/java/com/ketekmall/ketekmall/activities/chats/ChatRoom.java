@@ -43,6 +43,7 @@ import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.adapters.ChatListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.ChatSession;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.squareup.picasso.Picasso;
@@ -83,13 +84,14 @@ public class ChatRoom extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
 
+    Setup setup;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat);
         Declare();
-        getSession();
         ToolbarSettings();
         BottomNavigationSettings();
         getChat();
@@ -105,6 +107,9 @@ public class ChatRoom extends AppCompatActivity {
     }
 
     public void Declare(){
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         layout = findViewById(R.id.layout1);
         sendButton = findViewById(R.id.sendButton);
         messageArea = findViewById(R.id.messageArea);
@@ -136,13 +141,13 @@ public class ChatRoom extends AppCompatActivity {
         }
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void ToolbarSettings(){

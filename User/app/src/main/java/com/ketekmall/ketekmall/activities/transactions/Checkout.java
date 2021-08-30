@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,17 +32,14 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.activities.list.CartList;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.utils.ResultDelegate;
 import com.ketekmall.ketekmall.models.Checkout_Data;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.CheckoutListAdapter;
-import com.ketekmall.ketekmall.models.Item_All_Details;
-import com.ketekmall.ketekmall.models.MySingleton;
-import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
@@ -55,7 +51,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,78 +64,73 @@ import java.util.UUID;
 import com.ipay.IPayIH;
 import com.ipay.IPayIHPayment;
 
+import static com.ketekmall.ketekmall.configs.Constant.checkout;
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_01;
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_02;
+import static com.ketekmall.ketekmall.configs.Constant.sAD_DETAIL;
+import static com.ketekmall.ketekmall.configs.Constant.sCUSTOMER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sDELIVERY_ADDRESS;
+import static com.ketekmall.ketekmall.configs.Constant.sDELIVERY_DATE;
+import static com.ketekmall.ketekmall.configs.Constant.sDELIVERY_PRICE;
+import static com.ketekmall.ketekmall.configs.Constant.sDISTRICT;
+import static com.ketekmall.ketekmall.configs.Constant.sDIVISION;
+import static com.ketekmall.ketekmall.configs.Constant.s2DP;
+import static com.ketekmall.ketekmall.configs.Constant.sDT_FORMAT;
+import static com.ketekmall.ketekmall.configs.Constant.sEMAIL;
+import static com.ketekmall.ketekmall.configs.Constant.sID;
+import static com.ketekmall.ketekmall.configs.Constant.sITEM_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sMAIN_CATEGORY;
+import static com.ketekmall.ketekmall.configs.Constant.sNAME;
+import static com.ketekmall.ketekmall.configs.Constant.sONE;
+import static com.ketekmall.ketekmall.configs.Constant.sPHONE_NO;
+import static com.ketekmall.ketekmall.configs.Constant.sPHOTO;
+import static com.ketekmall.ketekmall.configs.Constant.sPOSTCODE;
+import static com.ketekmall.ketekmall.configs.Constant.sPRICE;
+import static com.ketekmall.ketekmall.configs.Constant.sQUANTITY;
+import static com.ketekmall.ketekmall.configs.Constant.sREAD;
+import static com.ketekmall.ketekmall.configs.Constant.sREF_NO;
+import static com.ketekmall.ketekmall.configs.Constant.sSELLER_DISTRICT;
+import static com.ketekmall.ketekmall.configs.Constant.sSELLER_DIVISION;
+import static com.ketekmall.ketekmall.configs.Constant.sSELLER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sSUB_CATEGORY;
+import static com.ketekmall.ketekmall.configs.Constant.sSUCCESS;
+import static com.ketekmall.ketekmall.configs.Constant.sTOTAL;
+import static com.ketekmall.ketekmall.configs.Constant.sWEIGHT;
+import static com.ketekmall.ketekmall.configs.Constant.sXUserKey;
+import static com.ketekmall.ketekmall.configs.Constant.serverPoslajuDomesticbyPostcode;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class Checkout extends AppCompatActivity implements Serializable{
     String RefID = UUID.randomUUID().toString();
-    public static final long serialVersionUID = 0;
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single_delivery.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
+    Button btnCheckout;
+    TextView tvGrandTot, tvGrandTot02, tvCustomerAddr, tvEmptyAddr;
+    LinearLayout llMain;
 
-    private static String URL_DELETE_SINGLE = "https://ketekmall.com/ketekmall/delete_order.php";
-
-    private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
-
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart_temp.php";
-    private static String URL_CART_TWO = "https://ketekmall.com/ketekmall/readcart_temp_two.php";
-    private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
-    private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
-    private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
-    private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
-    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer_three.php";
-
-    final String TAG = "NOTIFICATION TAG";
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
-    final private String contentType = "application/json";
-    String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
-    String TOPIC;
-
-    Button Button_Checkout;
-    TextView Grand_Total, Grand_Total2, AddressUser, No_Address;
-    LinearLayout linear2;
-
-    RecyclerView recyclerView;
-    CheckoutListAdapter userOrderAdapter;
-    ArrayList<Checkout_Data> item_all_detailsList;
-    RelativeLayout address_layout;
-    Item_All_Details item;
+    RecyclerView rvOrderProduct;
+    CheckoutListAdapter checkoutListAdapter;
+    ArrayList<Checkout_Data> alCheckout;
+    RelativeLayout rlAddr;
     Checkout_Data checkoutData;
 
     String getId, Price, Delivery_Date, ProductDesription;
-    String email_customer, item_id, delivery_price, item_price;
-    SessionManager sessionManager;
+    String item_id;
 
-    Double aFloat, grandtotal;
-    BottomNavigationView bottomNav;
-    ProgressBar loading;
+    Double doubGrandTot;
+    BottomNavigationView bnvMenu;
+    ProgressBar pbLoading;
 
     ArrayList productList = new ArrayList();
     ArrayList itemIdList = new ArrayList();
-
-    String HTTP_PoslajuDomesticbyPostcode = "https://apis.pos.com.my/apigateway/as2corporate/api/poslajubypostcodedomestic/v1";
-    String serverKey_PoslajuDomesticbyPostcode = "N1hHVHJFRW95cjRkQ0NyR3dialdrZUF4NGxaNm9Na1U=";
+    
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.checkout);
+        setContentView(checkout);
         Declare();
         getUserDetail();
-
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        final HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_TEMP_CART,
                 new Response.Listener<String>() {
@@ -148,27 +138,27 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
-                                loading.setVisibility(View.GONE);
+                            if (success.equals(sONE)) {
+                                pbLoading.setVisibility(View.GONE);
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String id = object.getString("id").trim();
-                                    final String ad_detail = object.getString("ad_detail").trim();
-                                    final Double price = Double.valueOf(object.getString("price").trim());
-                                    final String division = object.getString("division");
-                                    final String image_item = object.getString("photo");
-                                    final String seller_id = object.getString("seller_id");
-                                    final String item_id = object.getString("item_id");
-                                    final String quantity = object.getString("quantity");
-                                    final String postCode = object.getString("postcode");
-                                    final String weight = object.getString("weight");
+                                    final String pId = object.getString(sID).trim();
+                                    final String pAdDetail = object.getString(sAD_DETAIL).trim();
+                                    final Double pPrice = Double.valueOf(object.getString(sPRICE).trim());
+                                    final String pDivision = object.getString(sDIVISION);
+                                    final String pPhoto = object.getString(sPHOTO);
+                                    final String pSellerId = object.getString(sSELLER_ID);
+                                    final String pItemId = object.getString(sITEM_ID);
+                                    final String pQuantity = object.getString(sQUANTITY);
+                                    final String pPostcode = object.getString(sPOSTCODE);
+                                    final String pWeight = object.getString(sWEIGHT);
 
-                                    String description = ad_detail + " x" + quantity;
-                                    String itemCode = "KM00" + id;
+                                    String description = pAdDetail + " x" + pQuantity;
+                                    String itemCode = "KM00" + pId;
 
                                     productList.add(description);
                                     itemIdList.add(itemCode);
@@ -179,40 +169,34 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 public void onResponse(String response) {
                                                     try {
                                                         JSONObject jsonObject = new JSONObject(response);
-                                                        String success = jsonObject.getString("success");
-                                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                                        String success = jsonObject.getString(sSUCCESS);
+                                                        JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                                                        if (success.equals("1")) {
+                                                        if (success.equals(sONE)) {
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                String strName = object.getString("name").trim();
-                                                                String strPhone_no = object.getString("phone_no").trim();
-                                                                String strAddress01 = object.getString("address_01");
-                                                                String strAddress02 = object.getString("address_02");
-                                                                final String strCity = object.getString("division");
-                                                                String strPostCode = object.getString("postcode");
+                                                                String uName = object.getString(sNAME).trim();
+                                                                String uPhoneNo = object.getString(sPHONE_NO).trim();
+                                                                String uAddress01 = object.getString(sADDRESS_01);
+                                                                String uAddress02 = object.getString(sADDRESS_02);
+                                                                final String uDivision = object.getString(sDIVISION);
+                                                                String uPostcode = object.getString(sPOSTCODE);
 
-                                                                String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
+                                                                String fullAddress = uName + " | " + uPhoneNo + "\n" + uAddress01 + " " + uAddress02 + "\n" + uPostcode + " " + uDivision;
 
-                                                                if(strPostCode.isEmpty()){
-                                                                    Address = "Incomplete Information";
-                                                                    Button_Checkout.setVisibility(View.GONE);
+                                                                if(uPostcode.isEmpty()){
+                                                                    fullAddress = "Incomplete Information";
+                                                                    btnCheckout.setVisibility(View.GONE);
                                                                 }else{
-                                                                    Button_Checkout.setVisibility(View.VISIBLE);
+                                                                    btnCheckout.setVisibility(View.VISIBLE);
                                                                 }
 
-                                                                AddressUser.setText(Address);
-                                                                double neWeight = Double.parseDouble(weight) * Integer.parseInt(quantity);
+                                                                tvCustomerAddr.setText(fullAddress);
+                                                                double newWeight = Double.parseDouble(pWeight) * Integer.parseInt(pQuantity);
 
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
-
-//                                                                if(weight.contains("0.00")){
-//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
-//                                                                }else if(strPostCode.isEmpty()){
-//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
-//                                                                }
+                                                                String API = POSLAJU_DOMESTIC_BY_POSTCODE + "?postcodeFrom=" + pPostcode + "&postcodeTo=" + uPostcode + "&Weight=" + newWeight;
 
                                                                 StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                                                                         new Response.Listener<String>() {
@@ -227,59 +211,59 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                                         double NewTotalAmount = Double.parseDouble(totalAmount);
                                                                                         double RoundedTotalAmount = Math.ceil(NewTotalAmount);
 
-                                                                                        double weightDouble = Double.parseDouble(weight);
+                                                                                        double weightDouble = Double.parseDouble(pWeight);
 
                                                                                         double deliveryCharge = RoundedTotalAmount;
 
-                                                                                        Price = String.format("%.2f", deliveryCharge);
+                                                                                        Price = String.format(s2DP, deliveryCharge);
 
                                                                                         Log.i("jsonObjectRequest", Price);
 
                                                                                         checkoutData = new Checkout_Data();
-                                                                                        checkoutData.setId(id);
-                                                                                        checkoutData.setDelivery_item_id(item_id);
-                                                                                        checkoutData.setSeller_id(seller_id);
-                                                                                        checkoutData.setAd_detail(ad_detail);
-                                                                                        checkoutData.setPhoto(image_item);
-                                                                                        checkoutData.setPrice(String.valueOf(price));
-                                                                                        checkoutData.setDivision(division);
-                                                                                        checkoutData.setQuantity(quantity);
-                                                                                        checkoutData.setDelivery_price(String.format("%.2f", deliveryCharge));
-                                                                                        checkoutData.setDelivery_division(strCity);
-                                                                                        checkoutData.setDelivery_division1(division + " to " + strCity);
+                                                                                        checkoutData.setId(pId);
+                                                                                        checkoutData.setDelivery_item_id(pItemId);
+                                                                                        checkoutData.setSeller_id(pSellerId);
+                                                                                        checkoutData.setAd_detail(pAdDetail);
+                                                                                        checkoutData.setPhoto(pPhoto);
+                                                                                        checkoutData.setPrice(String.valueOf(pPrice));
+                                                                                        checkoutData.setDivision(pDivision);
+                                                                                        checkoutData.setQuantity(pQuantity);
+                                                                                        checkoutData.setDelivery_price(String.format(s2DP, deliveryCharge));
+                                                                                        checkoutData.setDelivery_division(uDivision);
+                                                                                        checkoutData.setDelivery_division1(pDivision + " to " + uDivision);
 
-                                                                                        grandtotal += (price * Integer.parseInt(quantity) + deliveryCharge);
-                                                                                        Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
-                                                                                        Grand_Total2.setText(String.format("%.2f", grandtotal));
+                                                                                        doubGrandTot += (pPrice * Integer.parseInt(pQuantity) + deliveryCharge);
+                                                                                        tvGrandTot.setText("RM" + String.format(s2DP, doubGrandTot));
+                                                                                        tvGrandTot02.setText(String.format(s2DP, doubGrandTot));
 
-                                                                                        item_all_detailsList.add(checkoutData);
+                                                                                        alCheckout.add(checkoutData);
 
                                                                                     }
-                                                                                    userOrderAdapter = new CheckoutListAdapter(Checkout.this, item_all_detailsList);
-                                                                                    recyclerView.setAdapter(userOrderAdapter);
-                                                                                    userOrderAdapter.setOnItemClickListener(new CheckoutListAdapter.OnItemClickListener() {
+                                                                                    checkoutListAdapter = new CheckoutListAdapter(Checkout.this, alCheckout);
+                                                                                    rvOrderProduct.setAdapter(checkoutListAdapter);
+                                                                                    checkoutListAdapter.setOnItemClickListener(new CheckoutListAdapter.OnItemClickListener() {
                                                                                         @Override
                                                                                         public void onSelfClick(int position) {
                                                                                             checkoutData = new Checkout_Data();
-                                                                                            checkoutData.setId(id);
-                                                                                            checkoutData.setDelivery_item_id(item_id);
-                                                                                            checkoutData.setSeller_id(seller_id);
-                                                                                            checkoutData.setAd_detail(ad_detail);
-                                                                                            checkoutData.setPhoto(image_item);
-                                                                                            checkoutData.setPrice(String.valueOf(price));
-                                                                                            checkoutData.setDivision(division);
-                                                                                            checkoutData.setQuantity(quantity);
+                                                                                            checkoutData.setId(pId);
+                                                                                            checkoutData.setDelivery_item_id(pItemId);
+                                                                                            checkoutData.setSeller_id(pSellerId);
+                                                                                            checkoutData.setAd_detail(pAdDetail);
+                                                                                            checkoutData.setPhoto(pPhoto);
+                                                                                            checkoutData.setPrice(String.valueOf(pPrice));
+                                                                                            checkoutData.setDivision(pDivision);
+                                                                                            checkoutData.setQuantity(pQuantity);
                                                                                             checkoutData.setDelivery_price("0.00");
-                                                                                            checkoutData.setDelivery_division(division);
+                                                                                            checkoutData.setDelivery_division(pDivision);
 
                                                                                             String delivery_text;
                                                                                             delivery_text = "<font color='#999999'>RM0.00</font>";
                                                                                             checkoutData.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            checkoutData.setDelivery_division1(division + " to " + division);
+                                                                                            checkoutData.setDelivery_division1(pDivision + " to " + pDivision);
 
-                                                                                            grandtotal -= Double.parseDouble(Price);
-                                                                                            Grand_Total2.setText(String.format("%.2f", grandtotal));
-                                                                                            Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
+                                                                                            doubGrandTot -= Double.parseDouble(Price);
+                                                                                            tvGrandTot02.setText(String.format(s2DP, doubGrandTot));
+                                                                                            tvGrandTot.setText("RM" + String.format(s2DP, doubGrandTot));
 
                                                                                             Price = "0.00";
                                                                                         }
@@ -304,7 +288,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                     @Override
                                                                     public Map<String, String> getHeaders() {
                                                                         Map<String, String> params = new HashMap<>();
-                                                                        params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+                                                                        params.put(sXUserKey, serverPoslajuDomesticbyPostcode);
                                                                         return params;
                                                                     }
 
@@ -358,7 +342,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<>();
-                                            params.put("id", getId);
+                                            params.put(sID, getId);
                                             return params;
                                         }
                                     };
@@ -409,7 +393,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
+                params.put(sCUSTOMER_ID, getId);
                 return params;
             }
         };
@@ -418,21 +402,23 @@ public class Checkout extends AppCompatActivity implements Serializable{
     }
 
     private void Declare() {
-        Button_Checkout = findViewById(R.id.btn_place_order);
-        No_Address = findViewById(R.id.no_address);
-        linear2 = findViewById(R.id.linear2);
-        loading = findViewById(R.id.loading);
+        setup = new Setup(this);
+        getId = setup.getUserId();
+        
+        btnCheckout = findViewById(R.id.btn_place_order);
+        tvEmptyAddr = findViewById(R.id.no_address);
+        llMain = findViewById(R.id.linear2);
+        pbLoading = findViewById(R.id.loading);
 
-        Grand_Total = findViewById(R.id.grandtotal);
-        Grand_Total2 = findViewById(R.id.grandtotal2);
-        AddressUser = findViewById(R.id.address);
+        tvGrandTot = findViewById(R.id.grandtotal);
+        tvGrandTot02 = findViewById(R.id.grandtotal2);
+        tvCustomerAddr = findViewById(R.id.address);
 
-        aFloat = 0.00;
-        grandtotal = 0.00;
+        doubGrandTot = 0.00;
 
-        bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.getMenu().getItem(0).setCheckable(false);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bnvMenu = findViewById(R.id.bottom_nav);
+        bnvMenu.getMenu().getItem(0).setCheckable(false);
+        bnvMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -462,8 +448,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
             }
         });
 
-        address_layout = findViewById(R.id.address_layout);
-        address_layout.setOnClickListener(new View.OnClickListener() {
+        rlAddr = findViewById(R.id.address_layout);
+        rlAddr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Checkout.this, UserProfileCheckout.class);
@@ -472,11 +458,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
             }
         });
 
-        recyclerView = findViewById(R.id.item_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(Checkout.this));
-        recyclerView.setNestedScrollingEnabled(false);
-        item_all_detailsList = new ArrayList<>();
+        rvOrderProduct = findViewById(R.id.item_view);
+        rvOrderProduct.setHasFixedSize(true);
+        rvOrderProduct.setLayoutManager(new LinearLayoutManager(Checkout.this));
+        rvOrderProduct.setNestedScrollingEnabled(false);
+        alCheckout = new ArrayList<>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -503,33 +489,33 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strName = object.getString("name").trim();
-                                    final String strEmail = object.getString("email").trim();
-                                    final String strPhone_no = object.getString("phone_no").trim();
-                                    String strAddress01 = object.getString("address_01");
-                                    String strAddress02 = object.getString("address_02");
-                                    final String strCity = object.getString("division");
-                                    String strPostCode = object.getString("postcode");
+                                    final String strName = object.getString(sNAME).trim();
+                                    final String strEmail = object.getString(sEMAIL).trim();
+                                    final String strPhone_no = object.getString(sPHONE_NO).trim();
+                                    String strAddress01 = object.getString(sADDRESS_01);
+                                    String strAddress02 = object.getString(sADDRESS_02);
+                                    final String strCity = object.getString(sDIVISION);
+                                    String strPostCode = object.getString(sPOSTCODE);
 
                                     String Address, Address2;
                                     if(strAddress01.contains("") && strAddress02.contains("") && strCity.contains("") && strPostCode.contains("")){
                                         Address = "Incomplete Information";
-                                        Button_Checkout.setVisibility(View.GONE);
+                                        btnCheckout.setVisibility(View.GONE);
                                     }
                                     Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
                                     Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
-                                    AddressUser.setText(Address);
+                                    tvCustomerAddr.setText(Address);
 
-                                    Button_Checkout.setOnClickListener(new View.OnClickListener() {
+                                    btnCheckout.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             ProductDesription = TextUtils.join(", ", productList);
@@ -544,7 +530,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setPaymentId ("");
                                                 payment.setCurrency ("MYR");
                                                 payment.setRefNo (RefID);
-                                                payment.setAmount (Grand_Total2.getText().toString());
+                                                payment.setAmount (tvGrandTot02.getText().toString());
                                                 payment.setProdDesc (ProductDesription);
                                                 payment.setUserName (strName);
                                                 payment.setUserEmail (strEmail);
@@ -606,7 +592,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -621,26 +607,26 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strName = object.getString("name").trim();
-                                    final String strEmail = object.getString("email").trim();
-                                    final String strPhone_no = object.getString("phone_no").trim();
-                                    String strAddress01 = object.getString("address_01");
-                                    String strAddress02 = object.getString("address_02");
-                                    final String strCity = object.getString("division");
-                                    String strPostCode = object.getString("postcode");
+                                    final String strName = object.getString(sNAME).trim();
+                                    final String strEmail = object.getString(sEMAIL).trim();
+                                    final String strPhone_no = object.getString(sPHONE_NO).trim();
+                                    String strAddress01 = object.getString(sADDRESS_01);
+                                    String strAddress02 = object.getString(sADDRESS_02);
+                                    final String strCity = object.getString(sDIVISION);
+                                    String strPostCode = object.getString(sPOSTCODE);
 
                                     final String Address = strName + " | " + strPhone_no + "\n" + strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
                                     final String Address2 = strAddress01 + " " + strAddress02 + "\n" + strPostCode + " " + strCity;
 
-                                    AddressUser.setText(Address);
+                                    tvCustomerAddr.setText(Address);
 
                                     AddOrder(strCity, Address2, strEmail);
                                 }
@@ -689,19 +675,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    private String decodeBase64(String text) {
-        String result = "";
-        byte[] data = Base64.decode(text, Base64.DEFAULT);
-        result = new String(data, StandardCharsets.UTF_8);
-        return result;
     }
 
     //DO NOT DELETE
@@ -712,34 +691,34 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String id = object.getString("id").trim();
-                                    final String customer_id = object.getString("customer_id").trim();
-                                    final String main_category = object.getString("main_category").trim();
-                                    final String sub_category = object.getString("sub_category").trim();
-                                    final String ad_detail = object.getString("ad_detail").trim();
-                                    final Double price = Double.valueOf(object.getString("price").trim());
-                                    final String seller_division = object.getString("division");
-                                    final String seller_district = object.getString("district");
-                                    final String image_item = object.getString("photo");
-                                    final String seller_id = object.getString("seller_id");
-                                    final String item_id = object.getString("item_id");
-                                    final String quantity = object.getString("quantity");
-                                    final String postcode = object.getString("postcode");
-                                    final String weight = object.getString("weight");
+                                    final String id = object.getString(sID).trim();
+                                    final String customer_id = object.getString(sCUSTOMER_ID).trim();
+                                    final String main_category = object.getString(sMAIN_CATEGORY).trim();
+                                    final String sub_category = object.getString(sSUB_CATEGORY).trim();
+                                    final String ad_detail = object.getString(sAD_DETAIL).trim();
+                                    final Double price = Double.valueOf(object.getString(sPRICE).trim());
+                                    final String seller_division = object.getString(sDIVISION);
+                                    final String seller_district = object.getString(sDISTRICT);
+                                    final String image_item = object.getString(sPHOTO);
+                                    final String seller_id = object.getString(sSELLER_ID);
+                                    final String item_id = object.getString(sITEM_ID);
+                                    final String quantity = object.getString(sQUANTITY);
+                                    final String postcode = object.getString(sPOSTCODE);
+                                    final String weight = object.getString(sWEIGHT);
 
                                     Date date = Calendar.getInstance().getTime();
 
-                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(sDT_FORMAT, Locale.getDefault());
                                     String oneDate = simpleDateFormat.format(date);
 
-                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+                                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(sDT_FORMAT);
                                     Calendar c = Calendar.getInstance();
                                     try {
                                         c.setTime(simpleDateFormat1.parse(oneDate));
@@ -747,7 +726,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                         e.printStackTrace();
                                     }
                                     c.add(Calendar.DATE, 10);
-                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+                                    SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(sDT_FORMAT);
                                     Delivery_Date = simpleDateFormat2.format(c.getTime());
 
 //                                    Log.d("DATE", Delivery_Date);
@@ -761,14 +740,14 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 public void onResponse(String response) {
                                                     try {
                                                         JSONObject jsonObject = new JSONObject(response);
-                                                        String success = jsonObject.getString("success");
+                                                        String success = jsonObject.getString(sSUCCESS);
 
-                                                        if (success.equals("1")) {
+                                                        if (success.equals(sONE)) {
 
                                                             DeleteOrder_Single();
-                                                            sendEmailBuyer(id, ad_detail, String.format("%.2f", price), Price, quantity, String.format("%.2f", TotalPrice), Email);
+                                                            sendEmailBuyer(String.format(s2DP, price), Price, quantity, String.format(s2DP, TotalPrice), Email);
                                                             Intent intent = new Intent(Checkout.this, PlacingOrder.class);
-                                                            intent.putExtra("seller_id", seller_id);
+                                                            intent.putExtra(sSELLER_ID, seller_id);
                                                             startActivity(intent);
                                                         } else {
                                                             Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -818,27 +797,27 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             double newprice = Double.parseDouble(weight);
                                             int quan = Integer.parseInt(quantity);
                                             double Delivery_Price = newprice * quan;
-                                            String DeliveryPrice = String.valueOf(Delivery_Price);
+                                            String.valueOf(Delivery_Price);
 
                                             Map<String, String> params = new HashMap<>();
-                                            params.put("seller_id", seller_id);
-                                            params.put("customer_id", getId);
-                                            params.put("ad_detail", ad_detail);
-                                            params.put("main_category", main_category);
-                                            params.put("sub_category", sub_category);
-                                            params.put("price", String.format("%.2f", price));
-                                            params.put("division", User_Division);
-                                            params.put("district", User_Division);
-                                            params.put("seller_division", seller_division);
-                                            params.put("seller_district", seller_district);
-                                            params.put("photo", image_item);
-                                            params.put("item_id", item_id);
-                                            params.put("quantity", quantity);
-                                            params.put("delivery_price", Price);
-                                            params.put("delivery_date", Delivery_Date);
-                                            params.put("delivery_addr", Address);
-                                            params.put("weight", weight);
-                                            params.put("refno", RefID);
+                                            params.put(sSELLER_ID, seller_id);
+                                            params.put(sCUSTOMER_ID, getId);
+                                            params.put(sAD_DETAIL, ad_detail);
+                                            params.put(sMAIN_CATEGORY, main_category);
+                                            params.put(sSUB_CATEGORY, sub_category);
+                                            params.put(sPRICE, String.format(s2DP, price));
+                                            params.put(sDIVISION, User_Division);
+                                            params.put(sDISTRICT, User_Division);
+                                            params.put(sSELLER_DIVISION, seller_division);
+                                            params.put(sSELLER_DISTRICT, seller_district);
+                                            params.put(sPHOTO, image_item);
+                                            params.put(sITEM_ID, item_id);
+                                            params.put(sQUANTITY, quantity);
+                                            params.put(sDELIVERY_PRICE, Price);
+                                            params.put(sDELIVERY_DATE, Delivery_Date);
+                                            params.put(sDELIVERY_ADDRESS, Address);
+                                            params.put(sWEIGHT, weight);
+                                            params.put(sREF_NO, RefID);
                                             return params;
                                         }
                                     };
@@ -888,7 +867,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
+                params.put(sCUSTOMER_ID, getId);
                 return params;
             }
         };
@@ -896,14 +875,14 @@ public class Checkout extends AppCompatActivity implements Serializable{
         requestQueue.add(stringRequest);
     }
 
-    private void sendEmailBuyer(final String ItemID, final String ProductName, final String Price, final String DeliveryPrice, final String Quantity, final String Total, final String Email){
+    private void sendEmailBuyer(final String Price, final String DeliveryPrice, final String Quantity, final String Total, final String Email){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, EMAIL_ORDER_SUMMARY,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -947,212 +926,14 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", Email);
-                params.put("id", item_id);
-                params.put("ad_detail", ProductDesription);
-                params.put("price", Price);
-                params.put("delivery_price", DeliveryPrice);
-//                params.put("quantity", Quantity);
-                params.put("total", Total);
+                params.put(sEMAIL, Email);
+                params.put(sID, item_id);
+                params.put(sAD_DETAIL, ProductDesription);
+                params.put(sPRICE, Price);
+                params.put(sDELIVERY_PRICE, DeliveryPrice);
+                params.put(sTOTAL, Total);
                 return params;
             }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-    }
-
-    private void GetPlayerData(final String CustomerUserID){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PLAYER_ID,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-
-                                    String PlayerID = object.getString("PlayerID");
-                                    String Name = object.getString("Name");
-                                    String UserID = object.getString("UserID");
-
-                                    OneSignalNoti(PlayerID, Name);
-                                }
-                            } else {
-                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("UserID", CustomerUserID);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void OneSignalNoti(final String PlayerUserID, final String Name){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, SEND_NOTIFICATION,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("POST", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {//Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("PlayerID", PlayerUserID);
-                params.put("Name", Name);
-                params.put("Words", "New Order has been placed! Check My Selling for more information.");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void PoslajuDomesticbyPostcode(String postcodeFrom, String postcodeTo, String Weight){
-
-        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("jsonObjectRequest", response);
-                        try{
-                            JSONArray jsonarray = new JSONArray(response);
-                            for(int i=0; i < jsonarray.length(); i++) {
-                                JSONObject jsonobject = jsonarray.getJSONObject(i);
-
-                                String totalAmount       = jsonobject.getString("totalAmount");
-                                Log.i("jsonObjectRequest", totalAmount);
-                            }
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                            Log.i("jsonObjectRequest", e.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
-                return params;
-            }
-
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
@@ -1164,7 +945,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
         DeleteOrder_Single2();
         Intent intent = new Intent(Checkout.this, CartList.class);
         startActivity(intent);
-//        finish();
     }
 
     private void DeleteOrder_Single() {
@@ -1174,9 +954,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 
                             } else {
                                 Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1197,7 +977,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
+                params.put(sCUSTOMER_ID, getId);
                 return params;
             }
         };
@@ -1212,9 +992,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 
                             } else {
                                 Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1235,7 +1015,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
+                params.put(sCUSTOMER_ID, getId);
                 return params;
             }
         };
@@ -1250,9 +1030,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 
                             } else {
                                 Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1271,9 +1051,9 @@ public class Checkout extends AppCompatActivity implements Serializable{
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
+                params.put(sCUSTOMER_ID, getId);
                 return params;
             }
         };

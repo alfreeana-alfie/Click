@@ -41,6 +41,7 @@ import com.ketekmall.ketekmall.activities.chats.ChatRoom;
 import com.ketekmall.ketekmall.activities.list.SellerShopList;
 import com.ketekmall.ketekmall.adapters.HomePageListAdapter;
 import com.ketekmall.ketekmall.adapters.PageAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,6 +64,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import static com.ketekmall.ketekmall.configs.Link.*;
+import static com.ketekmall.ketekmall.configs.Constant.*;
 
 public class ViewProduct extends AppCompatActivity {
 
@@ -88,6 +90,7 @@ public class ViewProduct extends AppCompatActivity {
     PageAdapter pageAdapter;
 
     List<String>  photoList = new ArrayList<String>();
+    Setup setup;
 
 
     @Override
@@ -99,11 +102,8 @@ public class ViewProduct extends AppCompatActivity {
         ratingfull2 = 0.0F;
         ratingText = findViewById(R.id.rating);
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
         viewPager = findViewById(R.id.view_pager);
 
@@ -180,40 +180,40 @@ public class ViewProduct extends AppCompatActivity {
         });
 
         final Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        userid = intent.getStringExtra("user_id");
-        strMain_category = intent.getStringExtra("main_category");
-        strSub_category = intent.getStringExtra("sub_category");
-        ad_detail = intent.getStringExtra("ad_detail");
+        id = intent.getStringExtra(sID);
+        userid = intent.getStringExtra(sUSER_ID);
+        strMain_category = intent.getStringExtra(sMAIN_CATEGORY);
+        strSub_category = intent.getStringExtra(sSUB_CATEGORY);
+        ad_detail = intent.getStringExtra(sAD_DETAIL);
 
-        brand = intent.getStringExtra("brand_material");
-        inner = intent.getStringExtra("inner_material");
-        stock = intent.getStringExtra("stock");
-        desc = intent.getStringExtra("description");
+        brand = intent.getStringExtra(sBRAND_MAT);
+        inner = intent.getStringExtra(sINNER_MAT);
+        stock = intent.getStringExtra(sSTOCK);
+        desc = intent.getStringExtra(sDESCRIPTION);
 
-        strPrice = intent.getStringExtra("price");
-        division = intent.getStringExtra("division");
-        postcode = intent.getStringExtra("postcode");
-        district = intent.getStringExtra("district");
-        photo = intent.getStringExtra("photo");
-        photo02 = intent.getStringExtra("photo02");
-        photo03 = intent.getStringExtra("photo03");
-        photo04 = intent.getStringExtra("photo04");
-        photo05 = intent.getStringExtra("photo05");
-        weight = intent.getStringExtra("weight");
+        strPrice = intent.getStringExtra(sPRICE);
+        division = intent.getStringExtra(sDIVISION);
+        postcode = intent.getStringExtra(sPOSTCODE);
+        district = intent.getStringExtra(sDISTRICT);
+        photo = intent.getStringExtra(sPHOTO);
+        photo02 = intent.getStringExtra(sPHOTO02);
+        photo03 = intent.getStringExtra(sPHOTO03);
+        photo04 = intent.getStringExtra(sPHOTO04);
+        photo05 = intent.getStringExtra(sPHOTO05);
+        weight = intent.getStringExtra(sWEIGHT);
 
         // List of photos
         photoList.add(photo);
-        if(!photo02.equals("null")){
+        if(!photo02.equals(sNULL)){
             photoList.add(photo02);
         }
-        if(!photo03.equals("null")){
+        if(!photo03.equals(sNULL)){
             photoList.add(photo03);
         }
-        if(!photo04.equals("null")){
+        if(!photo04.equals(sNULL)){
             photoList.add(photo04);
         }
-        if(!photo05.equals("null")){
+        if(!photo05.equals(sNULL)){
             photoList.add(photo05);
         }
 
@@ -241,53 +241,53 @@ public class ViewProduct extends AppCompatActivity {
                 Intent intent1 = new Intent(ViewProduct.this, ViewMoreDetails.class);
 
                 final Intent intent4 = getIntent();
-                String id1 = intent4.getStringExtra("id");
-                String stock = intent4.getStringExtra("stock");
-                String brand = intent4.getStringExtra("brand_material");
-                String inner = intent4.getStringExtra("inner_material");
-                String desc = intent4.getStringExtra("description");
-                String division = intent4.getStringExtra("division");
-                String district = intent4.getStringExtra("district");
+                String id1 = intent4.getStringExtra(sID);
+                String stock = intent4.getStringExtra(sSTOCK);
+                String brand = intent4.getStringExtra(sBRAND_MAT);
+                String inner = intent4.getStringExtra(sINNER_MAT);
+                String desc = intent4.getStringExtra(sDESCRIPTION);
+                String division = intent4.getStringExtra(sDIVISION);
+                String district = intent4.getStringExtra(sDISTRICT);
 
-                String userid1 = intent4.getStringExtra("user_id");
-                String strMain_category1 = intent4.getStringExtra("main_category");
-                String strSub_category1 = intent4.getStringExtra("sub_category");
-                String ad_detail1 = intent4.getStringExtra("ad_detail");
-                String strPrice1 = intent4.getStringExtra("price");
-                String division1 = intent4.getStringExtra("division");
-                String district1 = intent4.getStringExtra("district");
-                String photo1 = intent4.getStringExtra("photo");
-                String photo2 = intent4.getStringExtra("photo02");
-                String photo3 = intent4.getStringExtra("photo03");
-                String photo4 = intent4.getStringExtra("photo04");
-                String photo5 = intent4.getStringExtra("photo05");
-                String item_id = intent4.getStringExtra("item_id");
-                String postcode = intent4.getStringExtra("postcode");
+                String userid1 = intent4.getStringExtra(sUSER_ID);
+                String strMain_category1 = intent4.getStringExtra(sMAIN_CATEGORY);
+                String strSub_category1 = intent4.getStringExtra(sSUB_CATEGORY);
+                String ad_detail1 = intent4.getStringExtra(sAD_DETAIL);
+                String strPrice1 = intent4.getStringExtra(sPRICE);
+                String division1 = intent4.getStringExtra(sDIVISION);
+                String district1 = intent4.getStringExtra(sDISTRICT);
+                String photo1 = intent4.getStringExtra(sPHOTO);
+                String photo2 = intent4.getStringExtra(sPHOTO02);
+                String photo3 = intent4.getStringExtra(sPHOTO03);
+                String photo4 = intent4.getStringExtra(sPHOTO04);
+                String photo5 = intent4.getStringExtra(sPHOTO05);
+                String item_id = intent4.getStringExtra(sITEM_ID);
+                String postcode = intent4.getStringExtra(sPOSTCODE);
 
-                intent1.putExtra("item_id", item_id);
-                intent1.putExtra("id", id1);
-                intent1.putExtra("user_id", userid1);
-                intent1.putExtra("main_category", strMain_category1);
-                intent1.putExtra("sub_category", strSub_category1);
-                intent1.putExtra("ad_detail", ad_detail1);
-                intent1.putExtra("price", strPrice1);
-                intent1.putExtra("division", division1);
-                intent1.putExtra("photo", photo1);
-                intent1.putExtra("photo02", photo2);
-                intent1.putExtra("photo03", photo3);
-                intent1.putExtra("photo04", photo4);
-                intent1.putExtra("photo05", photo5);
-                intent1.putExtra("postcode", postcode);
-                intent1.putExtra("photo", photo1);
+                intent1.putExtra(sITEM_ID, item_id);
+                intent1.putExtra(sID, id1);
+                intent1.putExtra(sUSER_ID, userid1);
+                intent1.putExtra(sMAIN_CATEGORY, strMain_category1);
+                intent1.putExtra(sSUB_CATEGORY, strSub_category1);
+                intent1.putExtra(sAD_DETAIL, ad_detail1);
+                intent1.putExtra(sPRICE, strPrice1);
+                intent1.putExtra(sDIVISION, division1);
+                intent1.putExtra(sPHOTO, photo1);
+                intent1.putExtra(sPHOTO02, photo2);
+                intent1.putExtra(sPHOTO03, photo3);
+                intent1.putExtra(sPHOTO04, photo4);
+                intent1.putExtra(sPHOTO05, photo5);
+                intent1.putExtra(sPOSTCODE, postcode);
+                intent1.putExtra(sPHOTO, photo1);
 
 
-                intent1.putExtra("id", id1);
-                intent1.putExtra("stock", stock);
-                intent1.putExtra("brand_material", brand);
-                intent1.putExtra("inner_material", inner);
-                intent1.putExtra("description", desc);
-                intent1.putExtra("division", division);
-                intent1.putExtra("district", district);
+                intent1.putExtra(sID, id1);
+                intent1.putExtra(sSTOCK, stock);
+                intent1.putExtra(sBRAND_MAT, brand);
+                intent1.putExtra(sINNER_MAT, inner);
+                intent1.putExtra(sDESCRIPTION, desc);
+                intent1.putExtra(sDIVISION, division);
+                intent1.putExtra(sDISTRICT, district);
 
                 startActivity(intent1);
             }
@@ -369,7 +369,7 @@ public class ViewProduct extends AppCompatActivity {
             public void onPageSelected(int position) {
                 int NEWposition = position + 1;
                 if(position == 0){
-                    Page_Text.setText("1" + "/" + photoList.size());
+                    Page_Text.setText(sONE + "/" + photoList.size());
                 }else{
                     Page_Text.setText(NEWposition + "/" + photoList.size());
                 }
@@ -385,23 +385,23 @@ public class ViewProduct extends AppCompatActivity {
 
     private void View_Cart() {
         final Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        userid = intent.getStringExtra("user_id");
-        strMain_category = intent.getStringExtra("main_category");
-        strSub_category = intent.getStringExtra("sub_category");
-        ad_detail = intent.getStringExtra("ad_detail");
-        postcode = intent.getStringExtra("postcode");
+        id = intent.getStringExtra(sID);
+        userid = intent.getStringExtra(sUSER_ID);
+        strMain_category = intent.getStringExtra(sMAIN_CATEGORY);
+        strSub_category = intent.getStringExtra(sSUB_CATEGORY);
+        ad_detail = intent.getStringExtra(sAD_DETAIL);
+        postcode = intent.getStringExtra(sPOSTCODE);
 
-        brand = intent.getStringExtra("brand_material");
-        inner = intent.getStringExtra("inner_material");
-        stock = intent.getStringExtra("stock");
-        desc = intent.getStringExtra("description");
+        brand = intent.getStringExtra(sBRAND_MAT);
+        inner = intent.getStringExtra(sINNER_MAT);
+        stock = intent.getStringExtra(sSTOCK);
+        desc = intent.getStringExtra(sDESCRIPTION);
 
-        strPrice = intent.getStringExtra("price");
-        division = intent.getStringExtra("division");
-        district = intent.getStringExtra("district");
-        photo = intent.getStringExtra("photo");
-        weight = intent.getStringExtra("weight");
+        strPrice = intent.getStringExtra(sPRICE);
+        division = intent.getStringExtra(sDIVISION);
+        district = intent.getStringExtra(sDISTRICT);
+        photo = intent.getStringExtra(sPHOTO);
+        weight = intent.getStringExtra(sWEIGHT);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_SINGLE_CART_ITEM,
                 new Response.Listener<String>() {
@@ -412,18 +412,18 @@ public class ViewProduct extends AppCompatActivity {
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                String success = jsonObject.getString(sSUCCESS);
+                                JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
                                 if(jsonArray.length() == 0){
                                     Add_Cart(strMain_category, strSub_category, ad_detail, strPrice,
                                             division,postcode, district, photo, userid, id, weight);
                                 }
-                                if (success.equals("1")) {
+                                if (success.equals(sONE)) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        final String item_id = object.getString("item_id");
+                                        final String item_id = object.getString(sITEM_ID);
 
                                         if(!item_id.isEmpty() && item_id.equals(id)){
                                             Toast.makeText(ViewProduct.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
@@ -474,8 +474,8 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                params.put("item_id", id);
+                params.put(sCUSTOMER_ID, getId);
+                params.put(sITEM_ID, id);
                 return params;
             }
         };
@@ -485,22 +485,22 @@ public class ViewProduct extends AppCompatActivity {
 
     private void View_Cart2(final Item_All_Details item) {
         final Intent intent = getIntent();
-        id = intent.getStringExtra("id");
-        userid = intent.getStringExtra("user_id");
-        strMain_category = intent.getStringExtra("main_category");
-        strSub_category = intent.getStringExtra("sub_category");
-        ad_detail = intent.getStringExtra("ad_detail");
-        postcode = intent.getStringExtra("postcode");
+        id = intent.getStringExtra(sID);
+        userid = intent.getStringExtra(sUSER_ID);
+        strMain_category = intent.getStringExtra(sMAIN_CATEGORY);
+        strSub_category = intent.getStringExtra(sSUB_CATEGORY);
+        ad_detail = intent.getStringExtra(sAD_DETAIL);
+        postcode = intent.getStringExtra(sPOSTCODE);
 
-        brand = intent.getStringExtra("brand_material");
-        inner = intent.getStringExtra("inner_material");
-        stock = intent.getStringExtra("stock");
-        desc = intent.getStringExtra("description");
+        brand = intent.getStringExtra(sBRAND_MAT);
+        inner = intent.getStringExtra(sINNER_MAT);
+        stock = intent.getStringExtra(sSTOCK);
+        desc = intent.getStringExtra(sDESCRIPTION);
 
-        strPrice = intent.getStringExtra("price");
-        division = intent.getStringExtra("division");
-        district = intent.getStringExtra("district");
-        photo = intent.getStringExtra("photo");
+        strPrice = intent.getStringExtra(sPRICE);
+        division = intent.getStringExtra(sDIVISION);
+        district = intent.getStringExtra(sDISTRICT);
+        photo = intent.getStringExtra(sPHOTO);
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_SINGLE_CART_ITEM,
@@ -512,8 +512,8 @@ public class ViewProduct extends AppCompatActivity {
                         } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                JSONArray jsonArray = jsonObject.getJSONArray("read");
+                                String success = jsonObject.getString(sSUCCESS);
+                                JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
                                 if(jsonArray.length() == 0){
                                     final String strItem_Id = item.getId();
@@ -542,9 +542,9 @@ public class ViewProduct extends AppCompatActivity {
                                                         } else {
                                                             try {
                                                                 JSONObject jsonObject1 = new JSONObject(response);
-                                                                String success = jsonObject1.getString("success");
+                                                                String success = jsonObject1.getString(sSUCCESS);
 
-                                                                if (success.equals("1")) {
+                                                                if (success.equals(sONE)) {
                                                                     Toast.makeText(ViewProduct.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
                                                                 } else {
                                                                     Toast.makeText(ViewProduct.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
@@ -597,18 +597,18 @@ public class ViewProduct extends AppCompatActivity {
                                             @Override
                                             protected Map<String, String> getParams() {
                                                 Map<String, String> params = new HashMap<>();
-                                                params.put("customer_id", getId);
-                                                params.put("main_category", strMain_category);
-                                                params.put("sub_category", strSub_category);
-                                                params.put("ad_detail", strAd_Detail);
-                                                params.put("price", String.format("%.2f", strPrice));
-                                                params.put("division", strDivision);
-                                                params.put("postcode", strPostcode);
-                                                params.put("district", strDistrict);
-                                                params.put("photo", strPhoto);
-                                                params.put("seller_id", strSeller_id);
-                                                params.put("item_id", strItem_Id);
-                                                params.put("weight", strWeight);
+                                                params.put(sCUSTOMER_ID, getId);
+                                                params.put(sMAIN_CATEGORY, strMain_category);
+                                                params.put(sSUB_CATEGORY, strSub_category);
+                                                params.put(sAD_DETAIL, strAd_Detail);
+                                                params.put(sPRICE, String.format(s2DP, strPrice));
+                                                params.put(sDIVISION, strDivision);
+                                                params.put(sPOSTCODE, strPostcode);
+                                                params.put(sDISTRICT, strDistrict);
+                                                params.put(sPHOTO, strPhoto);
+                                                params.put(sSELLER_ID, strSeller_id);
+                                                params.put(sITEM_ID, strItem_Id);
+                                                params.put(sWEIGHT, strWeight);
                                                 return params;
                                             }
                                         };
@@ -617,11 +617,11 @@ public class ViewProduct extends AppCompatActivity {
                                     }
                                 }
 
-                                if (success.equals("1")) {
+                                if (success.equals(sONE)) {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        final String item_id = object.getString("item_id");
+                                        final String item_id = object.getString(sITEM_ID);
                                         Toast.makeText(ViewProduct.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                                     }
@@ -667,8 +667,8 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                params.put("item_id", item.getId());
+                params.put(sCUSTOMER_ID, getId);
+                params.put(sITEM_ID, item.getId());
                 return params;
             }
         };
@@ -686,9 +686,9 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject1 = new JSONObject(response);
-                            String success = jsonObject1.getString("success");
+                            String success = jsonObject1.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 Toast.makeText(ViewProduct.this, R.string.added_to_cart, Toast.LENGTH_SHORT).show();
 
                             }
@@ -738,18 +738,18 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                params.put("main_category", Main_category);
-                params.put("sub_category", Sub_category);
-                params.put("ad_detail", Ad_detail);
-                params.put("price", Price);
-                params.put("division", Division);
-                params.put("postcode", strPostcode);
-                params.put("district", District);
-                params.put("photo", Photo);
-                params.put("seller_id", Userid);
-                params.put("item_id", Id);
-                params.put("weight", Weight);
+                params.put(sCUSTOMER_ID, getId);
+                params.put(sMAIN_CATEGORY, Main_category);
+                params.put(sSUB_CATEGORY, Sub_category);
+                params.put(sAD_DETAIL, Ad_detail);
+                params.put(sPRICE, Price);
+                params.put(sDIVISION, Division);
+                params.put(sPOSTCODE, strPostcode);
+                params.put(sDISTRICT, District);
+                params.put(sPHOTO, Photo);
+                params.put(sSELLER_ID, Userid);
+                params.put(sITEM_ID, Id);
+                params.put(sWEIGHT, Weight);
                 return params;
             }
         };
@@ -765,20 +765,20 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strID = object.getString("id");
-                                    final String strName = object.getString("name").trim();
-                                    final String strEmail = object.getString("email");
-                                    final String strPhoto = object.getString("photo");
-                                    final String mobile_num = object.getString("phone_no");
-                                    final String strDivision = object.getString("division").trim();
+                                    final String strID = object.getString(sID);
+                                    final String strName = object.getString(sNAME).trim();
+                                    final String strEmail = object.getString(sEMAIL);
+                                    final String strPhoto = object.getString(sPHOTO);
+                                    final String mobile_num = object.getString(sPHONE_NO);
+                                    final String strDivision = object.getString(sDIVISION).trim();
 
                                     btn_chat.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -842,7 +842,7 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -857,20 +857,20 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strID = object.getString("id");
-                                    final String strName = object.getString("name").trim();
-                                    final String strEmail = object.getString("email");
-                                    final String strPhoto = object.getString("photo");
-                                    final String mobile_num = object.getString("phone_no");
-                                    final String strDivision = object.getString("division").trim();
+                                    final String strID = object.getString(sID);
+                                    final String strName = object.getString(sNAME).trim();
+                                    final String strEmail = object.getString(sEMAIL);
+                                    final String strPhoto = object.getString(sPHOTO);
+                                    final String mobile_num = object.getString(sPHONE_NO);
+                                    final String strDivision = object.getString(sDIVISION).trim();
 
                                     Picasso.get().load(strPhoto).into(seller_image);
                                     seller_name.setText(strName);
@@ -895,11 +895,11 @@ public class ViewProduct extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent1 = new Intent(ViewProduct.this, SellerShopList.class);
-                                            intent1.putExtra("id", userid);
-                                            intent1.putExtra("seller_name", strName);
-                                            intent1.putExtra("seller_photo", strPhoto);
-                                            intent1.putExtra("seller_location", strDivision);
-                                            intent1.putExtra("seller_phone", mobile_num);
+                                            intent1.putExtra(sID, userid);
+                                            intent1.putExtra(sSELLER_NAME, strName);
+                                            intent1.putExtra(sSELLER_PHOTO, strPhoto);
+                                            intent1.putExtra(sSELLER_LOCATION, strDivision);
+                                            intent1.putExtra(sSELLER_PHONE, mobile_num);
                                             startActivity(intent1);
                                         }
                                     });
@@ -908,12 +908,12 @@ public class ViewProduct extends AppCompatActivity {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent1 = new Intent(ViewProduct.this, SellerShopList.class);
-                                            intent1.putExtra("id", userid);
-                                            intent1.putExtra("seller_name", strName);
-                                            intent1.putExtra("seller_email", strEmail);
-                                            intent1.putExtra("seller_photo", strPhoto);
-                                            intent1.putExtra("seller_location", strDivision);
-                                            intent1.putExtra("seller_phone", mobile_num);
+                                            intent1.putExtra(sID, userid);
+                                            intent1.putExtra(sSELLER_NAME, strName);
+                                            intent1.putExtra(sSELLER_EMAIL, strEmail);
+                                            intent1.putExtra(sSELLER_PHOTO, strPhoto);
+                                            intent1.putExtra(sSELLER_LOCATION, strDivision);
+                                            intent1.putExtra(sSELLER_PHONE, mobile_num);
                                             startActivity(intent1);
                                         }
                                     });
@@ -965,7 +965,7 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", userid);
+                params.put(sID, userid);
                 return params;
             }
         };
@@ -980,19 +980,19 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    final String strName = object.getString("name").trim();
-                                    String strEmail = object.getString("email").trim();
-                                    final String strPhoto = object.getString("photo");
-                                    final String mobile_num = object.getString("phone_no");
-                                    final String strDivision = object.getString("division").trim();
+                                    final String strName = object.getString(sNAME).trim();
+                                    String strEmail = object.getString(sEMAIL).trim();
+                                    final String strPhoto = object.getString(sPHOTO);
+                                    final String mobile_num = object.getString(sPHONE_NO);
+                                    final String strDivision = object.getString(sDIVISION).trim();
 
                                     review1.setVisibility(VISIBLE);
                                     review11.setVisibility(VISIBLE);
@@ -1044,9 +1044,9 @@ public class ViewProduct extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", username);
+                params.put(sID, username);
                 return params;
             }
         };
@@ -1061,33 +1061,33 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            final JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
-                                    String seller_id = object.getString("user_id").trim();
-                                    String main_category = object.getString("main_category").trim();
-                                    String sub_category = object.getString("sub_category").trim();
-                                    String ad_detail = object.getString("ad_detail").trim();
-                                    String price = object.getString("price").trim();
-                                    String division = object.getString("division");
-                                    String postcode = object.getString("postcode");
-                                    String district = object.getString("district");
-                                    String image_item = object.getString("photo");
-                                    String image_item2 = object.getString("photo02");
-                                    String image_item3 = object.getString("photo03");
-                                    String image_item4 = object.getString("photo04");
-                                    String image_item5 = object.getString("photo05");
-                                    String rating = object.getString("rating");
-                                    String brand = object.getString("brand_material").trim();
-                                    String inner = object.getString("inner_material").trim();
-                                    String stock = object.getString("stock").trim();
-                                    String desc = object.getString("description").trim();
-                                    String weight = object.getString("weight").trim();
+                                    String id = object.getString(sID).trim();
+                                    String seller_id = object.getString(sUSER_ID).trim();
+                                    String main_category = object.getString(sMAIN_CATEGORY).trim();
+                                    String sub_category = object.getString(sSUB_CATEGORY).trim();
+                                    String ad_detail = object.getString(sAD_DETAIL).trim();
+                                    String price = object.getString(sPRICE).trim();
+                                    String division = object.getString(sDIVISION);
+                                    String postcode = object.getString(sPOSTCODE);
+                                    String district = object.getString(sDISTRICT);
+                                    String image_item = object.getString(sPHOTO);
+                                    String image_item2 = object.getString(sPHOTO02);
+                                    String image_item3 = object.getString(sPHOTO03);
+                                    String image_item4 = object.getString(sPHOTO04);
+                                    String image_item5 = object.getString(sPHOTO05);
+                                    String rating = object.getString(sRATING);
+                                    String brand = object.getString(sBRAND_MAT).trim();
+                                    String inner = object.getString(sINNER_MAT).trim();
+                                    String stock = object.getString(sSTOCK).trim();
+                                    String desc = object.getString(sDESCRIPTION).trim();
+                                    String weight = object.getString(sWEIGHT).trim();
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setRating(rating);
@@ -1112,26 +1112,26 @@ public class ViewProduct extends AppCompatActivity {
                                         Intent detailIntent = new Intent(ViewProduct.this, ViewProduct.class);
                                         Item_All_Details item = itemList.get(position);
 
-                                        detailIntent.putExtra("item_id", item.getItem_id());
-                                        detailIntent.putExtra("id", item.getId());
-                                        detailIntent.putExtra("user_id", item.getSeller_id());
-                                        detailIntent.putExtra("main_category", item.getMain_category());
-                                        detailIntent.putExtra("sub_category", item.getSub_category());
-                                        detailIntent.putExtra("ad_detail", item.getAd_detail());
-                                        detailIntent.putExtra("price", item.getPrice());
-                                        detailIntent.putExtra("division", item.getDivision());
-                                        detailIntent.putExtra("postcode", item.getPostcode());
-                                        detailIntent.putExtra("district", item.getDistrict());
-                                        detailIntent.putExtra("photo", item.getPhoto());
-                                        detailIntent.putExtra("photo02", item.getPhoto02());
-                                        detailIntent.putExtra("photo03", item.getPhoto03());
-                                        detailIntent.putExtra("photo04", item.getPhoto04());
-                                        detailIntent.putExtra("photo05", item.getPhoto05());
+                                        detailIntent.putExtra(sITEM_ID, item.getItem_id());
+                                        detailIntent.putExtra(sID, item.getId());
+                                        detailIntent.putExtra(sUSER_ID, item.getSeller_id());
+                                        detailIntent.putExtra(sMAIN_CATEGORY, item.getMain_category());
+                                        detailIntent.putExtra(sSUB_CATEGORY, item.getSub_category());
+                                        detailIntent.putExtra(sAD_DETAIL, item.getAd_detail());
+                                        detailIntent.putExtra(sPRICE, item.getPrice());
+                                        detailIntent.putExtra(sDIVISION, item.getDivision());
+                                        detailIntent.putExtra(sPOSTCODE, item.getPostcode());
+                                        detailIntent.putExtra(sDISTRICT, item.getDistrict());
+                                        detailIntent.putExtra(sPHOTO, item.getPhoto());
+                                        detailIntent.putExtra(sPHOTO02, item.getPhoto02());
+                                        detailIntent.putExtra(sPHOTO03, item.getPhoto03());
+                                        detailIntent.putExtra(sPHOTO04, item.getPhoto04());
+                                        detailIntent.putExtra(sPHOTO05, item.getPhoto05());
 
-                                        detailIntent.putExtra("brand_material", item.getBrand());
-                                        detailIntent.putExtra("inner_material", item.getInner());
-                                        detailIntent.putExtra("stock", item.getStock());
-                                        detailIntent.putExtra("description", item.getDescription());
+                                        detailIntent.putExtra(sBRAND_MAT, item.getBrand());
+                                        detailIntent.putExtra(sINNER_MAT, item.getInner());
+                                        detailIntent.putExtra(sSTOCK, item.getStock());
+                                        detailIntent.putExtra(sDESCRIPTION, item.getDescription());
 
                                         startActivity(detailIntent);
                                     }
@@ -1191,7 +1191,7 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", userid);
+                params.put(sUSER_ID, userid);
                 return params;
             }
         };
@@ -1206,23 +1206,23 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            final JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String id = object.getString("id").trim();
-                                    String seller_id = object.getString("seller_id").trim();
-                                    String main_category = object.getString("main_category").trim();
-                                    String sub_category = object.getString("sub_category").trim();
-                                    String ad_detail = object.getString("ad_detail").trim();
-                                    String price = object.getString("price").trim();
-                                    String division = object.getString("division");
-                                    String postcode = object.getString("postcode");
-                                    String district = object.getString("district");
-                                    String image_item = object.getString("photo");
+                                    String id = object.getString(sID).trim();
+                                    String seller_id = object.getString(sSELLER_ID).trim();
+                                    String main_category = object.getString(sMAIN_CATEGORY).trim();
+                                    String sub_category = object.getString(sSUB_CATEGORY).trim();
+                                    String ad_detail = object.getString(sAD_DETAIL).trim();
+                                    String price = object.getString(sPRICE).trim();
+                                    String division = object.getString(sDIVISION);
+                                    String postcode = object.getString(sPOSTCODE);
+                                    String district = object.getString(sDISTRICT);
+                                    String image_item = object.getString(sPHOTO);
 
                                     Item_All_Details item = new Item_All_Details(id, seller_id, main_category, sub_category, ad_detail, price, division, district, image_item);
                                     item.setPostcode(postcode);
@@ -1279,8 +1279,8 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("seller_id", userid);
-                params.put("ad_detail", ad_detail);
+                params.put(sSELLER_ID, userid);
+                params.put(sAD_DETAIL, ad_detail);
                 return params;
             }
         };
@@ -1295,10 +1295,10 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            final JSONArray jsonArray = jsonObject.getJSONArray("read");
+                            String success = jsonObject.getString(sSUCCESS);
+                            final JSONArray jsonArray = jsonObject.getJSONArray(sREAD);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 if(jsonArray.length() == 0){
                                     ratingBar.setVisibility(GONE);
                                     ratingText.setText("No Rating Yet");
@@ -1306,13 +1306,13 @@ public class ViewProduct extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String id = object.getString("id").trim();
-                                        String seller_id = object.getString("seller_id").trim();
-                                        String customer_id = object.getString("customer_id").trim();
-                                        String customer_name = object.getString("customer_name").trim();
-                                        final String item_id = object.getString("item_id").trim();
-                                        String review = object.getString("review").trim();
-                                        String rating = object.getString("rating");
+                                        String id = object.getString(sID).trim();
+                                        String seller_id = object.getString(sSELLER_ID).trim();
+                                        String customer_id = object.getString(sCUSTOMER_ID).trim();
+                                        String customer_name = object.getString(sCUSTOMER_NAME).trim();
+                                        final String item_id = object.getString(sITEM_ID).trim();
+                                        String review = object.getString(sREVIEW).trim();
+                                        String rating = object.getString(sRATING);
 
                                         ratingBar20.setRating(Float.parseFloat(rating));
                                         ratingBar21.setRating(Float.parseFloat(rating));
@@ -1321,7 +1321,7 @@ public class ViewProduct extends AppCompatActivity {
                                         ratingfull2 += Float.parseFloat(rating) / jsonArray.length();
 
                                         ratingBar.setRating(ratingfull);
-                                        ratingText.setText(String.format("%.1f", ratingfull));
+                                        ratingText.setText(String.format(s1DP, ratingfull));
 
                                         review1.setText(review);
                                         review2.setText(review);
@@ -1334,52 +1334,51 @@ public class ViewProduct extends AppCompatActivity {
                                                 Intent intent1 = new Intent(ViewProduct.this, ViewProductReview.class);
 
                                                 final Intent intent4 = getIntent();
-                                                String id1 = intent4.getStringExtra("id");
-                                                String stock = intent4.getStringExtra("stock");
-                                                String brand = intent4.getStringExtra("brand_material");
-                                                String inner = intent4.getStringExtra("inner_material");
-                                                String desc = intent4.getStringExtra("description");
-                                                String division = intent4.getStringExtra("division");
-                                                String postcode = intent4.getStringExtra("postcode");
-                                                String district = intent4.getStringExtra("district");
+                                                String id1 = intent4.getStringExtra(sID);
+                                                String stock = intent4.getStringExtra(sSTOCK);
+                                                String brand = intent4.getStringExtra(sBRAND_MAT);
+                                                String inner = intent4.getStringExtra(sINNER_MAT);
+                                                String desc = intent4.getStringExtra(sDESCRIPTION);
+                                                String division = intent4.getStringExtra(sDIVISION);
+                                                String postcode = intent4.getStringExtra(sPOSTCODE);
+                                                String district = intent4.getStringExtra(sDISTRICT);
 
-                                                String userid1 = intent4.getStringExtra("user_id");
-                                                String strMain_category1 = intent4.getStringExtra("main_category");
-                                                String strSub_category1 = intent4.getStringExtra("sub_category");
-                                                String ad_detail1 = intent4.getStringExtra("ad_detail");
-                                                String strPrice1 = intent4.getStringExtra("price");
-                                                String division1 = intent4.getStringExtra("division");
-                                                String district1 = intent4.getStringExtra("district");
-                                                String photo1 = intent4.getStringExtra("photo");
-                                                String photo2 = intent4.getStringExtra("photo02");
-                                                String photo3 = intent4.getStringExtra("photo03");
-                                                String photo4 = intent4.getStringExtra("photo04");
-                                                String photo5 = intent4.getStringExtra("photo05");
+                                                String userid1 = intent4.getStringExtra(sUSER_ID);
+                                                String strMain_category1 = intent4.getStringExtra(sMAIN_CATEGORY);
+                                                String strSub_category1 = intent4.getStringExtra(sSUB_CATEGORY);
+                                                String ad_detail1 = intent4.getStringExtra(sAD_DETAIL);
+                                                String strPrice1 = intent4.getStringExtra(sPRICE);
+                                                String division1 = intent4.getStringExtra(sDIVISION);
+                                                String district1 = intent4.getStringExtra(sDISTRICT);
+                                                String photo1 = intent4.getStringExtra(sPHOTO);
+                                                String photo2 = intent4.getStringExtra(sPHOTO02);
+                                                String photo3 = intent4.getStringExtra(sPHOTO03);
+                                                String photo4 = intent4.getStringExtra(sPHOTO04);
+                                                String photo5 = intent4.getStringExtra(sPHOTO05);
 
-                                                intent1.putExtra("item_id", item_id);
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("user_id", userid1);
-                                                intent1.putExtra("main_category", strMain_category1);
-                                                intent1.putExtra("sub_category", strSub_category1);
-                                                intent1.putExtra("ad_detail", ad_detail1);
-                                                intent1.putExtra("price", strPrice1);
-                                                intent1.putExtra("division", division1);
-                                                intent1.putExtra("postcode", postcode);
-                                                intent1.putExtra("district", district1);
-                                                intent1.putExtra("photo", photo1);
-                                                intent1.putExtra("photo02", photo2);
-                                                intent1.putExtra("photo03", photo3);
-                                                intent1.putExtra("photo04", photo4);
-                                                intent1.putExtra("photo05", photo5);
-
-
-                                                intent1.putExtra("id", id1);
-                                                intent1.putExtra("stock", stock);
-                                                intent1.putExtra("brand_material", brand);
-                                                intent1.putExtra("inner_material", inner);
-                                                intent1.putExtra("description", desc);
-                                                intent1.putExtra("division", division);
-                                                intent1.putExtra("district", district);
+                                                intent1.putExtra(sITEM_ID, item_id);
+                                                intent1.putExtra(sID, id1);
+                                                intent1.putExtra(sUSER_ID, userid1);
+                                                intent1.putExtra(sMAIN_CATEGORY, strMain_category1);
+                                                intent1.putExtra(sSUB_CATEGORY, strSub_category1);
+                                                intent1.putExtra(sAD_DETAIL, ad_detail1);
+                                                intent1.putExtra(sPRICE, strPrice1);
+                                                intent1.putExtra(sDIVISION, division1);
+                                                intent1.putExtra(sPOSTCODE, postcode);
+                                                intent1.putExtra(sDISTRICT, district1);
+                                                intent1.putExtra(sPHOTO, photo1);
+                                                intent1.putExtra(sPHOTO02, photo2);
+                                                intent1.putExtra(sPHOTO03, photo3);
+                                                intent1.putExtra(sPHOTO04, photo4);
+                                                intent1.putExtra(sPHOTO05, photo5);
+                                                
+                                                intent1.putExtra(sID, id1);
+                                                intent1.putExtra(sSTOCK, stock);
+                                                intent1.putExtra(sBRAND_MAT, brand);
+                                                intent1.putExtra(sINNER_MAT, inner);
+                                                intent1.putExtra(sDESCRIPTION, desc);
+                                                intent1.putExtra(sDIVISION, division);
+                                                intent1.putExtra(sDISTRICT, district);
 
                                                 startActivity(intent1);
                                             }
@@ -1436,7 +1435,7 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("item_id", item_id);
+                params.put(sITEM_ID, item_id);
                 return params;
             }
         };
@@ -1451,9 +1450,9 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 //                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ViewProduct.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1502,8 +1501,8 @@ public class ViewProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", item_id);
-                params.put("rating", rating);
+                params.put(sID, item_id);
+                params.put(sRATING, rating);
                 return params;
             }
         };
@@ -1518,9 +1517,9 @@ public class ViewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
 //                                Toast.makeText(View_Item_Single.this, "Login! ", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(ViewProduct.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1545,7 +1544,7 @@ public class ViewProduct extends AppCompatActivity {
                                 //error
                                 System.out.println("" + error);
                             } else if (error instanceof ServerError) {
-                                //Erroor
+                                //Error
                                 System.out.println("" + error);
                             } else if (error instanceof NetworkError) {
                                 //Error
@@ -1564,10 +1563,10 @@ public class ViewProduct extends AppCompatActivity {
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", item_id);
-                params.put("sold", sold);
+                params.put(sID, item_id);
+                params.put(sSOLD, sold);
                 return params;
             }
         };

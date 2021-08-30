@@ -27,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.RatingAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Rating;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -57,6 +58,7 @@ public class ProductRatingList extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String getId;
     SessionManager sessionManager;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class ProductRatingList extends AppCompatActivity {
         setContentView(R.layout.myrating);
         Declare();
         ToolbarSettings();
-        getSession();
+//        getSession();
         Read_Review(getId);
     }
 
@@ -223,13 +225,13 @@ public class ProductRatingList extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void ToolbarSettings(){
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -247,6 +249,9 @@ public class ProductRatingList extends AppCompatActivity {
     }
 
     private void Declare(){
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         ratingList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

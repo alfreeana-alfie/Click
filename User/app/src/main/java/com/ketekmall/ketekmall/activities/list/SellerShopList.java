@@ -44,6 +44,7 @@ import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.chats.ChatList;
 import com.ketekmall.ketekmall.activities.products.ViewProduct;
 import com.ketekmall.ketekmall.adapters.ProductListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.models.UserDetails;
@@ -62,6 +63,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class SellerShopList extends AppCompatActivity {
@@ -76,23 +78,27 @@ public class SellerShopList extends AppCompatActivity {
     BottomNavigationView bottomNav;
     ImageButton btn_chat_wsp, btn_chat;
     private GridView gridView_item;
+    Setup setup;
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_seller);
+
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
         itemList = new ArrayList<>();
         itemList2 = new ArrayList<>();
@@ -174,7 +180,7 @@ public class SellerShopList extends AppCompatActivity {
         sellerLocation.setText(seller_location);
         Picasso.get().load(seller_photo).into(sellerPhoto);
 
-        getSession();
+//        getSession();
         View_Item(seller_id);
         getSold(seller_id);
 
@@ -233,13 +239,13 @@ public class SellerShopList extends AppCompatActivity {
         return app_installed;
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void View_Cart2(final Item_All_Details item) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_SINGLE_CART_ITEM,

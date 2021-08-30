@@ -30,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.BoostAdListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -58,6 +59,7 @@ public class BoostAdList extends AppCompatActivity {
 
     List<Item_All_Details> item_all_details;
     BoostAdListAdapter boostAdListAdapter;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -67,7 +69,9 @@ public class BoostAdList extends AppCompatActivity {
         Declare();
         ToolbarSettings();
 
-        getSession();
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         getBoost();
     }
 
@@ -237,13 +241,13 @@ public class BoostAdList extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Declare(){
         item_all_details = new ArrayList<>();

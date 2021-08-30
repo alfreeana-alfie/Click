@@ -1,7 +1,6 @@
 package com.ketekmall.ketekmall.activities.users;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,10 +16,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -38,11 +47,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.models.Item_All_Details;
-import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
+import com.ketekmall.ketekmall.configs.Setup;
+import com.ketekmall.ketekmall.models.Item_All_Details;
+import com.ketekmall.ketekmall.models.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -58,25 +68,32 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.ketekmall.ketekmall.configs.Link.*;
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
+import static com.ketekmall.ketekmall.configs.Link.EDIT_PROFILE_DETAILS;
+import static com.ketekmall.ketekmall.configs.Link.GET_INCOME;
+import static com.ketekmall.ketekmall.configs.Link.GET_PROFILE_DETAILS;
+import static com.ketekmall.ketekmall.configs.Link.PROFILE_IMAGE_UPLOAD;
+
+import static com.ketekmall.ketekmall.configs.Constant.*;
 
 public class UserProfile extends AppCompatActivity {
 
-    public Uri filePath;
-    public SessionManager sessionManager;
-    public String getId;
-    public BottomNavigationView bottomNav;
-    private ArrayAdapter<CharSequence> adapter_gender;
-    private DatePickerDialog datePickerDialog;
-    private LinearLayout layout_gender_display, layout_gender, layout_income, layout_icno, layout_bankName, layout_BankAcc;
-    private EditText name, email, phone_no, address_01, address_02, city, postcode, birthday, gender_display, icno, bank_name, bank_acc;
-    private Button button_edit, button_accept;
-    private TextView income;
-    private ImageButton button_edit_photo;
-    private Spinner gender;
-    private Bitmap bitmap;
-    private ImageView gender_img_spinner;
-    private CircleImageView profile_image;
+    Uri filePath;
+    SessionManager sessionManager;
+    Setup setup;
+    private String getId;
+    private ArrayAdapter<CharSequence> adapterGender;
+    private DatePickerDialog dpdBirthday;
+    private LinearLayout llGenderDisplay, llGender, llIncome, llIcNo, llBankName, llBankAcc;
+    private EditText etName, etEmail, etPhoneNo, etAddress01, etAddress02, etDivision, etPostcode,
+            etBirthday, etGenderDisplay, etIcNo, etBankName, etBankAcc;
+    private Button btnEditProfile, btnSavedProfile;
+    private TextView tvIncome;
+    private ImageButton btnEditImage;
+    private Spinner spinGender;
+    private Bitmap bitmapUserImage;
+    private ImageView ivGender;
+    private CircleImageView civUserImage;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -85,18 +102,14 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.profile_edit);
 
         Declare();
-        getSession();
+
         getUserDetail();
         Buying_List();
-
-        gender_display.setText(gender.getSelectedItem().toString());
-        Button_Func();
 
         setupUI(findViewById(R.id.parent));
     }
 
     public void setupUI(View view) {
-
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
@@ -116,58 +129,44 @@ public class UserProfile extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
-        name = findViewById(R.id.name_edit);
-        email = findViewById(R.id.email_edit);
-        phone_no = findViewById(R.id.phone_edit);
-        button_edit = findViewById(R.id.button_edit);
-        button_accept = findViewById(R.id.button_accept);
-        button_edit_photo = findViewById(R.id.button_edit_photo);
-        profile_image = findViewById(R.id.profile_image);
-        gender = findViewById(R.id.gender_spinner);
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
-        icno = findViewById(R.id.icno_edit);
-        bank_name = findViewById(R.id.bank_name_edit);
-        bank_acc = findViewById(R.id.bank_acc_edit);
-        income = findViewById(R.id.income_text);
+        etName = findViewById(R.id.name_edit);
+        etEmail = findViewById(R.id.email_edit);
+        etPhoneNo = findViewById(R.id.phone_edit);
+        btnEditProfile = findViewById(R.id.button_edit);
+        btnSavedProfile = findViewById(R.id.button_accept);
+        btnEditImage = findViewById(R.id.button_edit_photo);
+        civUserImage = findViewById(R.id.profile_image);
+        spinGender = findViewById(R.id.gender_spinner);
 
-        layout_income = findViewById(R.id.layout_income);
-        layout_bankName = findViewById(R.id.layout_bankName);
-        layout_BankAcc = findViewById(R.id.layout_bankAcc);
-        layout_icno = findViewById(R.id.layout_icno);
+        etIcNo = findViewById(R.id.icno_edit);
+        etBankName = findViewById(R.id.bank_name_edit);
+        etBankAcc = findViewById(R.id.bank_acc_edit);
+        tvIncome = findViewById(R.id.income_text);
 
-        address_01 = findViewById(R.id.address_edit01);
-        address_02 = findViewById(R.id.address_edit02);
-        city = findViewById(R.id.city_edit);
-        postcode = findViewById(R.id.postcode_edit);
+        llIncome = findViewById(R.id.layout_income);
+        llBankName = findViewById(R.id.layout_bankName);
+        llBankAcc = findViewById(R.id.layout_bankAcc);
+        llIcNo = findViewById(R.id.layout_icno);
 
-        birthday = findViewById(R.id.birthday_edit);
-        gender_display = findViewById(R.id.textview_gender_display);
-        gender_img_spinner = findViewById(R.id.gender_display_img_spinner);
-        layout_gender_display = findViewById(R.id.layout_gender_display);
-        layout_gender = findViewById(R.id.layout_gender);
+        etAddress01 = findViewById(R.id.address_edit01);
+        etAddress02 = findViewById(R.id.address_edit02);
+        etDivision = findViewById(R.id.city_edit);
+        etPostcode = findViewById(R.id.postcode_edit);
 
-        bottomNav = findViewById(R.id.bottom_nav);
+        etBirthday = findViewById(R.id.birthday_edit);
+        etGenderDisplay = findViewById(R.id.textview_gender_display);
+        ivGender = findViewById(R.id.gender_display_img_spinner);
+        llGenderDisplay = findViewById(R.id.layout_gender_display);
+        llGender = findViewById(R.id.layout_gender);
+
+        etGenderDisplay.setText(spinGender.getSelectedItem().toString());
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -178,12 +177,6 @@ public class UserProfile extends AppCompatActivity {
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
-
-//                    case R.id.nav_feed:
-//                        Intent intent5 = new Intent(Edit_Profile.this, Feed_page.class);
-//                        intent5.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent5);
-//                        break;
 
                     case R.id.nav_noti:
                         Intent intent6 = new Intent(UserProfile.this, Notification.class);
@@ -203,47 +196,47 @@ public class UserProfile extends AppCompatActivity {
         });
 
 
-        adapter_gender = ArrayAdapter.createFromResource(UserProfile.this, R.array.gender, android.R.layout.simple_spinner_item);
-        adapter_gender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        gender.setAdapter(adapter_gender);
+        adapterGender = ArrayAdapter.createFromResource(UserProfile.this, R.array.gender, android.R.layout.simple_spinner_item);
+        adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinGender.setAdapter(adapterGender);
 
-        birthday.setInputType(InputType.TYPE_NULL);
-        profile_image.setBorderWidth(1);
+        etBirthday.setInputType(InputType.TYPE_NULL);
+        civUserImage.setBorderWidth(1);
 
-        name.setFocusable(false);
-        email.setFocusable(false);
-        phone_no.setFocusable(false);
+        etName.setFocusable(false);
+        etEmail.setFocusable(false);
+        etPhoneNo.setFocusable(false);
 
-        address_01.setFocusable(false);
-        address_02.setFocusable(false);
-        city.setFocusable(false);
-        postcode.setFocusable(false);
+        etAddress01.setFocusable(false);
+        etAddress02.setFocusable(false);
+        etDivision.setFocusable(false);
+        etPostcode.setFocusable(false);
 
-        birthday.setFocusable(false);
-        gender_display.setFocusable(false);
+        etBirthday.setFocusable(false);
+        etGenderDisplay.setFocusable(false);
 
-        icno.setFocusable(false);
-        bank_name.setFocusable(false);
-        bank_acc.setFocusable(false);
+        etIcNo.setFocusable(false);
+        etBankName.setFocusable(false);
+        etBankAcc.setFocusable(false);
 
-        name.setFocusableInTouchMode(false);
-        email.setFocusableInTouchMode(false);
-        phone_no.setFocusableInTouchMode(false);
+        etName.setFocusableInTouchMode(false);
+        etEmail.setFocusableInTouchMode(false);
+        etPhoneNo.setFocusableInTouchMode(false);
 
-        address_01.setFocusableInTouchMode(false);
-        address_02.setFocusableInTouchMode(false);
-        city.setFocusableInTouchMode(false);
-        postcode.setFocusableInTouchMode(false);
+        etAddress01.setFocusableInTouchMode(false);
+        etAddress02.setFocusableInTouchMode(false);
+        etDivision.setFocusableInTouchMode(false);
+        etPostcode.setFocusableInTouchMode(false);
 
-        birthday.setFocusableInTouchMode(false);
-        gender_display.setFocusableInTouchMode(false);
+        etBirthday.setFocusableInTouchMode(false);
+        etGenderDisplay.setFocusableInTouchMode(false);
 
-        icno.setFocusableInTouchMode(false);
-        bank_name.setFocusableInTouchMode(false);
-        bank_acc.setFocusableInTouchMode(false);
+        etIcNo.setFocusableInTouchMode(false);
+        etBankName.setFocusableInTouchMode(false);
+        etBankAcc.setFocusableInTouchMode(false);
 
-        layout_gender.setVisibility(View.GONE);
-        button_accept.setVisibility(View.GONE);
+        llGender.setVisibility(View.GONE);
+        btnSavedProfile.setVisibility(View.GONE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -261,38 +254,61 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
+
+        btnEditImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseFile();
+            }
+        });
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Edit_Func();
+
+            }
+        });
+        btnSavedProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Accept_Func();
+                SaveEditDetail();
+
+            }
+        });
     }
 
     private void Edit_Func() {
-        name.setFocusable(true);
-        email.setFocusable(true);
-        phone_no.setFocusable(true);
+        etName.setFocusable(true);
+        etEmail.setFocusable(true);
+        etPhoneNo.setFocusable(true);
 
-        address_01.setFocusable(true);
-        address_02.setFocusable(true);
-        city.setFocusable(true);
-        postcode.setFocusable(true);
+        etAddress01.setFocusable(true);
+        etAddress02.setFocusable(true);
+        etDivision.setFocusable(true);
+        etPostcode.setFocusable(true);
 
-        birthday.setFocusable(true);
+        etBirthday.setFocusable(true);
 
-        icno.setFocusable(false);
-        bank_name.setFocusable(true);
-        bank_acc.setFocusable(true);
+        etIcNo.setFocusable(false);
+        etBankName.setFocusable(true);
+        etBankAcc.setFocusable(true);
 
-        name.setFocusableInTouchMode(true);
-        email.setFocusableInTouchMode(true);
-        phone_no.setFocusableInTouchMode(true);
+        etName.setFocusableInTouchMode(true);
+        etEmail.setFocusableInTouchMode(true);
+        etPhoneNo.setFocusableInTouchMode(true);
 
-        address_01.setFocusableInTouchMode(true);
-        address_02.setFocusableInTouchMode(true);
-        city.setFocusableInTouchMode(true);
-        postcode.setFocusableInTouchMode(true);
+        etAddress01.setFocusableInTouchMode(true);
+        etAddress02.setFocusableInTouchMode(true);
+        etDivision.setFocusableInTouchMode(true);
+        etPostcode.setFocusableInTouchMode(true);
 
-        icno.setFocusableInTouchMode(false);
-        bank_name.setFocusableInTouchMode(true);
-        bank_acc.setFocusableInTouchMode(true);
+        etIcNo.setFocusableInTouchMode(false);
+        etBankName.setFocusableInTouchMode(true);
+        etBankAcc.setFocusableInTouchMode(true);
 
-        birthday.setOnClickListener(new View.OnClickListener() {
+        etBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar calendar = Calendar.getInstance();
@@ -301,81 +317,54 @@ public class UserProfile extends AppCompatActivity {
                 int year = calendar.get(Calendar.YEAR);
 
 
-                datePickerDialog = new DatePickerDialog(v.getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                dpdBirthday = new DatePickerDialog(v.getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String Birthday = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        birthday.setText(Birthday);
+                        etBirthday.setText(Birthday);
                     }
                 }, year, month, day);
-                datePickerDialog.show();
+                dpdBirthday.show();
             }
         });
 
-        button_accept.setVisibility(View.VISIBLE);
-        layout_gender.setVisibility(View.VISIBLE);
-        gender.setVisibility(View.VISIBLE);
-        gender_img_spinner.setVisibility(View.VISIBLE);
-        button_edit_photo.setVisibility(View.VISIBLE);
+        btnSavedProfile.setVisibility(View.VISIBLE);
+        llGender.setVisibility(View.VISIBLE);
+        spinGender.setVisibility(View.VISIBLE);
+        ivGender.setVisibility(View.VISIBLE);
+        btnEditImage.setVisibility(View.VISIBLE);
 
-        button_edit.setVisibility(View.GONE);
-        layout_gender_display.setVisibility(View.GONE);
+        btnEditProfile.setVisibility(View.GONE);
+        llGenderDisplay.setVisibility(View.GONE);
     }
 
     private void Accept_Func() {
-        name.setFocusable(false);
-        email.setFocusable(false);
-        phone_no.setFocusable(false);
-        address_01.setFocusable(false);
-        birthday.setFocusable(false);
-        gender_display.setFocusable(false);
-        icno.setFocusable(false);
-        bank_name.setFocusable(false);
-        bank_acc.setFocusable(false);
+        etName.setFocusable(false);
+        etEmail.setFocusable(false);
+        etPhoneNo.setFocusable(false);
+        etAddress01.setFocusable(false);
+        etBirthday.setFocusable(false);
+        etGenderDisplay.setFocusable(false);
+        etIcNo.setFocusable(false);
+        etBankName.setFocusable(false);
+        etBankAcc.setFocusable(false);
 
-        name.setFocusableInTouchMode(false);
-        email.setFocusableInTouchMode(false);
-        phone_no.setFocusableInTouchMode(false);
-        address_01.setFocusableInTouchMode(false);
-        birthday.setFocusableInTouchMode(false);
-        gender_display.setFocusableInTouchMode(false);
-        icno.setFocusableInTouchMode(false);
-        bank_name.setFocusableInTouchMode(false);
-        bank_acc.setFocusableInTouchMode(false);
+        etName.setFocusableInTouchMode(false);
+        etEmail.setFocusableInTouchMode(false);
+        etPhoneNo.setFocusableInTouchMode(false);
+        etAddress01.setFocusableInTouchMode(false);
+        etBirthday.setFocusableInTouchMode(false);
+        etGenderDisplay.setFocusableInTouchMode(false);
+        etIcNo.setFocusableInTouchMode(false);
+        etBankName.setFocusableInTouchMode(false);
+        etBankAcc.setFocusableInTouchMode(false);
 
-        layout_gender_display.setVisibility(View.VISIBLE);
-        button_edit.setVisibility(View.VISIBLE);
-        button_accept.setVisibility(View.GONE);
-        layout_gender.setVisibility(View.GONE);
-        button_edit_photo.setVisibility(View.GONE);
-        gender_display.setText(gender.getSelectedItem().toString());
-    }
-
-    private void Button_Func() {
-
-        button_edit_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseFile();
-            }
-        });
-
-        button_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Edit_Func();
-
-            }
-        });
-        button_accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Accept_Func();
-                SaveEditDetail();
-
-            }
-        });
-
+        llGenderDisplay.setVisibility(View.VISIBLE);
+        btnEditProfile.setVisibility(View.VISIBLE);
+        btnSavedProfile.setVisibility(View.GONE);
+        llGender.setVisibility(View.GONE);
+        btnEditImage.setVisibility(View.GONE);
+        etGenderDisplay.setText(spinGender.getSelectedItem().toString());
     }
 
     // Getting User Details
@@ -402,51 +391,51 @@ public class UserProfile extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        String strName = object.getString("name").trim();
-                                        String strEmail = object.getString("email").trim();
-                                        String strPhone_no = object.getString("phone_no").trim();
-                                        String strAddress01 = object.getString("address_01").trim();
-                                        String strAddress02 = object.getString("address_02").trim();
-                                        String strCity = object.getString("division").trim();
-                                        String strPostCode = object.getString("postcode").trim();
-                                        String strBirthday = object.getString("birthday").trim();
-                                        String strGender = object.getString("gender");
-                                        String strPhoto = object.getString("photo");
-                                        String strICNO = object.getString("ic_no").trim();
-                                        String strBankName = object.getString("bank_name");
-                                        String strBankAcc = object.getString("bank_acc");
-                                        int strVerify = Integer.parseInt(object.getString("verification"));
+                                        String strName = object.getString(sNAME).trim();
+                                        String strEmail = object.getString(sEMAIL).trim();
+                                        String strPhone_no = object.getString(sPHONE_NO).trim();
+                                        String strAddress01 = object.getString(sADDRESS_01).trim();
+                                        String strAddress02 = object.getString(sADDRESS_02).trim();
+                                        String strCity = object.getString(sDIVISION).trim();
+                                        String strPostCode = object.getString(sPOSTCODE).trim();
+                                        String strBirthday = object.getString(sBIRTHDAY).trim();
+                                        String strGender = object.getString(sGENDER);
+                                        String strPhoto = object.getString(sPHOTO);
+                                        String strICNO = object.getString(sIC_NO).trim();
+                                        String strBankName = object.getString(sBANK_NAME);
+                                        String strBankAcc = object.getString(sBANK_ACCOUNT);
+                                        int strVerify = Integer.parseInt(object.getString(sVERIFICATION));
 
-                                        name.setText(strName);
-                                        email.setText(strEmail);
-                                        phone_no.setText(strPhone_no);
-                                        address_01.setText(strAddress01);
-                                        address_02.setText(strAddress02);
-                                        city.setText(strCity);
-                                        postcode.setText(strPostCode);
-                                        birthday.setText(strBirthday);
-                                        gender.setSelection(adapter_gender.getPosition(strGender));
-                                        gender_display.setText(strGender);
+                                        etName.setText(strName);
+                                        etEmail.setText(strEmail);
+                                        etPhoneNo.setText(strPhone_no);
+                                        etAddress01.setText(strAddress01);
+                                        etAddress02.setText(strAddress02);
+                                        etDivision.setText(strCity);
+                                        etPostcode.setText(strPostCode);
+                                        etBirthday.setText(strBirthday);
+                                        spinGender.setSelection(adapterGender.getPosition(strGender));
+                                        etGenderDisplay.setText(strGender);
 
-                                        icno.setText(strICNO);
-                                        bank_name.setText(strBankName);
-                                        bank_acc.setText(strBankAcc);
+                                        etIcNo.setText(strICNO);
+                                        etBankName.setText(strBankName);
+                                        etBankAcc.setText(strBankAcc);
 
                                         if (strVerify == 0) {
-                                            layout_icno.setVisibility(View.GONE);
-                                            layout_bankName.setVisibility(View.GONE);
-                                            layout_BankAcc.setVisibility(View.GONE);
-                                            layout_income.setVisibility(View.GONE);
+                                            llIcNo.setVisibility(View.GONE);
+                                            llBankName.setVisibility(View.GONE);
+                                            llBankAcc.setVisibility(View.GONE);
+                                            llIncome.setVisibility(View.GONE);
                                         } else {
-                                            layout_icno.setVisibility(View.VISIBLE);
-                                            layout_bankName.setVisibility(View.VISIBLE);
-                                            layout_BankAcc.setVisibility(View.VISIBLE);
-                                            layout_income.setVisibility(View.VISIBLE);
+                                            llIcNo.setVisibility(View.VISIBLE);
+                                            llBankName.setVisibility(View.VISIBLE);
+                                            llBankAcc.setVisibility(View.VISIBLE);
+                                            llIncome.setVisibility(View.VISIBLE);
                                         }
 
-                                        gender.setVisibility(View.GONE);
-                                        gender_img_spinner.setVisibility(View.GONE);
-                                        Picasso.get().load(strPhoto).into(profile_image);
+                                        spinGender.setVisibility(View.GONE);
+                                        ivGender.setVisibility(View.GONE);
+                                        Picasso.get().load(strPhoto).into(civUserImage);
                                     }
                                 } else {
                                     progressDialog.dismiss();
@@ -500,7 +489,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -511,19 +500,19 @@ public class UserProfile extends AppCompatActivity {
 
     //Save User Details
     private void SaveEditDetail() {
-        final String strName = this.name.getText().toString().trim();
-        final String strEmail = this.email.getText().toString().trim();
-        final String str_Phone_no = this.phone_no.getText().toString().trim();
+        final String strName = this.etName.getText().toString().trim();
+        final String strEmail = this.etEmail.getText().toString().trim();
+        final String str_Phone_no = this.etPhoneNo.getText().toString().trim();
 
-        final String strAddress01 = this.address_01.getText().toString().trim();
-        final String strAddress02 = this.address_02.getText().toString().trim();
-        final String strCity = this.city.getText().toString().trim();
-        final String strPostCode = this.postcode.getText().toString().trim();
+        final String strAddress01 = this.etAddress01.getText().toString().trim();
+        final String strAddress02 = this.etAddress02.getText().toString().trim();
+        final String strCity = this.etDivision.getText().toString().trim();
+        final String strPostCode = this.etPostcode.getText().toString().trim();
 
-        final String strBirthday = this.birthday.getText().toString().trim();
-        final String strGender = this.gender.getSelectedItem().toString().trim();
-        final String strAccNo = this.bank_acc.getText().toString();
-        final String strBankName = this.bank_name.getText().toString();
+        final String strBirthday = this.etBirthday.getText().toString().trim();
+        final String strGender = this.spinGender.getSelectedItem().toString().trim();
+        final String strAccNo = this.etBankAcc.getText().toString();
+        final String strBankName = this.etBankName.getText().toString();
 
         final String id = getId;
 
@@ -596,18 +585,18 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", strName);
-                params.put("email", strEmail);
-                params.put("phone_no", str_Phone_no);
-                params.put("address_01", strAddress01);
-                params.put("address_02", strAddress02);
-                params.put("division", strCity);
-                params.put("postcode", strPostCode);
-                params.put("birthday", strBirthday);
-                params.put("gender", strGender);
-                params.put("bank_acc", strAccNo);
-                params.put("bank_name", strBankName);
-                params.put("id", id);
+                params.put(sNAME, strName);
+                params.put(sEMAIL, strEmail);
+                params.put(sPHONE_NO, str_Phone_no);
+                params.put(sADDRESS_01, strAddress01);
+                params.put(sADDRESS_02, strAddress02);
+                params.put(sDIVISION, strCity);
+                params.put(sPOSTCODE, strPostCode);
+                params.put(sBIRTHDAY, strBirthday);
+                params.put(sGENDER, strGender);
+                params.put(sBANK_ACCOUNT, strAccNo);
+                params.put(sBANK_NAME, strBankName);
+                params.put(sID, id);
                 return params;
             }
         };
@@ -704,8 +693,8 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("photo", photo);
-                params.put("id", id);
+                params.put(sPHOTO, photo);
+                params.put(sID, id);
                 return params;
             }
         };
@@ -720,12 +709,12 @@ public class UserProfile extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                profile_image.setImageBitmap(bitmap);
+                bitmapUserImage = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                civUserImage.setImageBitmap(bitmapUserImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            UploadPicture(getId, getStringImage(bitmap));
+            UploadPicture(getId, getStringImage(bitmapUserImage));
         }
 
     }
@@ -749,19 +738,19 @@ public class UserProfile extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        final String id = object.getString("id").trim();
-                                        final String main_category = object.getString("main_category").trim();
-                                        final String sub_category = object.getString("sub_category").trim();
-                                        final String ad_detail = object.getString("ad_detail").trim();
-                                        final double price = Double.parseDouble(object.getString("price").trim());
-                                        final String division = object.getString("division");
-                                        final String district = object.getString("district");
-                                        final String image_item = object.getString("photo");
-                                        final String seller_id = object.getString("seller_id");
-                                        final String quantity = object.getString("quantity");
+                                        final String id = object.getString(sID).trim();
+                                        final String main_category = object.getString(sMAIN_CATEGORY).trim();
+                                        final String sub_category = object.getString(sSUB_CATEGORY).trim();
+                                        final String ad_detail = object.getString(sAD_DETAIL).trim();
+                                        final double price = Double.parseDouble(object.getString(sPRICE).trim());
+                                        final String division = object.getString(sDIVISION);
+                                        final String district = object.getString(sDISTRICT);
+                                        final String image_item = object.getString(sPHOTO);
+                                        final String seller_id = object.getString(sSELLER_ID);
+                                        final String quantity = object.getString(sQUANTITY);
 
                                         grandtotal += (price * Integer.parseInt(quantity));
-                                        income.setText("MYR" + String.format("%.2f", grandtotal));
+                                        tvIncome.setText("MYR" + String.format("%.2f", grandtotal));
 
                                         final Item_All_Details item = new Item_All_Details(id,
                                                 seller_id,
@@ -821,7 +810,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("seller_id", getId);
+                params.put(sSELLER_ID, getId);
                 return params;
             }
         };

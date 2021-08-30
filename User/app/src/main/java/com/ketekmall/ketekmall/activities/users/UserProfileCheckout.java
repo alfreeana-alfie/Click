@@ -49,6 +49,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.transactions.Checkout;
@@ -70,14 +71,10 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class UserProfileCheckout extends AppCompatActivity {
-
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/profile_image/upload.php";
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
 
     public SessionManager sessionManager;
     public String getId;
@@ -94,6 +91,7 @@ public class UserProfileCheckout extends AppCompatActivity {
     private Bitmap bitmap;
     private ImageView gender_img_spinner;
     private CircleImageView profile_image;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -102,7 +100,7 @@ public class UserProfileCheckout extends AppCompatActivity {
         setContentView(R.layout.profile_edit);
 
         Declare();
-        getSession();
+//        getSession();
         getUserDetail();
         Buying_List();
 
@@ -133,27 +131,11 @@ public class UserProfileCheckout extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         name = findViewById(R.id.name_edit);
         email = findViewById(R.id.email_edit);
         phone_no = findViewById(R.id.phone_edit);

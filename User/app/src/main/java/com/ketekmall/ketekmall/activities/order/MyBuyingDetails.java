@@ -40,6 +40,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
@@ -53,6 +54,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 @SuppressLint("DefaultLocale")
@@ -75,6 +77,7 @@ public class MyBuyingDetails extends AppCompatActivity {
     ProgressBar loading;
     int numofStar;
     float getRating;
+    Setup setup;
 
 
     @SuppressLint("SetTextI18n")
@@ -83,7 +86,10 @@ public class MyBuyingDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_page_other);
 
-        getSession();
+//        getSession();
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         ToolbarSetting();
         setupUI(findViewById(R.id.parent));
 
@@ -341,16 +347,16 @@ public class MyBuyingDetails extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -667,13 +673,13 @@ public class MyBuyingDetails extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Received(final String strOrder_Date, final String strPrice) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_REVIEW,

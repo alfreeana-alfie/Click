@@ -1,84 +1,87 @@
 package com.ketekmall.ketekmall.auth.user;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Patterns;
-import android.view.*;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import androidx.annotation.*;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.*;
-import com.android.volley.toolbox.*;
-import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.activities.MainActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.firebase.client.Firebase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.activities.MainActivity;
 
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import static com.ketekmall.ketekmall.configs.Constant.*;
-import static com.ketekmall.ketekmall.configs.Link.*;
+import static com.ketekmall.ketekmall.configs.Constant.PASSWORD_PATTERN;
+import static com.ketekmall.ketekmall.configs.Constant.PICK_IMAGE_REQUEST;
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
+import static com.ketekmall.ketekmall.configs.Constant.sBIRTHDAY;
+import static com.ketekmall.ketekmall.configs.Constant.sEMAIL;
+import static com.ketekmall.ketekmall.configs.Constant.sGENDER;
+import static com.ketekmall.ketekmall.configs.Constant.sNAME;
+import static com.ketekmall.ketekmall.configs.Constant.sNULL;
+import static com.ketekmall.ketekmall.configs.Constant.sPHONE_NO;
+import static com.ketekmall.ketekmall.configs.Constant.sPHOTO;
+import static com.ketekmall.ketekmall.configs.Constant.sTOKEN;
+import static com.ketekmall.ketekmall.configs.Constant.sVERIFICATION;
+import static com.ketekmall.ketekmall.configs.Link.FIREBASE_USER;
+import static com.ketekmall.ketekmall.configs.Link.IMAGE_DEFAULT;
+import static com.ketekmall.ketekmall.configs.Link.REGISTER;
 
 @SuppressWarnings("deprecation")
 public class Register extends AppCompatActivity {
 
-//    private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
-//    private final int PICK_IMAGE_REQUEST = 22;
-    private String name_firebase, email_firebase;
-    private ImageView imageView;
-    private EditText name, email, phone_no, password, confirm_password;
-    private ProgressBar loading;
-    private Button button_goto_login_page, button_register;
+    private String firebaseName, firebaseEmail;
+    private ImageView ivUserImage;
+    private EditText etName, etEmail, etPhoneNo, etPassword, etConfirmPassword;
+    private ProgressBar pbLoading;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
-        Declare();
-        setupUI(findViewById(R.id.parent));
+
         Firebase.setAndroidContext(Register.this);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseImage();
-            }
-        });
 
-        button_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name_firebase = name.getText().toString();
-                email_firebase = email.getText().toString();
-                SignUp(v);
-            }
-        });
+        Declare();
 
-        button_goto_login_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(Register.this, MainActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
-                    }
-                }, 100);
-
-            }
-        });
+        setupUI(findViewById(R.id.parent));
     }
 
     public void setupUI(View view) {
@@ -102,81 +105,97 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
     private void Declare() {
-        name = findViewById(R.id.name_register);
-        email = findViewById(R.id.email_register);
-        phone_no = findViewById(R.id.phone_no_register);
-        password = findViewById(R.id.password_register);
-        confirm_password = findViewById(R.id.confirm_password_register);
-        loading = findViewById(R.id.loading);
-        button_register = findViewById(R.id.button_register);
-        button_goto_login_page = findViewById(R.id.button_goto_login_page);
-        imageView = findViewById(R.id.imageView);
+        etName = findViewById(R.id.name_register);
+        etEmail = findViewById(R.id.email_register);
+        etPhoneNo = findViewById(R.id.phone_no_register);
+        etPassword = findViewById(R.id.password_register);
+        etConfirmPassword = findViewById(R.id.confirm_password_register);
+        pbLoading = findViewById(R.id.loading);
+        btnRegister = findViewById(R.id.button_register);
+        ivUserImage = findViewById(R.id.imageView);
+
+        ivUserImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseImage();
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseName = etName.getText().toString();
+                firebaseEmail = etEmail.getText().toString();
+                SignUp(v);
+            }
+        });
+
+        Button btn_goToLogin = findViewById(R.id.button_goto_login_page);
+        btn_goToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Register.this, MainActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slidein_left, R.anim.slideout_right);
+                    }
+                }, 100);
+
+            }
+        });
     }
 
     private void SignUp(View view) {
-        final String newName = this.name.getText().toString();
-        final String strName = this.name.getText().toString();
-        final String strEmail = this.email.getText().toString();
-        final String strPhone_No = this.phone_no.getText().toString();
-        final String strPassword = this.password.getText().toString();
-        final String strConfirm_Password = this.confirm_password.getText().toString();
+        final String strName = this.etName.getText().toString();
+        final String strEmail = this.etEmail.getText().toString();
+        final String strPhone_No = this.etPhoneNo.getText().toString();
+        final String strPassword = this.etPassword.getText().toString();
+        final String strConfirm_Password = this.etConfirmPassword.getText().toString();
         final String strBirthday = "";
         final String strGender = "Female";
-        final String strVerification ="0";
-
-        final String strPhoto_URL = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
-
-        final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
+        final String strVerification = "0";
 
         //Name
         if (strName.isEmpty()) {
-            name.requestFocus();
-            name.setError("Fields cannot be empty!");
+            etName.requestFocus();
+            etName.setError("Fields cannot be empty!");
         }
 
         //Email
         if (strEmail.isEmpty()) {
-            email.requestFocus();
-            email.setError("Fields cannot be empty!");
+            etEmail.requestFocus();
+            etEmail.setError("Fields cannot be empty!");
         } else if (!Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
-            email.requestFocus();
-            email.setError("Please enter a valid email address");
+            etEmail.requestFocus();
+            etEmail.setError("Please enter a valid email address");
         }
 
         //Phone NO.
         if (strPhone_No.isEmpty()) {
-            phone_no.requestFocus();
-            phone_no.setError("Fields cannot be empty!");
+            etPhoneNo.requestFocus();
+            etPhoneNo.setError("Fields cannot be empty!");
         } else if (!Patterns.PHONE.matcher(strPhone_No).matches()) {
-            phone_no.requestFocus();
-            phone_no.setError("Enter only Numerical Letter");
+            etPhoneNo.requestFocus();
+            etPhoneNo.setError("Enter only Numerical Letter");
         }
 
         //Password
         if (strPassword.isEmpty()) {
-            password.requestFocus();
-            password.setError("Fields cannot be empty!");
+            etPassword.requestFocus();
+            etPassword.setError("Fields cannot be empty!");
         } else if (!PASSWORD_PATTERN.matcher(strPassword).matches()) {
-            password.requestFocus();
-            password.setError("At least 8 character lengths for email");
+            etPassword.requestFocus();
+            etPassword.setError("At least 8 character lengths for email");
         }
 
         //Other
         if (!strConfirm_Password.equals(strPassword)) {
-            confirm_password.requestFocus();
-            confirm_password.setError("Confirm Password is different than Password");
+            etConfirmPassword.requestFocus();
+            etConfirmPassword.setError("Confirm Password is different than Password");
         }
 
         if (Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()
@@ -184,34 +203,33 @@ public class Register extends AppCompatActivity {
                 && PASSWORD_PATTERN.matcher(strPassword).matches()
                 && strConfirm_Password.equals(strPassword)) {
 
-            loading.setVisibility(View.VISIBLE);
-            button_register.setVisibility(View.GONE);
+            pbLoading.setVisibility(View.VISIBLE);
+            btnRegister.setVisibility(View.GONE);
 
             //Firebase
-            String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
-                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+//                    Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                    final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                    if (s.equals("null")) {
-                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                        reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                    if (s.equals(sNULL)) {
+                        REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                        REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
+                        REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                         Toast.makeText(Register.this, "registration successful", Toast.LENGTH_LONG).show();
                     } else {
                         try {
                             JSONObject obj = new JSONObject(s);
 
-                            if (!obj.has(name_firebase)) {
-                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            if (!obj.has(firebaseName)) {
+                                REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
+                                REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                             } else {
-                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                reference.child(name_firebase).child("photo").setValue(strPhoto_URL);
-                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
+                                REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                             }
 
                         } catch (JSONException e) {
@@ -242,8 +260,8 @@ public class Register extends AppCompatActivity {
                         if (success.equals("1")) {
                             Toast.makeText(Register.this, "Success", Toast.LENGTH_SHORT).show();
 
-                            loading.setVisibility(View.GONE);
-                            button_register.setVisibility(View.VISIBLE);
+                            pbLoading.setVisibility(View.GONE);
+                            btnRegister.setVisibility(View.VISIBLE);
 
                             Timer timer = new Timer();
                             timer.schedule(new TimerTask() {
@@ -257,16 +275,16 @@ public class Register extends AppCompatActivity {
                         } else {
                             Toast.makeText(Register.this, "Failed", Toast.LENGTH_SHORT).show();
 
-                            loading.setVisibility(View.GONE);
-                            button_register.setVisibility(View.VISIBLE);
+                            pbLoading.setVisibility(View.GONE);
+                            btnRegister.setVisibility(View.VISIBLE);
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Toast.makeText(Register.this, "Email is already existed", Toast.LENGTH_SHORT).show();
 
-                        loading.setVisibility(View.GONE);
-                        button_register.setVisibility(View.VISIBLE);
+                        pbLoading.setVisibility(View.GONE);
+                        btnRegister.setVisibility(View.VISIBLE);
                     }
 
                 }
@@ -305,14 +323,14 @@ public class Register extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("name", strName);
-                    params.put("email", strEmail);
-                    params.put("phone_no", strPhone_No);
-                    params.put("password", strPassword);
-                    params.put("birthday", strBirthday);
-                    params.put("gender", strGender);
-                    params.put("photo", strPhoto_URL);
-                    params.put("verification", strVerification);
+                    params.put(sNAME, strName);
+                    params.put(sEMAIL, strEmail);
+                    params.put(sPHONE_NO, strPhone_No);
+                    params.put(sPHONE_NO, strPassword);
+                    params.put(sBIRTHDAY, strBirthday);
+                    params.put(sGENDER, strGender);
+                    params.put(sPHOTO, IMAGE_DEFAULT);
+                    params.put(sVERIFICATION, strVerification);
                     return params;
                 }
             };
@@ -336,7 +354,7 @@ public class Register extends AppCompatActivity {
 
                 // Setting image on image view using Bitmap
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                ivUserImage.setImageBitmap(bitmap);
             } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();

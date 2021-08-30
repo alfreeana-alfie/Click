@@ -13,28 +13,27 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.activities.main.Home;
+import com.ketekmall.ketekmall.activities.main.Me;
+import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.activities.policies.AppVersion;
 import com.ketekmall.ketekmall.activities.policies.Contact_Us;
 import com.ketekmall.ketekmall.activities.policies.DeliveryPolicy;
 import com.ketekmall.ketekmall.activities.policies.ReturnRefundPolicy;
 import com.ketekmall.ketekmall.activities.policies.TermsAndConditionsOnly;
-import com.ketekmall.ketekmall.models.SessionManager;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ketekmall.ketekmall.activities.main.Home;
-import com.ketekmall.ketekmall.activities.main.Me;
-import com.ketekmall.ketekmall.activities.main.Notification;
+import com.ketekmall.ketekmall.configs.Setup;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class AboutKetekMall extends AppCompatActivity {
 
-    LinearLayout ReturnRefundPolicy_Layout, DeliveryPolicy_Layout, ContactUs_Layout, TermsConditions_Layout, AppVersion_Layout;
+    LinearLayout llReturnRefundPolicy, llDeliveryPolicy, llContactUs, llTermsConditions, llAppVersion;
 
     String getId;
-    SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -43,8 +42,19 @@ public class AboutKetekMall extends AppCompatActivity {
         setContentView(R.layout.about_ketekmall);
         ToolbarSettings();
         Declare();
+    }
 
-        ReturnRefundPolicy_Layout.setOnClickListener(new View.OnClickListener() {
+    private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
+        llReturnRefundPolicy = findViewById(R.id.return_refund_layout);
+        llDeliveryPolicy = findViewById(R.id.delivery_policy_layout);
+        llContactUs = findViewById(R.id.contact_us_layout);
+        llTermsConditions = findViewById(R.id.terms_and_conditions_layout);
+        llAppVersion = findViewById(R.id.version_layout);
+
+        llReturnRefundPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutKetekMall.this, ReturnRefundPolicy.class);
@@ -53,7 +63,7 @@ public class AboutKetekMall extends AppCompatActivity {
             }
         });
 
-        DeliveryPolicy_Layout.setOnClickListener(new View.OnClickListener() {
+        llDeliveryPolicy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutKetekMall.this, DeliveryPolicy.class);
@@ -62,7 +72,7 @@ public class AboutKetekMall extends AppCompatActivity {
             }
         });
 
-        ContactUs_Layout.setOnClickListener(new View.OnClickListener() {
+        llContactUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutKetekMall.this, Contact_Us.class);
@@ -71,7 +81,7 @@ public class AboutKetekMall extends AppCompatActivity {
             }
         });
 
-        TermsConditions_Layout.setOnClickListener(new View.OnClickListener() {
+        llTermsConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutKetekMall.this, TermsAndConditionsOnly.class);
@@ -80,7 +90,7 @@ public class AboutKetekMall extends AppCompatActivity {
             }
         });
 
-        AppVersion_Layout.setOnClickListener(new View.OnClickListener() {
+        llAppVersion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutKetekMall.this, AppVersion.class);
@@ -117,24 +127,10 @@ public class AboutKetekMall extends AppCompatActivity {
                 return true;
             }
         });
-
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
-
-    private void Declare(){
-        ReturnRefundPolicy_Layout = findViewById(R.id.return_refund_layout);
-        DeliveryPolicy_Layout = findViewById(R.id.delivery_policy_layout);
-        ContactUs_Layout = findViewById(R.id.contact_us_layout);
-        TermsConditions_Layout = findViewById(R.id.terms_and_conditions_layout);
-        AppVersion_Layout = findViewById(R.id.version_layout);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void ToolbarSettings(){
+    private void ToolbarSettings() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

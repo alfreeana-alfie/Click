@@ -22,6 +22,8 @@ import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
 
+import static com.ketekmall.ketekmall.configs.Constant.*;
+
 public class ViewMoreDetails extends AppCompatActivity {
 
     TextView Stock, Brand, Inner, Ship_From, Description;
@@ -35,12 +37,12 @@ public class ViewMoreDetails extends AppCompatActivity {
         ToolbarSetting();
         setupUI(findViewById(R.id.parent));
         Intent intent = getIntent();
-        String division = intent.getStringExtra("division");
-        String district = intent.getStringExtra("district");
-        String brand = intent.getStringExtra("brand_material");
-        String inner = intent.getStringExtra("inner_material");
-        String stock = intent.getStringExtra("stock");
-        String desc = intent.getStringExtra("description");
+        String division = intent.getStringExtra(sDIVISION);
+        String district = intent.getStringExtra(sDISTRICT);
+        String brand = intent.getStringExtra(sBRAND_MAT);
+        String inner = intent.getStringExtra(sINNER_MAT);
+        String stock = intent.getStringExtra(sSTOCK);
+        String desc = intent.getStringExtra(sDESCRIPTION);
 
         String ship_detail = division + "," + district;
 
@@ -108,17 +110,6 @@ public class ViewMoreDetails extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
     private void ToolbarSetting(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,49 +121,6 @@ public class ViewMoreDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-//                Intent intent1 = new Intent(More_Details.this, View_Product.class);
-//
-//                final Intent intent4 = getIntent();
-//                String id1 = intent4.getStringExtra("id");
-//                String stock = intent4.getStringExtra("stock");
-//                String brand = intent4.getStringExtra("brand_material");
-//                String inner = intent4.getStringExtra("inner_material");
-//                String desc = intent4.getStringExtra("description");
-//                String division = intent4.getStringExtra("division");
-//                String district = intent4.getStringExtra("district");
-//
-//                String userid1 = intent4.getStringExtra("user_id");
-//                String strMain_category1 = intent4.getStringExtra("main_category");
-//                String strSub_category1 = intent4.getStringExtra("sub_category");
-//                String ad_detail1 = intent4.getStringExtra("ad_detail");
-//                String strPrice1 = intent4.getStringExtra("price");
-//                String division1 = intent4.getStringExtra("division");
-//                String district1 = intent4.getStringExtra("district");
-//                String photo1 = intent4.getStringExtra("photo");
-//                String item_id = intent4.getStringExtra("item_id");
-//
-//                intent1.putExtra("item_id", item_id);
-//                intent1.putExtra("id", id1);
-//                intent1.putExtra("user_id", userid1);
-//                intent1.putExtra("main_category", strMain_category1);
-//                intent1.putExtra("sub_category", strSub_category1);
-//                intent1.putExtra("ad_detail", ad_detail1);
-//                intent1.putExtra("price", strPrice1);
-//                intent1.putExtra("division", division1);
-//                intent1.putExtra("district", district1);
-//                intent1.putExtra("photo", photo1);
-//
-//
-//
-//                intent1.putExtra("id", id1);
-//                intent1.putExtra("stock", stock);
-//                intent1.putExtra("brand_material", brand);
-//                intent1.putExtra("inner_material", inner);
-//                intent1.putExtra("description", desc);
-//                intent1.putExtra("division", division);
-//                intent1.putExtra("district", district);
-//
-//                startActivity(intent1);
             }
         });
     }
@@ -181,48 +129,5 @@ public class ViewMoreDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-//        Intent intent1 = new Intent(More_Details.this, View_Product.class);
-//
-//        final Intent intent4 = getIntent();
-//        String id1 = intent4.getStringExtra("id");
-//        String stock = intent4.getStringExtra("stock");
-//        String brand = intent4.getStringExtra("brand_material");
-//        String inner = intent4.getStringExtra("inner_material");
-//        String desc = intent4.getStringExtra("description");
-//        String division = intent4.getStringExtra("division");
-//        String district = intent4.getStringExtra("district");
-//
-//        String userid1 = intent4.getStringExtra("user_id");
-//        String strMain_category1 = intent4.getStringExtra("main_category");
-//        String strSub_category1 = intent4.getStringExtra("sub_category");
-//        String ad_detail1 = intent4.getStringExtra("ad_detail");
-//        String strPrice1 = intent4.getStringExtra("price");
-//        String division1 = intent4.getStringExtra("division");
-//        String district1 = intent4.getStringExtra("district");
-//        String photo1 = intent4.getStringExtra("photo");
-//        String item_id = intent4.getStringExtra("item_id");
-//
-//        intent1.putExtra("item_id", item_id);
-//        intent1.putExtra("id", id1);
-//        intent1.putExtra("user_id", userid1);
-//        intent1.putExtra("main_category", strMain_category1);
-//        intent1.putExtra("sub_category", strSub_category1);
-//        intent1.putExtra("ad_detail", ad_detail1);
-//        intent1.putExtra("price", strPrice1);
-//        intent1.putExtra("division", division1);
-//        intent1.putExtra("district", district1);
-//        intent1.putExtra("photo", photo1);
-//
-//
-//
-//        intent1.putExtra("id", id1);
-//        intent1.putExtra("stock", stock);
-//        intent1.putExtra("brand_material", brand);
-//        intent1.putExtra("inner_material", inner);
-//        intent1.putExtra("description", desc);
-//        intent1.putExtra("division", division);
-//        intent1.putExtra("district", district);
-//
-//        startActivity(intent1);
     }
 }

@@ -1,13 +1,11 @@
 package com.ketekmall.ketekmall.auth.seller;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,13 +28,13 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ketekmall.ketekmall.activities.policies.TermsAndConditions;
-import com.ketekmall.ketekmall.models.SessionManager;
+import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
+import com.ketekmall.ketekmall.activities.policies.TermsAndConditions;
+import com.ketekmall.ketekmall.configs.Setup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,32 +43,30 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
+import static com.ketekmall.ketekmall.configs.Constant.sID;
 import static com.ketekmall.ketekmall.configs.Link.GET_PROFILE_DETAILS;
 
 public class RegisterSellerMain extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
-    Button btn_goto_register_seller;
-    TextView textView8, textView9, textView10, textView11;
+    BottomNavigationView bnvMenu;
+    Button btnGoToRegisterSeller;
+    TextView tvBeforeYouCanStartSellingYourProducts, tvYouNeedToRegisterAsKetekMallSeller, tvYourAccountHasBeenBlocked, tvPleaseContactAdministratorForMoreDetails;
     String getId;
-    SessionManager sessionManager;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_seller_page);
         ToolbarSetting();
-        sessionManager = new SessionManager(RegisterSellerMain.this);
-        sessionManager.checkLogin();
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
-
-
-        bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.getMenu().getItem(0).setCheckable(false);
-        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bnvMenu = findViewById(R.id.bottom_nav);
+        bnvMenu.getMenu().getItem(0).setCheckable(false);
+        bnvMenu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -97,23 +93,15 @@ public class RegisterSellerMain extends AppCompatActivity {
             }
         });
 
-        btn_goto_register_seller = findViewById(R.id.btn_register);
-        textView8 = findViewById(R.id.textView8);
-        textView9 = findViewById(R.id.textView9);
-        textView10 = findViewById(R.id.textView10);
-        textView11 = findViewById(R.id.textView11);
+        btnGoToRegisterSeller = findViewById(R.id.btn_register);
+        tvBeforeYouCanStartSellingYourProducts = findViewById(R.id.textView8);
+        tvYouNeedToRegisterAsKetekMallSeller = findViewById(R.id.textView9);
+        tvYourAccountHasBeenBlocked = findViewById(R.id.textView10);
+        tvPleaseContactAdministratorForMoreDetails = findViewById(R.id.textView11);
 
         SellerCheck_Main(getId);
 
         setupUI(findViewById(R.id.parent));
-//        btn_goto_register_seller.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(Register_Seller_MainPage.this, TermsAndConditions.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     public void setupUI(View view) {
@@ -137,18 +125,7 @@ public class RegisterSellerMain extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
-    private void SellerCheck_Main(final String user_id){
+    private void SellerCheck_Main(final String user_id) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,
                 new Response.Listener<String>() {
                     @Override
@@ -163,14 +140,14 @@ public class RegisterSellerMain extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
                                     int strVerify = Integer.parseInt(object.getString("verification"));
-                                    if(strVerify == 2){
+                                    if (strVerify == 2) {
 
-                                        textView8.setVisibility(View.GONE);
-                                        textView9.setVisibility(View.GONE);
-                                        textView10.setVisibility(View.VISIBLE);
-                                        textView11.setVisibility(View.VISIBLE);
-                                        btn_goto_register_seller.setVisibility(View.GONE);
-                                        btn_goto_register_seller.setOnClickListener(new View.OnClickListener() {
+                                        tvBeforeYouCanStartSellingYourProducts.setVisibility(View.GONE);
+                                        tvYouNeedToRegisterAsKetekMallSeller.setVisibility(View.GONE);
+                                        tvYourAccountHasBeenBlocked.setVisibility(View.VISIBLE);
+                                        tvPleaseContactAdministratorForMoreDetails.setVisibility(View.VISIBLE);
+                                        btnGoToRegisterSeller.setVisibility(View.GONE);
+                                        btnGoToRegisterSeller.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(RegisterSellerMain.this, TermsAndConditions.class);
@@ -178,13 +155,13 @@ public class RegisterSellerMain extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         });
-                                    }else{
-                                        textView8.setVisibility(View.VISIBLE);
-                                        textView9.setVisibility(View.VISIBLE);
-                                        textView10.setVisibility(View.GONE);
-                                        textView11.setVisibility(View.GONE);
-                                        btn_goto_register_seller.setVisibility(View.VISIBLE);
-                                        btn_goto_register_seller.setOnClickListener(new View.OnClickListener() {
+                                    } else {
+                                        tvBeforeYouCanStartSellingYourProducts.setVisibility(View.VISIBLE);
+                                        tvYouNeedToRegisterAsKetekMallSeller.setVisibility(View.VISIBLE);
+                                        tvYourAccountHasBeenBlocked.setVisibility(View.GONE);
+                                        tvPleaseContactAdministratorForMoreDetails.setVisibility(View.GONE);
+                                        btnGoToRegisterSeller.setVisibility(View.VISIBLE);
+                                        btnGoToRegisterSeller.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(RegisterSellerMain.this, TermsAndConditions.class);
@@ -211,7 +188,7 @@ public class RegisterSellerMain extends AppCompatActivity {
                             if (error instanceof TimeoutError) {
                                 //Time out error
 
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
 
                             } else if (error instanceof AuthFailureError) {
@@ -225,7 +202,7 @@ public class RegisterSellerMain extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
 
-                            }else{
+                            } else {
                                 //Error
                             }
                             //End
@@ -240,7 +217,7 @@ public class RegisterSellerMain extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", user_id);
+                params.put(sID, user_id);
                 return params;
             }
         };
@@ -248,7 +225,7 @@ public class RegisterSellerMain extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void ToolbarSetting(){
+    private void ToolbarSetting() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

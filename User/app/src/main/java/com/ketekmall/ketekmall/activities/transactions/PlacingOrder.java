@@ -25,7 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.models.SessionManager;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
@@ -38,22 +38,23 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ketekmall.ketekmall.configs.Constant.sCUSTOMER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sEMAIL;
+import static com.ketekmall.ketekmall.configs.Constant.sID;
+import static com.ketekmall.ketekmall.configs.Constant.sPLAYER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sSELLER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sUPPER_NAME;
+import static com.ketekmall.ketekmall.configs.Constant.sOS_USER_ID;
+import static com.ketekmall.ketekmall.configs.Constant.sWORDS;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class PlacingOrder extends AppCompatActivity {
 
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer.php";
-    private static String URL_SEND_SELLER = "https://ketekmall.com/ketekmall/sendEmail_seller.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-
     Button Continue_Shopping;
 
     String getId;
-    SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,16 +62,15 @@ public class PlacingOrder extends AppCompatActivity {
         setContentView(R.layout.after_place_order);
 
         Intent intent1 = getIntent();
-        String sellerID = intent1.getStringExtra("seller_id");
+        String sellerID = intent1.getStringExtra(sSELLER_ID);
         getSellerDetail(sellerID);
         GetPlayerData(sellerID);
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
         getUserDetail();
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.getMenu().getItem(0).setCheckable(false);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -163,7 +163,7 @@ public class PlacingOrder extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put("customer_id", getId);
+                        params.put(sCUSTOMER_ID, getId);
                         return params;
                     }
                 };
@@ -240,7 +240,7 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };
@@ -300,7 +300,7 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", email);
+                params.put(sEMAIL, email);
                 return params;
             }
         };
@@ -322,9 +322,9 @@ public class PlacingOrder extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String PlayerID = object.getString("PlayerID");
-                                    String Name = object.getString("Name");
-                                    String UserID = object.getString("UserID");
+                                    String PlayerID = object.getString(sPLAYER_ID);
+                                    String Name = object.getString(sUPPER_NAME);
+                                    String UserID = object.getString(sOS_USER_ID);
 
                                     OneSignalNoti(PlayerID, Name);
                                 }
@@ -375,7 +375,7 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("UserID", CustomerUserID);
+                params.put(sOS_USER_ID, CustomerUserID);
                 return params;
             }
         };
@@ -424,9 +424,9 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("PlayerID", PlayerUserID);
-                params.put("Name", Name);
-                params.put("Words", "New Order has been placed! Check My Selling for more information.");
+                params.put(sPLAYER_ID, PlayerUserID);
+                params.put(sUPPER_NAME, Name);
+                params.put(sWORDS, "New Order has been placed! Check My Selling for more information.");
                 return params;
             }
         };
@@ -448,7 +448,7 @@ public class PlacingOrder extends AppCompatActivity {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                    String strEmail = object.getString("email");
+                                    String strEmail = object.getString(sEMAIL);
 
                                     sendEmailSeller(strEmail);
                                 }
@@ -500,7 +500,7 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", sellerID);
+                params.put(sID, sellerID);
                 return params;
             }
         };
@@ -560,7 +560,7 @@ public class PlacingOrder extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("email", email);
+                params.put(sEMAIL, email);
                 return params;
             }
         };

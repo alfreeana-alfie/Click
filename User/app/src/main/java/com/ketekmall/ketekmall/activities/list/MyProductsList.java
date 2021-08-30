@@ -32,6 +32,7 @@ import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.products.EditProduct;
 import com.ketekmall.ketekmall.adapters.MyProductsListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -69,13 +70,14 @@ public class MyProductsList extends AppCompatActivity {
     private GridView gridView;
     private MyProductsListAdapter adapter_item;
     private List<Item_All_Details> itemList;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myproducts);
         Declare();
-        getSession();
+//        getSession();
         ToolbarSetting();
         View_List();
     }
@@ -97,15 +99,17 @@ public class MyProductsList extends AppCompatActivity {
         });
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_item);
         no_result = findViewById(R.id.no_result);

@@ -38,6 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.transactions.Checkout;
 import com.ketekmall.ketekmall.adapters.CartListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
@@ -72,6 +73,7 @@ public class CartList extends AppCompatActivity {
     BottomNavigationView bottomNav;
 
     ProgressBar loading;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -80,11 +82,11 @@ public class CartList extends AppCompatActivity {
         setContentView(R.layout.cart);
         Declare();
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
 
         DeleteOrder_Single();
 
@@ -93,6 +95,9 @@ public class CartList extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         Grand_Total = findViewById(R.id.grandtotal);
 
         loading = findViewById(R.id.loading);

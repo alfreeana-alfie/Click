@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.SectionsPagerAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -56,6 +57,7 @@ public class Me extends AppCompatActivity {
     private String getId;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +65,10 @@ public class Me extends AppCompatActivity {
         setContentView(R.layout.me_page);
 
         ToolbarSetting();
-        getSession();
+//        getSession();
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         getUserDetail();
         verify = findViewById(R.id.verify);
         SellerCheck_Main(getId);
@@ -194,16 +199,16 @@ public class Me extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        profile_image = findViewById(R.id.profile_image);
-        Username = findViewById(R.id.username);
-
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        profile_image = findViewById(R.id.profile_image);
+//        Username = findViewById(R.id.username);
+//
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void getUserDetail() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GET_PROFILE_DETAILS,

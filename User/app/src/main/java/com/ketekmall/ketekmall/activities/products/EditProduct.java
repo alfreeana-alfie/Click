@@ -68,22 +68,13 @@ import java.util.TimerTask;
 
 import static android.view.View.VISIBLE;
 
+import static com.ketekmall.ketekmall.configs.Constant.*;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class EditProduct extends AppCompatActivity {
 
-    private static String UPDATE = "https://ketekmall.com/ketekmall/products/update.php";
-
-    private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
-    private static String URL_IMG = "https://ketekmall.com/ketekmall/products/uploadimg02.php";
-    private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
-    private static String URL_READ_PHOTO = "https://ketekmall.com/ketekmall/products_img/read_photo.php";
     private static String URL_EDIT_PROD = "https://ketekmall.com/ketekmall/edit_product_detail.php";
-
-    private static String URL_ADD_TEMP = "https://ketekmall.com/ketekmall/products/add_temp.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/products/delete_temp.php";
-    private static String URL_DELETE_DB_TEMP = "https://ketekmall.com/ketekmall/products/delete_db_temp.php";
-    
+  
     ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category;
     Uri filePath1,filePath2,filePath3,filePath4,filePath5;
     String strID, sub_category, district;
@@ -115,54 +106,54 @@ public class EditProduct extends AppCompatActivity {
 
         final Intent intent = getIntent();
 
-        strID = intent.getStringExtra("id");
-        final String main_category = intent.getStringExtra("main_category");
-        sub_category = intent.getStringExtra("sub_category");
-        final String ad_detail = intent.getStringExtra("ad_detail");
-        final String price = intent.getStringExtra("price");
-        final String division = intent.getStringExtra("division");
-        final String postcode = intent.getStringExtra("postcode");
-        district = intent.getStringExtra("district");
-        final String photo = intent.getStringExtra("photo");
-        photo02 = intent.getStringExtra("photo02");
-        photo03 = intent.getStringExtra("photo03");
-        photo04 = intent.getStringExtra("photo04");
-        photo05 = intent.getStringExtra("photo05");
+        strID = intent.getStringExtra(sID);
+        final String main_category = intent.getStringExtra(sMAIN_CATEGORY);
+        sub_category = intent.getStringExtra(sSUB_CATEGORY);
+        final String ad_detail = intent.getStringExtra(sAD_DETAIL);
+        final String price = intent.getStringExtra(sPRICE);
+        final String division = intent.getStringExtra(sDIVISION);
+        final String postcode = intent.getStringExtra(sPOSTCODE);
+        district = intent.getStringExtra(sDISTRICT);
+        final String photo = intent.getStringExtra(sPHOTO);
+        photo02 = intent.getStringExtra(sPHOTO02);
+        photo03 = intent.getStringExtra(sPHOTO03);
+        photo04 = intent.getStringExtra(sPHOTO04);
+        photo05 = intent.getStringExtra(sPHOTO05);
         String Location_Text = division + ", " + district;
-        final String strMax_Order = intent.getStringExtra("max_order");
-        final String strWeight = intent.getStringExtra("weight");
+        final String strMax_Order = intent.getStringExtra(sMAX_ORDER);
+        final String strWeight = intent.getStringExtra(sWEIGHT);
 
-        final String brand = intent.getStringExtra("brand_material");
-        final String inner = intent.getStringExtra("inner_material");
-        final String stock = intent.getStringExtra("stock");
-        final String desc = intent.getStringExtra("description");
+        final String brand = intent.getStringExtra(sBRAND_MAT);
+        final String inner = intent.getStringExtra(sINNER_MAT);
+        final String stock = intent.getStringExtra(sSTOCK);
+        final String desc = intent.getStringExtra(sDESCRIPTION);
 
         // List of photos
-        if(!photo.equals("null")){
+        if(!photo.equals(sNULL)){
             photoUrlLink.add(photo);
             final String[] getPhotoId = photo.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo02.equals("null")){
+        if(!photo02.equals(sNULL)){
             photoUrlLink.add(photo02);
             final String[] getPhotoId = photo02.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo03.equals("null")){
+        if(!photo03.equals(sNULL)){
             photoUrlLink.add(photo03);
             final String[] getPhotoId = photo03.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo04.equals("null")){
+        if(!photo04.equals(sNULL)){
             photoUrlLink.add(photo04);
             final String[] getPhotoId = photo04.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo05.equals("null")){
+        if(!photo05.equals(sNULL)){
             photoUrlLink.add(photo05);
             final String[] getPhotoId = photo05.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
@@ -207,8 +198,6 @@ public class EditProduct extends AppCompatActivity {
         edittext_inner.setText(inner);
         edittext_stock.setText(stock);
         edittext_desc.setText(desc);
-
-        Button_Func();
     }
 
     private void Declare() {
@@ -320,42 +309,6 @@ public class EditProduct extends AppCompatActivity {
         adapter_category.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_main_category.setAdapter(adapter_category);
 
-//        setupUI(parent);
-    }
-
-    public void setupUI(View view) {
-
-        // Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(EditProduct.this);
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
-    private void Button_Func() {
         upload_photo_img1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -396,7 +349,7 @@ public class EditProduct extends AppCompatActivity {
             public void onClick(View v) {
                 upload_photo_img2.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
                 delete_2.setVisibility(View.GONE);
-                deletePhoto("2");
+//                deletePhoto("2");
                 deleteTemp(1);
             }
         });
@@ -406,7 +359,7 @@ public class EditProduct extends AppCompatActivity {
             public void onClick(View v) {
                 upload_photo_img3.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
                 delete_3.setVisibility(View.GONE);
-                deletePhoto("3");
+//                deletePhoto("3");
                 deleteTemp(2);
             }
         });
@@ -416,7 +369,7 @@ public class EditProduct extends AppCompatActivity {
             public void onClick(View v) {
                 upload_photo_img4.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
                 delete_4.setVisibility(View.GONE);
-                deletePhoto("4");
+//                deletePhoto("4");
                 deleteTemp(3);
             }
         });
@@ -426,7 +379,7 @@ public class EditProduct extends AppCompatActivity {
             public void onClick(View v) {
                 upload_photo_img5.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_photo_foreground));
                 delete_5.setVisibility(View.GONE);
-                deletePhoto("5");
+//                deletePhoto("5");
                 deleteTemp(4);
             }
         });
@@ -556,6 +509,29 @@ public class EditProduct extends AppCompatActivity {
                 Ad_Detail_TextView.setText(mAd_Detail);
             }
         });
+
+//        setupUI(parent);
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(EditProduct.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
     }
 
     private void gotoLocation() {
@@ -651,7 +627,7 @@ public class EditProduct extends AppCompatActivity {
 
     private void saveEdit() {
         final Intent intent = getIntent();
-        strID = intent.getStringExtra("id");
+        strID = intent.getStringExtra(sID);
         final String strMain_category = this.spinner_main_category.getSelectedItem().toString();
         final String strAd_Detail = this.EditText_Ad_Detail.getText().toString();
         final String strBrand = this.edittext_brand.getText().toString();
@@ -682,8 +658,8 @@ public class EditProduct extends AppCompatActivity {
                         }else{
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                if (success.equals("1")) {
+                                String success = jsonObject.getString(sSUCCESS);
+                                if (success.equals(sONE)) {
                                     loading.setVisibility(View.GONE);
                                     Button_SavedEdit.setVisibility(View.VISIBLE);
                                     Button_BackEdit.setVisibility(VISIBLE);
@@ -740,28 +716,27 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("main_category", strMain_category);
-                params.put("sub_category", strMain_category);
-                params.put("ad_detail", strAd_Detail);
-                params.put("brand_material", strBrand);
-                params.put("inner_material", strBrand);
-                params.put("stock", strStock);
-                params.put("description", strDesc);
+                params.put(sMAIN_CATEGORY, strMain_category);
+                params.put(sSUB_CATEGORY, strMain_category);
+                params.put(sAD_DETAIL, strAd_Detail);
+                params.put(sBRAND_MAT, strBrand);
+                params.put(sINNER_MAT, strBrand);
+                params.put(sSTOCK, strStock);
+                params.put(sDESCRIPTION, strDesc);
 
-                params.put("price", strPrice_Text);
-                params.put("max_order", strOrder);
-                params.put("division", strDivision);
-                params.put("postcode", strPostcode);
-                params.put("district", strDistrict);
-                params.put("id", strID);
-                params.put("item_id", strID);
-                params.put("photo", photoTempId.get(0));
+                params.put(sPRICE, strPrice_Text);
+                params.put(sMAX_ORDER, strOrder);
+                params.put(sDIVISION, strDivision);
+                params.put(sPOSTCODE, strPostcode);
+                params.put(sDISTRICT, strDistrict);
+                params.put(sID, strID);
+                params.put(sITEM_ID, strID);
+                params.put(sPHOTO, photoTempId.get(0));
                 for(int i = 1; i< photoTempId.size(); i++){
                     int num = i+1;
-                    Log.i("PHOTO", String.valueOf(num));
-                    params.put("photo0" + num, photoTempId.get(i));
+                    params.put(sPHOTO0 + num, photoTempId.get(i));
                 }
-                params.put("weight", strWeight);
+                params.put(sWEIGHT, strWeight);
                 return params;
             }
         };
@@ -772,8 +747,8 @@ public class EditProduct extends AppCompatActivity {
 
     private void saveItemID() {
         Intent intent = getIntent();
-        strID = intent.getStringExtra("id");
-        final String ad_detail = intent.getStringExtra("ad_detail");
+        strID = intent.getStringExtra(sID);
+        final String ad_detail = intent.getStringExtra(sAD_DETAIL);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT_PROD,
                 new Response.Listener<String>() {
@@ -784,8 +759,8 @@ public class EditProduct extends AppCompatActivity {
                         }else{
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                if (success.equals("1")) {
+                                String success = jsonObject.getString(sSUCCESS);
+                                if (success.equals(sONE)) {
                                     Log.d("Message", "Return SUCCESS");
                                 } else {
                                     Log.e("Message", "Return FAILED");
@@ -838,8 +813,8 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("ad_detail", ad_detail);
-                params.put("item_id", strID);
+                params.put(sAD_DETAIL, ad_detail);
+                params.put(sITEM_ID, strID);
                 return params;
             }
         };
@@ -895,78 +870,6 @@ public class EditProduct extends AppCompatActivity {
             delete_3.setVisibility(View.VISIBLE);
             delete_4.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void deletePhoto(final String number){
-        Intent intent = getIntent();
-        final String ad_detail = intent.getStringExtra("ad_detail");
-
-        final String Filename = ad_detail + number;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_PHOTO,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if(response != null){
-                            try {
-                                JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
-                                if (success.equals("1")) {
-                                    Log.d("Message", "Return SUCCESS");
-                                } else {
-                                    Log.e("Message", "Return FAILED");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-//                                Toast.makeText(Product_Edit.this, "Error " + e.toString(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        }else{
-                            Log.e("onResponse", "Return NULL");
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("filename", Filename);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 
     public String getStringImage(Bitmap bitmap) {
@@ -1314,7 +1217,6 @@ public class EditProduct extends AppCompatActivity {
     }
 
     // New Function - 21st August 2021
-    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
 
     private static String random() {
         final Random random=new Random();
@@ -1334,8 +1236,8 @@ public class EditProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1384,8 +1286,8 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("filename_temp", filename_temp);
-                params.put("photo", filename);
+                params.put(sFILENAME_TEMP, filename_temp);
+                params.put(sPHOTO, filename);
                 return params;
             }
         };
@@ -1411,8 +1313,8 @@ public class EditProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1465,17 +1367,15 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", noExtension[0]);
+                params.put(sID, noExtension[0]);
                 return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
-//        photoUrlLink.set(count, "null");
-        photoTempId.set(count, "null");
-        Log.i("PHOTO", photoUrlLink.toString());
-        Log.i("PHOTO", photoTempId.toString());
+//        photoUrlLink.set(count, sNULL);
+        photoTempId.set(count, sNULL);
         return true;
     }
 
@@ -1488,8 +1388,8 @@ public class EditProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1542,7 +1442,7 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", photoId);
+                params.put(sID, photoId);
                 return params;
             }
         };
@@ -1559,8 +1459,8 @@ public class EditProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Edit.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1613,7 +1513,7 @@ public class EditProduct extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", photoId);
+                params.put(sID, photoId);
                 return params;
             }
         };

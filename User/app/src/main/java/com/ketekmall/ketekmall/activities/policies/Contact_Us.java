@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.activities.main.Home;
@@ -24,6 +25,7 @@ public class Contact_Us extends AppCompatActivity {
     String getId;
     SessionManager sessionManager;
     BottomNavigationView bottomNav;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,11 +62,15 @@ public class Contact_Us extends AppCompatActivity {
             }
         });
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
     }
 
     private void ToolbarSettings(){

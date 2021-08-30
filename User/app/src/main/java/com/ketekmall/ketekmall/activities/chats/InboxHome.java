@@ -39,6 +39,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.ChatListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.ChatSession;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
@@ -55,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class InboxHome extends AppCompatActivity {
@@ -71,17 +73,18 @@ public class InboxHome extends AppCompatActivity {
     BottomNavigationView bottomNav;
 
     ChatListAdapter chat_adapter;
+    Setup setup;
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -89,7 +92,10 @@ public class InboxHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_inbox);
         ToolbarSetting();
-        getSession();
+//        getSession();
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         BottomNavigationSettings();
 
         recyclerView = findViewById(R.id.usersList);
@@ -321,13 +327,13 @@ public class InboxHome extends AppCompatActivity {
         });
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     public void BottomNavigationSettings(){
         bottomNav = findViewById(R.id.bottom_nav);

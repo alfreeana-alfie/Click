@@ -315,15 +315,6 @@ public class Home extends AppCompatActivity {
 //        this.recreate();
     }
 
-//    private void getSession() {
-//        sessionManager = new SessionManager(this);
-//        sessionManager.checkLogin();
-//
-//        HashMap<String, String> user = sessionManager.getUserDetail();
-//        getId = user.get(SessionManager.ID);
-//
-//    }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
         setup = new Setup(this);

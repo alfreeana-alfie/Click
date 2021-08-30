@@ -28,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapters.MyIncomeListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.OrderDone;
 import com.ketekmall.ketekmall.models.SessionManager;
@@ -60,14 +61,14 @@ public class MyIncomeList extends AppCompatActivity {
 
     MyIncomeListAdapter orderAdapter;
     List<OrderDone> orderList;
-
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myincome);
         Declare();
-        getSession();
+//        getSession();
         ToolbarSettings();
         getIncome();
 
@@ -178,15 +179,18 @@ public class MyIncomeList extends AppCompatActivity {
         });
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         orderList = new ArrayList<>();
         recyclerView = findViewById(R.id.order_view);
         recyclerView.setHasFixedSize(true);

@@ -1,57 +1,102 @@
 package com.ketekmall.ketekmall.auth.user;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.*;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import androidx.annotation.*;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.*;
-import com.android.volley.toolbox.*;
-import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.models.SessionManager;
-import com.ketekmall.ketekmall.models.UserDetails;
-import com.ketekmall.ketekmall.activities.main.Home;
-import com.facebook.*;
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.Firebase;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.*;
-import com.google.android.gms.common.*;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.activities.main.Home;
+import com.ketekmall.ketekmall.models.SessionManager;
+import com.ketekmall.ketekmall.models.UserDetails;
 
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import static com.ketekmall.ketekmall.configs.Constant.*;
-import static com.ketekmall.ketekmall.configs.Link.*;
+import static com.ketekmall.ketekmall.configs.Constant.PASSWORD_PATTERN;
+import static com.ketekmall.ketekmall.configs.Constant.RC_SIGN_IN;
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_01;
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_02;
+import static com.ketekmall.ketekmall.configs.Constant.sBIRTHDAY;
+import static com.ketekmall.ketekmall.configs.Constant.sDIVISION;
+import static com.ketekmall.ketekmall.configs.Constant.sEMAIL;
+import static com.ketekmall.ketekmall.configs.Constant.sGENDER;
+import static com.ketekmall.ketekmall.configs.Constant.sID;
+import static com.ketekmall.ketekmall.configs.Constant.sNAME;
+import static com.ketekmall.ketekmall.configs.Constant.sNULL;
+import static com.ketekmall.ketekmall.configs.Constant.sPASSWORD;
+import static com.ketekmall.ketekmall.configs.Constant.sPHONE_NO;
+import static com.ketekmall.ketekmall.configs.Constant.sPHOTO;
+import static com.ketekmall.ketekmall.configs.Constant.sPOSTCODE;
+import static com.ketekmall.ketekmall.configs.Constant.sTOKEN;
+import static com.ketekmall.ketekmall.configs.Link.FIREBASE_USER;
+import static com.ketekmall.ketekmall.configs.Link.IMAGE_DEFAULT;
+import static com.ketekmall.ketekmall.configs.Link.LOGIN;
+import static com.ketekmall.ketekmall.configs.Link.REGISTER;
 
 
 @SuppressWarnings("deprecation")
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-//    private static final int RC_SIGN_IN = 1;
-//    private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
-
-    private String name_firebase, email_firebase;
+    private String firebaseName, firebaseEmail;
     private CallbackManager callbackManager;
-    private EditText email, password;
-    private ProgressBar loading;
-    private Button button_login, button_goto_register_page, button_goto_forgot_page;
+    private EditText etEmail, etPassword;
+    private ProgressBar pbLoading;
+    private Button btnLogin;
     private SessionManager sessionManager;
-    private SignInButton signInButton;
     private GoogleApiClient googleApiClient;
-    private String getId;
-    private RelativeLayout loading_layout;
+    private RelativeLayout rlLoading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,58 +105,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         Declare();
 
         Firebase.setAndroidContext(Login.this);
-        sessionManager = new SessionManager(Login.this);
 
-        loading_layout = findViewById(R.id.loading_layout);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleApiClient=new GoogleApiClient.Builder(this)
-                .enableAutoManage(this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
-
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent, RC_SIGN_IN);
-            }
-        });
-
-        button_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SignIn();
-            }
-        });
-
-        button_goto_register_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, Register.class));
-//                final Fragment fragment_register = new Register();
-//                FragmentManager fragmentManager = getFragmentManager();
-//                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
-//                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
-//                fragmentTransaction.replace(R.id.framelayout, fragment_register);
-//                fragmentTransaction.commit();
-            }
-        });
-
-        button_goto_forgot_page.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Login.this, Forgot_Password.class));
-//                final Fragment fragment_forgot_password = new Forgot_Password();
-//                FragmentManager fragmentManager = getFragmentManager();
-//                FragmentTransaction fragmentTransaction = Objects.requireNonNull(fragmentManager).beginTransaction();
-//                fragmentTransaction.setCustomAnimations(R.anim.slidein_right, R.anim.slideout_left);
-//                fragmentTransaction.replace(R.id.framelayout, fragment_forgot_password);
-//                fragmentTransaction.commit();
-            }
-        });
         setupUI(findViewById(R.id.parent));
     }
+
     public void setupUI(View view) {
 
         // Set up touch listener for non-text box views to hide keyboard.
@@ -133,32 +130,22 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
     private void Declare() {
-        email = findViewById(R.id.email_edit);
-        password = findViewById(R.id.password_login);
-        loading = findViewById(R.id.loading);
-        button_login = findViewById(R.id.button_login);
-        button_goto_register_page = findViewById(R.id.button_goto_register_page);
-        button_goto_forgot_page = findViewById(R.id.button_goto_forgot_page);
-        signInButton = findViewById(R.id.sign_in_button);
+        etEmail = findViewById(R.id.email_edit);
+        etPassword = findViewById(R.id.password_login);
+        pbLoading = findViewById(R.id.loading);
+        btnLogin = findViewById(R.id.button_login);
+        Button btnGoToRegister = findViewById(R.id.button_goto_register_page);
+        Button btnGoToForgotPassword = findViewById(R.id.button_goto_forgot_page);
+        rlLoading = findViewById(R.id.loading_layout);
+        sessionManager = new SessionManager(Login.this);
+
+        SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_WIDE);
 
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-//        loginButton.setFragment(Login.this);
-
+        loginButton.setReadPermissions(sEMAIL);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -175,23 +162,58 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 Toast.makeText(Login.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         });
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, RC_SIGN_IN);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignIn();
+            }
+        });
+
+        btnGoToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, Register.class));
+            }
+        });
+
+        btnGoToForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, Forgot_Password.class));
+            }
+        });
     }
 
     private void SignIn() {
-        final String mEmail = this.email.getText().toString().trim();
-        final String mPassword = this.password.getText().toString().trim();
+        final String mEmail = this.etEmail.getText().toString().trim();
+        final String mPassword = this.etPassword.getText().toString().trim();
 
         if (!PASSWORD_PATTERN.matcher(mPassword).matches()) {
-            password.setError("Incorrect Password");
+            etPassword.setError("Incorrect Password");
         } else if (!mEmail.isEmpty() || !mPassword.isEmpty()) {
-            loading.setVisibility(View.VISIBLE);
-            button_login.setVisibility(View.GONE);
+            pbLoading.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            if(response != null){
+                            if (response != null) {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     String success = jsonObject.getString("success");
@@ -201,113 +223,110 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject object = jsonArray.getJSONObject(i);
 
-                                            final String name = object.getString("name").trim();
-                                            final String email = object.getString("email").trim();
-                                            final String phone_no = object.getString("phone_no").trim();
-                                            final String address_01 = object.getString("address_01").trim();
-                                            final String address_02 = object.getString("address_02").trim();
-                                            final String city = object.getString("division").trim();
-                                            final String postcode = object.getString("postcode").trim();
-                                            final String birthday = object.getString("birthday").trim();
-                                            final String gender = object.getString("gender").trim();
-                                            final String photo = object.getString("photo").trim();
-                                            String id = object.getString("id").trim();
+                                            final String strName = object.getString(sNAME).trim();
+                                            final String strEmail = object.getString(sEMAIL).trim();
+                                            final String strPhoneNo = object.getString(sPHONE_NO).trim();
+                                            final String strAddress01 = object.getString(sADDRESS_01).trim();
+                                            final String strAddress02 = object.getString(sADDRESS_02).trim();
+                                            final String strDivision = object.getString(sDIVISION).trim();
+                                            final String strPostcode = object.getString(sPOSTCODE).trim();
+                                            final String strBirthday = object.getString(sBIRTHDAY).trim();
+                                            final String strGender = object.getString(sGENDER).trim();
+                                            final String strPhoto = object.getString(sPHOTO).trim();
+                                            String strId = object.getString(sID).trim();
 
-                                            sessionManager.createSession(name, email,
-                                                    phone_no, address_01,
-                                                    address_02, city,
-                                                    postcode, birthday,
-                                                    gender, id);
+                                            sessionManager.createSession(strName, strEmail,
+                                                    strPhoneNo, strAddress01,
+                                                    strAddress02, strDivision,
+                                                    strPostcode, strBirthday,
+                                                    strGender, strId);
 
-                                            String newemail = email.substring(0, email.lastIndexOf("@"));
-
-                                            Log.d("TAG: ", newemail);
-                                            UserDetails.email = newemail;
+                                            UserDetails.email = strEmail.substring(0, strEmail.lastIndexOf("@"));
 
                                             //Firebase
                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
                                             final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
-                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                            StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String s) {
-                                                    if(s != null){
-                                                        if (s.equals("null")) {
+                                                    if (s != null) {
+                                                        if (s.equals(sNULL)) {
                                                             Toast.makeText(Login.this, "actionbar_chat not found", Toast.LENGTH_LONG).show();
                                                         } else {
                                                             try {
                                                                 JSONObject obj = new JSONObject(s);
-                                                                if (!obj.has(name)) {
-                                                                    name_firebase = name;
-                                                                    email_firebase = email;
+                                                                if (!obj.has(strName)) {
+                                                                    firebaseName = strName;
+                                                                    firebaseEmail = strEmail;
 
                                                                     String url = "https://click-1595830894120.firebaseio.com/users.json";
 
                                                                     StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                                                         @Override
                                                                         public void onResponse(String s) {
-                                                                            if (s != null){
-                                                                                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                                            if (s != null) {
+                                                                                final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                                                                if (s.equals("null")) {
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("email")
-                                                                                            .setValue(email_firebase);
-                                                                                    if(photo.equals("null")){
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo_url);
-                                                                                    }else {
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("photo")
-                                                                                                .setValue(photo);
+                                                                                if (s.equals(sNULL)) {
+                                                                                    REFERENCE.child(firebaseName)
+                                                                                            .child(sEMAIL)
+                                                                                            .setValue(firebaseEmail);
+                                                                                    if (strPhoto.equals(sNULL)) {
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sPHOTO)
+                                                                                                .setValue(IMAGE_DEFAULT);
+                                                                                    } else {
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sPHOTO)
+                                                                                                .setValue(strPhoto);
                                                                                     }
 
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("token")
+                                                                                    REFERENCE.child(firebaseName)
+                                                                                            .child(sTOKEN)
                                                                                             .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                                 } else {
                                                                                     try {
                                                                                         JSONObject obj = new JSONObject(s);
 
-                                                                                        if (!obj.has(name_firebase)) {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("email")
-                                                                                                    .setValue(email_firebase);
-                                                                                            if(photo.equals("null")){
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo_url);
-                                                                                            }else {
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo);
+                                                                                        if (!obj.has(firebaseName)) {
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sEMAIL)
+                                                                                                    .setValue(firebaseEmail);
+                                                                                            if (strPhoto.equals(sNULL)) {
+                                                                                                REFERENCE.child(firebaseName)
+                                                                                                        .child(sPHOTO)
+                                                                                                        .setValue(IMAGE_DEFAULT);
+                                                                                            } else {
+                                                                                                REFERENCE.child(firebaseName)
+                                                                                                        .child(sPHOTO)
+                                                                                                        .setValue(strPhoto);
                                                                                             }
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("token")
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sTOKEN)
                                                                                                     .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                                         } else {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("email")
-                                                                                                    .setValue(email_firebase);
-                                                                                            if(photo.equals("null")){
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo_url);
-                                                                                            }else {
-                                                                                                reference.child(name_firebase)
-                                                                                                        .child("photo")
-                                                                                                        .setValue(photo);
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sEMAIL)
+                                                                                                    .setValue(firebaseEmail);
+                                                                                            if (strPhoto.equals(sNULL)) {
+                                                                                                REFERENCE.child(firebaseName)
+                                                                                                        .child(sPHOTO)
+                                                                                                        .setValue(IMAGE_DEFAULT);
+                                                                                            } else {
+                                                                                                REFERENCE.child(firebaseName)
+                                                                                                        .child(sPHOTO)
+                                                                                                        .setValue(strPhoto);
                                                                                             }
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("token")
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sTOKEN)
                                                                                                     .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                                         }
                                                                                     } catch (JSONException e) {
                                                                                         e.printStackTrace();
                                                                                     }
                                                                                 }
-                                                                            }else{
+                                                                            } else {
                                                                                 Log.e("onResponse", "Return NULL");
                                                                             }
 
@@ -321,7 +340,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                                 if (error instanceof TimeoutError) {
                                                                                     //Time out error
                                                                                     System.out.println("" + error);
-                                                                                }else if(error instanceof NoConnectionError){
+                                                                                } else if (error instanceof NoConnectionError) {
                                                                                     //net work error
                                                                                     System.out.println("" + error);
                                                                                 } else if (error instanceof AuthFailureError) {
@@ -336,7 +355,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                                 } else if (error instanceof ParseError) {
                                                                                     //Error
                                                                                     System.out.println("" + error);
-                                                                                }else{
+                                                                                } else {
                                                                                     //Error
                                                                                     System.out.println("" + error);
                                                                                 }
@@ -349,71 +368,68 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                     RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                                                     rQueue.add(request);
 
-                                                                } else if (obj.getJSONObject(name).getString("email").equals(email)) {
-                                                                    UserDetails.username = name;
-                                                                    String newemail = email.substring(0, email.lastIndexOf("@"));
-                                                                    UserDetails.email = newemail;
+                                                                } else if (obj.getJSONObject(strName).getString(sEMAIL).equals(strEmail)) {
+                                                                    UserDetails.username = strName;
+                                                                    UserDetails.email = strEmail.substring(0, strEmail.lastIndexOf("@"));
 
-                                                                    name_firebase = name;
-                                                                    email_firebase = email;
+                                                                    firebaseName = strName;
+                                                                    firebaseEmail = strEmail;
 
-                                                                    String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-                                                                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                                                    StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                                                                         @Override
                                                                         public void onResponse(String s) {
-                                                                            final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                                            final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                                                            if (s.equals("null")) {
-                                                                                reference.child(name_firebase)
-                                                                                        .child("email")
-                                                                                        .setValue(email_firebase);
-                                                                                if(photo.equals("null")){
-                                                                                    reference.child(name_firebase)
-                                                                                            .child("photo")
-                                                                                            .setValue(photo_url);
+                                                                            if (s.equals(sNULL)) {
+                                                                                REFERENCE.child(firebaseName)
+                                                                                        .child(sEMAIL)
+                                                                                        .setValue(firebaseEmail);
+                                                                                if (strPhoto.equals(sNULL)) {
+                                                                                    REFERENCE.child(firebaseName)
+                                                                                            .child(sPHOTO)
+                                                                                            .setValue(IMAGE_DEFAULT);
                                                                                 }
-                                                                                reference.child(name_firebase)
-                                                                                        .child("photo")
-                                                                                        .setValue(photo);
-                                                                                reference.child(name_firebase)
-                                                                                        .child("token")
+                                                                                REFERENCE.child(firebaseName)
+                                                                                        .child(sPHOTO)
+                                                                                        .setValue(strPhoto);
+                                                                                REFERENCE.child(firebaseName)
+                                                                                        .child(sTOKEN)
                                                                                         .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                             } else {
                                                                                 try {
                                                                                     JSONObject obj = new JSONObject(s);
 
-                                                                                    if (!obj.has(name_firebase)) {
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("email")
-                                                                                                .setValue(email_firebase);
-                                                                                        if(photo.equals("null")){
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("photo")
-                                                                                                    .setValue(photo_url);
-                                                                                        }else {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("photo")
-                                                                                                    .setValue(photo);
+                                                                                    if (!obj.has(firebaseName)) {
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sEMAIL)
+                                                                                                .setValue(firebaseEmail);
+                                                                                        if (strPhoto.equals(sNULL)) {
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sPHOTO)
+                                                                                                    .setValue(IMAGE_DEFAULT);
+                                                                                        } else {
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sPHOTO)
+                                                                                                    .setValue(strPhoto);
                                                                                         }
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("token")
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sTOKEN)
                                                                                                 .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                                     } else {
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("email")
-                                                                                                .setValue(email_firebase);
-                                                                                        if(photo.equals("null")){
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("photo")
-                                                                                                    .setValue(photo_url);
-                                                                                        }else {
-                                                                                            reference.child(name_firebase)
-                                                                                                    .child("photo")
-                                                                                                    .setValue(photo);
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sEMAIL)
+                                                                                                .setValue(firebaseEmail);
+                                                                                        if (strPhoto.equals(sNULL)) {
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sPHOTO)
+                                                                                                    .setValue(IMAGE_DEFAULT);
+                                                                                        } else {
+                                                                                            REFERENCE.child(firebaseName)
+                                                                                                    .child(sPHOTO)
+                                                                                                    .setValue(strPhoto);
                                                                                         }
-                                                                                        reference.child(name_firebase)
-                                                                                                .child("token")
+                                                                                        REFERENCE.child(firebaseName)
+                                                                                                .child(sTOKEN)
                                                                                                 .setValue(FirebaseInstanceId.getInstance().getToken());
                                                                                     }
                                                                                 } catch (JSONException e) {
@@ -427,10 +443,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                         public void onErrorResponse(VolleyError error) {
                                                                             try {
 
-                                                                                if (error instanceof TimeoutError ) {
+                                                                                if (error instanceof TimeoutError) {
                                                                                     //Time out error
                                                                                     System.out.println("" + error);
-                                                                                }else if(error instanceof NoConnectionError){
+                                                                                } else if (error instanceof NoConnectionError) {
                                                                                     //net work error
                                                                                     System.out.println("" + error);
                                                                                 } else if (error instanceof AuthFailureError) {
@@ -445,7 +461,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                                 } else if (error instanceof ParseError) {
                                                                                     //Error
                                                                                     System.out.println("" + error);
-                                                                                }else{
+                                                                                } else {
                                                                                     //Error
                                                                                     System.out.println("" + error);
                                                                                 }
@@ -453,7 +469,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                                 e.printStackTrace();
                                                                             }
                                                                         }
-                                                                    })  {
+                                                                    }) {
                                                                         @Override
                                                                         protected Map<String, String> getParams() {
                                                                             return getParams();
@@ -468,7 +484,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                                 e.printStackTrace();
                                                             }
                                                         }
-                                                    }else{
+                                                    } else {
                                                         Log.e("onResponse", "Return NULL");
                                                     }
                                                 }
@@ -477,10 +493,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                 public void onErrorResponse(VolleyError error) {
                                                     try {
 
-                                                        if (error instanceof TimeoutError ) {
+                                                        if (error instanceof TimeoutError) {
                                                             //Time out error
                                                             System.out.println("" + error);
-                                                        }else if(error instanceof NoConnectionError){
+                                                        } else if (error instanceof NoConnectionError) {
                                                             //net work error
                                                             System.out.println("" + error);
                                                         } else if (error instanceof AuthFailureError) {
@@ -495,7 +511,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                         } else if (error instanceof ParseError) {
                                                             //Error
                                                             System.out.println("" + error);
-                                                        }else{
+                                                        } else {
                                                             //Error
                                                             System.out.println("" + error);
                                                         }
@@ -503,7 +519,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                                         e.printStackTrace();
                                                     }
                                                 }
-                                            })  {
+                                            }) {
                                                 @Override
                                                 protected Map<String, String> getParams() {
                                                     return getParams();
@@ -512,43 +528,43 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                             RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                                             rQueue.add(request);
 
-                                            loading_layout.setVisibility(View.VISIBLE);
+                                            rlLoading.setVisibility(View.VISIBLE);
                                             Timer timer = new Timer();
                                             timer.schedule(new TimerTask() {
                                                 @Override
                                                 public void run() {
                                                     Intent intent = new Intent(Login.this, Home.class);
-                                                    intent.putExtra("name", name);
-                                                    intent.putExtra("email", email);
-                                                    intent.putExtra("phone_no", phone_no);
-                                                    intent.putExtra("address_01", address_01);
-                                                    intent.putExtra("address_02", address_02);
-                                                    intent.putExtra("division", city);
-                                                    intent.putExtra("postcode", postcode);
-                                                    intent.putExtra("birthday", birthday);
-                                                    intent.putExtra("gender", gender);
+                                                    intent.putExtra(sNAME, strName);
+                                                    intent.putExtra(sEMAIL, strEmail);
+                                                    intent.putExtra(sPHONE_NO, strPhoneNo);
+                                                    intent.putExtra(sADDRESS_01, strAddress01);
+                                                    intent.putExtra(sADDRESS_02, strAddress02);
+                                                    intent.putExtra(sDIVISION, strDivision);
+                                                    intent.putExtra(sPOSTCODE, strPostcode);
+                                                    intent.putExtra(sBIRTHDAY, strBirthday);
+                                                    intent.putExtra(sGENDER, strGender);
 
                                                     startActivity(intent);
                                                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                                 }
                                             }, 3000);
                                             Toast.makeText(Login.this, "SignIn Success", Toast.LENGTH_SHORT).show();
-                                            loading.setVisibility(View.GONE);
-                                            button_login.setVisibility(View.VISIBLE);
+                                            pbLoading.setVisibility(View.GONE);
+                                            btnLogin.setVisibility(View.VISIBLE);
                                         }
                                     } else {
-                                        loading.setVisibility(View.GONE);
-                                        button_login.setVisibility(View.VISIBLE);
+                                        pbLoading.setVisibility(View.GONE);
+                                        btnLogin.setVisibility(View.VISIBLE);
                                         Toast.makeText(Login.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     Toast.makeText(Login.this, "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
 
-                                    loading.setVisibility(View.GONE);
-                                    button_login.setVisibility(View.VISIBLE);
+                                    pbLoading.setVisibility(View.GONE);
+                                    btnLogin.setVisibility(View.VISIBLE);
                                 }
-                            }else{
+                            } else {
                                 Log.e("onResponse", "Return NULL");
                             }
                         }
@@ -557,10 +573,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 public void onErrorResponse(VolleyError error) {
                     try {
 
-                        if (error instanceof TimeoutError ) {
+                        if (error instanceof TimeoutError) {
                             //Time out error
                             System.out.println("" + error);
-                        }else if(error instanceof NoConnectionError){
+                        } else if (error instanceof NoConnectionError) {
                             //net work error
                             System.out.println("" + error);
                         } else if (error instanceof AuthFailureError) {
@@ -575,7 +591,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         } else if (error instanceof ParseError) {
                             //Error
                             System.out.println("" + error);
-                        }else{
+                        } else {
                             //Error
                             System.out.println("" + error);
                         }
@@ -587,16 +603,16 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("email", mEmail);
-                    params.put("password", mPassword);
+                    params.put(sEMAIL, mEmail);
+                    params.put(sPASSWORD, mPassword);
                     return params;
                 }
             };
             RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
             requestQueue.add(stringRequest);
         } else {
-            email.setError("Fields cannot be empty!");
-            password.setError("Fields cannot be empty!");
+            etEmail.setError("Fields cannot be empty!");
+            etPassword.setError("Fields cannot be empty!");
         }
     }
 
@@ -609,7 +625,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 } else {
                     final String fbUserId = object.optString("id");
                     final String fbUserName = object.optString("name");
-                    final String fbEmail = object.optString("email");
+                    final String fbEmail = object.optString(sEMAIL);
                     final String phone_no = "00000000000";
 
                     final String birthday = "";
@@ -618,38 +634,38 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
                     final String photo = "http://graph.facebook.com/" + fbUserId + "/picture?type=large";
 
-                    name_firebase = fbUserName;
-                    email_firebase = fbEmail;
+                    firebaseName = fbUserName;
+                    firebaseEmail = fbEmail;
 
-                    String url = "https://click-1595830894120.firebaseio.com/users.json";
-                    StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String s) {
-                            final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                            final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                            if (s.equals("null")) {
-                                reference.child(name_firebase).child("email")
-                                        .setValue(email_firebase);
-                                reference.child(name_firebase).child("photo")
+
+                            if (s.equals(sNULL)) {
+                                REFERENCE.child(firebaseName).child(sEMAIL)
+                                        .setValue(firebaseEmail);
+                                REFERENCE.child(firebaseName).child(sPHOTO)
                                         .setValue(photo);
-                                reference.child(name_firebase).child("token")
+                                REFERENCE.child(firebaseName).child(sTOKEN)
                                         .setValue(FirebaseInstanceId.getInstance().getToken());
                             } else {
                                 try {
                                     JSONObject obj = new JSONObject(s);
-                                    if (!obj.has(name_firebase)) {
-                                        reference.child(name_firebase).child("email")
-                                                .setValue(email_firebase);
-                                        reference.child(name_firebase).child("photo")
+                                    if (!obj.has(firebaseName)) {
+                                        REFERENCE.child(firebaseName).child(sEMAIL)
+                                                .setValue(firebaseEmail);
+                                        REFERENCE.child(firebaseName).child(sPHOTO)
                                                 .setValue(photo);
-                                        reference.child(name_firebase).child("token")
+                                        REFERENCE.child(firebaseName).child(sTOKEN)
                                                 .setValue(FirebaseInstanceId.getInstance().getToken());
                                     } else {
-                                        reference.child(name_firebase).child("email")
-                                                .setValue(email_firebase);
-                                        reference.child(name_firebase).child("photo")
+                                        REFERENCE.child(firebaseName).child(sEMAIL)
+                                                .setValue(firebaseEmail);
+                                        REFERENCE.child(firebaseName).child(sPHOTO)
                                                 .setValue(photo);
-                                        reference.child(name_firebase).child("token")
+                                        REFERENCE.child(firebaseName).child(sTOKEN)
                                                 .setValue(FirebaseInstanceId.getInstance().getToken());
                                     }
                                 } catch (JSONException e) {
@@ -668,7 +684,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     RequestQueue rQueue = Volley.newRequestQueue(Login.this);
                     rQueue.add(request);
 
-
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER,
                             new Response.Listener<String>() {
                                 @Override
@@ -678,27 +693,26 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                                         String success = jsonObject.getString("success");
 
                                         if (success.equals("1")) {
-                                            String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                            StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                            StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String s) {
-                                                    final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                                    final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                                    if (s.equals("null")) {
-                                                        reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                        reference.child(name_firebase).child("photo").setValue(photo);
-                                                        reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    if (s.equals(sNULL)) {
+                                                        REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                                        REFERENCE.child(firebaseName).child(sPHOTO).setValue(photo);
+                                                        REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                                     } else {
                                                         try {
                                                             JSONObject obj = new JSONObject(s);
-                                                            if (!obj.has(name_firebase)) {
-                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                reference.child(name_firebase).child("photo").setValue(photo);
-                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                            if (!obj.has(firebaseName)) {
+                                                                REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(photo);
+                                                                REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                                             } else {
-                                                                reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                                reference.child(name_firebase).child("photo").setValue(photo);
-                                                                reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                                REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(photo);
+                                                                REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
@@ -781,26 +795,26 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<>();
-                            params.put("name", fbUserName);
-                            params.put("email", fbEmail);
-                            params.put("phone_no", phone_no);
-                            params.put("password", strPassword);
+                            params.put(sNAME, fbUserName);
+                            params.put(sEMAIL, fbEmail);
+                            params.put(sPHONE_NO, phone_no);
+                            params.put(sPASSWORD, strPassword);
 
-                            params.put("birthday", birthday);
-                            params.put("gender", gender);
-                            params.put("photo", photo);
+                            params.put(sBIRTHDAY, birthday);
+                            params.put(sGENDER, gender);
+                            params.put(sPHOTO, photo);
                             return params;
                         }
                     };
                     RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
                     requestQueue.add(stringRequest);
 
-                    email.setText(fbEmail);
-                    password.setText(strPassword);
+                    etEmail.setText(fbEmail);
+                    etPassword.setText(strPassword);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            button_login.performClick();
+                            btnLogin.performClick();
                         }
                     }, 20);
 
@@ -823,40 +837,37 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
         final String photo = String.valueOf(account.getPhotoUrl());
-        final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
 
-        name_firebase = name;
-        email_firebase = email;
+        firebaseName = name;
+        firebaseEmail = email;
 
-        String url = "https://click-1595830894120.firebaseio.com/users.json";
-
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                if (s.equals("null")) {
-                    reference.child(name_firebase).child("email").setValue(email_firebase);
-                    if(photo.equals("null")){
-                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                if (s.equals(sNULL)) {
+                    REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                    if (photo.equals(sNULL)) {
+                        REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                     }
-                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                    REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                 } else {
                     try {
                         JSONObject obj = new JSONObject(s);
 
-                        if (!obj.has(name_firebase)) {
-                            reference.child(name_firebase).child("email").setValue(email_firebase);
-                            if(photo.equals("null")){
-                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                        if (!obj.has(firebaseName)) {
+                            REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                            if (photo.equals(sNULL)) {
+                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                             }
-                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                         } else {
-                            reference.child(name_firebase).child("email").setValue(email_firebase);
-                            if(photo.equals("null")){
-                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                            REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                            if (photo.equals(sNULL)) {
+                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                             }
-                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                            REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -883,33 +894,32 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                             String success = jsonObject.getString("success");
 
                             if (success.equals("1")) {
-                                String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                StringRequest request = new StringRequest(Request.Method.GET, FIREBASE_USER, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String s) {
-                                        final Firebase reference = new Firebase("https://click-1595830894120.firebaseio.com/users");
+                                        final Firebase REFERENCE = new Firebase("https://click-1595830894120.firebaseio.com/users");
 
-                                        if (s.equals("null")) {
-                                            reference.child(name_firebase).child("email").setValue(email_firebase);
-                                            if(photo.equals("null")){
-                                                reference.child(name_firebase).child("photo").setValue(photo_url);
+                                        if (s.equals(sNULL)) {
+                                            REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                            if (photo.equals(sNULL)) {
+                                                REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                                             }
-                                            reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                            REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                         } else {
                                             try {
                                                 JSONObject obj = new JSONObject(s);
-                                                if (!obj.has(name_firebase)) {
-                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                    if(photo.equals("null")){
-                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                if (!obj.has(firebaseName)) {
+                                                    REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                                    if (photo.equals(sNULL)) {
+                                                        REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                                                     }
-                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                                 } else {
-                                                    reference.child(name_firebase).child("email").setValue(email_firebase);
-                                                    if(photo.equals("null")){
-                                                        reference.child(name_firebase).child("photo").setValue(photo_url);
+                                                    REFERENCE.child(firebaseName).child(sEMAIL).setValue(firebaseEmail);
+                                                    if (photo.equals(sNULL)) {
+                                                        REFERENCE.child(firebaseName).child(sPHOTO).setValue(IMAGE_DEFAULT);
                                                     }
-                                                    reference.child(name_firebase).child("token").setValue(FirebaseInstanceId.getInstance().getToken());
+                                                    REFERENCE.child(firebaseName).child(sTOKEN).setValue(FirebaseInstanceId.getInstance().getToken());
                                                 }
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
@@ -992,13 +1002,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", name);
-                params.put("email", email);
-                params.put("phone_no", phone_no);
-                params.put("password", password);
-                params.put("birthday", birthday);
-                params.put("gender", gender);
-                params.put("photo", photo);
+                params.put(sNAME, name);
+                params.put(sEMAIL, email);
+                params.put(sPHONE_NO, phone_no);
+                params.put(sPASSWORD, password);
+                params.put(sBIRTHDAY, birthday);
+                params.put(sGENDER, gender);
+                params.put(sPHOTO, photo);
                 return params;
             }
         };
@@ -1012,12 +1022,12 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         if (result.isSuccess()) {
             Google_SignIn(result);
             GoogleSignInAccount account = result.getSignInAccount();
-            email.setText(Objects.requireNonNull(account).getEmail());
-            password.setText(account.getFamilyName() + account.getGivenName());
+            etEmail.setText(Objects.requireNonNull(account).getEmail());
+            etPassword.setText(account.getFamilyName() + account.getGivenName());
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    button_login.performClick();
+                    btnLogin.performClick();
                 }
             }, 100);
 

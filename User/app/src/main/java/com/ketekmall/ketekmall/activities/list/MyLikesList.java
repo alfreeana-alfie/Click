@@ -19,6 +19,7 @@ import com.ketekmall.ketekmall.activities.products.ViewProduct;
 import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.adapters.MyLikesListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.*;
 import com.ketekmall.ketekmall.activities.users.UserProfile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +28,7 @@ import org.json.*;
 
 import java.util.*;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class MyLikesList extends AppCompatActivity {
@@ -53,17 +55,18 @@ public class MyLikesList extends AppCompatActivity {
     BottomNavigationView bottomNav;
 
     TextView no_result;
+    Setup setup;
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class MyLikesList extends AppCompatActivity {
             }
         });
         ToolbarSetting();
-        getSession();
+//        getSession();
         View_List();
     }
 
@@ -179,15 +182,18 @@ public class MyLikesList extends AppCompatActivity {
         });
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         itemList = new ArrayList<>();
         gridView = findViewById(R.id.gridView_item);
         no_result = findViewById(R.id.no_result);

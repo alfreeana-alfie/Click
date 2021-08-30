@@ -53,6 +53,7 @@ import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.adapters.ProductListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Item_All_Details;
 import com.ketekmall.ketekmall.models.SessionManager;
 
@@ -66,6 +67,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 
 public class ProductList extends AppCompatActivity {
     private static String GET_CATEGORY = "";
@@ -93,17 +96,18 @@ public class ProductList extends AppCompatActivity {
     private Button price_sortlowest, price_sorthighest, Button_Cancel, Button_Apply, Button_Filter;
     private ArrayAdapter<CharSequence> adapter_division, adapter_district;
     private ProgressBar loading;
+    Setup setup;
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -128,7 +132,7 @@ public class ProductList extends AppCompatActivity {
         View_List();
 
         ToolbarSetting();
-        getSession();
+//        getSession();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -272,15 +276,18 @@ public class ProductList extends AppCompatActivity {
 //        this.recreate();
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         loading = findViewById(R.id.loading);
 
         itemList = new ArrayList<>();

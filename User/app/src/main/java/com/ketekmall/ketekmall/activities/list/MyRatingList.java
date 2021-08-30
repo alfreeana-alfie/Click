@@ -21,6 +21,7 @@ import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.adapters.RatingAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,6 +29,7 @@ import org.json.*;
 
 import java.util.*;
 
+import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class MyRatingList extends AppCompatActivity {
@@ -42,17 +44,18 @@ public class MyRatingList extends AppCompatActivity {
     BottomNavigationView bottomNav;
     String getId;
     SessionManager sessionManager;
+    Setup setup;
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
+//    public static void hideSoftKeyboard(Activity activity) {
+//        InputMethodManager inputMethodManager =
+//                (InputMethodManager) activity.getSystemService(
+//                        Activity.INPUT_METHOD_SERVICE);
+//        if(activity.getCurrentFocus() != null){
+//            inputMethodManager.hideSoftInputFromWindow(
+//                    activity.getCurrentFocus().getWindowToken(), 0);
+//        }
+//
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class MyRatingList extends AppCompatActivity {
         setContentView(R.layout.myrating);
         Declare();
         ToolbarSettings();
-        getSession();
+//        getSession();
         Read_Review(getId);
     }
 
@@ -219,13 +222,13 @@ public class MyRatingList extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     private void ToolbarSettings(){
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -243,6 +246,9 @@ public class MyRatingList extends AppCompatActivity {
     }
 
     private void Declare(){
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         ratingList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);

@@ -20,6 +20,7 @@ import com.ketekmall.ketekmall.activities.main.Home;
 import com.ketekmall.ketekmall.activities.main.Me;
 import com.ketekmall.ketekmall.activities.main.Notification;
 import com.ketekmall.ketekmall.adapters.ChatListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,6 +42,7 @@ public class Inbox extends AppCompatActivity {
 
     LinearLayout parent;
     ChatListAdapter chat_adapter;
+    Setup setup;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -48,7 +50,9 @@ public class Inbox extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_inbox);
         ToolbarSetting();
-        getSession();
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         BottomNavigationSettings();
 
         recyclerView = findViewById(R.id.usersList);
@@ -281,13 +285,13 @@ public class Inbox extends AppCompatActivity {
         });
     }
 
-    private void getSession() {
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
-    }
+//    private void getSession() {
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
+//    }
 
     public void BottomNavigationSettings(){
         bottomNav = findViewById(R.id.bottom_nav);

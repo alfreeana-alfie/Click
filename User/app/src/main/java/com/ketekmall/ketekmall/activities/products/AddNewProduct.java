@@ -1,6 +1,5 @@
 package com.ketekmall.ketekmall.activities.products;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,6 +45,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.list.MyProductsList;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.Product_Add_Data;
 import com.ketekmall.ketekmall.models.SessionManager;
 import com.ketekmall.ketekmall.activities.main.Home;
@@ -67,6 +66,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.ketekmall.ketekmall.configs.Constant.*;
 import static com.ketekmall.ketekmall.configs.Link.*;
 
 public class AddNewProduct extends AppCompatActivity {
@@ -92,6 +92,7 @@ public class AddNewProduct extends AppCompatActivity {
     List<Product_Add_Data> itemList;
     BottomNavigationView bottomNav;
     RelativeLayout parent;
+    Setup setup;
 
     List<String> photoTempId = new ArrayList<String>();
 
@@ -130,13 +131,8 @@ public class AddNewProduct extends AppCompatActivity {
             }
         });
 
-        sessionManager = new SessionManager(AddNewProduct.this);
-        sessionManager.checkLogin();
-
-        getUserId();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+        setup = new Setup(this);
+        getId = setup.getUserId();
 
         upload_photo_img1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -367,17 +363,6 @@ public class AddNewProduct extends AppCompatActivity {
         }
     }
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        if(activity.getCurrentFocus() != null){
-            inputMethodManager.hideSoftInputFromWindow(
-                    activity.getCurrentFocus().getWindowToken(), 0);
-        }
-
-    }
-
     private void Declare() {
         itemList = new ArrayList<>();
         enter_category = findViewById(R.id.enter_main_category);
@@ -559,10 +544,10 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
+                            String success = jsonObject.getString(sSUCCESS);
                             JSONArray jsonArray = jsonObject.getJSONArray("read");
 
-                            if (success.equals("1")) {
+                            if (success.equals(sONE)) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                 }
                             } else {
@@ -659,7 +644,7 @@ public class AddNewProduct extends AppCompatActivity {
 
     private void deletePhoto(final String number){
         Intent intent = getIntent();
-        final String ad_detail = intent.getStringExtra("ad_detail");
+        final String ad_detail = intent.getStringExtra(sAD_DETAIL);
 
         final String Filename = ad_detail + number;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_PHOTO,
@@ -668,8 +653,8 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(AddNewProduct.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -1057,8 +1042,8 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1108,7 +1093,7 @@ public class AddNewProduct extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("filename_temp", filename_temp);
-                params.put("photo", filename);
+                params.put(sPHOTO, filename);
                 return params;
             }
         };
@@ -1128,8 +1113,8 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1202,8 +1187,8 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1273,8 +1258,8 @@ public class AddNewProduct extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            if (success.equals("1")) {
+                            String success = jsonObject.getString(sSUCCESS);
+                            if (success.equals(sONE)) {
                                 Log.i("IMAGE", "SUCCESS");
 //                                Toast.makeText(Product_Add.this, "Success!", Toast.LENGTH_SHORT).show();
                             } else {
@@ -1361,9 +1346,9 @@ public class AddNewProduct extends AppCompatActivity {
                         public void onResponse(String response) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String success = jsonObject.getString("success");
+                                String success = jsonObject.getString(sSUCCESS);
 
-                                if (success.equals("1")) {
+                                if (success.equals(sONE)) {
                                     loading.setVisibility(View.GONE);
                                     accept_item.setVisibility(View.VISIBLE);
                                 } else {
@@ -1418,28 +1403,28 @@ public class AddNewProduct extends AppCompatActivity {
                         }
                     }) {
                 @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
+                protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
-                    params.put("user_id", id);
-                    params.put("main_category", strMain_category);
-                    params.put("sub_category", strMain_category);
-                    params.put("ad_detail", strAd_Detail);
-                    params.put("brand_material", strBrand);
-                    params.put("inner_material", strBrand);
-                    params.put("stock", strStock);
-                    params.put("description", strDesc);
-                    params.put("price", String.format("%.2f", strPrice));
-                    params.put("max_order", strOrder);
-                    params.put("division", strDivision);
-                    params.put("postcode", strPostcode);
-                    params.put("district", strDistrict);
-                    params.put("photo", photoTempId.get(0));
+                    params.put(sUSER_ID, id);
+                    params.put(sMAIN_CATEGORY, strMain_category);
+                    params.put(sSUB_CATEGORY, strMain_category);
+                    params.put(sAD_DETAIL, strAd_Detail);
+                    params.put(sBRAND_MAT, strBrand);
+                    params.put(sINNER_MAT, strBrand);
+                    params.put(sSTOCK, strStock);
+                    params.put(sDESCRIPTION, strDesc);
+                    params.put(sPRICE, String.format(s2DP, strPrice));
+                    params.put(sMAX_ORDER, strOrder);
+                    params.put(sDIVISION, strDivision);
+                    params.put(sPOSTCODE, strPostcode);
+                    params.put(sDISTRICT, strDistrict);
+                    params.put(sPHOTO, photoTempId.get(0));
                     for(int i = 1; i< photoTempId.size(); i++){
                         int num = i+1;
 
-                        params.put("photo0" + num, photoTempId.get(i));
+                        params.put(sPHOTO0 + num, photoTempId.get(i));
                     }
-                    params.put("weight", strWeight);
+                    params.put(sWEIGHT, strWeight);
                     return params;
                 }
             };

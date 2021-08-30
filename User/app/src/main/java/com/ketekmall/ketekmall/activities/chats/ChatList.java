@@ -1,6 +1,5 @@
 package com.ketekmall.ketekmall.activities.chats;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
@@ -64,9 +61,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.ketekmall.ketekmall.configs.Constant.hideSoftKeyboard;
-import static com.ketekmall.ketekmall.configs.Link.ADD_NEW_CHAT;
 import static com.ketekmall.ketekmall.configs.Link.CREATE_NEW_CHAT;
-import static com.ketekmall.ketekmall.configs.Link.EDIT_CHAT;
 import static com.ketekmall.ketekmall.configs.Link.GET_PLAYER_ID;
 import static com.ketekmall.ketekmall.configs.Link.GET_SINGLE_CHAT;
 import static com.ketekmall.ketekmall.configs.Link.SEND_NOTIFICATION;
@@ -82,7 +77,6 @@ public class ChatList extends AppCompatActivity {
     BottomNavigationView bottomNav;
     List<ChatSession> chatDetailList;
     String getId;
-    SessionManager sessionManager;
     RelativeLayout parent;
     Setup setup;
 

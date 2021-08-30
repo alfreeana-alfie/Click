@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -24,11 +22,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.R;
-import com.ketekmall.ketekmall.activities.main.Home;
-import com.ketekmall.ketekmall.models.SessionManager;
-import com.ketekmall.ketekmall.models.UserDetails;
-import com.ketekmall.ketekmall.auth.user.Login;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -36,6 +29,11 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.firebase.client.Firebase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.ketekmall.ketekmall.R;
+import com.ketekmall.ketekmall.activities.main.Home;
+import com.ketekmall.ketekmall.auth.user.Login;
+import com.ketekmall.ketekmall.models.SessionManager;
+import com.ketekmall.ketekmall.models.UserDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,15 +43,23 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_01;
+import static com.ketekmall.ketekmall.configs.Constant.sADDRESS_02;
+import static com.ketekmall.ketekmall.configs.Constant.sBIRTHDAY;
+import static com.ketekmall.ketekmall.configs.Constant.sDIVISION;
+import static com.ketekmall.ketekmall.configs.Constant.sENG;
+import static com.ketekmall.ketekmall.configs.Constant.sGENDER;
+import static com.ketekmall.ketekmall.configs.Constant.sID;
+import static com.ketekmall.ketekmall.configs.Constant.sMS;
+import static com.ketekmall.ketekmall.configs.Constant.sNAME;
+import static com.ketekmall.ketekmall.configs.Constant.sPHONE_NO;
+import static com.ketekmall.ketekmall.configs.Constant.sPOSTCODE;
 import static com.ketekmall.ketekmall.configs.Link.GET_PROFILE_DETAILS;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     String getId;
     private SessionManager sessionManager;
-    private FrameLayout frameLayout;
-    private RelativeLayout loading_layout;
 
     private long backPressedTime;
     private Toast backToast;
@@ -64,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_APPEND);
         String s1 = sh.getString("lang", "");
 
-        if(s1.equals("en")){
-            String languageToLoad1 = "en"; // your language
+        if (s1.equals(sENG)) {
+            String languageToLoad1 = sENG; // your language
             Locale locale1 = new Locale(languageToLoad1);
             Locale.setDefault(locale1);
             Configuration config1 = new Configuration();
@@ -77,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor1 = lang1.edit();
             editor1.putString("lang", languageToLoad1);
             editor1.commit();
-        }else{
-            String languageToLoad1 = "ms"; // your language
+        } else {
+            String languageToLoad1 = sMS; // your language
             Locale locale1 = new Locale(languageToLoad1);
             Locale.setDefault(locale1);
             Configuration config1 = new Configuration();
@@ -95,23 +101,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Firebase.setAndroidContext(MainActivity.this);
 
-        frameLayout = findViewById(R.id.framelayout);
-        loading_layout = findViewById(R.id.loading_layout);
-
         sessionManager = new SessionManager(this);
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        if(!sessionManager.isLoggin()){
+        if (!sessionManager.isLoggin()) {
+            Log.i("CHECK", "LOG OUY");
             startActivity(new Intent(MainActivity.this, Login.class));
-        }else{
+        } else {
+            Log.i("CHECK", "LOG IN");
             getUserDetail();
         }
     }
@@ -143,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response == null){
+                        if (response == null) {
                             Log.e("onResponse", "Return NULL");
-                        }else{
+                        } else {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String success = jsonObject.getString("success");
@@ -155,17 +159,17 @@ public class MainActivity extends AppCompatActivity {
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
 
-                                        final String name = object.getString("name").trim();
+                                        final String name = object.getString(sNAME).trim();
                                         final String email = object.getString("email").trim();
-                                        final String phone_no = object.getString("phone_no").trim();
-                                        final String address_01 = object.getString("address_01").trim();
-                                        final String address_02 = object.getString("address_02").trim();
-                                        final String city = object.getString("division").trim();
-                                        final String postcode = object.getString("postcode").trim();
-                                        final String birthday = object.getString("birthday").trim();
-                                        final String gender = object.getString("gender").trim();
+                                        final String phone_no = object.getString(sPHONE_NO).trim();
+                                        final String address_01 = object.getString(sADDRESS_01).trim();
+                                        final String address_02 = object.getString(sADDRESS_02).trim();
+                                        final String city = object.getString(sDIVISION).trim();
+                                        final String postcode = object.getString(sPOSTCODE).trim();
+                                        final String birthday = object.getString(sBIRTHDAY).trim();
+                                        final String gender = object.getString(sGENDER).trim();
                                         final String photo = object.getString("photo").trim();
-                                        String id = object.getString("id").trim();
+                                        String id = object.getString(sID).trim();
 
                                         String newemail = email.substring(0, email.lastIndexOf("@"));
 
@@ -289,10 +293,10 @@ public class MainActivity extends AppCompatActivity {
 
                                                                     try {
 
-                                                                        if (error instanceof TimeoutError ) {
+                                                                        if (error instanceof TimeoutError) {
                                                                             //Time out error
 
-                                                                        }else if(error instanceof NoConnectionError){
+                                                                        } else if (error instanceof NoConnectionError) {
                                                                             //net work error
 
                                                                         } else if (error instanceof AuthFailureError) {
@@ -306,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                                                                         } else if (error instanceof ParseError) {
                                                                             //Error
 
-                                                                        }else{
+                                                                        } else {
                                                                             //Error
                                                                         }
                                                                         //End
@@ -342,15 +346,15 @@ public class MainActivity extends AppCompatActivity {
                                         sessionManager.createSession(name, email, phone_no, address_01, address_02, city, postcode, birthday, gender, id);
 
                                         Intent intent = new Intent(MainActivity.this, Home.class);
-                                        intent.putExtra("name", name);
+                                        intent.putExtra(sNAME, name);
                                         intent.putExtra("email", email);
-                                        intent.putExtra("phone_no", phone_no);
-                                        intent.putExtra("address_01", address_01);
-                                        intent.putExtra("address_02", address_02);
-                                        intent.putExtra("division", city);
-                                        intent.putExtra("postcode", postcode);
-                                        intent.putExtra("birthday", birthday);
-                                        intent.putExtra("gender", gender);
+                                        intent.putExtra(sPHONE_NO, phone_no);
+                                        intent.putExtra(sADDRESS_01, address_01);
+                                        intent.putExtra(sADDRESS_02, address_02);
+                                        intent.putExtra(sDIVISION, city);
+                                        intent.putExtra(sPOSTCODE, postcode);
+                                        intent.putExtra(sBIRTHDAY, birthday);
+                                        intent.putExtra(sGENDER, gender);
                                         startActivity(intent);
                                         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 //                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -371,10 +375,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         try {
 
-                            if (error instanceof TimeoutError ) {
+                            if (error instanceof TimeoutError) {
                                 //Time out error
 
-                            }else if(error instanceof NoConnectionError){
+                            } else if (error instanceof NoConnectionError) {
                                 //net work error
 
                             } else if (error instanceof AuthFailureError) {
@@ -388,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
                             } else if (error instanceof ParseError) {
                                 //Error
 
-                            }else{
+                            } else {
                                 //Error
                             }
                             //End
@@ -403,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", getId);
+                params.put(sID, getId);
                 return params;
             }
         };

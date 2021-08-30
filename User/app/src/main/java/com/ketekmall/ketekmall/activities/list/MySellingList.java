@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.activities.order.MySellingDetails;
 import com.ketekmall.ketekmall.adapters.MySellingListAdapter;
+import com.ketekmall.ketekmall.configs.Setup;
 import com.ketekmall.ketekmall.models.MySingleton;
 import com.ketekmall.ketekmall.models.Order;
 import com.ketekmall.ketekmall.models.Receipt;
@@ -80,6 +81,7 @@ public class MySellingList extends AppCompatActivity {
     SessionManager sessionManager;
     TextView textView8, textView9, getTextView10;
     BottomNavigationView bottomNav;
+    Setup setup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,11 +90,11 @@ public class MySellingList extends AppCompatActivity {
         Declare();
         ToolbarSettings();
 
-        sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
-
-        HashMap<String, String> user = sessionManager.getUserDetail();
-        getId = user.get(SessionManager.ID);
+//        sessionManager = new SessionManager(this);
+//        sessionManager.checkLogin();
+//
+//        HashMap<String, String> user = sessionManager.getUserDetail();
+//        getId = user.get(SessionManager.ID);
 
         SellerCheck(getId);
         Approval_List();
@@ -100,6 +102,9 @@ public class MySellingList extends AppCompatActivity {
     }
 
     private void Declare() {
+        setup = new Setup(this);
+        getId = setup.getUserId();
+
         itemList = new ArrayList<>();
         receiptList = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerView);
