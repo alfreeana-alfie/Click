@@ -217,16 +217,19 @@ public class View_Product extends AppCompatActivity {
 
         // List of photos
         photoList.add(photo);
-        if(!photo02.equals("null")){
+        if(!photo02.contains("null") && !photo02.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo02);
         }
-        if(!photo03.equals("null")){
+
+        if(!photo03.contains("null") && !photo03.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo03);
         }
-        if(!photo04.equals("null")){
+
+        if(!photo04.contains("null") && !photo04.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo04);
         }
-        if(!photo05.equals("null")){
+
+        if(!photo05.contains("null") && !photo05.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo05);
         }
 
@@ -367,7 +370,10 @@ public class View_Product extends AppCompatActivity {
 
             pageAdapter = new PageAdapter(View_Product.this, image);
             Log.i("PHOTO VIEW", image[i]);
+
+
         }
+
         viewPager.setAdapter(pageAdapter);
 
         Page_Text.setText("1/" + photoList.size());

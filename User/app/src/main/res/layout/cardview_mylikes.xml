@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/item_image"
                 android:paddingTop="5dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 tools:srcCompat="@tools:sample/avatars[1]" />
 
             <TextView

@@ -49,6 +49,7 @@ import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
 import com.ketekmall.ketekmall.adapter.PageAdapter;
+import com.ketekmall.ketekmall.adapter.PromotionAdapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.pages.navigation_items.About_KetekMall;
@@ -170,7 +171,7 @@ public class Homepage extends AppCompatActivity {
     private long backPressedTime;
     private Toast backToast;
     String[] image = new String[3];
-    PageAdapter adapter;
+    PromotionAdapter adapter;
     RequestQueue queue;
 
     @Override
@@ -1486,7 +1487,7 @@ public class Homepage extends AppCompatActivity {
 
                                     image[i] = image_item;
 
-                                    adapter = new PageAdapter(Homepage.this, image);
+                                    adapter = new PromotionAdapter(Homepage.this, image);
                                 }
                                 viewPager.setAdapter(adapter);
 

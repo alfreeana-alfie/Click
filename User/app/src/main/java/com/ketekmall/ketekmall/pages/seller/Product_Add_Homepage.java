@@ -753,7 +753,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
                         upload_photo_img1.setImageBitmap(rotatedBitmap);
                     }else{
@@ -771,7 +771,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
                             upload_photo_img1.setImageBitmap(rotatedBitmap);
                         }else{
@@ -793,7 +793,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                         upload_photo_img2.setImageBitmap(rotatedBitmap);
                     }else{
@@ -811,7 +811,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                         upload_photo_img2.setImageBitmap(rotatedBitmap);
                     }else{
@@ -830,7 +830,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                             upload_photo_img2.setImageBitmap(rotatedBitmap);
                         }else{
@@ -854,7 +854,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                         upload_photo_img3.setImageBitmap(rotatedBitmap);
                     }else{
@@ -872,7 +872,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                         upload_photo_img3.setImageBitmap(rotatedBitmap);
                     }else{
@@ -891,7 +891,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                             upload_photo_img3.setImageBitmap(rotatedBitmap);
                         }else{
@@ -914,7 +914,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                         upload_photo_img4.setImageBitmap(rotatedBitmap);
                     }else{
@@ -932,7 +932,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                         upload_photo_img4.setImageBitmap(rotatedBitmap);
                     }else{
@@ -951,7 +951,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                             upload_photo_img4.setImageBitmap(rotatedBitmap);
                         }else{
@@ -975,7 +975,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                         upload_photo_img5.setImageBitmap(rotatedBitmap);
                     }else{
@@ -993,7 +993,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                         upload_photo_img5.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1012,7 +1012,7 @@ public class Product_Add_Homepage extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                             upload_photo_img5.setImageBitmap(rotatedBitmap);
                         }else{

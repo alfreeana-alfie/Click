@@ -23,7 +23,7 @@
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_below="@id/text_order_id"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView

@@ -136,31 +136,31 @@ public class Product_Edit extends AppCompatActivity {
         final String desc = intent.getStringExtra("description");
 
         // List of photos
-        if(!photo.equals("null")){
+        if(!photo.equals("null") && !photo.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo);
             final String[] getPhotoId = photo.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo02.equals("null")){
+        if(!photo02.equals("null") && !photo02.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo02);
             final String[] getPhotoId = photo02.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo03.equals("null")){
+        if(!photo03.equals("null") && !photo03.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo03);
             final String[] getPhotoId = photo03.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo04.equals("null")){
+        if(!photo04.equals("null") && !photo04.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo04);
             final String[] getPhotoId = photo04.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo05.equals("null")){
+        if(!photo05.equals("null") && !photo05.contains("https://ketekmall.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo05);
             final String[] getPhotoId = photo05.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
@@ -989,7 +989,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
                         upload_photo_img1.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1007,7 +1007,7 @@ public class Product_Edit extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
                             upload_photo_img1.setImageBitmap(rotatedBitmap);
                         }else{
@@ -1029,7 +1029,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                         upload_photo_img2.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1047,7 +1047,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                         upload_photo_img2.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1066,7 +1066,7 @@ public class Product_Edit extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
                             upload_photo_img2.setImageBitmap(rotatedBitmap);
                         }else{
@@ -1090,7 +1090,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                         upload_photo_img3.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1108,7 +1108,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                         upload_photo_img3.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1127,7 +1127,7 @@ public class Product_Edit extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
                             upload_photo_img3.setImageBitmap(rotatedBitmap);
                         }else{
@@ -1150,7 +1150,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                         upload_photo_img4.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1168,7 +1168,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                         upload_photo_img4.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1187,7 +1187,7 @@ public class Product_Edit extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
                             upload_photo_img4.setImageBitmap(rotatedBitmap);
                         }else{
@@ -1211,7 +1211,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                         upload_photo_img5.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1229,7 +1229,7 @@ public class Product_Edit extends AppCompatActivity {
                     Matrix matrix = new Matrix();
 
                     if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(90);
+                        matrix.postRotate(360);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                         upload_photo_img5.setImageBitmap(rotatedBitmap);
                     }else{
@@ -1248,7 +1248,7 @@ public class Product_Edit extends AppCompatActivity {
                         Matrix matrix = new Matrix();
 
                         if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                            matrix.postRotate(90);
+                            matrix.postRotate(360);
                             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
                             upload_photo_img5.setImageBitmap(rotatedBitmap);
                         }else{

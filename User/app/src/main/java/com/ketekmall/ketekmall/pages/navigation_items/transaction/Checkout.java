@@ -767,6 +767,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
                                                             DeleteOrder_Single();
                                                             sendEmailBuyer(id, ad_detail, String.format("%.2f", price), Price, quantity, String.format("%.2f", TotalPrice), Email);
+
                                                             Intent intent = new Intent(Checkout.this, Place_Order.class);
                                                             intent.putExtra("seller_id", seller_id);
                                                             startActivity(intent);

@@ -49,7 +49,7 @@
                 android:layout_height="55dp"
                 android:contentDescription="@string/todo"
                 android:layout_toEndOf="@id/checkBox"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout

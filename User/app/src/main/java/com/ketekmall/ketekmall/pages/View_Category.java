@@ -668,6 +668,10 @@ public class View_Category extends AppCompatActivity {
                                     item.setRating(rating);
                                     item.setPostcode(postcode);
                                     item.setWeight(weight);
+                                    item.setPhoto02(image_item02);
+                                    item.setPhoto03(image_item03);
+                                    item.setPhoto04(image_item04);
+                                    item.setPhoto05(image_item05);
                                     itemList.add(item);
                                 }
                                 if (itemList.isEmpty()) {
@@ -700,6 +704,11 @@ public class View_Category extends AppCompatActivity {
                                         detailIntent.putExtra("postcode", item.getPostcode());
                                         detailIntent.putExtra("district", item.getDistrict());
                                         detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo", item.getPhoto());
+                                        detailIntent.putExtra("photo02", item.getPhoto02());
+                                        detailIntent.putExtra("photo03", item.getPhoto03());
+                                        detailIntent.putExtra("photo04", item.getPhoto04());
+                                        detailIntent.putExtra("photo05", item.getPhoto05());
 
                                         detailIntent.putExtra("weight", item.getWeight());
 
