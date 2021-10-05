@@ -60,9 +60,9 @@ import java.util.Objects;
 
 public class Chat_Inbox extends AppCompatActivity {
 
-    public static String URL_CREATECHAT = "https://ketekmall.com/ketekmall/createChat.php";
-    public static String URL_GETCHAT = "https://ketekmall.com/ketekmall/getChat.php";
-    public static String URL_GETCHATISREAD = "https://ketekmall.com/ketekmall/getChatIsRead.php";
+    public static String URL_CREATECHAT = "http://hawkingnight.com/ketekmall/createChat.php";
+    public static String URL_GETCHAT = "http://hawkingnight.com/ketekmall/getChat.php";
+    public static String URL_GETCHATISREAD = "http://hawkingnight.com/ketekmall/getChatIsRead.php";
 
     RecyclerView recyclerView;
     TextView noUsersText;

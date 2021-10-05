@@ -101,15 +101,15 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.INTERNET};
 
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_product_accept.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_tracking_no.php";
-    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-    private static String URL_CreatePosLaju = "https://ketekmall.com/ketekmall/createConnote.php";
-    private static String URL_getConnote = "https://ketekmall.com/ketekmall/getConnote.php";
-    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
+    private static String URL_SEND = "http://hawkingnight.com/ketekmall/sendEmail_product_accept.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit_tracking_no.php";
+    private static String URL_DELETE_ORDER = "http://hawkingnight.com/ketekmall/delete_order_seller.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
+    private static String URL_CreatePosLaju = "http://hawkingnight.com/ketekmall/createConnote.php";
+    private static String URL_getConnote = "http://hawkingnight.com/ketekmall/getConnote.php";
+    private static String URL_getPayment = "http://hawkingnight.com/ketekmall/getPayment.php";
 
     EditText edit_review;
     Button btn_submit, btn_cancel, btn_download;

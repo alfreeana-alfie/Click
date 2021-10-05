@@ -58,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
 @SuppressWarnings("deprecation")
 public class Register extends AppCompatActivity {
 
-    private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
+    private static String URL_REGISTER = "http://hawkingnight.com/ketekmall/register.php";
     private final int PICK_IMAGE_REQUEST = 22;
     private String name_firebase, email_firebase;
     private ImageView imageView;
@@ -161,7 +161,7 @@ public class Register extends AppCompatActivity {
         final String strGender = "Female";
         final String strVerification ="0";
 
-        final String strPhoto_URL = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
+        final String strPhoto_URL = "http://hawkingnight.com/ketekmall/profile_image/main_photo.png";
 
         final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 

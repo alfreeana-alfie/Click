@@ -64,19 +64,19 @@ import static android.view.View.VISIBLE;
 
 public class View_Product extends AppCompatActivity {
 
-    private static String URL_READALL_SELLER = "https://ketekmall.com/ketekmall/readall_seller.php";
-    private static String URL_READ_SELLER = "https://ketekmall.com/ketekmall/read_order_done_seller.php";
+    private static String URL_READALL_SELLER = "http://hawkingnight.com/ketekmall/readall_seller.php";
+    private static String URL_READ_SELLER = "http://hawkingnight.com/ketekmall/read_order_done_seller.php";
 
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
-    private static String URL_EDIT_RATING = "https://ketekmall.com/ketekmall/edit_detail_rating.php";
-    private static String URL_EDIT_SOLD = "https://ketekmall.com/ketekmall/edit_detail_sold.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single.php";
-    private static String URL_READ_PHOTO = "https://ketekmall.com/ketekmall/products_img/read_photo.php";
-    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_ADD_CART = "http://hawkingnight.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_REVIEW = "http://hawkingnight.com/ketekmall/read_review.php";
+    private static String URL_EDIT_RATING = "http://hawkingnight.com/ketekmall/edit_detail_rating.php";
+    private static String URL_EDIT_SOLD = "http://hawkingnight.com/ketekmall/edit_detail_sold.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_READ_DELIVERY = "http://hawkingnight.com/ketekmall/read_delivery_single.php";
+    private static String URL_READ_PHOTO = "http://hawkingnight.com/ketekmall/products_img/read_photo.php";
+    private static String URL_READ_CART = "http://hawkingnight.com/ketekmall/readcart_single.php";
 
-    String image_default = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
+    String image_default = "http://hawkingnight.com/ketekmall/profile_image/main_photo.png";
 
 
     String id, userid, ad_detail, division, district, strMain_category, strSub_category, strPrice, photo, getId,
@@ -217,19 +217,19 @@ public class View_Product extends AppCompatActivity {
 
         // List of photos
         photoList.add(photo);
-        if(!photo02.contains("null") && !photo02.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo02.contains("null") && !photo02.contains("http://hawkingnight.com/ketekmall/products/.jpg") && !photo02.contains("http://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo02);
         }
 
-        if(!photo03.contains("null") && !photo03.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo03.contains("null") && !photo03.contains("http://hawkingnight.com/ketekmall/products/.jpg") && !photo03.contains("http://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo03);
         }
 
-        if(!photo04.contains("null") && !photo04.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo04.contains("null") && !photo04.contains("http://hawkingnight.com/ketekmall/products/.jpg") && !photo04.contains("http://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo04);
         }
 
-        if(!photo05.contains("null") && !photo05.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo05.contains("null") && !photo05.contains("http://hawkingnight.com/ketekmall/products/.jpg") && !photo05.contains("http://ketekmall.com/ketekmall/products/.jpg")){
             photoList.add(photo05);
         }
 

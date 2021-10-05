@@ -50,8 +50,8 @@ import java.util.Map;
 
 public class MyRating extends AppCompatActivity {
 
-    private static String URL_READ_PRODUCT = "https://ketekmall.com/ketekmall/read_products_review.php";
-    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review_user.php";
+    private static String URL_READ_PRODUCT = "http://hawkingnight.com/ketekmall/read_products_review.php";
+    private static String URL_READ_REVIEW = "http://hawkingnight.com/ketekmall/read_review_user.php";
 
     Rating_Adapter ratingAdapter;
     List<Rating> ratingList;

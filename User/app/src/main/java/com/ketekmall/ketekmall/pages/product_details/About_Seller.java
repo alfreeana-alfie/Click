@@ -64,11 +64,11 @@ import java.util.Objects;
 
 public class About_Seller extends AppCompatActivity {
 
-    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readall_seller.php";
-    private static String URL_READ_SELLER = "https://ketekmall.com/ketekmall/read_order_done_seller_shop.php";
-    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_READ_CART2 = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_READ_CART = "http://hawkingnight.com/ketekmall/readall_seller.php";
+    private static String URL_READ_SELLER = "http://hawkingnight.com/ketekmall/read_order_done_seller_shop.php";
+    private static String URL_ADD_FAV = "http://hawkingnight.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "http://hawkingnight.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_CART2 = "http://hawkingnight.com/ketekmall/readcart_single.php";
 
     SessionManager sessionManager;
     String getId;

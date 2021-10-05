@@ -49,7 +49,7 @@ import java.util.Map;
 
 public class Review_Info extends AppCompatActivity {
 
-    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review.php";
+    private static String URL_READ_REVIEW = "http://hawkingnight.com/ketekmall/read_review.php";
 
     RecyclerView recyclerView;
     Review_Adapter reviewAdapter;

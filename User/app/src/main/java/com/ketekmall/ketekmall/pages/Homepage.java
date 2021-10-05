@@ -90,25 +90,25 @@ public class Homepage extends AppCompatActivity {
     public static final String ID = "id";
     private static final String ONESIGNAL_APP_ID = "6236bfc3-df4d-4f44-82d6-754332044779";
 
-    private static String URL_READ_USER_DETAIL = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
-    private static String URL_READ_PROMOTION = "https://ketekmall.com/ketekmall/read_promo.php";
+    private static String URL_READ_USER_DETAIL = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_CART = "http://hawkingnight.com/ketekmall/readcart.php";
+    private static String URL_READ_PROMOTION = "http://hawkingnight.com/ketekmall/read_promo.php";
 
-    private static String URL_ADD_PLAYERID = "https://ketekmall.com/ketekmall/add_playerID.php";
+    private static String URL_ADD_PLAYERID = "http://hawkingnight.com/ketekmall/add_playerID.php";
 
-    private static String URL_READ_CHAT = "https://ketekmall.com/ketekmall/read_chat.php";
+    private static String URL_READ_CHAT = "http://hawkingnight.com/ketekmall/read_chat.php";
 
-    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_ADD_FAV = "http://hawkingnight.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "http://hawkingnight.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_CART = "http://hawkingnight.com/ketekmall/readcart_single.php";
 
-    private static String URL_GETCHATISREADALL = "https://ketekmall.com/ketekmall/getChatIsReadAll.php";
+    private static String URL_GETCHATISREADALL = "http://hawkingnight.com/ketekmall/getChatIsReadAll.php";
 
-    String URL_READ_CATEGORY_MAIN = "https://ketekmall.com/ketekmall/category/";
-    String URL_READ_CATEGORY_SEARCH_MAIN = "https://ketekmall.com/ketekmall/search/";
-    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "https://ketekmall.com/ketekmall/filter_district/";
-    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "https://ketekmall.com/ketekmall/filter_division/";
-    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "https://ketekmall.com/ketekmall/filter_search_division/";
+    String URL_READ_CATEGORY_MAIN = "http://hawkingnight.com/ketekmall/category/";
+    String URL_READ_CATEGORY_SEARCH_MAIN = "http://hawkingnight.com/ketekmall/search/";
+    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "http://hawkingnight.com/ketekmall/filter_district/";
+    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "http://hawkingnight.com/ketekmall/filter_division/";
+    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "http://hawkingnight.com/ketekmall/filter_search_division/";
 
 
     String[] CATEGORY_LIST = {

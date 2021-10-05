@@ -49,7 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PosLajuTestArea extends AppCompatActivity {
-    private String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
+    private String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
     private static final String ONESIGNAL_APP_ID = "6236bfc3-df4d-4f44-82d6-754332044779";
 
     // Header

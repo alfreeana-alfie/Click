@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class Register_Seller extends AppCompatActivity {
 
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail_seller.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit_detail_seller.php";
 
     EditText Edit_IC_NO, Edit_bank_name, Edit_bank_acc;
     Button btn_accept, btn_cancel;

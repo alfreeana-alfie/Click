@@ -45,8 +45,8 @@ import java.util.Map;
 
 public class ProductRating extends AppCompatActivity {
 
-    private static String URL_READ_PRODUCT = "https://ketekmall.com/ketekmall/read_products_review.php";
-    private static String URL_READ_REVIEW = "https://ketekmall.com/ketekmall/read_review_seller.php";
+    private static String URL_READ_PRODUCT = "http://hawkingnight.com/ketekmall/read_products_review.php";
+    private static String URL_READ_REVIEW = "http://hawkingnight.com/ketekmall/read_review_seller.php";
 
     Rating_Adapter ratingAdapter;
     List<Rating> ratingList;

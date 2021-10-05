@@ -40,12 +40,12 @@ import java.util.Map;
 
 public class Place_Order extends AppCompatActivity {
 
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer.php";
-    private static String URL_SEND_SELLER = "https://ketekmall.com/ketekmall/sendEmail_seller.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+    private static String URL_SEND = "http://hawkingnight.com/ketekmall/sendEmail_buyer.php";
+    private static String URL_SEND_SELLER = "http://hawkingnight.com/ketekmall/sendEmail_seller.php";
+    private static String URL_DELETE = "http://hawkingnight.com/ketekmall/delete_order_buyer.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
 
     Button Continue_Shopping;
 

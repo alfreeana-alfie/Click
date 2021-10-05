@@ -68,13 +68,13 @@ import java.util.TimerTask;
 
 public class Product_Add_Homepage extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/itemsave.php";
-    private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/itemsave.php";
+    private static String URL_DELETE_PHOTO = "http://hawkingnight.com/ketekmall/products_img/delete_photo.php";
 
-    private static String URL_ADD_TEMP = "https://ketekmall.com/ketekmall/products/add_temp.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/products/delete_temp.php";
-    private static String URL_DELETE_DB_TEMP = "https://ketekmall.com/ketekmall/products/delete_db_temp.php";
-    private static String URL_ADD = "https://ketekmall.com/ketekmall/products/add.php";
+    private static String URL_ADD_TEMP = "http://hawkingnight.com/ketekmall/products/add_temp.php";
+    private static String URL_DELETE_TEMP = "http://hawkingnight.com/ketekmall/products/delete_temp.php";
+    private static String URL_DELETE_DB_TEMP = "http://hawkingnight.com/ketekmall/products/delete_db_temp.php";
+    private static String URL_ADD = "http://hawkingnight.com/ketekmall/products/add.php";
 
     SessionManager sessionManager;
     String getId;

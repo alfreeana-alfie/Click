@@ -61,10 +61,10 @@ public class MyProducts extends AppCompatActivity {
     public static final String EXTRA_IMG_ITEM = "photo";
 
 
-    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readuser.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_item.php";
-    private static String URL_EDIT_BOOST = "https://ketekmall.com/ketekmall/edit_boost_ad.php";
-    private static String DELETE_PRODUCT = "https://ketekmall.com/ketekmall/products/delete.php";
+    private static String URL_VIEW = "http://hawkingnight.com/ketekmall/readuser.php";
+    private static String URL_DELETE = "http://hawkingnight.com/ketekmall/delete_item.php";
+    private static String URL_EDIT_BOOST = "http://hawkingnight.com/ketekmall/edit_boost_ad.php";
+    private static String DELETE_PRODUCT = "http://hawkingnight.com/ketekmall/products/delete.php";
 
     SessionManager sessionManager;
     TextView no_result;

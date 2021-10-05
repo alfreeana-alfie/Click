@@ -56,11 +56,11 @@ import java.util.Map;
 @SuppressLint("DefaultLocale")
 public class Review_Page extends AppCompatActivity {
 
-    private static String URL_REVIEW = "https://ketekmall.com/ketekmall/add_review.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_remarks_done.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+    private static String URL_REVIEW = "http://hawkingnight.com/ketekmall/add_review.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit_remarks_done.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
 
     TextView OrderID, Rejected, Finished, Cancel, TrackingNo, AddressUser, DateOrder, DateReceived, Ordered, Pending, Shippped, Received, AdDetail, Price, Quantity, SubTotal, ShipTotal, GrandTotal;
     ImageView Photo, OrderedBlack, OrderedGreen,

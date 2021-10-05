@@ -75,26 +75,26 @@ public class Checkout extends AppCompatActivity implements Serializable{
     String RefID = UUID.randomUUID().toString();
     public static final long serialVersionUID = 0;
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single_delivery.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_READ_DELIVERY = "http://hawkingnight.com/ketekmall/read_delivery_single_delivery.php";
+    private static String URL_DELETE = "http://hawkingnight.com/ketekmall/delete_order_buyer.php";
 
-    private static String URL_DELETE_SINGLE = "https://ketekmall.com/ketekmall/delete_order.php";
+    private static String URL_DELETE_SINGLE = "http://hawkingnight.com/ketekmall/delete_order.php";
 
-    private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
+    private static String URL_CHECKOUT = "http://hawkingnight.com/ketekmall/add_to_checkout.php";
 
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart_temp.php";
-    private static String URL_CART_TWO = "https://ketekmall.com/ketekmall/readcart_temp_two.php";
-    private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
-    private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
-    private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
-    private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
-    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+    private static String URL_CART = "http://hawkingnight.com/ketekmall/readcart_temp.php";
+    private static String URL_CART_TWO = "http://hawkingnight.com/ketekmall/readcart_temp_two.php";
+    private static String URL_ORDER = "http://hawkingnight.com/ketekmall/read_order_buyer.php";
+    private static String URL_RECEIPTS = "http://hawkingnight.com/ketekmall/add_receipt.php";
+    private static String URL_READ_RECEIPTS = "http://hawkingnight.com/ketekmall/read_receipts.php";
+    private static String URL_APPROVAL = "http://hawkingnight.com/ketekmall/add_approval.php";
+    private static String URL_DELETE_TEMP = "http://hawkingnight.com/ketekmall/delete_cart_temp.php";
+    private static String URL_DELETE_TEMP_USER = "http://hawkingnight.com/ketekmall/delete_cart_temp_user.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
 
-    private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer_three.php";
+    private static String URL_SEND = "http://hawkingnight.com/ketekmall/sendEmail_buyer_three.php";
 
     final String TAG = "NOTIFICATION TAG";
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -536,7 +536,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             item_id = TextUtils.join(", ", itemIdList);
 
                                             Log.d("NANA", ProductDesription);
-                                            String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
+                                            String backendPostURL2 = "http://hawkingnight.com/ketekmall/backendURL.php";
                                             try{
                                                 IPayIHPayment payment = new IPayIHPayment();
                                                 payment.setMerchantKey ("8bgBOjTkij");

@@ -67,15 +67,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Chat extends AppCompatActivity {
 
-    private static String URL_ADD_CHAT = "https://ketekmall.com/ketekmall/add_chat.php";
-    private static String URL_EDIT_CHAT = "https://ketekmall.com/ketekmall/edit_chat.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
+    private static String URL_ADD_CHAT = "http://hawkingnight.com/ketekmall/add_chat.php";
+    private static String URL_EDIT_CHAT = "http://hawkingnight.com/ketekmall/edit_chat.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
 
-    public static String URL_CREATECHAT = "https://ketekmall.com/ketekmall/createChat.php";
-    public static String URL_GETCHAT = "https://ketekmall.com/ketekmall/getChat.php";
-    public static String URL_GETCHATSINGLE = "https://ketekmall.com/ketekmall/getChatSingle.php";
-    public static String URL_UPDATECHAT = "https://ketekmall.com/ketekmall/updateChat.php";
+    public static String URL_CREATECHAT = "http://hawkingnight.com/ketekmall/createChat.php";
+    public static String URL_GETCHAT = "http://hawkingnight.com/ketekmall/getChat.php";
+    public static String URL_GETCHATSINGLE = "http://hawkingnight.com/ketekmall/getChatSingle.php";
+    public static String URL_UPDATECHAT = "http://hawkingnight.com/ketekmall/updateChat.php";
 
     LinearLayout layout;
     ImageView sendButton;

@@ -49,8 +49,8 @@ import java.util.Objects;
 
 public class BoostAd extends AppCompatActivity {
 
-    private static String URL_READ_BOOST = "https://ketekmall.com/ketekmall/read_products_boost.php";
-    private static String URL_EDIT_BOOST = "https://ketekmall.com/ketekmall/edit_boost_ad_cancel.php";
+    private static String URL_READ_BOOST = "http://hawkingnight.com/ketekmall/read_products_boost.php";
+    private static String URL_EDIT_BOOST = "http://hawkingnight.com/ketekmall/edit_boost_ad_cancel.php";
 
     RecyclerView recyclerView;
     String getId;

@@ -46,7 +46,7 @@ import java.util.Map;
 
 public class Register_Seller_MainPage extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
     BottomNavigationView bottomNav;
     Button btn_goto_register_seller;
     TextView textView8, textView9, textView10, textView11;

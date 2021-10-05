@@ -44,7 +44,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Me_Page extends AppCompatActivity {
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
 
     CircleImageView profile_image;
     TextView Username, verify;

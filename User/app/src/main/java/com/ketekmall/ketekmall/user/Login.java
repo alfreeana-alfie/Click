@@ -76,8 +76,8 @@ import java.util.regex.Pattern;
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 1;
-    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/login.php";
-    private static String URL_REGISTER = "https://ketekmall.com/ketekmall/register.php";
+    private static String URL_LOGIN = "http://hawkingnight.com/ketekmall/login.php";
+    private static String URL_REGISTER = "http://hawkingnight.com/ketekmall/register.php";
     private final Pattern PASSWORD_PATTERN = Pattern.compile("^.{8,}$");
 
     private String name_firebase, email_firebase;
@@ -264,7 +264,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
                                             //Firebase
                                             String url = "https://click-1595830894120.firebaseio.com/users.json";
-                                            final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
+                                            final String photo_url = "http://hawkingnight.com/ketekmall/profile_image/main_photo.png";
 
                                             StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                                                 @Override
@@ -861,7 +861,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         final String gender = "Female";
         final String password = account.getFamilyName() + account.getGivenName();
         final String photo = String.valueOf(account.getPhotoUrl());
-        final String photo_url = "https://ketekmall.com/ketekmall/profile_image/main_photo.png";
+        final String photo_url = "http://hawkingnight.com/ketekmall/profile_image/main_photo.png";
 
         name_firebase = name;
         email_firebase = email;

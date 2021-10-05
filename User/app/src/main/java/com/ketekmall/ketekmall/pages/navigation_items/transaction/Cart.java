@@ -54,16 +54,16 @@ import java.util.Objects;
 
 public class Cart extends AppCompatActivity {
 
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_cart.php";
-    private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
-    private static String URL_CART_TEMP = "https://ketekmall.com/ketekmall/readcart_temp.php";
-    private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_three.php";
-    private static String URL_READ_PRODUCTS_TWO = "https://ketekmall.com/ketekmall/readcart_single_two.php";
-    private static String URL_READ_PRODUCTS_TWO_MINUS = "https://ketekmall.com/ketekmall/readcart_single_two_minus.php";
-    private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp_two.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
-    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit_cart.php";
+    private static String URL_CART = "http://hawkingnight.com/ketekmall/readcart.php";
+    private static String URL_CART_TEMP = "http://hawkingnight.com/ketekmall/readcart_temp.php";
+    private static String URL_READ_PRODUCTS = "http://hawkingnight.com/ketekmall/read_products_three.php";
+    private static String URL_READ_PRODUCTS_TWO = "http://hawkingnight.com/ketekmall/readcart_single_two.php";
+    private static String URL_READ_PRODUCTS_TWO_MINUS = "http://hawkingnight.com/ketekmall/readcart_single_two_minus.php";
+    private static String URL_ADD_CART_TEMP = "http://hawkingnight.com/ketekmall/add_to_cart_temp_two.php";
+    private static String URL_DELETE = "http://hawkingnight.com/ketekmall/delete_cart.php";
+    private static String URL_DELETE_TEMP = "http://hawkingnight.com/ketekmall/delete_cart_temp.php";
+    private static String URL_DELETE_TEMP_USER = "http://hawkingnight.com/ketekmall/delete_cart_temp_user.php";
 
     ArrayList<Item_All_Details> itemAllDetailsArrayList;
     ArrayList<Double> doubles = new ArrayList<>();

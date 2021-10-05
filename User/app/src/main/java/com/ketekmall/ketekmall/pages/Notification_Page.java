@@ -18,15 +18,15 @@ import com.ketekmall.ketekmall.pages.buyer.MyBuying;
 
 public class Notification_Page extends AppCompatActivity {
 
-    private static String URL_ADD_FAV = "https://ketekmall.com/ketekmall/add_to_fav.php";
-    private static String URL_ADD_CART = "https://ketekmall.com/ketekmall/add_to_cart.php";
-    private static String URL_READ_CART = "https://ketekmall.com/ketekmall/readcart_single.php";
+    private static String URL_ADD_FAV = "http://hawkingnight.com/ketekmall/add_to_fav.php";
+    private static String URL_ADD_CART = "http://hawkingnight.com/ketekmall/add_to_cart.php";
+    private static String URL_READ_CART = "http://hawkingnight.com/ketekmall/readcart_single.php";
 
-    String URL_READ_CATEGORY_MAIN = "https://ketekmall.com/ketekmall/category/";
-    String URL_READ_CATEGORY_SEARCH_MAIN = "https://ketekmall.com/ketekmall/search/";
-    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "https://ketekmall.com/ketekmall/filter_district/";
-    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "https://ketekmall.com/ketekmall/filter_division/";
-    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "https://ketekmall.com/ketekmall/filter_search_division/";
+    String URL_READ_CATEGORY_MAIN = "http://hawkingnight.com/ketekmall/category/";
+    String URL_READ_CATEGORY_SEARCH_MAIN = "http://hawkingnight.com/ketekmall/search/";
+    String URL_READ_CATEGORY_FILTER_DISTRICT_MAIN = "http://hawkingnight.com/ketekmall/filter_district/";
+    String URL_READ_CATEGORY_FILTER_DIVISION_MAIN = "http://hawkingnight.com/ketekmall/filter_division/";
+    String URL_READ_CATEGORY_FILTER_SEARCH_MAIN = "http://hawkingnight.com/ketekmall/filter_search_division/";
 
     String[] CATEGORY_LIST = {
             "read_cake.php",

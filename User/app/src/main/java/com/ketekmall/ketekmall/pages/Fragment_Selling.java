@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class Fragment_Selling extends Fragment {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
 
     String getId;
     SessionManager sessionManager;

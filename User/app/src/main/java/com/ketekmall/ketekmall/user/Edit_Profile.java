@@ -71,10 +71,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Edit_Profile extends AppCompatActivity {
 
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_detail.php";
-    private static String URL_UPLOAD = "https://ketekmall.com/ketekmall/profile_image/upload.php";
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit_detail.php";
+    private static String URL_UPLOAD = "http://hawkingnight.com/ketekmall/profile_image/upload.php";
+    private static String URL_READ_ORDER = "http://hawkingnight.com/ketekmall/read_order_buyer_done_profile.php";
     public Uri filePath;
     public SessionManager sessionManager;
     public String getId;

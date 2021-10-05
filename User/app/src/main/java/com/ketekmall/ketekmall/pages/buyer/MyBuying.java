@@ -67,14 +67,14 @@ public class MyBuying extends AppCompatActivity {
     public static final String ITEM_LOCATION = "district";
     public static final String PHOTO = "photo";
 
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done.php";
-    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order.php";
-    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_order.php";
-    private static String URL_UPDATE_ORDER = "https://ketekmall.com/ketekmall/updateOrder.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-    private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
+    private static String URL_READ_ORDER = "http://hawkingnight.com/ketekmall/read_order_buyer_done.php";
+    private static String URL_DELETE_ORDER = "http://hawkingnight.com/ketekmall/delete_order.php";
+    private static String URL_READ = "http://hawkingnight.com/ketekmall/read_detail.php";
+    private static String URL_EDIT_ORDER = "http://hawkingnight.com/ketekmall/edit_order.php";
+    private static String URL_UPDATE_ORDER = "http://hawkingnight.com/ketekmall/updateOrder.php";
+    private static String URL_NOTI = "http://hawkingnight.com/ketekmall/onesignal_noti.php";
+    private static String URL_GET_PLAYERID = "http://hawkingnight.com/ketekmall/getPlayerID.php";
+    private static String URL_getPayment = "http://hawkingnight.com/ketekmall/getPayment.php";
 
 //    final String TAG = "NOTIFICATION TAG";
 //    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";

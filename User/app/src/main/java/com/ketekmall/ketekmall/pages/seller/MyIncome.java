@@ -46,8 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MyIncome extends AppCompatActivity {
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer_done_profile.php";
-    private static String URL_READ_ORDERTWO = "https://ketekmall.com/ketekmall/read_order_two.php";
+    private static String URL_READ_ORDER = "http://hawkingnight.com/ketekmall/read_order_buyer_done_profile.php";
+    private static String URL_READ_ORDERTWO = "http://hawkingnight.com/ketekmall/read_order_two.php";
     TextView sold;
 
     String getId;

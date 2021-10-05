@@ -70,17 +70,17 @@ import static android.view.View.VISIBLE;
 
 public class Product_Edit extends AppCompatActivity {
 
-    private static String UPDATE = "https://ketekmall.com/ketekmall/products/update.php";
+    private static String UPDATE = "http://hawkingnight.com/ketekmall/products/update.php";
 
-    private static String URL_DELETE_PHOTO = "https://ketekmall.com/ketekmall/products_img/delete_photo.php";
-    private static String URL_IMG = "https://ketekmall.com/ketekmall/products/uploadimg02.php";
-    private static String URL_UPLOAD_EXTRA = "https://ketekmall.com/ketekmall/products_img/uploadimg03.php";
-    private static String URL_READ_PHOTO = "https://ketekmall.com/ketekmall/products_img/read_photo.php";
-    private static String URL_EDIT_PROD = "https://ketekmall.com/ketekmall/edit_product_detail.php";
+    private static String URL_DELETE_PHOTO = "http://hawkingnight.com/ketekmall/products_img/delete_photo.php";
+    private static String URL_IMG = "http://hawkingnight.com/ketekmall/products/uploadimg02.php";
+    private static String URL_UPLOAD_EXTRA = "http://hawkingnight.com/ketekmall/products_img/uploadimg03.php";
+    private static String URL_READ_PHOTO = "http://hawkingnight.com/ketekmall/products_img/read_photo.php";
+    private static String URL_EDIT_PROD = "http://hawkingnight.com/ketekmall/edit_product_detail.php";
 
-    private static String URL_ADD_TEMP = "https://ketekmall.com/ketekmall/products/add_temp.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/products/delete_temp.php";
-    private static String URL_DELETE_DB_TEMP = "https://ketekmall.com/ketekmall/products/delete_db_temp.php";
+    private static String URL_ADD_TEMP = "http://hawkingnight.com/ketekmall/products/add_temp.php";
+    private static String URL_DELETE_TEMP = "http://hawkingnight.com/ketekmall/products/delete_temp.php";
+    private static String URL_DELETE_DB_TEMP = "http://hawkingnight.com/ketekmall/products/delete_db_temp.php";
     
     ArrayAdapter<CharSequence> adapter_division, adapter_district, adapter_category;
     Uri filePath1,filePath2,filePath3,filePath4,filePath5;
@@ -136,31 +136,31 @@ public class Product_Edit extends AppCompatActivity {
         final String desc = intent.getStringExtra("description");
 
         // List of photos
-        if(!photo.equals("null") && !photo.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo.equals("null") && !photo.contains("http://hawkingnight.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo);
             final String[] getPhotoId = photo.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo02.equals("null") && !photo02.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo02.equals("null") && !photo02.contains("http://hawkingnight.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo02);
             final String[] getPhotoId = photo02.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo03.equals("null") && !photo03.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo03.equals("null") && !photo03.contains("http://hawkingnight.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo03);
             final String[] getPhotoId = photo03.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo04.equals("null") && !photo04.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo04.equals("null") && !photo04.contains("http://hawkingnight.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo04);
             final String[] getPhotoId = photo04.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");
             photoTempId.add(noExtension[0]);
         }
-        if(!photo05.equals("null") && !photo05.contains("https://ketekmall.com/ketekmall/products/.jpg")){
+        if(!photo05.equals("null") && !photo05.contains("http://hawkingnight.com/ketekmall/products/.jpg")){
             photoUrlLink.add(photo05);
             final String[] getPhotoId = photo05.split("https://ketekmall\\.com/ketekmall/products/");
             final String[] noExtension = getPhotoId[1].split("\\.");

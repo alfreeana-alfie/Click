@@ -47,9 +47,9 @@ import java.util.TimerTask;
 
 public class Forgot_Password extends AppCompatActivity {
 
-    private static String URL_LOGIN = "https://ketekmall.com/ketekmall/verify.php";
-    private static String URL_SEND_EMAIL = "https://ketekmall.com/ketekmall/sendEmail_getPassword.php";
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit.php";
+    private static String URL_LOGIN = "http://hawkingnight.com/ketekmall/verify.php";
+    private static String URL_SEND_EMAIL = "http://hawkingnight.com/ketekmall/sendEmail_getPassword.php";
+    private static String URL_EDIT = "http://hawkingnight.com/ketekmall/edit.php";
     private EditText email, new_password, confirm_new_password;
     private Button button_enter_email, button_enter_new_password, button_back_pressed, button_back_password;
     private ProgressBar loading, loading_password;

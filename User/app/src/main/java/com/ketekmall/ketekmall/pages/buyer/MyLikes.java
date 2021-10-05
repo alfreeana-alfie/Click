@@ -67,9 +67,9 @@ public class MyLikes extends AppCompatActivity {
     public static final String DIVISION = "division";
     public static final String PHOTO = "photo";
 
-    private static String URL_VIEW = "https://ketekmall.com/ketekmall/readfav.php";
-    private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_fav.php";
-    private static String URL_SEARCH = "https://ketekmall.com/ketekmall/search/search_fav.php";
+    private static String URL_VIEW = "http://hawkingnight.com/ketekmall/readfav.php";
+    private static String URL_DELETE = "http://hawkingnight.com/ketekmall/delete_fav.php";
+    private static String URL_SEARCH = "http://hawkingnight.com/ketekmall/search/search_fav.php";
 
     GridView gridView;
     MyLikes_Adapter adapter_item;
