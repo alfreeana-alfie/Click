@@ -437,21 +437,21 @@ public class Checkout extends AppCompatActivity implements Serializable{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        DeleteOrder_Single3();
+//                        DeleteOrder_Single3();
                         Intent intent4 = new Intent(Checkout.this, Homepage.class);
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
 
                     case R.id.nav_noti:
-                        DeleteOrder_Single3();
+//                        DeleteOrder_Single3();
                         Intent intent6 = new Intent(Checkout.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-                        DeleteOrder_Single3();
+//                        DeleteOrder_Single3();
                         Intent intent1 = new Intent(Checkout.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
@@ -487,7 +487,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrder_Single2();
+//                DeleteOrder_Single2();
                 Intent intent = new Intent(Checkout.this, Cart.class);
                 startActivity(intent);
 //                finish();
@@ -1162,7 +1162,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        DeleteOrder_Single2();
+//        DeleteOrder_Single2();
         Intent intent = new Intent(Checkout.this, Cart.class);
         startActivity(intent);
 //        finish();

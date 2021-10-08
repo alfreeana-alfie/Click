@@ -94,7 +94,7 @@ public class Cart extends AppCompatActivity {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
-        DeleteOrder_Single();
+//        DeleteOrder_Single();
 
         View_Item();
     }
@@ -156,7 +156,7 @@ public class Cart extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeleteOrder_Single();
+//                DeleteOrder_Single();
                 startActivity(new Intent(Cart.this, Homepage.class));
                 finish();
             }
@@ -201,6 +201,7 @@ public class Cart extends AppCompatActivity {
                                         final String quantity = object.getString("quantity");
                                         final String item_id = object.getString("item_id");
                                         final String weight = object.getString("weight");
+                                        final String isChecked = object.getString("is_checked");
 
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ_PRODUCTS,
                                                 new Response.Listener<String>() {
@@ -233,7 +234,12 @@ public class Cart extends AppCompatActivity {
                                                                     item.setMax_order(max_order);
                                                                     item.setPostcode(postcode);
                                                                     item.setWeight(weight);
+                                                                    item.setIsChecked(isChecked);
                                                                     itemAllDetailsArrayList.add(item);
+
+                                                                    if(isChecked.equals("true")){
+                                                                        Button_Checkout.setVisibility(View.VISIBLE);
+                                                                    }
                                                                 }
                                                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);
                                                                 recyclerView.setAdapter(_cart_adapter);
@@ -1056,72 +1062,72 @@ public class Cart extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void DeleteOrder_Single() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-                                Log.d("Message", "Return SUCCESS");
-                            } else {
-                                Log.e("Message", "Return FAILED");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
-        requestQueue.add(stringRequest);
-    }
+//    private void DeleteOrder_Single() {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            if (success.equals("1")) {
+//                                Log.d("Message", "Return SUCCESS");
+//                            } else {
+//                                Log.e("Message", "Return FAILED");
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+////                            Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        try {
+//                            if (error instanceof TimeoutError) {
+//                                //Time out error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof NoConnectionError) {
+//                                //net work error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof AuthFailureError) {
+//                                //error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ServerError) {
+//                                //Erroor
+//                                System.out.println("" + error);
+//                            } else if (error instanceof NetworkError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ParseError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else {
+//                                //Error
+//                                System.out.println("" + error);
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("customer_id", getId);
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+//        requestQueue.add(stringRequest);
+//    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        DeleteOrder_Single();
+//        DeleteOrder_Single();
         startActivity(new Intent(Cart.this, Homepage.class));
         finish();
     }

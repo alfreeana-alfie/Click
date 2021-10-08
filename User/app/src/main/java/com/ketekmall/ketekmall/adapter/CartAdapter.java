@@ -146,6 +146,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
+        if(itemAllDetails.getIsChecked().equals("true")){
+            holder.checkBox.setChecked(true);
+            holder.increase.setVisibility(View.INVISIBLE);
+            holder.decrease.setVisibility(View.INVISIBLE);
+        }
+
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

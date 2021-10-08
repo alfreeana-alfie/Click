@@ -17,6 +17,16 @@ public class Item_All_Details {
     private String postcode;
     private String weight;
 
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    private String isChecked;
+
     private String max_order, shocking, delivery_status;
 
     public String getPhoto02() {
