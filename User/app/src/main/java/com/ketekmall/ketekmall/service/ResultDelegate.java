@@ -14,6 +14,21 @@ public class ResultDelegate implements IPayIHResultDelegate, Serializable {
     private static final transient String TAG = ResultDelegate.class.getSimpleName();
 
     @Override
+    public void onPaymentSucceeded(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+
+    }
+
+    @Override
+    public void onPaymentFailed(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+
+    }
+
+    @Override
+    public void onPaymentCanceled(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+
+    }
+
+    @Override
     public void onRequeryResult(String s, String s1, String s2, String s3) {
         Log.d(TAG, "REQUERY");
     }
@@ -23,21 +38,6 @@ public class ResultDelegate implements IPayIHResultDelegate, Serializable {
         Log.d(TAG, "CONNECTION ERROR");
     }
 
-    @Override
-    public void onPaymentSucceeded(String s, String s1, String s2, String s3, String s4) {
-        Log.d(TAG, "SUCCESS");
-    }
-
-    @Override
-    public void onPaymentFailed(String s, String s1, String s2, String s3, String s4) {
-        Log.d(TAG, "FAILED");
-
-    }
-
-    @Override
-    public void onPaymentCanceled(String s, String s1, String s2, String s3, String s4) {
-        Log.d(TAG, "CANCELED");
-    }
 //    @Override
 //    public void onPaymentSucceeded(String TransId, String RefNo, String Amount,
 //                                   String Remark, String AuthCode, String CCName,

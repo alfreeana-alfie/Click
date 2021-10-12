@@ -1,6 +1,9 @@
 package com.ketekmall.ketekmall.pages.navigation_items.transaction;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -71,6 +74,8 @@ import java.util.UUID;
 import com.ipay.IPayIH;
 import com.ipay.IPayIHPayment;
 
+@SuppressLint("NewApi")
+@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class Checkout extends AppCompatActivity implements Serializable{
     String RefID = UUID.randomUUID().toString();
     public static final long serialVersionUID = 0;
@@ -544,6 +549,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setPaymentId ("");
                                                 payment.setCurrency ("MYR");
                                                 payment.setRefNo (RefID);
+//                                                payment.setAmount("1.00");
                                                 payment.setAmount (Grand_Total2.getText().toString());
                                                 payment.setProdDesc (ProductDesription);
                                                 payment.setUserName (strName);
