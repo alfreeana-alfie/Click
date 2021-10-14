@@ -112,7 +112,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
     private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
 
     EditText edit_review;
-    Button btn_submit, btn_cancel, btn_download;
+    Button btn_submit, btn_cancel, btn_download, btn_saved_tracking_no;
     ImageView photo;
     TextView text_order_id, text_ad_detail, text_price, text_quantity;
     TextView text_placed_date, text_status, text_ship_placed,
@@ -178,6 +178,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
         customer_address = findViewById(R.id.customer_addr);
         customer_phone = findViewById(R.id.customer_phone);
         btn_download = findViewById(R.id.btn_download);
+        btn_saved_tracking_no = findViewById(R.id.btn_saved_tracking_no);
 
 
         bottomNav = findViewById(R.id.bottom_nav);
@@ -313,8 +314,6 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     GetPlayerData(strCustomer_ID, "KM" + strID);
                     loading_Layout.setVisibility(View.INVISIBLE);
                 }
-
-
             }
         });
 
@@ -332,8 +331,6 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
                     PosLajuGetData(strCustomer_ID, strID,"admin@ketekmall.com", "8800001234", strOrder_Date, strID);
 //                    GetPlayerData(strCustomer_ID, "KM" + strID);
                 }
-
-//                ViewList(strCustomer_ID, strID, strOrder_Date);
             }
         });
 
@@ -346,7 +343,15 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             }
         });
 
-
+        btn_saved_tracking_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loading_Layout.setVisibility(View.VISIBLE);
+                TrackingNo(edit_review.getText().toString(), strOrder_Date, strID);
+                Toast.makeText(Selling_Detail.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+                loading_Layout.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void setupUI(View view) {
@@ -3489,10 +3494,6 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    private void GetPayment(){
-
     }
 
     private void GetPlayerData(final String CustomerUserID, final String OrderID){

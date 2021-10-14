@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -58,6 +59,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -986,15 +988,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
                     bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
-                        upload_photo_img1.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img1.setImageBitmap(bitmap1);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath1);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img1.setImageBitmap(bitmap1);
+
                     addTemp(getStringImage(bitmap1),0);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -1004,15 +1021,30 @@ public class Product_Edit extends AppCompatActivity {
                     try {
                         bitmap1 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath1);
                         bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap1.getWidth(), bitmap1.getHeight(), true);
-                        Matrix matrix = new Matrix();
 
-                        if(bitmap1.getWidth() > bitmap1.getHeight()) {
-                            matrix.postRotate(360);
-                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true);
-                            upload_photo_img1.setImageBitmap(rotatedBitmap);
-                        }else{
-                            upload_photo_img1.setImageBitmap(bitmap1);
+                        InputStream inputStream = getContentResolver().openInputStream(filePath1);
+
+                        try {
+                            ExifInterface exif = new ExifInterface(inputStream);
+                            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                            Log.d("EXIF", "Exif: " + orientation);
+                            Matrix matrix = new Matrix();
+                            if (orientation == 6) {
+                                matrix.postRotate(90);
+                            }
+                            else if (orientation == 3) {
+                                matrix.postRotate(180);
+                            }
+                            else if (orientation == 8) {
+                                matrix.postRotate(270);
+                            }
+                            bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), matrix, true); // rotating bitmap
                         }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        upload_photo_img1.setImageBitmap(bitmap1);
+
                         addTemp(getStringImage(bitmap1),0);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -1026,15 +1058,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
                     bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
-                        upload_photo_img2.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img2.setImageBitmap(bitmap2);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath2);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap2 = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img2.setImageBitmap(bitmap2);
+
                     addTemp(getStringImage(bitmap2),1);
                     delete_2.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1044,15 +1091,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
                     bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
-                        upload_photo_img2.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img2.setImageBitmap(bitmap2);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath2);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap2 = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img2.setImageBitmap(bitmap2);
+
                     addTemp(getStringImage(bitmap2),1);
                     delete_2.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1063,15 +1125,30 @@ public class Product_Edit extends AppCompatActivity {
                     try {
                         bitmap2 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath2);
                         bitmap2 = Bitmap.createScaledBitmap(bitmap2, bitmap2.getWidth(), bitmap2.getHeight(), true);
-                        Matrix matrix = new Matrix();
 
-                        if(bitmap2.getWidth() > bitmap2.getHeight()) {
-                            matrix.postRotate(360);
-                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true);
-                            upload_photo_img2.setImageBitmap(rotatedBitmap);
-                        }else{
-                            upload_photo_img2.setImageBitmap(bitmap2);
+                        InputStream inputStream = getContentResolver().openInputStream(filePath2);
+
+                        try {
+                            ExifInterface exif = new ExifInterface(inputStream);
+                            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                            Log.d("EXIF", "Exif: " + orientation);
+                            Matrix matrix = new Matrix();
+                            if (orientation == 6) {
+                                matrix.postRotate(90);
+                            }
+                            else if (orientation == 3) {
+                                matrix.postRotate(180);
+                            }
+                            else if (orientation == 8) {
+                                matrix.postRotate(270);
+                            }
+                            bitmap2 = Bitmap.createBitmap(bitmap2, 0, 0, bitmap2.getWidth(), bitmap2.getHeight(), matrix, true); // rotating bitmap
                         }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        upload_photo_img2.setImageBitmap(bitmap2);
+
                         addTemp(getStringImage(bitmap2),1);
                         delete_2.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
@@ -1079,7 +1156,6 @@ public class Product_Edit extends AppCompatActivity {
                     }
                 }
             }
-
         }
         if (requestCode == 3 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath3 = data.getData();
@@ -1087,15 +1163,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
                     bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
-                        upload_photo_img3.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img3.setImageBitmap(bitmap3);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath3);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap3 = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img3.setImageBitmap(bitmap3);
+
                     addTemp(getStringImage(bitmap3),2);
                     delete_3.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1105,15 +1196,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
                     bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
-                        upload_photo_img3.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img3.setImageBitmap(bitmap3);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath3);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap3 = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img3.setImageBitmap(bitmap3);
+
                     addTemp(getStringImage(bitmap3),2);
                     delete_3.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1124,15 +1230,30 @@ public class Product_Edit extends AppCompatActivity {
                     try {
                         bitmap3 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath3);
                         bitmap3 = Bitmap.createScaledBitmap(bitmap3, bitmap3.getWidth(), bitmap3.getHeight(), true);
-                        Matrix matrix = new Matrix();
 
-                        if(bitmap3.getWidth() > bitmap3.getHeight()) {
-                            matrix.postRotate(360);
-                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true);
-                            upload_photo_img3.setImageBitmap(rotatedBitmap);
-                        }else{
-                            upload_photo_img3.setImageBitmap(bitmap3);
+                        InputStream inputStream = getContentResolver().openInputStream(filePath3);
+
+                        try {
+                            ExifInterface exif = new ExifInterface(inputStream);
+                            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                            Log.d("EXIF", "Exif: " + orientation);
+                            Matrix matrix = new Matrix();
+                            if (orientation == 6) {
+                                matrix.postRotate(90);
+                            }
+                            else if (orientation == 3) {
+                                matrix.postRotate(180);
+                            }
+                            else if (orientation == 8) {
+                                matrix.postRotate(270);
+                            }
+                            bitmap3 = Bitmap.createBitmap(bitmap3, 0, 0, bitmap3.getWidth(), bitmap3.getHeight(), matrix, true); // rotating bitmap
                         }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        upload_photo_img3.setImageBitmap(bitmap3);
+
                         addTemp(getStringImage(bitmap3),2);
                         delete_3.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
@@ -1147,15 +1268,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
                     bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
-                        upload_photo_img4.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img4.setImageBitmap(bitmap4);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath4);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap4 = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img4.setImageBitmap(bitmap4);
+
                     addTemp(getStringImage(bitmap4),3);
                     delete_4.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1165,15 +1301,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
                     bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
-                        upload_photo_img4.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img4.setImageBitmap(bitmap4);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath4);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap4 = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img4.setImageBitmap(bitmap4);
+
                     addTemp(getStringImage(bitmap4),3);
                     delete_4.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1184,15 +1335,30 @@ public class Product_Edit extends AppCompatActivity {
                     try {
                         bitmap4 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath4);
                         bitmap4 = Bitmap.createScaledBitmap(bitmap4, bitmap4.getWidth(), bitmap4.getHeight(), true);
-                        Matrix matrix = new Matrix();
 
-                        if(bitmap4.getWidth() > bitmap4.getHeight()) {
-                            matrix.postRotate(360);
-                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true);
-                            upload_photo_img4.setImageBitmap(rotatedBitmap);
-                        }else{
-                            upload_photo_img4.setImageBitmap(bitmap4);
+                        InputStream inputStream = getContentResolver().openInputStream(filePath4);
+
+                        try {
+                            ExifInterface exif = new ExifInterface(inputStream);
+                            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                            Log.d("EXIF", "Exif: " + orientation);
+                            Matrix matrix = new Matrix();
+                            if (orientation == 6) {
+                                matrix.postRotate(90);
+                            }
+                            else if (orientation == 3) {
+                                matrix.postRotate(180);
+                            }
+                            else if (orientation == 8) {
+                                matrix.postRotate(270);
+                            }
+                            bitmap4 = Bitmap.createBitmap(bitmap4, 0, 0, bitmap4.getWidth(), bitmap4.getHeight(), matrix, true); // rotating bitmap
                         }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        upload_photo_img4.setImageBitmap(bitmap4);
+
                         addTemp(getStringImage(bitmap4),3);
                         delete_4.setVisibility(View.VISIBLE);
                     } catch (IOException e) {
@@ -1208,15 +1374,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
                     bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
-                        upload_photo_img5.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img5.setImageBitmap(bitmap5);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath5);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap5 = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img5.setImageBitmap(bitmap5);
+
                     addTemp(getStringImage(bitmap5),4);
                     delete_5.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1226,15 +1407,30 @@ public class Product_Edit extends AppCompatActivity {
                 try {
                     bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
                     bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
-                    Matrix matrix = new Matrix();
 
-                    if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                        matrix.postRotate(360);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
-                        upload_photo_img5.setImageBitmap(rotatedBitmap);
-                    }else{
-                        upload_photo_img5.setImageBitmap(bitmap5);
+                    InputStream inputStream = getContentResolver().openInputStream(filePath5);
+
+                    try {
+                        ExifInterface exif = new ExifInterface(inputStream);
+                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                        Log.d("EXIF", "Exif: " + orientation);
+                        Matrix matrix = new Matrix();
+                        if (orientation == 6) {
+                            matrix.postRotate(90);
+                        }
+                        else if (orientation == 3) {
+                            matrix.postRotate(180);
+                        }
+                        else if (orientation == 8) {
+                            matrix.postRotate(270);
+                        }
+                        bitmap5 = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true); // rotating bitmap
                     }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    upload_photo_img5.setImageBitmap(bitmap5);
+
                     addTemp(getStringImage(bitmap5),4);
                     delete_5.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
@@ -1245,15 +1441,30 @@ public class Product_Edit extends AppCompatActivity {
                     try {
                         bitmap5 = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath5);
                         bitmap5 = Bitmap.createScaledBitmap(bitmap5, bitmap5.getWidth(), bitmap5.getHeight(), true);
-                        Matrix matrix = new Matrix();
 
-                        if(bitmap5.getWidth() > bitmap5.getHeight()) {
-                            matrix.postRotate(360);
-                            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true);
-                            upload_photo_img5.setImageBitmap(rotatedBitmap);
-                        }else{
-                            upload_photo_img5.setImageBitmap(bitmap5);
+                        InputStream inputStream = getContentResolver().openInputStream(filePath5);
+
+                        try {
+                            ExifInterface exif = new ExifInterface(inputStream);
+                            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                            Log.d("EXIF", "Exif: " + orientation);
+                            Matrix matrix = new Matrix();
+                            if (orientation == 6) {
+                                matrix.postRotate(90);
+                            }
+                            else if (orientation == 3) {
+                                matrix.postRotate(180);
+                            }
+                            else if (orientation == 8) {
+                                matrix.postRotate(270);
+                            }
+                            bitmap5 = Bitmap.createBitmap(bitmap5, 0, 0, bitmap5.getWidth(), bitmap5.getHeight(), matrix, true); // rotating bitmap
                         }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        upload_photo_img5.setImageBitmap(bitmap5);
+
                         addTemp(getStringImage(bitmap5),4);
                         delete_5.setVisibility(View.VISIBLE);
                     } catch (IOException e) {

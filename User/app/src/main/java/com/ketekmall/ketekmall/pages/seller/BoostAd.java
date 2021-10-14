@@ -132,7 +132,7 @@ public class BoostAd extends AppCompatActivity {
                                                                     String success = jsonObject.getString("success");
 
                                                                     if (success.equals("1")) {
-                                                                        Toast.makeText(BoostAd.this, R.string.success_add, Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(BoostAd.this, "Cancelled Successfully", Toast.LENGTH_SHORT).show();
                                                                     } else {
                                                                         Toast.makeText(BoostAd.this, R.string.failed_to_add, Toast.LENGTH_SHORT).show();
                                                                     }

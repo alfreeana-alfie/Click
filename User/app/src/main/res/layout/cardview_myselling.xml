@@ -36,6 +36,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/ad_detail"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />

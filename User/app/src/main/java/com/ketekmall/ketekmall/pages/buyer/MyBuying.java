@@ -212,7 +212,7 @@ public class MyBuying extends AppCompatActivity {
                                     final String order_date = object.getString("order_date").trim();
                                     final String date = object.getString("date").trim();
                                     final String quantity = object.getString("quantity").trim();
-                                    final String status = object.getString("remarks").trim();
+                                    final String status = object.getString("status").trim();
                                     final String tracking_no = object.getString("tracking_no");
                                     final String delivery_price = object.getString("delivery_price");
                                     final String delivery_date = object.getString("delivery_date");

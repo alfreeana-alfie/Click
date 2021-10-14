@@ -239,6 +239,14 @@ public class Cart extends AppCompatActivity {
 
                                                                     if(isChecked.equals("true")){
                                                                         Button_Checkout.setVisibility(View.VISIBLE);
+
+                                                                        doubles.add(Double.parseDouble(item.getPrice()) * Integer.parseInt(item.getQuantity()));
+
+                                                                        Double fi = 0.00;
+                                                                        for (int k = 0; k < doubles.size(); k++) {
+                                                                            fi += doubles.get(k);
+                                                                            Grand_Total.setText("RM" + String.format("%.2f", fi));
+                                                                        }
                                                                     }
                                                                 }
                                                                 _cart_adapter = new CartAdapter(Cart.this, itemAllDetailsArrayList);

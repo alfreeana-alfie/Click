@@ -48,7 +48,6 @@ import com.android.volley.toolbox.Volley;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
 import com.ketekmall.ketekmall.adapter.Item_Adapter_Main;
-import com.ketekmall.ketekmall.adapter.PageAdapter;
 import com.ketekmall.ketekmall.adapter.PromotionAdapter;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
@@ -58,7 +57,6 @@ import com.ketekmall.ketekmall.pages.navigation_items.Chat_Inbox_Homepage;
 import com.ketekmall.ketekmall.pages.product_details.View_Product;
 import com.ketekmall.ketekmall.pages.register_seller.TermsAndConditions;
 import com.ketekmall.ketekmall.pages.seller.Product_Add;
-import com.ketekmall.ketekmall.pages.seller.Product_Add_Homepage;
 import com.ketekmall.ketekmall.user.Edit_Profile;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -930,7 +928,7 @@ public class Homepage extends AppCompatActivity {
                                         startActivity(new Intent(Homepage.this, TermsAndConditions.class));
                                     }else{
                                         loading_layout.setVisibility(View.GONE);
-                                        startActivity(new Intent(Homepage.this, Product_Add_Homepage.class));
+                                        startActivity(new Intent(Homepage.this, Product_Add.class));
                                     }
 
                                 }
