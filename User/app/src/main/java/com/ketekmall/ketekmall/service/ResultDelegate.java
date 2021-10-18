@@ -13,20 +13,20 @@ public class ResultDelegate implements IPayIHResultDelegate, Serializable {
 //    public static final long serialVersionUID = 42L;
     private static final transient String TAG = ResultDelegate.class.getSimpleName();
 
-    @Override
-    public void onPaymentSucceeded(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
-
-    }
-
-    @Override
-    public void onPaymentFailed(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
-
-    }
-
-    @Override
-    public void onPaymentCanceled(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
-
-    }
+//    @Override
+//    public void onPaymentSucceeded(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+//
+//    }
+//
+//    @Override
+//    public void onPaymentFailed(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+//
+//    }
+//
+//    @Override
+//    public void onPaymentCanceled(String s, String s1, String s2, String s3, String s4, String s5, String s6, String s7, String s8) {
+//
+//    }
 
     @Override
     public void onRequeryResult(String s, String s1, String s2, String s3) {
@@ -36,6 +36,21 @@ public class ResultDelegate implements IPayIHResultDelegate, Serializable {
     @Override
     public void onConnectionError(String s, String s1, String s2, String s3, String s4, String s5, String s6) {
         Log.d(TAG, "CONNECTION ERROR");
+    }
+
+    @Override
+    public void onPaymentSucceeded(String s, String s1, String s2, String s3, String s4) {
+
+    }
+
+    @Override
+    public void onPaymentFailed(String s, String s1, String s2, String s3, String s4) {
+
+    }
+
+    @Override
+    public void onPaymentCanceled(String s, String s1, String s2, String s3, String s4) {
+
     }
 
 //    @Override
