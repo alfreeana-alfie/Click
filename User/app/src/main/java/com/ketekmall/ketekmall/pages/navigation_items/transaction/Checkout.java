@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,31 +35,26 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.ketekmall.ketekmall.pages.buyer.MyBuying;
-import com.ketekmall.ketekmall.service.ResultDelegate;
-import com.ketekmall.ketekmall.data.Checkout_Data;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ipay.IPayIH;
+import com.ipay.IPayIHPayment;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.Checkout_Adapter;
-import com.ketekmall.ketekmall.data.Item_All_Details;
-import com.ketekmall.ketekmall.data.MySingleton;
+import com.ketekmall.ketekmall.data.Checkout_Data;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.service.ResultDelegate;
 import com.ketekmall.ketekmall.user.Edit_Profile_Address;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,9 +65,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import com.ipay.IPayIH;
-import com.ipay.IPayIHPayment;
-
 @SuppressLint("NewApi")
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public class Checkout extends AppCompatActivity implements Serializable{
@@ -81,33 +72,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
     public static final long serialVersionUID = 0;
 
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_DELIVERY = "https://ketekmall.com/ketekmall/read_delivery_single_delivery.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_order_buyer.php";
-
-    private static String URL_DELETE_SINGLE = "https://ketekmall.com/ketekmall/delete_order.php";
-
     private static String URL_CHECKOUT = "https://ketekmall.com/ketekmall/add_to_checkout.php";
-
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart_temp.php";
-    private static String URL_CART_TWO = "https://ketekmall.com/ketekmall/readcart_temp_two.php";
-    private static String URL_ORDER = "https://ketekmall.com/ketekmall/read_order_buyer.php";
-    private static String URL_RECEIPTS = "https://ketekmall.com/ketekmall/add_receipt.php";
-    private static String URL_READ_RECEIPTS = "https://ketekmall.com/ketekmall/read_receipts.php";
-    private static String URL_APPROVAL = "https://ketekmall.com/ketekmall/add_approval.php";
-    private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
-    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
-    private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
-    private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
-
     private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_buyer_three.php";
-
-    final String TAG = "NOTIFICATION TAG";
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
-    final private String contentType = "application/json";
-    String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
-    String TOPIC;
 
     Button Button_Checkout;
     TextView Grand_Total, Grand_Total2, AddressUser, No_Address;
@@ -117,11 +85,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
     Checkout_Adapter userOrderAdapter;
     ArrayList<Checkout_Data> item_all_detailsList;
     RelativeLayout address_layout;
-    Item_All_Details item;
     Checkout_Data checkoutData;
 
     String getId, Price, Delivery_Date, ProductDesription;
-    String email_customer, item_id, delivery_price, item_price;
+    String item_id;
     SessionManager sessionManager;
 
     Double aFloat, grandtotal;
@@ -130,9 +97,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
     ArrayList productList = new ArrayList();
     ArrayList itemIdList = new ArrayList();
-
-    String HTTP_PoslajuDomesticbyPostcode = "https://apis.pos.com.my/apigateway/as2corporate/api/poslajubypostcodedomestic/v1";
-    String serverKey_PoslajuDomesticbyPostcode = "N1hHVHJFRW95cjRkQ0NyR3dialdrZUF4NGxaNm9Na1U=";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -147,6 +111,11 @@ public class Checkout extends AppCompatActivity implements Serializable{
         final HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
 
+        getList();
+
+    }
+
+    public void getList() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
                     @Override
@@ -171,6 +140,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String quantity = object.getString("quantity");
                                     final String postCode = object.getString("postcode");
                                     final String weight = object.getString("weight");
+                                    final String deliveryPrice = object.getString("delivery_price");
 
                                     String description = ad_detail + " x" + quantity;
                                     String itemCode = "KM00" + id;
@@ -186,7 +156,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                         JSONObject jsonObject = new JSONObject(response);
                                                         String success = jsonObject.getString("success");
                                                         JSONArray jsonArray = jsonObject.getJSONArray("read");
-
 
                                                         if (success.equals("1")) {
                                                             for (int i = 0; i < jsonArray.length(); i++) {
@@ -209,113 +178,55 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                                 }
 
                                                                 AddressUser.setText(Address);
-                                                                double neWeight = Double.parseDouble(weight) * Integer.parseInt(quantity);
 
-                                                                String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
+                                                                checkoutData = new Checkout_Data();
+                                                                checkoutData.setId(id);
+                                                                checkoutData.setDelivery_item_id(item_id);
+                                                                checkoutData.setSeller_id(seller_id);
+                                                                checkoutData.setAd_detail(ad_detail);
+                                                                checkoutData.setPhoto(image_item);
+                                                                checkoutData.setPrice(String.valueOf(price));
+                                                                checkoutData.setDivision(division);
+                                                                checkoutData.setQuantity(quantity);
+                                                                checkoutData.setDelivery_price(deliveryPrice);
+                                                                checkoutData.setDelivery_division(strCity);
+                                                                checkoutData.setDelivery_division1(division + " to " + strCity);
 
-//                                                                if(weight.contains("0.00")){
-//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + strPostCode + "&Weight=" + "1.00";
-//                                                                }else if(strPostCode.isEmpty()){
-//                                                                    API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + "93050" + "&postcodeTo=" + "93050" + "&Weight=" + "1.00";
-//                                                                }
+                                                                grandtotal += (price * Integer.parseInt(quantity) + Double.parseDouble(deliveryPrice));
+                                                                Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
+                                                                Grand_Total2.setText(String.format("%.2f", grandtotal));
 
-                                                                StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
-                                                                        new Response.Listener<String>() {
-                                                                            @Override
-                                                                            public void onResponse(String response) {
-                                                                                Log.i("jsonObjectRequest", response);
-                                                                                try{
-                                                                                    JSONArray jsonarray = new JSONArray(response);
-                                                                                    for(int i=0; i < jsonarray.length(); i++) {
-                                                                                        JSONObject jsonobject = jsonarray.getJSONObject(i);
-                                                                                        String totalAmount       = jsonobject.getString("totalAmount");
-                                                                                        double NewTotalAmount = Double.parseDouble(totalAmount);
-                                                                                        double RoundedTotalAmount = Math.ceil(NewTotalAmount);
+                                                                item_all_detailsList.add(checkoutData);
 
-                                                                                        double weightDouble = Double.parseDouble(weight);
-
-                                                                                        double deliveryCharge = RoundedTotalAmount;
-
-                                                                                        Price = String.format("%.2f", deliveryCharge);
-
-                                                                                        Log.i("jsonObjectRequest", Price);
-
-                                                                                        checkoutData = new Checkout_Data();
-                                                                                        checkoutData.setId(id);
-                                                                                        checkoutData.setDelivery_item_id(item_id);
-                                                                                        checkoutData.setSeller_id(seller_id);
-                                                                                        checkoutData.setAd_detail(ad_detail);
-                                                                                        checkoutData.setPhoto(image_item);
-                                                                                        checkoutData.setPrice(String.valueOf(price));
-                                                                                        checkoutData.setDivision(division);
-                                                                                        checkoutData.setQuantity(quantity);
-                                                                                        checkoutData.setDelivery_price(String.format("%.2f", deliveryCharge));
-                                                                                        checkoutData.setDelivery_division(strCity);
-                                                                                        checkoutData.setDelivery_division1(division + " to " + strCity);
-
-                                                                                        grandtotal += (price * Integer.parseInt(quantity) + deliveryCharge);
-                                                                                        Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
-                                                                                        Grand_Total2.setText(String.format("%.2f", grandtotal));
-
-                                                                                        item_all_detailsList.add(checkoutData);
-
-                                                                                    }
-                                                                                    userOrderAdapter = new Checkout_Adapter(Checkout.this, item_all_detailsList);
-                                                                                    recyclerView.setAdapter(userOrderAdapter);
-                                                                                    userOrderAdapter.setOnItemClickListener(new Checkout_Adapter.OnItemClickListener() {
-                                                                                        @Override
-                                                                                        public void onSelfClick(int position) {
-                                                                                            checkoutData = new Checkout_Data();
-                                                                                            checkoutData.setId(id);
-                                                                                            checkoutData.setDelivery_item_id(item_id);
-                                                                                            checkoutData.setSeller_id(seller_id);
-                                                                                            checkoutData.setAd_detail(ad_detail);
-                                                                                            checkoutData.setPhoto(image_item);
-                                                                                            checkoutData.setPrice(String.valueOf(price));
-                                                                                            checkoutData.setDivision(division);
-                                                                                            checkoutData.setQuantity(quantity);
-                                                                                            checkoutData.setDelivery_price("0.00");
-                                                                                            checkoutData.setDelivery_division(division);
-
-                                                                                            String delivery_text;
-                                                                                            delivery_text = "<font color='#999999'>RM0.00</font>";
-                                                                                            checkoutData.setDelivery_price2(Html.fromHtml(delivery_text));
-                                                                                            checkoutData.setDelivery_division1(division + " to " + division);
-
-                                                                                            grandtotal -= Double.parseDouble(Price);
-                                                                                            Grand_Total2.setText(String.format("%.2f", grandtotal));
-                                                                                            Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
-
-                                                                                            Price = "0.00";
-                                                                                        }
-                                                                                    });
-                                                                                }catch(JSONException e){
-                                                                                    e.printStackTrace();
-                                                                                    Log.i("jsonObjectRequest", e.toString());
-                                                                                }
-                                                                            }
-                                                                        },
-                                                                        new Response.ErrorListener() {
-                                                                            @Override
-                                                                            public void onErrorResponse(VolleyError error) {
-                                                                                Toast.makeText(Checkout.this, R.string.incomplete_information, Toast.LENGTH_LONG).show();
-//                                                                                Log.i("STAGINGERROR", error.toString());
-                                                                                Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-                                                                                Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                                                                                Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-//                                                                                Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                                                                            }
-                                                                        }) {
+                                                                userOrderAdapter = new Checkout_Adapter(Checkout.this, item_all_detailsList);
+                                                                recyclerView.setAdapter(userOrderAdapter);
+                                                                userOrderAdapter.setOnItemClickListener(new Checkout_Adapter.OnItemClickListener() {
                                                                     @Override
-                                                                    public Map<String, String> getHeaders() {
-                                                                        Map<String, String> params = new HashMap<>();
-                                                                        params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
-                                                                        return params;
-                                                                    }
+                                                                    public void onSelfClick(int position) {
+                                                                        final Checkout_Data item = item_all_detailsList.get(position);
 
-                                                                };
-                                                                RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-                                                                requestQueue.add(stringRequest);
+                                                                        checkoutData = new Checkout_Data();
+                                                                        checkoutData.setId(id);
+                                                                        checkoutData.setDelivery_item_id(item_id);
+                                                                        checkoutData.setSeller_id(seller_id);
+                                                                        checkoutData.setAd_detail(ad_detail);
+                                                                        checkoutData.setPhoto(image_item);
+                                                                        checkoutData.setPrice(String.valueOf(price));
+                                                                        checkoutData.setDivision(division);
+                                                                        checkoutData.setQuantity(quantity);
+                                                                        checkoutData.setDelivery_price("0.00");
+                                                                        checkoutData.setDelivery_division(division);
+
+                                                                        String delivery_text;
+                                                                        delivery_text = "<font color='#999999'>RM0.00</font>";
+                                                                        checkoutData.setDelivery_price2(Html.fromHtml(delivery_text));
+                                                                        checkoutData.setDelivery_division1(division + " to " + division);
+
+                                                                        grandtotal -= Double.parseDouble(item.getDelivery_price());
+                                                                        Grand_Total2.setText(String.format("%.2f", grandtotal));
+                                                                        Grand_Total.setText("RM" + String.format("%.2f", grandtotal));
+                                                                    }
+                                                                });
                                                             }
                                                         } else {
                                                             Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
@@ -442,21 +353,18 @@ public class Checkout extends AppCompatActivity implements Serializable{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-//                        DeleteOrder_Single3();
                         Intent intent4 = new Intent(Checkout.this, Homepage.class);
                         intent4.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent4);
                         break;
 
                     case R.id.nav_noti:
-//                        DeleteOrder_Single3();
                         Intent intent6 = new Intent(Checkout.this, Notification_Page.class);
                         intent6.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_edit_profile:
-//                        DeleteOrder_Single3();
                         Intent intent1 = new Intent(Checkout.this, Me_Page.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent1);
@@ -480,7 +388,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
         recyclerView = findViewById(R.id.item_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(Checkout.this));
-        recyclerView.setNestedScrollingEnabled(false);
+//        recyclerView.setNestedScrollingEnabled(false);
         item_all_detailsList = new ArrayList<>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -492,10 +400,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                DeleteOrder_Single2();
                 Intent intent = new Intent(Checkout.this, Cart.class);
                 startActivity(intent);
-//                finish();
             }
         });
 
@@ -703,14 +609,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
         requestQueue.add(stringRequest);
     }
 
-    private String decodeBase64(String text) {
-        String result = "";
-        byte[] data = Base64.decode(text, Base64.DEFAULT);
-        result = new String(data, StandardCharsets.UTF_8);
-        return result;
-    }
-
-    //DO NOT DELETE
     private void AddOrder(final String User_Division, final String Address, final String Email){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CART,
                 new Response.Listener<String>() {
@@ -726,7 +624,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     final String id = object.getString("id").trim();
-                                    final String customer_id = object.getString("customer_id").trim();
+//                                    final String customer_id = object.getString("customer_id").trim();
                                     final String main_category = object.getString("main_category").trim();
                                     final String sub_category = object.getString("sub_category").trim();
                                     final String ad_detail = object.getString("ad_detail").trim();
@@ -737,7 +635,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     final String seller_id = object.getString("seller_id");
                                     final String item_id = object.getString("item_id");
                                     final String quantity = object.getString("quantity");
-                                    final String postcode = object.getString("postcode");
+//                                    final String postcode = object.getString("postcode");
                                     final String weight = object.getString("weight");
 
                                     Date date = Calendar.getInstance().getTime();
@@ -756,10 +654,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
                                     Delivery_Date = simpleDateFormat2.format(c.getTime());
 
-//                                    Log.d("DATE", Delivery_Date);
-
                                     final Double TotalPrice = Double.parseDouble(Price) + (price * Integer.parseInt(quantity));
-                                    //
 
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CHECKOUT,
                                             new Response.Listener<String>() {
@@ -825,7 +720,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             double newprice = Double.parseDouble(weight);
                                             int quan = Integer.parseInt(quantity);
                                             double Delivery_Price = newprice * quan;
-                                            String DeliveryPrice = String.valueOf(Delivery_Price);
+//                                            String DeliveryPrice = String.valueOf(Delivery_Price);
 
                                             Map<String, String> params = new HashMap<>();
                                             params.put("seller_id", seller_id);
@@ -854,7 +749,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                     requestQueue.add(stringRequest);
                                 }
                             }
-                        } catch (JSONException e) {
+                        } catch (JSONException ignored) {
 
                         }
                     }
@@ -887,8 +782,7 @@ public class Checkout extends AppCompatActivity implements Serializable{
 
 
                 } catch (Exception e) {
-
-
+                    e.printStackTrace();
                 }
             }
         }) {
@@ -968,203 +862,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
         requestQueue.add(stringRequest);
     }
 
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-    }
-
-    private void GetPlayerData(final String CustomerUserID){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-
-                            if (success.equals("1")) {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject object = jsonArray.getJSONObject(i);
-
-                                    String PlayerID = object.getString("PlayerID");
-                                    String Name = object.getString("Name");
-                                    String UserID = object.getString("UserID");
-
-                                    OneSignalNoti(PlayerID, Name);
-                                }
-                            } else {
-                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("UserID", CustomerUserID);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void OneSignalNoti(final String PlayerUserID, final String Name){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("POST", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {//Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("PlayerID", PlayerUserID);
-                params.put("Name", Name);
-                params.put("Words", "New Order has been placed! Check My Selling for more information.");
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void PoslajuDomesticbyPostcode(String postcodeFrom, String postcodeTo, String Weight){
-
-        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("jsonObjectRequest", response);
-                        try{
-                            JSONArray jsonarray = new JSONArray(response);
-                            for(int i=0; i < jsonarray.length(); i++) {
-                                JSONObject jsonobject = jsonarray.getJSONObject(i);
-
-                                String totalAmount       = jsonobject.getString("totalAmount");
-                                Log.i("jsonObjectRequest", totalAmount);
-                            }
-                        }catch(JSONException e){
-                            e.printStackTrace();
-                            Log.i("jsonObjectRequest", e.toString());
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i("STAGINGERROR", error.toString());
-                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-//                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<>();
-                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
-                return params;
-            }
-
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -1212,82 +909,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
         requestQueue.add(stringRequest);
     }
 
-    private void DeleteOrder_Single2() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-
-                            } else {
-                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-        requestQueue.add(stringRequest);
-    }
-
-    private void DeleteOrder_Single3() {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            if (success.equals("1")) {
-
-                            } else {
-                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("customer_id", getId);
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-        requestQueue.add(stringRequest);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1297,4 +918,246 @@ public class Checkout extends AppCompatActivity implements Serializable{
             getUserDetail2();
         }
     }
+
+//    private void OneSignalNoti(final String PlayerUserID, final String Name){
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.i("POST", response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        try {
+//                            if (error instanceof TimeoutError) {//Time out error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof NoConnectionError) {
+//                                //net work error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof AuthFailureError) {
+//                                //error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ServerError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof NetworkError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ParseError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else {
+//                                //Error
+//                                System.out.println("" + error);
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("PlayerID", PlayerUserID);
+//                params.put("Name", Name);
+//                params.put("Words", "New Order has been placed! Check My Selling for more information.");
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
+//    }
+
+//    private String decodeBase64(String text) {
+//        String result = "";
+//        byte[] data = Base64.decode(text, Base64.DEFAULT);
+//        result = new String(data, StandardCharsets.UTF_8);
+//        return result;
+//    }
+//
+//    private void sendNotification(JSONObject notification) {
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Log.i(TAG, "onResponse: " + response.toString());
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Log.i(TAG, "onErrorResponse: Didn't work");
+//                    }
+//                }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("Authorization", serverKey);
+//                params.put("Content-Type", contentType);
+//                return params;
+//            }
+//        };
+//        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+//    }
+//
+//    private void GetPlayerData(final String CustomerUserID){
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+//
+//                            if (success.equals("1")) {
+//                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                    JSONObject object = jsonArray.getJSONObject(i);
+//
+//                                    String PlayerID = object.getString("PlayerID");
+//                                    String Name = object.getString("Name");
+//                                    String UserID = object.getString("UserID");
+//
+//                                    OneSignalNoti(PlayerID, Name);
+//                                }
+//                            } else {
+//                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        try {
+//
+//                            if (error instanceof TimeoutError ) {
+//                                //Time out error
+//                                System.out.println("" + error);
+//                            }else if(error instanceof NoConnectionError){
+//                                //net work error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof AuthFailureError) {
+//                                //error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ServerError) {
+//                                //Erroor
+//                                System.out.println("" + error);
+//                            } else if (error instanceof NetworkError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            } else if (error instanceof ParseError) {
+//                                //Error
+//                                System.out.println("" + error);
+//                            }else{
+//                                //Error
+//                                System.out.println("" + error);
+//                            }
+//                            //End
+//
+//
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+////                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("UserID", CustomerUserID);
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
+//    }
+//
+//    private void DeleteOrder_Single3() {
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            String success = jsonObject.getString("success");
+//
+//                            if (success.equals("1")) {
+//
+//                            } else {
+//                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+////                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+//                        }
+//
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("customer_id", getId);
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
+//        requestQueue.add(stringRequest);
+//    }
+
+    //    private void PoslajuDomesticbyPostcode(String postcodeFrom, String postcodeTo, String Weight){
+//
+//        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.i("jsonObjectRequest", response);
+//                        try{
+//                            JSONArray jsonarray = new JSONArray(response);
+//                            for(int i=0; i < jsonarray.length(); i++) {
+//                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+//
+//                                String totalAmount       = jsonobject.getString("totalAmount");
+//                                Log.i("jsonObjectRequest", totalAmount);
+//                            }
+//                        }catch(JSONException e){
+//                            e.printStackTrace();
+//                            Log.i("jsonObjectRequest", e.toString());
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Log.i("STAGINGERROR", error.toString());
+//                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+//                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+//                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
+//                    }
+//                }) {
+//            @Override
+//            public Map<String, String> getHeaders() {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+//                return params;
+//            }
+//
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
+//    }
 }

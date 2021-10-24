@@ -62,39 +62,17 @@ import java.util.Map;
 public class MySelling extends AppCompatActivity {
 
     public static final String ID = "id";
-    public static final String AD_DETAIL = "ad_detail";
-    public static final String PRICE = "price";
-    public static final String ITEM_LOCATION = "district";
-    public static final String PHOTO = "photo";
-
-    private static String URL_READ_ORDER = "https://ketekmall.com/ketekmall/read_order.php";
-    private static String URL_READ_EMAIL = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_SEND = "https://ketekmall.com/ketekmall/sendEmail_product_reject.php";
 
     private static String URL_READ_ORDER_DONE = "https://ketekmall.com/ketekmall/read_order_buyer_done_two.php";
-    private static String URL_READ_APPROVAL = "https://ketekmall.com/ketekmall/read_detail_approval.php";
-    private static String URL_DELETE_ORDER = "https://ketekmall.com/ketekmall/delete_order_seller.php";
     private static String URL_EDIT_ORDER = "https://ketekmall.com/ketekmall/edit_order.php";
 
-    private static String URL_EDIT_RECEIPT = "https://ketekmall.com/ketekmall/edit_receipt.php";
-    private static String URL_ACCEPT = "https://ketekmall.com/ketekmall/add_accept.php";
-    private static String URL_REJECT = "https://ketekmall.com/ketekmall/add_reject.php";
-    private static String URL_DELETE_APPROVAL = "https://ketekmall.com/ketekmall/delete_approval.php";
     private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
-    private static String URL_READ_RECEIPT = "https://ketekmall.com/ketekmall/read_detail_receipt.php";
 
     private static String URL_NOTI = "https://ketekmall.com/ketekmall/onesignal_noti.php";
     private static String URL_GET_PLAYERID = "https://ketekmall.com/ketekmall/getPlayerID.php";
     private static String URL_UPDATE_ORDER = "https://ketekmall.com/ketekmall/updateOrder.php";
     private static String URL_getPayment = "https://ketekmall.com/ketekmall/getPayment.php";
-
-    final String TAG = "NOTIFICATION TAG";
-    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
-    final private String serverKey = "key=" + "AAAA1e9WIaM:APA91bGoWyt9jVnxE08PH2SzgIqh2VgOOolPPBy_uGVkrNV7q8E-1ecG3staHzI73jDzygIisGIRG2XbxzBBQBVRf-rU-qSNb8Fu0Lwo3JDlQtmNrsIvGSec5V3ANVFyR3jcGhgEduH7";
-    final private String contentType = "application/json";
-    String NOTIFICATION_TITLE;
-    String NOTIFICATION_MESSAGE;
-    String TOPIC;
 
     RecyclerView recyclerView;
     Order_SellerAdapter adapter_item;
@@ -219,11 +197,7 @@ public class MySelling extends AppCompatActivity {
                                     final String tracking_no = object.getString("tracking_no").trim();
                                     final String pick_up = object.getString("pick_up").trim();
 
-                                    Log.i("REFNO", refno);
-
-                                    Spanned status1;
-
-                                    if(refno != null){
+                                    if(!refno.isEmpty()){
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_getPayment,
                                                 new Response.Listener<String>() {
                                                     @Override
@@ -237,10 +211,10 @@ public class MySelling extends AppCompatActivity {
                                                                 for (int i = 0; i < jsonArray.length(); i++) {
                                                                     JSONObject object = jsonArray.getJSONObject(i);
 
-                                                                    final String PaymentID = object.getString("id").trim();
-                                                                    final String PaymentRefno = object.getString("OrderID").trim();
+//                                                                    final String PaymentID = object.getString("id").trim();
+//                                                                    final String PaymentRefno = object.getString("OrderID").trim();
                                                                     final String PaymentStatus = object.getString("Status").trim();
-                                                                    final String CreatedAt = object.getString("CreatedAt").trim();
+//                                                                    final String CreatedAt = object.getString("CreatedAt").trim();
 
                                                                     if(PaymentStatus.contains("Unsuccessful")){
                                                                         final Order item = new Order(id,
@@ -308,20 +282,8 @@ public class MySelling extends AppCompatActivity {
                                                                         Order order = itemList.get(position);
 
                                                                         final String strOrder_Id = order.getId();
-                                                                        final String strSeller_id = order.getSeller_id();
                                                                         final String strCustomer_id = order.getCustomer_id();
-                                                                        final String strItem_id = order.getItem_id();
-                                                                        final String strMain_category = order.getMain_category();
-                                                                        final String strSub_category = order.getSub_category();
-                                                                        final String strAd_Detail = order.getAd_detail();
-                                                                        final Double strPrice = Double.valueOf(order.getPrice());
-                                                                        final String strDivision = order.getDivision();
-                                                                        final String strDistrict = order.getDistrict();
-                                                                        final String strPhoto = order.getPhoto();
                                                                         final String strOrder_Date = order.getOrder_date();
-                                                                        final String strDate = order.getDate();
-                                                                        final String strQuantity = order.getQuantity();
-                                                                        final String strStatus = order.getStatus();
                                                                         final String strRefno = order.getRefNo();
 
                                                                         final String remarks = "ACCEPT";
@@ -342,26 +304,12 @@ public class MySelling extends AppCompatActivity {
                                                                                 Order order = itemList.get(position);
 
                                                                                 final String strOrder_Id = order.getId();
-                                                                                final String strSeller_id = order.getSeller_id();
                                                                                 final String strCustomer_id = order.getCustomer_id();
-                                                                                final String strItem_id = order.getItem_id();
-                                                                                final String strMain_category = order.getMain_category();
-                                                                                final String strSub_category = order.getSub_category();
-                                                                                final String strAd_Detail = order.getAd_detail();
-                                                                                final Double strPrice = Double.valueOf(order.getPrice());
-                                                                                final String strDivision = order.getDivision();
-                                                                                final String strDistrict = order.getDistrict();
-                                                                                final String strPhoto = order.getPhoto();
-                                                                                final String strOrder_Date = order.getOrder_date();
-                                                                                final String strDate = order.getDate();
-                                                                                final String strQuantity = order.getQuantity();
-                                                                                final String strStatus = order.getStatus();
                                                                                 final String strRefNo = order.getRefNo();
 
                                                                                 final String remarks = "Rejected";
-                                                                                Log.i("REFNO", strRefNo);
 
-//                                                Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
+                                                                                // Update_Order_Reject(strOrder_Date, remarks, strCustomer_id, strOrder_Id);
                                                                                 updateOrder(strCustomer_id, strOrder_Id, remarks, strRefNo);
                                                                                 getCustomerDetail(strCustomer_id, strOrder_Id);
 
@@ -388,18 +336,12 @@ public class MySelling extends AppCompatActivity {
                                                                         Order order = itemList.get(position);
 
                                                                         final String strOrder_Id = order.getId();
-                                                                        final String strSeller_id = order.getSeller_id();
                                                                         final String strCustomer_id = order.getCustomer_id();
-                                                                        final String strItem_id = order.getItem_id();
-                                                                        final String strMain_category = order.getMain_category();
-                                                                        final String strSub_category = order.getSub_category();
                                                                         final String strAd_Detail = order.getAd_detail();
                                                                         final Double strPrice = Double.valueOf(order.getPrice());
                                                                         final String strDivision = order.getDivision();
-                                                                        final String strDistrict = order.getDistrict();
                                                                         final String strPhoto = order.getPhoto();
                                                                         final String strOrder_Date = order.getOrder_date();
-                                                                        final String strDate = order.getDate();
                                                                         final String strQuantity = order.getQuantity();
                                                                         final String strStatus = order.getStatus();
                                                                         final String strTracking_NO = order.getTracking_no();
@@ -438,40 +380,11 @@ public class MySelling extends AppCompatActivity {
                                                 new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
-                                                        try {
-
-                                                            if (error instanceof TimeoutError ) {
-                                                                //Time out error
-
-                                                            }else if(error instanceof NoConnectionError){
-                                                                //net work error
-
-                                                            } else if (error instanceof AuthFailureError) {
-                                                                //error
-
-                                                            } else if (error instanceof ServerError) {
-                                                                //Erroor
-                                                            } else if (error instanceof NetworkError) {
-                                                                //Error
-
-                                                            } else if (error instanceof ParseError) {
-                                                                //Error
-
-                                                            }else{
-                                                                //Error
-                                                            }
-                                                            //End
-
-
-                                                        } catch (Exception e) {
-
-
-                                                        }
                                                     }
                                                 }) {
 
                                             @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                            protected Map<String, String> getParams() {
                                                 Map<String, String> params = new HashMap<>();
                                                 params.put("OrderID", refno);
                                                 return params;
@@ -484,43 +397,12 @@ public class MySelling extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                            } else if (error instanceof NetworkError) {
-                                //Error
-
-                            } else if (error instanceof ParseError) {
-                                //Error
-
-                            }else{
-                                //Error
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-
-
-                        }
-//                        Toast.makeText(MySelling.this, "JSON Parsing Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
@@ -555,10 +437,6 @@ public class MySelling extends AppCompatActivity {
                                                     JSONArray jsonArray = jsonObject.getJSONArray("read");
                                                     if (success.equals("1")) {
                                                         for (int i = 0; i < jsonArray.length(); i++) {
-                                                            JSONObject object = jsonArray.getJSONObject(i);
-
-                                                            final String strName = object.getString("name").trim();
-
                                                             GetPlayerData(Customer_id, strID);
                                                         }
                                                     } else {
@@ -572,35 +450,6 @@ public class MySelling extends AppCompatActivity {
                                         new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                try {
-
-                                                    if (error instanceof TimeoutError ) {
-                                                        //Time out error
-
-                                                    }else if(error instanceof NoConnectionError){
-                                                        //net work error
-
-                                                    } else if (error instanceof AuthFailureError) {
-                                                        //error
-
-                                                    } else if (error instanceof ServerError) {
-                                                        //Erroor
-                                                    } else if (error instanceof NetworkError) {
-                                                        //Error
-
-                                                    } else if (error instanceof ParseError) {
-                                                        //Error
-
-                                                    }else{
-                                                        //Error
-                                                    }
-                                                    //End
-
-
-                                                } catch (Exception e) {
-
-
-                                                }
                                             }
                                         }) {
                                     @Override
@@ -617,41 +466,12 @@ public class MySelling extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(MySelling.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                            } else if (error instanceof NetworkError) {
-                                //Error
-
-                            } else if (error instanceof ParseError) {
-                                //Error
-
-                            }else{
-                                //Error
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                     }
                 }){
             @Override
@@ -709,31 +529,31 @@ public class MySelling extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void sendNotification(JSONObject notification) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MySelling.this, "Request error", Toast.LENGTH_LONG).show();
-                        Log.i(TAG, "onErrorResponse: Didn't work");
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Authorization", serverKey);
-                params.put("Content-Type", contentType);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-    }
+//    private void sendNotification(JSONObject notification) {
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Log.i(TAG, "onResponse: " + response.toString());
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(MySelling.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Log.i(TAG, "onErrorResponse: Didn't work");
+//                    }
+//                }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//                params.put("Authorization", serverKey);
+//                params.put("Content-Type", contentType);
+//                return params;
+//            }
+//        };
+//        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+//    }
 
     private void SellerCheck(final String user_id){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,

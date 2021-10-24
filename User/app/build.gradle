@@ -11,8 +11,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 30
         multiDexEnabled true
-        versionCode 54
-        versionName "2.5.6"
+        versionCode 55
+        versionName "2.5.7"
         useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

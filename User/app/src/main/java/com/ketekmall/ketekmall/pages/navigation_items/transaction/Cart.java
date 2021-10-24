@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,13 +37,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ipay.IPayIH;
+import com.ipay.IPayIHPayment;
 import com.ketekmall.ketekmall.R;
 import com.ketekmall.ketekmall.adapter.CartAdapter;
+import com.ketekmall.ketekmall.adapter.Checkout_Adapter;
+import com.ketekmall.ketekmall.data.Checkout_Data;
 import com.ketekmall.ketekmall.data.Item_All_Details;
 import com.ketekmall.ketekmall.data.SessionManager;
 import com.ketekmall.ketekmall.pages.Homepage;
 import com.ketekmall.ketekmall.pages.Me_Page;
 import com.ketekmall.ketekmall.pages.Notification_Page;
+import com.ketekmall.ketekmall.service.ResultDelegate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +61,7 @@ import java.util.Objects;
 
 public class Cart extends AppCompatActivity {
 
-    private static String URL_EDIT = "https://ketekmall.com/ketekmall/edit_cart.php";
+    private static String URL_READ = "https://ketekmall.com/ketekmall/read_detail.php";
     private static String URL_CART = "https://ketekmall.com/ketekmall/readcart.php";
     private static String URL_CART_TEMP = "https://ketekmall.com/ketekmall/readcart_temp.php";
     private static String URL_READ_PRODUCTS = "https://ketekmall.com/ketekmall/read_products_three.php";
@@ -63,7 +70,9 @@ public class Cart extends AppCompatActivity {
     private static String URL_ADD_CART_TEMP = "https://ketekmall.com/ketekmall/add_to_cart_temp_two.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_cart.php";
     private static String URL_DELETE_TEMP = "https://ketekmall.com/ketekmall/delete_cart_temp.php";
-    private static String URL_DELETE_TEMP_USER = "https://ketekmall.com/ketekmall/delete_cart_temp_user.php";
+
+    String HTTP_PoslajuDomesticbyPostcode = "https://apis.pos.com.my/apigateway/as2corporate/api/poslajubypostcodedomestic/v1";
+    String serverKey_PoslajuDomesticbyPostcode = "N1hHVHJFRW95cjRkQ0NyR3dialdrZUF4NGxaNm9Na1U=";
 
     ArrayList<Item_All_Details> itemAllDetailsArrayList;
     ArrayList<Double> doubles = new ArrayList<>();
@@ -73,7 +82,7 @@ public class Cart extends AppCompatActivity {
     Button Button_Checkout;
     TextView Grand_Total;
 
-    String getId;
+    String getId, getUserPostcode;
     SessionManager sessionManager;
     int number;
 
@@ -93,11 +102,83 @@ public class Cart extends AppCompatActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(SessionManager.ID);
-
-//        DeleteOrder_Single();
+        getUserDetail();
 
         View_Item();
     }
+
+    private void getUserDetail() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            JSONArray jsonArray = jsonObject.getJSONArray("read");
+
+
+                            if (success.equals("1")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject object = jsonArray.getJSONObject(i);
+
+                                    String strPostCode = object.getString("postcode");
+
+                                    getUserPostcode = strPostCode;
+                                }
+                            } else {
+                                Toast.makeText(Cart.this, R.string.failed, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        try {
+
+                            if (error instanceof TimeoutError ) {
+                                //Time out error
+
+                            }else if(error instanceof NoConnectionError){
+                                //net work error
+
+                            } else if (error instanceof AuthFailureError) {
+                                //error
+
+                            } else if (error instanceof ServerError) {
+                                //Erroor
+                            } else if (error instanceof NetworkError) {
+                                //Error
+
+                            } else if (error instanceof ParseError) {
+                                //Error
+
+                            }else{
+                                //Error
+                            }
+                            //End
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void Declare() {
@@ -285,7 +366,7 @@ public class Cart extends AppCompatActivity {
                                                                         final double price = Double.parseDouble(item.getPrice());
 
                                                                         //Add to cart_temp
-                                                                        AddCartTemp(item, price);
+                                                                        AddCartTemp(item, item.getPostcode(), item.getWeight(), price);
 
                                                                         Button_Checkout.setVisibility(View.VISIBLE);
 
@@ -432,71 +513,139 @@ public class Cart extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void AddCartTemp(final Item_All_Details item, final double price) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_CART_TEMP,
+    String getDeliveryPrice;
+    private String getDeliveryPricePos(String postcode, String weight) {
+        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + getUserPostcode + "&Weight=" + weight;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response == null) {
-                            Log.e("onResponse", "Return NULL");
-                        } else {
-                            try {
-                                final JSONObject Object = new JSONObject(response);
-                                String success = Object.getString("success");
-                                if (success.equals("1")) {
-                                    Log.d("Message", "Return SUCCESS");
-                                } else {
-                                    Log.e("Message", "Return FAILED");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-//                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                        Log.i("jsonObjectRequest", response);
+                        try{
+                            JSONArray jsonarray = new JSONArray(response);
+                            for(int i=0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String totalAmount       = jsonobject.getString("totalAmount");
+                                double NewTotalAmount = Double.parseDouble(totalAmount);
+                                double deliveryCharge = Math.ceil(NewTotalAmount);
 
+//                                getDeliveryPrice = String.format("%.2f",deliveryCharge);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                            Log.i("jsonObjectRequest", e.toString());
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        try {
-                            if (error instanceof TimeoutError) {
-                                //Time out error
-                                System.out.println("" + error);
-                            } else if (error instanceof NoConnectionError) {
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else {
-                                //Error
-                                System.out.println("" + error);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
                     }
                 }) {
-            @SuppressLint("DefaultLocale")
             @Override
-            protected Map<String, String> getParams() {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
-                params.put("id", item.getId());
+                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
                 return params;
             }
+
         };
         RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
         requestQueue.add(stringRequest);
+
+        return getDeliveryPrice;
+    }
+
+    private void AddCartTemp(final Item_All_Details item,final String postcode, final String weight, final double price) {
+
+        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcode + "&postcodeTo=" + getUserPostcode + "&Weight=" + weight;
+
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
+                        try{
+                            JSONArray jsonarray = new JSONArray(response);
+                            for(int i=0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String totalAmount       = jsonobject.getString("totalAmount");
+                                double NewTotalAmount = Double.parseDouble(totalAmount);
+                                double deliveryCharge = Math.ceil(NewTotalAmount);
+
+                                item.setDeliveryPrice(String.format("%.2f", deliveryCharge));
+
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ADD_CART_TEMP,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                if (response == null) {
+                                                    Log.e("onResponse", "Return NULL");
+                                                } else {
+                                                    try {
+                                                        final JSONObject Object = new JSONObject(response);
+                                                        String success = Object.getString("success");
+                                                        if (success.equals("1")) {
+                                                            Log.d("Message", "Return SUCCESS");
+                                                        } else {
+                                                            Log.e("Message", "Return FAILED");
+                                                        }
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+//                                Toast.makeText(Cart.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                            }
+                                        }) {
+                                    @SuppressLint("DefaultLocale")
+                                    @Override
+                                    protected Map<String, String> getParams() {
+
+                                        Map<String, String> params = new HashMap<>();
+                                        params.put("id", item.getId());
+                                        params.put("delivery_price", item.getDeliveryPrice());
+
+                                        return params;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+                                requestQueue.add(stringRequest);
+
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                            Log.i("jsonObjectRequest", e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue2 = Volley.newRequestQueue(Cart.this);
+        requestQueue2.add(stringRequest2);
     }
 
     private void AlertDelete(final int position) {
@@ -1069,6 +1218,50 @@ public class Cart extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
         requestQueue.add(stringRequest);
     }
+
+    // PosLaju
+    public void posLaju(String postCode, String strPostCode, String neWeight) {
+        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postCode + "&postcodeTo=" + strPostCode + "&Weight=" + neWeight;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("jsonObjectRequest", response);
+                        try{
+                            JSONArray jsonarray = new JSONArray(response);
+                            for(int i=0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String totalAmount       = jsonobject.getString("totalAmount");
+                                double NewTotalAmount = Double.parseDouble(totalAmount);
+                                double deliveryCharge = Math.ceil(NewTotalAmount);
+                            }
+                        }catch(JSONException e){
+                            e.printStackTrace();
+                            Log.i("jsonObjectRequest", e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
+                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
+                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(Cart.this);
+        requestQueue.add(stringRequest);
+    }
+
 
 //    private void DeleteOrder_Single() {
 //        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,

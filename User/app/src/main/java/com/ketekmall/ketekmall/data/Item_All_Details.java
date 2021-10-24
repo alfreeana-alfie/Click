@@ -16,6 +16,16 @@ public class Item_All_Details {
     private String quantity;
     private String postcode;
     private String weight;
+    private String deliveryPrice;
+
+    public String getDeliveryPrice() {
+        return deliveryPrice;
+    }
+
+    public void setDeliveryPrice(String deliveryPrice) {
+        this.deliveryPrice = deliveryPrice;
+    }
+
 
     public String getIsChecked() {
         return isChecked;
