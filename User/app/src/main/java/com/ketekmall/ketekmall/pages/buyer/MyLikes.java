@@ -58,14 +58,6 @@ import java.util.Map;
 public class MyLikes extends AppCompatActivity {
 
     public static final String ID = "id";
-    public static final String USERID = "user_id";
-    public static final String MAIN_CATE = "main_category";
-    public static final String SUB_CATE = "sub_category";
-    public static final String AD_DETAIL = "ad_detail";
-    public static final String PRICE = "price";
-    public static final String DISTRICT = "district";
-    public static final String DIVISION = "division";
-    public static final String PHOTO = "photo";
 
     private static String URL_VIEW = "https://ketekmall.com/ketekmall/readfav.php";
     private static String URL_DELETE = "https://ketekmall.com/ketekmall/delete_fav.php";
