@@ -446,32 +446,28 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                             ProductDesription = TextUtils.join(", ", productList);
                                             item_id = TextUtils.join(", ", itemIdList);
 
-                                            getUserDetail2();
-
-//                                            Log.d("NANA", ProductDesription);
-//                                            String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
-//                                            try{
-//                                                IPayIHPayment payment = new IPayIHPayment();
-//                                                payment.setMerchantKey ("8bgBOjTkij");
-//                                                payment.setMerchantCode ("M29640");
-//                                                payment.setPaymentId ("");
-//                                                payment.setCurrency ("MYR");
-//                                                payment.setRefNo (RefID);
-////                                                payment.setAmount("1.00");
-//                                                payment.setAmount (Grand_Total2.getText().toString());
-//                                                payment.setProdDesc (ProductDesription);
-//                                                payment.setUserName (strName);
-//                                                payment.setUserEmail (strEmail);
-//                                                payment.setRemark ("Product Purchased: " + ProductDesription);
-//                                                payment.setLang ("ISO-8859-1");
-//                                                payment.setCountry ("MY");
-//                                                payment.setBackendPostURL (backendPostURL2);
-//                                                Intent checkoutIntent = IPayIH.getInstance().checkout(payment
-//                                                        , Checkout.this, new ResultDelegate(), IPayIH.PAY_METHOD_CREDIT_CARD);
-//                                                startActivityForResult(checkoutIntent, 1);
-//                                            }catch (Exception e){
-//                                                Log.d("ERROR", e.toString());
-//                                            }
+                                            String backendPostURL2 = "https://ketekmall.com/ketekmall/backendURL.php";
+                                            try{
+                                                IPayIHPayment payment = new IPayIHPayment();
+                                                payment.setMerchantKey ("8bgBOjTkij");
+                                                payment.setMerchantCode ("M29640");
+                                                payment.setPaymentId ("");
+                                                payment.setCurrency ("MYR");
+                                                payment.setRefNo (RefID);
+                                                payment.setAmount ("1.00");
+                                                payment.setProdDesc (ProductDesription);
+                                                payment.setUserName (strName);
+                                                payment.setUserEmail (strEmail);
+                                                payment.setRemark ("Product Purchased: " + ProductDesription);
+                                                payment.setLang ("ISO-8859-1");
+                                                payment.setCountry ("MY");
+                                                payment.setBackendPostURL (backendPostURL2);
+                                                Intent checkoutIntent = IPayIH.getInstance()
+                                                        .checkout(payment, Checkout.this, new ResultDelegate(), IPayIH.PAY_METHOD_CREDIT_CARD);
+                                                startActivityForResult(checkoutIntent, 1);
+                                            }catch (Exception e){
+                                                Log.d("ERROR", e.toString());
+                                            }
                                         }
                                     });
                                 }
@@ -880,12 +876,12 @@ public class Checkout extends AppCompatActivity implements Serializable{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getUserDetail2();
-//        if (requestCode != 1 || data == null) {
-//            Log.d("TAG", "NULL");
-//        }else{
-//            getUserDetail2();
-//        }
+//        getUserDetail2();
+        if (requestCode != 1 || data == null) {
+            Log.d("TAG", "NULL");
+        }else{
+            getUserDetail2();
+        }
     }
 
 //    private void OneSignalNoti(final String PlayerUserID, final String Name){

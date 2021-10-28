@@ -348,14 +348,13 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
             public void onClick(View view) {
                 loading_Layout.setVisibility(View.VISIBLE);
                 TrackingNo(edit_review.getText().toString(), strOrder_Date, strID);
-                Toast.makeText(Selling_Detail.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Selling_Detail.this, "Saved! Please click on Me, then go to My Selling to refresh", Toast.LENGTH_SHORT).show();
                 loading_Layout.setVisibility(View.GONE);
             }
         });
     }
 
     public void setupUI(View view) {
-
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
@@ -3205,7 +3204,7 @@ public class Selling_Detail extends AppCompatActivity implements OneSignal.OSNot
 
                             if (success.equals("1")) {
                                 Log.i("CONNOTE", "SAVED");
-                                Toast.makeText(Selling_Detail.this, R.string.success_update, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Selling_Detail.this, "Saved! Please click on Me, then go to My Selling to refresh", Toast.LENGTH_LONG).show();
                             } else {
                                 Log.i("CONNOTE", "FAILED saved");
                                 Toast.makeText(Selling_Detail.this, R.string.failed, Toast.LENGTH_SHORT).show();
