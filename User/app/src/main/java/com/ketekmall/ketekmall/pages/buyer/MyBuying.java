@@ -219,7 +219,7 @@ public class MyBuying extends AppCompatActivity {
                                     final String refno = object.getString("refno");
                                     final String pick_up = object.getString("pick_up");
 
-                                    if(refno != null){
+                                    if(!refno.isEmpty()){
                                         StringRequest stringRequest1 = new StringRequest(Request.Method.POST, URL_getPayment,
                                                 new Response.Listener<String>() {
                                                     @Override
@@ -391,35 +391,7 @@ public class MyBuying extends AppCompatActivity {
                                                 new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
-                                                        try {
 
-                                                            if (error instanceof TimeoutError ) {
-                                                                //Time out error
-
-                                                            }else if(error instanceof NoConnectionError){
-                                                                //net work error
-
-                                                            } else if (error instanceof AuthFailureError) {
-                                                                //error
-
-                                                            } else if (error instanceof ServerError) {
-                                                                //Erroor
-                                                            } else if (error instanceof NetworkError) {
-                                                                //Error
-
-                                                            } else if (error instanceof ParseError) {
-                                                                //Error
-
-                                                            }else{
-                                                                //Error
-                                                            }
-                                                            //End
-
-
-                                                        } catch (Exception e) {
-
-
-                                                        }
                                                     }
                                                 }) {
 
@@ -433,49 +405,18 @@ public class MyBuying extends AppCompatActivity {
                                         RequestQueue requestQueue1 = Volley.newRequestQueue(MyBuying.this);
                                         requestQueue1.add(stringRequest1);
                                     }
-
-
                                 }
 
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(MyBuying.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        try {
 
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                            } else if (error instanceof NetworkError) {
-                                //Error
-
-                            } else if (error instanceof ParseError) {
-                                //Error
-
-                            }else{
-                                //Error
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-
-
-                        }
                     }
                 }) {
 
@@ -521,37 +462,6 @@ public class MyBuying extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        try {
-
-                            if (error instanceof TimeoutError ) {
-                                //Time out error
-                                System.out.println("" + error);
-                            }else if(error instanceof NoConnectionError){
-                                //net work error
-                                System.out.println("" + error);
-                            } else if (error instanceof AuthFailureError) {
-                                //error
-                                System.out.println("" + error);
-                            } else if (error instanceof ServerError) {
-                                //Erroor
-                                System.out.println("" + error);
-                            } else if (error instanceof NetworkError) {
-                                //Error
-                                System.out.println("" + error);
-                            } else if (error instanceof ParseError) {
-                                //Error
-                                System.out.println("" + error);
-                            }else{
-                                //Error
-                                System.out.println("" + error);
-                            }
-                            //End
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-//                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
                     }
                 }) {
             @Override
