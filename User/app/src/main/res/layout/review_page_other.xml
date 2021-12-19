@@ -419,6 +419,8 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="0dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text="@string/ad_detail"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />

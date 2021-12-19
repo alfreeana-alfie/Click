@@ -454,7 +454,8 @@ public class Checkout extends AppCompatActivity implements Serializable{
                                                 payment.setPaymentId ("");
                                                 payment.setCurrency ("MYR");
                                                 payment.setRefNo (RefID);
-                                                payment.setAmount ("1.00");
+//                                                payment.setAmount ("1.00");
+                                                payment.setAmount (Grand_Total2.getText().toString());
                                                 payment.setProdDesc (ProductDesription);
                                                 payment.setUserName (strName);
                                                 payment.setUserEmail (strEmail);
@@ -843,7 +844,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String success = jsonObject.getString("success");
-
                             if (success.equals("1")) {
 
                             } else {
@@ -851,7 +851,6 @@ public class Checkout extends AppCompatActivity implements Serializable{
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-//                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -876,253 +875,10 @@ public class Checkout extends AppCompatActivity implements Serializable{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        getUserDetail2();
         if (requestCode != 1 || data == null) {
             Log.d("TAG", "NULL");
         }else{
             getUserDetail2();
         }
     }
-
-//    private void OneSignalNoti(final String PlayerUserID, final String Name){
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_NOTI,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.i("POST", response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        try {
-//                            if (error instanceof TimeoutError) {//Time out error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof NoConnectionError) {
-//                                //net work error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof AuthFailureError) {
-//                                //error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof ServerError) {
-//                                //Error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof NetworkError) {
-//                                //Error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof ParseError) {
-//                                //Error
-//                                System.out.println("" + error);
-//                            } else {
-//                                //Error
-//                                System.out.println("" + error);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("PlayerID", PlayerUserID);
-//                params.put("Name", Name);
-//                params.put("Words", "New Order has been placed! Check My Selling for more information.");
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
-
-//    private String decodeBase64(String text) {
-//        String result = "";
-//        byte[] data = Base64.decode(text, Base64.DEFAULT);
-//        result = new String(data, StandardCharsets.UTF_8);
-//        return result;
-//    }
-//
-//    private void sendNotification(JSONObject notification) {
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Log.i(TAG, "onResponse: " + response.toString());
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-//                        Log.i(TAG, "onErrorResponse: Didn't work");
-//                    }
-//                }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("Authorization", serverKey);
-//                params.put("Content-Type", contentType);
-//                return params;
-//            }
-//        };
-//        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
-//    }
-//
-//    private void GetPlayerData(final String CustomerUserID){
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_PLAYERID,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//                            JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                            if (success.equals("1")) {
-//                                for (int i = 0; i < jsonArray.length(); i++) {
-//                                    JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                    String PlayerID = object.getString("PlayerID");
-//                                    String Name = object.getString("Name");
-//                                    String UserID = object.getString("UserID");
-//
-//                                    OneSignalNoti(PlayerID, Name);
-//                                }
-//                            } else {
-//                                Toast.makeText(Checkout.this, "Incorrect Information", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        try {
-//
-//                            if (error instanceof TimeoutError ) {
-//                                //Time out error
-//                                System.out.println("" + error);
-//                            }else if(error instanceof NoConnectionError){
-//                                //net work error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof AuthFailureError) {
-//                                //error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof ServerError) {
-//                                //Erroor
-//                                System.out.println("" + error);
-//                            } else if (error instanceof NetworkError) {
-//                                //Error
-//                                System.out.println("" + error);
-//                            } else if (error instanceof ParseError) {
-//                                //Error
-//                                System.out.println("" + error);
-//                            }else{
-//                                //Error
-//                                System.out.println("" + error);
-//                            }
-//                            //End
-//
-//
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-////                        Toast.makeText(Homepage.this, "Connection Error", Toast.LENGTH_SHORT).show();
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("UserID", CustomerUserID);
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
-//
-//    private void DeleteOrder_Single3() {
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_DELETE_TEMP_USER,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String success = jsonObject.getString("success");
-//
-//                            if (success.equals("1")) {
-//
-//                            } else {
-//                                Toast.makeText(Checkout.this, R.string.failed, Toast.LENGTH_SHORT).show();
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-////                            Toast.makeText(Checkout.this, "JSON Parsing Error: " + e.toString(), Toast.LENGTH_SHORT).show();
-//                        }
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("customer_id", getId);
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(Checkout.this);
-//        requestQueue.add(stringRequest);
-//    }
-
-    //    private void PoslajuDomesticbyPostcode(String postcodeFrom, String postcodeTo, String Weight){
-//
-//        String API = HTTP_PoslajuDomesticbyPostcode + "?postcodeFrom=" + postcodeFrom + "&postcodeTo=" + postcodeTo + "&Weight=" + Weight;
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, API,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.i("jsonObjectRequest", response);
-//                        try{
-//                            JSONArray jsonarray = new JSONArray(response);
-//                            for(int i=0; i < jsonarray.length(); i++) {
-//                                JSONObject jsonobject = jsonarray.getJSONObject(i);
-//
-//                                String totalAmount       = jsonobject.getString("totalAmount");
-//                                Log.i("jsonObjectRequest", totalAmount);
-//                            }
-//                        }catch(JSONException e){
-//                            e.printStackTrace();
-//                            Log.i("jsonObjectRequest", e.toString());
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-//                        Log.i("STAGINGERROR", error.toString());
-//                        Log.i("jsonObjectRequest", "Error, Status Code " + error.networkResponse.statusCode);
-//                        Log.i("jsonObjectRequest", "Net Response to String: " + error.networkResponse.toString());
-//                        Log.i("jsonObjectRequest", "Error bytes: " + new String(error.networkResponse.data));
-////                        Toast.makeText(Checkout.this, "Request error", Toast.LENGTH_LONG).show();
-//                    }
-//                }) {
-//            @Override
-//            public Map<String, String> getHeaders() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("X-User-Key", serverKey_PoslajuDomesticbyPostcode);
-//                return params;
-//            }
-//
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
 }

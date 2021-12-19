@@ -312,9 +312,9 @@ public class Review_Page extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (strDivision.equals(strSeller_Division)) {
-                    Received(order_date, "0.00");
+                    Received(order_date, "0.00", order_id);
                 } else {
-                    Received(order_date, strShipping);
+                    Received(order_date, strShipping, order_id);
                 }
 
 
@@ -679,7 +679,7 @@ public class Review_Page extends AppCompatActivity {
         getId = user.get(SessionManager.ID);
     }
 
-    private void Received(final String strOrder_Date, final String strPrice) {
+    private void Received(final String strOrder_Date, final String strPrice, final String orderId) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_EDIT,
                 new Response.Listener<String>() {
                     @Override
@@ -739,6 +739,7 @@ public class Review_Page extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+                params.put("id", orderId);
                 params.put("order_date", strOrder_Date);
                 params.put("delivery_price", strPrice);
                 return params;

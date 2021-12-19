@@ -75,6 +75,8 @@
                     android:layout_below="@id/text_order_id"
                     android:layout_toEndOf="@id/photo"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="@string/ad_detail"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
